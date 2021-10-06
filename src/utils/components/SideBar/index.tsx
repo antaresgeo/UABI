@@ -16,18 +16,31 @@ const SideBar = () => {
 					collapse={false}
 					sublinks={[{ to: '', name: 'Inicio' }]}
 				/>
+
 				<SBItem
-					id='projects'
-					name='Proyectos'
+					id='adquisitions'
+					name='Adquisición'
 					sublinks={[
-						{ to: '/', name: 'Lista' },
-						{ to: '/create', name: 'Nuevo' },
-						{ to: '/edit', name: 'Editar' },
+						{ to: '/projects', name: 'Proyectos' },
+						{ to: '/real-estates', name: 'Bienes Inmuebles' },
 					]}
 				/>
-				<SBItem id='bienesInmuebles' name='Bienes Inmuebles' />
-				<SBItem id='bienesInmuebles/areas' name='Áreas de Bien Inmueble' />
-				<SBItem id='adquisisiones' name='Adquisisiones' />
+				<SBItem
+					id='registroContable'
+					name='Registro Contable - UABI'
+					sublinks={[{ to: '/', name: 'Registro Contable - UABI' }]}
+				/>
+				<SBItem id='asegurabilidad' name='Asegurabilidad' />
+				<SBItem
+					id='disposition'
+					name='Disposición'
+					sublinks={[{ to: '/real-estates/areas', name: 'Áreas' }]}
+				/>
+				<SBItem id='adquisisiones' name='Supervisión' />
+				<SBItem id='adquisisiones' name='Facturación' />
+				<SBItem id='adquisisiones' name='Mantenimiento' />
+				<SBItem id='adquisisiones' name='Consultas' />
+				<SBItem id='adquisisiones' name='Informes y Logs' />
 			</ul>
 		</div>
 	);

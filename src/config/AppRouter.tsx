@@ -9,13 +9,12 @@ import Auth from './../views/Auth';
 
 const AppRouter = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const token = localStorage.getItem('token');
 
 	useEffect(() => {
-		const token = localStorage.getItem('token');
 		if (token) {
 			setIsAuthenticated(true);
 		}
-		console.log(isAuthenticated);
 	}, []);
 
 	return (
@@ -24,7 +23,7 @@ const AppRouter = () => {
 				<Route path='/auth'>
 					<Auth />
 				</Route>
-				<PrivateRoute path='/' isAuthenticated={isAuthenticated} exact>
+				<PrivateRoute path='/' isAuthenticated={isAuthenticated}>
 					<MasterTemplate />
 				</PrivateRoute>
 				<Route component={NoMatch} />

@@ -166,3 +166,33 @@ main {
 .lh-tight {
 	line-height: 1.25;
 }
+
+.mainContainerLocation {
+	background-color: white;
+	padding: 2rem;
+}
+
+.containerLocation {
+	background-color: #f7f7f7;
+    border-radius: 15px;
+    border: 1px solid;
+}
+
+.innerContainerLocation {
+	padding: 2rem;
+}
+
+.containerLocation select {
+	width: 100%;
+	border-radius: 0.25rem;
+}
+
+.containerLocation input[type=number] {
+	width: 100%;
+	border-radius: 0.25rem;
+}
+
+.containerLocation input[type=text] {
+	width: 100%;
+	border-radius: 0.25rem;
+}
