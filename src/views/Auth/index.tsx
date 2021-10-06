@@ -5,7 +5,6 @@ import {
 	useRouteMatch,
 	Redirect,
 } from 'react-router-dom';
-import Register from './components/Register';
 import SignIn from './components/SignIn';
 
 const Auth = () => {
@@ -18,9 +17,6 @@ const Auth = () => {
 				</Route>
 				<Route path={`${path}/signin`}>
 					<SignIn />
-				</Route>
-				<Route path={`${path}/signup`}>
-					<Register />
 				</Route>
 			</Switch>
 		</Router>
