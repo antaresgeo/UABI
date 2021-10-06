@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 // import * as actions from './../../store/actions/userAction';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import {
 	Form,
 	Image,
@@ -12,9 +12,8 @@ import {
 	Grid,
 } from 'semantic-ui-react';
 
-import loginimage from './../../../utils/assets/img/login.jpeg';
+import loginimage from './../../../utils/assets/img/login.png';
 import logo from './../../../utils/assets/img/escudoAlcaldia.png';
-import { signIn } from './../../../apis/authentification';
 
 export default function SignIn() {
 	const history = useHistory();
@@ -25,19 +24,16 @@ export default function SignIn() {
 
 	async function ingresarUsuario() {
 		try {
-			let token: AxiosResponse<any> | string = await signIn(
-				idusuario,
-				contraseña
+			let token = await axios.post(
+				`${process.env.REACT_APP_PAGE_HOST}api/autenticacion`,
+				{
+					idusuario,
+					contraseña,
+				}
 			);
-			if (typeof token === 'string') {
-				alert('Any error');
-				return;
-			}
-			console.log(token);
-
+			console.log('ingreso el usuario');
 			localStorage.setItem('token', token.data);
 			history.push('/');
-			window.location.reload();
 		} catch (error) {
 			console.error(error);
 		}
@@ -52,7 +48,6 @@ export default function SignIn() {
 			setContenidopassword('VER');
 		}
 	}
-
 	return (
 		<div>
 			<Grid columns={2} style={{ height: '100vh' }} className='no-margin'>
@@ -67,10 +62,10 @@ export default function SignIn() {
 							</Form.Field>
 							<Form.Field>
 								<Header as='h2' className='sub-header-login'>
-									Sistema para la Administración de Bienes Inmuebles
-									{/* <Header.Subheader className='sub-header-login'>
-										Inicie sesión para acceder al sistema
-									</Header.Subheader> */}
+									UABI: Unidad Administrativa de Bienes Inmuebles
+									<Header.Subheader className='sub-header-login'>
+										Inicie sesion o registrese para acceder al sistema
+									</Header.Subheader>
 								</Header>
 							</Form.Field>
 							<Form.Field className='container-inputs-login usuario-item-login'>
@@ -96,26 +91,37 @@ export default function SignIn() {
 									}
 								/>
 							</Form.Field>
-
+							<Form.Field className='container-checkbox-login'>
+								<Checkbox
+									label='Recordar'
+									className='sub-container-checkbox-login checkbox-login'
+								/>
+								<Header
+									size='small'
+									color='blue'
+									className='sub-container-checkbox-login login-olvido-contraseña'
+									onClick={() => history.push('/OlvidoContraseña')}
+								>
+									¿Olvido la contraseña?
+								</Header>
+							</Form.Field>
 							<Form.Field className='container-flex-end'>
 								<Header
 									size='small'
 									color='blue'
 									className='login-olvido-contraseña'
 								>
-									Validar código de verificación
+									Valida tu código de verificación
 								</Header>
 							</Form.Field>
 							<Form.Field className='container-space-between'>
-								{/* <Button
+								<Button
 									color='black'
 									className='boton-ingresar-login'
-									onClick={() =>
-										(window.location.href = 'http://localhost:3000/auth/signup')
-									}
+									onClick={() => history.push('/CrearUsuario')}
 								>
 									Registrarme
-								</Button> */}
+								</Button>
 								<Button
 									color='blue'
 									className='boton-ingresar-login'
