@@ -43,6 +43,14 @@ const createRealEstate = (data) =>
 const updateRealEstate = (data, id) =>
     request_dispatch(types.realEstate, service.updateRealEstate(data, id));
 
+
+const setRealEstate = (realEstate) =>
+        request_dispatch(types.realEstate, noc(realEstate));
+
+
+const noc = async (r) => {
+    return Promise.resolve(r)
+}
 const actions = {
     // example
     getProject,

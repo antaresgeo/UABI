@@ -9,12 +9,13 @@ import ItemRealEstate from "../../components/ItemRealEstate";
 
 const RealEstates = () => {
     const dispatch = useDispatch();
-    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
 
     useEffect(() => {
         dispatch(actions.getRealEstates());
     }, []);
 
+    console.log(realEstates)
     return (
         <section className="pt-5" id="texto-superior">
             <div className="container-fluid">
@@ -34,7 +35,8 @@ const RealEstates = () => {
                                     alignItems: "center",
                                 }}
                             >
-                                <h5>Administrar Bienes Inmuebles</h5>
+                                <h5>Administrar Bienes Inmuebles </h5>
+
                                 <Link
                                     className="justify-content-end"
                                     style={{
@@ -138,7 +140,7 @@ const RealEstates = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {realEstates.map((realEstate) => {
+                                    {realEstates?.map((realEstate) => {
                                         let creationDate = new Date(
                                             parseFloat(realEstate.audit_trail.created_on)
                                         ).toDateString();

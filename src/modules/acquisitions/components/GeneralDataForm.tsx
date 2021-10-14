@@ -1,6 +1,9 @@
-import { FC } from "react";
+import { FC, useState } from "react";
+import LocationModal from "../../../utils/components/LocationModal";
+import { service } from "../redux";
 
 const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
+    const [address, set_address] = useState<string>("");
     return (
         <div className="row my-5 py-3">
             <div className="col-3">
@@ -12,7 +15,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     aria-label="dependency"
                     name="dependency"
                     onChange={handleChange}
-                    value={data.dependency}
+                    value={data?.dependency}
                 >
                     <option value="" selected disabled hidden>
                         -- Seleccione Dependencia --
@@ -32,7 +35,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     aria-label="destination_type"
                     name="destination_type"
                     onChange={handleChange}
-                    value={data.destination_type}
+                    value={data?.destination_type}
                 >
                     <option value="" selected disabled hidden>
                         -- Seleccione Destinación --
@@ -51,7 +54,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     aria-label="accounting_account"
                     name="accounting_account"
                     onChange={handleChange}
-                    value={data.accounting_account}
+                    value={data?.accounting_account}
                 >
                     <option value="" selected disabled hidden>
                         -- Seleccione Cuenta Contable --
@@ -71,7 +74,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     aria-label="cost_center"
                     name="cost_center"
                     onChange={handleChange}
-                    value={data.cost_center}
+                    value={data?.cost_center}
                 >
                     <option value="" selected disabled hidden>
                         -- Seleccione Centro de Costos --
@@ -94,7 +97,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     aria-describedby="emailHelp"
                     name="registry_number"
                     onChange={handleChange}
-                    value={data.registry_number}
+                    value={data?.registry_number}
                 />
                 <div id="emailHelp" className="form-text"></div>
             </div>
@@ -122,7 +125,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     id="name"
                     name="name"
                     onChange={handleChange}
-                    value={data.name}
+                    value={data?.name}
                 />
             </div>
             <div className="col-6">
@@ -136,7 +139,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     aria-describedby="description"
                     name="description"
                     onChange={handleChange}
-                    value={data.description}
+                    value={data?.description}
                 />
                 <div id="emailHelp" className="form-text"></div>
             </div>
@@ -151,7 +154,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     aria-describedby="patrimonial_value"
                     name="patrimonial_value"
                     onChange={handleChange}
-                    value={data.patrimonial_value}
+                    value={data?.patrimonial_value}
                 />
             </div>
 
@@ -159,14 +162,25 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                 <label htmlFor="exampleInputEmail1" className="form-label">
                     Dirección
                 </label>
-                <input
-                    type=""
-                    className="form-control"
-                    id="address"
-                    name="address"
-                    onChange={handleChange}
-                    placeholder="Pop Up"
-                />
+                <div className="input-group">
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="address"
+                        name="address"
+                        onChange={handleChange}
+                        value={address}
+                    />
+                    <div className="input-group-prepend">
+                        <LocationModal
+                            onSave={(values) => {
+                                return service.getAddress(values).then((res) => {
+                                    set_address(res.address);
+                                });
+                            }}
+                        />
+                    </div>
+                </div>
             </div>
             <div className="col-2">
                 <label className="form-label">Area Total (m2)</label>
@@ -175,7 +189,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     className="form-control"
                     id="total_area"
                     name="total_area"
-                    value={data.total_area}
+                    value={data?.total_area}
                     onChange={handleChange}
                 />
             </div>
@@ -186,7 +200,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     className="form-control"
                     id="total_percentage"
                     name="total_percentage"
-                    value={data.total_percentage}
+                    value={data?.total_percentage}
                     onChange={handleChange}
                 />
             </div>
@@ -230,7 +244,7 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     name="tipology"
                     id="tipology"
                     onChange={handleChange}
-                    value={data.tipology}
+                    value={data?.tipology}
                 >
                     <option value="" selected disabled hidden>
                         -- Seleccione Tipología --

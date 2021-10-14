@@ -6,8 +6,8 @@ import {
     IProjectResponse,
     IProjectsResponse,
 } from "../../../../utils/interfaces/components.interfaces";
-import { useSelector, useDispatch } from "react-redux";
-import { actions } from "../../redux";
+// import { useSelector, useDispatch } from "react-redux";
+// import { actions } from "../../redux";
 
 interface IProps {
     id: string;
@@ -15,20 +15,31 @@ interface IProps {
 
 const DetailProject = () => {
     const { id } = useParams<IProps>();
-    const dispatch = useDispatch();
     const history = useHistory();
+    const [project, setProject] = useState<IProjectAttributes>({
+        id: "",
+        name: "",
+        description: "",
+        dependency: "",
+        audit_trail: {
+            created_by: "",
+            created_on: "",
+            updated_by: null,
+            updated_on: null,
+            updated_values: null,
+        },
+        status: -1,
+    });
 
-    const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
+    const _getProject = async () => {
+        let projectResponse: IProjectResponse | string = await getProject(id);
 
-    // const _getProject = async () => {
-    //     let projectResponse: IProjectResponse | string = await getProject(id);
+        if (typeof projectResponse !== "string") {
+            let tmpData = projectResponse.data;
 
-    //     if (typeof projectResponse !== "string") {
-    //         let tmpData = projectResponse.data;
-
-    //         setProject(tmpData);
-    //     }
-    // };
+            setProject(tmpData);
+        }
+    };
 
     const _updateProject = async () => {
         let res: any = await updateProject(
@@ -42,17 +53,17 @@ const DetailProject = () => {
     };
 
     useEffect(() => {
-        dispatch(actions.getProject(id));
+        _getProject();
     }, []);
 
     const handleChange = (e: any) => {
-        const key = e.target.name;
+        console.log(e.target.name);
+        console.log(e.target.value);
 
-        project[key] = e.target.value;
-        // setProject({
-        //     ...project,
-        //     [e.target.name]: e.target.value,
-        // });
+        setProject({
+            ...project,
+            [e.target.name]: e.target.value,
+        });
     };
 
     return (
