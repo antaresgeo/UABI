@@ -138,7 +138,7 @@ const Projects = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {typeof projects !== "undefined" &&
+                                    {typeof projects !== "undefined" ? (
                                         projects.map((project) => {
                                             let creationDate = new Date(
                                                 parseFloat(project.audit_trail.created_on)
@@ -152,7 +152,10 @@ const Projects = () => {
                                                     createdBy={project.audit_trail.created_by}
                                                 />
                                             );
-                                        })}
+                                        })
+                                    ) : (
+                                        <b>nothing</b>
+                                    )}
                                 </tbody>
                             </Table>
                             <nav aria-label="Page navigation example">

@@ -192,6 +192,8 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
             </div>
 
             <div className="col-2">
+                <label className="form-label">Zona</label>
+
                 <div className="form-check">
                     <input
                         className="form-check-input"
@@ -205,7 +207,6 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                         Urbano
                     </label>
                 </div>
-
                 <div className="form-check">
                     <input
                         className="form-check-input"
@@ -219,6 +220,9 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     </label>
                 </div>
             </div>
+            <label className="form-label">Materiales</label>
+
+            <div className="col-2"></div>
             <div className="col-3">
                 <label className="form-label">Tipología</label>
                 <select

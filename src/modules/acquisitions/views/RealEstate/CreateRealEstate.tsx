@@ -12,37 +12,68 @@ import ItemRealEstate from "../../components/ItemRealEstate";
 import AdquisitionsFrom from "../../components/AdquisitionsForm";
 import GeneralDataForm from "../../components/GeneralDataForm";
 import { actions } from "../../redux";
+import { createRealEstate } from "../../../../apis/uabi";
 
 const RealEstate = () => {
     const dispatch = useDispatch();
 
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
-    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
+    // const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
+    const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
 
-    const [projects, setProjects] = useState<IProjectAttributes[]>([
-        {
-            id: "",
-            name: "",
-            description: "",
-            dependency: "",
-            audit_trail: {
-                created_by: "",
-                created_on: "",
-                updated_by: null,
-                updated_on: null,
-                updated_values: null,
-            },
-            status: -1,
+    const [realEstate, setRealEstate] = useState({
+        dependency: "",
+        destination_type: "",
+        accounting_account: "",
+        cost_center: "",
+
+        registry_number: "",
+        name: "",
+        description: "",
+        address: "",
+        cbml: "",
+
+        total_area: -1,
+        total_percentage: -1,
+        estate_type: "",
+        tipology: "",
+
+        project_id: -1,
+
+        audit_trail: {
+            created_by: "",
+            created_on: "",
+            updated_by: null,
+            updated_on: null,
+            updated_values: null,
         },
-    ]);
+        status: -1,
+    });
+    // const [projects, setProjects] = useState<IProjectAttributes[]>([
+    //     {
+    //         id: "",
+    //         name: "",
+    //         description: "",
+    //         dependency: "",
+    //         audit_trail: {
+    //             created_by: "",
+    //             created_on: "",
+    //             updated_by: null,
+    //             updated_on: null,
+    //             updated_values: null,
+    //         },
+    //         status: -1,
+    //     },
+    // ]);
 
     const _createRealEstate = async () => {
-        // const response: any = await createRealEstate(realEstate);
+        const response: any = await createRealEstate(realEstate);
 
-        // await alert(response.message);
-        // console.log(response);
-        // realEstates.push(realEstate);
+        await alert(response.message);
+        console.log(response);
+        realEstates.push(realEstate);
         cleanInputs();
+        dispatch(actions.getRealEstates());
         // _getRealEstates();
     };
 
@@ -66,10 +97,10 @@ const RealEstate = () => {
     };
 
     const handleChange = (e: any) => {
-        // setRealEstate({
-        //     ...realEstate,
-        //     [e.target.name]: e.target.value,
-        // });
+        setRealEstate({
+            ...realEstate,
+            [e.target.name]: e.target.value,
+        });
     };
 
     // Prints
@@ -77,7 +108,7 @@ const RealEstate = () => {
         projects.map((project) => {
             return (
                 <option value={project.id} selected>
-                    <div className="container">{project.name}</div>
+                    <div className="container">{String(project.name)}</div>
                 </option>
             );
         });
@@ -154,11 +185,15 @@ const RealEstate = () => {
                                                 name="project_id"
                                                 onChange={handleChange}
                                             >
-                                                <option value="" selected disabled>
+                                                <option value="" selected disabled hidden>
                                                     -- Seleccione Proyecto --
                                                 </option>
                                                 {projects.map((project) => {
-                                                    return <option value={project.id}>{project.name}</option>;
+                                                    return (
+                                                        <option value={project.id}>
+                                                            <div className="container">{String(project.name)}</div>
+                                                        </option>
+                                                    );
                                                 })}
                                             </select>
                                         </div>

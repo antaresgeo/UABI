@@ -98,7 +98,7 @@ const DetailProject = () => {
 
                                         <div className="col-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label">
-                                                Destinación
+                                                Dependencia
                                             </label>
                                             <input
                                                 type=""

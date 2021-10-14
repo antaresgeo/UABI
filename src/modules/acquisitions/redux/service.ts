@@ -23,7 +23,7 @@ export const getProject = async (
         return res.data.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -35,7 +35,7 @@ export const getProjects = async (): Promise<IProjectAttributes[] | string> => {
         return res.data.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -56,7 +56,7 @@ export const createProject = async (
         return res.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -71,7 +71,7 @@ export const updateProject = async (data: any, id: number) => {
         return res;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -85,7 +85,7 @@ export const altStatusProject = async (id: number) => {
         return res;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -100,7 +100,7 @@ const getRealEstates = async (): Promise<IRealEstateAttributes[] | string> => {
         return res.data.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -117,7 +117,7 @@ export const getRealEstatesByProject = async (
         return res.data.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -133,7 +133,7 @@ export const getRealEstate = async (
         return res.data.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -148,7 +148,7 @@ export const createRealEstate = async (
         return res.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -165,7 +165,7 @@ export const updateRealEstate = async (data: any, id: number) => {
         return res;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
