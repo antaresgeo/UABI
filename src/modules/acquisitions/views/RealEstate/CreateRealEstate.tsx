@@ -189,9 +189,14 @@ const RealEstate = () => {
                                                     -- Seleccione Proyecto --
                                                 </option>
                                                 {projects.map((project) => {
+                                                    const { name, id } = project;
+                                                    console.log(name.toUpperCase());
+                                                    console.log(id);
+
                                                     return (
-                                                        <option value={project.id}>
-                                                            <div className="container">{String(project.name)}</div>
+                                                        <option value={id}>
+                                                            {name.toUpperCase()}
+                                                            {/* <div className="container">{name}</div> */}
                                                         </option>
                                                     );
                                                 })}

@@ -359,8 +359,8 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 onClick={() => {
                                     console.log("add adquisition", adquisition);
 
-                                    // addAdquisition(adquisition);
-                                    // clearAdquisition();
+                                    addAdquisition(adquisition);
+                                    clearAdquisition();
                                 }}
                             >
                                 Agregar Adquisición
