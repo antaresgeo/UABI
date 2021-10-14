@@ -384,6 +384,11 @@ const DetailRealEstate = () => {
                                             </div>
                                         </div>
                                     </div>
+                                        <div className='d-flex justify-content-end mt-5'>
+                                            <button type='submit' className='btn btn-success btn-lg text-uppercase'>
+                                                exportar a sap
+                                            </button>
+                                        </div>
                                 </form>
                             </div>
                         </div>

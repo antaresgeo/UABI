@@ -5,7 +5,7 @@ const Asegurabilidad = () => {
 
     return (
         <>
-            <h1>Desde Asegurabilidad</h1>
+            {/* <h1>Desde Asegurabilidad</h1> */}
 
             <FormPoliza />
         </>
