@@ -1,58 +1,18 @@
 import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getRealEstates } from "../../../../apis/uabi";
-import {
-    IRealEstateAttributes,
-    IProjectsResponse,
-    IRealEstateResponse,
-    IRealEstatesResponse,
-} from "../../../../utils/interfaces/components.interfaces";
+import { useSelector, useDispatch } from "react-redux";
+import { actions } from "./../../redux";
+
+import { IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
 import ItemRealEstate from "../../components/ItemRealEstate";
 
-const Projects = () => {
-    const [realEstates, setRealEstates] = useState<any[]>([
-        {
-            id: -1,
-            dependency: "",
-            destination_type: "",
-            accounting_account: "",
-            cost_center: "",
-
-            registry_number: "",
-            name: "",
-            description: "",
-
-            total_area: -1,
-            total_percentage: -1,
-            estate_type: "",
-            tipology: "",
-
-            project_id: -1,
-
-            audit_trail: {
-                created_by: "",
-                created_on: "",
-                updated_by: null,
-                updated_on: null,
-                updated_values: null,
-            },
-            status: -1,
-        },
-    ]);
-
-    const _getProjects = async () => {
-        let realEstatesResponse: IRealEstatesResponse | string = await getRealEstates();
-
-        if (typeof realEstatesResponse !== "string") {
-            let tmpData = realEstatesResponse.data;
-
-            setRealEstates(tmpData);
-        }
-    };
+const RealEstates = () => {
+    const dispatch = useDispatch();
+    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
     useEffect(() => {
-        _getProjects();
+        dispatch(actions.getRealEstates());
     }, []);
 
     return (
@@ -178,18 +138,18 @@ const Projects = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {realEstates.map((project) => {
+                                    {realEstates.map((realEstate) => {
                                         let creationDate = new Date(
-                                            parseFloat(project.audit_trail.created_on)
+                                            parseFloat(realEstate.audit_trail.created_on)
                                         ).toDateString();
                                         return (
                                             <ItemRealEstate
-                                                id={project.id}
-                                                matricula={project.registry_number}
-                                                name={project.name}
-                                                project={project.project_id}
+                                                id={String(realEstate.id)}
+                                                matricula={realEstate.registry_number}
+                                                name={realEstate.name}
+                                                project={realEstate.project_id}
                                                 creationDate={creationDate}
-                                                createdBy={project.audit_trail.created_by}
+                                                createdBy={realEstate.audit_trail.created_by}
                                             />
                                         );
                                     })}
@@ -232,4 +192,4 @@ const Projects = () => {
     );
 };
 
-export default Projects;
+export default RealEstates;

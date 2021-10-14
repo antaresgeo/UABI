@@ -1,10 +1,12 @@
 import axios from "axios";
 import { FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "./index";
 // import store, { AppDispatch } from "../../store";
-import {swal} from "../../utils";
+import { swal } from "../../utils";
 
-const BASE_URL = `${process.env.URI_SERVICE_UABI}`;
-const API_URL = `${BASE_URL}${process.env.REACT_APP_API_VERSION}`;
+const BASE_URL = `${process.env.REACT_APP_URI_SERVICE_UABI}`;
+const API_URL = `${BASE_URL}${process.env.REACT_APP_API_UABI_VERSION}`;
+
+console.log(API_URL);
 
 const response_error_interceptor = (error: any) => {
     if (!axios.isCancel(error)) {

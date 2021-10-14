@@ -91,7 +91,6 @@ export const getRealEstates = async (): Promise<
     try {
         let URI = `${URI_SERVICE_UABI}real-estates/lists`;
         let res: AxiosResponse<IRealEstatesResponse> = await axios.get(URI);
-        console.log(res);
 
         return res.data;
     } catch (error) {

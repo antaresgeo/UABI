@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
-import { createRealEstate, getProjects, getRealEstatesByProject } from "../../../../apis/uabi";
-import { Link, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import {
     IProjectAttributes,
     IProjectsResponse,
+    IRealEstateAttributes,
     IRealEstatesResponse,
 } from "../../../../utils/interfaces/components.interfaces";
 import { Input, Table } from "semantic-ui-react";
 import ItemRealEstate from "../../components/ItemRealEstate";
 import AdquisitionsFrom from "../../components/AdquisitionsForm";
-import GeneralDataForm from "../../components/GeneralDataFrom";
+import GeneralDataForm from "../../components/GeneralDataForm";
+import { actions } from "../../redux";
 
-interface IProps {
-    name: string;
-}
+const RealEstate = () => {
+    const dispatch = useDispatch();
 
-const RealEstate = ({ name }: IProps) => {
-    const history = useHistory();
+    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
+
     const [projects, setProjects] = useState<IProjectAttributes[]>([
         {
             id: "",
@@ -34,123 +36,40 @@ const RealEstate = ({ name }: IProps) => {
         },
     ]);
 
-    const [realEstate, setRealEstate] = useState({
-        dependency: "",
-        destination_type: "",
-        accounting_account: "",
-        cost_center: "",
-        registry_number: "",
-        name: "",
-        description: "",
-        address: "",
-        cbml: "",
-        total_area: -1,
-        total_percentage: -1,
-        estate_type: "",
-        tipology: "",
-        project_id: -1,
-    });
-
-    const [realEstates, setRealEstates] = useState<any[]>([
-        {
-            id: -1,
-            dependency: "",
-            destination_type: "",
-            accounting_account: "",
-            cost_center: "",
-
-            registry_number: "",
-            name: "",
-            description: "",
-
-            total_area: -1,
-            total_percentage: -1,
-            estate_type: "",
-            tipology: "",
-
-            project_id: -1,
-
-            audit_trail: {
-                created_by: "",
-                created_on: "",
-                updated_by: null,
-                updated_on: null,
-                updated_values: null,
-            },
-            status: -1,
-        },
-    ]);
-
-    useEffect(() => {
-        _getProjects();
-    }, []);
-
-    useEffect(() => {
-        _getRealEstates();
-    }, [realEstate.project_id]);
-
-    useEffect(() => {
-        printProjects();
-    }, [projects]);
-
-    const _getRealEstates = async () => {
-        let realEstatesResponse: IRealEstatesResponse | string = await getRealEstatesByProject(
-            String(realEstate.project_id)
-        );
-
-        if (typeof realEstatesResponse !== "string") {
-            let tmpData = realEstatesResponse.data;
-
-            setRealEstates(tmpData);
-        }
-    };
-
-    const _getProjects = async () => {
-        let projectsResponse: IProjectsResponse | string = await getProjects();
-
-        if (typeof projectsResponse !== "string") {
-            let tmpData = projectsResponse.data;
-
-            setProjects(tmpData);
-        }
-    };
-
     const _createRealEstate = async () => {
-        const response: any = await createRealEstate(realEstate);
+        // const response: any = await createRealEstate(realEstate);
 
-        await alert(response.message);
-        console.log(response);
+        // await alert(response.message);
+        // console.log(response);
+        // realEstates.push(realEstate);
         cleanInputs();
-        _getRealEstates();
+        // _getRealEstates();
     };
 
     const cleanInputs = () => {
-        setRealEstate({
-            dependency: "",
-            destination_type: "",
-            accounting_account: "",
-            cost_center: "",
-            registry_number: "",
-            name: "",
-            description: "",
-            address: "",
-            cbml: "",
-            total_area: -1,
-            total_percentage: -1,
-            estate_type: "",
-            tipology: "",
-            project_id: -1,
-        });
+        // setRealEstate({
+        //     dependency: "",
+        //     destination_type: "",
+        //     accounting_account: "",
+        //     cost_center: "",
+        //     registry_number: "",
+        //     name: "",
+        //     description: "",
+        //     address: "",
+        //     cbml: "",
+        //     total_area: -1,
+        //     total_percentage: -1,
+        //     estate_type: "",
+        //     tipology: "",
+        //     project_id: -1,
+        // });
     };
 
     const handleChange = (e: any) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
-
-        setRealEstate({
-            ...realEstate,
-            [e.target.name]: e.target.value,
-        });
+        // setRealEstate({
+        //     ...realEstate,
+        //     [e.target.name]: e.target.value,
+        // });
     };
 
     // Prints
@@ -158,11 +77,25 @@ const RealEstate = ({ name }: IProps) => {
         projects.map((project) => {
             return (
                 <option value={project.id} selected>
-                    {project.name}
+                    <div className="container">{project.name}</div>
                 </option>
             );
         });
     };
+
+    useEffect(() => {
+        // _getProjects();
+        dispatch(actions.getProjects());
+    }, []);
+
+    useEffect(() => {
+        // _getRealEstates();
+        dispatch(actions.getRealEstates());
+    }, [realEstate.project_id]);
+
+    useEffect(() => {
+        printProjects();
+    }, [projects]);
 
     return (
         <section className="pt-5" id="texto-superior">
@@ -176,7 +109,9 @@ const RealEstate = ({ name }: IProps) => {
                                 padding: "10px 20px",
                             }}
                         >
-                            <h5>{name} Bien Inmueble</h5>
+                            <h5>
+                                <b>Creación</b> de Bien Inmueble
+                            </h5>
                             <hr />
                             <div className="container">
                                 <form>
@@ -229,7 +164,7 @@ const RealEstate = ({ name }: IProps) => {
                                         </div>
                                     </div>
 
-                                    <GeneralDataForm type="create" handleChange={handleChange} />
+                                    <GeneralDataForm type="create" handleChange={handleChange} data={{}} />
 
                                     {/* Adquisitions */}
                                     <AdquisitionsFrom type="create" />
@@ -335,7 +270,7 @@ const RealEstate = ({ name }: IProps) => {
                                         ).toDateString();
                                         return (
                                             <ItemRealEstate
-                                                id={project.id}
+                                                id={String(project.id)}
                                                 matricula={project.registry_number}
                                                 name={project.name}
                                                 creationDate={creationDate}

@@ -1,90 +1,37 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Table } from "semantic-ui-react";
-import { getProject, getRealEstates, getRealEstatesByProject } from "../../../../apis/uabi";
 import ItemRealEstate from "../../components/ItemRealEstate";
+import { useSelector, useDispatch } from "react-redux";
+
 import {
     IProjectAttributes,
     IProjectResponse,
     IProjectsResponse,
+    IRealEstateAttributes,
     IRealEstatesResponse,
 } from "../../../../utils/interfaces/components.interfaces";
+import { actions } from "../../redux";
 
-interface IProps {
+interface IParams {
     id: string;
 }
 
 const DetailProject = () => {
-    const { id } = useParams<IProps>();
-    const [project, setProject] = useState<IProjectAttributes>({
-        id: "",
-        name: "",
-        description: "",
-        dependency: "",
-        audit_trail: {
-            created_by: "",
-            created_on: "",
-            updated_by: null,
-            updated_on: null,
-            updated_values: null,
-        },
-        status: -1,
-    });
+    const { id } = useParams<IParams>();
+    const dispatch = useDispatch();
 
-    const [realEstates, setRealEstates] = useState<any[]>([
-        {
-            id: -1,
-            dependency: "",
-            destination_type: "",
-            accounting_account: "",
-            cost_center: "",
-
-            registry_number: "",
-            name: "",
-            description: "",
-
-            total_area: -1,
-            total_percentage: -1,
-            estate_type: "",
-            tipology: "",
-
-            project_id: -1,
-
-            audit_trail: {
-                created_by: "",
-                created_on: "",
-                updated_by: null,
-                updated_on: null,
-                updated_values: null,
-            },
-            status: -1,
-        },
-    ]);
-
-    const _getRealEstates = async () => {
-        let realEstatesResponse: IRealEstatesResponse | string = await getRealEstatesByProject(id);
-
-        if (typeof realEstatesResponse !== "string") {
-            let tmpData = realEstatesResponse.data;
-
-            setRealEstates(tmpData);
-        }
-    };
-
-    const _getProject = async () => {
-        let projectResponse: IProjectResponse | string = await getProject(id);
-
-        if (typeof projectResponse !== "string") {
-            let tmpData = projectResponse.data;
-
-            setProject(tmpData);
-        }
-    };
+    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
 
     useEffect(() => {
-        _getProject();
-        _getRealEstates();
+        dispatch(actions.getProject(id));
     }, []);
+
+    useEffect(() => {
+        console.log(project.id);
+        dispatch(actions.getRealEstatesByProject(project.id));
+    }, [project]);
 
     return (
         <section className="pt-5" id="texto-superior">
@@ -234,7 +181,7 @@ const DetailProject = () => {
                                                 ).toDateString();
                                                 return (
                                                     <ItemRealEstate
-                                                        id={project.id}
+                                                        id={String(project.id)}
                                                         matricula={project.registry_number}
                                                         name={project.name}
                                                         creationDate={creationDate}

@@ -1,19 +1,23 @@
 import { useState } from "react";
-import { createProject } from "../../../../apis/uabi";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import swal from "sweetalert";
+import { IProjectAttributes } from "../../../../utils/interfaces/components.interfaces";
+import { actions } from "../../redux";
 
-interface IProps {
-    name: string;
-}
+const CreateRealEstate = () => {
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
 
-const CreateRealEstate = ({ name }: IProps) => {
     const [projectName, setProjectName] = useState("");
     const [projectDescription, setProjectDescription] = useState("");
     const [dependency, setDependency] = useState("");
 
-    const _createProject = async () => {
-        const response: any = await createProject(projectName, projectDescription, dependency);
-        await alert(response.message);
-        console.log(response);
+    const createProject = async () => {
+        const response: any = await dispatch(actions.createProject(projectName, projectDescription, dependency));
+        await swal("Message", response.message, "success");
+        history.push(`/acquisitions/projects`);
     };
 
     return (
@@ -28,7 +32,9 @@ const CreateRealEstate = ({ name }: IProps) => {
                                 padding: "10px 20px",
                             }}
                         >
-                            <h5>{name}</h5>
+                            <h5>
+                                <b>Creación</b> de Proyecto
+                            </h5>
                             <hr />
                             <div className="container">
                                 <form>
@@ -89,7 +95,7 @@ const CreateRealEstate = ({ name }: IProps) => {
                                 </form>
                             </div>
                             <div className="col text-center">
-                                <div className="btn btn-success my-3" onClick={_createProject}>
+                                <div className="btn btn-success my-3" onClick={createProject}>
                                     Guardar
                                 </div>
                             </div>

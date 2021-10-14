@@ -7,7 +7,7 @@ import {
     IRealEstatesResponse,
 } from "../../../../utils/interfaces/components.interfaces";
 import AdquisitionsFrom from "../../components/AdquisitionsForm";
-import GeneralDataForm from "../../components/GeneralDataFrom";
+import GeneralDataForm from "../../components/GeneralDataForm";
 
 interface IProps {
     id: string;

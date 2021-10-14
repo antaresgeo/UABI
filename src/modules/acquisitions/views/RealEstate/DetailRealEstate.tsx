@@ -1,71 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { TextArea } from "semantic-ui-react";
-import { getRealEstate } from "../../../../apis/uabi";
-import {
-    IRealEstateAttributes,
-    IRealEstateResponse,
-    IRealEstatesResponse,
-} from "../../../../utils/interfaces/components.interfaces";
-import AdquisitionsFrom from "../../components/AdquisitionsForm";
+import { useSelector, useDispatch } from "react-redux";
 
-interface IProps {
+import { IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
+import AdquisitionsFrom from "../../components/AdquisitionsForm";
+import { actions } from "../../redux";
+
+interface IParams {
     id: string;
 }
 
 const DetailRealEstate = () => {
-    const { id } = useParams<IProps>();
-    const [realEstate, setRealEstate] = useState<IRealEstateAttributes>({
-        id: -1,
-        dependency: "",
-        destination_type: "",
-        accounting_account: "",
-        cost_center: "",
+    const { id } = useParams<IParams>();
+    const dispatch = useDispatch();
 
-        registry_number: "",
-        name: "",
-        description: "",
-
-        total_area: -1,
-        total_percentage: -1,
-        estate_type: "",
-        tipology: "",
-
-        project_id: -1,
-
-        audit_trail: {
-            created_by: "",
-            created_on: "",
-            updated_by: null,
-            updated_on: null,
-            updated_values: null,
-        },
-        status: -1,
-    });
-
-    const _getRealEstate = async () => {
-        let realEstateResponse: IRealEstateResponse | string = await getRealEstate(id);
-
-        if (typeof realEstateResponse !== "string") {
-            let tmpData = realEstateResponse.data;
-
-            setRealEstate(tmpData);
-        }
-    };
+    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
 
     useEffect(() => {
-        _getRealEstate();
+        dispatch(actions.getRealEstate(id));
     }, []);
-
-    const handleChange = (e: any) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
-
-        setRealEstate({
-            ...realEstate,
-            [e.target.name]: e.target.value,
-        });
-    };
 
     return (
         <section className="pt-5" id="texto-superior">

@@ -1,44 +1,21 @@
 import { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getProjects } from "../../../../apis/uabi";
 import { IProjectAttributes, IProjectsResponse } from "../../../../utils/interfaces/components.interfaces";
 import ItemProject from "../../components/ItemProject";
+import { useSelector, useDispatch } from "react-redux";
+import { actions } from "../../redux";
 
 interface IProps {
     name: string;
 }
 
 const Projects = () => {
-    const [projectsArray, setProjectsArray] = useState<IProjectAttributes[]>([
-        {
-            id: "",
-            name: "",
-            description: "",
-            dependency: "",
-            audit_trail: {
-                created_by: "",
-                created_on: "",
-                updated_by: null,
-                updated_on: null,
-                updated_values: null,
-            },
-            status: -1,
-        },
-    ]);
-
-    const _getProjects = async () => {
-        let projectsResponse: IProjectsResponse | string = await getProjects();
-
-        if (typeof projectsResponse !== "string") {
-            let tmpData = projectsResponse.data;
-
-            setProjectsArray(tmpData);
-        }
-    };
+    const dispatch = useDispatch();
+    const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
 
     useEffect(() => {
-        _getProjects();
+        dispatch(actions.getProjects());
     }, []);
 
     return (
@@ -161,8 +138,8 @@ const Projects = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {typeof projectsArray !== "undefined" &&
-                                        projectsArray.map((project) => {
+                                    {typeof projects !== "undefined" &&
+                                        projects.map((project) => {
                                             let creationDate = new Date(
                                                 parseFloat(project.audit_trail.created_on)
                                             ).toDateString();

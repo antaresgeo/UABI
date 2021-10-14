@@ -6,6 +6,8 @@ import {
     IProjectResponse,
     IProjectsResponse,
 } from "../../../../utils/interfaces/components.interfaces";
+import { useSelector, useDispatch } from "react-redux";
+import { actions } from "../../redux";
 
 interface IProps {
     id: string;
@@ -13,31 +15,20 @@ interface IProps {
 
 const DetailProject = () => {
     const { id } = useParams<IProps>();
+    const dispatch = useDispatch();
     const history = useHistory();
-    const [project, setProject] = useState<IProjectAttributes>({
-        id: "",
-        name: "",
-        description: "",
-        dependency: "",
-        audit_trail: {
-            created_by: "",
-            created_on: "",
-            updated_by: null,
-            updated_on: null,
-            updated_values: null,
-        },
-        status: -1,
-    });
 
-    const _getProject = async () => {
-        let projectResponse: IProjectResponse | string = await getProject(id);
+    const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
 
-        if (typeof projectResponse !== "string") {
-            let tmpData = projectResponse.data;
+    // const _getProject = async () => {
+    //     let projectResponse: IProjectResponse | string = await getProject(id);
 
-            setProject(tmpData);
-        }
-    };
+    //     if (typeof projectResponse !== "string") {
+    //         let tmpData = projectResponse.data;
+
+    //         setProject(tmpData);
+    //     }
+    // };
 
     const _updateProject = async () => {
         let res: any = await updateProject(
@@ -51,17 +42,17 @@ const DetailProject = () => {
     };
 
     useEffect(() => {
-        _getProject();
+        dispatch(actions.getProject(id));
     }, []);
 
     const handleChange = (e: any) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
+        const key = e.target.name;
 
-        setProject({
-            ...project,
-            [e.target.name]: e.target.value,
-        });
+        project[key] = e.target.value;
+        // setProject({
+        //     ...project,
+        //     [e.target.name]: e.target.value,
+        // });
     };
 
     return (
