@@ -8,6 +8,7 @@ import {
     IRealEstateResponse,
     IRealEstatesResponse,
 } from "../../../utils/interfaces/components.interfaces";
+import { service } from "./index";
 
 // PROJECTS
 // Services: GET
@@ -23,7 +24,7 @@ export const getProject = async (
         return res.data.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -35,7 +36,7 @@ export const getProjects = async (): Promise<IProjectAttributes[] | string> => {
         return res.data.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -56,7 +57,7 @@ export const createProject = async (
         return res.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -71,7 +72,7 @@ export const updateProject = async (data: any, id: number) => {
         return res;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -85,7 +86,7 @@ export const altStatusProject = async (id: number) => {
         return res;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -94,13 +95,11 @@ export const altStatusProject = async (id: number) => {
 const getRealEstates = async (): Promise<IRealEstateAttributes[] | string> => {
     try {
         let URI = `/real-estates/lists/`;
-        console.log("Works");
         let res: AxiosResponse<IRealEstatesResponse> = await http.get(URI);
-
         return res.data.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -117,7 +116,7 @@ export const getRealEstatesByProject = async (
         return res.data.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -133,7 +132,7 @@ export const getRealEstate = async (
         return res.data.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -148,7 +147,7 @@ export const createRealEstate = async (
         return res.data;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
     }
 };
 
@@ -165,7 +164,85 @@ export const updateRealEstate = async (data: any, id: number) => {
         return res;
     } catch (error) {
         console.error(error);
-        return "Error";
+        return Promise.reject("Error");
+    }
+};
+
+export const getIdFromLocation = async ({
+    city,
+    state,
+    country,
+    commune,
+    neighborhood,
+}) => {
+    try {
+        let URI = "/localizations/id/";
+        let res = await http.get(URI, {
+            params: { city, state, country, commune, neighborhood },
+        });
+        return res.data.data;
+    } catch (e) {
+        return Promise.reject("Error");
+    }
+};
+
+export const insertAddress = async ({
+    type,
+    number_one,
+    word_one,
+    number_two,
+    indicative,
+    user_id,
+    location_id,
+}) => {
+    try {
+        let URI = "/addresses/";
+        let res = await http.post(URI, {
+            type,
+            number_one,
+            word_one,
+            number_two,
+            indicative,
+            user_id,
+            location_id,
+        });
+        return res.data.data;
+    } catch (e) {
+        return Promise.reject("Error");
+    }
+};
+export const getAddressById = async (id) => {
+    try {
+        let URI = "/addresses/formated/";
+        let res = await http.get(URI, { params: { id } });
+        return res.data.data;
+    } catch (e) {
+        return Promise.reject("Error");
+    }
+};
+
+const getAddress = async (values) => {
+    try {
+        const res1 = await getIdFromLocation({
+            city: values.municipio,
+            state: values.departamento,
+            country: values.pais,
+            commune: values.commune,
+            neighborhood: values.barrio,
+        });
+        const res2 = await insertAddress({
+            type: values.tipo,
+            number_one: values.numero1,
+            word_one: values.letra1,
+            number_two: values.numero2,
+            indicative: values.indicativo,
+            user_id: "",
+            location_id: res1.id,
+        });
+        const res3 = await getAddressById(res2.id);
+        return res3.data.data;
+    } catch (e) {
+        return Promise.reject("Error");
     }
 };
 
@@ -180,6 +257,7 @@ const services = {
     getRealEstate,
     createRealEstate,
     updateRealEstate,
+    getAddress
 };
 
 export default services;
