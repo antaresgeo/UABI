@@ -38,7 +38,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
     });
 
     const getList = (querySearch: any) => {
-        locationhttp;
+        // locationhttp;
     };
 
     return (
