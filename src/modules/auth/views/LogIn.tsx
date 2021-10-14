@@ -105,11 +105,6 @@ export default function SignIn() {
                                 />
                             </Form.Field>
 
-                            <Form.Field className="container-flex-start">
-                                <Header size="small" color="blue" className="login-olvido-contraseña">
-                                    Validar código de verificación
-                                </Header>
-                            </Form.Field>
                             <Form.Field className="container-flex-end">
                                 {/* <Button
 									color='black'
