@@ -28,10 +28,11 @@ const DetailProjects = () => {
         registry_number: "",
         name: "",
         description: "",
+        patrimonial_value: 0,
 
         total_area: -1,
         total_percentage: -1,
-        estate_type: "",
+        zone: "",
         tipology: "",
 
         project_id: -1,

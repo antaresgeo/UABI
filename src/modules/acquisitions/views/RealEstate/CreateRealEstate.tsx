@@ -13,15 +13,22 @@ import AdquisitionsFrom from "../../components/AdquisitionsForm";
 import GeneralDataForm from "../../components/GeneralDataForm";
 import { actions } from "../../redux";
 import { createRealEstate } from "../../../../apis/uabi";
+import { useLocation, useParams, useRouteMatch } from "react-router-dom";
+import { qsToArray } from "../../../../utils";
 
 const RealEstate = () => {
+    const { search } = useLocation();
     const dispatch = useDispatch();
+    // const params = useParams();
+    let qsAsArray = qsToArray(search);
+
+    const [projectSelected, setProjectSelected] = useState({ flag: false, value: "" });
 
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     // const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
 
-    const [realEstate, setRealEstate] = useState({
+    const [realEstate, setRealEstate] = useState<IRealEstateAttributes>({
         dependency: "",
         destination_type: "",
         accounting_account: "",
@@ -30,12 +37,13 @@ const RealEstate = () => {
         registry_number: "",
         name: "",
         description: "",
+        patrimonial_value: -1,
         address: "",
         cbml: "",
 
         total_area: -1,
         total_percentage: -1,
-        estate_type: "",
+        zone: "",
         tipology: "",
 
         project_id: -1,
@@ -49,58 +57,55 @@ const RealEstate = () => {
         },
         status: -1,
     });
-    // const [projects, setProjects] = useState<IProjectAttributes[]>([
-    //     {
-    //         id: "",
-    //         name: "",
-    //         description: "",
-    //         dependency: "",
-    //         audit_trail: {
-    //             created_by: "",
-    //             created_on: "",
-    //             updated_by: null,
-    //             updated_on: null,
-    //             updated_values: null,
-    //         },
-    //         status: -1,
-    //     },
-    // ]);
 
     const _createRealEstate = async () => {
-        const response: any = await createRealEstate(realEstate);
+        // const response: any = await createRealEstate(realEstate);
 
-        await alert(response.message);
-        console.log(response);
-        realEstates.push(realEstate);
-        cleanInputs();
-        dispatch(actions.getRealEstates());
+        // await alert(response.message);
+        // console.log(response);
+        // realEstates.push(realEstate);
+        // cleanInputs();
+        // dispatch(actions.getRealEstates());
         // _getRealEstates();
+        console.log(realEstate);
     };
 
     const cleanInputs = () => {
-        // setRealEstate({
-        //     dependency: "",
-        //     destination_type: "",
-        //     accounting_account: "",
-        //     cost_center: "",
-        //     registry_number: "",
-        //     name: "",
-        //     description: "",
-        //     address: "",
-        //     cbml: "",
-        //     total_area: -1,
-        //     total_percentage: -1,
-        //     estate_type: "",
-        //     tipology: "",
-        //     project_id: -1,
-        // });
+        setRealEstate({
+            dependency: "",
+            destination_type: "",
+            accounting_account: "",
+            cost_center: "",
+            registry_number: "",
+            name: "",
+            description: "",
+            patrimonial_value: -1,
+
+            address: "",
+            cbml: "",
+            total_area: -1,
+            total_percentage: -1,
+            zone: "",
+            tipology: "",
+            project_id: -1,
+        });
     };
 
     const handleChange = (e: any) => {
-        setRealEstate({
-            ...realEstate,
-            [e.target.name]: e.target.value,
-        });
+        // if (e.target.type === 'radio')
+        // setRealEstate({...realEstate, zone: e.target.name})
+        if (projectSelected.flag && e.target.name === "project_id") projectSelected.flag = false;
+
+        if (e.target.type === "number")
+            setRealEstate({
+                ...realEstate,
+                [e.target.name]: parseInt(e.target.value),
+            });
+        else
+            setRealEstate({
+                ...realEstate,
+                [e.target.name]: e.target.value,
+            });
     };
 
     // Prints
@@ -117,6 +122,15 @@ const RealEstate = () => {
     useEffect(() => {
         // _getProjects();
         dispatch(actions.getProjects());
+
+        qsAsArray.map(async (qs) => {
+            if (qs.key === "project_id") {
+                console.log(qs.key === "project_id");
+                await setProjectSelected({ flag: true, value: qs.value });
+
+                setRealEstate({ ...realEstate, project_id: parseInt(qs.value) });
+            }
+        });
     }, []);
 
     useEffect(() => {
@@ -184,21 +198,14 @@ const RealEstate = () => {
                                                 aria-label="Default select example"
                                                 name="project_id"
                                                 onChange={handleChange}
+                                                defaultValue={projectSelected.flag && projectSelected.value}
                                             >
                                                 <option value="" selected disabled hidden>
                                                     -- Seleccione Proyecto --
                                                 </option>
                                                 {projects.map((project) => {
                                                     const { name, id } = project;
-                                                    console.log(name.toUpperCase());
-                                                    console.log(id);
-
-                                                    return (
-                                                        <option value={id}>
-                                                            {name.toUpperCase()}
-                                                            {/* <div className="container">{name}</div> */}
-                                                        </option>
-                                                    );
+                                                    return <option value={id}>{name.toUpperCase()}</option>;
                                                 })}
                                             </select>
                                         </div>

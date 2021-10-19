@@ -226,7 +226,7 @@ const DetailRealEstate = () => {
                                                     type="radio"
                                                     id="flexRadioDefault2"
                                                     name="estate_type"
-                                                    value={realEstate.estate_type}
+                                                    value={realEstate.zone}
                                                     disabled
                                                     checked
                                                 />
@@ -241,7 +241,7 @@ const DetailRealEstate = () => {
                                                     type="radio"
                                                     id="flexRadioDefault1"
                                                     name="estate_type"
-                                                    value={realEstate.estate_type}
+                                                    value={realEstate.zone}
                                                     disabled
                                                 />
                                                 <label className="form-check-label" htmlFor="flexRadioDefault1">
@@ -384,11 +384,11 @@ const DetailRealEstate = () => {
                                             </div>
                                         </div>
                                     </div>
-                                        <div className='d-flex justify-content-end mt-5'>
-                                            <button type='submit' className='btn btn-success btn-lg text-uppercase'>
-                                                exportar a sap
-                                            </button>
-                                        </div>
+                                    <div className="d-flex justify-content-end mt-5">
+                                        <button type="submit" className="btn btn-success btn-lg text-uppercase">
+                                            exportar a sap
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
