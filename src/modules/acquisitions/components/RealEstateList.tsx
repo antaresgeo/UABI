@@ -6,8 +6,9 @@ import { IRealEstateAttributes } from "../../../utils/interfaces/components.inte
 interface RealEstateListProps {
     realEstates: IRealEstateAttributes[];
     withProject?: boolean;
+    change_page?: (page: number, pageSize?: number) => void;
 }
-const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject }) => {
+const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, change_page }) => {
     const table_columns = [
         {
             title: "ID",
@@ -97,11 +98,12 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject }) =
             ],
         },
     ];
-    return <Table columns={table_columns} items={realEstates} with_pagination count={10} change_page={() => {}} />;
+    return <Table columns={table_columns} items={realEstates} with_pagination count={10} change_page={change_page} />;
 };
 
 RealEstateList.defaultProps = {
     withProject: false,
+    change_page: () => {}
 };
 
 export default RealEstateList;

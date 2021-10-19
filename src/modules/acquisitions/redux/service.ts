@@ -34,7 +34,6 @@ export const getProjects = async (): Promise<IProjectAttributes[] | string> => {
     try {
         let URI = `/projects/lists`;
         let res: AxiosResponse<IProjectsResponse> = await http.get(URI);
-
         return res.data.data;
     } catch (error) {
         console.error(error);
@@ -106,10 +105,20 @@ export const deleteProject = async (id: number) => {
 
 // REAL ESTATES
 // Services: GET
-const getRealEstates = async (): Promise<IRealEstateAttributes[] | string> => {
+const getRealEstates = async ({
+    page = 1,
+    pageSize = 10,
+    q = null,
+}): Promise<IRealEstateAttributes[] | string> => {
     try {
         let URI = `/real-estates/lists/`;
-        let res: AxiosResponse<IRealEstatesResponse> = await http.get(URI);
+        let res: AxiosResponse<IRealEstatesResponse> = await http.get(URI, {
+            params: {
+                page,
+                pageSize,
+                ...(q ? { q } : {}),
+            },
+        });
         return res.data.data;
     } catch (error) {
         console.error(error);

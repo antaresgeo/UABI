@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { actions } from "./../../redux";
 import { IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
@@ -8,12 +8,20 @@ import RealEstateList from "../../components/RealEstateList";
 const RealEstates = () => {
     const dispatch = useDispatch();
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
-
+    const [query, set_query] = useState<string>(null);
+    const [page_size, set_pageSize] = useState<number>(10);
     useEffect(() => {
-        dispatch(actions.getRealEstates());
+        dispatch(actions.getRealEstates({}));
     }, []);
 
-    console.log(realEstates);
+    const filter = () => {
+        dispatch(actions.getRealEstates({ page: 1, q: query }));
+    };
+
+    const change_page = (page, pageSize) => {
+        dispatch(actions.getRealEstates({ page,  pageSize, q: query }));
+    };
+
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
@@ -30,28 +38,28 @@ const RealEstates = () => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="Nombre / Código"
-                                                aria-label="Nombre / Código"
+                                                placeholder="Matricula"
+                                                aria-label="Matricula"
                                                 aria-describedby="button-addon2"
+                                                value={query}
+                                                onChange={(e) => {
+                                                    set_query(e.target.value)
+                                                }}
                                             />
-                                            <span className="input-group-text">
+                                            <span className="input-group-text" onClick={filter}>
                                                 <span>
-                                                    <i className="fa fa-search" aria-hidden="true"/>
+                                                    <i className="fa fa-search" aria-hidden="true" />
                                                 </span>
                                             </span>
                                         </div>
                                     </div>
-                                    <Link
-                                        to=""
-                                        className="ml-4"
-                                        name="Filtro de búsqueda"
-                                        avatar={false}
-                                        icon={<i className="fa fa-filter" aria-hidden="true" />}
-                                    />
+                                    {/*<div style={{ fontSize: 16, color: "#1FAEEF" }} onClick={filter}>*/}
+                                    {/*    <i className="fa fa-filter" aria-hidden="true" />*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
                         </form>
-                        <RealEstateList realEstates={realEstates} withProject />
+                        <RealEstateList realEstates={realEstates} withProject change_page={change_page}/>
                     </Card>
                 </div>
             </div>

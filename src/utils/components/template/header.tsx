@@ -1,16 +1,10 @@
 import React, { FC, useContext } from "react";
-// import Menu from "antd/lib/menu";
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    // UploadOutlined,
-    // UserOutlined,
-    // VideoCameraOutlined,
-} from "@ant-design/icons";
-import { TemplateConstext } from "./template_context";
+import { MenuFoldOutlined, MenuUnfoldOutlined, PicRightOutlined, BellOutlined } from "@ant-design/icons";
+import { TemplateContext } from "./template_context";
+import  Badge  from "antd/lib/badge";
 
 const Header: FC<{ collapsible: boolean }> = ({ collapsible }) => {
-    const context = useContext(TemplateConstext);
+    const context = useContext(TemplateContext);
     return (
         <div className="bar">
             <div className="d-flex justify-content-between align-items-center">
@@ -18,22 +12,21 @@ const Header: FC<{ collapsible: boolean }> = ({ collapsible }) => {
                     {collapsible &&
                         React.createElement(context.menu_collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                             className: "trigger",
-                            onClick: context.toggle_collapsed,
+                            onClick: context.menu_toggle,
                         })}
                 </span>
                 <span className="d-flex align-items-center">
                     <span>
-                        Hola, <b>Andrea Canasteros Marulanda</b>
+                        Hola, <b>Luisa María Sánchez Cadavid</b>
                     </span>
-                    <span
-                        className="d-inline-block mx-2"
-                        onClick={() => {
-                            // history.replace("/auth/signin");
-                            // window.location.reload();
-                        }}
-                    >
-                        Salir
-                    </span>
+                    <Badge count={100} >
+                        <BellOutlined  style={{ fontSize: 22, marginLeft: 16, color: "#FF8900" }}/>
+                    </Badge>
+                    <PicRightOutlined
+                        onClick={context.drawer_open}
+                        style={{ fontSize: 22, marginLeft: 22, color: "#1faeef" }}
+                    />
+                    {/*<button onClick={context.drawer_open}>Open</button>*/}
                 </span>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { FC, useContext } from "react";
 import Layout from "antd/lib/layout";
-import { TemplateConstext } from "./template_context";
+import { TemplateContext } from "./template_context";
+import Drawer from "antd/lib/drawer";
 import AppSider from "./sider";
 import AppHeader from "./header";
 import { Link } from "react-router-dom";
@@ -12,7 +13,7 @@ interface ITemplate {
 
 const Template: FC<ITemplate> = ({ children, breadcrumbs }) => {
     const { Header, Sider, Content } = Layout;
-    const context = useContext(TemplateConstext);
+    const context = useContext(TemplateContext);
     const collapsible = false; // TO DO: verificar si esto debe ser collapsible
     const sider_ops = {
         width: 280,
@@ -26,34 +27,58 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs }) => {
             : {}),
     };
     return (
-        <Layout className="w-100 h-100">
-            <Sider {...sider_ops}>
-                <AppSider width={sider_ops.width} />
-            </Sider>
-            <Layout className="site-layout">
-                <Header className="uabi-header" style={{ padding: 0 }}>
-                    <AppHeader collapsible={collapsible} />
-                </Header>
-                <Content>
-                    <div className="d-flex flex-column w-100">
-                        <div
-                            className="d-flex justify-content-between align-items-center bar"
-                            style={{
-                                backgroundColor: "#6DA3FC",
-                                padding: "4px 24px",
-                                color: "white",
-                                boxShadow: "inset 0px 5px 3px #00000015",
-                            }}
-                        >
-                            <Breadcrumbs breadcrumbs={breadcrumbs} />
+        <>
+            <Layout className="w-100 h-100">
+                <Sider {...sider_ops}>
+                    <AppSider width={sider_ops.width} />
+                </Sider>
+                <Layout className="site-layout">
+                    <Header className="uabi-header" style={{ padding: 0 }}>
+                        <AppHeader collapsible={collapsible} />
+                    </Header>
+                    <Content>
+                        <div className="d-flex flex-column w-100">
+                            <div
+                                className="d-flex justify-content-between align-items-center bar"
+                                style={{
+                                    backgroundColor: "#6DA3FC",
+                                    padding: "4px 24px",
+                                    color: "white",
+                                    boxShadow: "inset 0px 5px 3px #00000015",
+                                }}
+                            >
+                                <Breadcrumbs breadcrumbs={breadcrumbs} />
+                            </div>
+                            <div className="content uabi-main-content" style={{ overflow: "auto" }}>
+                                {children}
+                            </div>
                         </div>
-                        <div className="content uabi-main-content" style={{ overflow: "auto" }}>
-                            {children}
-                        </div>
-                    </div>
-                </Content>
+                    </Content>
+                </Layout>
             </Layout>
-        </Layout>
+            <Drawer placement="right" onClose={context.drawer_close} visible={context.drawer_collapsed} width={300}>
+                <div
+                    className="d-flex justify-content-center align-items-center text-white"
+                    style={{
+                        backgroundColor: "#1FAEEF",
+                        borderRight: "1px solid #2ea1fe",
+                        height: 180,
+                        letterSpacing: "-0.4px",
+                    }}
+                >
+                    <div className="d-flex align-start flex-column">
+                        <span style={{ fontWeight: "bold", fontSize: 22 }}>Luisa María</span>
+                        <span style={{ fontWeight: "bold", fontSize: 16, lineHeight: "12px" }}>Sánchez Cadavid</span>
+                        <span style={{ fontWeight: 400, fontSize: 16, lineHeight: "40px" }}>C.C. 1026 399 098</span>
+                    </div>
+
+                </div>
+                <div className="drawer-content"></div>
+                <div className="text-danger p-4" style={{ outline: " 1px solid #ccc", textAlign: "center" }}>
+                    CERRAR SESIÓN
+                </div>
+            </Drawer>
+        </>
     );
 };
 
