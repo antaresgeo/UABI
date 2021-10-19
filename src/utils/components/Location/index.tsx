@@ -1,13 +1,26 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { locationhttp } from "../../../config/axios_instances";
+import { getList } from "./service";
+import {
+    ICityAddressAttributes,
+    ICommuneAddressAttributes,
+    ICountryAddressAttributes,
+    INeighborhoodAddressAttributes,
+    IStateAddressAttributes,
+} from "../../interfaces";
 
 interface LocationProps {
     modalClose?: (values, callback) => void;
 }
 
 const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
+    const [countries, setCountries] = useState<ICountryAddressAttributes[]>([{ country_code: "", country: "" }]);
+    const [states, setStates] = useState([]);
+    const [city, setCity] = useState([]);
+    const [commune, setCommune] = useState([]);
+    const [neighborhood, setNeighborhood] = useState([]);
+
     const initialValues = {
         pais: "",
         departamento: "",
@@ -37,9 +50,16 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
         indicativo: Yup.string().required("obligatorio"),
     });
 
-    const getList = (querySearch: any) => {
-        // locationhttp;
-    };
+    useEffect(() => {
+        (async () => {
+            let arrCountries: any = await getList("country");
+            let arrStates: any = await getList("state");
+            let arrCity: any = await getList("city");
+            let arrCommune: any = await getList("commune");
+            let arrNeighborhood: any = await getList("neighborhood");
+            setCountries(arrCountries);
+        })();
+    }, []);
 
     return (
         <Formik
@@ -67,24 +87,11 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     <option value="" disabled>
                                         --País--
                                     </option>
-                                    <option key="co" value="Colombia">
-                                        Colombia
-                                    </option>
-                                    <option key="ve" value="Venezuela">
-                                        Venezuela
-                                    </option>
-                                    <option key="cr" value="Costa Rica">
-                                        Costa Rica
-                                    </option>
-                                    <option key="pa" value="Panamá">
-                                        Panamá
-                                    </option>
-                                    <option key="br" value="Brasíl">
-                                        Brasil
-                                    </option>
-                                    <option key="ec" value="Ecuador">
-                                        Ecuador
-                                    </option>
+                                    {countries.length >= 1 &&
+                                        countries[0].country !== "" &&
+                                        countries.map((country) => (
+                                            <option value={country.country_code}>{country.country}</option>
+                                        ))}
                                 </Field>
 
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>

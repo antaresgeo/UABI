@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
@@ -37,5 +38,19 @@ export const request_dispatch =
             });
     };
 
+export const setTitle = (title: string) => (document.title = title);
 
-export const setTitle = (title: string) => document.title = title;
+export const qsToArray = (qs: string) => {
+    let qsAsArray = [];
+
+    let search = qs.split("?").pop().split("&");
+    search.map(async (_search) => {
+        let tmp = _search.split("=");
+
+        await qsAsArray.push({
+            key: tmp[0],
+            value: tmp[1],
+        });
+    });
+    return qsAsArray;
+};
