@@ -10,7 +10,7 @@ import {
     IRealEstateResponse,
     IRealEstatesResponse,
 } from "../../../utils/interfaces/components.interfaces";
-import { locationhttp } from "./../../../config/axios_instances";
+import { location_http } from "./../../../config/axios_instances";
 
 // PROJECTS
 // Services: GET
@@ -227,7 +227,7 @@ export const insertAddress = async ({
 export const getAddressById = async (id) => {
     try {
         let URI = "/addresses/formated/";
-        let res = await locationhttp.get(URI, { params: { id } });
+        let res = await location_http.get(URI, { params: { id } });
         return res.data.data;
     } catch (e) {
         return Promise.reject("Error");

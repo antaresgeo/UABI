@@ -307,7 +307,7 @@ const DetailRealEstate = () => {
                                         </div>
                                         <div className="col-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label">
-                                                Importe Contabilidad
+                                                Importe Contable
                                             </label>
                                             <input
                                                 type="number"
@@ -315,7 +315,6 @@ const DetailRealEstate = () => {
                                                 id="name"
                                                 name="name"
                                                 // value={realEstate.audit_trail?.created_by}
-                                                disabled
                                             />
                                         </div>
                                         <div className="col-3">
@@ -341,8 +340,8 @@ const DetailRealEstate = () => {
                                                 className="form-control"
                                                 id="name"
                                                 name="name"
+                                                // ES UNA LISTA
                                                 // value={realEstate.audit_trail?.created_by}
-                                                disabled
                                             />
                                         </div>
                                         <TextArea className="col-12" placeholder="Comentarios y anotaciones" />

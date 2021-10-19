@@ -7,6 +7,7 @@ import { Form, Image, Header, Input, Button, Grid, Icon, SemanticICONS } from "s
 import loginimage from "./../../../utils/assets/img/login.jpeg";
 import logo from "./../../../utils/assets/img/escudoAlcaldia.png";
 import { signIn } from "../../../apis/authentification";
+import { authenticationUme } from "../../../utils";
 
 export default function SignIn() {
     const history = useHistory();
@@ -18,22 +19,23 @@ export default function SignIn() {
     const [iconVisibility, setIconVisibility] = useState<SemanticICONS>("eye");
 
     async function ingresarUsuario() {
-        try {
-            let res: AxiosResponse<any> | any = await signIn(idusuario, contraseña);
-            console.log(res);
+        // try {
+        //     let res: AxiosResponse<any> | any = await signIn(idusuario, contraseña);
+        //     console.log(res);
 
-            if (res.status === 200) {
-                localStorage.setItem("token", res.data);
+        //     if (res.status === 200) {
+        //         localStorage.setItem("token", res.data);
 
-                history.push("/");
-                window.location.reload();
-            } else {
-                console.error(res[0]);
-                await alert(res[0].response.data.mensaje);
-            }
-        } catch (error) {
-            console.error(error);
-        }
+        //         history.push("/");
+        //         window.location.reload();
+        //     } else {
+        //         console.error(res[0]);
+        //         await alert(res[0].response.data.mensaje);
+        //     }
+        // } catch (error) {
+        //     console.error(error);
+        // }
+        await authenticationUme();
     }
 
     const handleAltVisibility = () => {
