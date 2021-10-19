@@ -18,8 +18,8 @@ const Home = () => {
                 <section id="cards">
                     <div className="container">
                         <div className="row justify-content-center">
-                            <Card name="Adquisición" path="/acquisitions/real-estates/" />
-                            <Card name="UABI" path="/acquisitions/projects/" />
+                            <Card name="Adquisición" path="/acquisitions/" view="acquisitions" />
+                            <Card name="UABI" path="/" />
                         </div>
                     </div>
                 </section>
