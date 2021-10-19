@@ -21,6 +21,7 @@ const Route: FC<RouteWithSubRoutesProps> = ({
     location,
     lazy,
     template,
+    breadcrumbs,
     ...props
 }) => {
     const has_access = get_can_access(can_access, props);
@@ -38,7 +39,7 @@ const Route: FC<RouteWithSubRoutesProps> = ({
         if (is_private) {
             const Template = template
             if (has_access) {
-                return template? <Template>{cp}</Template>: cp;
+                return template? <Template breadcrumbs={breadcrumbs}>{cp}</Template>: cp;
             } else {
                 return compute_redirect(privateRedirect, location);
             }

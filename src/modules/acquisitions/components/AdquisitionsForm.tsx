@@ -2,6 +2,7 @@ import React, { FC, Fragment, useState } from "react";
 import { Table } from "semantic-ui-react";
 import CheckboxGroup from "react-checkbox-group";
 import { IAuditTrail } from "../../../utils/interfaces/components.interfaces";
+import AcquisitionList from "./AcquisitionList";
 
 interface AdquisitionsItf {
     id?: number;
@@ -27,8 +28,8 @@ interface AdquisitionsItf {
     audit_trail?: IAuditTrail;
 }
 
-const AdquisitionsFrom: FC<any> = ({ type }) => {
-    const inicial_values: AdquisitionsItf = {
+const AcquisitionsFrom: FC<any> = ({ type }) => {
+    const initial_values: AdquisitionsItf = {
         acquisition_type: "",
         active_type: [],
         title_type: "",
@@ -44,39 +45,29 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
 
         real_estate_id: 0,
     };
-    const [adquisitions, set_adquisitions] = useState<AdquisitionsItf[]>([]);
-    // console.log(adquisitions);
-    const [adquisition, set_adquisition] = useState<AdquisitionsItf>(inicial_values);
+    const [acquisitions, set_acquisitions] = useState<AdquisitionsItf[]>([]);
+    const [acquisition, set_acquisition] = useState<AdquisitionsItf>(initial_values);
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
         // console.log("handleChange", { name, value });
         const data = {
-            ...adquisition,
+            ...acquisition,
             [name]: value,
         };
-        set_adquisition(data);
+        set_acquisition(data);
     };
 
-    const addAdquisition = (new_adquisition: AdquisitionsItf) => {
-        set_adquisitions([...adquisitions, new_adquisition]);
+    const addAcquisition = (new_acquisition: AdquisitionsItf) => {
+        set_acquisitions([...acquisitions, new_acquisition]);
     };
 
-    const clearAdquisition = () => {
-        set_adquisition(inicial_values);
+    const clearAcquisition = () => {
+        set_acquisition(initial_values);
     };
 
     return (
-        <div
-            className="row py-3 my-3"
-            style={{
-                backgroundColor: "#f7f7f7",
-                borderRadius: 15,
-                border: "1px solid",
-            }}
-        >
-            <h5>Información de Adquisición</h5>
-
+        <div className="row">
             {type !== "view" && (
                 <div className="col-6">
                     <div className="row">
@@ -89,7 +80,7 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 aria-label="acquisition_type"
                                 name="acquisition_type"
                                 onChange={handleChange}
-                                // value={adquisition.acquisition_type}
+                                value={acquisition.acquisition_type}
                             >
                                 <option value="0" selected disabled hidden>
                                     -- Seleccione Tipo de Adquisición --
@@ -110,9 +101,9 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
 
                             <CheckboxGroup
                                 name="active_type"
-                                value={adquisition.active_type || []}
+                                value={acquisition.active_type || []}
                                 onChange={(data) => {
-                                    set_adquisition({ ...adquisition, active_type: data.length > 0 ? data : ["1"] });
+                                    set_acquisition({ ...acquisition, active_type: data.length > 0 ? data : ["1"] });
                                 }}
                             >
                                 {(Checkbox) => (
@@ -142,7 +133,7 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 aria-label="Default select example"
                                 name="title_type"
                                 onChange={handleChange}
-                                value={adquisition.title_type}
+                                value={acquisition.title_type}
                             >
                                 <option value="None">-- Seleccione Tipo de Título --</option>
                                 <option value="Acta">Acta</option>
@@ -151,10 +142,10 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                             </select>
                         </div>
                         <div className="col-6">
-                            {adquisition.title_type !== "None" && (
+                            {acquisition.title_type !== "None" && (
                                 <div className="mb-3">
                                     <label htmlFor="formFile" className="form-label">
-                                        Documento de {adquisition.title_type}
+                                        Documento de {acquisition.title_type}
                                     </label>
                                     <input className="form-control" type="file" id="title_type_document_id" />
                                     {/*<div id='emailHelp' className='form-text'>*/}
@@ -174,7 +165,7 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 aria-describedby="act_number"
                                 name="act_number"
                                 onChange={handleChange}
-                                value={adquisition.act_number || ""}
+                                value={acquisition.act_number || ""}
                             />
                         </div>
                         <div className="col-6">
@@ -188,11 +179,11 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 aria-describedby="acquisition_value"
                                 name="acquisition_value"
                                 onChange={handleChange}
-                                value={adquisition.act_value || ""}
+                                value={acquisition.act_value || ""}
                             />
                         </div>
                         <div className="col-6">
-                            {adquisition.active_type?.includes("1") && (
+                            {acquisition.active_type?.includes("1") && (
                                 <>
                                     <label htmlFor="exampleInputEmail1" className="form-label">
                                         Area Total Lote (m2)
@@ -204,15 +195,15 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                         aria-describedby="plot_area"
                                         name="plot_area"
                                         onChange={handleChange}
-                                        value={adquisition.plot_area || ""}
+                                        value={acquisition.plot_area || ""}
                                     />
                                 </>
                             )}
                         </div>
                         <div className="col-6">
-                            {(adquisition.active_type?.includes("2") ||
-                                adquisition.active_type?.includes("3") ||
-                                adquisition.active_type?.includes("4")) && (
+                            {(acquisition.active_type?.includes("2") ||
+                                acquisition.active_type?.includes("3") ||
+                                acquisition.active_type?.includes("4")) && (
                                 <>
                                     <label htmlFor="exampleInputEmail1" className="form-label">
                                         Area Construccion (m2)
@@ -224,39 +215,39 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                         aria-describedby="construction_area"
                                         name="construction_area"
                                         onChange={handleChange}
-                                        value={adquisition.construction_area || ""}
+                                        value={acquisition.construction_area || ""}
                                     />
                                 </>
                             )}
                         </div>
                         {/* {type === "edit" && <div className='col-12'>
-                    <div className='mb-3'>
-                        <label htmlFor='formFile' className='form-label'>
-                           Previacion
-                        </label>
-                        <input
-                            className='form-control'
-                            type='file'
-                            id='formFile'
-                        />
-                        <div id='emailHelp' className='form-text'>
-                           Escritura.pdf
-                        </div>
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='formFile' className='form-label'>
-                           Avaluo
-                        </label>
-                        <input
-                            className='form-control'
-                            type='file'
-                            id='formFile'
-                        />
-                        <div id='emailHelp' className='form-text'>
-                           Escritura.pdf
-                        </div>
-                    </div>
-                </div> } */}
+                                <div className='mb-3'>
+                                    <label htmlFor='formFile' className='form-label'>
+                                       Previacion
+                                    </label>
+                                    <input
+                                        className='form-control'
+                                        type='file'
+                                        id='formFile'
+                                    />
+                                    <div id='emailHelp' className='form-text'>
+                                       Escritura.pdf
+                                    </div>
+                                </div>
+                                <div className='mb-3'>
+                                    <label htmlFor='formFile' className='form-label'>
+                                       Avaluo
+                                    </label>
+                                    <input
+                                        className='form-control'
+                                        type='file'
+                                        id='formFile'
+                                    />
+                                    <div id='emailHelp' className='form-text'>
+                                       Escritura.pdf
+                                    </div>
+                                </div>
+                            </div> } */}
                         <div className="col-6">
                             <label htmlFor="exampleInputEmail1" className="form-label">
                                 Porcentaje Adquirido
@@ -268,7 +259,7 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 aria-describedby="acquired_percentage"
                                 name="acquired_percentage"
                                 onChange={handleChange}
-                                value={adquisition.acquired_percentage || ""}
+                                value={acquisition.acquired_percentage || ""}
                             />
                             <div id="emailHelp" className="form-text"></div>
                         </div>
@@ -282,7 +273,7 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 id="seller"
                                 name="seller"
                                 onChange={handleChange}
-                                value={adquisition.seller}
+                                value={acquisition.seller}
                             >
                                 <option value="1">Alexander</option>
                                 <option value="2">Sergio</option>
@@ -290,20 +281,20 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                             </select>
                         </div>
                         {/* <div className='col-3'>
-                    <label htmlFor='form-select' className='form-label'>
-                        Comprador
-                    </label>
-                    <select
-                        className='form-select'
-                        aria-label='Default select example'
-                    >
-                        <option value='1' selected>
-                            Alexander
-                        </option>
-                        <option value='2'>Sergio</option>
-                        <option value='3'>Ximena</option>
-                    </select>
-                </div> */}
+                            <label htmlFor='form-select' className='form-label'>
+                                Comprador
+                            </label>
+                            <select
+                                className='form-select'
+                                aria-label='Default select example'
+                            >
+                                <option value='1' selected>
+                                    Alexander
+                                </option>
+                                <option value='2'>Sergio</option>
+                                <option value='3'>Ximena</option>
+                            </select>
+                        </div> */}
 
                         <div className="col-6">
                             <label htmlFor="form-select" className="form-label">
@@ -315,7 +306,7 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 id="entity_type"
                                 name="entity_type"
                                 onChange={handleChange}
-                                value={adquisition.entity_type}
+                                value={acquisition.entity_type}
                             >
                                 <option value="1">Notaría</option>
                                 <option value="2">Sergio</option>
@@ -333,7 +324,7 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 aria-describedby="entity_number"
                                 name="entity_number"
                                 onChange={handleChange}
-                                value={adquisition.entity_number || ""}
+                                value={acquisition.entity_number || ""}
                             />
                             <div id="emailHelp" className="form-text"></div>
                         </div>
@@ -356,10 +347,9 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 type="button"
                                 className="btn btn-primary mr-3"
                                 onClick={() => {
-                                    console.log("add adquisition", adquisition);
-
-                                    addAdquisition(adquisition);
-                                    clearAdquisition();
+                                    console.log("add adquisition", acquisition);
+                                    addAcquisition(acquisition);
+                                    clearAcquisition();
                                 }}
                             >
                                 Agregar Adquisición
@@ -370,65 +360,11 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
             )}
             <div className={`col-${type !== "view" ? 6 : 12}`}>
                 <div className="row">
-                    <Table celled>
-                        <Table.Header>
-                            <Table.Row>
-                                <Table.HeaderCell>Tipo de Adquisición</Table.HeaderCell>
-                                <Table.HeaderCell>No Acto administrativo</Table.HeaderCell>
-                                <Table.HeaderCell>Valor de adquisición</Table.HeaderCell>
-                                {type === "view" && (
-                                    <Fragment>
-                                        <Table.HeaderCell>Tipo de Título</Table.HeaderCell>
-                                        <Table.HeaderCell>Tipo de activo</Table.HeaderCell>
-                                        <Table.HeaderCell>Vendedor</Table.HeaderCell>
-                                        <Table.HeaderCell>Porcentaje Adquirido</Table.HeaderCell>
-                                        <Table.HeaderCell>Area Total</Table.HeaderCell>
-                                        <Table.HeaderCell>Tipo de Entidad</Table.HeaderCell>
-                                        <Table.HeaderCell>No. Entidad</Table.HeaderCell>
-                                        <Table.HeaderCell>Dirección</Table.HeaderCell>
-                                    </Fragment>
-                                )}
-                            </Table.Row>
-                        </Table.Header>
-
-                        <Table.Body>
-                            {adquisitions.map((row) => {
-                                return (
-                                    <Table.Row>
-                                        <Table.Cell>{row.acquisition_type}</Table.Cell>
-                                        <Table.Cell>{row.act_number}</Table.Cell>
-                                        <Table.Cell>{row.act_value}</Table.Cell>
-                                        {type === "view" && (
-                                            <Fragment>
-                                                <Table.Cell>{row.title_type}</Table.Cell>
-                                                <Table.Cell>{row.active_type?.join(", ")}</Table.Cell>
-                                                <Table.Cell>{row.seller}</Table.Cell>
-                                                <Table.Cell>{row.acquired_percentage}</Table.Cell>
-                                                <Table.Cell>{row.plot_area}</Table.Cell>
-                                                <Table.Cell>{row.entity_type}</Table.Cell>
-                                                <Table.Cell>{row.entity_number}</Table.Cell>
-                                                <Table.Cell>{row.address}</Table.Cell>
-                                            </Fragment>
-                                        )}
-                                    </Table.Row>
-                                );
-                            })}
-                            {adquisitions.length === 0 && type !== "view" && (
-                                <Table.Row>
-                                    <Table.Cell colSpan="3">No se encontraron adquisiciónes</Table.Cell>
-                                </Table.Row>
-                            )}
-                            {adquisitions.length === 0 && type === "view" && (
-                                <Table.Row>
-                                    <Table.Cell colSpan="11">No se encontraron adquisiciónes</Table.Cell>
-                                </Table.Row>
-                            )}
-                        </Table.Body>
-                    </Table>
+                    <AcquisitionList acquisitions={acquisitions} type={type} />
                 </div>
             </div>
         </div>
     );
 };
 
-export default AdquisitionsFrom;
+export default AcquisitionsFrom;

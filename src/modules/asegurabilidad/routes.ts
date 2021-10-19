@@ -1,4 +1,4 @@
-import store from "../../config/store";
+// import store from "../../config/store";
 import { IRoute } from "../../utils/components/app_router/custom_types";
 import { Asegurabilidad } from "./views";
 

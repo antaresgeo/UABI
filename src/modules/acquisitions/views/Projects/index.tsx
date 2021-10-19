@@ -1,20 +1,98 @@
-import { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { IProjectAttributes, IProjectsResponse } from "../../../../utils/interfaces/components.interfaces";
-import ItemProject from "../../components/ItemProject";
+import { useEffect/*, useState*/ } from "react";
+import { IProjectAttributes/*, IProjectsResponse*/ } from "../../../../utils/interfaces/components.interfaces";
+// import ItemProject from "../../components/ItemProject";
 import { useSelector, useDispatch } from "react-redux";
 import { actions } from "../../redux";
+import { Link, Card, Table as UiTable } from "../../../../utils/ui";
+import { altStatusProject } from "../../../../apis/uabi";
+import { formatDate } from "../../../../utils";
 
-interface IProps {
-    name: string;
-    tumbh: number;
-}
+const table_columns = [
+    {
+        title: "ID",
+        dataIndex: "id",
+        align: "center" as "center",
+    },
+    {
+        title: "Nombre",
+        dataIndex: "name",
+        align: "center" as "center",
+    },
+    {
+        title: "Dependencia",
+        dataIndex: "dependency",
+        align: "center" as "center",
+    },
+    {
+        title: "Fecha Creación",
+        dataIndex: "audit_trail",
+        align: "center" as "center",
+        render: (dates) => formatDate(dates?.created_on),
+    },
+    {
+        title: "Creado por",
+        dataIndex: "audit_trail.created_by",
+        align: "center" as "center",
+    },
+    {
+        title: "Acciones",
+        fixed: true,
+        children: [
+            {
+                title: "Ver",
+                dataIndex: "id",
+                align: "center" as "center",
+                render: (id) => {
+                    return (
+                        <Link
+                            to={`/acquisitions/projects/${id}/`}
+                            name=""
+                            avatar={false}
+                            icon={<i className="fa fa-eye" aria-hidden="true" />}
+                        />
+                    );
+                },
+            },
+            {
+                title: "Editar",
+                dataIndex: "id",
+                align: "center" as "center",
+                render: (id) => {
+                    return (
+                        <Link
+                            to={`/acquisitions/projects/edit/${id}/`}
+                            name=""
+                            avatar={false}
+                            icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                        />
+                    );
+                },
+            },
+            {
+                title: "Eliminar",
+                dataIndex: "id",
+                align: "center" as "center",
+                render: (id) => {
+                    return (
+                        <div
+                            className="text-danger"
+                            onClick={async () => {
+                                await altStatusProject(parseInt(id));
+                            }}
+                        >
+                            <i className="fa fa-trash" aria-hidden="true" />
+                        </div>
+                    );
+                },
+            },
+        ],
+    },
+];
 
 const Projects = () => {
     const dispatch = useDispatch();
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
-
+    
     useEffect(() => {
         dispatch(actions.getProjects());
     }, []);
@@ -24,181 +102,53 @@ const Projects = () => {
     }, [projects]);
 
     return (
-        <section className="pt-5" id="texto-superior">
-            <div className="container-fluid">
-                <div className="row justify-content-center">
-                    <div className="col-md-12">
-                        <div
-                            style={{
-                                backgroundColor: "white",
-                                borderRadius: 15,
-                                padding: "10px 20px",
-                            }}
-                        >
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                }}
-                            >
-                                <h5>Administrar Proyectos</h5>
-                                <Link
-                                    className="justify-content-end"
-                                    style={{
-                                        display: "flex",
-                                        width: 70,
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                        textDecoration: "none",
-                                    }}
-                                    to="/acquisitions/projects/create"
-                                >
-                                    <i className="fa fa-plus-circle" aria-hidden="true" style={{ fontSize: 20 }}></i>
-                                    <p>Crear</p>
-                                </Link>
-                            </div>
-                            <hr />
-                            <form>
-                                <div className="row justify-content-between">
-                                    <div className="col-5 d-flex">
-                                        <div className="col-6">
-                                            <div className="input-group">
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Nombre / Código"
-                                                    aria-label="Nombre / Código"
-                                                    aria-describedby="button-addon2"
-                                                />
-                                                <span className="input-group-text">
-                                                    <a href="">
-                                                        <i className="fa fa-search" aria-hidden="true"></i>
-                                                    </a>
+        <div className="container-fluid">
+            <div className="row justify-content-center">
+                <div className="col-md-12">
+                    <Card
+                        title="Administrar Proyectos"
+                        extra={<Link to="/acquisitions/projects/create/" name="Crear" iconText="+" />}
+                    >
+                        <form>
+                            <div className="row justify-content-between">
+                                <div className="col-5 d-flex">
+                                    <div className="col-6">
+                                        <div className="input-group">
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Nombre / Código"
+                                                aria-label="Nombre / Código"
+                                                aria-describedby="button-addon2"
+                                            />
+                                            <span className="input-group-text">
+                                                <span>
+                                                    <i className="fa fa-search" aria-hidden="true"></i>
                                                 </span>
-                                            </div>
+                                            </span>
                                         </div>
-                                        <a href="#">
-                                            Filtro búsqueda <i className="fa fa-filter" aria-hidden="true"></i>
-                                        </a>
                                     </div>
-                                    <div
-                                        className="col-3 d-flex"
-                                        style={{ justifyContent: "end", alignItems: "center" }}
-                                    >
-                                        <label>Registros por página</label>
-                                        <select
-                                            style={{ width: "30%" }}
-                                            className="form-select form-select-lg mb-3"
-                                            aria-label=".form-select-lg"
-                                            defaultValue="10"
-                                        >
-                                            <option value="10">10</option>
-                                            <option value="20">20</option>
-                                            <option value="30">50</option>
-                                        </select>
-                                    </div>
+                                    <Link
+                                        to=""
+                                        className="ml-4"
+                                        name="Filtro de búsqueda"
+                                        avatar={false}
+                                        icon={<i className="fa fa-filter" aria-hidden="true" />}
+                                    />
                                 </div>
-                            </form>
-                            <hr />
-                            {/* <table className='table table-hover text-center'> */}
-                            <Table responsive>
-                                <thead>
-                                    <tr>
-                                        <th scope="col" className="align-top center">
-                                            ID
-                                        </th>
-                                        <th scope="col" className="align-top">
-                                            Nombre
-                                        </th>
-                                        <th scope="col" className="align-top">
-                                            Dependencia
-                                        </th>
-                                        <th scope="col" className="align-top">
-                                            Fecha Creación
-                                        </th>
-                                        <th scope="col" className="align-top">
-                                            Creado por
-                                        </th>
-                                        <th scope="col" className="align-top">
-                                            <div
-                                                style={{
-                                                    display: "flex",
-                                                    flexDirection: "column",
-                                                }}
-                                            >
-                                                Acciones
-                                                <div
-                                                    style={{
-                                                        display: "flex",
-                                                        width: "100%",
-                                                        justifyContent: "space-around",
-                                                    }}
-                                                >
-                                                    <p> Ver </p>
-                                                    <p> Editar </p>
-                                                    <p> Eliminar </p>
-                                                </div>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {typeof projects !== "undefined" ? (
-                                        projects.map((project) => {
-                                            let creationDate = new Date(
-                                                parseFloat(project.audit_trail.created_on)
-                                            ).toDateString();
-                                            return (
-                                                <ItemProject
-                                                    key={project.id}
-                                                    id={String(project.id)}
-                                                    name={project.name}
-                                                    dependency={project.dependency}
-                                                    creationDate={creationDate}
-                                                    createdBy={project.audit_trail.created_by}
-                                                />
-                                            );
-                                        })
-                                    ) : (
-                                        <b>nothing</b>
-                                    )}
-                                </tbody>
-                            </Table>
-                            <nav aria-label="Page navigation example">
-                                <ul className="pagination justify-content-end">
-                                    <li className="page-item">
-                                        <a className="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#">
-                                            1
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#">
-                                            2
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#">
-                                            3
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+                            </div>
+                        </form>
+                        <UiTable
+                            columns={table_columns}
+                            items={projects}
+                            with_pagination
+                            count={10}
+                            change_page={() => {}}
+                        />
+                    </Card>
                 </div>
             </div>
-        </section>
+        </div>
     );
 };
 

@@ -27,11 +27,11 @@ export interface IAuditTrail {
 }
 
 export interface IProjectAttributes {
-    id: string | number;
+    id?: string | number;
     name: string;
     description: string;
     dependency: string;
-    audit_trail: IAuditTrail;
+    audit_trail?: IAuditTrail;
     status: number;
 }
 

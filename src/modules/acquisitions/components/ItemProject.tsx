@@ -115,7 +115,7 @@ const ItemProject = ({ id, name, dependency, creationDate, createdBy }: IItemPro
                         justifyContent: "space-around",
                     }}
                 >
-                    <Link to={`/acquisitions/projects/${id}`} style={LinkStyle}>
+                    <Link to={`/acquisitions/projects/${id}/`} style={LinkStyle}>
                         <i className="fa fa-eye" aria-hidden="true"></i>
                     </Link>
                     <Link to={`/acquisitions/projects/edit/${id}`} style={LinkStyle}>

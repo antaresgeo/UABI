@@ -1,6 +1,6 @@
-import store from "../../config/store";
+// import store from "../../config/store";
 import { IRoute } from "../../utils/components/app_router/custom_types";
-import { Home, Location } from "./views";
+import { Home } from "./views";
 
 const get_routes = (): IRoute[] => {
     return [
@@ -11,13 +11,13 @@ const get_routes = (): IRoute[] => {
             path: "/",
             component: Home,
         },
-        {
-            exact: true,
-            is_private: true,
-            can_access: true,
-            path: "/location/",
-            component: Location,
-        },
+        // {
+        //     exact: true,
+        //     is_private: true,
+        //     can_access: true,
+        //     path: "/location/",
+        //     component: Location,
+        // },
     ];
 };
 

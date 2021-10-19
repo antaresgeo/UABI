@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import moment from "moment";
 
 export const swal = withReactContent(Swal);
 
@@ -19,26 +20,24 @@ export const request_dispatch =
         creators: [Function?, Function?] = [],
         effect?: EffectFn
     ) =>
-    (dispatch: any): Promise<any> => {
-        const [success, fail] = creators || [];
-        dispatch({ type: type.default });
-        return request
-            .then((payload) => {
-                success
-                    ? dispatch(success(payload))
-                    : dispatch({ type: type.success, payload });
-                if (effect) effect(payload);
-                return Promise.resolve(payload);
-            })
-            .catch((error) => {
-                fail
-                    ? dispatch(fail(error))
-                    : dispatch({ type: type.fail, error });
-                return Promise.reject(error);
-            });
-    };
-
-export const setTitle = (title: string) => (document.title = title);
+        (dispatch: any): Promise<any> => {
+            const [success, fail] = creators || [];
+            dispatch({ type: type.default });
+            return request
+                .then((payload) => {
+                    success
+                        ? dispatch(success(payload))
+                        : dispatch({ type: type.success, payload });
+                    if (effect) effect(payload);
+                    return Promise.resolve(payload);
+                })
+                .catch((error) => {
+                    fail
+                        ? dispatch(fail(error))
+                        : dispatch({ type: type.fail, error });
+                    return Promise.reject(error);
+                });
+        };
 
 export const qsToArray = (qs: string) => {
     let qsAsArray = [];
@@ -54,3 +53,6 @@ export const qsToArray = (qs: string) => {
     });
     return qsAsArray;
 };
+export const setTitle = (title: string) => document.title = title;
+
+export const formatDate = (date) => date && moment(date).format("DD-MM-YYYY")

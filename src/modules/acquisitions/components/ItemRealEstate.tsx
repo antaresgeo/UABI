@@ -1,4 +1,4 @@
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { Link /*, useHistory, useRouteMatch*/ } from "react-router-dom";
 import { CSSProperties } from "react";
 import { IItemRealEstate } from "../../../utils/interfaces/components.interfaces";
 import { swal } from "./../../../utils";

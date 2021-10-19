@@ -4,7 +4,7 @@ import { TextArea } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
-import AdquisitionsFrom from "../../components/AdquisitionsForm";
+import AcquisitionsFrom from "../../components/AdquisitionsForm";
 import { actions } from "../../redux";
 
 interface IParams {
@@ -349,7 +349,7 @@ const DetailRealEstate = () => {
                                     </div>
 
                                     {/* Adquisitions */}
-                                    <AdquisitionsFrom type="view" />
+                                    <AcquisitionsFrom type="view" />
                                     {/* END Adquisitions */}
 
                                     <div

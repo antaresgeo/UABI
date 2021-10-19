@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { getProject, getRealEstate, updateProject, updateRealEstate } from "../../../../apis/uabi";
+import { getRealEstate, updateRealEstate /*, getProject, updateProject */ } from "../../../../apis/uabi";
 import {
     IRealEstateAttributes,
     IRealEstateResponse,
-    IRealEstatesResponse,
+    // IRealEstatesResponse,
 } from "../../../../utils/interfaces/components.interfaces";
-import AdquisitionsFrom from "../../components/AdquisitionsForm";
+import AcquisitionsFrom from "../../components/AdquisitionsForm";
 import GeneralDataForm from "../../components/GeneralDataForm";
 
 interface IProps {
@@ -101,7 +101,7 @@ const DetailProjects = () => {
                                     <GeneralDataForm type="edit" handleChange={handleChange} data={realEstate} />
 
                                     {/* Adquisitions */}
-                                    <AdquisitionsFrom type="edit" />
+                                    <AcquisitionsFrom type="edit" />
                                     {/* END Adquisitions */}
 
                                     <div
