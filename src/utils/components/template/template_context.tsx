@@ -6,27 +6,34 @@ import "moment/locale/es";
 type KeyPath = [string, string];
 interface TemplateProps {
     menu_collapsed: boolean;
-    toggle_collapsed: () => void;
+    drawer_collapsed: boolean;
+    menu_toggle: () => void;
+    drawer_open: () => void;
+    drawer_close: () => void;
     menu_key_path: KeyPath;
     set_menu_key_path: Function;
 }
-export const TemplateConstext = React.createContext<TemplateProps>(null);
+export const TemplateContext = React.createContext<TemplateProps>(null);
 
 const TemplateProvider: FC = ({ children }) => {
     const [menu_collapsed, set_menu_collapsed] = useState<boolean>(false);
     const [menu_key_path, set_menu_key_path] = useState<KeyPath>(["1", "sub1"]);
+    const [drawer_collapsed, set_drawer_collapsed] = useState(false);
     return (
         <ConfigProvider locale={esES}>
-            <TemplateConstext.Provider
+            <TemplateContext.Provider
                 value={{
                     menu_collapsed,
+                    drawer_collapsed,
                     menu_key_path,
                     set_menu_key_path,
-                    toggle_collapsed: () => set_menu_collapsed((collapsed) => !collapsed),
+                    menu_toggle: () => set_menu_collapsed((collapsed) => !collapsed),
+                    drawer_open: () => set_drawer_collapsed(true),
+                    drawer_close: () => set_drawer_collapsed(false),
                 }}
             >
                 {children}
-            </TemplateConstext.Provider>
+            </TemplateContext.Provider>
         </ConfigProvider>
     );
 };

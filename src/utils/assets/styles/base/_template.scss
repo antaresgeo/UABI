@@ -2,8 +2,26 @@
     background: #f7fbff;
 }
 
-.ant-table-tbody > tr > td, .ant-table-thead > tr > th, .ant-table tfoot > tr > td, .ant-table tfoot > tr > th {
+.ant-table-tbody > tr > td,
+.ant-table-thead > tr > th,
+.ant-table tfoot > tr > td,
+.ant-table tfoot > tr > th {
     padding: 8px;
+}
+
+.ant-drawer-body {
+    padding: 0;
+    .drawer-content {
+        padding: 16px;
+        height: calc(100% - 244px);
+    }
+}
+.ant-drawer-close {
+    color: rgba(255, 255, 255, 0.45);
+    &:focus,
+    &:hover {
+        color: rgba(255, 255, 255, 0.75);
+    }
 }
 
 .trigger {
@@ -35,7 +53,7 @@
     .bar {
         padding: 0 24px;
     }
-    .ant-card-extra{
+    .ant-card-extra {
         padding: 0 !important;
     }
 }
@@ -47,13 +65,13 @@
 }
 
 .uabi-link {
-    color: #1FAEEF;
+    color: #1faeef;
     text-decoration: none;
     > span {
         margin-left: 4px;
     }
     &:hover {
-        color: #1FAEEF;
+        color: #1faeef;
     }
 }
 

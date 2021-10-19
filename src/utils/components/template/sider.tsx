@@ -1,12 +1,12 @@
 import { FC, useContext } from "react";
 import tmpImg from "../../assets/img/medellin.png";
 import Menu from "antd/lib/menu";
-import { TemplateConstext } from "./template_context";
+import { TemplateContext } from "./template_context";
 import { useHistory } from "react-router-dom";
 
 const Sider: FC<{ width: number }> = ({ width }) => {
     const { SubMenu } = Menu;
-    const context = useContext(TemplateConstext);
+    const context = useContext(TemplateContext);
     const history = useHistory();
     const handleClick = (e) => {
         context.set_menu_key_path(e.keyPath);

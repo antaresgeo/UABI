@@ -8,6 +8,7 @@ interface ProjectFormPros {
 }
 const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit }) => {
     const initial_values: IProjectAttributes  = project || {
+        id: "",
         name: "",
         description: "",
         dependency: "",
