@@ -136,7 +136,7 @@ const RealEstate = () => {
 
     useEffect(() => {
         // _getRealEstates();
-        dispatch(actions.getRealEstates());
+        dispatch(actions.getRealEstates({}));
     }, [realEstate.project_id]);
 
     useEffect(() => {
