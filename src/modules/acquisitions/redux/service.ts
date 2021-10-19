@@ -1,5 +1,7 @@
 import { AxiosResponse } from "axios";
 import { http } from "../../../config/axios_instances";
+import { swal } from "../../../utils";
+
 import {
     IProjectAttributes,
     IProjectResponse,
@@ -8,7 +10,6 @@ import {
     IRealEstateResponse,
     IRealEstatesResponse,
 } from "../../../utils/interfaces/components.interfaces";
-import { service } from "./index";
 import { locationhttp } from "./../../../config/axios_instances";
 
 // PROJECTS
@@ -46,7 +47,7 @@ export const createProject = async (
     name: string,
     description: string,
     dependency: string
-): Promise<IProjectResponse | string> => {
+): Promise<IProjectAttributes | string> => {
     try {
         let URI = `/projects`;
         let res: AxiosResponse<IProjectResponse> = await http.post(URI, {
@@ -55,9 +56,13 @@ export const createProject = async (
             dependency,
         });
 
-        return res.data;
+        await swal.fire("Proyecto creado", res.data.message, "success");
+
+        return res.data.data;
     } catch (error) {
         console.error(error);
+        await swal.fire("Error", "", "error");
+
         return Promise.reject("Error");
     }
 };
@@ -77,17 +82,25 @@ export const updateProject = async (data: any, id: number) => {
     }
 };
 
-export const altStatusProject = async (id: number) => {
+export const deleteProject = async (id: number) => {
     try {
-        let URI = `/projects/alt-status`;
-        let res: AxiosResponse<IProjectResponse> = await http.put(URI, null, {
+        let URI = `/projects/delete`;
+        let res: AxiosResponse<IProjectResponse> = await http.delete(URI, {
             params: { id },
         });
 
-        return res;
+        swal.fire({
+            title: "Proyecto Inactivado",
+            text: res.data.message,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+
+        return res.data.data;
     } catch (error) {
         console.error(error);
-        return Promise.reject("Error");
+        return Promise.reject("Error in delete Project");
     }
 };
 
@@ -105,14 +118,13 @@ const getRealEstates = async (): Promise<IRealEstateAttributes[] | string> => {
 };
 
 export const getRealEstatesByProject = async (
-    id: string
+    id: number
 ): Promise<IRealEstateAttributes[] | string> => {
     try {
         let URI = `/real-estates/project`;
         let res: AxiosResponse<IRealEstatesResponse> = await http.get(URI, {
             params: { id },
         });
-        console.log(res);
 
         return res.data.data;
     } catch (error) {
@@ -140,12 +152,12 @@ export const getRealEstate = async (
 // Services: POST
 export const createRealEstate = async (
     data: any
-): Promise<IProjectResponse | string> => {
+): Promise<IProjectAttributes | string> => {
     try {
         let URI = `/real-estates`;
         let res: AxiosResponse<IProjectResponse> = await http.post(URI, data);
 
-        return res.data;
+        return res.data.data;
     } catch (error) {
         console.error(error);
         return Promise.reject("Error");
@@ -247,18 +259,31 @@ const getAddress = async (values) => {
     }
 };
 
+const deleteRealEstate = async (id) => {
+    try {
+        let URI = `/projects`;
+        let res: AxiosResponse<IProjectResponse> = await http.get(URI, {
+            params: { id },
+        });
+
+        return res.data.data;
+    } catch (e) {
+        return Promise.reject("Error");
+    }
+};
+
 const services = {
     getProject,
     getProjects,
     createProject,
     updateProject,
-    altStatusProject,
     getRealEstates,
     getRealEstatesByProject,
     getRealEstate,
     createRealEstate,
     updateRealEstate,
     getAddress,
+    deleteProject,
 };
 
 export default services;

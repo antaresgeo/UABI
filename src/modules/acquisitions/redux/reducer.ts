@@ -1,3 +1,4 @@
+import { swal } from "../../../utils";
 import types from "./types";
 
 interface State {}
@@ -162,6 +163,40 @@ const reducer = (state: any = initialState, action: any): any => {
             };
         }
 
+        // ONE PROJECT
+        case types.project.default: {
+            return {
+                ...state,
+                project: { ...state.project, loading: true },
+            };
+        }
+
+        case types.project.success: {
+            return {
+                ...state,
+                project: {
+                    ...state.project,
+
+                    loading: false,
+                    loaded: true,
+                    value: action.payload,
+                },
+            };
+        }
+
+        case types.project.fail: {
+            return {
+                ...state,
+                project: {
+                    ...state.project,
+                    message: emptyInitialState.project.message,
+                    loading: false,
+                    loaded: false,
+                    value: emptyInitialState.project.value,
+                },
+            };
+        }
+
         // REAL ESTATES
         case types.realEstates.default: {
             return {
@@ -190,38 +225,6 @@ const reducer = (state: any = initialState, action: any): any => {
                     loading: false,
                     loaded: false,
                     value: emptyInitialState.realEstates.value,
-                },
-            };
-        }
-
-        // ONE PROJECT
-        case types.project.default: {
-            return {
-                ...state,
-                project: { ...state.project, loading: true },
-            };
-        }
-
-        case types.project.success: {
-            return {
-                ...state,
-                project: {
-                    ...state.project,
-                    loading: false,
-                    loaded: true,
-                    value: action.payload,
-                },
-            };
-        }
-
-        case types.project.fail: {
-            return {
-                ...state,
-                project: {
-                    ...state.project,
-                    loading: false,
-                    loaded: false,
-                    value: emptyInitialState.project.value,
                 },
             };
         }
