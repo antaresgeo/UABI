@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import swal from "sweetalert";
 import { IProjectAttributes } from "../../../../utils/interfaces/components.interfaces";
 import { actions } from "../../redux";
+import { swal } from "./../../../../utils";
 
 const CreateRealEstate = () => {
     const history = useHistory();
@@ -15,8 +15,8 @@ const CreateRealEstate = () => {
     const [dependency, setDependency] = useState("");
 
     const createProject = async () => {
-        const response: any = await dispatch(actions.createProject(projectName, projectDescription, dependency));
-        await swal("Message", response.message, "success");
+        dispatch(actions.createProject(projectName, projectDescription, dependency));
+
         history.push(`/acquisitions/projects`);
     };
 
@@ -58,15 +58,16 @@ const CreateRealEstate = () => {
                                             <label htmlFor="exampleInputEmail1" className="form-label">
                                                 Descripción Proyecto
                                             </label>
-                                            <input
-                                                type=""
-                                                className="form-control"
-                                                id="exampleInputEmail1"
-                                                aria-describedby="emailHelp"
+                                            <textarea
+                                                id="description"
+                                                className="md-textarea form-control"
+                                                rows={3}
+                                                name="description"
                                                 placeholder="Descripción del Proyecto"
                                                 value={projectDescription}
                                                 onChange={(e) => setProjectDescription(e.target.value)}
-                                            />
+                                            ></textarea>
+
                                             <div id="emailHelp" className="form-text"></div>
                                         </div>
 
@@ -96,7 +97,7 @@ const CreateRealEstate = () => {
                             </div>
                             <div className="col text-center">
                                 <div className="btn btn-success my-3" onClick={createProject}>
-                                    Guardar
+                                    Crear
                                 </div>
                             </div>
                         </div>

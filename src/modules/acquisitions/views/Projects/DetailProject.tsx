@@ -1,16 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Table } from "semantic-ui-react";
 import ItemRealEstate from "../../components/ItemRealEstate";
 import { useSelector, useDispatch } from "react-redux";
 
-import {
-    IProjectAttributes,
-    IProjectResponse,
-    IProjectsResponse,
-    IRealEstateAttributes,
-    IRealEstatesResponse,
-} from "../../../../utils/interfaces/components.interfaces";
+import { IProjectAttributes, IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
 import { actions } from "../../redux";
 
 interface IParams {
@@ -21,16 +15,18 @@ const DetailProject = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
 
-    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
+    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
     useEffect(() => {
         dispatch(actions.getProject(id));
+        console.log(project);
     }, []);
 
     useEffect(() => {
-        console.log(project.id);
-        dispatch(actions.getRealEstatesByProject(project.id));
+        if (project.id !== "" && project.id !== undefined) {
+            dispatch(actions.getRealEstatesByProject(project.id));
+        }
     }, [project]);
 
     return (
@@ -45,9 +41,14 @@ const DetailProject = () => {
                                 padding: "10px 20px",
                             }}
                         >
-                            <h5>
-                                <b>Proyecto:</b> {project.name}
-                            </h5>
+                            <div className="d-flex justify-content-between align-items-center">
+                                <h5>
+                                    <b>Proyecto:</b> {project.name}
+                                </h5>
+                                <Link to={`/acquisitions/projects/edit/${project.id}`} className="btn btn-success">
+                                    Editar
+                                </Link>
+                            </div>
                             <hr />
                             <div className="container">
                                 <form>
@@ -85,14 +86,14 @@ const DetailProject = () => {
                                             <label htmlFor="exampleInputEmail1" className="form-label">
                                                 Descripción Proyecto
                                             </label>
-                                            <input
-                                                type=""
-                                                className="form-control"
-                                                id="exampleInputEmail1"
-                                                aria-describedby="emailHelp"
+                                            <textarea
+                                                id="description"
+                                                className="md-textarea form-control"
+                                                rows={3}
+                                                name="description"
                                                 value={project.description}
                                                 disabled
-                                            />
+                                            ></textarea>
                                             <div id="emailHelp" className="form-text"></div>
                                         </div>
 
@@ -123,7 +124,7 @@ const DetailProject = () => {
                                                 alignItems: "center",
                                                 textDecoration: "none",
                                             }}
-                                            to="/acquisitions/real-estates/create"
+                                            to={`/acquisitions/real-estates/create?project_id=${project.id}`}
                                         >
                                             <i
                                                 className="fa fa-plus-circle"
@@ -181,6 +182,7 @@ const DetailProject = () => {
                                                 ).toDateString();
                                                 return (
                                                     <ItemRealEstate
+                                                        key={project.id}
                                                         id={String(project.id)}
                                                         matricula={project.registry_number}
                                                         name={project.name}

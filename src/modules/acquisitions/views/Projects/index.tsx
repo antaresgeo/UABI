@@ -8,6 +8,7 @@ import { actions } from "../../redux";
 
 interface IProps {
     name: string;
+    tumbh: number;
 }
 
 const Projects = () => {
@@ -17,6 +18,10 @@ const Projects = () => {
     useEffect(() => {
         dispatch(actions.getProjects());
     }, []);
+
+    useEffect(() => {
+        dispatch(actions.getProjects());
+    }, [projects]);
 
     return (
         <section className="pt-5" id="texto-superior">
@@ -85,11 +90,12 @@ const Projects = () => {
                                         <select
                                             style={{ width: "30%" }}
                                             className="form-select form-select-lg mb-3"
-                                            aria-label=".form-select-lg example"
+                                            aria-label=".form-select-lg"
+                                            defaultValue="10"
                                         >
-                                            <option selected>10</option>
-                                            <option value="1">20</option>
-                                            <option value="2">50</option>
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">50</option>
                                         </select>
                                     </div>
                                 </div>
@@ -145,7 +151,8 @@ const Projects = () => {
                                             ).toDateString();
                                             return (
                                                 <ItemProject
-                                                    id={project.id}
+                                                    key={project.id}
+                                                    id={String(project.id)}
                                                     name={project.name}
                                                     dependency={project.dependency}
                                                     creationDate={creationDate}

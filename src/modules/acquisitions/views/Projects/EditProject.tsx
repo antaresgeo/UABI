@@ -1,22 +1,33 @@
 import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { getProject, updateProject } from "../../../../apis/uabi";
+import { actions } from "../../redux";
+
+// SERVICES
+import { useSelector, useDispatch } from "react-redux";
+
+// INTERFACES
 import {
     IProjectAttributes,
     IProjectResponse,
     IProjectsResponse,
 } from "../../../../utils/interfaces/components.interfaces";
-// import { useSelector, useDispatch } from "react-redux";
-// import { actions } from "../../redux";
+import swal from "sweetalert";
 
-interface IProps {
+interface IParams {
     id: string;
 }
 
-const DetailProject = () => {
-    const { id } = useParams<IProps>();
+interface IProps {
+    view?: string;
+}
+
+const DetailProject = ({ view }: IProps) => {
+    const { id } = useParams<IParams>();
     const history = useHistory();
-    const [project, setProject] = useState<IProjectAttributes>({
+    const dispatch = useDispatch();
+
+    const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
+    const [projectForm, setProjectForm] = useState<IProjectAttributes>({
         id: "",
         name: "",
         description: "",
@@ -31,37 +42,41 @@ const DetailProject = () => {
         status: -1,
     });
 
-    const _getProject = async () => {
-        let projectResponse: IProjectResponse | string = await getProject(id);
+    // const _getProject = async () => {
+    //     let projectResponse: IProjectResponse | string = await getProject(id);
 
-        if (typeof projectResponse !== "string") {
-            let tmpData = projectResponse.data;
+    //     if (typeof projectResponse !== "string") {
+    //         let tmpData = projectResponse.data;
 
-            setProject(tmpData);
-        }
-    };
+    //         setProjectForm(tmpData);
+    //     }
+    // };
 
     const _updateProject = async () => {
-        let res: any = await updateProject(
-            { name: project.name, description: project.description },
-            parseInt(project.id)
+        let res: any;
+        res = await dispatch(
+            actions.updateProject(
+                { name: projectForm.name, description: projectForm.description, dependency: projectForm.dependency },
+                id
+            )
         );
 
         console.log(res);
-        await alert(res.data.message);
-        history.push(`/adquisitions/projects/${project.id}`);
+        await swal("Proyecto actualizado", res.data.message, "success");
+        history.push(`/acquisitions/projects/${project.id}`);
     };
 
     useEffect(() => {
-        _getProject();
+        dispatch(actions.getProject(id));
     }, []);
 
-    const handleChange = (e: any) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
+    useEffect(() => {
+        setProjectForm(project);
+    }, [project]);
 
-        setProject({
-            ...project,
+    const handleChange = (e: any) => {
+        setProjectForm({
+            ...projectForm,
             [e.target.name]: e.target.value,
         });
     };
@@ -73,7 +88,7 @@ const DetailProject = () => {
                     <div className="col-md-12">
                         <div style={{ backgroundColor: "white", borderRadius: 15 }}>
                             <h5>
-                                <b>Editando:</b> {project.name}
+                                <b>Editando:</b> {projectForm.name}
                             </h5>
                             <hr />
                             <div className="container">
@@ -89,7 +104,7 @@ const DetailProject = () => {
                                                     id="disabledTextInput"
                                                     className="form-control"
                                                     placeholder="1ABC3"
-                                                    value={project.id}
+                                                    value={projectForm.id}
                                                     disabled
                                                 />
                                             </fieldset>
@@ -103,7 +118,7 @@ const DetailProject = () => {
                                                 className="form-control"
                                                 id="name"
                                                 name="name"
-                                                value={project.name}
+                                                value={projectForm.name}
                                                 onChange={handleChange}
                                             />
                                         </div>
@@ -115,29 +130,38 @@ const DetailProject = () => {
                                                 className="md-textarea form-control"
                                                 rows={3}
                                                 name="description"
-                                                value={project.description}
+                                                value={projectForm.description}
                                                 onChange={handleChange}
                                             ></textarea>
                                         </div>
 
                                         <div className="col">
                                             <label htmlFor="form-select" className="form-label">
-                                                Destinación
+                                                Dependencia
                                             </label>
                                             <select
                                                 className="form-select"
-                                                aria-label="Default select example"
+                                                aria-label="dependency"
                                                 name="dependency"
                                                 onChange={handleChange}
                                             >
-                                                <option value="PÚBLICO" selected={project.dependency === "PÚBLICO"}>
-                                                    Público
+                                                <option
+                                                    value="Dependencia Infraestructura"
+                                                    selected={projectForm.dependency === "Dependencia Infraestructura"}
+                                                >
+                                                    Dependencia Infraestructura
                                                 </option>
-                                                <option value="FISCAL" selected={project.dependency === "FISCAL"}>
-                                                    Fiscal
+                                                <option
+                                                    value="Dependencia Salud"
+                                                    selected={projectForm.dependency === "Dependencia Salud"}
+                                                >
+                                                    Dependencia Salud
                                                 </option>
-                                                <option value="MIXTO" selected={project.dependency === "MIXTO"}>
-                                                    Mixto
+                                                <option
+                                                    value="Dependencia Educación"
+                                                    selected={projectForm.dependency === "Dependencia Educación"}
+                                                >
+                                                    Dependencia Educación
                                                 </option>
                                             </select>
                                         </div>
