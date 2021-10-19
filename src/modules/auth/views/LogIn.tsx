@@ -22,7 +22,7 @@ export default function SignIn() {
             let res: AxiosResponse<any> | any = await signIn(idusuario, contraseña);
             console.log(res);
 
-            if (res.status == 200) {
+            if (res.status === 200) {
                 localStorage.setItem("token", res.data);
 
                 history.push("/");

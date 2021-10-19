@@ -284,15 +284,15 @@ const EstateAreas = () => {
                                                 role="group"
                                                 aria-label="Basic mixed styles example"
                                             >
-                                                <a href="">
+                                                <span>
                                                     <i className="fa fa-eye" aria-hidden="true"></i>
-                                                </a>
-                                                <a href="">
+                                                </span>
+                                                <span>
                                                     <i className="fa fa-pencil" aria-hidden="true"></i>
-                                                </a>
-                                                <a href="">
+                                                </span>
+                                                <span>
                                                     <i className="fa fa-trash" aria-hidden="true"></i>
-                                                </a>
+                                                </span>
                                             </div>
                                         </td>
                                     </tr>
@@ -309,15 +309,15 @@ const EstateAreas = () => {
                                                 role="group"
                                                 aria-label="Basic mixed styles example"
                                             >
-                                                <a href="">
+                                                <span>
                                                     <i className="fa fa-eye" aria-hidden="true"></i>
-                                                </a>
-                                                <a href="">
+                                                </span>
+                                                <span>
                                                     <i className="fa fa-pencil" aria-hidden="true"></i>
-                                                </a>
-                                                <a href="">
+                                                </span>
+                                                <span>
                                                     <i className="fa fa-trash" aria-hidden="true"></i>
-                                                </a>
+                                                </span>
                                             </div>
                                         </td>
                                     </tr>
@@ -334,15 +334,15 @@ const EstateAreas = () => {
                                                 role="group"
                                                 aria-label="Basic mixed styles example"
                                             >
-                                                <a href="">
+                                                <span>
                                                     <i className="fa fa-eye" aria-hidden="true"></i>
-                                                </a>
-                                                <a href="">
+                                                </span>
+                                                <span>
                                                     <i className="fa fa-pencil" aria-hidden="true"></i>
-                                                </a>
-                                                <a href="">
+                                                </span>
+                                                <span>
                                                     <i className="fa fa-trash" aria-hidden="true"></i>
-                                                </a>
+                                                </span>
                                             </div>
                                         </td>
                                     </tr>

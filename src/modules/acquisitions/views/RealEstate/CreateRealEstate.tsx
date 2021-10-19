@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import {
     IProjectAttributes,
-    IProjectsResponse,
+    // IProjectsResponse,
     IRealEstateAttributes,
-    IRealEstatesResponse,
+    // IRealEstatesResponse,
 } from "../../../../utils/interfaces/components.interfaces";
-import { Input, Table } from "semantic-ui-react";
-import ItemRealEstate from "../../components/ItemRealEstate";
-import AdquisitionsFrom from "../../components/AdquisitionsForm";
+import { Input } from "semantic-ui-react";
+// import ItemRealEstate from "../../components/ItemRealEstate";
+import AcquisitionsFrom from "../../components/AdquisitionsForm";
 import GeneralDataForm from "../../components/GeneralDataForm";
 import { actions } from "../../redux";
 import { createRealEstate } from "../../../../apis/uabi";
 import { useLocation, useParams, useRouteMatch } from "react-router-dom";
 import { qsToArray } from "../../../../utils";
+import { Card } from "../../../../utils/ui";
+import RealEstateList from "../../components/RealEstateList";
 
 const RealEstate = () => {
     const { search } = useLocation();
@@ -143,201 +144,80 @@ const RealEstate = () => {
     }, [projects]);
 
     return (
-        <section className="pt-5" id="texto-superior">
-            <div className="container-fluid">
-                <div className="row justify-content-center">
-                    <div className="col-md-12">
-                        <div
-                            style={{
-                                backgroundColor: "white",
-                                borderRadius: 15,
-                                padding: "10px 20px",
-                            }}
-                        >
-                            <h5>
-                                <b>Creación</b> de Bien Inmueble
-                            </h5>
-                            <hr />
-                            <div className="container">
-                                <form>
-                                    <div className="row">
-                                        <div className="col-3 d-flex">
-                                            {/*	<div className='form-check'>
-												<input
-													className='form-check-input'
-													type='radio'
-													name='flexRadioDefault'
-													id='flexRadioDefault4'
-													checked
-												/>
-												<label
-													className='form-check-label'
-													htmlFor='flexRadioDefault4'
-												>
-													Proyecto Existente
-												</label>
-											</div> */}
-                                            {/* <div className='form-check'>
-													<input
-														className='form-check-input'
-														type='radio'
-														name='flexRadioDefault'
-														id='flexRadioDefault5'
-													/>
-													<label
-														className='form-check-label'
-														htmlFor='flexRadioDefault5'
-													>
-														Proyecto Nuevo
-													</label>
-												</div> */}
-                                        </div>
-                                        <div className="col-6">
-                                            <select
-                                                className="form-select"
-                                                aria-label="Default select example"
-                                                name="project_id"
-                                                onChange={handleChange}
-                                                defaultValue={projectSelected.flag && projectSelected.value}
-                                            >
-                                                <option value="" selected disabled hidden>
-                                                    -- Seleccione Proyecto --
-                                                </option>
-                                                {projects.map((project) => {
-                                                    const { name, id } = project;
-                                                    return <option value={id}>{name.toUpperCase()}</option>;
-                                                })}
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <GeneralDataForm type="create" handleChange={handleChange} data={{}} />
-
-                                    {/* Adquisitions */}
-                                    <AdquisitionsFrom type="create" />
-                                    {/* END Adquisitions */}
-
-                                    <div
-                                        className="row py-3 my-3"
-                                        style={{
-                                            backgroundColor: "#f7f7f7",
-                                            borderRadius: 15,
-                                            border: "1px solid",
-                                        }}
+        <div className="container-fluid">
+            <div className="row justify-content-center">
+                <div className="col-md-12">
+                    <form>
+                        <Card title="Creación de Bien Inmueble">
+                            <div className="row">
+                                <div className="col-3 d-flex"/>
+                                <div className="col-6">
+                                    <select
+                                        className="form-select"
+                                        aria-label="Default select example"
+                                        name="project_id"
+                                        onChange={handleChange}
+                                        defaultValue={projectSelected.flag && projectSelected.value}
                                     >
-                                        <h5>Documentos Soporte</h5>
-
-                                        <div className="col-3">
-                                            <label htmlFor="form-select" className="form-label">
-                                                Nombre del Documento
-                                            </label>
-                                            <Input />
-                                        </div>
-                                        <div className="col-3">
-                                            <div className="mb-3">
-                                                <label htmlFor="formFile" className="form-label">
-                                                    Default file input example
-                                                </label>
-                                                <input className="form-control" type="file" id="formFile" />
-                                                <div id="emailHelp" className="form-text">
-                                                    Escritura.pdf
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-1">
-                                            <label htmlFor=""></label>
-                                            <button type="submit" className="btn btn-primary mr-3">
-                                                Subir
-                                            </button>
+                                        <option value="" selected disabled hidden>
+                                            -- Seleccione Proyecto --
+                                        </option>
+                                        {projects.map((project) => {
+                                            const { name, id } = project;
+                                            return <option value={id}>{name.toUpperCase()}</option>;
+                                        })}
+                                    </select>
+                                </div>
+                            </div>
+                            <GeneralDataForm type="create" handleChange={handleChange} data={{}} />
+                        </Card>
+                        <Card title="Información de Adquisición">
+                            <AcquisitionsFrom type="create" />
+                        </Card>
+                        <Card title="Documentos Soporte">
+                            <div className="row">
+                                <div className="col-3">
+                                    <label htmlFor="form-select" className="form-label">
+                                        Nombre del Documento
+                                    </label>
+                                    <Input />
+                                </div>
+                                <div className="col-3">
+                                    <div className="mb-3">
+                                        <label htmlFor="formFile" className="form-label">
+                                            Default file input example
+                                        </label>
+                                        <input className="form-control" type="file" id="formFile" />
+                                        <div id="emailHelp" className="form-text">
+                                            Escritura.pdf
                                         </div>
                                     </div>
-                                    <div className="d-flex my-3">
-                                        <button type="submit" className="btn btn-success mr-3">
-                                            Guardar
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary mx-3"
-                                            onClick={_createRealEstate}
-                                        >
-                                            Agregar
-                                        </button>
-                                    </div>
-                                </form>
+                                </div>
+                                <div className="col-1">
+                                    <label htmlFor=""></label>
+                                    <button type="submit" className="btn btn-primary mr-3">
+                                        Subir
+                                    </button>
+                                </div>
                             </div>
-                            <hr />
-                            <div className="d-flex flex-row">
-                                <h5>Bienes Inmuebles del Proyecto</h5>
+                            <div className="row justify-content-center">
+                                <div className="col text-start">
+                                    <button type="submit" className="btn btn-success mr-3">
+                                        Guardar
+                                    </button>
+                                    <button type="button" className="btn btn-primary mx-3" onClick={_createRealEstate}>
+                                        Agregar
+                                    </button>
+                                </div>
                             </div>
-                            <Table responsive>
-                                <thead>
-                                    <tr>
-                                        <th scope="col" className="align-top center">
-                                            ID
-                                        </th>
-                                        <th scope="col" className="align-top">
-                                            Matricula
-                                        </th>
-                                        <th scope="col" className="align-top">
-                                            Nombre
-                                        </th>
-                                        <th scope="col" className="align-top">
-                                            Fecha Creación
-                                        </th>
-                                        <th scope="col" className="align-top">
-                                            Creado por
-                                        </th>
-                                        <th scope="col" className="align-top">
-                                            <div
-                                                style={{
-                                                    display: "flex",
-                                                    flexDirection: "column",
-                                                }}
-                                            >
-                                                Acciones
-                                                <div
-                                                    style={{
-                                                        display: "flex",
-                                                        width: "100%",
-                                                        justifyContent: "space-around",
-                                                    }}
-                                                >
-                                                    <p> Ver </p>
-                                                    <p> Editar </p>
-                                                    <p> Eliminar </p>
-                                                </div>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {realEstates.map((project) => {
-                                        let creationDate = new Date(
-                                            parseFloat(project.audit_trail.created_on)
-                                        ).toDateString();
-                                        return (
-                                            <ItemRealEstate
-                                                id={String(project.id)}
-                                                matricula={project.registry_number}
-                                                name={project.name}
-                                                creationDate={creationDate}
-                                                createdBy={project.audit_trail.created_by}
-                                            />
-                                        );
-                                    })}
-                                </tbody>
-                            </Table>
-
-                            <div className="col text-center">
-                                <button type="submit" className="btn btn-success my-3">
-                                    Guardar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                        </Card>
+                    </form>
+                    <Card title="Bienes Inmuebles del Proyecto">
+                        <RealEstateList realEstates={realEstates} />
+                    </Card>
                 </div>
             </div>
-        </section>
+        </div>
     );
 };
 

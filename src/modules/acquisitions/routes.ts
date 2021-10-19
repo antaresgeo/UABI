@@ -18,6 +18,10 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/acquisitions/real-estates/areas/create/",
+            breadcrumbs: [
+                { name: "Bienes Inmuebles", to: "/acquisitions/real-estates/" },
+                { name: "Crear Areas" },
+            ],
             component: EstateAreas,
         },
         {
@@ -25,6 +29,10 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/acquisitions/real-estates/create/",
+            breadcrumbs: [
+                { name: "Bienes Inmuebles", to: "/acquisitions/real-estates/" },
+                { name: "Crear" },
+            ],
             component: CreateRealEstate,
         },
         {
@@ -32,6 +40,10 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/acquisitions/real-estates/edit/:id/",
+            breadcrumbs: [
+                { name: "Bienes Inmuebles", to: "/acquisitions/real-estates/" },
+                { name: "Editar" },
+            ],
             component: EditRealEstate,
         },
         {
@@ -39,6 +51,10 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/acquisitions/real-estates/:id/",
+            breadcrumbs: [
+                { name: "Bienes Inmuebles", to: "/acquisitions/real-estates/" },
+                { name: "Detalle" },
+            ],
             component: DetailRealEstate,
         },
         {
@@ -46,6 +62,7 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/acquisitions/real-estates/",
+            breadcrumbs: [{ name: "Bienes Inmuebles" }],
             component: RealEstate,
         },
         {
@@ -53,6 +70,10 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/acquisitions/projects/create/",
+            breadcrumbs: [
+                { name: "Proyectos", to: "/acquisitions/projects/" },
+                { name: "Crear" },
+            ],
             component: CreateProject,
         },
         {
@@ -60,6 +81,10 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/acquisitions/projects/edit/:id/",
+            breadcrumbs: [
+                { name: "Proyectos", to: "/acquisitions/projects/" },
+                { name: "Editar" },
+            ],
             component: EditProject,
         },
         {
@@ -67,13 +92,18 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/acquisitions/projects/:id/",
+            breadcrumbs: [
+                { name: "Proyectos", to: "/acquisitions/projects/" },
+                { name: "Detalle" },
+            ],
             component: DetailProject,
         },
         {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/projects",
+            path: "/acquisitions/projects/",
+            breadcrumbs: [{ name: "Proyectos" }],
             component: Projects,
         },
     ];

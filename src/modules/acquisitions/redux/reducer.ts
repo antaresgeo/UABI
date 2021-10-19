@@ -1,13 +1,13 @@
 import { swal } from "../../../utils";
 import types from "./types";
 
-interface State {}
+// interface State {}
 
 const emptyInitialState: any = {
     projects: {
         value: [
             {
-                id: "",
+                id: "-1",
                 name: "",
                 description: "",
                 dependency: "",
@@ -78,7 +78,7 @@ const emptyInitialState: any = {
     },
     project: {
         value: {
-            id: "",
+            id: "-1",
             name: "",
             description: "",
             dependency: "",

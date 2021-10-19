@@ -1,11 +1,13 @@
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Table } from "semantic-ui-react";
 import ItemRealEstate from "../../components/ItemRealEstate";
 import { useSelector, useDispatch } from "react-redux";
-
 import { IProjectAttributes, IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
 import { actions } from "../../redux";
+import { Card, Link } from "../../../../utils/ui";
+import Descriptions from "antd/lib/descriptions";
+import RealEstateList from "../../components/RealEstateList";
 
 interface IParams {
     id: string;
@@ -30,176 +32,35 @@ const DetailProject = () => {
     }, [project]);
 
     return (
-        <section className="pt-5" id="texto-superior">
-            <div className="container-fluid">
-                <div className="row justify-content-center">
-                    <div className="col-md-12">
-                        <div
-                            style={{
-                                backgroundColor: "white",
-                                borderRadius: 15,
-                                padding: "10px 20px",
-                            }}
-                        >
-                            <div className="d-flex justify-content-between align-items-center">
-                                <h5>
-                                    <b>Proyecto:</b> {project.name}
-                                </h5>
-                                <Link to={`/acquisitions/projects/edit/${project.id}`} className="btn btn-success">
-                                    Editar
-                                </Link>
-                            </div>
-                            <hr />
-                            <div className="container">
-                                <form>
-                                    <div className="row mb-5">
-                                        <div className="col-3">
-                                            <fieldset disabled>
-                                                <label htmlFor="disabledTextInput" className="form-label">
-                                                    Código Proyecto
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    id="disabledTextInput"
-                                                    className="form-control"
-                                                    placeholder="1ABC3"
-                                                    value={project.id}
-                                                    disabled
-                                                />
-                                            </fieldset>
-                                        </div>
-                                        <div className="col-3">
-                                            <label htmlFor="exampleInputEmail1" className="form-label">
-                                                Nombre Proyecto
-                                            </label>
-                                            <input
-                                                type=""
-                                                className="form-control"
-                                                id="exampleInputEmail1"
-                                                aria-describedby="emailHelp"
-                                                value={project.name}
-                                                disabled
-                                            />
-                                            <div id="emailHelp" className="form-text"></div>
-                                        </div>
-                                        <div className="col-6">
-                                            <label htmlFor="exampleInputEmail1" className="form-label">
-                                                Descripción Proyecto
-                                            </label>
-                                            <textarea
-                                                id="description"
-                                                className="md-textarea form-control"
-                                                rows={3}
-                                                name="description"
-                                                value={project.description}
-                                                disabled
-                                            ></textarea>
-                                            <div id="emailHelp" className="form-text"></div>
-                                        </div>
+        <div className="container-fluid">
+            <div className="row justify-content-center">
+                <div className="col-md-12">
+                    <Card
+                        title={
+                            <>
+                                <b>Proyecto:</b> {project.name}
+                            </>
+                        }
+                    >
+                        <Descriptions bordered size="middle">
+                            <Descriptions.Item label="Código">{project.id}</Descriptions.Item>
+                            <Descriptions.Item label="Nombre">{project.name}</Descriptions.Item>
+                            <Descriptions.Item label="Dependencia">{project.dependency}</Descriptions.Item>
+                            <Descriptions.Item label=" Descripción" span={3}>
+                                {project.description}
+                            </Descriptions.Item>
+                        </Descriptions>
+                    </Card>
 
-                                        <div className="col-3">
-                                            <label htmlFor="exampleInputEmail1" className="form-label">
-                                                Dependencia
-                                            </label>
-                                            <input
-                                                type=""
-                                                className="form-control"
-                                                id="exampleInputEmail1"
-                                                aria-describedby="emailHelp"
-                                                value={project.dependency}
-                                                disabled
-                                            />
-                                            <div id="emailHelp" className="form-text"></div>
-                                        </div>
-                                    </div>
-
-                                    <div className="d-flex flex-row">
-                                        <h5>Bienes Inmuebles del Proyecto</h5>
-                                        <Link
-                                            className="justify-content-end"
-                                            style={{
-                                                display: "flex",
-                                                width: 70,
-                                                justifyContent: "space-between",
-                                                alignItems: "center",
-                                                textDecoration: "none",
-                                            }}
-                                            to={`/acquisitions/real-estates/create?project_id=${project.id}`}
-                                        >
-                                            <i
-                                                className="fa fa-plus-circle"
-                                                aria-hidden="true"
-                                                style={{ fontSize: 20 }}
-                                            ></i>
-                                            <p>Crear</p>
-                                        </Link>
-                                    </div>
-                                    <Table responsive>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" className="align-top center">
-                                                    ID
-                                                </th>
-                                                <th scope="col" className="align-top">
-                                                    Matricula
-                                                </th>
-                                                <th scope="col" className="align-top">
-                                                    Nombre
-                                                </th>
-                                                <th scope="col" className="align-top">
-                                                    Fecha Creación
-                                                </th>
-                                                <th scope="col" className="align-top">
-                                                    Creado por
-                                                </th>
-                                                <th scope="col" className="align-top">
-                                                    <div
-                                                        style={{
-                                                            display: "flex",
-                                                            flexDirection: "column",
-                                                        }}
-                                                    >
-                                                        Acciones
-                                                        <div
-                                                            style={{
-                                                                display: "flex",
-                                                                width: "100%",
-                                                                justifyContent: "space-around",
-                                                            }}
-                                                        >
-                                                            <p> Ver </p>
-                                                            <p> Editar </p>
-                                                            <p> Eliminar </p>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {realEstates.map((project) => {
-                                                let creationDate = new Date(
-                                                    parseFloat(project.audit_trail.created_on)
-                                                ).toDateString();
-                                                return (
-                                                    <ItemRealEstate
-                                                        key={project.id}
-                                                        id={String(project.id)}
-                                                        matricula={project.registry_number}
-                                                        name={project.name}
-                                                        creationDate={creationDate}
-                                                        createdBy={project.audit_trail.created_by}
-                                                    />
-                                                );
-                                            })}
-                                        </tbody>
-                                    </Table>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    <Card
+                        title="Bienes Inmuebles del Proyecto"
+                        extra={<Link to="/acquisitions/real-estates/create/" name="Crear" iconText="+" />}
+                    >
+                        <RealEstateList realEstates={realEstates} />
+                    </Card>
                 </div>
             </div>
-        </section>
+        </div>
     );
 };
 

@@ -1,3 +1,11 @@
+.ant-layout {
+    background: #f7fbff;
+}
+
+.ant-table-tbody > tr > td, .ant-table-thead > tr > th, .ant-table tfoot > tr > td, .ant-table tfoot > tr > th {
+    padding: 8px;
+}
+
 .trigger {
     font-size: 18px;
     cursor: pointer;
@@ -16,14 +24,39 @@
 }
 
 .uabi-main-content {
-    margin: 24px 16px;
+    padding: 32px 16px;
     //padding: 16px;
 }
 
 .uabi-header {
     padding: 0;
-    background-color: white;
+    background: #fff 0 0 no-repeat padding-box;
+    box-shadow: 0 5px 3px #00000015;
     .bar {
         padding: 0 24px;
     }
+    .ant-card-extra{
+        padding: 0 !important;
+    }
+}
+
+.uabi-content {
+    box-shadow: 0 3px 10px #00000029;
+    background: #fff 0 0 no-repeat padding-box;
+    border-radius: 11px;
+}
+
+.uabi-link {
+    color: #1FAEEF;
+    text-decoration: none;
+    > span {
+        margin-left: 4px;
+    }
+    &:hover {
+        color: #1FAEEF;
+    }
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #fff !important;
 }

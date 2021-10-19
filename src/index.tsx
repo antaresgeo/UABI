@@ -4,11 +4,9 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./config/store";
-
 import "./utils/assets/styles/index.scss";
-
-// import Template from "./utils/components/template";
 import TemplateProvider from "./utils/components/template/template_context";
+
 
 declare global {
     interface Window {

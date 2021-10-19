@@ -9,14 +9,13 @@ const Sider: FC<{ width: number }> = ({ width }) => {
     const context = useContext(TemplateConstext);
     const history = useHistory();
     const handleClick = (e) => {
-        console.log("click ", e);
         context.set_menu_key_path(e.keyPath);
     };
 
     const goTo = (to) => () => history.push(to);
     return (
         <>
-            <div className="text-center" style={{ backgroundColor: "#6DA3FC" }}>
+            <div className="text-center" style={{ backgroundColor: "#6DA3FC", borderRight: "1px solid #2ea1fe" }}>
                 <img src={tmpImg} className="img-fluid" alt="" width="80%" style={{ paddingTop: "16px" }} />
                 <div className="text-white" style={{ fontWeight: 400, padding: "8px 0" }}>
                     UABI
@@ -46,11 +45,14 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                 </SubMenu>
 
                 <SubMenu key="sub3" title="Asegurabilidad">
-                    <Menu.Item key="4" onClick={goTo("/asegurabilidad/")}>Asegurabilidad</Menu.Item>
+                    <Menu.Item key="4" onClick={goTo("/asegurabilidad/")}>
+                        Asegurabilidad
+                    </Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub4" title="Disposición">
-                    <Menu.Item key="5" onClick={goTo("/acquisitions/real-estates/areas/")}>Áreas</Menu.Item>
-
+                    <Menu.Item key="5" onClick={goTo("/acquisitions/real-estates/areas/")}>
+                        Áreas
+                    </Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub5" title="Supervisión" />
                 <SubMenu key="sub6" title="Facturación" />
