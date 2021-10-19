@@ -74,20 +74,20 @@ const validate_refresh = (original_config: any) => {
     return original_config;
 };
 
-const processQueue = ({ error = null, token = null }) => {
-    if (window.retry_pending.length) {
-        window.retry_pending.forEach((prom) => {
-            if (error) {
-                prom.reject(error);
-            } else if (token) {
-                prom.resolve(token);
-            } else {
-                prom.reject(null);
-            }
-        });
-        window.retry_pending = [];
-    }
-};
+// const processQueue = ({ error = null, token = null }) => {
+//     if (window.retry_pending.length) {
+//         window.retry_pending.forEach((prom) => {
+//             if (error) {
+//                 prom.reject(error);
+//             } else if (token) {
+//                 prom.resolve(token);
+//             } else {
+//                 prom.reject(null);
+//             }
+//         });
+//         window.retry_pending = [];
+//     }
+// };
 
 const onUnauthorized = (original_error: any) => {
     let original_config = original_error.config;
