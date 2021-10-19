@@ -1,10 +1,14 @@
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { CSSProperties } from "react";
 import { IItemRealEstate } from "../../../utils/interfaces/components.interfaces";
+import { swal } from "./../../../utils";
+import { actions } from "../redux";
+import { useDispatch } from "react-redux";
 
 const ItemRealEstate = ({ id, matricula, name, project, creationDate, createdBy }: IItemRealEstate) => {
-    let { path, url } = useRouteMatch();
-    const history = useHistory();
+    // let { path, url } = useRouteMatch();
+    // const history = useHistory();
+    const dispatch = useDispatch();
 
     const LinkStyle: CSSProperties = {
         width: "100%",
@@ -13,6 +17,34 @@ const ItemRealEstate = ({ id, matricula, name, project, creationDate, createdBy 
         justifyContent: "center",
         alignItems: "center",
         textDecoration: "none",
+    };
+
+    const deleteRealEstate = async () => {
+        const result = await swal.fire({
+            icon: "warning",
+            title: "¿Está seguro?",
+            text: "¿Está seguro que quiere inactivar el proyecto?",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: "Continuar",
+            denyButtonText: `Cancelar`,
+        });
+
+        if (result.isConfirmed) {
+            // dispatch(actions.deleteRealEstate(id));
+            // const _res: any = await dispatch(actions.deleteProject(id));
+            // console.log(_res);
+            // console.log(_res.message);
+            // swal.fire({
+            //     title: "Proyecto Inactivado",
+            //     text: message,
+            //     icon: "success",
+            //     showConfirmButton: false,
+            //     timer: 1500,
+            // });
+        } else if (result.isDenied) {
+            swal.close();
+        }
     };
 
     return (

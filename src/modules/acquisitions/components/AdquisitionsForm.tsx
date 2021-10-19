@@ -1,48 +1,56 @@
 import React, { FC, Fragment, useState } from "react";
 import { Table } from "semantic-ui-react";
 import CheckboxGroup from "react-checkbox-group";
+import { IAuditTrail } from "../../../utils/interfaces/components.interfaces";
 
 interface AdquisitionsItf {
     id?: number;
-    acquisition_type?: string;
-    active_type?: any[];
-    title_type?: string;
-    act_number?: string;
-    acquisition_value?: number;
-    area?: number;
-    acquired_percentage?: number;
-    seller?: string;
-    entity_type?: string;
-    entity_number?: string;
+
+    acquisition_type: string;
+    active_type: string[];
+    title_type: string;
+    title_type_document_id?: string;
+    act_number: string;
+    act_value: number;
+
+    plot_area: number;
+    construction_area?: number;
+    acquired_percentage: number;
+    seller: string;
+
+    entity_type: string;
+    entity_number: string;
     address?: string;
     //--------
-    id_document_acquisition_type?: number;
-    real_estate_id?: number;
-    id_document_matricula?: number;
+    real_estate_id: number;
     status?: number;
+    audit_trail?: IAuditTrail;
 }
 
 const AdquisitionsFrom: FC<any> = ({ type }) => {
     const inicial_values: AdquisitionsItf = {
-        title_type: "None",
-        acquisition_type: "1",
-        active_type: ["1"],
-        seller: "1",
-        entity_type: "1",
-        acquired_percentage: 0,
-        acquisition_value: 0,
+        acquisition_type: "",
+        active_type: [],
+        title_type: "",
         act_number: "",
-        address: "",
-        area: 0,
+        act_value: 0,
+
+        plot_area: 0,
+        acquired_percentage: 0,
+        seller: "",
+
+        entity_type: "",
         entity_number: "",
+
+        real_estate_id: 0,
     };
     const [adquisitions, set_adquisitions] = useState<AdquisitionsItf[]>([]);
-    console.log(adquisitions);
+    // console.log(adquisitions);
     const [adquisition, set_adquisition] = useState<AdquisitionsItf>(inicial_values);
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
-        console.log("handleChange", { name, value });
+        // console.log("handleChange", { name, value });
         const data = {
             ...adquisition,
             [name]: value,
@@ -78,18 +86,21 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                             </label>
                             <select
                                 className="form-select"
-                                aria-label="Default select example"
+                                aria-label="acquisition_type"
                                 name="acquisition_type"
                                 onChange={handleChange}
-                                value={adquisition.acquisition_type}
+                                // value={adquisition.acquisition_type}
                             >
-                                <option value="1">Compraventa</option>
-                                <option value="2">Donación</option>
-                                <option value="3">Expropiación</option>
-                                <option value="4">Permuta</option>
-                                <option value="5">Cesión a título gratuito</option>
-                                <option value="6">Dación en pago</option>
-                                <option value="7">Obigaciones Urbanísticas</option>
+                                <option value="0" selected disabled hidden>
+                                    -- Seleccione Tipo de Adquisición --
+                                </option>
+                                <option value="Compraventa">Compraventa</option>
+                                <option value="Donación">Donación</option>
+                                <option value="Expropiación">Expropiación</option>
+                                <option value="Permuta">Permuta</option>
+                                <option value="Cesión a título gratuito">Cesión a título gratuito</option>
+                                <option value="Dación en pago">Dación en pago</option>
+                                <option value="Obigaciones Urbanísticas">Obigaciones Urbanísticas</option>
                             </select>
                         </div>
                         <div className="col-6">
@@ -97,18 +108,6 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 Tipo de activo
                             </label>
 
-                            {/* <select
-                        className='form-select'
-                        aria-label='Default select example'
-                        name="active_type"
-                        onChange={handleChange}
-                        value={adquisition.active_type}
-                    >
-                        <option value='1'>Lote</option>
-                        <option value='2'>Construccion</option>
-                        <option value='3'>Mejora</option>
-                        <option value='4'>Construcción para demoler</option>
-                    </select> */}
                             <CheckboxGroup
                                 name="active_type"
                                 value={adquisition.active_type || []}
@@ -119,16 +118,16 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 {(Checkbox) => (
                                     <>
                                         <label>
-                                            <Checkbox value="1" /> Lote
+                                            <Checkbox value="Lote" /> Lote
                                         </label>
                                         <label>
-                                            <Checkbox value="2" /> Construccion
+                                            <Checkbox value="Construccion" /> Construccion
                                         </label>
                                         <label>
-                                            <Checkbox value="3" /> Construccion Mejora
+                                            <Checkbox value="Construccion para Mejora" /> Construccion para Mejora
                                         </label>
                                         <label>
-                                            <Checkbox value="4" /> Construcción para demoler
+                                            <Checkbox value="Construcción para demoler" /> Construcción para demoler
                                         </label>
                                     </>
                                 )}
@@ -145,7 +144,7 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 onChange={handleChange}
                                 value={adquisition.title_type}
                             >
-                                <option value="None">--</option>
+                                <option value="None">-- Seleccione Tipo de Título --</option>
                                 <option value="Acta">Acta</option>
                                 <option value="Mejora">Mejora</option>
                                 <option value="Construcción">Construcción para demoler</option>
@@ -157,7 +156,7 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                     <label htmlFor="formFile" className="form-label">
                                         Documento de {adquisition.title_type}
                                     </label>
-                                    <input className="form-control" type="file" id="formFile" />
+                                    <input className="form-control" type="file" id="title_type_document_id" />
                                     {/*<div id='emailHelp' className='form-text'>*/}
                                     {/*    Escritura.pdf*/}
                                     {/*</div>*/}
@@ -189,7 +188,7 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                 aria-describedby="acquisition_value"
                                 name="acquisition_value"
                                 onChange={handleChange}
-                                value={adquisition.acquisition_value || ""}
+                                value={adquisition.act_value || ""}
                             />
                         </div>
                         <div className="col-6">
@@ -201,11 +200,11 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                     <input
                                         type="number"
                                         className="form-control"
-                                        id="area"
-                                        aria-describedby="area"
-                                        name="area"
+                                        id="plot_area"
+                                        aria-describedby="plot_area"
+                                        name="plot_area"
                                         onChange={handleChange}
-                                        value={adquisition.area || ""}
+                                        value={adquisition.plot_area || ""}
                                     />
                                 </>
                             )}
@@ -222,10 +221,10 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                         type="number"
                                         className="form-control"
                                         id="area_construccion"
-                                        aria-describedby="area"
-                                        name="area"
+                                        aria-describedby="construction_area"
+                                        name="construction_area"
                                         onChange={handleChange}
-                                        value={adquisition.area || ""}
+                                        value={adquisition.construction_area || ""}
                                     />
                                 </>
                             )}
@@ -398,14 +397,14 @@ const AdquisitionsFrom: FC<any> = ({ type }) => {
                                     <Table.Row>
                                         <Table.Cell>{row.acquisition_type}</Table.Cell>
                                         <Table.Cell>{row.act_number}</Table.Cell>
-                                        <Table.Cell>{row.acquisition_value}</Table.Cell>
+                                        <Table.Cell>{row.act_value}</Table.Cell>
                                         {type === "view" && (
                                             <Fragment>
                                                 <Table.Cell>{row.title_type}</Table.Cell>
                                                 <Table.Cell>{row.active_type?.join(", ")}</Table.Cell>
                                                 <Table.Cell>{row.seller}</Table.Cell>
                                                 <Table.Cell>{row.acquired_percentage}</Table.Cell>
-                                                <Table.Cell>{row.area}</Table.Cell>
+                                                <Table.Cell>{row.plot_area}</Table.Cell>
                                                 <Table.Cell>{row.entity_type}</Table.Cell>
                                                 <Table.Cell>{row.entity_number}</Table.Cell>
                                                 <Table.Cell>{row.address}</Table.Cell>

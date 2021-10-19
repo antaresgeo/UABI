@@ -207,17 +207,17 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
 
             <div className="col-2">
                 <label className="form-label">Zona</label>
-
                 <div className="form-check">
                     <input
                         className="form-check-input"
                         type="radio"
-                        id="flexRadioDefault2"
-                        name="estate_type"
-                        onChange={handleChange}
-                        checked
+                        name="zone"
+                        id="zone_urbano"
+                        value="Urbano"
+                        onClick={handleChange}
+                        checked={data?.zone === "Urbano"}
                     />
-                    <label className="form-check-label" htmlFor="flexRadioDefault2">
+                    <label className="form-check-label" htmlFor="zone_urbano">
                         Urbano
                     </label>
                 </div>
@@ -225,11 +225,13 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     <input
                         className="form-check-input"
                         type="radio"
-                        id="flexRadioDefault1"
-                        name="estate_type"
-                        onChange={handleChange}
+                        name="zone"
+                        id="zone_rural"
+                        value="Rural"
+                        onClick={handleChange}
+                        checked={data?.zone === "Rural"}
                     />
-                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                    <label className="form-check-label" htmlFor="zone_rural">
                         Rural
                     </label>
                 </div>
@@ -249,9 +251,24 @@ const GeneralDataForm: FC<any> = ({ handleChange, type, data }) => {
                     <option value="" selected disabled hidden>
                         -- Seleccione Tipología --
                     </option>
-                    <option value="2">Secretaría Salud</option>
-                    <option value="3">Secretaría Cultura</option>
-                    <option value="POR DEFINIR">POR DEFINIR</option>
+                    <option value="Agrícola">Agrícola</option>
+                    <option value="Agroindustrial">Agroindustrial</option>
+                    <option value="Comercial">Comercial</option>
+                    <option value="Cultural">Cultural</option>
+                    <option value="Agropecuario">Agropecuario</option>
+                    <option value="Educativo">Educativo</option>
+                    <option value="Forestal">Forestal</option>
+                    <option value="Habitacional">Habitacional</option>
+                    <option value="Institucional">Institucional</option>
+                    <option value="Minero">Minero</option>
+                    <option value="Pecuario">Pecuario</option>
+                    <option value="Recreación">Recreación</option>
+                    <option value="Religioso">Religioso</option>
+                    <option value="Industrial">Industrial</option>
+                    <option value="Salubridad">Salubridad</option>
+                    <option value="Servicios">Servicios</option>
+                    <option value="Especiales">Especiales</option>
+                    <option value="Uso Publico">Uso Publico</option>
                 </select>
             </div>
         </div>
