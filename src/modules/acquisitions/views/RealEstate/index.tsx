@@ -8,7 +8,7 @@ import RealEstateList from "../../components/RealEstateList";
 const RealEstates = () => {
     const dispatch = useDispatch();
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
-    const [query, set_query] = useState<string>(null);
+    const [query, set_query] = useState<string>("");
     const [page_size, set_pageSize] = useState<number>(10);
     useEffect(() => {
         dispatch(actions.getRealEstates({}));

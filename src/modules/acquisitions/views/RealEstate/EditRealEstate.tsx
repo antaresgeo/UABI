@@ -6,8 +6,8 @@ import {
     IRealEstateResponse,
     // IRealEstatesResponse,
 } from "../../../../utils/interfaces/components.interfaces";
-import AcquisitionsFrom from "../../components/AdquisitionsForm";
-import GeneralDataForm from "../../components/GeneralDataForm";
+import AcquisitionsFrom from "../../components/RealEstateForm/AdquisitionsForm";
+import GeneralDataForm from "../../components/RealEstateForm/GeneralDataForm";
 
 interface IProps {
     id: string;
@@ -98,7 +98,7 @@ const DetailProjects = () => {
                             <hr />
                             <div className="container">
                                 <form>
-                                    <GeneralDataForm type="edit" handleChange={handleChange} data={realEstate} />
+                                    <GeneralDataForm type="create" projects={[]} setFieldValue={() => {}} />
 
                                     {/* Adquisitions */}
                                     <AcquisitionsFrom type="edit" />

@@ -4,7 +4,7 @@ import { TextArea } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
-import AcquisitionsFrom from "../../components/AdquisitionsForm";
+import AcquisitionsFrom from "../../components/RealEstateForm/AdquisitionsForm";
 import { actions } from "../../redux";
 
 interface IParams {
@@ -179,7 +179,7 @@ const DetailRealEstate = () => {
                                                 className="form-control"
                                                 id="address"
                                                 name="address"
-                                                value={realEstate.address}
+                                                value={realEstate.location}
                                                 disabled
                                                 placeholder="Integración con Localización (Pop Up)"
                                             />
@@ -266,6 +266,8 @@ const DetailRealEstate = () => {
                                                 <option value="POR DEFINIR">POR DEFINIR</option>
                                             </select>
                                         </div>
+
+                                        {/************/}
                                         <div className="col-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label">
                                                 Creado por

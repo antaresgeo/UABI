@@ -112,7 +112,7 @@ const getRealEstates = async ({
 }): Promise<IRealEstateAttributes[] | string> => {
     try {
         let URI = `/real-estates/lists/`;
-        let res: AxiosResponse<IRealEstatesResponse> = await http.get(URI, {
+        let res: AxiosResponse<IRealEstatesResponse> = await http.get(URI,  {
             params: {
                 page,
                 pageSize,

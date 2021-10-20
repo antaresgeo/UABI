@@ -75,7 +75,6 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
             }}
         >
             {({ values, isValid, isSubmitting }) => {
-                // .form-group.col>(label.form-label(span.text-danger{*})+Field[name=""][as="select"].w-100.form-select+ErrorMessage[name=""][component="span"].text-danger.text-left.d-block.w-100.mt-1)
                 return (
                     <Form>
                         <div className="form-row row">
@@ -89,8 +88,10 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     </option>
                                     {countries.length >= 1 &&
                                         countries[0].country !== "" &&
-                                        countries.map((country) => (
-                                            <option value={country.country_code}>{country.country}</option>
+                                        countries.map((country, i) => (
+                                            <option key={i} value={country.country_code}>
+                                                {country.country}
+                                            </option>
                                         ))}
                                 </Field>
 
@@ -230,7 +231,9 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     <ErrorMessage name="comuna" />
                                 </span>
                             </div>
-                            <div className="form-group col">
+                        </div>
+                        <div className="form-row row">
+                            <div className="form-group col-3">
                                 <label htmlFor="" className="form-label">
                                     Barrio <span className="text-danger">*</span>
                                 </label>
@@ -266,7 +269,8 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 </span>
                             </div>
                         </div>
-                        <h5 className="text-center text-uppercase">Dirección</h5>
+                        <h5>Dirección</h5>
+                        <hr />
                         <div className="from-row row">
                             <div className="form-group col">
                                 <label htmlFor="" className="form-label">
@@ -417,13 +421,26 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                             </div>
                         </div>
                         <div className="row align-items-center">
-                            <div className="col-1 fs-4 text-end">#</div>
                             <div className="form-group col">
                                 <label htmlFor="" className="form-label">
                                     Número <span className="text-danger">*</span>
                                 </label>
-                                {/*<div className="fs-4 text-end d-inline-block">#</div>*/}
-                                <Field name="numero2" type="number" className="w-100 form-control" />
+                                <div className="input-group">
+                                    <span
+                                        className="input-group-text"
+                                        style={{ background: "white", borderRight: "none" }}
+                                        id="basic-addon1"
+                                    >
+                                        #
+                                    </span>
+                                    <Field
+                                        name="numero2"
+                                        type="number"
+                                        className="form-control"
+                                        style={{ borderLeft: "none" }}
+                                    />
+                                </div>
+
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
                                     <ErrorMessage name="numero2" />
                                 </span>
@@ -529,8 +546,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
                                     <ErrorMessage name="orientacion1" />
                                 </span>
-                            </div>
-                            <div className="col-1 fs-4 text-center">-</div>
+                            </div> -
                             <div className="form-group col">
                                 <label htmlFor="" className="form-label">
                                     Indicativo <span className="text-danger">*</span>
@@ -542,7 +558,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                             </div>
                         </div>
                         <div className="from-row row">
-                            <div className="form-group col">
+                            <div className="form-group col-9">
                                 <label htmlFor="" className="form-label">
                                     indicaciones
                                 </label>
@@ -558,12 +574,9 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 </span>
                             </div>
                         </div>
-                        <div className="d-flex justify-content-end mt-1">
-                            <button
-                                type="submit"
-                                className="btn btn-primary btn-lg"
-                                disabled={isSubmitting || !isValid}
-                            >
+                        <hr style={{margin: 0}}/>
+                        <div className="d-flex justify-content-end mt-2">
+                            <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isValid}>
                                 Consultar
                             </button>
                         </div>
