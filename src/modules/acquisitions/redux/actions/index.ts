@@ -9,7 +9,7 @@ import {
     getRealEstatesByProject,
     createRealEstate,
     updateRealEstate,
-    // deleteRealEstate,
+    deleteRealEstate,
 } from "./realEstates";
 
 // const example = (filters = {}) =>
@@ -20,7 +20,7 @@ const getProject = (id: string) =>
     request_dispatch(types.project, service.getProject(id));
 
 const getProjects = () =>
-    request_dispatch(types.projects, service.getProjects());
+    request_dispatch(types.projects, service.getProjects({}));
 
 const createProject = (name, description, dependecy) =>
     request_dispatch(
@@ -46,6 +46,6 @@ const actions = {
     getRealEstate,
     createRealEstate,
     updateRealEstate,
-    // deleteRealEstate
+    deleteRealEstate,
 };
 export default actions;
