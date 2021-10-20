@@ -63,16 +63,16 @@ const RealEstateForm: FC<RealEstateFormProps> = ({ realEstate, onSubmit, disable
                                         <div className="col-md-12">
                                             <GeneralDataForm
                                                 type={type}
-                                                disabled={disabled}
+                                                disabled={type === "view"}
                                                 setFieldValue={formik.setFieldValue}
                                                 projects={projects}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
                                             <AcquisitionsFrom
                                                 type={type}
-                                                disabled={disabled}
+                                                disabled={type === "view"}
                                                 setFieldValue={formik.setFieldValue}
-                                                acquisitions={formik.values.acquisitions}
+                                                acquisitions={formik.values.acquisitions || []}
                                             />
                                             <Card title="Documentos Soporte">
                                                 <div className="row">
