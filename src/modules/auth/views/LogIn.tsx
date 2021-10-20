@@ -35,7 +35,8 @@ export default function SignIn() {
         // } catch (error) {
         //     console.error(error);
         // }
-        await authenticationUme();
+        const auth = await authenticationUme();
+        console.log(auth);
     }
 
     const handleAltVisibility = () => {
