@@ -30,10 +30,20 @@ export const getProject = async (
     }
 };
 
-export const getProjects = async (): Promise<IProjectAttributes[] | string> => {
+const getProjects = async ({
+    page = 1,
+    pageSize = 10,
+    q = null,
+}): Promise<IProjectAttributes[] | string> => {
     try {
         let URI = `/projects/lists`;
-        let res: AxiosResponse<IProjectsResponse> = await http.get(URI);
+        let res: AxiosResponse<IProjectsResponse> = await http.get(URI, {
+            params: {
+                page,
+                pageSize,
+                ...(q ? { q } : {}),
+            },
+        });
         return res.data.data;
     } catch (error) {
         console.error(error);
@@ -270,14 +280,29 @@ const getAddress = async (values) => {
 
 const deleteRealEstate = async (id) => {
     try {
-        let URI = `/projects`;
-        let res: AxiosResponse<IProjectResponse> = await http.get(URI, {
+        let URI = `/real-estates/delete`;
+        let res: AxiosResponse<IRealEstateResponse> = await http.delete(URI, {
             params: { id },
         });
 
+        swal.fire({
+            title: "Bien Inmueble Inactivado",
+            text: res.data.message,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+
         return res.data.data;
-    } catch (e) {
-        return Promise.reject("Error");
+    } catch (error) {
+        console.error(error);
+        swal.fire({
+            title: "Error al inactivar Bien Inmueble",
+            text: error.message,
+            icon: "error",
+            showConfirmButton: false,
+        });
+        return Promise.reject("Error in delete Project");
     }
 };
 
@@ -293,6 +318,7 @@ const services = {
     updateRealEstate,
     getAddress,
     deleteProject,
+    deleteRealEstate,
 };
 
 export default services;
