@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { getRealEstate, updateRealEstate /*, getProject, updateProject */ } from "../../../../apis/uabi";
 import {
+    IProjectAttributes,
     IRealEstateAttributes,
     IRealEstateResponse,
     // IRealEstatesResponse,
 } from "../../../../utils/interfaces/components.interfaces";
 import AcquisitionsFrom from "../../components/RealEstateForm/AdquisitionsForm";
 import GeneralDataForm from "../../components/RealEstateForm/GeneralDataForm";
+import { actions } from "../../redux";
+import RealEstateForm from "../../components/RealEstateForm";
+import { useDispatch, useSelector } from "react-redux";
 
 interface IProps {
     id: string;
@@ -15,140 +19,46 @@ interface IProps {
 
 const DetailProjects = () => {
     const { id } = useParams<IProps>();
-    console.log(useParams());
-
-    const history = useHistory();
-    const [realEstate, setRealEstate] = useState<IRealEstateAttributes>({
-        id: -1,
-        dependency: "",
-        destination_type: "",
-        accounting_account: "",
-        cost_center: "",
-
-        registry_number: "",
-        name: "",
-        description: "",
-        patrimonial_value: 0,
-
-        total_area: -1,
-        total_percentage: -1,
-        zone: "",
-        tipology: "",
-
-        project_id: -1,
-
-        audit_trail: {
-            created_by: "",
-            created_on: "",
-            updated_by: null,
-            updated_on: null,
-            updated_values: null,
-        },
-        status: -1,
-    });
-
-    const _getRealEstate = async () => {
-        let realEstateResponse: IRealEstateResponse | string = await getRealEstate(id);
-        console.log(realEstateResponse);
-
-        if (typeof realEstateResponse !== "string") {
-            let tmpData = realEstateResponse.data;
-
-            setRealEstate(tmpData);
-        }
-    };
-
-    const _updateRealEstate = async () => {
-        if (typeof realEstate.id === "number") {
-            let res: any = await updateRealEstate(realEstate, parseInt(id));
-
-            console.log(res);
-            await alert(res.data.message);
-            history.push(`/adquisitions/real-estates/${id}`);
-        }
-    };
+    const history: any = useHistory();
+    const dispatch = useDispatch();
+    const [project_id, set_project_id] = useState(history.location.state?.project_id);
+    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
+    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
 
     useEffect(() => {
-        _getRealEstate();
+        dispatch(actions.getProjects());
+        dispatch(actions.getRealEstate(id));
     }, []);
 
-    const handleChange = (e: any) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
-
-        setRealEstate({
-            ...realEstate,
-            [e.target.name]: e.target.value,
-        });
-    };
-
+    useEffect(() => {
+        dispatch(actions.getRealEstatesByProject(realEstate.project_id));
+    }, [realEstate.project_id]);
     return (
-        <section className="pt-5" id="texto-superior">
-            <div className="container-fluid">
-                <div className="row justify-content-center">
-                    <div className="col-md-12">
-                        <div
-                            style={{
-                                backgroundColor: "white",
-                                borderRadius: 15,
-                                padding: "10px 20px",
-                            }}
-                        >
-                            <h5>Bien Inmueble</h5>
-                            <hr />
-                            <div className="container">
-                                <form>
-                                    <GeneralDataForm type="create" projects={[]} setFieldValue={() => {}} />
-
-                                    {/* Adquisitions */}
-                                    <AcquisitionsFrom type="edit" />
-                                    {/* END Adquisitions */}
-
-                                    <div
-                                        className="row py-3 my-3"
-                                        style={{
-                                            backgroundColor: "#f7f7f7",
-                                            borderRadius: 15,
-                                            border: "1px solid",
-                                        }}
-                                    >
-                                        <div className="col-3">
-                                            <label htmlFor="form-select" className="form-label">
-                                                Tipo Documento
-                                            </label>
-                                            <select className="form-select" aria-label="Default select example">
-                                                <option value="1" selected>
-                                                    Escritura
-                                                </option>
-                                                <option value="2">Matricula</option>
-                                                <option value="3">Contrato</option>
-                                            </select>
-                                        </div>
-                                        <div className="col-3">
-                                            <div className="mb-3">
-                                                <label htmlFor="formFile" className="form-label">
-                                                    Default file input example
-                                                </label>
-                                                <input className="form-control" type="file" id="formFile" />
-                                                <div id="emailHelp" className="form-text">
-                                                    Escritura.pdf
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <div className="col text-center">
-                                <div className="btn btn-success my-3" onClick={_updateRealEstate}>
-                                    Guardar
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <RealEstateForm
+            type="edit"
+            projects={projects}
+            realEstates={realEstates}
+            projectId={project_id}
+            onProjectSelectedChange={(value) => {
+                set_project_id(value);
+                dispatch(actions.getRealEstatesByProject(value));
+            }}
+            onSubmit={async (values, form, isFinish) => {
+                delete values.acquisitions;
+                try {
+                    await dispatch(actions.updateRealEstate(realEstate.id, values));
+                    if (!isFinish) {
+                        return dispatch(actions.getRealEstatesByProject(project_id));
+                    } else {
+                        history.push("/acquisitions/real-estates/");
+                        return Promise.resolve();
+                    }
+                } catch (e) {
+                    return Promise.reject();
+                }
+            }}
+        />
     );
 };
 

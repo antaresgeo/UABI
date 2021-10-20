@@ -75,7 +75,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
     return (
         <Card title="Información de Adquisición">
             <div className="row">
-                {(type !== "view" || disabled) && (
+                {(type !== "view" || !disabled) && (
                     <>
                         <div className="col-12">
                             <div className="row">
