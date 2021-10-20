@@ -4,9 +4,10 @@ import {IProjectAttributes} from "../../../utils/interfaces/components.interface
 
 interface ProjectFormPros {
     project?: IProjectAttributes;
-    onSubmit: (values, form?) => Promise<any>;
+    onSubmit?: (values, form?) => Promise<any>;
+    disabled?: boolean;
 }
-const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit }) => {
+const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
     const initial_values: IProjectAttributes  = project || {
         id: "",
         name: "",
@@ -19,6 +20,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit }) => {
             form.setSubmitting(false);
         });
     };
+    console.log(disabled)
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values}>
             {({ values, isValid, isSubmitting }) => {
@@ -35,7 +37,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit }) => {
                                         id="id_id"
                                         className="form-control"
                                         aria-describedby="codigo del projecto"
-                                        disabled
+                                        disabled={true}
                                         name="id"
                                         autoComplete="off"
                                     />
@@ -59,6 +61,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit }) => {
                                     placeholder="Ej.: Puente de la Madre Laura"
                                     name="name"
                                     autoComplete="off"
+                                    disabled={disabled}
                                 />
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
                                     <ErrorMessage name="name" />
@@ -75,6 +78,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit }) => {
                                     name="dependency"
                                     id="dependency_id"
                                     autoComplete="off"
+                                    disabled={disabled}
                                 >
                                     <option value="" disabled hidden>
                                         Selecciona una Destinación
@@ -100,6 +104,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit }) => {
                                     aria-describedby="emailHelp"
                                     placeholder="Descripción del Proyecto"
                                     name="description"
+                                    disabled={disabled}
                                     autoComplete="off"
                                 />
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
@@ -109,7 +114,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit }) => {
                         </div>
                         <div className="row justify-content-end">
                             <div className="col text-end">
-                                <button className="btn btn-success my-3" disabled={!isValid || isSubmitting}>
+                                <button className="btn btn-success my-3" disabled={!isValid || isSubmitting || disabled}>
                                     Guardar
                                 </button>
                             </div>
@@ -120,4 +125,8 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit }) => {
         </Formik>
     );
 };
+
+ProjectForm.defaultProps = {
+    onSubmit: (v) => Promise.resolve(),
+}
 export default ProjectForm;

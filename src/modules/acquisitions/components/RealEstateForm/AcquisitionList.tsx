@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Table } from "../../../utils/ui";
+import {Link, Table} from "../../../../utils/ui";
 
 interface AcquisitionListProps {
     acquisitions: any[];
@@ -7,6 +7,7 @@ interface AcquisitionListProps {
 }
 
 const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
+    console.log("list", acquisitions);
     const acquisition_columns = [
         {
             title: "Tipo de Adquisición",
@@ -21,7 +22,7 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
         {
             title: "Valor de adquisición",
             align: "center" as "center",
-            dataIndex: "acquisition_value",
+            dataIndex: "act_value",
         },
         ...(type === "view"
             ? [
@@ -67,6 +68,21 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
                   },
               ]
             : []),
+        {
+            title: "Eliminar",
+            dataIndex: "",
+            align: "center" as "center",
+            render: (id) => {
+                return (
+                    <Link
+                        to=""
+                        name=""
+                        avatar={false}
+                        icon={<i className="fa fa-trash text-danger" aria-hidden="true" />}
+                    />
+                );
+            },
+        },
     ];
     return <Table columns={acquisition_columns} items={acquisitions} />;
 };

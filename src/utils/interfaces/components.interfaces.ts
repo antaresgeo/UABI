@@ -1,3 +1,5 @@
+import {AdquisitionsItf} from "../../modules/acquisitions/components/RealEstateForm/AdquisitionsForm";
+
 export interface ICardProps {
     name: string;
     path: string;
@@ -58,7 +60,7 @@ export interface IRealEstateAttributes {
     name: string;
     description: string;
     patrimonial_value: number;
-    address?: string;
+    location?: string;
     cbml?: string;
 
     total_area: number;
@@ -69,10 +71,11 @@ export interface IRealEstateAttributes {
 
     supports_documents?: object;
 
-    project_id: number;
+    project_id: number | string;
 
     status?: number;
     audit_trail?: IAuditTrail;
+    acquisitions?: AdquisitionsItf[]
 }
 
 export interface IRealEstatesResponse {
