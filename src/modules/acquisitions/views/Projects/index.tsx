@@ -104,12 +104,14 @@ const Projects = () => {
             title: "Fecha Creación",
             dataIndex: "audit_trail",
             align: "center" as "center",
-            render: (dates) => formatDate(dates?.created_on),
+
+            render: (audit_trail) => formatDate(audit_trail?.created_on),
         },
         {
             title: "Creado por",
-            dataIndex: "audit_trail.created_by",
+            dataIndex: "audit_trail",
             align: "center" as "center",
+            render: (audit_trail) => audit_trail?.created_by,
         },
         {
             title: "Acciones",

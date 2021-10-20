@@ -56,7 +56,13 @@ export const qsToArray = (qs: string) => {
 };
 export const setTitle = (title: string) => (document.title = title);
 
-export const formatDate = (date) => date && moment(date).format("DD-MM-YYYY");
+export const formatDate = (date) => {
+    const tmpDate = new Date(parseInt(date));
+
+    const newDate = moment(tmpDate).format("DD-MM-YYYY");
+
+    return date && newDate;
+};
 
 export const authenticationUme = () => {
     // cadena
