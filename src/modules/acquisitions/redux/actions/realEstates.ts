@@ -25,4 +25,4 @@ export const updateRealEstate = (data, id) =>
     request_dispatch(types.realEstate, service.updateRealEstate(data, id));
 
 export const deleteRealEstate = (id) =>
-    request_dispatch(types.realEstate, service.deleteRealEstate(id));
+    request_dispatch(types.deleteRealEstate, service.deleteRealEstate(id));

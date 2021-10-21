@@ -32,7 +32,7 @@ const updateProject = (data: any, id) =>
     request_dispatch(types.project, service.updateProject(data, id));
 
 const deleteProject = (id) =>
-    request_dispatch(types.project, service.deleteProject(id));
+    request_dispatch(types.deleteProject, service.deleteProject(id));
 
 const actions = {
     // example
