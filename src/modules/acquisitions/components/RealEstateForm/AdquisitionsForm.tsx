@@ -1,36 +1,12 @@
-import React, { FC, Fragment, useState } from "react";
-import { Table } from "semantic-ui-react";
-import CheckboxGroup from "react-checkbox-group";
-import { IAuditTrail } from "../../../../utils/interfaces/components.interfaces";
-import AcquisitionList from "./AcquisitionList";
-import { Card } from "../../../../utils/ui";
-
-export interface AdquisitionsItf {
-    id?: number;
-
-    acquisition_type: string;
-    active_type: string[];
-    title_type: string;
-    title_type_document_id?: string;
-    act_number: string;
-    act_value: number;
-
-    plot_area: number;
-    construction_area?: number;
-    acquired_percentage: number;
-    seller: string;
-
-    entity_type: string;
-    entity_number: string;
-    address?: string;
-    //--------
-    real_estate_id: number;
-    status?: number;
-    audit_trail?: IAuditTrail;
-}
+import React, { FC, Fragment, useState } from 'react';
+import { Table } from 'semantic-ui-react';
+import CheckboxGroup from 'react-checkbox-group';
+import { AdquisitionsItf, IAuditTrail } from '../../../../utils/interfaces';
+import AcquisitionList from './AcquisitionList';
+import { Card } from '../../../../utils/ui';
 
 interface AcquisitionsFromProps {
-    type?: "view" | "edit" | "create";
+    type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
     setFieldValue?: Function;
     acquisitions?: AdquisitionsItf[];
@@ -39,23 +15,23 @@ interface AcquisitionsFromProps {
 const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFieldValue, disabled }) => {
     const [count, set_count] = useState<number>(acquisitions.length || 0);
     const initial_values: AdquisitionsItf = {
-        acquisition_type: "",
+        acquisition_type: '',
         active_type: [],
-        title_type: "",
-        act_number: "",
+        title_type: '',
+        act_number: '',
         act_value: 0,
         plot_area: 0,
         acquired_percentage: 0,
-        seller: "",
-        entity_type: "",
-        entity_number: "",
+        seller: '',
+        entity_type: '',
+        entity_number: '',
         real_estate_id: 0,
     };
     const [acquisition, set_acquisition] = useState<AdquisitionsItf>(initial_values);
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
-        console.log("handleChange", { name, value });
+        console.log('handleChange', { name, value });
         const data = {
             ...acquisition,
             [name]: value,
@@ -75,7 +51,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
     return (
         <Card title="Información de Adquisición">
             <div className="row">
-                {(type !== "view" || !disabled) && (
+                {(type !== 'view' || !disabled) && (
                     <>
                         <div className="col-12">
                             <div className="row">
@@ -114,7 +90,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                             console.log(data);
                                             set_acquisition({
                                                 ...acquisition,
-                                                active_type: data.length > 0 ? data : ["Lote"],
+                                                active_type: data.length > 0 ? data : ['Lote'],
                                             });
                                         }}
                                     >
@@ -158,10 +134,10 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                     </select>
                                 </div>
                                 <div className="col-4">
-                                    {acquisition.title_type !== "None" && (
+                                    {acquisition.title_type !== 'None' && (
                                         <div className="mb-3">
                                             <label htmlFor="formFile" className="form-label">
-                                                Documento {acquisition.title_type ? `de ${acquisition.title_type}` : ""}
+                                                Documento {acquisition.title_type ? `de ${acquisition.title_type}` : ''}
                                             </label>
                                             <input className="form-control" type="file" id="title_type_document_id" />
                                             {/*<div id='emailHelp' className='form-text'>*/}
@@ -181,7 +157,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                         aria-describedby="act_number"
                                         name="act_number"
                                         onChange={handleChange}
-                                        value={acquisition.act_number || ""}
+                                        value={acquisition.act_number || ''}
                                     />
                                 </div>
                                 <div className="col-2">
@@ -195,7 +171,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                         aria-describedby="acquisition_value"
                                         name="act_value"
                                         onChange={handleChange}
-                                        value={acquisition.act_value || ""}
+                                        value={acquisition.act_value || ''}
                                     />
                                 </div>
                             </div>
@@ -211,8 +187,8 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                         aria-describedby="plot_area"
                                         name="plot_area"
                                         onChange={handleChange}
-                                        value={acquisition.plot_area || ""}
-                                        disabled={!acquisition.active_type?.includes("Lote")}
+                                        value={acquisition.plot_area || ''}
+                                        disabled={!acquisition.active_type?.includes('Lote')}
                                     />
                                 </div>
                                 <div className="col-2">
@@ -226,12 +202,12 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                         aria-describedby="construction_area"
                                         name="construction_area"
                                         onChange={handleChange}
-                                        value={acquisition.construction_area || ""}
+                                        value={acquisition.construction_area || ''}
                                         disabled={
                                             !(
-                                                acquisition.active_type?.includes("Construccion") ||
-                                                acquisition.active_type?.includes("Construccion para Mejora") ||
-                                                acquisition.active_type?.includes("Construcción para demoler")
+                                                acquisition.active_type?.includes('Construccion') ||
+                                                acquisition.active_type?.includes('Construccion para Mejora') ||
+                                                acquisition.active_type?.includes('Construcción para demoler')
                                             )
                                         }
                                     />
@@ -275,7 +251,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                         aria-describedby="acquired_percentage"
                                         name="acquired_percentage"
                                         onChange={handleChange}
-                                        value={acquisition.acquired_percentage || ""}
+                                        value={acquisition.acquired_percentage || ''}
                                     />
                                     <div id="emailHelp" className="form-text"></div>
                                 </div>
@@ -326,7 +302,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                         aria-describedby="entity_number"
                                         name="entity_number"
                                         onChange={handleChange}
-                                        value={acquisition.entity_number || ""}
+                                        value={acquisition.entity_number || ''}
                                     />
                                     <div id="emailHelp" className="form-text"></div>
                                 </div>
@@ -351,7 +327,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                         type="button"
                                         className="btn btn-primary mr-3"
                                         onClick={() => {
-                                            console.log("add adquisition", acquisition);
+                                            console.log('add adquisition', acquisition);
                                             addAcquisition(acquisition);
                                             clearAcquisition();
                                         }}

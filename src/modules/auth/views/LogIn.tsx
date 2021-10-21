@@ -1,22 +1,17 @@
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-// import * as actions from './../../store/actions/userAction';
-import { AxiosResponse } from "axios";
-import { Form, Image, Header, Input, Button, Grid, Icon, SemanticICONS } from "semantic-ui-react";
+import { useEffect, useState } from 'react';
+import { Form, Image, Header, Input, Button, Grid, Icon, SemanticICONS } from 'semantic-ui-react';
 
-import loginimage from "./../../../utils/assets/img/login.jpeg";
-import logo from "./../../../utils/assets/img/escudoAlcaldia.png";
-import { signIn } from "../../../apis/authentification";
-import { authenticationUme } from "../../../utils";
+import loginimage from './../../../utils/assets/img/login.jpeg';
+import logo from './../../../utils/assets/img/escudoAlcaldia.png';
+import { authenticationUme } from '../../../utils';
 
 export default function SignIn() {
-    const history = useHistory();
-    const [idusuario, setIdusuario] = useState("");
-    const [contraseña, setContraseña] = useState("");
-    const [contenidopassword, setContenidopassword] = useState("VER");
-    const [tipopassword, setTipoPassword] = useState("password");
+    const [idusuario, setIdusuario] = useState('');
+    const [contraseña, setContraseña] = useState('');
+    const [contenidopassword, setContenidopassword] = useState('VER');
+    const [tipopassword, setTipoPassword] = useState('password');
     const [passwordVisibled, setPasswordVisibled] = useState(false);
-    const [iconVisibility, setIconVisibility] = useState<SemanticICONS>("eye");
+    const [iconVisibility, setIconVisibility] = useState<SemanticICONS>('eye');
 
     async function ingresarUsuario() {
         // try {
@@ -44,11 +39,11 @@ export default function SignIn() {
     };
 
     const altVisibilityPassword = () => {
-        if (contraseña.trim() === "") return;
+        if (contraseña.trim() === '') return;
 
-        setTipoPassword(passwordVisibled ? "input" : "password");
-        setContenidopassword(passwordVisibled ? "Ocultar" : "Mostrar");
-        setIconVisibility(passwordVisibled ? "eye slash" : "eye");
+        setTipoPassword(passwordVisibled ? 'input' : 'password');
+        setContenidopassword(passwordVisibled ? 'Ocultar' : 'Mostrar');
+        setIconVisibility(passwordVisibled ? 'eye slash' : 'eye');
     };
 
     useEffect(() => {
@@ -57,7 +52,7 @@ export default function SignIn() {
 
     return (
         <div>
-            <Grid columns={2} style={{ height: "100vh" }} className="no-margin">
+            <Grid columns={2} style={{ height: '100vh' }} className="no-margin">
                 <Grid.Row className="no-padding-bottom no-padding-top">
                     <Grid.Column className="no-padding-right no-padding-left">
                         <Image className="image-container-login" src={loginimage} />

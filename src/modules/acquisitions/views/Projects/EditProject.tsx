@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { actions } from "../../redux";
+import { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { actions } from '../../redux';
 
 // SERVICES
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 
 // INTERFACES
-import {
-    IProjectAttributes,
-} from "../../../../utils/interfaces/components.interfaces";
-import swal from "sweetalert";
-import { Card } from "../../../../utils/ui";
-import ProjectForm from "../../components/ProjectForm";
-
+import { IProjectAttributes } from '../../../../utils/interfaces';
+import swal from 'sweetalert';
+import { Card } from '../../../../utils/ui';
+import ProjectForm from '../../components/ProjectForm';
 
 interface IParams {
     id: string;
@@ -28,7 +25,7 @@ const DetailProject = ({ view }: IProps) => {
     const dispatch = useDispatch();
 
     const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
-    
+
     const _updateProject = async (projectForm) => {
         let res: any;
         res = await dispatch(
@@ -39,7 +36,7 @@ const DetailProject = ({ view }: IProps) => {
         );
 
         console.log(res);
-        await swal("Proyecto actualizado", res.data.message, "success");
+        await swal('Proyecto actualizado', res.data.message, 'success');
         history.push(`/acquisitions/projects/${project.id}`);
     };
 

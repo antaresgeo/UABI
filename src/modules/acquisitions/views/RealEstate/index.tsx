@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { actions } from "./../../redux";
-import { IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
-import { Link, Card } from "../../../../utils/ui";
-import RealEstateList from "../../components/RealEstateList";
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from './../../redux';
+import { IRealEstateAttributes } from '../../../../utils/interfaces';
+import { Link, Card } from '../../../../utils/ui';
+import RealEstateList from '../../components/RealEstateList';
 // import { swal } from "../../../../utils";
 
 const RealEstates = () => {
     const dispatch = useDispatch();
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
-    const [query, set_query] = useState<string>("");
-    const [page_size, set_pageSize] = useState<number>(10);
+    const { total_results } = useSelector((store: any) => store.acquisitions.realEstates.pagination);
+
+    const [query, set_query] = useState<string>('');
+    // const [page_size, set_pageSize] = useState<number>(10);
 
     useEffect(() => {
         dispatch(actions.getRealEstates({}));
@@ -61,7 +63,12 @@ const RealEstates = () => {
                                 </div>
                             </div>
                         </form>
-                        <RealEstateList realEstates={realEstates} withProject change_page={change_page} />
+                        <RealEstateList
+                            realEstates={realEstates}
+                            withProject
+                            change_page={change_page}
+                            total={total_results}
+                        />
                     </Card>
                 </div>
             </div>

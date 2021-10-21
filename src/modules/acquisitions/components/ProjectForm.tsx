@@ -1,6 +1,6 @@
-import { FC } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import {IProjectAttributes} from "../../../utils/interfaces/components.interfaces";
+import { FC } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { IProjectAttributes } from '../../../utils/interfaces/';
 
 interface ProjectFormPros {
     project?: IProjectAttributes;
@@ -8,19 +8,18 @@ interface ProjectFormPros {
     disabled?: boolean;
 }
 const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
-    const initial_values: IProjectAttributes  = project || {
-        id: "",
-        name: "",
-        description: "",
-        dependency: "",
-        status: -1
+    const initial_values: IProjectAttributes = project || {
+        id: '',
+        name: '',
+        description: '',
+        dependency: '',
+        status: -1,
     };
     const submit = (values, form) => {
         onSubmit(values, form).then(() => {
             form.setSubmitting(false);
         });
     };
-    console.log(disabled)
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values}>
             {({ values, isValid, isSubmitting }) => {
@@ -43,7 +42,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
                                     />
                                     <span
                                         className="text-danger text-left d-block w-100 mt-1"
-                                        style={{ height: "22px" }}
+                                        style={{ height: '22px' }}
                                     >
                                         <ErrorMessage name="id" />
                                     </span>
@@ -63,7 +62,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
                                     autoComplete="off"
                                     disabled={disabled}
                                 />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="name" />
                                 </span>
                             </div>
@@ -87,7 +86,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
                                     <option value="Dependencia Salud">Dependencia Salud</option>
                                     <option value="Dependencia Educación">Dependencia Educación</option>
                                 </Field>
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="dependency" />
                                 </span>
                             </div>
@@ -107,14 +106,17 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
                                     disabled={disabled}
                                     autoComplete="off"
                                 />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="description" />
                                 </span>
                             </div>
                         </div>
                         <div className="row justify-content-end">
                             <div className="col text-end">
-                                <button className="btn btn-success my-3" disabled={!isValid || isSubmitting || disabled}>
+                                <button
+                                    className="btn btn-success my-3"
+                                    disabled={!isValid || isSubmitting || disabled}
+                                >
                                     Guardar
                                 </button>
                             </div>
@@ -128,5 +130,5 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
 
 ProjectForm.defaultProps = {
     onSubmit: (v) => Promise.resolve(),
-}
+};
 export default ProjectForm;

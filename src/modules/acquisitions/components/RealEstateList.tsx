@@ -1,28 +1,30 @@
-import { FC } from "react";
-import { formatDate } from "../../../utils";
-import { Link, Table } from "../../../utils/ui";
-import { useSelector, useDispatch } from "react-redux";
-import { swal } from "../../../utils";
+import { FC } from 'react';
+import { formatDate } from '../../../utils';
+import { Link, Table } from '../../../utils/ui';
+import { useSelector, useDispatch } from 'react-redux';
+import { swal } from '../../../utils';
 
-import { IRealEstateAttributes } from "../../../utils/interfaces/components.interfaces";
-import { actions } from "../redux";
+import { IRealEstateAttributes } from '../../../utils/interfaces';
+import { actions } from '../redux';
 
 interface RealEstateListProps {
     realEstates: IRealEstateAttributes[];
     withProject?: boolean;
     change_page?: (page: number, pageSize?: number) => void;
+    total?: number;
 }
-const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, change_page }) => {
+const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, change_page, total }) => {
     const dispatch = useDispatch();
+    console.log(realEstates);
 
     const deleteRealEstate = (id) => async () => {
         const result = await swal.fire({
-            icon: "warning",
-            title: "¿Está seguro?",
-            text: "¿Está seguro que quiere inactivar el Bien Inmueble?",
+            icon: 'warning',
+            title: '¿Está seguro?',
+            text: '¿Está seguro que quiere inactivar el Bien Inmueble?',
             showDenyButton: true,
             showCancelButton: false,
-            confirmButtonText: "Continuar",
+            confirmButtonText: 'Continuar',
             denyButtonText: `Cancelar`,
         });
 
@@ -48,48 +50,48 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
 
     const table_columns = [
         {
-            title: "ID",
-            dataIndex: "id",
-            align: "center" as "center",
+            title: 'ID',
+            dataIndex: 'id',
+            align: 'center' as 'center',
         },
         {
-            title: "Matricula",
-            dataIndex: "registry_number",
-            align: "center" as "center",
+            title: 'Matricula',
+            dataIndex: 'registry_number',
+            align: 'center' as 'center',
         },
         {
-            title: "Nombre",
-            dataIndex: "name",
-            align: "center" as "center",
+            title: 'Nombre',
+            dataIndex: 'name',
+            align: 'center' as 'center',
         },
         ...(withProject
             ? [
                   {
-                      title: "Proyecto Asociado",
-                      dataIndex: "project_id",
-                      align: "center" as "center",
+                      title: 'Proyecto Asociado',
+                      dataIndex: 'project_id',
+                      align: 'center' as 'center',
                   },
               ]
             : []),
         {
-            title: "Fecha Creación",
-            dataIndex: "audit_trail",
-            align: "center" as "center",
+            title: 'Fecha Creación',
+            dataIndex: 'audit_trail',
+            align: 'center' as 'center',
             render: (dates) => formatDate(dates?.created_on),
         },
         {
-            title: "Creado por",
-            dataIndex: "audit_trail.created_by",
-            align: "center" as "center",
+            title: 'Creado por',
+            dataIndex: 'audit_trail.created_by',
+            align: 'center' as 'center',
         },
         {
-            title: "Acciones",
+            title: 'Acciones',
             fixed: true,
             children: [
                 {
-                    title: "Ver",
-                    dataIndex: "id",
-                    align: "center" as "center",
+                    title: 'Ver',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <Link
@@ -102,9 +104,9 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
                     },
                 },
                 {
-                    title: "Editar",
-                    dataIndex: "id",
-                    align: "center" as "center",
+                    title: 'Editar',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <Link
@@ -117,9 +119,9 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
                     },
                 },
                 {
-                    title: "Eliminar",
-                    dataIndex: "id",
-                    align: "center" as "center",
+                    title: 'Eliminar',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <div className="text-danger" onClick={deleteRealEstate(id)}>
@@ -131,7 +133,9 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
             ],
         },
     ];
-    return <Table columns={table_columns} items={realEstates} with_pagination count={10} change_page={change_page} />;
+    return (
+        <Table columns={table_columns} items={realEstates} with_pagination count={total} change_page={change_page} />
+    );
 };
 
 RealEstateList.defaultProps = {

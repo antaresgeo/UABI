@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios";
-import { swal } from "../../../utils";
+// import { swal } from "../../../utils";
 
-import { IProjectResponse } from "../../../utils/interfaces/components.interfaces";
 import {
     IAddressResponse,
     ICityAddressAttributes,
@@ -56,79 +55,7 @@ export const getList = async (
     }
 };
 
-// export const getProjects = async (): Promise<IProjectAttributes[] | string> => {
-//     try {
-//         let URI = `/projects/lists`;
-//         let res: AxiosResponse<IProjectsResponse> = await http.get(URI);
 
-//         return res.data.data;
-//     } catch (error) {
-//         console.error(error);
-//         return Promise.reject("Error");
-//     }
-// };
-
-// Services: POST
-// export const createProject = async (
-//     name: string,
-//     description: string,
-//     dependency: string
-// ): Promise<IProjectAttributes | string> => {
-//     try {
-//         let URI = `/projects`;
-//         let res: AxiosResponse<IProjectResponse> = await http.post(URI, {
-//             name,
-//             description,
-//             dependency,
-//         });
-
-//         await swal.fire("Proyecto creado", res.data.message, "success");
-
-//         return res.data.data;
-//     } catch (error) {
-//         console.error(error);
-//         await swal.fire("Error", "", "error");
-
-//         return Promise.reject("Error");
-//     }
-// };
-
-// Services: PUT
-// export const updateProject = async (data: any, id: number) => {
-//     try {
-//         let URI = `/projects`;
-//         let res: AxiosResponse<IProjectResponse> = await http.put(URI, data, {
-//             params: { id },
-//         });
-
-//         return res;
-//     } catch (error) {
-//         console.error(error);
-//         return Promise.reject("Error");
-//     }
-// };
-
-// export const deleteProject = async (id: number) => {
-//     try {
-//         let URI = `/projects/delete`;
-//         let res: AxiosResponse<IProjectResponse> = await http.delete(URI, {
-//             params: { id },
-//         });
-
-//         swal.fire({
-//             title: "Proyecto Inactivado",
-//             text: res.data.message,
-//             icon: "success",
-//             showConfirmButton: false,
-//             timer: 1500,
-//         });
-
-//         return res.data.data;
-//     } catch (error) {
-//         console.error(error);
-//         return Promise.reject("Error in delete Project");
-//     }
-// };
 
 // export const getIdFromLocation = async ({
 //     city,
