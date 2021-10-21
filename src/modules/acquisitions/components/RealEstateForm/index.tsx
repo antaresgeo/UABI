@@ -1,11 +1,12 @@
 import { IProjectAttributes, IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
 import { Formik, Form } from "formik";
-import {FC, useState} from "react";
+import { FC, useState } from "react";
 import GeneralDataForm from "./GeneralDataForm";
 import AcquisitionsFrom from "./AdquisitionsForm";
 import RealEstateList from "../RealEstateList";
-import {Card} from "../../../../utils/ui";
-import {Input} from "semantic-ui-react";
+import { Card } from "../../../../utils/ui";
+import { Input } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 
 interface RealEstateFormProps {
     realEstate?: IRealEstateAttributes;
@@ -14,12 +15,21 @@ interface RealEstateFormProps {
     projects: IProjectAttributes[];
     type: "view" | "edit" | "create";
     onProjectSelectedChange?: (value) => void;
-    realEstates?: IRealEstateAttributes[],
-    projectId?: number
+    realEstates?: IRealEstateAttributes[];
+    projectId?: number;
 }
 
-const RealEstateForm: FC<RealEstateFormProps> = ({ realEstate, onSubmit, disabled, projects, type, onProjectSelectedChange, projectId }) => {
-
+const RealEstateForm: FC<RealEstateFormProps> = ({
+    realEstates,
+    realEstate,
+    onSubmit,
+    disabled,
+    projects,
+    type,
+    onProjectSelectedChange,
+    projectId,
+}) => {
+    const history = useHistory();
     const initial_values: IRealEstateAttributes = realEstate || {
         id: 0,
         sap_id: "",
@@ -116,7 +126,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({ realEstate, onSubmit, disable
                                                 </div>
                                             </Card>
                                             <Card title="Bienes Inmuebles del Proyecto">
-                                                <RealEstateList realEstates={[]} />
+                                                <RealEstateList realEstates={realEstates} />
                                             </Card>
                                         </div>
                                     </div>
@@ -126,16 +136,30 @@ const RealEstateForm: FC<RealEstateFormProps> = ({ realEstate, onSubmit, disable
                                 className="bg-white d-flex flex-row justify-content-between"
                                 style={{ padding: 16, borderTop: "1px solid #ccc" }}
                             >
-                                <button type="button" className="btn btn-primary">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        history.goBack();
+                                    }}
+                                >
                                     Atras
                                 </button>
-                                <div/>
-                                <button type="button" className="btn btn-primary" onClick={() => {
-                                    submit(formik.values, formik, true)
-                                }}>
-                                    Finalizar
-                                </button>
-                                <button className="btn btn-success">Guardar</button>
+                                <div />
+                                {type !== "view" && (
+                                    <>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary"
+                                            onClick={() => {
+                                                submit(formik.values, formik, true);
+                                            }}
+                                        >
+                                            Finalizar
+                                        </button>
+                                        <button className="btn btn-success">Guardar</button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </Form>
