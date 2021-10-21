@@ -1,4 +1,3 @@
-
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { actions } from "../../redux";
@@ -11,9 +10,9 @@ const CreateRealEstate = () => {
     const dispatch = useDispatch();
 
     const createProject = async (projectName, projectDescription, dependency) => {
-        const response: any = await dispatch(actions.createProject(projectName, projectDescription, dependency));
-        await swal("Message", response.message, "success");
-        history.push(`/acquisitions/projects/`);
+        const res: any = await dispatch(actions.createProject(projectName, projectDescription, dependency));
+
+        history.push(`/acquisitions/projects/${res.id}`);
     };
 
     return (
