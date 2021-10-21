@@ -122,7 +122,7 @@ const getRealEstates = async ({
 }): Promise<IRealEstateAttributes[] | string> => {
     try {
         let URI = `/real-estates/lists/`;
-        let res: AxiosResponse<IRealEstatesResponse> = await http.get(URI,  {
+        let res: AxiosResponse<IRealEstatesResponse> = await http.get(URI, {
             params: {
                 page,
                 pageSize,
@@ -174,6 +174,14 @@ export const createRealEstate = async (
 ): Promise<IProjectAttributes | string> => {
     try {
         let URI = `/real-estates`;
+
+        delete data.id;
+        delete data.status;
+        delete data.acquisitions;
+        delete data.audit_trail;
+        delete data.supports_documents;
+        delete data.registry_number_document_id;
+
         let res: AxiosResponse<IProjectResponse> = await http.post(URI, data);
 
         return res.data.data;
@@ -187,15 +195,36 @@ export const createRealEstate = async (
 export const updateRealEstate = async (data: any, id: number) => {
     try {
         let URI = `/real-estates`;
-        delete data["id"];
-        delete data["audit_trail"];
+
+        delete data.id;
+        delete data.status;
+        delete data.acquisitions;
+        delete data.audit_trail;
+        delete data.supports_documents;
+        delete data.registry_number_document_id;
+
         let res: AxiosResponse<IProjectResponse> = await http.put(URI, data, {
             params: { id: id },
         });
 
-        return res;
+        swal.fire({
+            title: "Bien Inmueble actualizado.",
+            text: res.data.message,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+
+        return res.data.data;
     } catch (error) {
         console.error(error);
+        swal.fire({
+            title: "Bien Inmueble actualizado con error.",
+            text: "Error",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
         return Promise.reject("Error");
     }
 };

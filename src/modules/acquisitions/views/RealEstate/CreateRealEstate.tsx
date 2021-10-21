@@ -26,7 +26,7 @@ const RealEstate = () => {
 
     useEffect(() => {
         dispatch(actions.getProjects());
-        if(history.location.state?.project_id) {
+        if (history.location.state?.project_id) {
             dispatch(actions.getRealEstatesByProject(history.location.state?.project_id));
         }
     }, []);
@@ -38,17 +38,18 @@ const RealEstate = () => {
             realEstates={realEstates}
             projectId={project_id}
             onProjectSelectedChange={(value) => {
-                set_project_id(value)
-                dispatch(actions.getRealEstatesByProject(value));
+                if (project_id !== value) {
+                    set_project_id(value);
+                    if (value) dispatch(actions.getRealEstatesByProject(value));
+                }
             }}
             onSubmit={async (values, form, isFinish) => {
-                delete values.acquisitions;
                 try {
-                    await dispatch(actions.createRealEstate(values));
+                    const res: any = await dispatch(actions.createRealEstate(values));
                     if (!isFinish) {
-                        return dispatch(actions.getRealEstatesByProject(project_id));
+                        if (res.project_id) return await dispatch(actions.getRealEstatesByProject(res.project_id));
                     } else {
-                        history.push("/acquisitions/real-estates/");
+                        history.push(`/acquisitions/real-estates/`);
                         return Promise.resolve();
                     }
                 } catch (e) {

@@ -36,22 +36,24 @@ const DetailRealEstate = () => {
             realEstate={realEstate}
             projectId={parseInt(project_id + "")}
             onProjectSelectedChange={(value) => {
-                set_project_id(value);
-                dispatch(actions.getRealEstatesByProject(value));
+                if (project_id !== value) {
+                    set_project_id(value);
+                    if (value) dispatch(actions.getRealEstatesByProject(value));
+                }
             }}
             onSubmit={async (values, form, isFinish) => {
-                delete values.acquisitions;
-                try {
-                    await dispatch(actions.createRealEstate(values));
-                    if (!isFinish) {
-                        return dispatch(actions.getRealEstatesByProject(project_id));
-                    } else {
-                        history.push("/acquisitions/real-estates/");
-                        return Promise.resolve();
-                    }
-                } catch (e) {
-                    return Promise.reject();
-                }
+                // delete values.acquisitions;
+                // try {
+                //     await dispatch(actions.createRealEstate(values));
+                //     if (!isFinish) {
+                //         return dispatch(actions.getRealEstatesByProject(project_id));
+                //     } else {
+                //         history.push("/acquisitions/real-estates/");
+                //         return Promise.resolve();
+                //     }
+                // } catch (e) {
+                return Promise.reject();
+                // }
             }}
         />
     );
