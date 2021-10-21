@@ -15,6 +15,11 @@ const types = Object.freeze({
         success: "Se consulta endpoint de servicio Project [success]",
         fail: "Se consulta endpoint de servicio Project [fail]",
     },
+    deleteProject: {
+        default: "Se consulta endpoint delete de servicio Project [default]",
+        success: "Se consulta endpoint delete de servicio Project [success]",
+        fail: "Se consulta endpoint delete de servicio Project [fail]",
+    },
     realEstates: {
         default: "Se consulta endpoint de servicio Real Estates [default]",
         success: "Se consulta endpoint de servicio Real Estates [success]",
@@ -24,6 +29,13 @@ const types = Object.freeze({
         default: "Se consulta endpoint de servicio Real Estate [default]",
         success: "Se consulta endpoint de servicio Real Estate [success]",
         fail: "Se consulta endpoint de servicio Real Estate [fail]",
+    },
+    deleteRealEstate: {
+        default:
+            "Se consulta endpoint delete de servicio Real Estate [default]",
+        success:
+            "Se consulta endpoint delete de servicio Real Estate [success]",
+        fail: "Se consulta endpoint delete de servicio Real Estate [fail]",
     },
     acquisitions: {
         default: "Se consulta endpoint de servicio Acquisitions [default]",

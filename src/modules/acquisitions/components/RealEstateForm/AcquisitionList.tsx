@@ -1,5 +1,5 @@
 import { FC } from "react";
-import {Link, Table} from "../../../../utils/ui";
+import { Link, Table } from "../../../../utils/ui";
 
 interface AcquisitionListProps {
     acquisitions: any[];
@@ -7,7 +7,6 @@ interface AcquisitionListProps {
 }
 
 const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
-    console.log("list", acquisitions);
     const acquisition_columns = [
         {
             title: "Tipo de Adquisición",

@@ -1,6 +1,7 @@
-export { auth as authttp } from "./auth";
+// export { auth as authttp } from "./auth";
 export { http } from "./general";
-export { http as locationhttp } from "./location";
+export { http as location_http } from "./location";
+export { http as auth_http } from "./auth";
 export { zero } from "./zero";
 export const UNAUTHORIZED = 401;
 export const FORBIDDEN = 403;

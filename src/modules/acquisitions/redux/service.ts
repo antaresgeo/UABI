@@ -10,7 +10,7 @@ import {
     IRealEstateResponse,
     IRealEstatesResponse,
 } from "../../../utils/interfaces/components.interfaces";
-import { locationhttp } from "./../../../config/axios_instances";
+import { location_http } from "./../../../config/axios_instances";
 
 // PROJECTS
 // Services: GET
@@ -30,10 +30,20 @@ export const getProject = async (
     }
 };
 
-export const getProjects = async (): Promise<IProjectAttributes[] | string> => {
+const getProjects = async ({
+    page = 1,
+    pageSize = 10,
+    q = null,
+}): Promise<IProjectAttributes[] | string> => {
     try {
         let URI = `/projects/lists`;
-        let res: AxiosResponse<IProjectsResponse> = await http.get(URI);
+        let res: AxiosResponse<IProjectsResponse> = await http.get(URI, {
+            params: {
+                page,
+                pageSize,
+                ...(q ? { q } : {}),
+            },
+        });
         return res.data.data;
     } catch (error) {
         console.error(error);
@@ -112,7 +122,7 @@ const getRealEstates = async ({
 }): Promise<IRealEstateAttributes[] | string> => {
     try {
         let URI = `/real-estates/lists/`;
-        let res: AxiosResponse<IRealEstatesResponse> = await http.get(URI,  {
+        let res: AxiosResponse<IRealEstatesResponse> = await http.get(URI, {
             params: {
                 page,
                 pageSize,
@@ -164,6 +174,14 @@ export const createRealEstate = async (
 ): Promise<IProjectAttributes | string> => {
     try {
         let URI = `/real-estates`;
+
+        delete data.id;
+        delete data.status;
+        delete data.acquisitions;
+        delete data.audit_trail;
+        delete data.supports_documents;
+        delete data.registry_number_document_id;
+
         let res: AxiosResponse<IProjectResponse> = await http.post(URI, data);
 
         return res.data.data;
@@ -177,15 +195,36 @@ export const createRealEstate = async (
 export const updateRealEstate = async (data: any, id: number) => {
     try {
         let URI = `/real-estates`;
-        delete data["id"];
-        delete data["audit_trail"];
+
+        delete data.id;
+        delete data.status;
+        delete data.acquisitions;
+        delete data.audit_trail;
+        delete data.supports_documents;
+        delete data.registry_number_document_id;
+
         let res: AxiosResponse<IProjectResponse> = await http.put(URI, data, {
             params: { id: id },
         });
 
-        return res;
+        swal.fire({
+            title: "Bien Inmueble actualizado.",
+            text: res.data.message,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+
+        return res.data.data;
     } catch (error) {
         console.error(error);
+        swal.fire({
+            title: "Bien Inmueble actualizado con error.",
+            text: "Error",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
         return Promise.reject("Error");
     }
 };
@@ -236,7 +275,7 @@ export const insertAddress = async ({
 export const getAddressById = async (id) => {
     try {
         let URI = "/addresses/formated/";
-        let res = await locationhttp.get(URI, { params: { id } });
+        let res = await location_http.get(URI, { params: { id } });
         return res.data.data;
     } catch (e) {
         return Promise.reject("Error");
@@ -270,14 +309,29 @@ const getAddress = async (values) => {
 
 const deleteRealEstate = async (id) => {
     try {
-        let URI = `/projects`;
-        let res: AxiosResponse<IProjectResponse> = await http.get(URI, {
+        let URI = `/real-estates/delete`;
+        let res: AxiosResponse<IRealEstateResponse> = await http.delete(URI, {
             params: { id },
         });
 
+        swal.fire({
+            title: "Bien Inmueble Inactivado",
+            text: res.data.message,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+
         return res.data.data;
-    } catch (e) {
-        return Promise.reject("Error");
+    } catch (error) {
+        console.error(error);
+        swal.fire({
+            title: "Error al inactivar Bien Inmueble",
+            text: error.message,
+            icon: "error",
+            showConfirmButton: false,
+        });
+        return Promise.reject("Error in delete Project");
     }
 };
 
@@ -293,6 +347,7 @@ const services = {
     updateRealEstate,
     getAddress,
     deleteProject,
+    deleteRealEstate,
 };
 
 export default services;

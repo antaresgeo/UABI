@@ -10,7 +10,7 @@ import {
     INeighborhoodAddressAttributes,
     IStateAddressAttributes,
 } from "../../interfaces";
-import { locationhttp } from "./../../../config/axios_instances";
+import { location_http } from "./../../../config/axios_instances";
 
 interface IParams {
     country?: string;
@@ -41,9 +41,12 @@ export const getList = async (
 
     try {
         let URI = `/localizations/lists`;
-        let res: AxiosResponse<IAddressResponse> = await locationhttp.get(URI, {
-            params,
-        });
+        let res: AxiosResponse<IAddressResponse> = await location_http.get(
+            URI,
+            {
+                params,
+            }
+        );
         console.log(res.data);
 
         return res.data.data;
@@ -173,7 +176,7 @@ export const getList = async (
 // export const getAddressById = async (id) => {
 //     try {
 //         let URI = "/addresses/formated/";
-//         let res = await locationhttp.get(URI, { params: { id } });
+//         let res = await location_http.get(URI, { params: { id } });
 //         return res.data.data;
 //     } catch (e) {
 //         return Promise.reject("Error");

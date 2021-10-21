@@ -4,12 +4,14 @@ import { actions } from "./../../redux";
 import { IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
 import { Link, Card } from "../../../../utils/ui";
 import RealEstateList from "../../components/RealEstateList";
+// import { swal } from "../../../../utils";
 
 const RealEstates = () => {
     const dispatch = useDispatch();
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
     const [query, set_query] = useState<string>("");
     const [page_size, set_pageSize] = useState<number>(10);
+
     useEffect(() => {
         dispatch(actions.getRealEstates({}));
     }, []);
@@ -19,7 +21,7 @@ const RealEstates = () => {
     };
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.getRealEstates({ page,  pageSize, q: query }));
+        dispatch(actions.getRealEstates({ page, pageSize, q: query }));
     };
 
     return (
@@ -43,7 +45,7 @@ const RealEstates = () => {
                                                 aria-describedby="button-addon2"
                                                 value={query}
                                                 onChange={(e) => {
-                                                    set_query(e.target.value)
+                                                    set_query(e.target.value);
                                                 }}
                                             />
                                             <span className="input-group-text" onClick={filter}>
@@ -59,7 +61,7 @@ const RealEstates = () => {
                                 </div>
                             </div>
                         </form>
-                        <RealEstateList realEstates={realEstates} withProject change_page={change_page}/>
+                        <RealEstateList realEstates={realEstates} withProject change_page={change_page} />
                     </Card>
                 </div>
             </div>

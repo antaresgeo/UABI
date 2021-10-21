@@ -1,7 +1,11 @@
 import { FC } from "react";
 import { formatDate } from "../../../utils";
 import { Link, Table } from "../../../utils/ui";
+import { useSelector, useDispatch } from "react-redux";
+import { swal } from "../../../utils";
+
 import { IRealEstateAttributes } from "../../../utils/interfaces/components.interfaces";
+import { actions } from "../redux";
 
 interface RealEstateListProps {
     realEstates: IRealEstateAttributes[];
@@ -9,6 +13,39 @@ interface RealEstateListProps {
     change_page?: (page: number, pageSize?: number) => void;
 }
 const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, change_page }) => {
+    const dispatch = useDispatch();
+
+    const deleteRealEstate = (id) => async () => {
+        const result = await swal.fire({
+            icon: "warning",
+            title: "¿Está seguro?",
+            text: "¿Está seguro que quiere inactivar el Bien Inmueble?",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: "Continuar",
+            denyButtonText: `Cancelar`,
+        });
+
+        if (result.isConfirmed) {
+            await dispatch(actions.deleteRealEstate(id));
+            await dispatch(actions.getRealEstates({}));
+            // const _res: any = await dispatch(actions.deleteProject(id));
+            // console.log(_res);
+
+            // console.log(_res.message);
+
+            // swal.fire({
+            //     title: "Proyecto Inactivado",
+            //     text: message,
+            //     icon: "success",
+            //     showConfirmButton: false,
+            //     timer: 1500,
+            // });
+        } else if (result.isDenied) {
+            swal.close();
+        }
+    };
+
     const table_columns = [
         {
             title: "ID",
@@ -85,13 +122,9 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
                     align: "center" as "center",
                     render: (id) => {
                         return (
-                            <Link
-                                to={`/acquisitions/real-estates/delete?id=${id}`}
-                                name=""
-                                avatar={false}
-                                className="text-danger"
-                                icon={<i className="fa fa-trash" aria-hidden="true" />}
-                            />
+                            <div className="text-danger" onClick={deleteRealEstate(id)}>
+                                <i className="fa fa-trash" aria-hidden="true" />
+                            </div>
                         );
                     },
                 },
@@ -103,7 +136,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
 
 RealEstateList.defaultProps = {
     withProject: false,
-    change_page: () => {}
+    change_page: () => {},
 };
 
 export default RealEstateList;

@@ -3,8 +3,11 @@ import types from "../types";
 import service from "../service";
 
 // REAL ESTATES
-export const getRealEstates = (filters: {page?: number, pageSize?: 10| 20| 30, q?: string}) =>
-    request_dispatch(types.realEstates, service.getRealEstates(filters));
+export const getRealEstates = (filters: {
+    page?: number;
+    pageSize?: 10 | 20 | 30;
+    q?: string;
+}) => request_dispatch(types.realEstates, service.getRealEstates(filters));
 
 export const getRealEstatesByProject = (id) =>
     request_dispatch(
@@ -21,5 +24,5 @@ export const createRealEstate = (data) =>
 export const updateRealEstate = (data, id) =>
     request_dispatch(types.realEstate, service.updateRealEstate(data, id));
 
-// export const deleteRealEstate = (id) =>
-// request_dispatch(types.realEstate, service.deleteRealEstate(id));
+export const deleteRealEstate = (id) =>
+    request_dispatch(types.deleteRealEstate, service.deleteRealEstate(id));
