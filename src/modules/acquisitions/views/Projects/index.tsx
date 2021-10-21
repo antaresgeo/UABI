@@ -1,39 +1,40 @@
-import { useEffect /*, useState*/ } from "react";
-import { IProjectAttributes /*, IProjectsResponse*/ } from "../../../../utils/interfaces/components.interfaces";
+import { useEffect /*, useState*/ } from 'react';
+import { IProjectAttributes /*, IProjectsResponse*/ } from '../../../../utils/interfaces';
 // import ItemProject from "../../components/ItemProject";
-import { useSelector, useDispatch } from "react-redux";
-import { actions } from "../../redux";
-import { Link, Card, Table as UiTable } from "../../../../utils/ui";
-import { formatDate, swal } from "../../../../utils";
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from '../../redux';
+import { Link, Card, Table as UiTable } from '../../../../utils/ui';
+import { formatDate, swal } from '../../../../utils';
 
 const Projects = () => {
     const dispatch = useDispatch();
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
+    const { total_results } = useSelector((store: any) => store.acquisitions.projects.pagination);
 
     const deleteProject = (id) => async () => {
         let res: any;
-        if (id !== "" && id !== undefined) {
+        if (id !== '' && id !== undefined) {
             res = await dispatch(actions.getRealEstatesByProject(id));
         }
         if (res.length !== 0) {
             const result = await swal.fire({
-                icon: "warning",
-                title: "¡Precaución!",
+                icon: 'warning',
+                title: '¡Precaución!',
                 text: `El proyecto contiene ${res.length} bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
                 showDenyButton: true,
                 showCancelButton: false,
-                confirmButtonText: "Continuar",
+                confirmButtonText: 'Continuar',
                 denyButtonText: `Cancelar`,
             });
 
             if (result.isConfirmed) {
                 swal.fire({
-                    icon: "info",
-                    title: "¡Última oportunidad!",
-                    text: "¿Está seguro que quiere inactivar el proyecto?",
+                    icon: 'info',
+                    title: '¡Última oportunidad!',
+                    text: '¿Está seguro que quiere inactivar el proyecto?',
                     showDenyButton: true,
                     showCancelButton: false,
-                    confirmButtonText: "Continuar",
+                    confirmButtonText: 'Continuar',
                     denyButtonText: `Cancelar`,
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -55,12 +56,12 @@ const Projects = () => {
             }
         } else {
             const result = await swal.fire({
-                icon: "warning",
-                title: "¿Está seguro?",
-                text: "¿Está seguro que quiere inactivar el proyecto?",
+                icon: 'warning',
+                title: '¿Está seguro?',
+                text: '¿Está seguro que quiere inactivar el proyecto?',
                 showDenyButton: true,
                 showCancelButton: false,
-                confirmButtonText: "Continuar",
+                confirmButtonText: 'Continuar',
                 denyButtonText: `Cancelar`,
             });
 
@@ -86,41 +87,41 @@ const Projects = () => {
 
     const table_columns = [
         {
-            title: "ID",
-            dataIndex: "id",
-            align: "center" as "center",
+            title: 'ID',
+            dataIndex: 'id',
+            align: 'center' as 'center',
         },
         {
-            title: "Nombre",
-            dataIndex: "name",
-            align: "center" as "center",
+            title: 'Nombre',
+            dataIndex: 'name',
+            align: 'center' as 'center',
         },
         {
-            title: "Dependencia",
-            dataIndex: "dependency",
-            align: "center" as "center",
+            title: 'Dependencia',
+            dataIndex: 'dependency',
+            align: 'center' as 'center',
         },
         {
-            title: "Fecha Creación",
-            dataIndex: "audit_trail",
-            align: "center" as "center",
+            title: 'Fecha Creación',
+            dataIndex: 'audit_trail',
+            align: 'center' as 'center',
 
             render: (audit_trail) => formatDate(audit_trail?.created_on),
         },
         {
-            title: "Creado por",
-            dataIndex: "audit_trail",
-            align: "center" as "center",
+            title: 'Creado por',
+            dataIndex: 'audit_trail',
+            align: 'center' as 'center',
             render: (audit_trail) => audit_trail?.created_by,
         },
         {
-            title: "Acciones",
+            title: 'Acciones',
             fixed: true,
             children: [
                 {
-                    title: "Ver",
-                    dataIndex: "id",
-                    align: "center" as "center",
+                    title: 'Ver',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <Link
@@ -133,9 +134,9 @@ const Projects = () => {
                     },
                 },
                 {
-                    title: "Editar",
-                    dataIndex: "id",
-                    align: "center" as "center",
+                    title: 'Editar',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <Link
@@ -148,9 +149,9 @@ const Projects = () => {
                     },
                 },
                 {
-                    title: "Eliminar",
-                    dataIndex: "id",
-                    align: "center" as "center",
+                    title: 'Eliminar',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <div className="text-danger" onClick={deleteProject(id)}>
@@ -167,9 +168,9 @@ const Projects = () => {
         dispatch(actions.getProjects());
     }, []);
 
-    useEffect(() => {
-        dispatch(actions.getProjects());
-    }, [projects]);
+    // const change_page = (page, pageSize) => {
+    // dispatch(actions.getRealEstates({ page, pageSize, q: query }));
+    // };
 
     return (
         <div className="container-fluid">
@@ -212,8 +213,8 @@ const Projects = () => {
                             columns={table_columns}
                             items={projects}
                             with_pagination
-                            count={10}
                             change_page={() => {}}
+                            count={0}
                         />
                     </Card>
                 </div>

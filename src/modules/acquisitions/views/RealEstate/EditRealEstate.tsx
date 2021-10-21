@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { getRealEstate, updateRealEstate /*, getProject, updateProject */ } from "../../../../apis/uabi";
+import { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import {
     IProjectAttributes,
     IRealEstateAttributes,
     IRealEstateResponse,
     // IRealEstatesResponse,
-} from "../../../../utils/interfaces/components.interfaces";
-import AcquisitionsFrom from "../../components/RealEstateForm/AdquisitionsForm";
-import GeneralDataForm from "../../components/RealEstateForm/GeneralDataForm";
-import { actions } from "../../redux";
-import RealEstateForm from "../../components/RealEstateForm";
-import { useDispatch, useSelector } from "react-redux";
+} from '../../../../utils/interfaces';
+import { actions } from '../../redux';
+import RealEstateForm from '../../components/RealEstateForm';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface IProps {
     id: string;
@@ -56,7 +53,7 @@ const DetailProjects = () => {
                     if (!isFinish) {
                         if (res.project_id) return dispatch(actions.getRealEstatesByProject(res.project_id));
                     } else {
-                        history.push("/acquisitions/real-estates/");
+                        history.push('/acquisitions/real-estates/');
                         return Promise.resolve();
                     }
                 } catch (e) {

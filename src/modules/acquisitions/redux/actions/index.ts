@@ -1,5 +1,5 @@
 import types from "../types";
-import service from "../service";
+import service from "../services";
 import { request_dispatch } from "../../../../utils";
 
 // ACTIONS | REAL ESTATES

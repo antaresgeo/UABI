@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     IProjectAttributes,
     // IProjectsResponse,
     IRealEstateAttributes,
     // IRealEstatesResponse,
-} from "../../../../utils/interfaces/components.interfaces";
-import { Input } from "semantic-ui-react";
-import AcquisitionsFrom from "../../components/RealEstateForm/AdquisitionsForm";
-import GeneralDataForm from "../../components/RealEstateForm/GeneralDataForm";
-import { actions } from "../../redux";
-import { createRealEstate } from "../../../../apis/uabi";
-import { useHistory, useLocation, useParams, useRouteMatch } from "react-router-dom";
-import { qsToArray } from "../../../../utils";
-import { Card } from "../../../../utils/ui";
-import RealEstateList from "../../components/RealEstateList";
-import RealEstateForm from "../../components/RealEstateForm";
+} from '../../../../utils/interfaces';
+import { Input } from 'semantic-ui-react';
+import AcquisitionsFrom from '../../components/RealEstateForm/AdquisitionsForm';
+import GeneralDataForm from '../../components/RealEstateForm/GeneralDataForm';
+import { actions } from '../../redux';
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
+import { qsToArray } from '../../../../utils';
+import { Card } from '../../../../utils/ui';
+import RealEstateList from '../../components/RealEstateList';
+import RealEstateForm from '../../components/RealEstateForm';
 
 const RealEstate = () => {
     const history: any = useHistory();
@@ -40,14 +39,18 @@ const RealEstate = () => {
             onProjectSelectedChange={(value) => {
                 if (project_id !== value) {
                     set_project_id(value);
-                    if (value) dispatch(actions.getRealEstatesByProject(value));
+                    if (value) {
+                        console.log(value);
+
+                        dispatch(actions.getRealEstatesByProject(value));
+                    }
                 }
             }}
             onSubmit={async (values, form, isFinish) => {
                 try {
                     const res: any = await dispatch(actions.createRealEstate(values));
                     if (!isFinish) {
-                        if (res.project_id) return await dispatch(actions.getRealEstatesByProject(res.project_id));
+                        if (res) return await dispatch(actions.getRealEstatesByProject(res));
                     } else {
                         history.push(`/acquisitions/real-estates/`);
                         return Promise.resolve();
@@ -124,7 +127,7 @@ const noc = () => (
         </div>
         <div
             className="bg-white d-flex flex-row justify-content-between"
-            style={{ padding: 16, borderTop: "1px solid #ccc" }}
+            style={{ padding: 16, borderTop: '1px solid #ccc' }}
         >
             <button className="btn btn-primary">Atras</button>
             <button className="btn btn-success">Guardar</button>

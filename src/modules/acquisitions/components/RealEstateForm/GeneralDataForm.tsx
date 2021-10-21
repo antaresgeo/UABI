@@ -1,12 +1,12 @@
-import { FC, useState } from "react";
-import { Field, ErrorMessage } from "formik";
-import { Card } from "../../../../utils/ui";
-import LocationModal from "../../../../utils/components/LocationModal";
-import { service } from "../../redux";
-import { IProjectAttributes } from "../../../../utils/interfaces/components.interfaces";
-import { TextArea } from "semantic-ui-react";
+import { FC, useState } from 'react';
+import { Field, ErrorMessage } from 'formik';
+import { Card } from '../../../../utils/ui';
+import LocationModal from '../../../../utils/components/LocationModal';
+import { service } from '../../redux';
+import { IProjectAttributes } from '../../../../utils/interfaces';
+import { TextArea } from 'semantic-ui-react';
 interface GeneralDataFormProps {
-    type?: "view" | "edit" | "create";
+    type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
     setFieldValue: Function;
     projects: IProjectAttributes[];
@@ -158,7 +158,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                     </span>
                 </div>
                 <div className="form-group col-4">
-                    {type !== "edit" && (
+                    {type !== 'edit' && (
                         <>
                             <label htmlFor="file_id" className="form-label">
                                 Documento de Matricula
@@ -224,7 +224,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                             id="patrimonial_value_id"
                             type="number"
                             className="form-control text-end"
-                            style={{ borderLeft: "none" }}
+                            style={{ borderLeft: 'none' }}
                         />
                     </div>
                     <span className="form-error">
@@ -245,7 +245,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 type="radio"
                                 className="form-check-input"
                                 value="Urbano"
-                            />{" "}
+                            />{' '}
                             Urbano
                         </label>
                     </div>
@@ -258,7 +258,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 type="radio"
                                 className="form-check-input"
                                 value="Rural"
-                            />{" "}
+                            />{' '}
                             Rural
                         </label>
                     </div>
@@ -279,7 +279,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 disabled={disabled}
                                 onSave={(values) => {
                                     return service.getAddress(values).then((res) => {
-                                        setFieldValue("location", res, null);
+                                        setFieldValue('location', res, null);
                                     });
                                 }}
                             />
@@ -362,7 +362,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                     </span>
                 </div>
             </div>
-            {type === "view" && (
+            {type === 'view' && (
                 <>
                     <div className="row">
                         <div className="col-4">

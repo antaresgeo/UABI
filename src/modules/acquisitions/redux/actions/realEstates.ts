@@ -1,6 +1,6 @@
 import { request_dispatch } from "../../../../utils";
 import types from "../types";
-import service from "../service";
+import service from "../services";
 
 // REAL ESTATES
 export const getRealEstates = (filters: {

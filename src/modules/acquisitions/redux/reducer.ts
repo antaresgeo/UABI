@@ -1,3 +1,4 @@
+import { number } from "yup/lib/locale";
 import { swal } from "../../../utils";
 import types from "./types";
 
@@ -21,6 +22,13 @@ const emptyInitialState: any = {
                 status: -1,
             },
         ],
+        pagination: {
+            page: 1,
+            count: 0,
+            next_page: null,
+            previous_page: null,
+            total_results: 0,
+        },
         loading: false,
         loaded: false,
     },
@@ -54,6 +62,13 @@ const emptyInitialState: any = {
                 status: -1,
             },
         ],
+        pagination: {
+            page: 1,
+            count: 0,
+            next_page: null,
+            previous_page: null,
+            total_results: 0,
+        },
         loading: false,
         loaded: false,
     },
@@ -144,9 +159,17 @@ const reducer = (state: any = initialState, action: any): any => {
                 ...state,
                 projects: {
                     ...state.projects,
+                    value: action.payload,
+
+                    pagination: {
+                        page: action.payload?.page || 1,
+                        count: action.payload?.count || 0,
+                        next_page: action.payload?.next_page,
+                        previous_page: action.payload?.previous_page,
+                        total_results: action.payload?.total_results || 0,
+                    },
                     loading: false,
                     loaded: true,
-                    value: action.payload,
                 },
             };
         }
@@ -177,9 +200,10 @@ const reducer = (state: any = initialState, action: any): any => {
                 project: {
                     ...state.project,
 
+                    value: action.payload,
+                   
                     loading: false,
                     loaded: true,
-                    value: action.payload,
                 },
             };
         }
@@ -210,9 +234,16 @@ const reducer = (state: any = initialState, action: any): any => {
                 ...state,
                 realEstates: {
                     ...state.realEstates,
+                    value: action.payload?.results || [],
+                    pagination: {
+                        page: action.payload?.page || 1,
+                        count: action.payload?.count || 0,
+                        next_page: action.payload?.next_page,
+                        previous_page: action.payload?.previous_page,
+                        total_results: action.payload?.total_results || 0,
+                    },
                     loading: false,
                     loaded: true,
-                    value: action.payload,
                 },
             };
         }

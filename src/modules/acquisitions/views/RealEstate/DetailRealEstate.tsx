@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useParams, Link, useHistory } from "react-router-dom";
-import { TextArea } from "semantic-ui-react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useParams, Link, useHistory } from 'react-router-dom';
+import { TextArea } from 'semantic-ui-react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { IProjectAttributes, IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
-import AcquisitionsFrom from "../../components/RealEstateForm/AdquisitionsForm";
-import { actions } from "../../redux";
-import RealEstateForm from "../../components/RealEstateForm";
+import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
+import AcquisitionsFrom from '../../components/RealEstateForm/AdquisitionsForm';
+import { actions } from '../../redux';
+import RealEstateForm from '../../components/RealEstateForm';
 
 interface IParams {
     id: string;
@@ -34,7 +34,7 @@ const DetailRealEstate = () => {
             type="view"
             projects={projects}
             realEstate={realEstate}
-            projectId={parseInt(project_id + "")}
+            projectId={parseInt(project_id + '')}
             onProjectSelectedChange={(value) => {
                 if (project_id !== value) {
                     set_project_id(value);

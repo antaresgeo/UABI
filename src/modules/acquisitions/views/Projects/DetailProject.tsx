@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { IProjectAttributes, IRealEstateAttributes } from "../../../../utils/interfaces/components.interfaces";
-import { actions } from "../../redux";
-import { Card, Link } from "../../../../utils/ui";
-import RealEstateList from "../../components/RealEstateList";
-import ProjectForm from "../../components/ProjectForm";
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
+import { actions } from '../../redux';
+import { Card, Link } from '../../../../utils/ui';
+import RealEstateList from '../../components/RealEstateList';
+import ProjectForm from '../../components/ProjectForm';
 
 interface IParams {
     id: string;
@@ -24,7 +24,7 @@ const DetailProject = () => {
     }, []);
 
     useEffect(() => {
-        if (project.id !== "" && project.id !== undefined) {
+        if (project.id !== '' && project.id !== undefined) {
             dispatch(actions.getRealEstatesByProject(project.id));
         }
     }, [project]);
@@ -48,7 +48,7 @@ const DetailProject = () => {
                         extra={
                             <Link
                                 to={{
-                                    pathname: "/acquisitions/real-estates/create/",
+                                    pathname: '/acquisitions/real-estates/create/',
                                     state: { project_id: project.id },
                                 }}
                                 name="Crear"
