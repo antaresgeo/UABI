@@ -5,10 +5,13 @@ indent_size = 4
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
+quote_type = single
 
 [*.tsx]
 max_line_length = 120
+quote_type = single
 
 
 [*.html]
 max_line_length = 1000
+quote_type = double
