@@ -27,7 +27,8 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
         });
 
         if (result.isConfirmed) {
-            dispatch(actions.deleteRealEstate(id));
+            await dispatch(actions.deleteRealEstate(id));
+            await dispatch(actions.getRealEstates({}));
             // const _res: any = await dispatch(actions.deleteProject(id));
             // console.log(_res);
 
