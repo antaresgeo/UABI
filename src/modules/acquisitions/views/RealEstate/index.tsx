@@ -16,10 +16,6 @@ const RealEstates = () => {
         dispatch(actions.getRealEstates({}));
     }, []);
 
-    useEffect(() => {
-        dispatch(actions.getRealEstates({}));
-    }, [realEstates]);
-
     const filter = () => {
         dispatch(actions.getRealEstates({ page: 1, q: query }));
     };
