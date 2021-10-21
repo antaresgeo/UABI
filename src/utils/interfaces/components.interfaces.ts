@@ -1,5 +1,3 @@
-import {AdquisitionsItf} from "../../modules/acquisitions/components/RealEstateForm/AdquisitionsForm";
-
 export interface ICardProps {
     name: string;
     path: string;
@@ -38,61 +36,43 @@ export interface IProjectAttributes {
 }
 
 export interface IProjectsResponse {
-    data: IProjectAttributes[];
+    results: IProjectAttributes[];
     message: string;
 }
 export interface IProjectResponse {
-    data: IProjectAttributes;
+    results: IProjectAttributes;
     message: string;
 }
 
-export interface IRealEstateAttributes {
+export interface AdquisitionsItf {
     id?: number;
-    sap_id?: string;
 
-    dependency: string;
-    destination_type: string;
-    accounting_account: string;
-    cost_center: string;
+    acquisition_type: string;
+    active_type: string[];
+    title_type: string;
+    title_type_document_id?: string;
+    act_number: string;
+    act_value: number;
 
-    registry_number: string;
-    registry_number_document_id?: string;
-    name: string;
-    description: string;
-    patrimonial_value: number;
-    location?: string;
-    cbml?: string;
+    plot_area: number;
+    construction_area?: number;
+    acquired_percentage: number;
+    seller: string;
 
-    total_area: number;
-    total_percentage: number;
-    zone: string;
-    tipology: string;
-    materials?: string;
-
-    supports_documents?: object;
-
-    project_id: number | string;
-
+    entity_type: string;
+    entity_number: string;
+    address?: string;
+    //--------
+    real_estate_id: number;
     status?: number;
     audit_trail?: IAuditTrail;
-    acquisitions?: AdquisitionsItf[]
 }
-
-export interface IRealEstatesResponse {
-    data: IRealEstateAttributes[];
+export interface IPaginable<T> {
     message: string;
-}
-
-export interface IRealEstateResponse {
-    data: IRealEstateAttributes;
-    message: string;
-}
-
-export interface IItemRealEstate {
-    id: string;
-    matricula: string | number;
-    name: string;
-    project?: number | string;
-    creationDate: string;
-    createdBy?: string;
+    results: T[];
+    page: number;
+    count: number;
+    next_page?: number | null;
+    previous_page?: number | null;
+    total_results: number;
 }
