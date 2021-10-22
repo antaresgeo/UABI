@@ -1,6 +1,6 @@
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { Formik, Form } from 'formik';
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import GeneralDataForm from './GeneralDataForm';
 import AcquisitionsFrom from './AdquisitionsForm';
 import RealEstateList from '../RealEstateList';
@@ -43,8 +43,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         name: '',
         description: '',
         patrimonial_value: 0,
-        location: '',
-        cbml: '',
+        location: 'Kr 1a # 34',
+        cbml: '46446',
         total_area: 0,
         total_percentage: 0,
         zone: '',
@@ -81,11 +81,22 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     const submit = (values, form, isFinish = false) => {
         onSubmit(values, form, isFinish).then(() => {
             form.setSubmitting(false);
+            form.resetForm();
+            form.setFieldValue('project_id', projectId || '');
         });
     };
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
             {(formik) => {
+                const { name, registry_number } = formik.values;
+                const TitleSpan = ({ name, registry_number }) => {
+                    return (
+                        <>
+                            {name ? ': ' : ''}
+                            <span>{name}</span> {registry_number ? '-' : ''} <span>{registry_number}</span>
+                        </>
+                    );
+                };
                 return (
                     <Form className="h-100" autoComplete="off">
                         <div className="h-100 d-flex flex-column">
@@ -93,21 +104,37 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                 <div className="container-fluid">
                                     <div className="row justify-content-center">
                                         <div className="col-md-12">
+                                            {type === 'view' && (
+                                                <h4 className="ms-4 mb-3">
+                                                    Bien inmueble
+                                                    <TitleSpan name={name} registry_number={registry_number} />
+                                                </h4>
+                                            )}
+                                            {type === 'create' && <h4 className="ms-4 mb-3">Crear bien inmueble</h4>}
+                                            {type === 'edit' && (
+                                                <h4 className="ms-4 mb-3">
+                                                    Editar bien inmueble
+                                                    <TitleSpan name={name} registry_number={registry_number} />
+                                                </h4>
+                                            )}
                                             <GeneralDataForm
                                                 type={type}
                                                 disabled={type === 'view'}
-                                                setFieldValue={formik.setFieldValue}
+                                                formik={formik}
                                                 projects={projects}
-                                                values={realEstate}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
-                                            <AcquisitionsFrom
-                                                type={type}
-                                                disabled={type === 'view'}
-                                                setFieldValue={formik.setFieldValue}
-                                                acquisitions={formik.values.acquisitions || []}
-                                            />
-                                            <Card title="Documentos Soporte">
+                                            <AcquisitionsFrom type={type} disabled={type === 'view'} formik={formik} />
+                                            <Card
+                                                title="Documentos Soporte"
+                                                actions={[
+                                                    <div className="d-flex flex-row-reverse px-3 py-1">
+                                                        <button type="button" className="btn btn-primary">
+                                                            Guardar
+                                                        </button>
+                                                    </div>,
+                                                ]}
+                                            >
                                                 <div className="row">
                                                     <div className="col-3">
                                                         <label htmlFor="form-select" className="form-label">
@@ -178,9 +205,9 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 submit(formik.values, formik, true);
                                             }}
                                         >
-                                            Finalizar
+                                            Guardar y Finalizar
                                         </button>
-                                        <button className="btn btn-primary">Guardar</button>
+                                        <button className="btn btn-primary">Guardar y Crear otro</button>
                                     </>
                                 )}
                             </div>
