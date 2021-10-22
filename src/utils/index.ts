@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-import moment from "moment";
-import crypto from "crypto";
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import moment from 'moment';
+import crypto from 'crypto';
 
 export const swal = withReactContent(Swal);
 
@@ -43,9 +43,9 @@ export const request_dispatch =
 export const qsToArray = (qs: string) => {
     let qsAsArray = [];
 
-    let search = qs.split("?").pop().split("&");
+    let search = qs.split('?').pop().split('&');
     search.map(async (_search) => {
-        let tmp = _search.split("=");
+        let tmp = _search.split('=');
 
         await qsAsArray.push({
             key: tmp[0],
@@ -59,7 +59,15 @@ export const setTitle = (title: string) => (document.title = title);
 export const formatDate = (date) => {
     const tmpDate = new Date(parseInt(date));
 
-    const newDate = moment(tmpDate).format("MM/DD/YYYY hh:mm");
+    const newDate = moment(tmpDate).format('MM/DD/YYYY hh:mm');
+
+    return date && newDate;
+};
+
+export const extractMonth = (date) => {
+    const tmpDate = new Date(parseInt(date));
+
+    const newDate = moment(tmpDate).format('MMMM');
 
     return date && newDate;
 };
@@ -67,7 +75,7 @@ export const formatDate = (date) => {
 export const authenticationUme = () => {
     // cadena
 
-    let hexdec = "10681D4015638022C919FCB3A8A996B75997C66B"
+    let hexdec = '10681D4015638022C919FCB3A8A996B75997C66B'
 
         .toString()
 
@@ -81,14 +89,14 @@ export const authenticationUme = () => {
     // contraseña
 
     // let password = ConfigEnv.UME_PASSWORD;
-    let password = "6tC8dvgfr@C";
+    let password = '6tC8dvgfr@C';
 
     let passwordbas = base64encode(password).toString();
 
     //usuario
 
     // let user = ConfigEnv.UME_USER;
-    let user = "USR_UABI_UME";
+    let user = 'USR_UABI_UME';
 
     let userBase64 = base64encode(user).toString();
 
@@ -112,20 +120,20 @@ export const authenticationUme = () => {
 
 const base64encode = (string: string) => {
     // create a buffer
-    const buff = Buffer.from(string, "utf-8");
+    const buff = Buffer.from(string, 'utf-8');
 
     // decode buffer as Base64
-    return buff.toString("base64");
+    return buff.toString('base64');
 };
 
 function sha256(str: string) {
     // secret or salt to be hashed with
-    const secret = "4xc3lS0fTw4r3.*";
+    const secret = '4xc3lS0fTw4r3.*';
 
     // create a sha-256 hasher
-    const sha256Hasher = crypto.createHmac("sha256", secret);
+    const sha256Hasher = crypto.createHmac('sha256', secret);
 
     // hash the string
     // and set the output format
-    return sha256Hasher.update(str).digest("hex");
+    return sha256Hasher.update(str).digest('hex');
 }

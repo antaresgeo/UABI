@@ -67,9 +67,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             .max(20, 'El Número Matricula debe tener maximo 20 caracteres'),
         name: Yup.string().required('obligatorio'),
         description: Yup.string().required('obligatorio'),
-        patrimonial_value: Yup.number()
-            .required('obligatorio')
-            .max(20, 'El Número Matricula debe tener maximo 20 caracteres'),
+        patrimonial_value: Yup.number().required('obligatorio'),
         total_area: Yup.number().required('obligatorio'),
         total_percentage: Yup.number()
             .required('obligatorio')
@@ -100,6 +98,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 disabled={type === 'view'}
                                                 setFieldValue={formik.setFieldValue}
                                                 projects={projects}
+                                                values={realEstate}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
                                             <AcquisitionsFrom

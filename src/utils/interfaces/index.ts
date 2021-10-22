@@ -1,6 +1,7 @@
-export * from "./address";
-export * from "./realEstates";
-export * from "./projects";
+export * from './address';
+export * from './realEstates';
+export * from './projects';
+export * from './documents';
 
 export interface ICardProps {
     name: string;
