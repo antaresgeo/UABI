@@ -42,18 +42,7 @@ const DetailRealEstate = () => {
                 }
             }}
             onSubmit={async (values, form, isFinish) => {
-                // delete values.acquisitions;
-                // try {
-                //     await dispatch(actions.createRealEstate(values));
-                //     if (!isFinish) {
-                //         return dispatch(actions.getRealEstatesByProject(project_id));
-                //     } else {
-                //         history.push("/acquisitions/real-estates/");
-                //         return Promise.resolve();
-                //     }
-                // } catch (e) {
                 return Promise.reject();
-                // }
             }}
         />
     );

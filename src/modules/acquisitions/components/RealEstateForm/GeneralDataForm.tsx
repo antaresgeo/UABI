@@ -5,23 +5,27 @@ import LocationModal from '../../../../utils/components/LocationModal';
 import { service } from '../../redux';
 import { IProjectAttributes } from '../../../../utils/interfaces';
 import { TextArea } from 'semantic-ui-react';
+import { extractMonth, formatDate } from '../../../../utils';
 interface GeneralDataFormProps {
     type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
-    setFieldValue: Function;
+    formik: any;
     projects: IProjectAttributes[];
     onProjectSelectedChange?: (value) => void;
 }
 
-const GeneralDataForm: FC<GeneralDataFormProps> = ({
-    type,
-    disabled,
-    setFieldValue,
-    projects,
-    onProjectSelectedChange,
-}) => {
+const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, projects, onProjectSelectedChange }) => {
     return (
-        <Card title="Creación de Bien Inmueble">
+        <Card
+            title="Información del proyecto"
+            actions={[
+                <div className="d-flex flex-row-reverse px-3 py-1">
+                    <button type="button" className="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>,
+            ]}
+        >
             <div className="row">
                 <div className="form-group col-6">
                     <label htmlFor="project_id_id" className="form-label">
@@ -226,7 +230,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                             type="number"
                             className="form-control text-end"
                             style={{ borderLeft: 'none' }}
-                            maxLength={21}
+                            maxLength={200}
                         />
                     </div>
                     <span className="form-error">
@@ -260,7 +264,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 type="radio"
                                 className="form-check-input"
                                 value="Rural"
-                            />{' '}
+                            />
                             Rural
                         </label>
                     </div>
@@ -275,13 +279,16 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                         Dirección
                     </label>
                     <div className="input-group">
+                        <Field name="cbml" id="address" type="text" className="form-control" disabled />
                         <Field name="location" id="address" type="text" className="form-control" disabled />
                         <div className="input-group-prepend">
                             <LocationModal
                                 disabled={disabled}
+                                view={'general'}
                                 onSave={(values) => {
                                     return service.getAddress(values).then((res) => {
-                                        setFieldValue('location', res, null);
+                                        formik.setFieldValue('location', `${res.id} | ${res.addressAsString}`, null);
+                                        formik.setFieldValue('cbml', `${res.cbml}`, null);
                                     });
                                 }}
                             />
@@ -392,6 +399,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 className="form-control"
                                 id="audit_trail_created_on_id"
                                 name="audit_trail.created_on"
+                                value={formatDate(formik.values.audit_trail.created_on)}
                                 disabled
                             />
                             <span className="form-error" />
@@ -429,12 +437,14 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                             <label htmlFor="periodo_contable_id" className="form-label">
                                 Periodo contable
                             </label>
-                            <input
-                                type=""
+                            <Field
+                                type="text"
                                 className="form-control"
                                 id="periodo_contable_id"
                                 name="periodo_contable"
+                                value={extractMonth(formik.values.audit_trail.created_on)}
                                 disabled
+
                                 // EL MES
                             />
                             <span className="form-error" />

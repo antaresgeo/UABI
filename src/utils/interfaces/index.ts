@@ -2,6 +2,7 @@ export * from "./address";
 export * from "./realEstates";
 export * from "./projects";
 export * from "./insurability";
+export * from './documents';
 
 export interface ICardProps {
     name: string;

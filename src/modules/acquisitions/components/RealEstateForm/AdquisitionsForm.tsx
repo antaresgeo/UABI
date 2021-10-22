@@ -4,16 +4,17 @@ import CheckboxGroup from 'react-checkbox-group';
 import { AdquisitionsItf, IAuditTrail } from '../../../../utils/interfaces';
 import AcquisitionList from './AcquisitionList';
 import { Card } from '../../../../utils/ui';
+import { ErrorMessage, Field } from 'formik';
+import LocationModal from '../../../../utils/components/LocationModal';
 
 interface AcquisitionsFromProps {
     type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
-    setFieldValue?: Function;
-    acquisitions?: AdquisitionsItf[];
+    formik?: any;
 }
 
-const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFieldValue, disabled }) => {
-    const [count, set_count] = useState<number>(acquisitions.length || 0);
+const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled }) => {
+    const [count, set_count] = useState<number>(formik?.values?.acquisitions?.length || 0);
     const initial_values: AdquisitionsItf = {
         acquisition_type: '',
         active_type: [],
@@ -40,7 +41,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
     };
 
     const addAcquisition = (new_acquisition: AdquisitionsItf) => {
-        setFieldValue(`acquisitions[${count}]`, new_acquisition);
+        formik.setFieldValue(`acquisitions[${count}]`, new_acquisition);
         set_count((c) => c + 1);
     };
 
@@ -49,7 +50,11 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
     };
 
     return (
-        <Card title="Información de Adquisición">
+        <Card title="Información de Adquisición" actions={[
+            <div className="d-flex flex-row-reverse px-3 py-1">
+                <button type="button" className="btn btn-primary">Guardar</button>
+            </div>,
+        ]}>
             <div className="row">
                 {(type !== 'view' || !disabled) && (
                     <>
@@ -88,6 +93,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                         value={acquisition.active_type || []}
                                         onChange={(data) => {
                                             console.log(data);
+
                                             set_acquisition({
                                                 ...acquisition,
                                                 active_type: data.length > 0 ? data : ['Lote'],
@@ -306,18 +312,35 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                     />
                                     <div id="emailHelp" className="form-text"></div>
                                 </div>
-                                <div className="col-4">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">
+                                <div className="form-group col-4">
+                                    <label htmlFor="address" className="form-label">
                                         Dirección
                                     </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="address"
-                                        name="address"
-                                        onChange={handleChange}
-                                        placeholder="Pop Up - Departamento y Municipio"
-                                    />
+                                    <div className="input-group">
+                                        <input
+                                            name="location"
+                                            id="address"
+                                            type="text"
+                                            className="form-control"
+                                            disabled
+                                        />
+                                        <div className="input-group-prepend">
+                                            <LocationModal
+                                                disabled={disabled}
+                                                onSave={(values) => {
+                                                    return values;
+                                                    // return service.getAddress(values).then((res) => {
+                                                    //     console.log(res);
+
+                                                    //     setFieldValue('location', `${res.id} | ${res.addressAsString}`, null);
+                                                    // });
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    <span className="form-error">
+                                        <ErrorMessage name="location" />
+                                    </span>
                                 </div>
                             </div>
                             <div className="row pt-3 pb-3">
@@ -341,7 +364,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                 )}
                 <div className="col-12">
                     <div className="row">
-                        <AcquisitionList acquisitions={acquisitions || []} type={type} />
+                        <AcquisitionList acquisitions={formik?.values?.acquisitions || []} type={type} />
                     </div>
                 </div>
             </div>

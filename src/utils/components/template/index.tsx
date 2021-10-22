@@ -33,7 +33,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs }) => {
                     <AppSider width={sider_ops.width} />
                 </Sider>
                 <Layout className="site-layout">
-                    <Header className="uabi-header" style={{ padding: 0 }}>
+                    <Header className="uabi-header p-0">
                         <AppHeader collapsible={collapsible} />
                     </Header>
                     <Content>
@@ -49,7 +49,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs }) => {
                             >
                                 <Breadcrumbs breadcrumbs={breadcrumbs} />
                             </div>
-                            <div className="content uabi-main-content" style={{ overflow: "auto" }}>
+                            <div className="content uabi-main-content overflow-auto">
                                 {children}
                             </div>
                         </div>

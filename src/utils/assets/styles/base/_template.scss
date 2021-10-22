@@ -13,8 +13,11 @@
     border-radius: 10px 10px 0 0;
 }
 
-.ant-modal-content{
+.ant-modal-content {
     border-radius: 10px;
+}
+.ant-card-actions {
+    border-radius: 0 0 11px 11px;
 }
 
 .ant-drawer-body {
@@ -24,6 +27,17 @@
         height: calc(100% - 244px);
     }
 }
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background: #ff840355;
+}
+.ant-menu-inline .ant-menu-item:after,
+.ant-menu-vertical-left .ant-menu-item:after,
+.ant-menu-vertical-right .ant-menu-item:after,
+.ant-menu-vertical .ant-menu-item:after {
+    border-right: 3px solid #ff8403;
+}
+
 .ant-drawer-close {
     color: rgba(255, 255, 255, 0.45);
     &:focus,
@@ -56,8 +70,6 @@
     }
 }
 
-
-
 .uabi-header {
     padding: 0;
     background: #fff 0 0 no-repeat padding-box;
@@ -67,6 +79,14 @@
     }
     .ant-card-extra {
         padding: 0 !important;
+    }
+    .ant-menu {
+        color: #555;
+        .ant-menu-inline.ant-menu-root .ant-menu-item,
+        .ant-menu-inline.ant-menu-root .ant-menu-submenu-title {
+            font-weight: bold;
+            color: #555;
+        }
     }
 }
 
@@ -91,10 +111,16 @@
     color: #fff !important;
 }
 
-.form-error{
+.form-error {
     @extend .text-danger;
     margin-top: 0.25rem;
     display: block;
     width: 100%;
     height: 22px;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #f4f4f4;
+    opacity: 1;
 }

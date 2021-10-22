@@ -1,11 +1,18 @@
 import { http } from '../../../../config/axios_instances';
 import { location_http } from '../../../../config/axios_instances';
+import { IDocumentResponse } from '../../../../utils/interfaces';
 
 // PROJECTS
 import projectsServices from './projects';
 
 // REAL ESTATES
 import realEstatesServices from './realEstates';
+import { AxiosResponse } from 'axios';
+import { IAddress } from './../../../../utils/interfaces/address';
+
+interface IProps {
+    id: number;
+}
 
 const getIdFromLocation = async ({
     city,
@@ -13,39 +20,29 @@ const getIdFromLocation = async ({
     country,
     commune,
     neighborhood,
-}) => {
+}): Promise<number | string> => {
     try {
         let URI = '/localizations/id/';
-        let res = await http.get(URI, {
-            params: { city, state, country, commune, neighborhood },
-        });
-        return res.data.data;
+        let res: AxiosResponse<IDocumentResponse<IProps>> =
+            await location_http.get(URI, {
+                params: { city, state, country, commune, neighborhood },
+            });
+        console.log(res);
+
+        return res.data.results.id;
     } catch (e) {
         return Promise.reject('Error');
     }
 };
 
-export const insertAddress = async ({
-    type,
-    number_one,
-    word_one,
-    number_two,
-    indicative,
-    user_id,
-    location_id,
-}) => {
+export const insertAddress = async (data: IAddress) => {
     try {
         let URI = '/addresses/';
-        let res = await http.post(URI, {
-            type,
-            number_one,
-            word_one,
-            number_two,
-            indicative,
-            user_id,
-            location_id,
-        });
-        return res.data.data;
+        let res: AxiosResponse<IDocumentResponse<any>> =
+            await location_http.post(URI, {
+                ...data,
+            });
+        return res.data.results;
     } catch (e) {
         return Promise.reject('Error');
     }
@@ -55,34 +52,53 @@ export const getAddressById = async (id) => {
     try {
         let URI = '/addresses/formated/';
         let res = await location_http.get(URI, { params: { id } });
-        return res.data.data;
+        console.log(res);
+
+        return res.data.results;
     } catch (e) {
         return Promise.reject('Error');
     }
 };
 
 const getAddress = async (values) => {
+    let idLocation: any;
     try {
-        const res1 = await getIdFromLocation({
-            city: values.municipio,
-            state: values.departamento,
-            country: values.pais,
+        idLocation = await getIdFromLocation({
+            country: values.country,
+            state: values.state,
+            city: values.city,
             commune: values.commune,
-            neighborhood: values.barrio,
+            neighborhood: values.neighborhood,
         });
-        const res2 = await insertAddress({
-            type: values.tipo,
-            number_one: values.numero1,
-            word_one: values.letra1,
-            number_two: values.numero2,
-            indicative: values.indicativo,
-            user_id: '',
-            location_id: res1.id,
-        });
-        const res3 = await getAddressById(res2.id);
-        return res3.data.data;
-    } catch (e) {
+    } catch (error) {
+        console.error(error);
         return Promise.reject('Error');
+    }
+
+    // INSERT ADDRESS WITH ID LOCATION
+    let addressValues: IAddress = {
+        type: values.type,
+        number_one: values.number_one,
+        number_two: values.number_two,
+        indicative: values.indicative,
+        user_id: 'Administrador',
+        location_id: idLocation,
+    };
+
+    if (values.word_one) addressValues.word_one = values.word_one;
+    if (values.orientation_one)
+        addressValues.orientation_one = values.orientation_one;
+    if (values.word_two) addressValues.word_two = values.word_two;
+    if (values.orientation_two)
+        addressValues.orientation_two = values.orientation_two;
+    if (values.block) addressValues.block = values.block;
+    if (values.lot) addressValues.lot = values.lot;
+    if (values.indications) addressValues.indications = values.indications;
+
+    try {
+        return await insertAddress(addressValues);
+    } catch (e) {
+        return Promise.reject('Error insertando la dirección');
     }
 };
 //  localizations/lists

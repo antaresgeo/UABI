@@ -1,5 +1,26 @@
-export interface IAddressAttributes {
-    country_code: string;
+import { IAuditTrail } from '.';
+
+export interface IAddress {
+    id?: number;
+
+    type: string;
+    number_one: number;
+    word_one?: string;
+    orientation_one?: string;
+
+    number_two: number;
+    word_two?: string;
+    orientation_two?: string;
+    indicative: number;
+
+    block?: string;
+    lot?: string;
+    indications?: string;
+    user_id: string;
+    location_id: number;
+
+    status?: number;
+    audit_trail?: IAuditTrail;
 }
 
 export interface ILocationAttributes {

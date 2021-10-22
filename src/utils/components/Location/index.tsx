@@ -12,9 +12,10 @@ import {
 
 interface LocationProps {
     modalClose?: (values, callback) => void;
+    view?: string;
 }
 
-const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
+const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
     const [countries, setCountries] = useState<ICountryAddressAttributes[]>([]);
     const [states, setStates] = useState([]);
     const [city, setCity] = useState([]);
@@ -22,32 +23,33 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
     const [neighborhood, setNeighborhood] = useState([]);
 
     const initialValues = {
-        pais: '',
-        departamento: '',
-        municipio: '',
-        comuna: '',
-        barrio: '',
-        tipo: '',
-        numero1: '',
-        letra1: '',
-        orientacion1: '',
-        numero2: '',
-        letra2: '',
-        orientacion2: '',
-        indicativo: '',
+        country: '',
+        state: '',
+        city: '',
+        commune: '',
+        neighborhood: '',
+
+        type: '',
+        number_one: '',
+        word_one: '',
+        orientation_one: '',
+        number_two: '',
+        word_two: '',
+        orientation_two: '',
+        indicative: '',
         indicaciones: '',
     };
 
     const schema = Yup.object().shape({
-        pais: Yup.string().required('obligatorio'),
-        departamento: Yup.string().required('obligatorio'),
-        municipio: Yup.string().required('obligatorio'),
-        comuna: Yup.string().required('obligatorio'),
-        barrio: Yup.string().required('obligatorio'),
-        tipo: Yup.string().required('obligatorio'),
-        numero1: Yup.string().required('obligatorio'),
-        numero2: Yup.string().required('obligatorio'),
-        indicativo: Yup.string().required('obligatorio'),
+        country: Yup.string().required('Obligatorio'),
+        state: Yup.string().required('Obligatorio'),
+        city: Yup.string().required('Obligatorio'),
+        commune: Yup.string().required('Obligatorio'),
+        neighborhood: Yup.string().required('Obligatorio'),
+        type: Yup.string().required('Obligatorio'),
+        number_one: Yup.string().required('Obligatorio'),
+        number_two: Yup.string().required('Obligatorio'),
+        indicative: Yup.string().required('Obligatorio'),
     });
 
     useEffect(() => {
@@ -57,11 +59,22 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
         })();
     }, []);
 
+    const renderOptions = (id, name, options = []) => {
+        return (
+            options.length > 0 &&
+            options.map((option, i) => (
+                <option key={i} value={option[id]}>
+                    {option[name]}
+                </option>
+            ))
+        );
+    };
+
     return (
         <Formik
             enableReinitialize
             initialValues={initialValues}
-            validationSchema={schema}
+            validationSchema={view === 'general' && schema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
                 modalClose &&
                     modalClose(values, () => {
@@ -71,10 +84,11 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
             }}
         >
             {({ values, isValid, isSubmitting, setFieldValue, handleChange }) => {
-                const has_country = values.pais !== '';
-                let has_states = values.departamento !== '';
-                let has_city = values.municipio !== '';
-                let has_commune = values.comuna !== '';
+                const has_country = values.country !== '';
+                let has_states = values.state !== '';
+                let has_city = values.city !== '';
+                let has_commune = values.commune !== '';
+
                 return (
                     <Form>
                         <div className="form-row row">
@@ -84,26 +98,22 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 </label>
                                 <Field
                                     className="w-100 form-select"
-                                    name="pais"
+                                    name="country"
                                     as="select"
-                                    onChange={(e) => {
+                                    onChange={async (e) => {
                                         handleChange(e);
-                                        getList('states', { country: e.target.value });
+                                        const list = await getList('state', { country: e.target.value });
+                                        setStates(list);
                                     }}
                                 >
                                     <option value="" disabled>
                                         --País--
                                     </option>
-                                    {countries.length > 0 &&
-                                        countries.map((country, i) => (
-                                            <option key={i} value={country.country_code}>
-                                                {country.country}
-                                            </option>
-                                        ))}
+                                    {renderOptions('country_code', 'country', countries)}
                                 </Field>
 
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="pais" />
+                                    <ErrorMessage name="country" />
                                 </span>
                             </div>
                             <div className="form-group col">
@@ -112,491 +122,491 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 </label>
                                 <Field
                                     className="w-100 form-select"
-                                    name="departamento"
+                                    name="state"
                                     as="select"
                                     disabled={!has_country}
+                                    onChange={async (e) => {
+                                        handleChange(e);
+                                        const list = await getList('city', { state: e.target.value });
+                                        setCity(list);
+                                    }}
                                 >
                                     <option value="" selected disabled>
-                                        --Departamento--
+                                        --state--
                                     </option>
-                                    <option key="antioquia" value="Antioquia">
-                                        Antioquia
-                                    </option>
-                                    <option key="cundinamarca" value="Cundinamarca">
-                                        Cundinamarca
-                                    </option>
-                                    <option key="vallecauca" value="Valle del Cauca">
-                                        Valle del Cauca
-                                    </option>
-                                    <option key="atlantico" value="Atlántico">
-                                        Atlántico
-                                    </option>
-                                    <option key="magdalena" value="Magdalena">
-                                        Magdalena
-                                    </option>
-                                    <option key="bolivar" value="Bolívar">
-                                        Bolívar
-                                    </option>
+                                    {renderOptions('state_code', 'state', states)}
                                 </Field>
 
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="departamento" />
+                                    <ErrorMessage name="state" />
                                 </span>
                             </div>
                             <div className="form-group col">
                                 <label htmlFor="" className="form-label">
-                                    Municipio <span className="text-danger">*</span>
+                                    Ciudad <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     className="w-100 form-select"
-                                    name="municipio"
+                                    name="city"
                                     as="select"
                                     disabled={!has_states}
+                                    onChange={async (e) => {
+                                        handleChange(e);
+                                        const list = await getList('commune', { city: e.target.value });
+                                        setCommune(list);
+                                    }}
                                 >
                                     <option value="" disabled>
-                                        --Municipio--
+                                        --city--
                                     </option>
-                                    <option key="medellin" value="Medellín">
-                                        Medellín
-                                    </option>
-                                    <option key="envigado" value="Envigado">
-                                        Envigado
-                                    </option>
-                                    <option key="sabaneta" value="Sabaneta">
-                                        Sabaneta
-                                    </option>
-                                    <option key="bogota" value="Bogotá">
-                                        Bogotá
-                                    </option>
-                                    <option key="cali" value="Cali">
-                                        Cali
-                                    </option>
-                                    <option key="barranquilla" value="Barranquila">
-                                        Barranquilla
-                                    </option>
-                                    <option key="santamarta" value="Santamarta">
-                                        Santa Marta
-                                    </option>
-                                    <option key="cartagena" value="Cartagena">
-                                        Cartagena
-                                    </option>
+                                    {renderOptions('city_code', 'city', city)}
                                 </Field>
 
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="municipio" />
+                                    <ErrorMessage name="city" />
                                 </span>
                             </div>
-                            <div className="form-group col">
-                                <label htmlFor="" className="form-label">
-                                    Comuna <span className="text-danger">*</span>
-                                </label>
-                                <Field className="w-100 form-select" name="comuna" as="select" disabled={!has_city}>
-                                    <option value="" disabled>
-                                        --Comuna--
-                                    </option>
-                                    <option key="01" value="01">
-                                        01
-                                    </option>
-                                    <option key="02" value="02">
-                                        02
-                                    </option>
-                                    <option key="03" value="03">
-                                        03
-                                    </option>
-                                    <option key="04" value="04">
-                                        04
-                                    </option>
-                                    <option key="05" value="05">
-                                        05
-                                    </option>
-                                    <option key="06" value="06">
-                                        06
-                                    </option>
-                                    <option key="07" value="07">
-                                        07
-                                    </option>
-                                    <option key="08" value="08">
-                                        08
-                                    </option>
-                                    <option key="09" value="09">
-                                        09
-                                    </option>
-                                    <option key="10" value="10">
-                                        10
-                                    </option>
-                                    <option key="11" value="11">
-                                        11
-                                    </option>
-                                    <option key="12" value="12">
-                                        12
-                                    </option>
-                                    <option key="13" value="13">
-                                        13
-                                    </option>
-                                    <option key="14" value="14">
-                                        14
-                                    </option>
-                                    <option key="15" value="15">
-                                        15
-                                    </option>
-                                    <option key="16" value="16">
-                                        16
-                                    </option>
-                                </Field>
-
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="comuna" />
-                                </span>
-                            </div>
-                        </div>
-                        <div className="form-row row">
-                            <div className="form-group col-3">
-                                <label htmlFor="" className="form-label">
-                                    Barrio <span className="text-danger">*</span>
-                                </label>
-                                <Field className="w-100 form-select" name="barrio" as="select" disabled={!has_commune}>
-                                    <option value="" selected disabled>
-                                        --Barrio--
-                                    </option>
-                                    <option key="belenlamota" value="Belén La Mota">
-                                        Belén La Mota
-                                    </option>
-                                    <option key="salvador" value="Salvador">
-                                        Salvador
-                                    </option>
-                                    <option key="buenosaires" value="Buenos Aires">
-                                        Buenos Aires
-                                    </option>
-                                    <option key="manrique" value="Manríque">
-                                        Manrique
-                                    </option>
-                                    <option key="aranjuez" value="Aranjúez">
-                                        Aranjúez
-                                    </option>
-                                    <option key="laureles" value="Laureles">
-                                        Laureles
-                                    </option>
-                                    <option key="milagrosa" value="La Milagrosa">
-                                        Milagrosa
-                                    </option>
-                                </Field>
-
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="barrio" />
-                                </span>
-                            </div>
-                        </div>
-                        <h5>Dirección</h5>
-                        <hr />
-                        <div className="from-row row">
-                            <div className="form-group col">
-                                <label htmlFor="" className="form-label">
-                                    Tipo <span className="text-danger">*</span>
-                                </label>
-                                <Field name="tipo" as="select" className="w-100 form-select">
-                                    <option value="" disabled>
-                                        --Tipo--
-                                    </option>
-                                    <option key="calle" value="Calle">
-                                        Calle
-                                    </option>
-                                    <option key="carrera" value="Carrera">
-                                        Carrera
-                                    </option>
-                                    <option key="avenida" value="Avenida">
-                                        Avenida
-                                    </option>
-                                    <option key="circular" value="Circular">
-                                        Circular
-                                    </option>
-                                    <option key="transversal" value="Transversal">
-                                        Transversal
-                                    </option>
-                                    <option key="circunvalar" value="Circunvalar">
-                                        Circunvalar
-                                    </option>
-                                    <option key="diagonal" value="Diagonal">
-                                        Diagonal
-                                    </option>
-                                </Field>
-
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="tipo" />
-                                </span>
-                            </div>
-                            <div className="form-group col">
-                                <label htmlFor="" className="form-label">
-                                    Número <span className="text-danger">*</span>
-                                </label>
-                                <Field name="numero1" type="number" className="w-100 form-control" />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="numero1" />
-                                </span>
-                            </div>
-                            <div className="form-group col">
-                                <label htmlFor="" className="form-label">
-                                    Letra
-                                </label>
-                                <Field name="letra1" as="select" className="w-100 form-select">
-                                    <option value="" disabled>
-                                        --Letra--
-                                    </option>
-                                    <option key="A" value="A">
-                                        A
-                                    </option>
-                                    <option key="B" value="B">
-                                        B
-                                    </option>
-                                    <option key="C" value="B">
-                                        C
-                                    </option>
-                                    <option key="D" value="D">
-                                        D
-                                    </option>
-                                    <option key="E" value="E">
-                                        E
-                                    </option>
-                                    <option key="F" value="F">
-                                        F
-                                    </option>
-                                    <option key="G" value="G">
-                                        G
-                                    </option>
-                                    <option key="H" value="H">
-                                        H
-                                    </option>
-                                    <option key="I" value="I">
-                                        I
-                                    </option>
-                                    <option key="AA" value="AA">
-                                        AA
-                                    </option>
-                                    <option key="AB" value="AB">
-                                        AB
-                                    </option>
-                                    <option key="AC" value="AC">
-                                        AC
-                                    </option>
-                                    <option key="AD" value="AD">
-                                        AD
-                                    </option>
-                                    <option key="AE" value="AE">
-                                        AE
-                                    </option>
-                                    <option key="BB" value="BB">
-                                        BB
-                                    </option>
-                                    <option key="BC" value="BC">
-                                        BC
-                                    </option>
-                                    <option key="CC" value="CC">
-                                        CC
-                                    </option>
-                                    <option key="CD" value="CD">
-                                        CD
-                                    </option>
-                                    <option key="CE" value="CE">
-                                        CE
-                                    </option>
-                                    <option key="DD" value="DD">
-                                        DD
-                                    </option>
-                                    <option key="DE" value="DE">
-                                        DE
-                                    </option>
-                                </Field>
-
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="letra1" />
-                                </span>
-                            </div>
-                            <div className="form-group col">
-                                <label htmlFor="" className="form-label">
-                                    Orientación
-                                </label>
-                                <Field name="orientacion1" as="select" className="w-100 form-select">
-                                    <option value="" disabled>
-                                        --Orientación--
-                                    </option>
-                                    <option key="sur" value="Sur">
-                                        Sur
-                                    </option>
-                                    <option key="norte" value="Norte">
-                                        Norte
-                                    </option>
-                                    <option key="oeste" value="Oeste">
-                                        Oeste
-                                    </option>
-                                    <option key="este" value="Este">
-                                        Este
-                                    </option>
-                                </Field>
-
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="orientacion1" />
-                                </span>
-                            </div>
-                        </div>
-                        <div className="row align-items-center">
-                            <div className="form-group col">
-                                <label htmlFor="" className="form-label">
-                                    Número <span className="text-danger">*</span>
-                                </label>
-                                <div className="input-group">
-                                    <span
-                                        className="input-group-text"
-                                        style={{ background: 'white', borderRight: 'none' }}
-                                        id="basic-addon1"
-                                    >
-                                        #
-                                    </span>
+                            {view === 'general' && (
+                                <div className="form-group col">
+                                    <label htmlFor="" className="form-label">
+                                        Comuna <span className="text-danger">*</span>
+                                    </label>
                                     <Field
-                                        name="numero2"
-                                        type="number"
-                                        className="form-control"
-                                        style={{ borderLeft: 'none' }}
-                                    />
+                                        className="w-100 form-select"
+                                        name="commune"
+                                        as="select"
+                                        disabled={!has_city}
+                                        onChange={async (e) => {
+                                            handleChange(e);
+                                            const list = await getList('neighborhood', { commune: e.target.value });
+                                            setNeighborhood(list);
+                                        }}
+                                    >
+                                        <option value="" disabled>
+                                            --commune--
+                                        </option>
+                                        {renderOptions('commune_code', 'commune', commune)}
+                                    </Field>
+
+                                    <span
+                                        className="text-danger text-left d-block w-100 mt-1"
+                                        style={{ height: '22px' }}
+                                    >
+                                        <ErrorMessage name="commune" />
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                        {view === 'general' && (
+                            <div className="form-row row">
+                                <div className="form-group col-3">
+                                    <label htmlFor="" className="form-label">
+                                        Barrio <span className="text-danger">*</span>
+                                    </label>
+                                    <Field
+                                        className="w-100 form-select"
+                                        name="neighborhood"
+                                        as="select"
+                                        disabled={!has_commune}
+                                        onChange={async (e) => {
+                                            handleChange(e);
+                                        }}
+                                    >
+                                        <option value="" selected disabled>
+                                            --neighborhood--
+                                        </option>
+                                        {renderOptions('neighborhood_code', 'neighborhood', neighborhood)}
+                                    </Field>
+
+                                    <span
+                                        className="text-danger text-left d-block w-100 mt-1"
+                                        style={{ height: '22px' }}
+                                    >
+                                        <ErrorMessage name="neighborhood" />
+                                    </span>
                                 </div>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="numero2" />
-                                </span>
-                            </div>
-                            <div className="form-group col">
-                                <label htmlFor="" className="form-label">
-                                    Letra
-                                </label>
-                                <Field name="letra2" as="select" className="w-100 form-select">
-                                    <option value="" disabled>
-                                        --Letra--
-                                    </option>
-                                    <option key="A" value="A">
-                                        A
-                                    </option>
-                                    <option key="B" value="B">
-                                        B
-                                    </option>
-                                    <option key="C" value="B">
-                                        C
-                                    </option>
-                                    <option key="D" value="D">
-                                        D
-                                    </option>
-                                    <option key="E" value="E">
-                                        E
-                                    </option>
-                                    <option key="F" value="F">
-                                        F
-                                    </option>
-                                    <option key="G" value="G">
-                                        G
-                                    </option>
-                                    <option key="H" value="H">
-                                        H
-                                    </option>
-                                    <option key="I" value="I">
-                                        I
-                                    </option>
-                                    <option key="AA" value="AA">
-                                        AA
-                                    </option>
-                                    <option key="AB" value="AB">
-                                        AB
-                                    </option>
-                                    <option key="AC" value="AC">
-                                        AC
-                                    </option>
-                                    <option key="AD" value="AD">
-                                        AD
-                                    </option>
-                                    <option key="AE" value="AE">
-                                        AE
-                                    </option>
-                                    <option key="BB" value="BB">
-                                        BB
-                                    </option>
-                                    <option key="BC" value="BC">
-                                        BC
-                                    </option>
-                                    <option key="CC" value="CC">
-                                        CC
-                                    </option>
-                                    <option key="CD" value="CD">
-                                        CD
-                                    </option>
-                                    <option key="CE" value="CE">
-                                        CE
-                                    </option>
-                                    <option key="DD" value="DD">
-                                        DD
-                                    </option>
-                                    <option key="DE" value="DE">
-                                        DE
-                                    </option>
-                                </Field>
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="letra1" />
-                                </span>
-                            </div>
-                            <div className="form-group col">
-                                <label htmlFor="" className="form-label">
-                                    Orientación
-                                </label>
-                                <Field name="orientacion2" as="select" className="w-100 form-select">
-                                    <option value="" disabled>
-                                        --Orientación--
-                                    </option>
-                                    <option key="sur" value="Sur">
-                                        Sur
-                                    </option>
-                                    <option key="norte" value="Norte">
-                                        Norte
-                                    </option>
-                                    <option key="oeste" value="Oeste">
-                                        Oeste
-                                    </option>
-                                    <option key="este" value="Este">
-                                        Este
-                                    </option>
-                                </Field>
+                                {view === 'general' && (
+                                    <>
+                                        <div className="form-group col">
+                                            <label htmlFor="" className="form-label">
+                                                Manzana <span className="text-danger">*</span>
+                                            </label>
+                                            <Field className="w-100 form-select" type="text" name="block"></Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="orientacion1" />
-                                </span>
-                            </div>{' '}
-                            -
-                            <div className="form-group col">
-                                <label htmlFor="" className="form-label">
-                                    Indicativo <span className="text-danger">*</span>
-                                </label>
-                                <Field name="indicativo" type="number" className="w-100 form-control" />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="indicativo" />
-                                </span>
-                            </div>
-                        </div>
-                        <div className="from-row row">
-                            <div className="form-group col-9">
-                                <label htmlFor="" className="form-label">
-                                    indicaciones
-                                </label>
-                                <Field
-                                    name="indicaciones"
-                                    type="text"
-                                    className="w-100 form-control"
-                                    placeholder="Manzana, Urbanización, Núcleo, Bloque, apartamento"
-                                />
+                                            <span
+                                                className="text-danger text-left d-block w-100 mt-1"
+                                                style={{ height: '22px' }}
+                                            >
+                                                <ErrorMessage name="block" />
+                                            </span>
+                                        </div>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="indicaciones" />
-                                </span>
+                                        <div className="form-group col">
+                                            <label htmlFor="" className="form-label">
+                                                Lote <span className="text-danger">*</span>
+                                            </label>
+                                            <Field className="w-100 form-select" type="text" name="lot"></Field>
+
+                                            <span
+                                                className="text-danger text-left d-block w-100 mt-1"
+                                                style={{ height: '22px' }}
+                                            >
+                                                <ErrorMessage name="lot" />
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
                             </div>
-                        </div>
+                        )}
+                        {view === 'general' && (
+                            <>
+                                <h5>Dirección</h5>
+                                <hr />
+                                <div className="from-row row">
+                                    <div className="form-group col">
+                                        <label htmlFor="" className="form-label">
+                                            Tipo <span className="text-danger">*</span>
+                                        </label>
+                                        <Field name="type" as="select" className="w-100 form-select">
+                                            <option value="" disabled>
+                                                --Tipo--
+                                            </option>
+                                            <option key="calle" value="Calle">
+                                                Calle
+                                            </option>
+                                            <option key="carrera" value="Carrera">
+                                                Carrera
+                                            </option>
+                                            <option key="avenida" value="Avenida">
+                                                Avenida
+                                            </option>
+                                            <option key="circular" value="Circular">
+                                                Circular
+                                            </option>
+                                            <option key="transversal" value="Transversal">
+                                                Transversal
+                                            </option>
+                                            <option key="circunvalar" value="Circunvalar">
+                                                Circunvalar
+                                            </option>
+                                            <option key="diagonal" value="Diagonal">
+                                                Diagonal
+                                            </option>
+                                        </Field>
+
+                                        <span
+                                            className="text-danger text-left d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            <ErrorMessage name="tipo" />
+                                        </span>
+                                    </div>
+                                    <div className="form-group col">
+                                        <label htmlFor="" className="form-label">
+                                            Número <span className="text-danger">*</span>
+                                        </label>
+                                        <Field name="number_one" type="number" className="w-100 form-control" />
+                                        <span
+                                            className="text-danger text-left d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            <ErrorMessage name="number_one" />
+                                        </span>
+                                    </div>
+                                    <div className="form-group col">
+                                        <label htmlFor="" className="form-label">
+                                            Letra
+                                        </label>
+                                        <Field name="word_one" as="select" className="w-100 form-select">
+                                            <option value="" disabled>
+                                                --Letra--
+                                            </option>
+                                            <option key="A" value="A">
+                                                A
+                                            </option>
+                                            <option key="B" value="B">
+                                                B
+                                            </option>
+                                            <option key="C" value="B">
+                                                C
+                                            </option>
+                                            <option key="D" value="D">
+                                                D
+                                            </option>
+                                            <option key="E" value="E">
+                                                E
+                                            </option>
+                                            <option key="F" value="F">
+                                                F
+                                            </option>
+                                            <option key="G" value="G">
+                                                G
+                                            </option>
+                                            <option key="H" value="H">
+                                                H
+                                            </option>
+                                            <option key="I" value="I">
+                                                I
+                                            </option>
+                                            <option key="AA" value="AA">
+                                                AA
+                                            </option>
+                                            <option key="AB" value="AB">
+                                                AB
+                                            </option>
+                                            <option key="AC" value="AC">
+                                                AC
+                                            </option>
+                                            <option key="AD" value="AD">
+                                                AD
+                                            </option>
+                                            <option key="AE" value="AE">
+                                                AE
+                                            </option>
+                                            <option key="BB" value="BB">
+                                                BB
+                                            </option>
+                                            <option key="BC" value="BC">
+                                                BC
+                                            </option>
+                                            <option key="CC" value="CC">
+                                                CC
+                                            </option>
+                                            <option key="CD" value="CD">
+                                                CD
+                                            </option>
+                                            <option key="CE" value="CE">
+                                                CE
+                                            </option>
+                                            <option key="DD" value="DD">
+                                                DD
+                                            </option>
+                                            <option key="DE" value="DE">
+                                                DE
+                                            </option>
+                                        </Field>
+
+                                        <span
+                                            className="text-danger text-left d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            <ErrorMessage name="word_one" />
+                                        </span>
+                                    </div>
+                                    <div className="form-group col">
+                                        <label htmlFor="" className="form-label">
+                                            Orientación
+                                        </label>
+                                        <Field name="orientation_one" as="select" className="w-100 form-select">
+                                            <option value="" disabled>
+                                                --Orientación--
+                                            </option>
+                                            <option key="sur" value="Sur">
+                                                Sur
+                                            </option>
+                                            <option key="norte" value="Norte">
+                                                Norte
+                                            </option>
+                                            <option key="oeste" value="Oeste">
+                                                Oeste
+                                            </option>
+                                            <option key="este" value="Este">
+                                                Este
+                                            </option>
+                                        </Field>
+
+                                        <span
+                                            className="text-danger text-left d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            <ErrorMessage name="orientation_one" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="row align-items-center">
+                                    <div className="form-group col">
+                                        <label htmlFor="" className="form-label">
+                                            Número <span className="text-danger">*</span>
+                                        </label>
+                                        <div className="input-group">
+                                            <span
+                                                className="input-group-text"
+                                                style={{ background: 'white', borderRight: 'none' }}
+                                                id="basic-addon1"
+                                            >
+                                                #
+                                            </span>
+                                            <Field
+                                                name="number_two"
+                                                type="number"
+                                                className="form-control"
+                                                style={{ borderLeft: 'none' }}
+                                            />
+                                        </div>
+
+                                        <span
+                                            className="text-danger text-left d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            <ErrorMessage name="number_two" />
+                                        </span>
+                                    </div>
+                                    <div className="form-group col">
+                                        <label htmlFor="" className="form-label">
+                                            Letra
+                                        </label>
+                                        <Field name="word_two" as="select" className="w-100 form-select">
+                                            <option value="" disabled>
+                                                --Letra--
+                                            </option>
+                                            <option key="A" value="A">
+                                                A
+                                            </option>
+                                            <option key="B" value="B">
+                                                B
+                                            </option>
+                                            <option key="C" value="B">
+                                                C
+                                            </option>
+                                            <option key="D" value="D">
+                                                D
+                                            </option>
+                                            <option key="E" value="E">
+                                                E
+                                            </option>
+                                            <option key="F" value="F">
+                                                F
+                                            </option>
+                                            <option key="G" value="G">
+                                                G
+                                            </option>
+                                            <option key="H" value="H">
+                                                H
+                                            </option>
+                                            <option key="I" value="I">
+                                                I
+                                            </option>
+                                            <option key="AA" value="AA">
+                                                AA
+                                            </option>
+                                            <option key="AB" value="AB">
+                                                AB
+                                            </option>
+                                            <option key="AC" value="AC">
+                                                AC
+                                            </option>
+                                            <option key="AD" value="AD">
+                                                AD
+                                            </option>
+                                            <option key="AE" value="AE">
+                                                AE
+                                            </option>
+                                            <option key="BB" value="BB">
+                                                BB
+                                            </option>
+                                            <option key="BC" value="BC">
+                                                BC
+                                            </option>
+                                            <option key="CC" value="CC">
+                                                CC
+                                            </option>
+                                            <option key="CD" value="CD">
+                                                CD
+                                            </option>
+                                            <option key="CE" value="CE">
+                                                CE
+                                            </option>
+                                            <option key="DD" value="DD">
+                                                DD
+                                            </option>
+                                            <option key="DE" value="DE">
+                                                DE
+                                            </option>
+                                        </Field>
+                                        <span
+                                            className="text-danger text-left d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            <ErrorMessage name="word_one" />
+                                        </span>
+                                    </div>
+                                    <div className="form-group col">
+                                        <label htmlFor="" className="form-label">
+                                            Orientación
+                                        </label>
+                                        <Field name="orientation_two" as="select" className="w-100 form-select">
+                                            <option value="" disabled>
+                                                --Orientación--
+                                            </option>
+                                            <option key="sur" value="Sur">
+                                                Sur
+                                            </option>
+                                            <option key="norte" value="Norte">
+                                                Norte
+                                            </option>
+                                            <option key="oeste" value="Oeste">
+                                                Oeste
+                                            </option>
+                                            <option key="este" value="Este">
+                                                Este
+                                            </option>
+                                        </Field>
+
+                                        <span
+                                            className="text-danger text-left d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            <ErrorMessage name="orientation_one" />
+                                        </span>
+                                    </div>{' '}
+                                    -
+                                    <div className="form-group col">
+                                        <label htmlFor="" className="form-label">
+                                            indicative <span className="text-danger">*</span>
+                                        </label>
+                                        <Field name="indicative" type="number" className="w-100 form-control" />
+                                        <span
+                                            className="text-danger text-left d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            <ErrorMessage name="indicative" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="from-row row">
+                                    <div className="form-group col-9">
+                                        <label htmlFor="" className="form-label">
+                                            indicaciones
+                                        </label>
+                                        <Field
+                                            name="indicaciones"
+                                            type="text"
+                                            className="w-100 form-control"
+                                            placeholder="Manzana, Urbanización, Núcleo, Bloque, apartamento"
+                                        />
+
+                                        <span
+                                            className="text-danger text-left d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            <ErrorMessage name="indicaciones" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                         <hr style={{ margin: 0 }} />
                         <div className="d-flex justify-content-end mt-2">
-                            <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isValid}>
-                                Consultar
-                            </button>
+                            {view === 'general' ? (
+                                <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isValid}>
+                                    Consultar
+                                </button>
+                            ) : (
+                                <button type="submit" className="btn btn-primary">
+                                    Consultar
+                                </button>
+                            )}
                         </div>
                     </Form>
                 );
