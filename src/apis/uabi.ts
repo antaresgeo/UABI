@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import {
+    IPolicyResponse,
     IProjectResponse,
     IProjectsResponse,
     IRealEstateResponse,
@@ -152,6 +153,23 @@ export const altStatusProject = async (id: number) => {
     try {
         let URI = `${URI_SERVICE_UABI}projects/alt-status`;
         let res: AxiosResponse<IProjectResponse> = await axios.put(URI, null, {
+            params: { id },
+        });
+
+        return res;
+    } catch (error) {
+        console.error(error);
+        return "Error";
+    }
+};
+
+
+// insurability
+
+export const altStatusPolicy = async (id: number) => {
+    try {
+        let URI = `${URI_SERVICE_UABI}policy/alt-status`;
+        let res: AxiosResponse<IPolicyResponse> = await axios.put(URI, null, {
             params: { id },
         });
 

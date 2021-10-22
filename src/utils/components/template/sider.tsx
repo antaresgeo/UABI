@@ -45,8 +45,8 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                 </SubMenu>
 
                 <SubMenu key="sub3" title="Asegurabilidad">
-                    <Menu.Item key="4" onClick={goTo("/asegurabilidad/")}>
-                        Asegurabilidad
+                    <Menu.Item key="4" onClick={goTo("/insurabilities/policy")}>
+                        Poliza
                     </Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub4" title="Disposición">
