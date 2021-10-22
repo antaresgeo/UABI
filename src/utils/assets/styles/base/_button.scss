@@ -1,10 +1,12 @@
 .btn {
     border-radius: 20px !important;
+    padding: 0.465rem 1.215rem !important;
 }
 
 .btn-primary {
     background-color: $azulClarito !important;
-    color: white !important;
+    border: 1px solid $azulClarito !important;
+
 }
 
 .btn-primary:hover {

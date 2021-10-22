@@ -66,7 +66,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                                         onChange={handleChange}
                                         value={acquisition.acquisition_type}
                                     >
-                                        <option value="0" selected disabled hidden>
+                                        <option value="" disabled hidden>
                                             -- Seleccione Tipo de Adquisición --
                                         </option>
                                         <option value="Compraventa">Compraventa</option>

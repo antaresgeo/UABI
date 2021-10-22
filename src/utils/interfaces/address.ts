@@ -44,7 +44,7 @@ export interface INeighborhoodAddressAttributes {
 export interface IAddressResponse {
     message: string;
     error?: any;
-    data?: // | IAddressAttributes
+    results?: // | IAddressAttributes
     | ICountryAddressAttributes[]
         | IStateAddressAttributes[]
         | ICityAddressAttributes[]

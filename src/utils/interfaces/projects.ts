@@ -6,7 +6,7 @@ export interface IProjectAttributes {
     description: string;
     dependency: string;
     audit_trail?: IAuditTrail;
-    status: number;
+    status?: number;
 }
 
 export interface IProjectsResponse {
