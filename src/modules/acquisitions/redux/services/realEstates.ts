@@ -37,17 +37,19 @@ const getRealEstates = async ({
 export const getRealEstatesByProject = async (
     id: number
 ): Promise<IPaginable<IRealEstateAttributes> | string> => {
-    try {
-        let URI = `/real-estates/project`;
-        let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
-            await http.get(URI, {
-                params: { id },
-            });
+    if(id){
+        try {
+            let URI = `/real-estates/project/`;
+            let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
+                await http.get(URI, {
+                    params: { id },
+                });
 
-        return res.data;
-    } catch (error) {
-        console.error(error);
-        return Promise.reject('Error');
+            return res.data;
+        } catch (error) {
+            console.error(error);
+            return Promise.reject('Error');
+        }
     }
 };
 

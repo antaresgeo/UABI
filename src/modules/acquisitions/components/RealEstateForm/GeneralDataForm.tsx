@@ -9,22 +9,23 @@ import { extractMonth, formatDate } from '../../../../utils';
 interface GeneralDataFormProps {
     type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
-    setFieldValue: Function;
+    formik: any;
     projects: IProjectAttributes[];
-    values?: any;
     onProjectSelectedChange?: (value) => void;
 }
 
-const GeneralDataForm: FC<GeneralDataFormProps> = ({
-    type,
-    disabled,
-    setFieldValue,
-    projects,
-    values,
-    onProjectSelectedChange,
-}) => {
+const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, projects, onProjectSelectedChange }) => {
     return (
-        <Card title="Creación de Bien Inmueble">
+        <Card
+            title="Información del proyecto"
+            actions={[
+                <div className="d-flex flex-row-reverse px-3 py-1">
+                    <button type="button" className="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>,
+            ]}
+        >
             <div className="row">
                 <div className="form-group col-6">
                     <label htmlFor="project_id_id" className="form-label">
@@ -286,10 +287,8 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 view={'general'}
                                 onSave={(values) => {
                                     return service.getAddress(values).then((res) => {
-                                        console.log(res);
-
-                                        setFieldValue('location', `${res.id} | ${res.addressAsString}`, null);
-                                        setFieldValue('cbml', `${res.cbml}`, null);
+                                        formik.setFieldValue('location', `${res.id} | ${res.addressAsString}`, null);
+                                        formik.setFieldValue('cbml', `${res.cbml}`, null);
                                     });
                                 }}
                             />
@@ -400,7 +399,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 className="form-control"
                                 id="audit_trail_created_on_id"
                                 name="audit_trail.created_on"
-                                value={formatDate(values.audit_trail.created_on)}
+                                value={formatDate(formik.values.audit_trail.created_on)}
                                 disabled
                             />
                             <span className="form-error" />
@@ -443,7 +442,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 className="form-control"
                                 id="periodo_contable_id"
                                 name="periodo_contable"
-                                value={extractMonth(values.audit_trail.created_on)}
+                                value={extractMonth(formik.values.audit_trail.created_on)}
                                 disabled
 
                                 // EL MES

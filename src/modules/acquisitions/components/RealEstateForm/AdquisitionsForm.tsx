@@ -10,12 +10,11 @@ import LocationModal from '../../../../utils/components/LocationModal';
 interface AcquisitionsFromProps {
     type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
-    setFieldValue?: Function;
-    acquisitions?: AdquisitionsItf[];
+    formik?: any;
 }
 
-const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFieldValue, disabled }) => {
-    const [count, set_count] = useState<number>(acquisitions.length || 0);
+const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled }) => {
+    const [count, set_count] = useState<number>(formik?.values?.acquisitions?.length || 0);
     const initial_values: AdquisitionsItf = {
         acquisition_type: '',
         active_type: [],
@@ -42,7 +41,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
     };
 
     const addAcquisition = (new_acquisition: AdquisitionsItf) => {
-        setFieldValue(`acquisitions[${count}]`, new_acquisition);
+        formik.setFieldValue(`acquisitions[${count}]`, new_acquisition);
         set_count((c) => c + 1);
     };
 
@@ -51,7 +50,11 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
     };
 
     return (
-        <Card title="Información de Adquisición">
+        <Card title="Información de Adquisición" actions={[
+            <div className="d-flex flex-row-reverse px-3 py-1">
+                <button type="button" className="btn btn-primary">Guardar</button>
+            </div>,
+        ]}>
             <div className="row">
                 {(type !== 'view' || !disabled) && (
                     <>
@@ -361,7 +364,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, acquisitions, setFi
                 )}
                 <div className="col-12">
                     <div className="row">
-                        <AcquisitionList acquisitions={acquisitions || []} type={type} />
+                        <AcquisitionList acquisitions={formik?.values?.acquisitions || []} type={type} />
                     </div>
                 </div>
             </div>

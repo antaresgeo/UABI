@@ -30,35 +30,41 @@ const RealEstate = () => {
         }
     }, []);
 
+    const createRealEstate = async (values, form, isFinish) => {
+        try {
+            const res: any = await dispatch(actions.createRealEstate(values));
+            if (!isFinish) {
+                if (res) {
+                    return await dispatch(actions.getRealEstatesByProject(res.project_id));
+                }
+            } else {
+                history.push(`/acquisitions/real-estates/`);
+                return Promise.resolve();
+            }
+        } catch (e) {
+            return Promise.reject();
+        }
+    };
+
+    const onProjectSelectedChange = (value) => {
+        if (project_id !== value) {
+            set_project_id(value);
+            if (value) {
+                console.log(value);
+
+                dispatch(actions.getRealEstatesByProject(value));
+            }
+        }
+    };
+
     return (
         <RealEstateForm
             type="create"
             projects={projects}
             realEstates={realEstates}
             projectId={project_id}
-            onProjectSelectedChange={(value) => {
-                if (project_id !== value) {
-                    set_project_id(value);
-                    if (value) {
-                        console.log(value);
-
-                        dispatch(actions.getRealEstatesByProject(value));
-                    }
-                }
-            }}
-            onSubmit={async (values, form, isFinish) => {
-                try {
-                    const res: any = await dispatch(actions.createRealEstate(values));
-                    if (!isFinish) {
-                        if (res) return await dispatch(actions.getRealEstatesByProject(res));
-                    } else {
-                        history.push(`/acquisitions/real-estates/`);
-                        return Promise.resolve();
-                    }
-                } catch (e) {
-                    return Promise.reject();
-                }
-            }}
+            onProjectSelectedChange={onProjectSelectedChange}
+            onSubmit={createRealEstate}
         />
     );
 };
