@@ -1,13 +1,17 @@
 import { FC } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { IProjectAttributes } from '../../../utils/interfaces/';
+import Input from 'antd/lib/input';
+import * as Yup from 'yup';
 
 interface ProjectFormPros {
     project?: IProjectAttributes;
     onSubmit?: (values, form?) => Promise<any>;
     disabled?: boolean;
+    type?: 'view' | 'create' | 'edit';
 }
-const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
+const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type }) => {
+    const { TextArea } = Input;
     const initial_values: IProjectAttributes = project || {
         id: '',
         name: '',
@@ -15,13 +19,20 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
         dependency: '',
         status: -1,
     };
+
+    const schema = Yup.object().shape({
+        name: Yup.string().required('obligatorio').max(200, 'El nombre debe tener maximo 200 caracteres'),
+        description: Yup.string().required('obligatorio').max(1000, 'La Descripción debe tener maximo 200 caracteres'),
+        dependency: Yup.string().required('obligatorio'),
+    });
+
     const submit = (values, form) => {
         onSubmit(values, form).then(() => {
             form.setSubmitting(false);
         });
     };
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values}>
+        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
             {({ values, isValid, isSubmitting }) => {
                 return (
                     <Form>
@@ -61,6 +72,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
                                     name="name"
                                     autoComplete="off"
                                     disabled={disabled}
+                                    maxLength={201}
                                 />
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="name" />
@@ -105,20 +117,38 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled }) => {
                                     name="description"
                                     disabled={disabled}
                                     autoComplete="off"
+                                    maxLength={1001}
                                 />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="description" />
-                                </span>
+                                <div className="row">
+                                    <div className="col">
+                                        <span
+                                            className="text-danger text-left d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            <ErrorMessage name="description" />
+                                        </span>
+                                    </div>
+                                    <div className="col">
+                                        <span
+                                            className="text-muted text-end d-block w-100 mt-1"
+                                            style={{ height: '22px' }}
+                                        >
+                                            {values.description.length}/1000
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="row justify-content-end">
                             <div className="col text-end">
-                                <button
-                                    className="btn btn-success my-3"
-                                    disabled={!isValid || isSubmitting || disabled}
-                                >
-                                    Guardar
-                                </button>
+                                {type !== 'view' && (
+                                    <button
+                                        className="btn btn-primary my-3"
+                                        disabled={ isSubmitting || disabled}
+                                    >
+                                        Guardar
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </Form>

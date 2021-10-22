@@ -152,6 +152,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                         autoComplete="off"
                         placeholder=""
                         disabled={disabled}
+                        maxLength={21}
                     />
                     <span className="form-error">
                         <ErrorMessage name="registry_number" />
@@ -225,6 +226,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                             type="number"
                             className="form-control text-end"
                             style={{ borderLeft: 'none' }}
+                            maxLength={21}
                         />
                     </div>
                     <span className="form-error">
@@ -321,6 +323,9 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                             name="total_percentage"
                             id="total_percentage_id"
                             className="form-control border-end-0"
+                            min={0}
+                            max={100}
+                            type="number"
                         />
                         <div className="input-group-prepend">
                             <span className="input-group-text bg-white border-start-0">%</span>

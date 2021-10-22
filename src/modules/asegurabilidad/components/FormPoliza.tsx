@@ -100,7 +100,7 @@ const FormPoliza = () => {
                         </div>
 
                         <div className='d-flex justify-content-end mt-5'>
-                            <button type='submit' className='btn btn-success btn-lg text-uppercase'>
+                            <button type='submit' className='btn btn-primary btn-lg text-uppercase'>
                                 guardar
                             </button>
                         </div>

@@ -7,6 +7,7 @@ import RealEstateList from '../RealEstateList';
 import { Card } from '../../../../utils/ui';
 import { Input } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 
 interface RealEstateFormProps {
     realEstate?: IRealEstateAttributes;
@@ -56,13 +57,36 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         acquisitions: [],
     };
 
+    const schema = Yup.object().shape({
+        dependency: Yup.string().required('obligatorio'),
+        destination_type: Yup.string().required('obligatorio'),
+        accounting_account: Yup.string().required('obligatorio'),
+        cost_center: Yup.string().required('obligatorio'),
+        registry_number: Yup.string()
+            .required('obligatorio')
+            .max(20, 'El Número Matricula debe tener maximo 20 caracteres'),
+        name: Yup.string().required('obligatorio'),
+        description: Yup.string().required('obligatorio'),
+        patrimonial_value: Yup.number()
+            .required('obligatorio')
+            .max(20, 'El Número Matricula debe tener maximo 20 caracteres'),
+        total_area: Yup.number().required('obligatorio'),
+        total_percentage: Yup.number()
+            .required('obligatorio')
+            .min(0, 'El procentaje minimo es 0')
+            .max(100, 'El procentaje maximo es 100'),
+        zone: Yup.string().required('obligatorio'),
+        tipology: Yup.string().required('obligatorio'),
+        project_id: Yup.number().required('obligatorio'),
+    });
+
     const submit = (values, form, isFinish = false) => {
         onSubmit(values, form, isFinish).then(() => {
             form.setSubmitting(false);
         });
     };
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values}>
+        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
             {(formik) => {
                 return (
                     <Form className="h-100" autoComplete="off">
@@ -112,7 +136,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 </div>
                                                 <div className="row justify-content-center">
                                                     <div className="col text-start">
-                                                        <button type="submit" className="btn btn-success mr-3">
+                                                        <button type="submit" className="btn btn-primary mr-3">
                                                             Guardar
                                                         </button>
                                                         <button
@@ -138,26 +162,26 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                             >
                                 <button
                                     type="button"
-                                    className="btn btn-primary"
+                                    className="btn btn-outline-primary"
                                     onClick={() => {
                                         history.goBack();
                                     }}
                                 >
                                     Atras
                                 </button>
-                                <div />
+                                <div className="flex-fill" />
                                 {type !== 'view' && (
                                     <>
                                         <button
                                             type="button"
-                                            className="btn btn-primary"
+                                            className="btn btn-outline-primary me-3"
                                             onClick={() => {
                                                 submit(formik.values, formik, true);
                                             }}
                                         >
                                             Finalizar
                                         </button>
-                                        <button className="btn btn-success">Guardar</button>
+                                        <button className="btn btn-primary">Guardar</button>
                                     </>
                                 )}
                             </div>
