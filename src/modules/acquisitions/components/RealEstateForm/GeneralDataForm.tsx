@@ -5,11 +5,13 @@ import LocationModal from '../../../../utils/components/LocationModal';
 import { service } from '../../redux';
 import { IProjectAttributes } from '../../../../utils/interfaces';
 import { TextArea } from 'semantic-ui-react';
+import { extractMonth, formatDate } from '../../../../utils';
 interface GeneralDataFormProps {
     type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
     setFieldValue: Function;
     projects: IProjectAttributes[];
+    values?: any;
     onProjectSelectedChange?: (value) => void;
 }
 
@@ -18,6 +20,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
     disabled,
     setFieldValue,
     projects,
+    values,
     onProjectSelectedChange,
 }) => {
     return (
@@ -226,7 +229,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                             type="number"
                             className="form-control text-end"
                             style={{ borderLeft: 'none' }}
-                            maxLength={21}
+                            maxLength={200}
                         />
                     </div>
                     <span className="form-error">
@@ -260,7 +263,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 type="radio"
                                 className="form-check-input"
                                 value="Rural"
-                            />{' '}
+                            />
                             Rural
                         </label>
                     </div>
@@ -275,13 +278,18 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                         Dirección
                     </label>
                     <div className="input-group">
+                        <Field name="cbml" id="address" type="text" className="form-control" disabled />
                         <Field name="location" id="address" type="text" className="form-control" disabled />
                         <div className="input-group-prepend">
                             <LocationModal
                                 disabled={disabled}
+                                view={'general'}
                                 onSave={(values) => {
                                     return service.getAddress(values).then((res) => {
-                                        setFieldValue('location', res, null);
+                                        console.log(res);
+
+                                        setFieldValue('location', `${res.id} | ${res.addressAsString}`, null);
+                                        setFieldValue('cbml', `${res.cbml}`, null);
                                     });
                                 }}
                             />
@@ -392,6 +400,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 className="form-control"
                                 id="audit_trail_created_on_id"
                                 name="audit_trail.created_on"
+                                value={formatDate(values.audit_trail.created_on)}
                                 disabled
                             />
                             <span className="form-error" />
@@ -429,12 +438,14 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                             <label htmlFor="periodo_contable_id" className="form-label">
                                 Periodo contable
                             </label>
-                            <input
-                                type=""
+                            <Field
+                                type="text"
                                 className="form-control"
                                 id="periodo_contable_id"
                                 name="periodo_contable"
+                                value={extractMonth(values.audit_trail.created_on)}
                                 disabled
+
                                 // EL MES
                             />
                             <span className="form-error" />

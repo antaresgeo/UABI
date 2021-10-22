@@ -1,15 +1,14 @@
-import { AxiosResponse } from "axios";
-import { getAddressById, insertAddress } from ".";
-// import { getAddressById, insertAddress } from ".";
-import { http } from "../../../../config/axios_instances";
-import { swal } from "../../../../utils";
+import { AxiosResponse } from 'axios';
+import { getAddressById, insertAddress } from '.';
+import { http } from '../../../../config/axios_instances';
+import { swal } from '../../../../utils';
 
 import {
     IPaginable,
     IRealEstateAttributes,
     IRealEstateResponse,
     IRealEstatesResponse,
-} from "../../../../utils/interfaces";
+} from '../../../../utils/interfaces';
 
 // REAL ESTATES
 // Services: GET
@@ -31,7 +30,7 @@ const getRealEstates = async ({
         return res.data;
     } catch (error) {
         console.error(error);
-        return Promise.reject("Error");
+        return Promise.reject('Error');
     }
 };
 
@@ -40,14 +39,15 @@ export const getRealEstatesByProject = async (
 ): Promise<IPaginable<IRealEstateAttributes> | string> => {
     try {
         let URI = `/real-estates/project`;
-        let res: AxiosResponse<IPaginable<IRealEstateAttributes>> = await http.get(URI, {
-            params: { id },
-        });
+        let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
+            await http.get(URI, {
+                params: { id },
+            });
 
         return res.data;
     } catch (error) {
         console.error(error);
-        return Promise.reject("Error");
+        return Promise.reject('Error');
     }
 };
 
@@ -60,10 +60,12 @@ export const getRealEstate = async (
             params: { id },
         });
 
+        // const auxRes = {...res.data.results, audit_trail: {...res.data.}}
+
         return res.data.results;
     } catch (error) {
         console.error(error);
-        return Promise.reject("Error");
+        return Promise.reject('Error');
     }
 };
 
@@ -89,7 +91,7 @@ export const createRealEstate = async (
         return res.data.results;
     } catch (error) {
         console.error(error);
-        return Promise.reject("Error");
+        return Promise.reject('Error');
     }
 };
 
@@ -114,9 +116,9 @@ export const updateRealEstate = async (data: any, id: number) => {
         );
 
         swal.fire({
-            title: "Bien Inmueble actualizado.",
+            title: 'Bien Inmueble actualizado.',
             text: res.data.message,
-            icon: "success",
+            icon: 'success',
             showConfirmButton: false,
             timer: 1500,
         });
@@ -125,13 +127,13 @@ export const updateRealEstate = async (data: any, id: number) => {
     } catch (error) {
         console.error(error);
         swal.fire({
-            title: "Bien Inmueble actualizado con error.",
-            text: "Error",
-            icon: "success",
+            title: 'Bien Inmueble actualizado con error.',
+            text: 'Error',
+            icon: 'success',
             showConfirmButton: false,
             timer: 1500,
         });
-        return Promise.reject("Error");
+        return Promise.reject('Error');
     }
 };
 
@@ -143,13 +145,13 @@ export const getIdFromLocation = async ({
     neighborhood,
 }) => {
     try {
-        let URI = "/localizations/id/";
+        let URI = '/localizations/id/';
         let res = await http.get(URI, {
             params: { city, state, country, commune, neighborhood },
         });
         return res.data.data;
     } catch (e) {
-        return Promise.reject("Error");
+        return Promise.reject('Error');
     }
 };
 
@@ -168,13 +170,13 @@ const getAddress = async (values) => {
             word_one: values.letra1,
             number_two: values.numero2,
             indicative: values.indicativo,
-            user_id: "",
+            user_id: '',
             location_id: res1.id,
         });
         const res3 = await getAddressById(res2.id);
         return res3.data.data;
     } catch (e) {
-        return Promise.reject("Error");
+        return Promise.reject('Error');
     }
 };
 
@@ -186,9 +188,9 @@ const deleteRealEstate = async (id) => {
         });
 
         swal.fire({
-            title: "Bien Inmueble Inactivado",
+            title: 'Bien Inmueble Inactivado',
             text: res.data.message,
-            icon: "success",
+            icon: 'success',
             showConfirmButton: false,
             timer: 1500,
         });
@@ -197,12 +199,12 @@ const deleteRealEstate = async (id) => {
     } catch (error) {
         console.error(error);
         swal.fire({
-            title: "Error al inactivar Bien Inmueble",
+            title: 'Error al inactivar Bien Inmueble',
             text: error.message,
-            icon: "error",
+            icon: 'error',
             showConfirmButton: false,
         });
-        return Promise.reject("Error in delete Project");
+        return Promise.reject('Error in delete Project');
     }
 };
 
