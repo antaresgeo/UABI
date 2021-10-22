@@ -11,7 +11,7 @@ const get_routes = (): IRoute[] => {
             can_access: true,
             path: '/notification/',
             breadcrumbs: [{ name: "Notificaciones" }],
-            component: DetailNotification
+            component: ListNotification
         },
         {
             exact: true,

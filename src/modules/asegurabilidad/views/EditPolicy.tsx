@@ -5,8 +5,6 @@ import { useEffect } from 'react';
 import PolizaForm from './../components/PolizaForm';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-
-
 import { Card } from '../../../utils/ui';
 import { swal } from '../../../utils';
 import { actions } from '../redux';

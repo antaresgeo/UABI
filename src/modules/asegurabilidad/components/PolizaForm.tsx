@@ -107,8 +107,8 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, onSubmit }) => {
                     <div className="col-10">
                     </div>
                     <div className="col-2">
-                        <button type='submit' className='btn btn-success btn-lg text-uppercase'>
-                            guardar
+                        <button type='submit' className='btn btn-success'>
+                            Guardar
                         </button>
                     </div>
 

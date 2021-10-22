@@ -7,11 +7,6 @@ import { actions } from "../redux";
 
 const table_columns = [
     {
-        title: "ID",
-        dataIndex: "id",
-        align: "center" as "center",
-    },
-    {
         title: "Titulo",
         dataIndex: "title",
         align: "center" as "center",
@@ -27,25 +22,19 @@ const table_columns = [
         align: "center" as "center",
     },
     {
-        title: "Acciones",
-        fixed: true,
-        children: [
-            {
-                title: "Ver",
-                dataIndex: "id",
-                align: "center" as "center",
-                render: (id) => {
-                    return (
-                        <Link
-                            to={`/notification/${id}/`}
-                            name=""
-                            avatar={false}
-                            icon={<i className="fa fa-eye" aria-hidden="true" />}
-                        />
-                    );
-                },
-            },
-        ],
+        title: "Ver",
+        dataIndex: "id",
+        align: "center" as "center",
+        render: (id) => {
+            return (
+                <Link
+                    to={`/notification/${id}/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-eye" aria-hidden="true" />}
+                />
+            );
+        },
     },
 ];
 const ListNotification = () => {

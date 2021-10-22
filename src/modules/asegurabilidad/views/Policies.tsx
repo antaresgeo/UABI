@@ -4,8 +4,6 @@ import { IPolicyAttributes } from '../../../utils/interfaces/components.interfac
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-
-import { altStatusPolicy } from '../../../apis/uabi';
 import { formatDate } from '../../../utils';
 import { actions } from '../redux';
 import { Link, Card, Table as UiTable } from '../../../utils/ui';
@@ -96,7 +94,7 @@ const table_columns = [
                         <div
                             className="text-danger"
                             onClick={async () => {
-                                await altStatusPolicy(parseInt(id));
+                                //await altStatusPolicy(parseInt(id));
                             }}
                         >
                             <i className="fa fa-trash" aria-hidden="true" />

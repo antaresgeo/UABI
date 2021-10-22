@@ -37,6 +37,7 @@ const DetailNotification = () => {
                                     placeholder="Titulo"
                                     className="form-control"
                                     value={notification.path}
+                                    disabled
                                 />
                             </div>
                         <div className="col-6">
@@ -48,6 +49,7 @@ const DetailNotification = () => {
                                     placeholder="Path"
                                     className="form-control"
                                     value={notification.path}
+                                    disabled
                                 />
                             </div>
                         </div>
@@ -62,6 +64,7 @@ const DetailNotification = () => {
                                     name="description"
                                     value={notification.description}    
                                     autoComplete="off"
+                                    disabled
                                 />
                             </div>
                         </div>
