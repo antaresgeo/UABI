@@ -22,7 +22,8 @@ interface IParams {
 // PROJECTS
 // Services: GET
 export const getList = async (
-    nameList: string
+    nameList: string,
+    filters?: any
 ): Promise<
     | ICountryAddressAttributes[]
     | IStateAddressAttributes[]
@@ -43,12 +44,13 @@ export const getList = async (
         let res: AxiosResponse<IAddressResponse> = await location_http.get(
             URI,
             {
-                params,
+                params: {
+                    ...params,
+                    ...filters
+                },
             }
         );
-        console.log(res.data);
-
-        return res.data.data;
+        return res.data.results;
     } catch (error) {
         console.error(error);
         return Promise.reject("Error");

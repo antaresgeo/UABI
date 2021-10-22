@@ -34,7 +34,7 @@ const SupportDocs: FC<SupportDocsProps> = () => {
             </div>
             <div className="row justify-content-center">
                 <div className="col text-start">
-                    <button type="submit" className="btn btn-success mr-3">
+                    <button type="submit" className="btn btn-primary mr-3">
                         Guardar
                     </button>
                     <button type="button" className="btn btn-primary mx-3" onClick={() => {} /*_createRealEstate*/}>

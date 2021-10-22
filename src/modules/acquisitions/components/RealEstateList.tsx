@@ -15,7 +15,6 @@ interface RealEstateListProps {
 }
 const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, change_page, total }) => {
     const dispatch = useDispatch();
-    console.log(realEstates);
 
     const deleteRealEstate = (id) => async () => {
         const result = await swal.fire({
@@ -133,6 +132,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
             ],
         },
     ];
+
     return (
         <Table columns={table_columns} items={realEstates} with_pagination count={total} change_page={change_page} />
     );

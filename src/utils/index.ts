@@ -59,7 +59,7 @@ export const setTitle = (title: string) => (document.title = title);
 export const formatDate = (date) => {
     const tmpDate = new Date(parseInt(date));
 
-    const newDate = moment(tmpDate).format("DD-MM-YYYY");
+    const newDate = moment(tmpDate).format("MM/DD/YYYY hh:mm");
 
     return date && newDate;
 };

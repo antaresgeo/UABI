@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { actions } from '../../redux';
@@ -14,13 +14,13 @@ interface IParams {
 const DetailProject = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
     useEffect(() => {
         dispatch(actions.getProject(id));
-        console.log(project);
     }, []);
 
     useEffect(() => {
@@ -30,35 +30,54 @@ const DetailProject = () => {
     }, [project]);
 
     return (
-        <div className="container-fluid">
-            <div className="row justify-content-center">
-                <div className="col-md-12">
-                    <Card
-                        title={
-                            <>
-                                <b>Proyecto:</b> {project.name}
-                            </>
-                        }
-                    >
-                        <ProjectForm disabled project={project} />
-                    </Card>
+        <div className="h-100 d-flex flex-column">
+            <div className="flex-fill overflow-auto">
+                <div className="container-fluid">
+                    <div className="row justify-content-center">
+                        <div className="col-md-12">
+                            <Card
+                                title={
+                                    <>
+                                        <b>Proyecto:</b> {project?.name}
+                                    </>
+                                }
+                            >
+                                <ProjectForm disabled project={project} type="view" />
+                            </Card>
 
-                    <Card
-                        title="Bienes Inmuebles del Proyecto"
-                        extra={
-                            <Link
-                                to={{
-                                    pathname: '/acquisitions/real-estates/create/',
-                                    state: { project_id: project.id },
-                                }}
-                                name="Crear"
-                                iconText="+"
-                            />
-                        }
-                    >
-                        <RealEstateList realEstates={realEstates} />
-                    </Card>
+                            <Card
+                                title="Bienes Inmuebles del Proyecto"
+                                extra={
+                                    <Link
+                                        to={{
+                                            pathname: '/acquisitions/real-estates/create/',
+                                            state: { project_id: project?.id },
+                                        }}
+                                        name="Crear"
+                                        iconText="+"
+                                    />
+                                }
+                            >
+                                <RealEstateList realEstates={realEstates} />
+                            </Card>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div
+                className="bg-white d-flex flex-row justify-content-between"
+                style={{ padding: 16, borderTop: '1px solid #ccc' }}
+            >
+                <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={() => {
+                        history.goBack();
+                    }}
+                >
+                    Atras
+                </button>
+                <div className="flex-fill" />
             </div>
         </div>
     );

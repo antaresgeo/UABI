@@ -1,62 +1,58 @@
-import { FC, useEffect, useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { getList } from "./service";
+import { FC, useEffect, useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { getList } from './service';
 import {
     ICityAddressAttributes,
     ICommuneAddressAttributes,
     ICountryAddressAttributes,
     INeighborhoodAddressAttributes,
     IStateAddressAttributes,
-} from "../../interfaces";
+} from '../../interfaces';
 
 interface LocationProps {
     modalClose?: (values, callback) => void;
 }
 
 const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
-    const [countries, setCountries] = useState<ICountryAddressAttributes[]>([{ country_code: "", country: "" }]);
+    const [countries, setCountries] = useState<ICountryAddressAttributes[]>([]);
     const [states, setStates] = useState([]);
     const [city, setCity] = useState([]);
     const [commune, setCommune] = useState([]);
     const [neighborhood, setNeighborhood] = useState([]);
 
     const initialValues = {
-        pais: "",
-        departamento: "",
-        municipio: "",
-        comuna: "",
-        barrio: "",
-        tipo: "",
-        numero1: "",
-        letra1: "",
-        orientacion1: "",
-        numero2: "",
-        letra2: "",
-        orientacion2: "",
-        indicativo: "",
-        indicaciones: "",
+        pais: '',
+        departamento: '',
+        municipio: '',
+        comuna: '',
+        barrio: '',
+        tipo: '',
+        numero1: '',
+        letra1: '',
+        orientacion1: '',
+        numero2: '',
+        letra2: '',
+        orientacion2: '',
+        indicativo: '',
+        indicaciones: '',
     };
 
     const schema = Yup.object().shape({
-        pais: Yup.string().required("obligatorio"),
-        departamento: Yup.string().required("obligatorio"),
-        municipio: Yup.string().required("obligatorio"),
-        comuna: Yup.string().required("obligatorio"),
-        barrio: Yup.string().required("obligatorio"),
-        tipo: Yup.string().required("obligatorio"),
-        numero1: Yup.string().required("obligatorio"),
-        numero2: Yup.string().required("obligatorio"),
-        indicativo: Yup.string().required("obligatorio"),
+        pais: Yup.string().required('obligatorio'),
+        departamento: Yup.string().required('obligatorio'),
+        municipio: Yup.string().required('obligatorio'),
+        comuna: Yup.string().required('obligatorio'),
+        barrio: Yup.string().required('obligatorio'),
+        tipo: Yup.string().required('obligatorio'),
+        numero1: Yup.string().required('obligatorio'),
+        numero2: Yup.string().required('obligatorio'),
+        indicativo: Yup.string().required('obligatorio'),
     });
 
     useEffect(() => {
         (async () => {
-            let arrCountries: any = await getList("country");
-            let arrStates: any = await getList("state");
-            let arrCity: any = await getList("city");
-            let arrCommune: any = await getList("commune");
-            let arrNeighborhood: any = await getList("neighborhood");
+            let arrCountries: any = await getList('country');
             setCountries(arrCountries);
         })();
     }, []);
@@ -74,7 +70,11 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                     });
             }}
         >
-            {({ values, isValid, isSubmitting }) => {
+            {({ values, isValid, isSubmitting, setFieldValue, handleChange }) => {
+                const has_country = values.pais !== '';
+                let has_states = values.departamento !== '';
+                let has_city = values.municipio !== '';
+                let has_commune = values.comuna !== '';
                 return (
                     <Form>
                         <div className="form-row row">
@@ -82,12 +82,19 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 <label htmlFor="" className="form-label">
                                     País <span className="text-danger">*</span>
                                 </label>
-                                <Field className="w-100 form-select" name="pais" as="select">
+                                <Field
+                                    className="w-100 form-select"
+                                    name="pais"
+                                    as="select"
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                        getList('states', { country: e.target.value });
+                                    }}
+                                >
                                     <option value="" disabled>
                                         --País--
                                     </option>
-                                    {countries.length >= 1 &&
-                                        countries[0].country !== "" &&
+                                    {countries.length > 0 &&
                                         countries.map((country, i) => (
                                             <option key={i} value={country.country_code}>
                                                 {country.country}
@@ -95,7 +102,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                         ))}
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="pais" />
                                 </span>
                             </div>
@@ -103,7 +110,12 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 <label htmlFor="" className="form-label">
                                     Departamento <span className="text-danger">*</span>
                                 </label>
-                                <Field className="w-100 form-select" name="departamento" as="select">
+                                <Field
+                                    className="w-100 form-select"
+                                    name="departamento"
+                                    as="select"
+                                    disabled={!has_country}
+                                >
                                     <option value="" selected disabled>
                                         --Departamento--
                                     </option>
@@ -127,7 +139,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     </option>
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="departamento" />
                                 </span>
                             </div>
@@ -135,7 +147,12 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 <label htmlFor="" className="form-label">
                                     Municipio <span className="text-danger">*</span>
                                 </label>
-                                <Field className="w-100 form-select" name="municipio" as="select">
+                                <Field
+                                    className="w-100 form-select"
+                                    name="municipio"
+                                    as="select"
+                                    disabled={!has_states}
+                                >
                                     <option value="" disabled>
                                         --Municipio--
                                     </option>
@@ -165,7 +182,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     </option>
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="municipio" />
                                 </span>
                             </div>
@@ -173,7 +190,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 <label htmlFor="" className="form-label">
                                     Comuna <span className="text-danger">*</span>
                                 </label>
-                                <Field className="w-100 form-select" name="comuna" as="select">
+                                <Field className="w-100 form-select" name="comuna" as="select" disabled={!has_city}>
                                     <option value="" disabled>
                                         --Comuna--
                                     </option>
@@ -227,7 +244,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     </option>
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="comuna" />
                                 </span>
                             </div>
@@ -237,7 +254,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 <label htmlFor="" className="form-label">
                                     Barrio <span className="text-danger">*</span>
                                 </label>
-                                <Field className="w-100 form-select" name="barrio" as="select">
+                                <Field className="w-100 form-select" name="barrio" as="select" disabled={!has_commune}>
                                     <option value="" selected disabled>
                                         --Barrio--
                                     </option>
@@ -264,7 +281,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     </option>
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="barrio" />
                                 </span>
                             </div>
@@ -303,7 +320,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     </option>
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="tipo" />
                                 </span>
                             </div>
@@ -312,7 +329,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     Número <span className="text-danger">*</span>
                                 </label>
                                 <Field name="numero1" type="number" className="w-100 form-control" />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="numero1" />
                                 </span>
                             </div>
@@ -389,7 +406,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     </option>
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="letra1" />
                                 </span>
                             </div>
@@ -415,7 +432,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     </option>
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="orientacion1" />
                                 </span>
                             </div>
@@ -428,7 +445,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                 <div className="input-group">
                                     <span
                                         className="input-group-text"
-                                        style={{ background: "white", borderRight: "none" }}
+                                        style={{ background: 'white', borderRight: 'none' }}
                                         id="basic-addon1"
                                     >
                                         #
@@ -437,11 +454,11 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                         name="numero2"
                                         type="number"
                                         className="form-control"
-                                        style={{ borderLeft: "none" }}
+                                        style={{ borderLeft: 'none' }}
                                     />
                                 </div>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="numero2" />
                                 </span>
                             </div>
@@ -517,7 +534,7 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                         DE
                                     </option>
                                 </Field>
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="letra1" />
                                 </span>
                             </div>
@@ -543,16 +560,17 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     </option>
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="orientacion1" />
                                 </span>
-                            </div> -
+                            </div>{' '}
+                            -
                             <div className="form-group col">
                                 <label htmlFor="" className="form-label">
                                     Indicativo <span className="text-danger">*</span>
                                 </label>
                                 <Field name="indicativo" type="number" className="w-100 form-control" />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="indicativo" />
                                 </span>
                             </div>
@@ -569,12 +587,12 @@ const Location: FC<LocationProps> = ({ modalClose, ...props }) => {
                                     placeholder="Manzana, Urbanización, Núcleo, Bloque, apartamento"
                                 />
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: "22px" }}>
+                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="indicaciones" />
                                 </span>
                             </div>
                         </div>
-                        <hr style={{margin: 0}}/>
+                        <hr style={{ margin: 0 }} />
                         <div className="d-flex justify-content-end mt-2">
                             <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isValid}>
                                 Consultar
