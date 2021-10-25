@@ -24,7 +24,11 @@ const SideBar = () => {
 					name='Registro Contable - UABI'
 					sublinks={[{ to: '/', name: 'Registro Contable - UABI' }]}
 				/> */}
-                <SBItem id="asegurabilidad" name="Asegurabilidad" />
+                <SBItem 
+                    id="insurability" 
+                    name="insurability" 
+                    sublinks={[{ to: "/policy", name: "Poliza"}]}
+                />
                 <SBItem id="disposition" name="Disposición" sublinks={[{ to: "/real-estates/areas", name: "Áreas" }]} />
                 <SBItem id="adquisisiones" name="Supervisión" />
                 <SBItem id="adquisisiones" name="Facturación" />

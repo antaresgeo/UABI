@@ -4,7 +4,7 @@ import types from "./types";
 
 // interface State {}
 
-const emptyInitialState: any = {
+const emptyInitialState: any = {    
     projects: {
         value: [
             {
