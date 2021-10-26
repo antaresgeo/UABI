@@ -1,21 +1,21 @@
 export interface IPolicyAttributes {
-    id?: number;
-    matricula: number;
-    initialDate: string;
-    finalDate: string;
-    ensuranceAgent: string;
-    ensuranceCompany: string;
-    ensuranceValue: number;
-    ensuranceFile: string;
-
+    id?: number | string;
+    registry_number: string;
+    vigency_start: string;
+    vigency_end: string;
+    insurance_broker: string;
+    insurance_company: string;
+    insurance_value: string;
+    insurance_document_id: string;
+    real_estate_id: number;
 }
 
 export interface IPoliciesResponse {
-    data: IPolicyAttributes[];
+    results: IPolicyAttributes[];
     message: string;
 }
 
 export interface IPolicyResponse {
-    data: IPolicyAttributes;
+    results: IPolicyAttributes;
     message: string;
 }

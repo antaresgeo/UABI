@@ -20,25 +20,27 @@ export const request_dispatch =
         request: Promise<any>,
         creators: [Function?, Function?] = [],
         effect?: EffectFn
-    ) =>
-    (dispatch: any): Promise<any> => {
-        const [success, fail] = creators || [];
-        dispatch({ type: type.default });
-        return request
-            .then((payload) => {
-                success
-                    ? dispatch(success(payload))
-                    : dispatch({ type: type.success, payload });
-                if (effect) effect(payload);
-                return Promise.resolve(payload);
-            })
-            .catch((error) => {
-                fail
-                    ? dispatch(fail(error))
-                    : dispatch({ type: type.fail, error });
-                return Promise.reject(error);
-            });
-    };
+    ) =>{
+        return (dispatch: any): Promise<any> => {
+            const [success, fail] = creators || [];
+            dispatch({ type: type.default });
+            return request
+                .then((payload) => {
+                    success
+                        ? dispatch(success(payload))
+                        : dispatch({ type: type.success, payload });
+                    if (effect) effect(payload);
+                    return Promise.resolve(payload);
+                })
+                .catch((error) => {
+                    fail
+                        ? dispatch(fail(error))
+                        : dispatch({ type: type.fail, error });
+                    return Promise.reject(error);
+                });
+        };
+    }
+
 
 export const qsToArray = (qs: string) => {
     let qsAsArray = [];

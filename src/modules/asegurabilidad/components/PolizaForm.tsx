@@ -6,27 +6,31 @@ import {
 } from 'formik';
 // import { actions } from "./../redux";
 import { FC } from 'react';
-import { IPolicyAttributes } from '../../../utils/interfaces/components.interfaces';
+import { IPolicyAttributes } from './../../../utils/interfaces/insurability';
+import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
 
 
 interface InsurabilityFormPros {
     policy?: IPolicyAttributes;
+    realEstates?: IRealEstateAttributes[];
+    disabled? : boolean;
     onSubmit: (values, actions?) => Promise<any>;
 }
 
-const PolizaForm: FC<InsurabilityFormPros> = ({ policy, onSubmit }) => {
-    const initialValues: IPolicyAttributes = policy || {
-        matricula: 0,
-        initialDate: '',
-        finalDate: '',
-        ensuranceAgent: '',
-        ensuranceCompany: '',
-        ensuranceValue: 0,
-        ensuranceFile: '',
+const PolizaForm: FC<InsurabilityFormPros> = ({ policy,realEstates,disabled, onSubmit }) => {
+    const initialValues =  {
+        registry_number: '',
+        vigency_start: '',
+        vigency_end: '',
+        insurance_broker: '',
+        insurance_company: '',
+        insurance_value: '',
+        insurance_document_id: '',
+        real_estate_id: 0,
+        ...policy
     };
 
     const submit = (values, actions) => {
-        console.log(values);
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
         });
@@ -35,29 +39,30 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, onSubmit }) => {
         <Formik
             initialValues={initialValues}
             onSubmit={submit}
+            enableReinitialize
         >
             <Form>
                 <div className="row">
                     <div className="col-4">
-                        <label htmlFor="matricula" className="form-label">Matrícula</label>
-                        <Field type="text" id="matricula" name="matricula" placeholder="Número Matrícula" className="form-control" />
+                        <label htmlFor="registry_number" className="form-label">Matrícula</label>
+                        <Field type="number" id="registry_number" name="registry_number" placeholder="Número Matrícula" className="form-control" disabled={disabled} />
                     </div>
 
                     <div className="col-4">
-                        <label htmlFor="initialDate" className="form-label mt-3 mt-lg-0">Fecha Inicial de la Póliza</label>
-                        <Field type="date" id="initialDate" name="initialDate" placeholder="Fecha Inicial" className="form-control" />
+                        <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">Fecha Inicial de la Póliza</label>
+                        <Field type="date" id="vigency_start" name="vigency_start" placeholder="Fecha Inicial" className="form-control" disabled={disabled} />
                     </div>
 
                     <div className="col-4">
-                        <label htmlFor="finalDate" className="form-label mt-3 mt-lg-0">Fecha Final de la Póliza</label>
-                        <Field type="date" id="finalDate" name="finalDate" placeholder="Fecha Final" className="form-control" />
+                        <label htmlFor="vigency_end" className="form-label mt-3 mt-lg-0">Fecha Final de la Póliza</label>
+                        <Field type="date" id="vigency_end" name="vigency_end" placeholder="Fecha Final" className="form-control" disabled={disabled} />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col-4">
-                        <label htmlFor="ensuranceAgent" className="form-label">Corredor de Seguros</label>
-                        <Field as="select" id="ensuranceAgent" name="ensuranceAgent" className="w-100 form-select form-control">
+                        <label htmlFor="insurance_broker" className="form-label">Corredor de Seguros</label>
+                        <Field as="select" id="insurance_broker" name="insurance_broker" className="w-100 form-select form-control" disabled={disabled}>
                             <option value="" selected disabled>
                                 --Corredor--
                             </option>
@@ -74,8 +79,8 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, onSubmit }) => {
                     </div>
 
                     <div className="col-4">
-                        <label htmlFor="ensuranceCompany" className="form-label">Compañía de Seguros</label>
-                        <Field as="select" id="ensuranceCompany" name="ensuranceCompany" className='w-100 form-select'>
+                        <label htmlFor="insurance_company" className="form-label" >Compañía de Seguros</label>
+                        <Field as="select" id="insurance_company" name="insurance_company" className='w-100 form-select'disabled={disabled}>
                             <option value="" selected disabled>
                                 --Compañía--
                             </option>
@@ -92,17 +97,60 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, onSubmit }) => {
                     </div>
 
                     <div className="col-4">
-                        <label htmlFor="ensuranceValue" className="form-label">Valor Asegurado</label>
-                        <Field type="number" id="ensuranceValue" name="ensuranceValue" placeholder="Valor Asegurado" className="form-control" />
+                        <label htmlFor="insurance_value" className="form-label">
+                            Valor Asegurado
+                        </label>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text bg-white border-end-0">$</span>
+                            </div>
+                            <Field
+                                name="insurance_value"
+                                id="insurance_value"
+                                type="number"
+                                className="form-control text-end"
+                                style={{ borderLeft: 'none' }}
+                                maxLength={200}
+                                disabled={disabled}
+                            />
+                        </div>
                     </div>
 
                 </div>
+
                 <div className="row">
-                    <div className="col-6">
-                        <label htmlFor="ensuranceFile" className="form-label">Agregue Póliza</label>
-                        <Field type="file" id="ensuranceFile" name="ensuranceFile" placeholder="Agregue Póliza" className="form-control" />
+                    <div className="col-4">
+                        <label htmlFor="insurance_document_id" className="form-label">Agregue Póliza</label>
+                        <Field type="text" id="insurance_document_id" name="insurance_document_id" placeholder="Agregue Póliza" className="form-control" disabled={disabled} />
+                    </div>
+                    <div className="col-4">
+                        <label htmlFor="real_estate_id" className="form-label">Bien inmueble</label>
+                        <Field
+
+                            name="real_estate_id"
+                            as="select"
+                            className="form-select"
+                            id="real_estate_id"
+                            disabled={disabled}
+
+                        >
+                        <option value="" hidden>
+                            -- Seleccione Bien Inmueble --
+                        </option>
+                        {realEstates?.map((realEstates, i) => {
+                            const { name, id } = realEstates;
+                            console.log(name, id)
+                            return (
+                                <option key={`project_${i}`} value={id}>
+                                    {name.toUpperCase()}
+                                </option>
+                            );
+                        })}
+                    </Field>
+                        {/* <<Field type="number" id="real_estate_id" name="real_estate_id" placeholder="" className="form-control"  /> */}
                     </div>
                 </div>
+
                 <div className='row mt-4'>
                     <div className="col-10">
                     </div>

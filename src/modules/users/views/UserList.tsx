@@ -1,28 +1,22 @@
 import { FC } from 'react';
-import { formatDate } from '../../../utils';
-import { Link, Table } from '../../../utils/ui';
-import { useSelector, useDispatch } from 'react-redux';
-import { swal } from '../../../utils';
-
-import { IRealEstateAttributes } from '../../../utils/interfaces';
+import { useDispatch } from 'react-redux';
 import { actions } from '../redux';
-import Register from './../../auth/views/SignUp';
+import { formatDate, swal } from '../../../utils';
+import { Link, Table } from '../../../utils/ui';
+import { IUserAttributes } from '../../../utils/interfaces/users';
 
-interface RealEstateListProps {
-    realEstates: IRealEstateAttributes[];
-    withProject?: boolean;
+interface UserListProps {
+    users: IUserAttributes[];
     change_page?: (page: number, pageSize?: number) => void;
     total?: number;
-    register?: boolean;
 }
-const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, change_page, total, register }) => {
+const UserList: FC<UserListProps> = ({ users, change_page, total }) => {
     const dispatch = useDispatch();
-
-    const deleteRealEstate = (id) => async () => {
+    const deleteUser = (id) => async () => {
         const result = await swal.fire({
             icon: 'warning',
             title: '¿Está seguro?',
-            text: '¿Está seguro que quiere inactivar el Bien Inmueble?',
+            text: '¿Está seguro que quiere inactivar este Usuario?',
             showDenyButton: true,
             showCancelButton: false,
             confirmButtonText: 'Continuar',
@@ -30,20 +24,8 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
         });
 
         if (result.isConfirmed) {
-            await dispatch(actions.deleteRealEstate(id));
-            await dispatch(actions.getRealEstates({}));
-            // const _res: any = await dispatch(actions.deleteProject(id));
-            // console.log(_res);
-
-            // console.log(_res.message);
-
-            // swal.fire({
-            //     title: "Proyecto Inactivado",
-            //     text: message,
-            //     icon: "success",
-            //     showConfirmButton: false,
-            //     timer: 1500,
-            // });
+            await dispatch(actions.deleteUser(id));
+            await dispatch(actions.getUsers({}));
         } else if (result.isDenied) {
             swal.close();
         }
@@ -56,24 +38,15 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
             align: 'center' as 'center',
         },
         {
-            title: 'Matricula',
-            dataIndex: 'registry_number',
+            title: 'Nombre',
+            dataIndex: 'username',
             align: 'center' as 'center',
         },
         {
-            title: 'Nombre',
-            dataIndex: 'name',
+            title: 'rol',
+            dataIndex: 'id_rol',
             align: 'center' as 'center',
         },
-        ...(withProject
-            ? [
-                  {
-                      title: 'Proyecto Asociado',
-                      dataIndex: 'project_id',
-                      align: 'center' as 'center',
-                  },
-              ]
-            : []),
         {
             title: 'Fecha Creación',
             dataIndex: 'audit_trail',
@@ -85,15 +58,6 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
             dataIndex: 'audit_trail.created_by',
             align: 'center' as 'center',
         },
-        ...(register
-            ? [
-                  {
-                      title: 'Estado',
-                      dataIndex: 'status',
-                      align: 'center' as 'center',
-                  },
-              ]
-            : []),
         {
             title: 'Acciones',
             fixed: true,
@@ -105,7 +69,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
                     render: (id) => {
                         return (
                             <Link
-                                to={`/acquisitions/real-estates/${id}/`}
+                                to={`/users/${id}/`}
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-eye" aria-hidden="true" />}
@@ -120,7 +84,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
                     render: (id) => {
                         return (
                             <Link
-                                to={`/acquisitions/real-estates/edit/${id}/`}
+                                to={`/users/edit/${id}/`}
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-pencil" aria-hidden="true" />}
@@ -134,7 +98,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
                     align: 'center' as 'center',
                     render: (id) => {
                         return (
-                            <div className="text-danger" onClick={deleteRealEstate(id)}>
+                            <div className="text-danger" onClick={deleteUser(id)}>
                                 <i className="fa fa-trash" aria-hidden="true" />
                             </div>
                         );
@@ -145,13 +109,9 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
     ];
 
     return (
-        <Table columns={table_columns} items={realEstates} with_pagination count={total} change_page={change_page} />
+        <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} />
     );
 };
 
-RealEstateList.defaultProps = {
-    withProject: false,
-    change_page: () => {},
-};
 
-export default RealEstateList;
+export default UserList

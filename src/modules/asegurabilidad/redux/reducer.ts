@@ -4,25 +4,25 @@ import types from "./types";
 
 const emptyInitialState: any = {
     policy: {
-        value: [
-            {
-                id: "-1",
-                registration_number: "",
-                start_date: "",
-                insurance_broker: "",
-                insurance_company: "",
-                insured_value: "",
-                policy_document_id: "",
-                audit_trail: {
-                    created_by: "",
-                    created_on: "",
-                    updated_by: null,
-                    updated_on: null,
-                    updated_values: null,
-                },
-                status: -1,
+        value: {
+            id: "-1",
+            registry_number: "",
+            vigency_start: "",
+            vigency_end: "",
+            insurance_broker: "",
+            insurance_company: "",
+            insurance_value: "",
+            insurance_document_id: 0,
+            real_estate_id: 0,
+            audit_trail: {
+                created_by: "",
+                created_on: "",
+                updated_by: null,
+                updated_on: null,
+                updated_values: null,
             },
-        ],
+            status: -1,
+        },
         loading: false,
         loaded: false,
     },
@@ -30,12 +30,14 @@ const emptyInitialState: any = {
         value: [
             {
                 id: "-1",
-                registration_number: "",
-                start_date: "",
+                registry_number: "",
+                vigency_start: "",
+                vigency_end: "",
                 insurance_broker: "",
                 insurance_company: "",
-                insured_value: "",
-                policy_document_id: "",
+                insurance_value: "",
+                insurance_document_id: 0,
+                real_estate_id: 0,
                 audit_trail: {
                     created_by: "",
                     created_on: "",
@@ -53,6 +55,7 @@ const emptyInitialState: any = {
 const initialState = emptyInitialState;
 
 const reducer = (state: any = initialState, action: any): any => {
+    // console.log(action.payload)
     switch (action.type) {
         case types.policy.default: {
             return {
@@ -62,7 +65,9 @@ const reducer = (state: any = initialState, action: any): any => {
         }
 
         case types.policy.success: {
+
             return {
+
                 ...state,
                 policy: {
                     ...state.policy,

@@ -7,16 +7,18 @@ import { request_dispatch } from "../../../utils";
 const createPolicy = (dataPolicy) =>
    request_dispatch(types.policy, service.createPolicy(dataPolicy));
 
-const getPolicy = (id: string) =>
-    request_dispatch(types.policy, service.getPolicy(id));
-
+const getPolicy = (id: string) =>{
+    return request_dispatch(types.policy, service.getPolicy(id));
+}
 const getPolicies = () =>
     request_dispatch(types.policies, service.getPolicies());
 
 const updatePolicy = (data: any, id) =>
     request_dispatch(types.policy, service.updatePolicy(data, id));
+
+
 const actions = {
-    // example  
+    // example
     createPolicy,
     getPolicy,
     getPolicies,

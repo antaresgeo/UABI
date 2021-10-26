@@ -47,5 +47,11 @@ const types = Object.freeze({
         success: "Se consulta endpoint de servicio Acquisition [success]",
         fail: "Se consulta endpoint de servicio Acquisition [fail]",
     },
+    registers: {
+        default: "Se consulta endpoint de servicio registers [default]",
+        success: "Se consulta endpoint de servicio registers [success]",
+        fail: "Se consulta endpoint de servicio registers [fail]",
+    },
+
 });
 export default types;
