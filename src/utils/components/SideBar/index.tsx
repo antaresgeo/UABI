@@ -10,7 +10,11 @@ const SideBar = () => {
 
             <ul className="list-unstyled ps-0">
                 <SBItem id="" name="Inicio" collapse={false} sublinks={[{ to: "", name: "Inicio" }]} />
-
+                <SBItem
+                    id="users"
+                    name="users"
+                    sublinks={[{ to: "/users", name: "Usuarios"}]}
+                />
                 <SBItem
                     id="acquisitions"
                     name="Adquisición"
@@ -24,9 +28,9 @@ const SideBar = () => {
 					name='Registro Contable - UABI'
 					sublinks={[{ to: '/', name: 'Registro Contable - UABI' }]}
 				/> */}
-                <SBItem 
-                    id="insurability" 
-                    name="insurability" 
+                <SBItem
+                    id="insurability"
+                    name="insurability"
                     sublinks={[{ to: "/policy", name: "Poliza"}]}
                 />
                 <SBItem id="disposition" name="Disposición" sublinks={[{ to: "/real-estates/areas", name: "Áreas" }]} />
