@@ -1,14 +1,15 @@
 .btn {
     border-radius: 20px !important;
-    padding: 0.465rem 1.215rem !important;
+    padding: 10px 17px !important;
+    font-weight: 600;
+    transition: all 300ms;
+    &:hover {
+        background-color: #f28c02 !important;
+        border: 1px solid #f27503 !important;
+    }
 }
 
 .btn-primary {
     background-color: $azulClarito !important;
     border: 1px solid $azulClarito !important;
-
-}
-
-.btn-primary:hover {
-    background-color: $azulGov !important;
 }

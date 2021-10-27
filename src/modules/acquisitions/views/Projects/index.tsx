@@ -1,4 +1,4 @@
-import { useEffect /*, useState*/ } from 'react';
+import { useEffect, useState /*, useState*/ } from 'react';
 import { IProjectAttributes /*, IProjectsResponse*/ } from '../../../../utils/interfaces';
 // import ItemProject from "../../components/ItemProject";
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,7 +9,20 @@ import { formatDate, swal } from '../../../../utils';
 const Projects = () => {
     const dispatch = useDispatch();
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
+    const loading: boolean = useSelector((states: any) => states.acquisitions.projects.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.projects.pagination);
+
+    console.log(total_results)
+
+    const [query, set_query] = useState<string>('');
+
+    const filter = () => {
+        dispatch(actions.getProjects({ page: 1, q: query }));
+    };
+
+    const change_page = (page, pageSize) => {
+        dispatch(actions.getProjects({ page, pageSize, q: query }));
+    };
 
     const deleteProject = (id) => async () => {
         let res: any;
@@ -36,10 +49,10 @@ const Projects = () => {
                     showCancelButton: false,
                     confirmButtonText: 'Continuar',
                     denyButtonText: `Cancelar`,
-                }).then((result) => {
+                }).then(async (result) => {
                     if (result.isConfirmed) {
-                        dispatch(actions.deleteProject(id));
-
+                        await dispatch(actions.deleteProject(id));
+                        await dispatch(actions.getProjects());
                         // swal.fire({
                         //     title: "Proyecto Inactivado",
                         //     text: message,
@@ -66,7 +79,8 @@ const Projects = () => {
             });
 
             if (result.isConfirmed) {
-                dispatch(actions.deleteProject(id));
+                await dispatch(actions.deleteProject(id));
+                await dispatch(actions.getProjects());
                 // const _res: any = await dispatch(actions.deleteProject(id));
                 // console.log(_res);
 
@@ -168,10 +182,6 @@ const Projects = () => {
         dispatch(actions.getProjects());
     }, []);
 
-    // const change_page = (page, pageSize) => {
-    // dispatch(actions.getRealEstates({ page, pageSize, q: query }));
-    // };
-
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
@@ -188,24 +198,21 @@ const Projects = () => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="Nombre / Código"
-                                                aria-label="Nombre / Código"
+                                                placeholder="Dependencia / Código"
+                                                aria-label="Dependencia / Código"
                                                 aria-describedby="button-addon2"
+                                                value={query}
+                                                onChange={(e) => {
+                                                    set_query(e.target.value);
+                                                }}
                                             />
-                                            <span className="input-group-text">
+                                            <span className="input-group-text" onClick={filter}>
                                                 <span>
                                                     <i className="fa fa-search" aria-hidden="true"></i>
                                                 </span>
                                             </span>
                                         </div>
                                     </div>
-                                    <Link
-                                        to=""
-                                        className="ml-4"
-                                        name="Filtro de búsqueda"
-                                        avatar={false}
-                                        icon={<i className="fa fa-filter" aria-hidden="true" />}
-                                    />
                                 </div>
                             </div>
                         </form>
@@ -213,8 +220,9 @@ const Projects = () => {
                             columns={table_columns}
                             items={projects}
                             with_pagination
-                            change_page={() => {}}
-                            count={0}
+                            change_page={change_page}
+                            count={total_results}
+                            loading={loading}
                         />
                     </Card>
                 </div>

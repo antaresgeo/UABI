@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 interface ISubLink {
     to: string;
@@ -13,9 +13,9 @@ interface IProps {
 }
 
 const SBItem = ({ id, name, collapse = true, sublinks }: IProps) => {
-    const _id = name.toLowerCase().split(" ").join("-");
-    const clsCollapse: string = collapse ? "collapse" : "collapse show";
-    const btnAriaExpanded = collapse ? "false" : "true";
+    const _id = name.toLowerCase().split(' ').join('-');
+    const clsCollapse: string = collapse ? 'collapse' : 'collapse show';
+    const btnAriaExpanded = collapse ? 'false' : 'true';
 
     let subLinks = sublinks?.map((obj) => {
         return (

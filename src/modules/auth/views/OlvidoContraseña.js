@@ -1,20 +1,20 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { Form, Image, Header, Input, Button, Grid } from "semantic-ui-react";
-import loginimage from "../../assets/login.png";
-import logo from "../../assets/escudoAlcaldia.png";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { Form, Image, Header, Input, Button, Grid } from 'semantic-ui-react';
+import loginimage from '../../assets/login.png';
+import logo from '../../assets/escudoAlcaldia.png';
 
 export default function OlvidoContraseña() {
     const history = useHistory();
-    const [email, setEmail] = React.useState("");
+    const [email, setEmail] = React.useState('');
 
     function enviarCorreo() {
-        console.log("enviando correo electronico");
-        history.push("/");
+        console.log('enviando correo electronico');
+        history.push('/');
     }
     return (
         <div>
-            <Grid columns={2} style={{ height: "100vh" }} className="no-margin">
+            <Grid columns={2} style={{ height: '100vh' }} className="no-margin">
                 <Grid.Row className="no-padding-bottom no-padding-top">
                     <Grid.Column className="no-padding-right no-padding-left">
                         <Image
@@ -50,7 +50,7 @@ export default function OlvidoContraseña() {
                                 <Button
                                     color="black"
                                     className="boton-ingresar-login"
-                                    onClick={() => history.push("/")}
+                                    onClick={() => history.push('/')}
                                 >
                                     Regresar
                                 </Button>

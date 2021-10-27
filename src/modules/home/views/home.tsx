@@ -1,4 +1,4 @@
-import Card from "../components/Card";
+import Card from '../components/Card';
 
 const Home = () => {
     return (
@@ -8,7 +8,7 @@ const Home = () => {
                     <div className="row">
                         <div className="col-md-12 text-center">
                             <h4>Bienvenido al sistema de información para administración de bienes inmuebles</h4>
-                            <p>Encuentra aquí los accesos rápidos a las funciones más utilizadas.</p>
+                            <p className="mb-5">Encuentra aquí los accesos rápidos a las funciones más utilizadas.</p>
                         </div>
                     </div>
                 </div>
@@ -18,8 +18,22 @@ const Home = () => {
                 <section id="cards">
                     <div className="container">
                         <div className="row justify-content-center">
-                            <Card name="Adquisición" path="/acquisitions/" view="acquisitions" />
-                            <Card name="UABI" path="/" />
+                            <Card name="Administrativo" links={[{ name: 'Asignación de Roles y Permisos' }]} />
+                            <Card
+                                name="Adquisición"
+                                links={[
+                                    { name: 'Proyectos', to: '/acquisitions/projects/' },
+                                    { name: 'Bienes inmuebles', to: '/acquisitions/real-estates/' },
+                                ]}
+                            />
+                            <Card
+                                name="Asegurabilidad"
+                                links={[
+                                    { name: 'Registrar póliza' },
+                                    { name: 'Gestionar corredor de seguros' },
+                                    { name: 'Gestionar compañía aseguradora' },
+                                ]}
+                            />
                         </div>
                     </div>
                 </section>

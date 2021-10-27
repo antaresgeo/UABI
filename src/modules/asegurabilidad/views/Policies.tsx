@@ -10,9 +10,9 @@ import { Link, Card, Table as UiTable } from '../../../utils/ui';
 
 const table_columns = [
     {
-        title: "ID",
-        dataIndex: "id",
-        align: "center" as "center",
+        title: 'ID',
+        dataIndex: 'id',
+        align: 'center' as 'center',
     },
     {
         title: "Matricula",
@@ -59,13 +59,13 @@ const table_columns = [
         align: "center" as "center",
     },
     {
-        title: "Acciones",
+        title: 'Acciones',
         fixed: true,
         children: [
             {
-                title: "Ver",
-                dataIndex: "id",
-                align: "center" as "center",
+                title: 'Ver',
+                dataIndex: 'id',
+                align: 'center' as 'center',
                 render: (id) => {
                     return (
                         <Link
@@ -78,9 +78,9 @@ const table_columns = [
                 },
             },
             {
-                title: "Editar",
-                dataIndex: "id",
-                align: "center" as "center",
+                title: 'Editar',
+                dataIndex: 'id',
+                align: 'center' as 'center',
                 render: (id) => {
                     return (
                         <Link
@@ -93,9 +93,9 @@ const table_columns = [
                 },
             },
             {
-                title: "Eliminar",
-                dataIndex: "id",
-                align: "center" as "center",
+                title: 'Eliminar',
+                dataIndex: 'id',
+                align: 'center' as 'center',
                 render: (id) => {
                     return (
                         <div

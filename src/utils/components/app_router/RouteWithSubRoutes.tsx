@@ -1,7 +1,7 @@
-import React, { FC } from "react";
-import { Route as ReactRoute } from "react-router-dom";
-import { compute_redirect, get_can_access, withSuspense, redirect_fn } from "./utils";
-import { IRoute } from "./custom_types";
+import React, { FC } from 'react';
+import { Route as ReactRoute } from 'react-router-dom';
+import { compute_redirect, get_can_access, withSuspense, redirect_fn } from './utils';
+import { IRoute } from './custom_types';
 
 interface RouteWithSubRoutesProps extends IRoute {
     template: any;
@@ -21,7 +21,7 @@ const Route: FC<RouteWithSubRoutesProps> = ({
     location,
     lazy,
     template,
-    breadcrumbs,
+    template_props,
     ...props
 }) => {
     const has_access = get_can_access(can_access, props);
@@ -37,9 +37,10 @@ const Route: FC<RouteWithSubRoutesProps> = ({
         };
         const cp = lazy ? withSuspense(ops, dr)(component) : withSuspense(ops, dr, false)(component);
         if (is_private) {
-            const Template = template
             if (has_access) {
-                return template? <Template breadcrumbs={breadcrumbs}>{cp}</Template>: cp;
+                const Template = template;
+                const template_ops = { ...template_props };
+                return template ? <Template {...template_ops}>{cp}</Template> : cp;
             } else {
                 return compute_redirect(privateRedirect, location);
             }

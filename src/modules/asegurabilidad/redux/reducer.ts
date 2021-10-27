@@ -1,4 +1,4 @@
-import types from "./types";
+import types from './types';
 
 //interface State {}
 
@@ -39,8 +39,8 @@ const emptyInitialState: any = {
                 insurance_document_id: 0,
                 real_estate_id: 0,
                 audit_trail: {
-                    created_by: "",
-                    created_on: "",
+                    created_by: '',
+                    created_on: '',
                     updated_by: null,
                     updated_on: null,
                     updated_values: null,
@@ -125,9 +125,7 @@ const reducer = (state: any = initialState, action: any): any => {
         default: {
             return state;
         }
-
     }
-
 };
 
 export default reducer;

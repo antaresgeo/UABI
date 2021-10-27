@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
@@ -61,18 +61,12 @@ const Registers = () => {
                                 </div>
                             </div>
                         </form>
-                        <RealEstateList
-                            realEstates={registers}
-                            withProject
-                            change_page={change_page}
-                            total={total_results}
-                            register
-                        />
+                        <RealEstateList withProject register />
                     </Card>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Registers
+export default Registers;

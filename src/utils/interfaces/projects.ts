@@ -1,4 +1,4 @@
-import { IAuditTrail } from ".";
+import { IAuditTrail } from '.';
 
 export interface IProjectAttributes {
     id?: string | number;

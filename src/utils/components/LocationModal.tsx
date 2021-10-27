@@ -6,8 +6,9 @@ interface LocationModalProps {
     onSave?: (values) => Promise<any>;
     disabled?: boolean;
     view?: string;
+    zone?: string;
 }
-const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view }) => {
+const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone }) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
     const open = () => !disabled && set_is_visible(true);
     const close = () => set_is_visible(false);
@@ -15,11 +16,12 @@ const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view }) => {
     return (
         <>
             <span className="input-group-text" onClick={open}>
-                @
+                #
             </span>
-            <Modal title="Ubicación" centered visible={is_visible} footer={null} width={1000} onCancel={close}>
+            <Modal title="Ubicación" centered visible={is_visible} footer={null} width={700} onCancel={close}>
                 <Location
                     view={view && view}
+                    zone={zone}
                     modalClose={(values, callback) => {
                         console.log(values);
                         onSave &&

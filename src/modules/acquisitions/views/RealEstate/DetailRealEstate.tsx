@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link, useHistory } from 'react-router-dom';
-import { TextArea } from 'semantic-ui-react';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
-import AcquisitionsFrom from '../../components/RealEstateForm/AdquisitionsForm';
 import { actions } from '../../redux';
 import RealEstateForm from '../../components/RealEstateForm';
 
@@ -14,25 +12,31 @@ interface IParams {
 
 const DetailRealEstate = () => {
     const { id } = useParams<IParams>();
-    const history: any = useHistory();
     const dispatch = useDispatch();
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
+    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const [project_id, set_project_id] = useState(realEstate?.project_id);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
 
     useEffect(() => {
         dispatch(actions.getProjects());
-        dispatch(actions.getRealEstate(id));
+        const promise: any = dispatch(actions.getRealEstate(id));
+        promise.then((res) => {
+            set_project_id(res.project_id);
+        });
     }, []);
 
     useEffect(() => {
-        dispatch(actions.getRealEstatesByProject(realEstate.project_id));
-    }, [realEstate.project_id]);
+        if (project_id) {
+            dispatch(actions.getRealEstatesByProject(project_id));
+        }
+    }, [project_id]);
 
     return (
         <RealEstateForm
             type="view"
             projects={projects}
+            realEstates={project_id ? realEstates : []}
             realEstate={realEstate}
             projectId={parseInt(project_id + '')}
             onProjectSelectedChange={(value) => {

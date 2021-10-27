@@ -9,6 +9,12 @@
     padding: 8px;
 }
 
+.ant-card-head-title {
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 16px;
+}
+
 .ant-modal-header {
     border-radius: 10px 10px 0 0;
 }
@@ -28,15 +34,7 @@
     }
 }
 
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background: #ff840355;
-}
-.ant-menu-inline .ant-menu-item:after,
-.ant-menu-vertical-left .ant-menu-item:after,
-.ant-menu-vertical-right .ant-menu-item:after,
-.ant-menu-vertical .ant-menu-item:after {
-    border-right: 3px solid #ff8403;
-}
+
 
 .ant-drawer-close {
     color: rgba(255, 255, 255, 0.45);
@@ -73,7 +71,6 @@
 .uabi-header {
     padding: 0;
     background: #fff 0 0 no-repeat padding-box;
-    box-shadow: 0 5px 3px #00000015;
     .bar {
         padding: 0 24px;
     }
@@ -120,7 +117,27 @@
 }
 
 .form-control:disabled,
-.form-control[readonly] {
+.form-control[readonly],
+.form-select:disabled {
     background-color: #f4f4f4;
     opacity: 1;
+}
+
+.custom-list-style {
+    list-style: none;
+    li::before {
+        content: attr(data-icon);
+        color: #ff8403;
+        font-size: 12px;
+        font-weight: bold;
+        margin-right: 16px;
+    }
+}
+
+.ant-menu-vertical {
+    width: 240px;
+}
+
+.ant-select-selection-overflow {
+    padding: 1px;
 }

@@ -1,65 +1,63 @@
-import { IPolicyAttributes } from "../../../utils/interfaces/components.interfaces"
+import { IPolicyAttributes } from '../../../utils/interfaces/components.interfaces';
 import { FC } from 'react';
-import { formatDate } from "../../../utils";
-import { Table, Link} from "../../../utils/ui";
-
+import { formatDate } from '../../../utils';
+import { Table, Link } from '../../../utils/ui';
 
 interface InsurabilityListProps {
     policies: IPolicyAttributes[];
-    
-};
+}
 const PolizaList: FC<InsurabilityListProps> = ({ policies }) => {
     const table_columns = [
         {
-            title: "ID",
-            dataIndex: "id",
-            align: "center" as "center",
+            title: 'ID',
+            dataIndex: 'id',
+            align: 'center' as 'center',
         },
         {
-            title: "Matricula",
-            dataIndex: "matricula",
-            align: "center" as "center",
+            title: 'Matricula',
+            dataIndex: 'matricula',
+            align: 'center' as 'center',
         },
         {
-            title: "Fecha Inicial de la Póliza",
-            dataIndex: "initialDate",
-            align: "center" as "center",
+            title: 'Fecha Inicial de la Póliza',
+            dataIndex: 'initialDate',
+            align: 'center' as 'center',
             render: (dates) => formatDate(dates?.created_on),
         },
         {
-            title: "Fecha Final de Poliza",
-            dataIndex: "finalDate",
-            align: "center" as "center",
+            title: 'Fecha Final de Poliza',
+            dataIndex: 'finalDate',
+            align: 'center' as 'center',
             render: (dates) => formatDate(dates?.created_on),
         },
         {
-            title: "Corredor de Seguros",
-            dataIndex: "ensuranceAgent",
-            align: "center" as "center",
-        },        
-        {
-            title: "Compañía de Seguros",
-            dataIndex: "ensuranceCompany",
-            align: "center" as "center",
+            title: 'Corredor de Seguros',
+            dataIndex: 'ensuranceAgent',
+            align: 'center' as 'center',
         },
         {
-            title: "Valor Asegurado",
-            dataIndex: "ensuranceValue",
-            align: "center" as "center",
+            title: 'Compañía de Seguros',
+            dataIndex: 'ensuranceCompany',
+            align: 'center' as 'center',
         },
         {
-            title: "Póliza",
-            dataIndex: "ensuranceFile",
-            align: "center" as "center",
+            title: 'Valor Asegurado',
+            dataIndex: 'ensuranceValue',
+            align: 'center' as 'center',
         },
         {
-            title: "Acciones",
+            title: 'Póliza',
+            dataIndex: 'ensuranceFile',
+            align: 'center' as 'center',
+        },
+        {
+            title: 'Acciones',
             fixed: true,
             children: [
                 {
-                    title: "Ver",
-                    dataIndex: "id",
-                    align: "center" as "center",
+                    title: 'Ver',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <Link
@@ -72,9 +70,9 @@ const PolizaList: FC<InsurabilityListProps> = ({ policies }) => {
                     },
                 },
                 {
-                    title: "Editar",
-                    dataIndex: "id",
-                    align: "center" as "center",
+                    title: 'Editar',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <Link
@@ -87,9 +85,9 @@ const PolizaList: FC<InsurabilityListProps> = ({ policies }) => {
                     },
                 },
                 {
-                    title: "Eliminar",
-                    dataIndex: "id",
-                    align: "center" as "center",
+                    title: 'Eliminar',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <Link
@@ -104,8 +102,8 @@ const PolizaList: FC<InsurabilityListProps> = ({ policies }) => {
                 },
             ],
         },
-    ]
+    ];
     return <Table columns={table_columns} items={policies} with_pagination count={10} change_page={() => {}} />;
-}
+};
 
-export default PolizaList
+export default PolizaList;

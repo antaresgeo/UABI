@@ -1,12 +1,12 @@
 const useDetectBrowser = (
     minBrowserVersions: any = {
-        chrome: "60",
-        firefox: "55",
-        edge: "15",
+        chrome: '60',
+        firefox: '55',
+        edge: '15',
     }
 ): [any, boolean] => {
-    const { detect } = require("detect-browser");
-    const cmp = require("semver-compare");
+    const { detect } = require('detect-browser');
+    const cmp = require('semver-compare');
     const browser = detect();
     let supported: boolean = false;
     if (browser) {

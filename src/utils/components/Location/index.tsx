@@ -2,20 +2,16 @@ import { FC, useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { getList } from './service';
-import {
-    ICityAddressAttributes,
-    ICommuneAddressAttributes,
-    ICountryAddressAttributes,
-    INeighborhoodAddressAttributes,
-    IStateAddressAttributes,
-} from '../../interfaces';
+import { ICountryAddressAttributes } from '../../interfaces';
+import Tooltip from 'antd/lib/tooltip';
 
 interface LocationProps {
     modalClose?: (values, callback) => void;
     view?: string;
+    zone?: string;
 }
 
-const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
+const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
     const [countries, setCountries] = useState<ICountryAddressAttributes[]>([]);
     const [states, setStates] = useState([]);
     const [city, setCity] = useState([]);
@@ -23,12 +19,11 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
     const [neighborhood, setNeighborhood] = useState([]);
 
     const initialValues = {
-        country: '',
-        state: '',
-        city: '',
+        country: '57',
+        state: '05',
+        city: '05001',
         commune: '',
         neighborhood: '',
-
         type: '',
         number_one: '',
         word_one: '',
@@ -41,33 +36,49 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
     };
 
     const schema = Yup.object().shape({
-        country: Yup.string().required('Obligatorio'),
-        state: Yup.string().required('Obligatorio'),
-        city: Yup.string().required('Obligatorio'),
-        commune: Yup.string().required('Obligatorio'),
-        neighborhood: Yup.string().required('Obligatorio'),
-        type: Yup.string().required('Obligatorio'),
-        number_one: Yup.string().required('Obligatorio'),
-        number_two: Yup.string().required('Obligatorio'),
-        indicative: Yup.string().required('Obligatorio'),
+        country: Yup.string().required('Campo obligatorio'),
+        state: Yup.string().required('Campo obligatorio'),
+        city: Yup.string().required('Campo obligatorio'),
+        commune: Yup.string().required('Campo obligatorio'),
+        neighborhood: Yup.string().required('Campo obligatorio'),
+        type: Yup.string().required('Campo obligatorio'),
+        number_one: Yup.string().required('Campo obligatorio'),
+        number_two: Yup.string().required('Campo obligatorio'),
+        indicative: Yup.string().required('Campo obligatorio'),
     });
 
     useEffect(() => {
         (async () => {
             let arrCountries: any = await getList('country');
             setCountries(arrCountries);
+            const arrStates = await getList('state', { country: initialValues.country });
+            setStates(arrStates);
+            const arrCity = await getList('city', { state: initialValues.state });
+            setCity(arrCity);
+            const arrCommune = await getList('commune', { city: initialValues.city });
+            setCommune(arrCommune);
         })();
     }, []);
 
-    const renderOptions = (id, name, options = []) => {
-        return (
+    const renderOptions = (id, name, options = [], show_id = false) => {
+        let res =
             options.length > 0 &&
-            options.map((option, i) => (
-                <option key={i} value={option[id]}>
-                    {option[name]}
-                </option>
-            ))
-        );
+            options.map((option, i) => {
+                const code = option[id];
+                const _name = option[name];
+                if (_name) {
+                    return (
+                        <option key={`${name}${i}`} value={code}>
+                            {show_id && code ? `${code} - ${_name}` : _name}
+                        </option>
+                    );
+                }
+                return null;
+            });
+        if (Array.isArray(res)) {
+            res = res.filter((r) => r !== null);
+        }
+        return res;
     };
 
     return (
@@ -88,11 +99,14 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                 let has_states = values.state !== '';
                 let has_city = values.city !== '';
                 let has_commune = values.commune !== '';
-
+                let has_neighborhood = values.neighborhood !== '';
+                const cb = `${has_commune ? values.commune : ''}${
+                    has_commune && has_neighborhood ? values.neighborhood : ''
+                }`;
                 return (
                     <Form>
                         <div className="form-row row">
-                            <div className="form-group col">
+                            <div className="form-group col-4">
                                 <label htmlFor="" className="form-label">
                                     País <span className="text-danger">*</span>
                                 </label>
@@ -104,10 +118,14 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                         handleChange(e);
                                         const list = await getList('state', { country: e.target.value });
                                         setStates(list);
+                                        setFieldValue('state', '');
+                                        setFieldValue('city', '');
+                                        setFieldValue('commune', '');
+                                        setFieldValue('neighborhood', '');
                                     }}
                                 >
                                     <option value="" disabled>
-                                        --País--
+                                        --país--
                                     </option>
                                     {renderOptions('country_code', 'country', countries)}
                                 </Field>
@@ -116,7 +134,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                     <ErrorMessage name="country" />
                                 </span>
                             </div>
-                            <div className="form-group col">
+                            <div className="form-group col-4">
                                 <label htmlFor="" className="form-label">
                                     Departamento <span className="text-danger">*</span>
                                 </label>
@@ -129,10 +147,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                         handleChange(e);
                                         const list = await getList('city', { state: e.target.value });
                                         setCity(list);
+                                        setFieldValue('city', '');
+                                        setFieldValue('commune', '');
+                                        setFieldValue('neighborhood', '');
                                     }}
                                 >
                                     <option value="" selected disabled>
-                                        --state--
+                                        --departamento--
                                     </option>
                                     {renderOptions('state_code', 'state', states)}
                                 </Field>
@@ -141,9 +162,10 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                     <ErrorMessage name="state" />
                                 </span>
                             </div>
-                            <div className="form-group col">
+                            <div className="form-group col-4">
                                 <label htmlFor="" className="form-label">
-                                    Ciudad <span className="text-danger">*</span>
+                                    {zone && zone === 'Rural' ? 'Municipio ' : 'Ciudad '}
+                                    <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     className="w-100 form-select"
@@ -154,10 +176,12 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                         handleChange(e);
                                         const list = await getList('commune', { city: e.target.value });
                                         setCommune(list);
+                                        setFieldValue('commune', '');
+                                        setFieldValue('neighborhood', '');
                                     }}
                                 >
                                     <option value="" disabled>
-                                        --city--
+                                        --{zone && zone === 'Rural' ? 'municipio' : 'ciudad'}--
                                     </option>
                                     {renderOptions('city_code', 'city', city)}
                                 </Field>
@@ -166,10 +190,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                     <ErrorMessage name="city" />
                                 </span>
                             </div>
-                            {view === 'general' && (
-                                <div className="form-group col">
+                        </div>
+                        {(view === 'general' || view === 'user') && (
+                            <div className="form-row row">
+                                <div className="form-group col-6">
                                     <label htmlFor="" className="form-label">
-                                        Comuna <span className="text-danger">*</span>
+                                        {zone && zone === 'Rural' ? 'Corregimiento ' : 'Comuna '}
+                                        <span className="text-danger">*</span>
                                     </label>
                                     <Field
                                         className="w-100 form-select"
@@ -180,12 +207,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                             handleChange(e);
                                             const list = await getList('neighborhood', { commune: e.target.value });
                                             setNeighborhood(list);
+                                            setFieldValue('neighborhood', '');
                                         }}
                                     >
                                         <option value="" disabled>
-                                            --commune--
+                                            --{zone && zone === 'Rural' ? 'corregimiento' : 'comuna'}--
                                         </option>
-                                        {renderOptions('commune_code', 'commune', commune)}
+                                        {renderOptions('commune_code', 'commune', commune, true)}
                                     </Field>
 
                                     <span
@@ -195,13 +223,10 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                         <ErrorMessage name="commune" />
                                     </span>
                                 </div>
-                            )}
-                        </div>
-                        {view === 'general' && (
-                            <div className="form-row row">
-                                <div className="form-group col-3">
+                                <div className="form-group col-6">
                                     <label htmlFor="" className="form-label">
-                                        Barrio <span className="text-danger">*</span>
+                                        {zone && zone === 'Rural' ? 'Vereda ' : 'Barrio '}
+                                        <span className="text-danger">*</span>
                                     </label>
                                     <Field
                                         className="w-100 form-select"
@@ -213,9 +238,9 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                         }}
                                     >
                                         <option value="" selected disabled>
-                                            --neighborhood--
+                                            --{zone && zone === 'Rural' ? 'vereda' : 'barrio'}--
                                         </option>
-                                        {renderOptions('neighborhood_code', 'neighborhood', neighborhood)}
+                                        {renderOptions('neighborhood_code', 'neighborhood', neighborhood, true)}
                                     </Field>
 
                                     <span
@@ -225,14 +250,35 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                         <ErrorMessage name="neighborhood" />
                                     </span>
                                 </div>
-
-                                {view === 'general' && (
+                                {view !== 'user' && (
                                     <>
+                                        <div className="form-group col-2">
+                                            <label htmlFor="" className="form-label">
+                                                CB
+                                            </label>
+                                            <input className="w-100 form-control" type="text" value={cb} disabled />
+                                            <span
+                                                className="text-danger text-left d-block w-100 mt-1"
+                                                style={{ height: '22px' }}
+                                            ></span>
+                                        </div>
                                         <div className="form-group col">
                                             <label htmlFor="" className="form-label">
-                                                Manzana <span className="text-danger">*</span>
+                                                Manzana
+                                                <Tooltip title="Lorem impsu texto descriptivo">
+                                                    <i
+                                                        className="fa fa-info-circle text-muted ms-2 me-2"
+                                                        style={{ fontSize: 14 }}
+                                                    />
+                                                </Tooltip>
+                                                <span className="text-danger">*</span>
                                             </label>
-                                            <Field className="w-100 form-select" type="text" name="block"></Field>
+                                            <Field
+                                                className="w-100 form-control"
+                                                type="number"
+                                                name="block"
+                                                autoComplete="off"
+                                            />
 
                                             <span
                                                 className="text-danger text-left d-block w-100 mt-1"
@@ -244,9 +290,21 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
 
                                         <div className="form-group col">
                                             <label htmlFor="" className="form-label">
-                                                Lote <span className="text-danger">*</span>
+                                                Lote
+                                                <Tooltip title="Lorem impsu texto descriptivo">
+                                                    <i
+                                                        className="fa fa-info-circle text-muted ms-2 me-2"
+                                                        style={{ fontSize: 14 }}
+                                                    />
+                                                </Tooltip>
+                                                <span className="text-danger">*</span>
                                             </label>
-                                            <Field className="w-100 form-select" type="text" name="lot"></Field>
+                                            <Field
+                                                className="w-100 form-control"
+                                                type="number"
+                                                name="lot"
+                                                autoComplete="off"
+                                            />
 
                                             <span
                                                 className="text-danger text-left d-block w-100 mt-1"
@@ -259,7 +317,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, ...props }) => {
                                 )}
                             </div>
                         )}
-                        {view === 'general' && (
+                        {(view === 'general' || view === "user") && (
                             <>
                                 <h5>Dirección</h5>
                                 <hr />

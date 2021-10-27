@@ -1,11 +1,11 @@
-import types from "./types";
-import service from "./service";
-import { request_dispatch } from "../../../utils";
+import types from './types';
+import service from './service';
+import { request_dispatch } from '../../../utils';
 
 // const example = (filters = {}) =>
 //     request_dispatch(types.example_type, service.example_service(filters));
 const createPolicy = (dataPolicy) =>
-   request_dispatch(types.policy, service.createPolicy(dataPolicy));
+    request_dispatch(types.policy, service.createPolicy(dataPolicy));
 
 const getPolicy = (id: string) =>{
     return request_dispatch(types.policy, service.getPolicy(id));
@@ -22,8 +22,7 @@ const actions = {
     createPolicy,
     getPolicy,
     getPolicies,
-    updatePolicy
+    updatePolicy,
 };
-
 
 export default actions;

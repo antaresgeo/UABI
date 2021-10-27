@@ -1,6 +1,7 @@
-import { request_dispatch } from "../../../../utils";
-import types from "../types";
-import service from "../services";
+import { request_dispatch } from '../../../../utils';
+import types from '../types';
+import service from '../services';
+import { AdquisitionsItf } from '../../../../utils/interfaces';
 
 // REAL ESTATES
 export const getRealEstates = (filters: {
@@ -26,3 +27,11 @@ export const updateRealEstate = (data, id) =>
 
 export const deleteRealEstate = (id) =>
     request_dispatch(types.deleteRealEstate, service.deleteRealEstate(id));
+
+export const createAcquisitionForRealEstate = (
+    acquisitions: AdquisitionsItf[]
+) =>
+    request_dispatch(
+        types.acquisition_create,
+        service.createAcquisitionForRealEstate(acquisitions)
+    );

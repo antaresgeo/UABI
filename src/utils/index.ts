@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import moment from 'moment';
@@ -49,7 +48,7 @@ export const qsToArray = (qs: string) => {
     search.map(async (_search) => {
         let tmp = _search.split('=');
 
-        await qsAsArray.push({
+        qsAsArray.push({
             key: tmp[0],
             value: tmp[1],
         });
@@ -60,9 +59,7 @@ export const setTitle = (title: string) => (document.title = title);
 
 export const formatDate = (date) => {
     const tmpDate = new Date(parseInt(date));
-
-    const newDate = moment(tmpDate).format('MM/DD/YYYY hh:mm');
-
+    const newDate = moment(tmpDate).format('MM/DD/YYYY - h:mm A');
     return date && newDate;
 };
 
@@ -110,14 +107,12 @@ export const authenticationUme = () => {
 
     let keybas = base64encode(encryption).toString();
 
-    const Authorization = {
+    return {
         fecha: dateNow,
         usuario: userBase64,
         llave: keybas,
         cadena: hexdec,
     };
-
-    return Authorization;
 };
 
 const base64encode = (string: string) => {
@@ -139,3 +134,44 @@ function sha256(str: string) {
     // and set the output format
     return sha256Hasher.update(str).digest('hex');
 }
+
+export const clearObjectNulls = (obj: Object): Object => {
+    return Object.keys({ ...obj }).reduce((newObj, key: string) => {
+        if (has(obj, key)) {
+            let value = obj[key];
+            if (
+                typeof value === 'object' &&
+                value.constructor &&
+                value.constructor.name === 'Object'
+            ) {
+                value = clearObjectNulls(value);
+                if (Object.keys(value).length > 0) {
+                    newObj[key] = value;
+                }
+            } else {
+                newObj[key] = value;
+            }
+        }
+        return newObj;
+    }, {});
+};
+
+const has = (obj, property: string): boolean => {
+    const value = obj[property];
+    let res =
+        obj.hasOwnProperty(property) &&
+        value !== undefined &&
+        value !== null &&
+        value !== '';
+    if (res && Array.isArray(value)) {
+        res = !(value?.length === 0);
+    } else if (res && typeof value === 'object') {
+        res = !(Object.entries(value).length === 0);
+    }
+    return res;
+};
+
+export const is_empty = (obj) =>
+    obj && // 👈 null and undefined check
+    Object.keys(obj).length === 0 &&
+    Object.getPrototypeOf(obj) === Object.prototype;

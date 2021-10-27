@@ -1,4 +1,4 @@
-import { AdquisitionsItf, IAuditTrail } from ".";
+import { AdquisitionsItf, IAuditTrail } from '.';
 
 export interface IRealEstateAttributes {
     id?: number;

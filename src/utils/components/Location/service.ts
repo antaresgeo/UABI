@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosResponse } from 'axios';
 // import { swal } from "../../../utils";
 
 import {
@@ -8,8 +8,8 @@ import {
     ICountryAddressAttributes,
     INeighborhoodAddressAttributes,
     IStateAddressAttributes,
-} from "../../interfaces";
-import { location_http } from "./../../../config/axios_instances";
+} from '../../interfaces';
+import { location_http } from './../../../config/axios_instances';
 
 interface IParams {
     country?: string;
@@ -33,11 +33,11 @@ export const getList = async (
 > => {
     let params: IParams;
 
-    if (nameList === "country") params = { country: "true" };
-    if (nameList === "state") params = { state: "true" };
-    if (nameList === "city") params = { city: "true" };
-    if (nameList === "commune") params = { commune: "true" };
-    if (nameList === "neighborhood") params = { neighborhood: "true" };
+    if (nameList === 'country') params = { country: 'true' };
+    if (nameList === 'state') params = { state: 'true' };
+    if (nameList === 'city') params = { city: 'true' };
+    if (nameList === 'commune') params = { commune: 'true' };
+    if (nameList === 'neighborhood') params = { neighborhood: 'true' };
 
     try {
         let URI = `/localizations/lists`;
@@ -46,18 +46,16 @@ export const getList = async (
             {
                 params: {
                     ...params,
-                    ...filters
+                    ...filters,
                 },
             }
         );
         return res.data.results;
     } catch (error) {
         console.error(error);
-        return Promise.reject("Error");
+        return Promise.reject('Error');
     }
 };
-
-
 
 // export const getIdFromLocation = async ({
 //     city,
