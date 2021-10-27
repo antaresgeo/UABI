@@ -38,30 +38,38 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                         Inicio
                     </Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub2" title="Adquisición">
-                    <Menu.Item key="2" onClick={goTo('/acquisitions/projects/')}>
+                <SubMenu key="sub2" title="Usuarios">
+                    <Menu.Item key="2" onClick={goTo('/users')}>
+                        Usuarios
+                    </Menu.Item>
+                </SubMenu>
+                <SubMenu key="sub3" title="Adquisición">
+                    <Menu.Item key="3" onClick={goTo('/acquisitions/projects/')}>
                         Proyectos
                     </Menu.Item>
-                    <Menu.Item key="3" onClick={goTo('/acquisitions/real-estates/')}>
+                    <Menu.Item key="4" onClick={goTo('/acquisitions/real-estates/')}>
                         Bienes Inmuebles
+                    </Menu.Item>
+                    <Menu.Item key="4s" onClick={goTo('/acquisitions/registers/')}>
+                        Registros
                     </Menu.Item>
                 </SubMenu>
 
-                <SubMenu key="sub3" title="Asegurabilidad">
-                    <Menu.Item key="4" onClick={goTo('/insurabilities/policy/')}>
+                <SubMenu key="sub4" title="Asegurabilidad">
+                    <Menu.Item key="5" onClick={goTo('/insurabilities/policy/')}>
                         Asegurabilidad
                     </Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub4" title="Disposición">
-                    <Menu.Item key="5" onClick={goTo('/acquisitions/real-estates/areas/')}>
+                <SubMenu key="sub5" title="Disposición">
+                    <Menu.Item key="6" onClick={goTo('/acquisitions/real-estates/areas/')}>
                         Áreas
                     </Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub5" title="Supervisión" />
-                <SubMenu key="sub6" title="Facturación" />
-                <SubMenu key="sub7" title="Mantenimiento" />
-                <SubMenu key="sub8" title="Consultas" />
-                <SubMenu key="sub9" title="Informes y Logs" />
+                <SubMenu key="sub6" title="Supervisión" />
+                <SubMenu key="sub7" title="Facturación" />
+                <SubMenu key="sub8" title="Mantenimiento" />
+                <SubMenu key="sub9" title="Consultas" />
+                <SubMenu key="sub10" title="Informes y Logs" />
             </Menu>
         </>
     );

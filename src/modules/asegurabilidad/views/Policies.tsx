@@ -1,6 +1,6 @@
 // export {default as Insurability} from './CreatePolicy';
 import { useDispatch } from 'react-redux';
-import { IPolicyAttributes } from '../../../utils/interfaces/components.interfaces';
+import { IPolicyAttributes } from '../../../utils/interfaces/insurability';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -16,39 +16,46 @@ const table_columns = [
     },
     {
         title: "Matricula",
-        dataIndex: "matricula",
+        dataIndex: "registry_number",
         align: "center" as "center",
     },
     {
         title: "Fecha Inicial",
-        dataIndex: "initialDate",
+        dataIndex: "vigency_start",
         align: "center" as "center",
-        render: (dates) => formatDate(dates?.created_on),
+        // render: (vigency_start) =>formatDate(vigency_start)
+
+
     },
     {
         title: "Fecha Final",
-        dataIndex: "finalDate",
+        dataIndex: "vigency_end",
         align: "center" as "center",
-        render: (dates) => formatDate(dates?.created_on),
+        // render: (vigency_end) => formatDate(vigency_end),
     },
     {
         title: "Corredor de Seguros",
-        dataIndex: "ensuranceAgent",
+        dataIndex: "insurance_broker",
         align: "center" as "center",
     },
     {
         title: "Compañía de Seguros",
-        dataIndex: "ensuranceCompany",
+        dataIndex: "insurance_company",
         align: "center" as "center",
     },
     {
         title: "Valor Asegurado",
-        dataIndex: "ensuranceValue",
+        dataIndex: "insurance_value",
         align: "center" as "center",
     },
     {
         title: "Póliza",
-        dataIndex: "ensuranceFile",
+        dataIndex: "insurance_document_id",
+        align: "center" as "center",
+    },
+    {
+        title: "Bien Inmueble",
+        dataIndex: "real_estate_id",
         align: "center" as "center",
     },
     {
@@ -108,15 +115,11 @@ const table_columns = [
 
 const Policies = () => {
     const dispatch = useDispatch();
-    const policies: IPolicyAttributes[] = useSelector((store: any) => store.asegurabilty.policy.value);
-    
-    useEffect(() => {
-        dispatch(actions.getPolicies());
-    }, []);
+    const policies: IPolicyAttributes[] = useSelector((store: any) => store.asegurabilty.policies.value);
 
     useEffect(() => {
         dispatch(actions.getPolicies());
-    }, [policies]);
+    }, []);
 
     return (
         <div className="container-fluid">
@@ -155,7 +158,7 @@ const Policies = () => {
                                 </div>
                             </div>
                         </form>
-                        
+
                         <UiTable
                             columns={table_columns}
                             items={policies}

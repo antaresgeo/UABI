@@ -1,5 +1,9 @@
 import { IRoute } from "../../utils/components/app_router/custom_types";
+import Registers from './views/Registers/Registers';
+import store from './../../config/store';
 import {
+
+
     CreateProject,
     CreateRealEstate,
     DetailRealEstate,
@@ -9,9 +13,17 @@ import {
     RealEstate,
     DetailProject,
     Projects,
+
 } from "./views";
 
+export const create_realEstate = () => {
+    /*const user = */
+    //console.log(store.getState().users);
+    //store.getState().users.user.value[0].id_rol
+    //console.log( user.hasOwnProperty("") );
+}
 const get_routes = (): IRoute[] => {
+    create_realEstate();
     return [
         {
             exact: true,
@@ -105,6 +117,15 @@ const get_routes = (): IRoute[] => {
             path: "/acquisitions/projects/",
             breadcrumbs: [{ name: "Proyectos" }],
             component: Projects,
+        },
+
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: "/acquisitions/registers/",
+            breadcrumbs: [{ name: "Registros" }],
+            component: Registers
         },
     ];
 };

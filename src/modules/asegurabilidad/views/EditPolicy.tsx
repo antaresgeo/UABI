@@ -1,6 +1,6 @@
 
 import { useParams, useHistory } from 'react-router-dom';
-import { IPolicyAttributes } from '../../../utils/interfaces/components.interfaces';
+import { IPolicyAttributes } from '../../../utils/interfaces/insurability';
 import { useEffect } from 'react';
 import PolizaForm from './../components/PolizaForm';
 import { useDispatch } from 'react-redux';
@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import { Card } from '../../../utils/ui';
 import { swal } from '../../../utils';
 import { actions } from '../redux';
+import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
+import { getRealEstates } from "../../acquisitions/redux/actions/realEstates";
 
 
 interface IParams {
@@ -21,8 +23,13 @@ const EditPolicy = () => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
+    const policy: IPolicyAttributes = useSelector((store: any) => store.asegurabilty.policy.value);
+    const realEstate: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
-    const project: IPolicyAttributes = useSelector((store: any) => store.asegurabilty.policy.value);
+    useEffect(() => {
+        dispatch(getRealEstates({}));
+    }, [])
+
 
     const _updatePolicy = async (policyForm) => {
         let res: any;
@@ -32,27 +39,24 @@ const EditPolicy = () => {
                 id
             )
         );
-
-        console.log(res);
         await swal("Proyecto actualizado", res.data.message, "success");
-        history.push(`/insurability/policy/${project.id}`);
+        history.push(`/insurability/policy/${policy.id}`);
     };
 
     useEffect(() => {
         dispatch(actions.getPolicy(id));
     }, []);
+
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card
-                        title={
-                            <>
-                                <b>Póliza:</b> {}
-                            </>
-                        }
+                        title="Póliza"
                     >
                         <PolizaForm
+                            realEstates={realEstate}
+                            policy={policy}
                             onSubmit={(values) => {
                                 return _updatePolicy(values);
                             }}
