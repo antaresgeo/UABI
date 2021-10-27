@@ -1,7 +1,7 @@
-import axios from "axios";
-import { FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "./index";
+import axios from 'axios';
+import { FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from './index';
 // import store, { AppDispatch } from "../../store";
-import { swal } from "../../utils";
+import { swal } from '../../utils';
 
 const BASE_URL_LOCATION = `${process.env.REACT_APP_URI_SERVICE_LOCATION}`;
 const API_URL_LOCATION = `${BASE_URL_LOCATION}${process.env.REACT_APP_API_LOCATION_VERSION}`;
@@ -26,9 +26,9 @@ const response_error_interceptor = (error: any) => {
         } else {
             // store.dispatch(auth.actions.logOut());
             swal.fire({
-                title: "Warning",
-                text: "We have detected a problem in your connection",
-                icon: "warning",
+                title: 'Warning',
+                text: 'We have detected a problem in your connection',
+                icon: 'warning',
             });
         }
     }
@@ -38,7 +38,7 @@ export const http = axios.create({
     baseURL: API_URL_LOCATION,
 });
 http.interceptors.request.use((config) => {
-    const token = localStorage.getItem("_tk_");
+    const token = localStorage.getItem('_tk_');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
@@ -121,9 +121,9 @@ const onUnauthorized = (original_error: any) => {
 
 const onInternalServerError = (original_error: any) => {
     swal.fire({
-        title: "Warning",
-        text: "An unexpected error has occurred, please notify the system administrator!",
-        icon: "warning",
+        title: 'Warning',
+        text: 'An unexpected error has occurred, please notify the system administrator!',
+        icon: 'warning',
         timer: 2000,
     });
     return Promise.reject(original_error);
@@ -134,9 +134,9 @@ const onForbidden = (original_error: any) => {
     const { detail } = original_error.response?.data;
     if (detail) {
         swal.fire({
-            title: "Warning",
+            title: 'Warning',
             text: detail,
-            icon: "warning",
+            icon: 'warning',
         });
     }
     return Promise.reject(original_error);

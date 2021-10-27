@@ -1,9 +1,10 @@
-html, body {
+html,
+body {
     overflow: hidden;
 }
 body {
     background-color: #f7fbff;
-    font-family: "Lato", sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 .navbar {
     background-color: #fff;
@@ -16,9 +17,10 @@ body {
     height: 100hv;
 }
 #texto-superior {
-    background: rgba(109, 163, 252, 0.2);
+    background: white;
     color: #000;
     padding-bottom: 6rem;
+    box-shadow: 0 5px 3px #00000015 inset;
 }
 #texto-superior h4 {
     font-size: 18px;
@@ -31,7 +33,7 @@ body {
 }
 .content-cards {
     position: relative;
-    top: -4.66rem;
+    top: -5.66rem;
     bottom: 0;
 }
 #cards .card {
@@ -140,10 +142,10 @@ main {
     transform-origin: 0.5em 50%;
 }
 
-.btn-toggle[aria-expanded="true"] {
+.btn-toggle[aria-expanded='true'] {
     color: rgba(0, 0, 0, 0.85);
 }
-.btn-toggle[aria-expanded="true"]::before {
+.btn-toggle[aria-expanded='true']::before {
     transform: rotate(90deg);
 }
 
@@ -187,21 +189,18 @@ main {
 
 .containerLocation select {
     width: 100%;
-    border: 1px solid #C3C3C3;
+    border: 1px solid #c3c3c3;
     border-radius: 5px;
 }
 
-
-.containerLocation input[type=number] {
+.containerLocation input[type='number'] {
     width: 100%;
-    border: 1px solid #C3C3C3;
+    border: 1px solid #c3c3c3;
     border-radius: 5px;
 }
 
-
-.containerLocation input[type=text] {
+.containerLocation input[type='text'] {
     width: 100%;
-    border: 1px solid #C3C3C3;
+    border: 1px solid #c3c3c3;
     border-radius: 5px;
 }
-

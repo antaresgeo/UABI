@@ -1,32 +1,48 @@
 import { Link } from 'react-router-dom';
-import { ICardProps } from '../../../utils/interfaces/';
+import UabiCard from '../../../utils/ui/card';
+import { FC } from 'react';
 
-const Card = ({ name, path, view }: ICardProps) => {
+interface CardProps {
+    name: string;
+    links?: { to?: any; name: string }[];
+}
+const Card: FC<CardProps> = ({ name, links }) => {
+    links = links || [];
     return (
-        <div className="col-auto">
-            <div className="as-card">
-                <Link to={path} style={{ textDecoration: 'none', color: '#632264',}}>
-                    <div className="card-header" >
-                        <span style={{color: '#FF8403',  fontSize: '12px', marginLeft:38}}>
-                            ACCESOS RÁPIDOS <h5 style={{color: '#FF8403', fontWeight: 'bold', fontSize: '14px', marginLeft:38, marginBottom:5}}>{name}</h5>
-                        </span>
-                    </div>
-                </Link>
-                <div className="card-body d-flex flex-column d-sm-flex flex-sm-column">
-                    {view === 'acquisitions' ? (
-                        <>
-                            <Link to="/acquisitions/projects/" style={{ color: 'black', textDecoration: 'none',  marginLeft:38  }}>
-                                Proyectos
-                            </Link>
-                            <Link to="/acquisitions/real-estates/" style={{ color: 'black', textDecoration: 'none',  marginLeft:38  }}>
-                                Bienes Inmuebles
-                            </Link>
-                        </>
-                    ) : (
-                        <p style={{marginLeft:38}}>Haz clic para acceder a esta sección.</p>
-                    )}
-                </div>
-            </div>
+        <div className="col-4">
+            <UabiCard
+                className="h-100"
+                title={
+                    <span style={{ color: '#FF8403', fontWeight: 400 }}>
+                        ACCESOS RÁPIDOS{' '}
+                        <h5
+                            style={{
+                                color: '#FF8403',
+                                fontWeight: 'bold',
+                                fontSize: '14px',
+                                marginBottom: 5,
+                            }}
+                        >
+                            {name}
+                        </h5>
+                    </span>
+                }
+            >
+                <ul className="custom-list-style">
+                    {links.map((link, i) => {
+                        return (
+                            <li key={`link_${i}`} data-icon=">">
+                                {link.to && (
+                                    <Link to={link.to} style={{ color: 'black', textDecoration: 'none' }}>
+                                        {link.name}
+                                    </Link>
+                                )}
+                                {!link.to && `${link.name}`}
+                            </li>
+                        );
+                    })}
+                </ul>
+            </UabiCard>
         </div>
     );
 };

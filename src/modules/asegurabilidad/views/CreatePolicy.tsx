@@ -8,7 +8,6 @@ import { getRealEstates } from "../../acquisitions/redux/actions/realEstates";
 import PolizaForm from '../components/PolizaForm';
 import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
 
-
 const CreateInsurability = () => {
     //const history = useHistory();
     const dispatch = useDispatch();
@@ -38,7 +37,7 @@ const CreateInsurability = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CreateInsurability
+export default CreateInsurability;

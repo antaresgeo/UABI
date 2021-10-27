@@ -29,9 +29,7 @@ const Sider: FC<{ width: number }> = ({ width }) => {
             <Menu
                 onClick={handleClick}
                 style={{ width }}
-                mode="inline"
-                selectedKeys={[context.menu_key_path[0]]}
-                defaultOpenKeys={[context.menu_key_path[1]]}
+                mode="vertical"
             >
                 <SubMenu key="sub1" title="Inicio">
                     <Menu.Item key="1" onClick={goTo('/')}>

@@ -30,7 +30,7 @@ export default function SignIn() {
         // } catch (error) {
         //     console.error(error);
         // }
-        const auth = await authenticationUme();
+        const auth = authenticationUme();
         console.log(auth);
     }
 

@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { IProjectAttributes } from '../../../utils/interfaces/';
-import Input from 'antd/lib/input';
 import * as Yup from 'yup';
 
 interface ProjectFormPros {
@@ -11,7 +10,6 @@ interface ProjectFormPros {
     type?: 'view' | 'create' | 'edit';
 }
 const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type }) => {
-    const { TextArea } = Input;
     const initial_values: IProjectAttributes = project || {
         id: '',
         name: '',
@@ -21,9 +19,11 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
     };
 
     const schema = Yup.object().shape({
-        name: Yup.string().required('obligatorio').max(200, 'El nombre debe tener maximo 200 caracteres'),
-        description: Yup.string().required('obligatorio').max(1000, 'La Descripción debe tener maximo 200 caracteres'),
-        dependency: Yup.string().required('obligatorio'),
+        name: Yup.string().required('Campo obligatorio').max(200, 'El nombre debe tener maximo 200 caracteres'),
+        description: Yup.string()
+            .required('Campo obligatorio')
+            .max(1000, 'La Descripción debe tener maximo 200 caracteres'),
+        dependency: Yup.string().required('Campo obligatorio'),
     });
 
     const submit = (values, form) => {
@@ -130,8 +130,8 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                     </div>
                                     <div className="col">
                                         <span
-                                            className="text-muted text-end d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
+                                            className="text-end d-block w-100 mt-1"
+                                            style={{ height: '22px', color: '#F28C02' }}
                                         >
                                             {values.description.length}/1000
                                         </span>
@@ -142,10 +142,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                         <div className="row justify-content-end">
                             <div className="col text-end">
                                 {type !== 'view' && (
-                                    <button
-                                        className="btn btn-primary my-3"
-                                        disabled={ isSubmitting || disabled}
-                                    >
+                                    <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
                                         Guardar
                                     </button>
                                 )}

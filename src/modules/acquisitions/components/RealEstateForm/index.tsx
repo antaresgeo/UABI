@@ -1,6 +1,6 @@
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { Formik, Form } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import GeneralDataForm from './GeneralDataForm';
 import AcquisitionsFrom from './AdquisitionsForm';
 import RealEstateList from '../RealEstateList';
@@ -31,7 +31,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     projectId,
 }) => {
     const history = useHistory();
-    const initial_values: IRealEstateAttributes = realEstate || {
+    const initial_values = {
         id: 0,
         sap_id: '',
         dependency: '',
@@ -43,52 +43,61 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         name: '',
         description: '',
         patrimonial_value: 0,
+        reconstruction_value: 0,
         location: 'Kr 1a # 34',
         cbml: '46446',
         total_area: 0,
         total_percentage: 0,
         zone: '',
         tipology: '',
-        materials: '',
+        materials: [],
         supports_documents: null,
-        project_id: projectId || '',
+        project_id: [],
         status: 0,
         audit_trail: null,
         acquisitions: [],
+        active_code: '',
+        _type: null,
+        ...realEstate,
     };
 
     const schema = Yup.object().shape({
-        dependency: Yup.string().required('obligatorio'),
-        destination_type: Yup.string().required('obligatorio'),
-        accounting_account: Yup.string().required('obligatorio'),
-        cost_center: Yup.string().required('obligatorio'),
+        dependency: Yup.string().required('Campo obligatorio'),
+        destination_type: Yup.string().required('Campo obligatorio'),
+        accounting_account: Yup.string(),
+        cost_center: Yup.string(),
         registry_number: Yup.string()
-            .required('obligatorio')
+            .required('Campo obligatorio')
             .max(20, 'El Número Matricula debe tener maximo 20 caracteres'),
-        name: Yup.string().required('obligatorio'),
-        description: Yup.string().required('obligatorio'),
-        patrimonial_value: Yup.number().required('obligatorio'),
-        total_area: Yup.number().required('obligatorio'),
+        name: Yup.string().required('Campo obligatorio'),
+        description: Yup.string().required('Campo obligatorio'),
+        patrimonial_value: Yup.number().required('Campo obligatorio'),
+        total_area: Yup.number().required('Campo obligatorio'),
         total_percentage: Yup.number()
-            .required('obligatorio')
+            .required('Campo obligatorio')
             .min(0, 'El procentaje minimo es 0')
             .max(100, 'El procentaje maximo es 100'),
-        zone: Yup.string().required('obligatorio'),
-        tipology: Yup.string().required('obligatorio'),
-        project_id: Yup.number().required('obligatorio'),
+        zone: Yup.string().required('Campo obligatorio'),
+        tipology: Yup.string().required('Campo obligatorio'),
+        project_id: Yup.number().required('Campo obligatorio'),
+        acquisitions: Yup.array(),
     });
 
-    const submit = (values, form, isFinish = false) => {
+    const submit = (aux_values, form) => {
+        const isFinish = aux_values._type === 'finish';
+        const values: any = { ...aux_values };
+        delete values._type;
         onSubmit(values, form, isFinish).then(() => {
             form.setSubmitting(false);
             form.resetForm();
             form.setFieldValue('project_id', projectId || '');
         });
     };
+
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
             {(formik) => {
-                const { name, registry_number } = formik.values;
+                const { name, registry_number, project_id } = formik.values;
                 const TitleSpan = ({ name, registry_number }) => {
                     return (
                         <>
@@ -127,13 +136,15 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             <AcquisitionsFrom type={type} disabled={type === 'view'} formik={formik} />
                                             <Card
                                                 title="Documentos Soporte"
-                                                actions={[
-                                                    <div className="d-flex flex-row-reverse px-3 py-1">
-                                                        <button type="button" className="btn btn-primary">
-                                                            Guardar
-                                                        </button>
-                                                    </div>,
-                                                ]}
+                                                actions={
+                                                    [
+                                                        // <div className="d-flex flex-row-reverse px-3 py-1">
+                                                        //     <button type="button" className="btn btn-primary">
+                                                        //         Guardar
+                                                        //     </button>
+                                                        // </div>,
+                                                    ]
+                                                }
                                             >
                                                 <div className="row">
                                                     <div className="col-3">
@@ -176,7 +187,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 </div>
                                             </Card>
                                             <Card title="Bienes Inmuebles del Proyecto">
-                                                <RealEstateList realEstates={realEstates} />
+                                                <RealEstateList project_id={project_id} init={false} />
                                             </Card>
                                         </div>
                                     </div>
@@ -202,12 +213,22 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             type="button"
                                             className="btn btn-outline-primary me-3"
                                             onClick={() => {
-                                                submit(formik.values, formik, true);
+                                                formik.setFieldValue('_type', 'finish');
+                                                formik.submitForm();
                                             }}
                                         >
                                             Guardar y Finalizar
                                         </button>
-                                        <button className="btn btn-primary">Guardar y Crear otro</button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary"
+                                            onClick={() => {
+                                                formik.setFieldValue('_type', 'normal');
+                                                formik.submitForm();
+                                            }}
+                                        >
+                                            Guardar y Crear otro
+                                        </button>
                                     </>
                                 )}
                             </div>

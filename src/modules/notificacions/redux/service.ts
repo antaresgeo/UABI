@@ -1,6 +1,10 @@
-import { AxiosResponse } from "axios";
-import { http } from "../../../config/axios_instances";
-import { INotificationtAttributes, INotificationResponse, INotificationsResponse } from './../../../utils/interfaces/notification';
+import { AxiosResponse } from 'axios';
+import { http } from '../../../config/axios_instances';
+import {
+    INotificationtAttributes,
+    INotificationResponse,
+    INotificationsResponse,
+} from '../../../utils/interfaces/notification';
 
 const getNotification = async (
     id: string
@@ -14,7 +18,7 @@ const getNotification = async (
         return res.data.results;
     } catch (error) {
         console.error(error);
-        return Promise.reject("Error");
+        return Promise.reject('Error');
     }
 };
 
@@ -35,15 +39,13 @@ const getNotifications = async ({
         return res.data.results;
     } catch (error) {
         console.error(error);
-        return Promise.reject("Error");
+        return Promise.reject('Error');
     }
 };
 
-
 const services = {
     getNotification,
-    getNotifications
-    
+    getNotifications,
 };
 
 export default services;

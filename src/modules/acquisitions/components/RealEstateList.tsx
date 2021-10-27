@@ -1,22 +1,26 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { formatDate } from '../../../utils';
 import { Link, Table } from '../../../utils/ui';
 import { useSelector, useDispatch } from 'react-redux';
 import { swal } from '../../../utils';
-
 import { IRealEstateAttributes } from '../../../utils/interfaces';
 import { actions } from '../redux';
 import Register from './../../auth/views/SignUp';
 
 interface RealEstateListProps {
-    realEstates: IRealEstateAttributes[];
     withProject?: boolean;
-    change_page?: (page: number, pageSize?: number) => void;
-    total?: number;
+    filters?: any;
+    project_id?: number;
+    init?: boolean;
     register?: boolean;
 }
-const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, change_page, total, register }) => {
+
+const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project_id, init, register }) => {
     const dispatch = useDispatch();
+
+    const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
+    const loading: boolean = useSelector((store: any) => store.acquisitions.realEstates.loading);
+    const { total_results } = useSelector((store: any) => store.acquisitions.realEstates.pagination);
 
     const deleteRealEstate = (id) => async () => {
         const result = await swal.fire({
@@ -82,8 +86,9 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
         },
         {
             title: 'Creado por',
-            dataIndex: 'audit_trail.created_by',
+            dataIndex: 'audit_trail',
             align: 'center' as 'center',
+            render: (data) => data.created_by,
         },
         ...(register
             ? [
@@ -144,14 +149,33 @@ const RealEstateList: FC<RealEstateListProps> = ({ realEstates, withProject, cha
         },
     ];
 
+    const change_page = (page, pageSize) => {
+        dispatch(actions.getRealEstates({ page, pageSize, ...filters }));
+    };
+
+    useEffect(() => {
+        if (project_id) {
+            dispatch(actions.getRealEstatesByProject(project_id));
+        } else if (init) {
+            dispatch(actions.getRealEstates({}));
+        }
+    }, [project_id]);
+
     return (
-        <Table columns={table_columns} items={realEstates} with_pagination count={total} change_page={change_page} />
+        <Table
+            columns={table_columns}
+            items={realEstates}
+            with_pagination
+            count={total_results}
+            change_page={change_page}
+            loading={loading}
+        />
     );
 };
 
 RealEstateList.defaultProps = {
     withProject: false,
-    change_page: () => {},
+    init: true,
 };
 
 export default RealEstateList;

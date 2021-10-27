@@ -1,4 +1,3 @@
-
 import { useParams, useHistory } from 'react-router-dom';
 import { IPolicyAttributes } from '../../../utils/interfaces/insurability';
 import { useEffect } from 'react';
@@ -11,14 +10,10 @@ import { actions } from '../redux';
 import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
 import { getRealEstates } from "../../acquisitions/redux/actions/realEstates";
 
-
 interface IParams {
     id: string;
 }
 
-interface IProps {
-    view?: string;
-}
 const EditPolicy = () => {
     const { id } = useParams<IParams>();
     const history = useHistory();
@@ -66,6 +61,6 @@ const EditPolicy = () => {
             </div>
         </div>
     );
-}
+};
 
-export default EditPolicy
+export default EditPolicy;

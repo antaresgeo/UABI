@@ -1,16 +1,15 @@
-import types from "./types";
-
+import types from './types';
 
 const emptyInitialState: any = {
     notifications: {
         Value: [
             {
-                id: "-1",
-                title: "",
-                description: "",
-                path: "",
+                id: '-1',
+                title: '',
+                description: '',
+                path: '',
                 status: -1,
-            }
+            },
         ],
         pagination: {
             page: 1,
@@ -25,17 +24,16 @@ const emptyInitialState: any = {
     notification: {
         value: [
             {
-                id: "-1",
-                title: "",
-                description: "",
-                path: "",
+                id: '-1',
+                title: '',
+                description: '',
+                path: '',
                 status: -1,
-            }
+            },
         ],
         loading: false,
         loaded: false,
-    }
-
+    },
 };
 const initialState = emptyInitialState;
 
@@ -114,7 +112,6 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
-
 
         default: {
             return state;

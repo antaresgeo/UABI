@@ -1,7 +1,7 @@
-import AppRouter from "./AppRouter";
-import { IRoute } from "./custom_types";
+import AppRouter from './AppRouter';
+import { IRoute } from './custom_types';
 
-const basic_routes: any = [{ path: "**", redirect: "/auth/login/" }];
+const basic_routes: any = [{ path: '**', redirect: '/auth/login/' }];
 
 export const combineRoutes = (props: any, fn_list: Function[]): IRoute[] => {
     const routes_list = fn_list.map((fn) => fn(props));

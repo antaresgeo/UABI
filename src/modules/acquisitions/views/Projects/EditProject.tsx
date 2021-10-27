@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 
@@ -53,7 +53,7 @@ const DetailProject = ({ view }: IProps) => {
                             <Card
                                 title={
                                     <>
-                                        <b>Proyecto:</b> {project.name}
+                                        <b>Proyecto:</b> {project?.name}
                                     </>
                                 }
                             >

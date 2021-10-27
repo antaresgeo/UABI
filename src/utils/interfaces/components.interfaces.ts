@@ -103,7 +103,6 @@ export interface IPolicyAttributes {
     ensuranceCompany: string;
     ensuranceValue: number;
     ensuranceFile: string;
-
 }
 
 export interface IPoliciesResponse {

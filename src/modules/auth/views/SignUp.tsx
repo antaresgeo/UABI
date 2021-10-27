@@ -1,40 +1,40 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { Form, Image, Header, Input, Button, Grid, Select } from "semantic-ui-react";
-import moment from "moment";
-import axios from "axios";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { Form, Image, Header, Input, Button, Grid, Select } from 'semantic-ui-react';
+import moment from 'moment';
+import axios from 'axios';
 
-import loginimage from "./../../../utils/assets/img/login.jpeg";
-import logo from "./../../../utils/assets/img/escudoAlcaldia.png";
+import loginimage from './../../../utils/assets/img/login.jpeg';
+import logo from './../../../utils/assets/img/escudoAlcaldia.png';
 
 const Register = () => {
     const history = useHistory();
-    const [id_tipo, setId_tipo] = React.useState("");
-    const [idusuario, setIdusuario] = React.useState("");
-    const [contraseña, setContraseña] = React.useState("");
-    const [nombres, setNombres] = React.useState("");
-    const [apellidos, setApellidos] = React.useState("");
-    const [direccion, setDireccion] = React.useState("");
-    const [telefono, setTelefono] = React.useState("");
-    const [tipo_identificacion, setTipo_identificacion] = React.useState("");
+    const [id_tipo, setId_tipo] = React.useState('');
+    const [idusuario, setIdusuario] = React.useState('');
+    const [contraseña, setContraseña] = React.useState('');
+    const [nombres, setNombres] = React.useState('');
+    const [apellidos, setApellidos] = React.useState('');
+    const [direccion, setDireccion] = React.useState('');
+    const [telefono, setTelefono] = React.useState('');
+    const [tipo_identificacion, setTipo_identificacion] = React.useState('');
     //   const [fecha_creacion, setFecha_creacion] = React.useState("");
-    const [email, setEmail] = React.useState("");
+    const [email, setEmail] = React.useState('');
     // TIPO DE IDENTIFICACIONES
     const tiposidentificacion = [
-        { key: "CC", value: "CC", text: "CEDULA DE CIUDADANIA" },
-        { key: "TI", value: "TI", text: "TARJETA IDENTIDAD" },
-        { key: "CE", value: "CE", text: "CEDULA EXTRANJERIA" },
-        { key: "TE", value: "TE", text: "TARJETA EXTRANGERIA" },
-        { key: "NI", value: "NI", text: "NIT" },
-        { key: "PA", value: "PA", text: "PASAPORTE" },
-        { key: "TDE", value: "TDE", text: "TIPO DE DOCUMENTO EXTRANJERO" },
-        { key: "RG", value: "RG", text: "REGISTRO CIVIL" },
-        { key: "SIN", value: "SIN", text: "SIN IDENTIFICACION" },
+        { key: 'CC', value: 'CC', text: 'CEDULA DE CIUDADANIA' },
+        { key: 'TI', value: 'TI', text: 'TARJETA IDENTIDAD' },
+        { key: 'CE', value: 'CE', text: 'CEDULA EXTRANJERIA' },
+        { key: 'TE', value: 'TE', text: 'TARJETA EXTRANGERIA' },
+        { key: 'NI', value: 'NI', text: 'NIT' },
+        { key: 'PA', value: 'PA', text: 'PASAPORTE' },
+        { key: 'TDE', value: 'TDE', text: 'TIPO DE DOCUMENTO EXTRANJERO' },
+        { key: 'RG', value: 'RG', text: 'REGISTRO CIVIL' },
+        { key: 'SIN', value: 'SIN', text: 'SIN IDENTIFICACION' },
     ];
 
     async function registrarUsuario() {
-        let fecha_creacion = moment().format("YYYY-MM-DD");
-        let fecha_actualizacion = moment().format("YYYY-MM-DD");
+        let fecha_creacion = moment().format('YYYY-MM-DD');
+        let fecha_actualizacion = moment().format('YYYY-MM-DD');
         try {
             const data = await axios.post(`${process.env.REACT_APP_PAGE_HOST}api/usuarios`, {
                 id_tipo,
@@ -50,7 +50,7 @@ const Register = () => {
                 fecha_actualizacion,
             });
             console.log(data);
-            history.push("/auth");
+            history.push('/auth');
         } catch (error: any) {
             console.error(error.response);
         }
@@ -58,7 +58,7 @@ const Register = () => {
 
     return (
         <div>
-            <Grid columns={2} style={{ height: "100vh" }} className="no-margin">
+            <Grid columns={2} style={{ height: '100vh' }} className="no-margin">
                 <Grid.Row className="no-padding-bottom no-padding-top">
                     <Grid.Column className="no-padding-right no-padding-left">
                         <Image className="image-container-login" src={loginimage} />
@@ -105,7 +105,7 @@ const Register = () => {
                                         placeholder="Seleccione el tipo de identificacion"
                                         options={tiposidentificacion}
                                         onChange={(e: any, { value }: any) => {
-                                            if (typeof value !== "undefined") {
+                                            if (typeof value !== 'undefined') {
                                                 setTipo_identificacion(value.toString());
                                             }
                                         }}
@@ -135,7 +135,7 @@ const Register = () => {
                                 <Button
                                     color="black"
                                     className="boton-ingresar-login"
-                                    onClick={() => history.push("/auth")}
+                                    onClick={() => history.push('/auth')}
                                 >
                                     Regresar
                                 </Button>

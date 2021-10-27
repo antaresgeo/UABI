@@ -1,11 +1,13 @@
-import React, { FC, Fragment, useState } from 'react';
-import { Table } from 'semantic-ui-react';
+import React, { FC, useState } from 'react';
 import CheckboxGroup from 'react-checkbox-group';
-import { AdquisitionsItf, IAuditTrail } from '../../../../utils/interfaces';
+import { AdquisitionsItf } from '../../../../utils/interfaces';
 import AcquisitionList from './AcquisitionList';
 import { Card } from '../../../../utils/ui';
-import { ErrorMessage, Field } from 'formik';
+import { ErrorMessage } from 'formik';
 import LocationModal from '../../../../utils/components/LocationModal';
+import { LinkButton } from '../../../../utils/ui/link';
+import { clearObjectNulls, is_empty } from '../../../../utils';
+import Tooltip from 'antd/lib/tooltip';
 
 interface AcquisitionsFromProps {
     type?: 'view' | 'edit' | 'create';
@@ -13,26 +15,28 @@ interface AcquisitionsFromProps {
     formik?: any;
 }
 
+const active_type = ['Lote', 'Mejora', 'Construccion', 'Construccion para demoler', 'Mejora para demoler'];
+
 const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled }) => {
     const [count, set_count] = useState<number>(formik?.values?.acquisitions?.length || 0);
-    const initial_values: AdquisitionsItf = {
+    const initial_values = {
         acquisition_type: '',
         active_type: [],
         title_type: '',
         act_number: '',
-        act_value: 0,
-        plot_area: 0,
-        acquired_percentage: 0,
+        act_value: '',
+        plot_area: '',
+        acquired_percentage: '',
         seller: '',
         entity_type: '',
         entity_number: '',
-        real_estate_id: 0,
+        city: '',
+        real_estate_id: '',
     };
-    const [acquisition, set_acquisition] = useState<AdquisitionsItf>(initial_values);
+    const [acquisition, set_acquisition] = useState<any>(initial_values);
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
-        console.log('handleChange', { name, value });
         const data = {
             ...acquisition,
             [name]: value,
@@ -41,8 +45,11 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
     };
 
     const addAcquisition = (new_acquisition: AdquisitionsItf) => {
-        formik.setFieldValue(`acquisitions[${count}]`, new_acquisition);
-        set_count((c) => c + 1);
+        const data = clearObjectNulls(new_acquisition);
+        if (!is_empty(data)) {
+            formik.setFieldValue(`acquisitions[${count}]`, data);
+            set_count((c) => c + 1);
+        }
     };
 
     const clearAcquisition = () => {
@@ -50,17 +57,24 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
     };
 
     return (
-        <Card title="Información de Adquisición" actions={[
-            <div className="d-flex flex-row-reverse px-3 py-1">
-                <button type="button" className="btn btn-primary">Guardar</button>
-            </div>,
-        ]}>
+        <Card
+            title="Información de Adquisición"
+            actions={
+                [
+                    // <div className="d-flex flex-row-reverse px-3 py-1">
+                    //     <button type="button" className="btn btn-primary">
+                    //         Guardar
+                    //     </button>
+                    // </div>,
+                ]
+            }
+        >
             <div className="row">
                 {(type !== 'view' || !disabled) && (
                     <>
                         <div className="col-12">
                             <div className="row">
-                                <div className="col-4">
+                                <div className="col-3">
                                     <label htmlFor="form-select" className="form-label">
                                         Tipo de Adquisición
                                     </label>
@@ -82,8 +96,9 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         <option value="Dación en pago">Dación en pago</option>
                                         <option value="Obigaciones Urbanísticas">Obigaciones Urbanísticas</option>
                                     </select>
+                                    <span className="form-error" />
                                 </div>
-                                <div className="col-8">
+                                <div className="col-9">
                                     <label htmlFor="form-select" className="form-label">
                                         Tipo de activo
                                     </label>
@@ -91,38 +106,53 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                     <CheckboxGroup
                                         name="active_type"
                                         value={acquisition.active_type || []}
-                                        onChange={(data) => {
-                                            console.log(data);
-
+                                        onChange={(data, ...args) => {
+                                            const data_now = [...acquisition.active_type];
+                                            const diff = data
+                                                .filter((x) => !data_now.includes(x))
+                                                .concat(data_now.filter((x) => !data.includes(x)))[0];
+                                            const key = 'Lote';
+                                            let aux_data = [];
+                                            if (!data_now.includes(diff)) {
+                                                if (data_now.includes(key)) {
+                                                    aux_data = [key, diff];
+                                                } else {
+                                                    if (diff === key) {
+                                                        aux_data = [key, ...data_now];
+                                                    } else {
+                                                        aux_data = [diff];
+                                                    }
+                                                }
+                                            } else {
+                                                aux_data = [...data_now].filter((x) => x !== diff);
+                                            }
                                             set_acquisition({
                                                 ...acquisition,
-                                                active_type: data.length > 0 ? data : ['Lote'],
+                                                active_type: data.length > 0 ? aux_data : [],
                                             });
                                         }}
                                     >
                                         {(Checkbox) => (
                                             <>
-                                                <label className="d-inline-block me-3">
-                                                    <Checkbox value="Lote" /> Lote
-                                                </label>
-                                                <label className="d-inline-block me-3">
-                                                    <Checkbox value="Construccion" /> Construccion
-                                                </label>
-                                                <label className="d-inline-block me-3">
-                                                    <Checkbox value="Construccion para Mejora" /> Construccion para
-                                                    Mejora
-                                                </label>
-                                                <label className="d-inline-block me-3">
-                                                    <Checkbox value="Construcción para demoler" /> Construcción para
-                                                    demoler
-                                                </label>
+                                                {active_type.map((op, i) => (
+                                                    <label
+                                                        key={`active_type_${i}`}
+                                                        className="d-inline-block me-3 align-middle"
+                                                    >
+                                                        <Checkbox value={op} />
+                                                        <span className="ms-2" style={{ fontWeight: 500 }}>
+                                                            {op}
+                                                        </span>
+                                                    </label>
+                                                ))}
                                             </>
                                         )}
                                     </CheckboxGroup>
+                                    <span className="form-error" />
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-4">
+                                <div className="col-3">
                                     <label htmlFor="form-select" className="form-label">
                                         Tipo de Título
                                     </label>
@@ -138,23 +168,11 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         <option value="Mejora">Mejora</option>
                                         <option value="Construcción">Construcción para demoler</option>
                                     </select>
+                                    <span className="form-error" />
                                 </div>
-                                <div className="col-4">
-                                    {acquisition.title_type !== 'None' && (
-                                        <div className="mb-3">
-                                            <label htmlFor="formFile" className="form-label">
-                                                Documento {acquisition.title_type ? `de ${acquisition.title_type}` : ''}
-                                            </label>
-                                            <input className="form-control" type="file" id="title_type_document_id" />
-                                            {/*<div id='emailHelp' className='form-text'>*/}
-                                            {/*    Escritura.pdf*/}
-                                            {/*</div>*/}
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="col-2">
+                                <div className="col-3">
                                     <label htmlFor="act_number_id" className="form-label">
-                                        No Acto administrativo
+                                        N° acto administrativo
                                     </label>
                                     <input
                                         type="number"
@@ -165,8 +183,84 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         onChange={handleChange}
                                         value={acquisition.act_number || ''}
                                     />
+                                    <span className="form-error" />
                                 </div>
-                                <div className="col-2">
+                                <div className="col-3">
+                                    <label htmlFor="form-select" className="form-label">
+                                        Procedencia
+                                        <Tooltip title="Lorem impsu texto descriptivo">
+                                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
+                                        </Tooltip>
+                                    </label>
+                                    <select
+                                        className="form-select"
+                                        aria-label="seller"
+                                        id="seller"
+                                        name="seller"
+                                        onChange={handleChange}
+                                        value={acquisition.seller}
+                                    >
+                                        <option value="1">Alexander</option>
+                                        <option value="2">Sergio</option>
+                                        <option value="3">Ximena</option>
+                                    </select>
+                                    <span className="form-error" />
+                                </div>
+                                <div className="col-3">
+                                    <label htmlFor="exampleInputEmail1" className="form-label">
+                                        Area Total Lote
+                                    </label>
+                                    <div className="input-group">
+                                        <input
+                                            type="number"
+                                            className="form-control border-end-0"
+                                            id="plot_area"
+                                            aria-describedby="plot_area"
+                                            name="plot_area"
+                                            onChange={handleChange}
+                                            value={acquisition.plot_area || ''}
+                                            disabled={!acquisition.active_type?.includes('Lote')}
+                                        />
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text bg-white border-start-0">
+                                                m<sup>2</sup>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span className="form-error" />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-3">
+                                    <label htmlFor="exampleInputEmail1" className="form-label">
+                                        Area Construccion
+                                    </label>
+                                    <div className="input-group">
+                                        <input
+                                            type="number"
+                                            className="form-control border-end-0"
+                                            id="area_construccion"
+                                            aria-describedby="construction_area"
+                                            name="construction_area"
+                                            onChange={handleChange}
+                                            value={acquisition.construction_area || ''}
+                                            disabled={
+                                                !(
+                                                    acquisition.active_type?.includes('Construccion') ||
+                                                    acquisition.active_type?.includes('Construccion para Mejora') ||
+                                                    acquisition.active_type?.includes('Construcción para demoler')
+                                                )
+                                            }
+                                        />
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text bg-white border-start-0">
+                                                m<sup>2</sup>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span className="form-error" />
+                                </div>
+                                <div className="col-3">
                                     <label htmlFor="exampleInputEmail1" className="form-label">
                                         Valor de adquisición
                                     </label>
@@ -179,45 +273,9 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         onChange={handleChange}
                                         value={acquisition.act_value || ''}
                                     />
+                                    <span className="form-error" />
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-4">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">
-                                        Area Total Lote (m2)
-                                    </label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        id="plot_area"
-                                        aria-describedby="plot_area"
-                                        name="plot_area"
-                                        onChange={handleChange}
-                                        value={acquisition.plot_area || ''}
-                                        disabled={!acquisition.active_type?.includes('Lote')}
-                                    />
-                                </div>
-                                <div className="col-2">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">
-                                        Area Construccion (m2)
-                                    </label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        id="area_construccion"
-                                        aria-describedby="construction_area"
-                                        name="construction_area"
-                                        onChange={handleChange}
-                                        value={acquisition.construction_area || ''}
-                                        disabled={
-                                            !(
-                                                acquisition.active_type?.includes('Construccion') ||
-                                                acquisition.active_type?.includes('Construccion para Mejora') ||
-                                                acquisition.active_type?.includes('Construcción para demoler')
-                                            )
-                                        }
-                                    />
-                                </div>
+
                                 {/* {type === "edit" && <div className='col-12'>
                                 <div className='mb-3'>
                                     <label htmlFor='formFile' className='form-label'>
@@ -246,41 +304,27 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                     </div>
                                 </div>
                             </div> } */}
-                                <div className="col-2">
+                                <div className="col-3">
                                     <label htmlFor="exampleInputEmail1" className="form-label">
                                         Porcentaje Adquirido
                                     </label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        id="acquired_percentage"
-                                        aria-describedby="acquired_percentage"
-                                        name="acquired_percentage"
-                                        onChange={handleChange}
-                                        value={acquisition.acquired_percentage || ''}
-                                    />
-                                    <div id="emailHelp" className="form-text"></div>
+                                    <div className="input-group">
+                                        <input
+                                            type="number"
+                                            className="form-control border-end-0"
+                                            id="acquired_percentage"
+                                            aria-describedby="acquired_percentage"
+                                            name="acquired_percentage"
+                                            onChange={handleChange}
+                                            value={acquisition.acquired_percentage || ''}
+                                        />
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text bg-white border-start-0">%</span>
+                                        </div>
+                                    </div>
+                                    <span className="form-error" />
                                 </div>
-                                <div className="col-4">
-                                    <label htmlFor="form-select" className="form-label">
-                                        Vendedor
-                                    </label>
-                                    <select
-                                        className="form-select"
-                                        aria-label="seller"
-                                        id="seller"
-                                        name="seller"
-                                        onChange={handleChange}
-                                        value={acquisition.seller}
-                                    >
-                                        <option value="1">Alexander</option>
-                                        <option value="2">Sergio</option>
-                                        <option value="3">Ximena</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-4">
+                                <div className="col-3">
                                     <label htmlFor="form-select" className="form-label">
                                         Tipo de Entidad
                                     </label>
@@ -296,10 +340,13 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         <option value="2">Sergio</option>
                                         <option value="3">Ximena</option>
                                     </select>
+                                    <span className="form-error" />
                                 </div>
-                                <div className="col-4">
+                            </div>
+                            <div className="row">
+                                <div className="col-3">
                                     <label htmlFor="exampleInputEmail1" className="form-label">
-                                        No.Entidad
+                                        N° de entidad
                                     </label>
                                     <input
                                         type="number"
@@ -310,11 +357,11 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         onChange={handleChange}
                                         value={acquisition.entity_number || ''}
                                     />
-                                    <div id="emailHelp" className="form-text"></div>
+                                    <span className="form-error" />
                                 </div>
-                                <div className="form-group col-4">
+                                <div className="col-3">
                                     <label htmlFor="address" className="form-label">
-                                        Dirección
+                                        Ciudad
                                     </label>
                                     <div className="input-group">
                                         <input
@@ -328,12 +375,8 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                             <LocationModal
                                                 disabled={disabled}
                                                 onSave={(values) => {
-                                                    return values;
-                                                    // return service.getAddress(values).then((res) => {
-                                                    //     console.log(res);
-
-                                                    //     setFieldValue('location', `${res.id} | ${res.addressAsString}`, null);
-                                                    // });
+                                                    handleChange({ target: { value: values.city, name: 'city' } });
+                                                    return Promise.resolve();
                                                 }}
                                             />
                                         </div>
@@ -342,21 +385,17 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         <ErrorMessage name="location" />
                                     </span>
                                 </div>
-                            </div>
-                            <div className="row pt-3 pb-3">
-                                <div className="col-9" />
-                                <div className="col-3">
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary mr-3"
+                                <div className="col-3" />
+                                <div className="col-3 d-flex justify-content-end">
+                                    <LinkButton
+                                        name="Agregar Adquisición"
+                                        iconText="+"
+                                        avatar
                                         onClick={() => {
-                                            console.log('add adquisition', acquisition);
                                             addAcquisition(acquisition);
                                             clearAcquisition();
                                         }}
-                                    >
-                                        Agregar Adquisición
-                                    </button>
+                                    />
                                 </div>
                             </div>
                         </div>
