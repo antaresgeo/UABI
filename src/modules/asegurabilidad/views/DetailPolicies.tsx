@@ -8,7 +8,6 @@ import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
 import { getRealEstates } from "../../acquisitions/redux/actions/realEstates";
 import PolizaForm from '../components/PolizaForm';
 
-
 interface IParams {
     id: string;
 }
@@ -215,7 +214,6 @@ const DetailInsurability = () => {
         // </div>
 
     );
-}
+};
 
-export default DetailInsurability
-
+export default DetailInsurability;

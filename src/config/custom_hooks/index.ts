@@ -1,1 +1,1 @@
-export { default as useDetectBrowser } from "./useDetectBrowser";
+export { default as useDetectBrowser } from './useDetectBrowser';

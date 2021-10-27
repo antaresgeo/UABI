@@ -4,7 +4,7 @@ const EstateAreas = () => {
             <div className="container-fluid">
                 <div className="row justify-content-center">
                     <div className="col-md-12">
-                        <div style={{ backgroundColor: "white", borderRadius: 15 }}>
+                        <div style={{ backgroundColor: 'white', borderRadius: 15 }}>
                             <h5>
                                 <b>Creando:</b> Area
                             </h5>
@@ -197,9 +197,9 @@ const EstateAreas = () => {
                                     <div
                                         className="row py-3 my-3"
                                         style={{
-                                            backgroundColor: "#f7f7f7",
+                                            backgroundColor: '#f7f7f7',
                                             borderRadius: 15,
-                                            border: "1px solid",
+                                            border: '1px solid',
                                         }}
                                     >
                                         <div className="col-3">

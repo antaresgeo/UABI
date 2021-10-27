@@ -1,27 +1,10 @@
-import { number } from "yup/lib/locale";
-import { swal } from "../../../utils";
-import types from "./types";
+import types from './types';
 
 // interface State {}
 
-const emptyInitialState: any = {    
+const emptyInitialState: any = {
     projects: {
-        value: [
-            {
-                id: "-1",
-                name: "",
-                description: "",
-                dependency: "",
-                audit_trail: {
-                    created_by: "",
-                    created_on: "",
-                    updated_by: null,
-                    updated_on: null,
-                    updated_values: null,
-                },
-                status: -1,
-            },
-        ],
+        value: [],
         pagination: {
             page: 1,
             count: 0,
@@ -33,35 +16,7 @@ const emptyInitialState: any = {
         loaded: false,
     },
     realEstates: {
-        value: [
-            {
-                id: -1,
-                dependency: "",
-                destination_type: "",
-                accounting_account: "",
-                cost_center: "",
-
-                registry_number: "",
-                name: "",
-                description: "",
-
-                total_area: -1,
-                total_percentage: -1,
-                estate_type: "",
-                tipology: "",
-
-                project_id: -1,
-
-                audit_trail: {
-                    created_by: "",
-                    created_on: "",
-                    updated_by: null,
-                    updated_on: null,
-                    updated_values: null,
-                },
-                status: -1,
-            },
-        ],
+        value: [],
         pagination: {
             page: 1,
             count: 0,
@@ -73,75 +28,22 @@ const emptyInitialState: any = {
         loaded: false,
     },
     acquisitions: {
-        value: [
-            {
-                title_type: "None",
-                acquisition_type: "1",
-                active_type: ["1"],
-                seller: "1",
-                entity_type: "1",
-                acquired_percentage: 0,
-                acquisition_value: 0,
-                act_number: "",
-                address: "",
-                area: 0,
-                entity_number: "",
-            },
-        ],
+        value: [],
         loading: false,
         loaded: false,
     },
     project: {
-        value: {
-            id: "-1",
-            name: "",
-            description: "",
-            dependency: "",
-            audit_trail: {
-                created_by: "",
-                created_on: "",
-                updated_by: null,
-                updated_on: null,
-                updated_values: null,
-            },
-            status: -1,
-        },
-
+        value: null,
         loading: false,
         loaded: false,
     },
     realEstate: {
-        value: {
-            id: -1,
-            dependency: "",
-            destination_type: "",
-            accounting_account: "",
-            cost_center: "",
-
-            registry_number: "",
-            name: "",
-            description: "",
-
-            total_area: -1,
-            total_percentage: -1,
-            estate_type: "",
-            tipology: "",
-
-            project_id: -1,
-
-            audit_trail: {
-                created_by: "",
-                created_on: "",
-                updated_by: null,
-                updated_on: null,
-                updated_values: null,
-            },
-            status: -1,
-        },
+        value: null,
         loading: false,
         loaded: false,
     },
 };
+
 const initialState = emptyInitialState;
 
 const reducer = (state: any = initialState, action: any): any => {
@@ -159,8 +61,7 @@ const reducer = (state: any = initialState, action: any): any => {
                 ...state,
                 projects: {
                     ...state.projects,
-                    value: action.payload,
-
+                    value: action.payload?.results || [],
                     pagination: {
                         page: action.payload?.page || 1,
                         count: action.payload?.count || 0,
@@ -201,7 +102,7 @@ const reducer = (state: any = initialState, action: any): any => {
                     ...state.project,
 
                     value: action.payload,
-                   
+
                     loading: false,
                     loaded: true,
                 },

@@ -1,7 +1,7 @@
-import React, { FC, useState } from "react";
-import ConfigProvider from "antd/lib/config-provider";
-import esES from "antd/lib/locale/es_ES";
-import "moment/locale/es";
+import React, { FC, useState } from 'react';
+import ConfigProvider from 'antd/lib/config-provider';
+import esES from 'antd/lib/locale/es_ES';
+import 'moment/locale/es';
 
 type KeyPath = [string, string];
 interface TemplateProps {
@@ -17,7 +17,7 @@ export const TemplateContext = React.createContext<TemplateProps>(null);
 
 const TemplateProvider: FC = ({ children }) => {
     const [menu_collapsed, set_menu_collapsed] = useState<boolean>(false);
-    const [menu_key_path, set_menu_key_path] = useState<KeyPath>(["1", "sub1"]);
+    const [menu_key_path, set_menu_key_path] = useState<KeyPath>(['1', 'sub1']);
     const [drawer_collapsed, set_drawer_collapsed] = useState(false);
     return (
         <ConfigProvider locale={esES}>

@@ -13,7 +13,9 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/users/",
-            breadcrumbs: [{ name: "Usuarios" }],
+            template_props: {
+                breadcrumbs: [{ name: "Usuarios" }],
+            },
             component: Users,
         },
         {
@@ -21,10 +23,12 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/users/create/",
-            breadcrumbs: [
-                { name: "Usuario", to: "/users/" },
-                { name: "Crear" },
-            ],
+            template_props: {
+                breadcrumbs: [
+                    { name: "Usuario", to: "/users/" },
+                    { name: "Crear" },
+                ],
+            },
             component: CreateUser,
         },
         {
@@ -32,10 +36,12 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/users/:id/",
-            breadcrumbs: [
-                { name: "Usuario", to: "/users/" },
-                { name: "Detalle" },
-            ],
+            template_props: {
+                breadcrumbs: [
+                    { name: "Usuario", to: "/users/" },
+                    { name: "Detalle" },
+                ]
+            },
             component: DetailUser,
         },
         {
@@ -43,10 +49,12 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/users/edit/:id/",
-            breadcrumbs: [
-                { name: "Usuario", to: "/users/" },
-                { name: "Editar" },
-            ],
+            template_props: {
+                breadcrumbs: [
+                    { name: "Usuario", to: "/users/" },
+                    { name: "Editar" },
+                ],
+            },
             component: EditUser,
         },
     ];

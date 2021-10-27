@@ -1,12 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { Provider } from "react-redux";
-import store from "./config/store";
-import "./utils/assets/styles/index.scss";
-import TemplateProvider from "./utils/components/template/template_context";
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store from './config/store';
+import './utils/assets/styles/index.scss';
+import TemplateProvider from './utils/components/template/template_context';
 
 declare global {
     interface Window {
@@ -21,13 +20,13 @@ declare global {
 
 ReactDOM.render(
     // <React.StrictMode>
-        <Provider store={store}>
-            <TemplateProvider>
-                <App />
-            </TemplateProvider>
-        </Provider>,
+    <Provider store={store}>
+        <TemplateProvider>
+            <App />
+        </TemplateProvider>
+    </Provider>,
     // </React.StrictMode>,
-    document.getElementById("root")
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

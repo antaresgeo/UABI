@@ -1,51 +1,56 @@
 const types = Object.freeze({
     type_name: {
-        default: "type string [default]",
-        success: "type string [success]",
-        fail: "type string [fail]",
+        default: 'type string [default]',
+        success: 'type string [success]',
+        fail: 'type string [fail]',
     },
 
     projects: {
-        default: "Se consulta endpoint de servicio Projects [default]",
-        success: "Se consulta endpoint de servicio Projects [success]",
-        fail: "Se consulta endpoint de servicio Projects [fail]",
+        default: 'Se consulta endpoint de servicio Projects [default]',
+        success: 'Se consulta endpoint de servicio Projects [success]',
+        fail: 'Se consulta endpoint de servicio Projects [fail]',
     },
     project: {
-        default: "Se consulta endpoint de servicio Project [default]",
-        success: "Se consulta endpoint de servicio Project [success]",
-        fail: "Se consulta endpoint de servicio Project [fail]",
+        default: 'Se consulta endpoint de servicio Project [default]',
+        success: 'Se consulta endpoint de servicio Project [success]',
+        fail: 'Se consulta endpoint de servicio Project [fail]',
     },
     deleteProject: {
-        default: "Se consulta endpoint delete de servicio Project [default]",
-        success: "Se consulta endpoint delete de servicio Project [success]",
-        fail: "Se consulta endpoint delete de servicio Project [fail]",
+        default: 'Se consulta endpoint delete de servicio Project [default]',
+        success: 'Se consulta endpoint delete de servicio Project [success]',
+        fail: 'Se consulta endpoint delete de servicio Project [fail]',
     },
     realEstates: {
-        default: "Se consulta endpoint de servicio Real Estates [default]",
-        success: "Se consulta endpoint de servicio Real Estates [success]",
-        fail: "Se consulta endpoint de servicio Real Estates [fail]",
+        default: 'Se consulta endpoint de servicio Real Estates [default]',
+        success: 'Se consulta endpoint de servicio Real Estates [success]',
+        fail: 'Se consulta endpoint de servicio Real Estates [fail]',
     },
     realEstate: {
-        default: "Se consulta endpoint de servicio Real Estate [default]",
-        success: "Se consulta endpoint de servicio Real Estate [success]",
-        fail: "Se consulta endpoint de servicio Real Estate [fail]",
+        default: 'Se consulta endpoint de servicio Real Estate [default]',
+        success: 'Se consulta endpoint de servicio Real Estate [success]',
+        fail: 'Se consulta endpoint de servicio Real Estate [fail]',
     },
     deleteRealEstate: {
         default:
-            "Se consulta endpoint delete de servicio Real Estate [default]",
+            'Se consulta endpoint delete de servicio Real Estate [default]',
         success:
-            "Se consulta endpoint delete de servicio Real Estate [success]",
-        fail: "Se consulta endpoint delete de servicio Real Estate [fail]",
+            'Se consulta endpoint delete de servicio Real Estate [success]',
+        fail: 'Se consulta endpoint delete de servicio Real Estate [fail]',
     },
     acquisitions: {
-        default: "Se consulta endpoint de servicio Acquisitions [default]",
-        success: "Se consulta endpoint de servicio Acquisitions [success]",
-        fail: "Se consulta endpoint de servicio Acquisitions [fail]",
+        default: 'Se consulta endpoint de servicio Acquisitions [default]',
+        success: 'Se consulta endpoint de servicio Acquisitions [success]',
+        fail: 'Se consulta endpoint de servicio Acquisitions [fail]',
     },
     acquisition: {
-        default: "Se consulta endpoint de servicio Acquisition [default]",
-        success: "Se consulta endpoint de servicio Acquisition [success]",
-        fail: "Se consulta endpoint de servicio Acquisition [fail]",
+        default: 'Se consulta endpoint de servicio Acquisition [default]',
+        success: 'Se consulta endpoint de servicio Acquisition [success]',
+        fail: 'Se consulta endpoint de servicio Acquisition [fail]',
+    },
+    acquisition_create: {
+        default: 'Se consulta para crear adquiciciones [default]',
+        success: 'Se consulta para crear adquiciciones [success]',
+        fail: 'Se consulta para crear adquiciciones [fail]',
     },
     registers: {
         default: "Se consulta endpoint de servicio registers [default]",

@@ -1,15 +1,13 @@
 import { IRoute } from "../../utils/components/app_router/custom_types";
 import Registers from './views/Registers/Registers';
-import store from './../../config/store';
+// import store from './../../config/store';
 import {
-
-
     CreateProject,
     CreateRealEstate,
     DetailRealEstate,
     EditProject,
     EditRealEstate,
-    EstateAreas,
+    // EstateAreas,
     RealEstate,
     DetailProject,
     Projects,
@@ -29,93 +27,107 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/real-estates/areas/create/",
-            breadcrumbs: [
-                { name: "Bienes Inmuebles", to: "/acquisitions/real-estates/" },
-                { name: "Crear Areas" },
-            ],
-            component: EstateAreas,
-        },
-        {
-            exact: true,
-            is_private: true,
-            can_access: true,
-            path: "/acquisitions/real-estates/create/",
-            breadcrumbs: [
-                { name: "Bienes Inmuebles", to: "/acquisitions/real-estates/" },
-                { name: "Crear" },
-            ],
+            path: '/acquisitions/real-estates/create/',
+            template_props: {
+                breadcrumbs: [
+                    {
+                        name: 'Bienes Inmuebles',
+                        to: '/acquisitions/real-estates/',
+                    },
+                    { name: 'Crear' },
+                ],
+            },
             component: CreateRealEstate,
         },
         {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/real-estates/edit/:id/",
-            breadcrumbs: [
-                { name: "Bienes Inmuebles", to: "/acquisitions/real-estates/" },
-                { name: "Editar" },
-            ],
+            path: '/acquisitions/real-estates/edit/:id/',
+            template_props: {
+                breadcrumbs: [
+                    {
+                        name: 'Bienes Inmuebles',
+                        to: '/acquisitions/real-estates/',
+                    },
+                    { name: 'Editar' },
+                ],
+            },
             component: EditRealEstate,
         },
         {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/real-estates/:id/",
-            breadcrumbs: [
-                { name: "Bienes Inmuebles", to: "/acquisitions/real-estates/" },
-                { name: "Detalle" },
-            ],
+            path: '/acquisitions/real-estates/:id/',
+            template_props: {
+                breadcrumbs: [
+                    {
+                        name: 'Bienes Inmuebles',
+                        to: '/acquisitions/real-estates/',
+                    },
+                    { name: 'Detalle' },
+                ],
+            },
             component: DetailRealEstate,
         },
         {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/real-estates/",
-            breadcrumbs: [{ name: "Bienes Inmuebles" }],
+            path: '/acquisitions/real-estates/',
+            template_props: {
+                breadcrumbs: [{ name: 'Bienes Inmuebles' }],
+            },
             component: RealEstate,
         },
         {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/projects/create/",
-            breadcrumbs: [
-                { name: "Proyectos", to: "/acquisitions/projects/" },
-                { name: "Crear" },
-            ],
+            path: '/acquisitions/projects/create/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Proyectos', to: '/acquisitions/projects/' },
+                    { name: 'Crear' },
+                ],
+            },
             component: CreateProject,
         },
         {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/projects/edit/:id/",
-            breadcrumbs: [
-                { name: "Proyectos", to: "/acquisitions/projects/" },
-                { name: "Editar" },
-            ],
+            path: '/acquisitions/projects/edit/:id/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Proyectos', to: '/acquisitions/projects/' },
+                    { name: 'Editar' },
+                ],
+            },
             component: EditProject,
         },
         {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/projects/:id/",
-            breadcrumbs: [
-                { name: "Proyectos", to: "/acquisitions/projects/" },
-                { name: "Detalle" },
-            ],
+            path: '/acquisitions/projects/:id/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Proyectos', to: '/acquisitions/projects/' },
+                    { name: 'Detalle' },
+                ],
+            },
             component: DetailProject,
         },
         {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/projects/",
-            breadcrumbs: [{ name: "Proyectos" }],
+            path: '/acquisitions/projects/',
+            template_props: {
+                breadcrumbs: [{ name: 'Proyectos' }],
+            },
             component: Projects,
         },
 
@@ -124,7 +136,9 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: "/acquisitions/registers/",
-            breadcrumbs: [{ name: "Registros" }],
+            template_props: {
+                breadcrumbs: [{ name: "Registros" }],
+            },
             component: Registers
         },
     ];

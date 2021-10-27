@@ -1,6 +1,6 @@
-import types from "../types";
-import service from "../services";
-import { request_dispatch } from "../../../../utils";
+import types from '../types';
+import service from '../services';
+import { request_dispatch } from '../../../../utils';
 
 // ACTIONS | REAL ESTATES
 import {
@@ -10,7 +10,8 @@ import {
     createRealEstate,
     updateRealEstate,
     deleteRealEstate,
-} from "./realEstates";
+    createAcquisitionForRealEstate,
+} from './realEstates';
 
 // const example = (filters = {}) =>
 // request_dispatch(types.realEstates, service.getRealEstates());
@@ -19,8 +20,8 @@ import {
 const getProject = (id: string) =>
     request_dispatch(types.project, service.getProject(id));
 
-const getProjects = () =>
-    request_dispatch(types.projects, service.getProjects({}));
+const getProjects = (filters?: any) =>
+    request_dispatch(types.projects, service.getProjects({ ...filters }));
 
 const createProject = (name, description, dependecy) =>
     request_dispatch(
@@ -47,5 +48,6 @@ const actions = {
     createRealEstate,
     updateRealEstate,
     deleteRealEstate,
+    createAcquisitionForRealEstate,
 };
 export default actions;
