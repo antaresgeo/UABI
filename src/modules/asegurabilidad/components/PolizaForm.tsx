@@ -8,17 +8,18 @@ import {
 import { FC } from 'react';
 import { IPolicyAttributes } from './../../../utils/interfaces/insurability';
 import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
-
+import * as Yup from 'yup';
 
 interface InsurabilityFormPros {
     policy?: IPolicyAttributes;
     realEstates?: IRealEstateAttributes[];
-    disabled? : boolean;
+    disabled?: boolean;
+    type?: 'view' | 'create' | 'edit';
     onSubmit: (values, actions?) => Promise<any>;
 }
 
-const PolizaForm: FC<InsurabilityFormPros> = ({ policy,realEstates,disabled, onSubmit }) => {
-    const initialValues =  {
+const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled,type, onSubmit }) => {
+    const initialValues = {
         registry_number: '',
         vigency_start: '',
         vigency_end: '',
@@ -30,6 +31,18 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy,realEstates,disabled, onS
         ...policy
     };
 
+    const schema = Yup.object().shape({
+        registry_number: Yup.number().required('obligatorio'),
+        vigency_start: Yup.date().required('obligatorio'),
+        vigency_end: Yup.date().required('obligatorio'),
+        insurance_broker: Yup.string().required('obligatorio'),
+        insurance_company: Yup.string().required('obligatorio'),
+        insurance_value: Yup.number().required('obligatorio'),
+        insurance_document_id: Yup.string().required('obligatorio'),
+        real_estate_id: Yup.number().required('obligatorio'),
+
+    });
+
     const submit = (values, actions) => {
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
@@ -39,13 +52,16 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy,realEstates,disabled, onS
         <Formik
             initialValues={initialValues}
             onSubmit={submit}
+            validationSchema={schema}
             enableReinitialize
         >
-            <Form>
+            {({ isSubmitting }) => {
+                return (
+                    <Form>
                 <div className="row">
                     <div className="col-4">
                         <label htmlFor="registry_number" className="form-label">Matrícula</label>
-                        <Field type="number" id="registry_number" name="registry_number" placeholder="Número Matrícula" className="form-control" disabled={disabled} />
+                        <Field type="number" id="registry_number" name="registry_number" placeholder="Número Matrícula" className="form-control" disabled={disabled} autoComplete="off"/>
                     </div>
 
                     <div className="col-4">
@@ -80,7 +96,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy,realEstates,disabled, onS
 
                     <div className="col-4">
                         <label htmlFor="insurance_company" className="form-label" >Compañía de Seguros</label>
-                        <Field as="select" id="insurance_company" name="insurance_company" className='w-100 form-select'disabled={disabled}>
+                        <Field as="select" id="insurance_company" name="insurance_company" className='w-100 form-select' disabled={disabled}>
                             <option value="" selected disabled>
                                 --Compañía--
                             </option>
@@ -134,34 +150,38 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy,realEstates,disabled, onS
                             disabled={disabled}
 
                         >
-                        <option value="" hidden>
-                            -- Seleccione Bien Inmueble --
-                        </option>
-                        {realEstates?.map((realEstates, i) => {
-                            const { name, id } = realEstates;
-                            console.log(name, id)
-                            return (
-                                <option key={`project_${i}`} value={id}>
-                                    {name.toUpperCase()}
-                                </option>
-                            );
-                        })}
-                    </Field>
+                            <option value="" hidden>
+                                -- Seleccione Bien Inmueble --
+                            </option>
+                            {realEstates?.map((realEstates, i) => {
+                                const { name, id } = realEstates;
+                                return (
+                                    <option key={`project_${i}`} value={id}>
+                                        {name.toUpperCase()}
+                                    </option>
+                                );
+                            })}
+                        </Field>
                         {/* <<Field type="number" id="real_estate_id" name="real_estate_id" placeholder="" className="form-control"  /> */}
                     </div>
                 </div>
 
-                <div className='row mt-4'>
-                    <div className="col-10">
+                <div className="row justify-content-end">
+                    <div className="col text-end">
+                        {type !== 'view' && (
+                            <button
+                                className="btn btn-primary my-3"
+                                disabled={ isSubmitting || disabled}
+                            >
+                                Guardar
+                            </button>
+                        )}
                     </div>
-                    <div className="col-2">
-                        <button type='submit' className='btn btn-success'>
-                            Guardar
-                        </button>
-                    </div>
-
                 </div>
             </Form>
+                )
+
+            }}
         </Formik>
 
     );

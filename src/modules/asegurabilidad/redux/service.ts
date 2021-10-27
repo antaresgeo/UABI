@@ -10,7 +10,7 @@ const createPolicy = async (
     try {
 
         let URI = `/insurabilities`;
-        console.log(data);
+        // console.log(data);
         let res: AxiosResponse<IPolicyResponse> = await http.post(URI, data);
         await swal.fire("poliza creada", res.data.message, "success");
         return res.data.results;

@@ -8,8 +8,18 @@ const emptyInitialState: any = {
         value: [
             {
                 id: -1,
-                username: "",
-                id_rol: -1,
+                society_type: 'N-Persona Natural',
+                entity_type: 'Ninguno',
+                id_type: '',
+                id_number: '',
+                names: '',
+                surnames: '',
+                email: '',
+                location: '',
+                cellphone_number: '',
+                phone_number: '',
+                gender: '',
+                id_rol: 0,
                 audit_trail: {
                     created_by: "",
                     created_on: "",
@@ -34,9 +44,19 @@ const emptyInitialState: any = {
     user: {
         value: [
             {
-                id: "-1",
-                username: "",
-                id_rol: -1,
+                id: -1,
+                society_type: 'N-Persona Natural',
+                entity_type: 'Ninguno',
+                id_type: '',
+                id_number: '',
+                names: '',
+                surnames: '',
+                email: '',
+                location: '',
+                cellphone_number: '',
+                phone_number: '',
+                gender: '',
+                id_rol: 0,
                 audit_trail: {
                     created_by: "",
                     created_on: "",

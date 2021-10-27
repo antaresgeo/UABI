@@ -1,80 +1,77 @@
 import { FC } from 'react';
+import { Field, Formik, Form, ErrorMessage } from 'formik';
+// import * as Yup from 'yup';
 import { IUserAttributes } from './../../../utils/interfaces/users';
-import { Form, Field, Formik, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-
-interface UserFormPros {
+import React, { useState } from 'react';
+import { Transfer } from 'antd';
+interface IUserFormPros {
     user?: IUserAttributes;
-    onSubmit?: (values, form?) => Promise<any>;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
+    onSubmit: (values, actions?) => Promise<any>;
 }
 
-const UserForm: FC<UserFormPros> = ({ user, onSubmit, disabled, type }) => {
-    const initial_values: IUserAttributes = user || {
-        id: -1,
-        username: '',
-        id_rol: -1,
-        status: -1,
+const UserForm: FC<IUserFormPros> = ({ disabled, user, type, onSubmit }) => {
+    const initialValues = {
+        society_type: '',
+        entity_type: '',
+        id_type: '',
+        id_number: '',
+        names: '',
+        surnames: '',
+        email: '',
+        location: '',
+        cellphone_number: '',
+        phone_number: '',
+        gender: '',
+        id_rol: 0,
+        ...user
     };
-
-    const schema = Yup.object().shape({
-        username: Yup.string().required('obligatorio').max(200, 'El nombre debe tener maximo 200 caracteres'),
-        // id_rol: Yup.number().required('obligatorio').min(2, 'Min value 2.').max(10, 'Max value 10.')
-
-    });
-
-    const submit = (values, form) => {
-        onSubmit(values, form).then(() => {
-            form.setSubmitting(false);
+    const submit = (values, actions) => {
+        onSubmit(values, actions).then(() => {
+            actions.setSubmitting(false);
         });
+    }
+
+    const mockData = [];
+    for (let i = 0; i < 20; i++) {
+        mockData.push({
+            key: i.toString(),
+            title: `content${i + 1}`,
+            description: `description of content${i + 1}`,
+        });
+    }
+
+    const initialTargetKeys = mockData.filter(item => +item.key > 10).map(item => item.key);
+
+    const [targetKeys, setTargetKeys] = useState(initialTargetKeys);
+    const [selectedKeys, setSelectedKeys] = useState([]);
+    const onChange = (nextTargetKeys, direction, moveKeys) => {
+        console.log('targetKeys:', nextTargetKeys);
+        console.log('direction:', direction);
+        console.log('moveKeys:', moveKeys);
+        setTargetKeys(nextTargetKeys);
     };
+
+    const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
+        console.log('sourceSelectedKeys:', sourceSelectedKeys);
+        console.log('targetSelectedKeys:', targetSelectedKeys);
+        setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
+    };
+
+    const onScroll = (direction, e) => {
+        console.log('direction:', direction);
+        console.log('target:', e.target);
+    };
+
+
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
+        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} >
             {({ values, isValid, isSubmitting }) => {
                 return (
                     <Form>
                         <div className="row">
-                            <div className="col-2">
-                                <label htmlFor="id" className="form-label">
-                                    id Usuario
-                                </label>
-                                <Field
-                                    type="text"
-                                    id="id"
-                                    className="form-control"
-                                    aria-describedby="ID usuario"
-                                    disabled={true}
-                                    name="id"
-                                    autoComplete="off"
-                                />
-                                <span
-                                    className="text-danger text-left d-block w-100 mt-1"
-                                    style={{ height: '22px' }}
-                                >
-                                    <ErrorMessage name="id" />
-                                </span>
-                            </div>
-                            <div className="col-6">
-                                <label htmlFor="username" className="form-label">
-                                    Nombre
-                                </label>
-                                <Field
-                                    type="text"
-                                    className="form-control"
-                                    id="username"
-                                    aria-describedby="nombre Usuario"
-                                    placeholder="nombre"
-                                    name="username"
-                                    autoComplete="off"
-                                    disabled={disabled}
-                                    maxLength={201}
-                                />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="name" />
-                                </span>
-                            </div>
-                            <div className="col-4">
+                        <div className="col-6">
                                 <label htmlFor="id_rol" className="form-label">
                                     Rol
                                 </label>
@@ -103,13 +100,32 @@ const UserForm: FC<UserFormPros> = ({ user, onSubmit, disabled, type }) => {
                                     <ErrorMessage name="name" />
                                 </span>
                             </div>
+                            <div className="col-6">
+                                <label htmlFor="location" className="form-label">
+                                    Permisos
+                                </label>
+                                <Transfer
+                                    dataSource={mockData}
+                                    titles={['Source', 'Target']}
+                                    targetKeys={targetKeys}
+                                    selectedKeys={[]}
+                                    onChange={onChange}
+                                    onSelectChange={onSelectChange}
+                                    onScroll={onScroll}
+                                    render={item => item.title}
+                                    disabled
+
+                                />
+                            </div>
+
                         </div>
+
                         <div className="row justify-content-end">
                             <div className="col text-end">
                                 {type !== 'view' && (
                                     <button
                                         className="btn btn-primary my-3"
-                                        disabled={ isSubmitting || disabled}
+                                        disabled={isSubmitting || disabled}
                                     >
                                         Guardar
                                     </button>
@@ -123,5 +139,7 @@ const UserForm: FC<UserFormPros> = ({ user, onSubmit, disabled, type }) => {
         </Formik>
     )
 }
+
+
 
 export default UserForm

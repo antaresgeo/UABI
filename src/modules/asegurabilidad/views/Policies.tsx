@@ -20,37 +20,8 @@ const table_columns = [
         align: "center" as "center",
     },
     {
-        title: "Fecha Inicial",
-        dataIndex: "vigency_start",
-        align: "center" as "center",
-        // render: (vigency_start) =>formatDate(vigency_start)
-
-
-    },
-    {
-        title: "Fecha Final",
-        dataIndex: "vigency_end",
-        align: "center" as "center",
-        // render: (vigency_end) => formatDate(vigency_end),
-    },
-    {
-        title: "Corredor de Seguros",
-        dataIndex: "insurance_broker",
-        align: "center" as "center",
-    },
-    {
-        title: "Compañía de Seguros",
-        dataIndex: "insurance_company",
-        align: "center" as "center",
-    },
-    {
-        title: "Valor Asegurado",
-        dataIndex: "insurance_value",
-        align: "center" as "center",
-    },
-    {
-        title: "Póliza",
-        dataIndex: "insurance_document_id",
+        title: "Proyecto",
+        dataIndex: "",
         align: "center" as "center",
     },
     {
@@ -89,23 +60,6 @@ const table_columns = [
                             avatar={false}
                             icon={<i className="fa fa-pencil" aria-hidden="true" />}
                         />
-                    );
-                },
-            },
-            {
-                title: "Eliminar",
-                dataIndex: "id",
-                align: "center" as "center",
-                render: (id) => {
-                    return (
-                        <div
-                            className="text-danger"
-                            onClick={async () => {
-                                //await altStatusPolicy(parseInt(id));
-                            }}
-                        >
-                            <i className="fa fa-trash" aria-hidden="true" />
-                        </div>
                     );
                 },
             },

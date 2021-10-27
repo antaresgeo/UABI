@@ -2,8 +2,18 @@ import { IAuditTrail } from ".";
 
 export interface IUserAttributes {
     id?: string | number;
-    username: string;
-    id_rol: number;
+    society_type?: string;
+    entity_type?: string;
+    id_type: string;
+    id_number: string;
+    names: string;
+    surnames: string;
+    email: string;
+    location: string;
+    cellphone_number?: string;
+    phone_number: string;
+    gender: string;
+    id_rol?: number;
     audit_trail?: IAuditTrail;
     status?: number;
 }

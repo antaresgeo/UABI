@@ -6,6 +6,10 @@ import { IUserAttributes } from './../../../utils/interfaces/users';
 import UserForm from './../components/UserForm';
 import { useHistory } from 'react-router-dom';
 import { Card } from '../../../utils/ui';
+import UserFormUnion from '../components/UserFormUnion';
+import UserFormDetail from '../components/GerenalForm';
+import { Form, Formik } from 'formik';
+import GeneralForm from './../components/GerenalForm';
 
 interface IParams {
 
@@ -22,16 +26,27 @@ const DetailUser = () => {
         dispatch(actions.getUser(parseInt(id)));
     }, []);
 
+    const getUser = async (dataPolicy) => {
+        console.log(dataPolicy);
+        const action = actions.getUser(parseInt(id));
+        await dispatch(action);
+
+    }
+    const initial_values = {}
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card
-                                title="Usuario"
-                            >
-                                <UserForm disabled user={user} type="view" />
+                            <Card title="información Usuario">
+                                <GeneralForm
+                                    type="create"
+                                    disabled
+                                    onSubmit={(values) => {
+                                        return getUser(values);
+                                    }}
+                                />
                             </Card>
                         </div>
                     </div>
@@ -53,7 +68,6 @@ const DetailUser = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-
 
     )
 }
