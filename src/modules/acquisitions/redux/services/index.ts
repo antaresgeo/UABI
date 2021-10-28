@@ -1,4 +1,4 @@
-import { http } from '../../../../config/axios_instances';
+
 import { location_http } from '../../../../config/axios_instances';
 import { IDocumentResponse } from '../../../../utils/interfaces';
 
@@ -8,7 +8,7 @@ import projectsServices from './projects';
 // REAL ESTATES
 import realEstatesServices from './realEstates';
 import { AxiosResponse } from 'axios';
-import { IAddress } from './../../../../utils/interfaces/address';
+import { IAddress } from '../../../../utils/interfaces';
 
 interface IProps {
     id: number;
@@ -102,15 +102,15 @@ const getAddress = async (values) => {
     }
 };
 //  localizations/lists
-const localizationsLists = async (filters) => {
-    try {
-        const URI = '/localizations/lists/';
-        let res = await location_http.get(URI, { params: { ...filters } });
-        return res.data.results;
-    } catch (e) {
-        return Promise.reject('Error');
-    }
-};
+// const localizationsLists = async (filters) => {
+//     try {
+//         const URI = '/localizations/lists/';
+//         let res = await location_http.get(URI, { params: { ...filters } });
+//         return res.data.results;
+//     } catch (e) {
+//         return Promise.reject('Error');
+//     }
+// };
 
 const services = {
     ...projectsServices,

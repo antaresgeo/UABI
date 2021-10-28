@@ -8,8 +8,6 @@ import { routes as homeRoutes } from "../modules/home";
 import { routes as notificationRoutes } from "../modules/notificacions";
 import { routes as usersRoutes } from "../modules/users";
 
-
-
 const useRoutes = (props = null): IRoute[] => {
 
     return combineRoutes(props, [

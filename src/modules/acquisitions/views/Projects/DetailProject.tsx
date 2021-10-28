@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
+import { IProjectAttributes } from '../../../../utils/interfaces';
 import { actions } from '../../redux';
 import { Card, Link } from '../../../../utils/ui';
 import RealEstateList from '../../components/RealEstateList';
@@ -17,17 +17,10 @@ const DetailProject = () => {
     const history = useHistory();
 
     const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
-    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
     useEffect(() => {
         dispatch(actions.getProject(id));
     }, []);
-
-    useEffect(() => {
-        if (project.id !== '' && project.id !== undefined) {
-            dispatch(actions.getRealEstatesByProject(project.id));
-        }
-    }, [project]);
 
     return (
         <div className="h-100 d-flex flex-column">
@@ -58,7 +51,7 @@ const DetailProject = () => {
                                     />
                                 }
                             >
-                                <RealEstateList realEstates={realEstates} />
+                                <RealEstateList project_id={parseInt(project?.id + '') || undefined} init={false} />
                             </Card>
                         </div>
                     </div>

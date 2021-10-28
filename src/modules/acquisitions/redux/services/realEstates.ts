@@ -4,10 +4,10 @@ import { http } from '../../../../config/axios_instances';
 import { swal } from '../../../../utils';
 
 import {
+    AdquisitionsItf,
     IPaginable,
     IRealEstateAttributes,
-    IRealEstateResponse,
-    IRealEstatesResponse,
+    IRealEstateResponse
 } from '../../../../utils/interfaces';
 
 // REAL ESTATES
@@ -38,7 +38,7 @@ const getRealEstates = async ({
 export const getRealEstatesByProject = async (
     id: number
 ): Promise<IPaginable<IRealEstateAttributes> | string> => {
-    if(id){
+    if (id) {
         try {
             let URI = `/real-estates/project/`;
             let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
@@ -78,17 +78,18 @@ export const createRealEstate = async (
 ): Promise<IRealEstateAttributes | string> => {
     try {
         let URI = `/real-estates`;
-
-        delete data.id;
-        delete data.status;
-        delete data.acquisitions;
-        delete data.audit_trail;
-        delete data.supports_documents;
-        delete data.registry_number_document_id;
+        const aux_data = { ...data };
+        delete aux_data.id;
+        delete aux_data.status;
+        delete aux_data.acquisitions;
+        delete aux_data.audit_trail;
+        delete aux_data.supports_documents;
+        delete aux_data.registry_number_document_id;
+        delete aux_data.reconstruction_value;
 
         let res: AxiosResponse<IRealEstateResponse> = await http.post(
             URI,
-            data
+            aux_data
         );
 
         return res.data.results;
@@ -103,16 +104,18 @@ export const updateRealEstate = async (data: any, id: number) => {
     try {
         let URI = `/real-estates`;
 
-        delete data.id;
-        delete data.status;
-        delete data.acquisitions;
-        delete data.audit_trail;
-        delete data.supports_documents;
-        delete data.registry_number_document_id;
+        const aux_data = { ...data };
+        delete aux_data.id;
+        delete aux_data.status;
+        delete aux_data.acquisitions;
+        delete aux_data.audit_trail;
+        delete aux_data.supports_documents;
+        delete aux_data.registry_number_document_id;
+        delete aux_data.reconstruction_value;
 
         let res: AxiosResponse<IRealEstateResponse> = await http.put(
             URI,
-            data,
+            aux_data,
             {
                 params: { id: id },
             }
@@ -207,7 +210,33 @@ const deleteRealEstate = async (id) => {
             icon: 'error',
             showConfirmButton: false,
         });
-        return Promise.reject('Error in delete Project');
+        return Promise.reject('Error in delete real estate');
+    }
+};
+
+const createAcquisitionForRealEstate = async (
+    acquisitions: AdquisitionsItf[]
+) => {
+    try {
+        let URI = '/real-estates/adquisitions/';
+        let res: AxiosResponse = await http.post(URI, acquisitions);
+        return res.data.results;
+    } catch (e) {
+        return Promise.reject('Error in  create acquisition for real estate');
+    }
+};
+
+const getAcquisitionForRealEstate = async (real_estate_id) => {
+    try {
+        let URI = '/real-estates/adquisitions/';
+        let res: AxiosResponse = await http.get(URI, {
+            params: {
+                real_estate_id,
+            },
+        });
+        return res.data.results;
+    } catch (e) {
+        return Promise.reject('Error in get acquisition for real estate');
     }
 };
 
@@ -219,6 +248,8 @@ const services = {
     updateRealEstate,
     getAddress,
     deleteRealEstate,
+    createAcquisitionForRealEstate,
+    getAcquisitionForRealEstate
 };
 
 export default services;

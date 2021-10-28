@@ -1,5 +1,3 @@
-
-
 export interface INotificationtAttributes {
     id?: string | number;
     title: string;

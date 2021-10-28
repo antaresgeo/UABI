@@ -1,19 +1,19 @@
-import { Redirect } from "react-router-dom";
-import React, { FC } from "react";
-import { CanAccess } from "./custom_types";
+import { Redirect } from 'react-router-dom';
+import React, { FC } from 'react';
+import { CanAccess } from './custom_types';
 
 export const redirect_fn = (can_access: boolean, location: any) => {
     return can_access
         ? location?.state?.form
             ? compute_redirect(location.state.from, location)
-            : compute_redirect("/", location)
+            : compute_redirect('/', location)
         : null;
 };
 
 export const get_can_access = (can_access: CanAccess, props: any): boolean => {
-    let has_access = can_access ? true : false;
+    let has_access = !!can_access;
     if (has_access) {
-        if (typeof can_access === "function") {
+        if (typeof can_access === 'function') {
             has_access = can_access(props);
         }
     }
@@ -33,16 +33,16 @@ export const compute_redirect = (to: string, location: any) => {
 };
 
 export const withSuspense = (props: any, dr: any, suspense: boolean = true): FC<any> => {
-    return (WrappedComponent, ) => {
+    return (WrappedComponent) => {
         if (WrappedComponent) {
-            if(suspense) {
+            if (suspense) {
                 return (
-                    <React.Suspense fallback={"Cargando"}>
+                    <React.Suspense fallback={'Cargando'}>
                         <WrappedComponent {...props} />
                     </React.Suspense>
                 );
-            }else {
-                return <WrappedComponent {...props} />
+            } else {
+                return <WrappedComponent {...props} />;
             }
         }
         /*
@@ -53,5 +53,3 @@ export const withSuspense = (props: any, dr: any, suspense: boolean = true): FC<
         return dr;
     };
 };
-
-

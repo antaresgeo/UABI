@@ -3,12 +3,8 @@ import { useParams } from 'react-router-dom';
 import { actions } from '../redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { IUserAttributes } from './../../../utils/interfaces/users';
-import UserForm from './../components/UserForm';
 import { useHistory } from 'react-router-dom';
 import { Card } from '../../../utils/ui';
-import UserFormUnion from '../components/UserFormUnion';
-import UserFormDetail from '../components/GerenalForm';
-import { Form, Formik } from 'formik';
 import GeneralForm from './../components/GerenalForm';
 
 interface IParams {

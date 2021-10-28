@@ -1,6 +1,6 @@
 body {
     background-color: #f7fbff;
-    font-family: "Lato", sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .navbar {
@@ -149,11 +149,11 @@ main {
     transform-origin: 0.5em 50%;
 }
 
-.btn-toggle[aria-expanded="true"] {
+.btn-toggle[aria-expanded='true'] {
     color: rgba(0, 0, 0, 0.85);
 }
 
-.btn-toggle[aria-expanded="true"]::before {
+.btn-toggle[aria-expanded='true']::before {
     transform: rotate(90deg);
 }
 
@@ -199,7 +199,7 @@ main {
     border-radius: 8px;
 }
 
-.containerLocation input[type="number"] {
+.containerLocation input[type='number'] {
     width: 100%;
     border-radius: 8px;
 }

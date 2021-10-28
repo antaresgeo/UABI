@@ -1,5 +1,5 @@
-import { FC } from "react";
-import Table, { ColumnsType, TablePaginationConfig } from "antd/lib/table";
+import { FC } from 'react';
+import Table, { ColumnsType, TablePaginationConfig } from 'antd/lib/table';
 
 interface CompressTableProps {
     columns: ColumnsType<any>;
@@ -16,9 +16,9 @@ const getPaginator = (
     total: number,
     change_page?: (page: number, pageSize?: number) => void
 ): TablePaginationConfig => {
-    const paginator_format = "Mostrando $FROM a $TO de $TOTAL entradas";
+    const paginator_format = 'Mostrando $FROM a $TO de $TOTAL entradas';
     return {
-        position: ["bottomRight"],
+        position: ['bottomRight'],
         total: total || 0,
         ...(change_page
             ? {
@@ -29,9 +29,9 @@ const getPaginator = (
             : {}),
         showTotal: (total, current) => {
             return paginator_format
-                .replace("$FROM", `${current[0]}`)
-                .replace("$TO", `${current[1]}`)
-                .replace("$TOTAL", `${total}`);
+                .replace('$FROM', `${current[0]}`)
+                .replace('$TO', `${current[1]}`)
+                .replace('$TOTAL', `${total}`);
         },
     };
 };
@@ -56,11 +56,11 @@ const CompressTable: FC<CompressTableProps> = ({
             : { pagination: false }),
         loading: loading,
         bordered: true,
-        className: "w-100",
-        ...(scroll ? { scroll: { x: "max-content" } } : {}),
+        className: 'w-100',
+        ...(scroll ? { scroll: { x: 'max-content' } } : {}),
     };
     return (
-        <div style={{marginTop: 16}}>
+        <div style={{ marginTop: 16 }}>
             {title && (
                 <>
                     <h3 style={{ fontWeight: 300 }}>{title}</h3>

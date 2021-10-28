@@ -2,18 +2,10 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     IProjectAttributes,
-    // IProjectsResponse,
     IRealEstateAttributes,
-    // IRealEstatesResponse,
 } from '../../../../utils/interfaces';
-import { Input } from 'semantic-ui-react';
-import AcquisitionsFrom from '../../components/RealEstateForm/AdquisitionsForm';
-import GeneralDataForm from '../../components/RealEstateForm/GeneralDataForm';
 import { actions } from '../../redux';
-import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
-import { qsToArray } from '../../../../utils';
-import { Card } from '../../../../utils/ui';
-import RealEstateList from '../../components/RealEstateList';
+import { useHistory } from 'react-router-dom';
 import RealEstateForm from '../../components/RealEstateForm';
 
 const RealEstate = () => {
@@ -26,7 +18,7 @@ const RealEstate = () => {
 
     useEffect(() => {
         dispatch(actions.getProjects());
-        if (history.location.state?.project_id) {
+        if (project_id) {
             dispatch(actions.getRealEstatesByProject(history.location.state?.project_id));
         }
     }, []);
@@ -34,14 +26,24 @@ const RealEstate = () => {
     const createRealEstate = async (values, form, isFinish) => {
         try {
             const res: any = await dispatch(actions.createRealEstate(values));
-            if (!isFinish) {
+            if (values.acquisitions.length > 0) {
+                await dispatch(
+                    actions.createAcquisitionForRealEstate(
+                        values.acquisitions.map((a) => {
+                            a.real_estate_id = res.id;
+                            return a;
+                        })
+                    )
+                );
+            }
+            if (isFinish) {
+                history.push(`/acquisitions/real-estates/`);
+            } else {
                 if (res) {
                     return await dispatch(actions.getRealEstatesByProject(res.project_id));
                 }
-            } else {
-                history.push(`/acquisitions/real-estates/`);
-                return Promise.resolve();
             }
+            return Promise.resolve();
         } catch (e) {
             return Promise.reject();
         }
@@ -52,7 +54,6 @@ const RealEstate = () => {
             set_project_id(value);
             if (value) {
                 console.log(value);
-
                 dispatch(actions.getRealEstatesByProject(value));
             }
         }
@@ -62,7 +63,7 @@ const RealEstate = () => {
         <RealEstateForm
             type="create"
             projects={projects}
-            realEstates={realEstates}
+            realEstates={project_id ? realEstates : []}
             projectId={project_id}
             onProjectSelectedChange={onProjectSelectedChange}
             onSubmit={createRealEstate}

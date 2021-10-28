@@ -1,9 +1,7 @@
-import { Input } from "semantic-ui-react";
-import { Card } from "../../../../utils/ui";
-import {FC} from "react";
-interface SupportDocsProps {
-
-}
+import { Input } from 'semantic-ui-react';
+import { Card } from '../../../../utils/ui';
+import { FC } from 'react';
+interface SupportDocsProps {}
 const SupportDocs: FC<SupportDocsProps> = () => {
     return (
         <Card title="Documentos Soporte">
@@ -45,3 +43,4 @@ const SupportDocs: FC<SupportDocsProps> = () => {
         </Card>
     );
 };
+export default SupportDocs;

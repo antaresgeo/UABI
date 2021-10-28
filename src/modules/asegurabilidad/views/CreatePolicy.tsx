@@ -57,7 +57,7 @@ const CreateInsurability = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CreateInsurability
+export default CreateInsurability;

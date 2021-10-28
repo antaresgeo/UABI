@@ -4,40 +4,31 @@ import { Link } from '../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 
 export const DropdownNotification = () => {
-    const items = [1,2,3,4,5,6,7,8,9,10];
+    const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const history = useHistory();
-    const handleClick = e => {
+    const handleClick = (e) => {
         console.log('click ', e.key);
-        if(e.key !== "ver mas"){
-            history.push(`/notification/${e.key}/`)
+        if (e.key !== 'ver mas') {
+            history.push(`/notification/${e.key}/`);
         }
-        
     };
     return (
-        <Menu
-            onClick={handleClick}
-            style={{ width: 200, boxShadow: '0 0 10px #CCC', borderRadius: '5px' }}    
-        >
-            {
-               items.map(item => (
-                    <Menu.Item key={item} icon={<MailOutlined />} >
-                        {item} menu item
-                    </Menu.Item>       
-               ))
-            }
-            <Menu.Item key="ver mas" className="text-center" style={{ borderTop: '1px solid #CCC', color: 'rgb(109, 163, 250)' }} >
-                <Link
-                    to={`/notification/`}
-                    name="ver mas..."
-                    
-                />
+        <Menu onClick={handleClick} style={{ width: 200, boxShadow: '0 0 10px #CCC', borderRadius: '5px' }}>
+            {items.map((item) => (
+                <Menu.Item key={item} icon={<MailOutlined />}>
+                    {item} menu item
+                </Menu.Item>
+            ))}
+            <Menu.Item
+                key="ver mas"
+                className="text-center"
+                style={{ borderTop: '1px solid #CCC', color: 'rgb(109, 163, 250)' }}
+            >
+                <Link to={`/notification/`} name="ver mas..." />
             </Menu.Item>
-
         </Menu>
-    )
-}
-
-
+    );
+};
 
 // ReactDOM.render(
 //   <Dropdown overlay={menu}>

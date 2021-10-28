@@ -1,9 +1,5 @@
 // import React from 'react';
-import {
-    Formik,
-    Form,
-    Field,
-} from 'formik';
+import { Formik, Form, Field } from 'formik';
 // import { actions } from "./../redux";
 import { FC } from 'react';
 import { IPolicyAttributes } from './../../../utils/interfaces/insurability';
@@ -47,7 +43,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled,ty
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
         });
-    }
+    };
     return (
         <Formik
             initialValues={initialValues}
@@ -82,15 +78,9 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled,ty
                             <option value="" selected disabled>
                                 --Corredor--
                             </option>
-                            <option value="vera1">
-                                Vera 1
-                            </option>
-                            <option value="vera2">
-                                Vera 2
-                            </option>
-                            <option value="vera3">
-                                Vera 3
-                            </option>
+                            <option value="vera1">Vera 1</option>
+                            <option value="vera2">Vera 2</option>
+                            <option value="vera3">Vera 3</option>
                         </Field>
                     </div>
 
@@ -100,15 +90,9 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled,ty
                             <option value="" selected disabled>
                                 --Compañía--
                             </option>
-                            <option value="sura1">
-                                Sura 1
-                            </option>
-                            <option value="sura2">
-                                Sura 2
-                            </option>
-                            <option value="sura3">
-                                Sura 3
-                            </option>
+                            <option value="sura1">Sura 1</option>
+                            <option value="sura2">Sura 2</option>
+                            <option value="sura3">Sura 3</option>
                         </Field>
                     </div>
 
@@ -131,7 +115,6 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled,ty
                             />
                         </div>
                     </div>
-
                 </div>
 
                 <div className="row">
@@ -183,8 +166,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled,ty
 
             }}
         </Formik>
-
     );
-}
+};
 
-export default PolizaForm
+export default PolizaForm;

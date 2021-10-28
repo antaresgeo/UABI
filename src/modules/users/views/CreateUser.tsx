@@ -49,7 +49,6 @@ const CreateUser = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-
     )
 }
 

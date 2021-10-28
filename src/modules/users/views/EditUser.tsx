@@ -7,8 +7,6 @@ import { actions } from '../redux';
 import swal from 'sweetalert';
 import { Card } from '../../../utils/ui';
 import UserForm from './../components/UserForm';
-import UserFormDetail from '../components/GerenalForm';
-import PolizaForm from '../../asegurabilidad/components/PolizaForm';
 import GeneralForm from './../components/GerenalForm';
 
 interface IParams {
@@ -87,17 +85,6 @@ const EditUser = ({view }: IProps) => {
                 <div className="flex-fill" />
             </div>
         </div>
-
-                                // <UserForm
-                                //     user={user}
-                                //     type="edit"
-                                //     onSubmit={(values) => {
-                                //         return _updateUser(values);
-                                //     }}
-
-
-
-
     )
 }
 

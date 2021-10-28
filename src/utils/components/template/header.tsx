@@ -1,10 +1,9 @@
 import React, { FC, useContext } from 'react';
-import { MenuFoldOutlined, MenuUnfoldOutlined, PicRightOutlined,  } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined, PicRightOutlined } from '@ant-design/icons';
 import { TemplateContext } from './template_context';
 import Badge from 'antd/lib/badge';
-import { DropdownNotification } from './../../../modules/notificacions/views/DropdownNotification';
+import { DropdownNotification } from '../../../modules/notificacions/views/DropdownNotification';
 import { Dropdown } from 'antd';
-
 
 const Header: FC<{ collapsible: boolean }> = ({ collapsible }) => {
     const context = useContext(TemplateContext);
@@ -22,16 +21,13 @@ const Header: FC<{ collapsible: boolean }> = ({ collapsible }) => {
                     <span>
                         Hola, <b>Luisa María Sánchez Cadavid</b>
                     </span>
-                    <Dropdown overlay={<DropdownNotification />} >
+                    <Dropdown overlay={<DropdownNotification />}>
                         <Badge
-                            
-                            count={100} 
-                            style={{ backgroundColor: 'transparent', color: '#FF8900' }} offset={[16, 8]}
+                            count={100}
+                            style={{ backgroundColor: 'transparent', color: '#FF8900' }}
+                            offset={[16, 8]}
                         >
-                            <i 
-                                className="fa fa-bell" 
-                                style={{ fontSize: 18, marginLeft: 20, color: '#FF8900' }}
-                            />
+                            <i className="fa fa-bell" style={{ fontSize: 18, marginLeft: 20, color: '#FF8900' }} />
                         </Badge>
                     </Dropdown>
                     <PicRightOutlined
