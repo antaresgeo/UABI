@@ -1,18 +1,18 @@
 
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { actions } from '../redux';
+import { useDispatch } from 'react-redux';
 import { Card } from '../../../utils/ui';
+import { useHistory } from 'react-router-dom';
 import UserForm from '../components/UserForm';
+import GeneralForm from './../components/GerenalForm';
 
 const CreateUser = () => {
-    const history: any = useHistory();
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const createUser = async (username, id_rol) => {
-        console.log(username, id_rol);
-        // const res: any = await dispatch(actions.createUser(username,parseInt(id_rol)));
-        // history.push(`/users/${res}`);
+    const createUser = async (dataPolicy) => {
+        console.log(dataPolicy)
+        await dispatch(actions.createUser(dataPolicy));
     };
 
     return (
@@ -21,12 +21,12 @@ const CreateUser = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card title="Creación Usuario">
-                                <UserForm
-                                    onSubmit={(values) => {
-                                        return createUser(values.username, values.id_rol);
-                                    }}
+                            <Card title="información Usuario">
+                                <GeneralForm
                                     type="create"
+                                    onSubmit={(values) => {
+                                        return createUser(values);
+                                    }}
                                 />
                             </Card>
                         </div>

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { swal } from '../../../utils';
 import { IRealEstateAttributes } from '../../../utils/interfaces';
 import { actions } from '../redux';
-import Register from './../../auth/views/SignUp';
+
 
 interface RealEstateListProps {
     withProject?: boolean;

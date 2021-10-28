@@ -7,6 +7,7 @@ import { actions } from '../redux';
 import swal from 'sweetalert';
 import { Card } from '../../../utils/ui';
 import UserForm from './../components/UserForm';
+import GeneralForm from './../components/GerenalForm';
 
 interface IParams {
 
@@ -28,7 +29,7 @@ const EditUser = ({view }: IProps) => {
         let res: any;
         res = await dispatch(
             actions.updateUser(
-                { username: userForm.username, id_rol: userForm.id_rol },
+                { userForm },
                 id
             )
         );
@@ -48,17 +49,20 @@ const EditUser = ({view }: IProps) => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card
-                                title="Usuario"
-
-                            >
-                                <UserForm
-                                    user={user}
-                                    type="edit"
+                            <Card title="Edición de Usuario">
+                                <GeneralForm
+                                    type='edit'
                                     onSubmit={(values) => {
                                         return _updateUser(values);
                                     }}
-
+                                />
+                            </Card>
+                            <Card title="Permisos del Usuario">
+                                <UserForm
+                                    type='edit'
+                                    onSubmit={(values) => {
+                                        return _updateUser(values);
+                                    }}
                                 />
                             </Card>
                         </div>

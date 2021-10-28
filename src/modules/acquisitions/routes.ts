@@ -2,6 +2,8 @@ import { IRoute } from "../../utils/components/app_router/custom_types";
 import Registers from './views/Registers/Registers';
 // import store from './../../config/store';
 import {
+
+
     CreateProject,
     CreateRealEstate,
     DetailRealEstate,

@@ -39,16 +39,11 @@ const getUsers = async ({
 }
 
 const createUser = async (
-    username: string,
-    id_rol: number
+    data: any
 ): Promise<IUserAttributes | string > => {
     try {
         let URI = `/users`;
-        let res: AxiosResponse<IUserResponse> = await http.post(URI, {
-            username,
-            id_rol
-        });
-
+        let res: AxiosResponse<IUserResponse> = await http.post(URI, data);
         await swal.fire("Usuario Creado", res.data.message, "success");
         return res.data.results;
     } catch (error) {

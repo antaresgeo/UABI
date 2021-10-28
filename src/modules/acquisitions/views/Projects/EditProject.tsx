@@ -20,10 +20,10 @@ interface IProps {
 }
 
 const DetailProject = ({ view }: IProps) => {
-    const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
 
+    const { id } = useParams<IParams>();
     const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
 
     const _updateProject = async (projectForm) => {

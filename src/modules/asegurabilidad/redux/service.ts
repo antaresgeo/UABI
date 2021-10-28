@@ -10,11 +10,13 @@ import {
 // Services: POST
 const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
     try {
+
         let URI = `/insurabilities`;
-        console.log(data);
+        // console.log(data);
         let res: AxiosResponse<IPolicyResponse> = await http.post(URI, data);
-        await swal.fire('poliza creada', res.data.message, 'success');
+        await swal.fire("poliza creada", res.data.message, "success");
         return res.data.results;
+
     } catch (error) {
         console.error(error);
         await swal.fire('Error', '', 'error');

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux';
 import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
@@ -66,7 +66,6 @@ const Registers = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    );}
 
-export default Registers;
+export default Registers
