@@ -16,7 +16,6 @@ export default function SignIn() {
     async function ingresarUsuario() {
         // try {
         //     let res: AxiosResponse<any> | any = await signIn(idusuario, contraseña);
-        //     console.log(res);
 
         //     if (res.status === 200) {
         //         localStorage.setItem("token", res.data);
@@ -31,7 +30,6 @@ export default function SignIn() {
         //     console.error(error);
         // }
         const auth = authenticationUme();
-        console.log(auth);
     }
 
     const handleAltVisibility = () => {

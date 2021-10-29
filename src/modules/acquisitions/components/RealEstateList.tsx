@@ -37,9 +37,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
             await dispatch(actions.deleteRealEstate(id));
             await dispatch(actions.getRealEstates({}));
             // const _res: any = await dispatch(actions.deleteProject(id));
-            // console.log(_res);
 
-            // console.log(_res.message);
 
             // swal.fire({
             //     title: "Proyecto Inactivado",

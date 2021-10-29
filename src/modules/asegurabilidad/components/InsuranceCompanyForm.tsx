@@ -1,30 +1,43 @@
 import { FC } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { IProjectAttributes } from '../../../utils/interfaces/';
+// import { IInsuranceCompanyAttributes } from '../../../utils/interfaces/';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
 
-interface ProjectFormPros {
-    project?: IProjectAttributes;
+export interface IInsuranceCompanyAttributes {
+    id?: number | string;
+    name: string;
+    nit: string;
+    phone: string;
+    audit_trail?: {
+        created_by: string;
+        created_on: string;
+        updated_by?: any;
+        updated_on?: any;
+        updated_values?: any;
+    };
+}
+
+interface InsuranceCompanyFormPros {
+    insurance_company?: IInsuranceCompanyAttributes;
     onSubmit?: (values, form?) => Promise<any>;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
 }
-const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type }) => {
-    const initial_values: IProjectAttributes = project || {
+
+const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company, onSubmit, disabled, type }) => {
+    const initial_values = {
         id: '',
         name: '',
-        description: '',
-        dependency: '',
-        status: -1,
+        nit: '',
+        phone: '',
+        ...insurance_company,
     };
 
     const schema = Yup.object().shape({
-        name: Yup.string().required('Campo obligatorio').max(200, 'El nombre debe tener maximo 200 caracteres'),
-        description: Yup.string()
-            .required('Campo obligatorio')
-            .max(1000, 'La Descripción debe tener maximo 1000 caracteres'),
-        dependency: Yup.string().required('Campo obligatorio'),
+        name: Yup.string().required('Campo obligatorio'),
+        nit: Yup.string().required('Campo obligatorio'),
+        phone: Yup.string().required('Campo obligatorio'),
     });
 
     const submit = (values, form) => {
@@ -38,8 +51,8 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                 return (
                     <Form>
                         <div className="row">
-                            {project && (
-                                <div className="col-4">
+                            {insurance_company && (
+                                <div className="col-3">
                                     <label htmlFor="id_id" className="form-label">
                                         Código
                                     </label>
@@ -55,63 +68,52 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                     <ErrorMessage name="id" />
                                 </div>
                             )}
-                            <div className={`col-${project ? 4 : 6}`}>
+                            <div className={`col-${insurance_company ? 9 : 12}`}>
                                 <label htmlFor="name_id" className="form-label">
-                                    Nombre
+                                    Nombre de la empresa
                                 </label>
                                 <Field
                                     type="text"
                                     className="form-control"
                                     id="name_id"
-                                    aria-describedby="nombre del projecto"
 
                                     name="name"
                                     autoComplete="off"
                                     disabled={disabled}
-                                    maxLength={201}
                                 />
                                 <ErrorMessage name="name" />
                             </div>
-                            <div className={`col-${project ? 4 : 6}`}>
-                                <label htmlFor="dependency_id" className="form-label">
-                                    Dependecia
-                                </label>
-                                <Field
-                                    className="form-select"
-                                    aria-label="Default select example"
-                                    as="select"
-                                    name="dependency"
-                                    id="dependency_id"
-                                    autoComplete="off"
-                                    disabled={disabled}
-                                >
-                                    <option value="" disabled hidden>
-                                        Selecciona una Destinación
-                                    </option>
-                                    <option value="Dependencia Infraestructura">Dependencia Infraestructura</option>
-                                    <option value="Dependencia Salud">Dependencia Salud</option>
-                                    <option value="Dependencia Educación">Dependencia Educación</option>
-                                </Field>
-                                <ErrorMessage name="dependency" />
-                            </div>
                         </div>
                         <div className="row">
-                            <div className="col">
-                                <label htmlFor="description_id" className="form-label">
-                                    Descripción
+                            <div className="col-6">
+                                <label htmlFor="nit_id" className="form-label">
+                                    NIT
                                 </label>
                                 <Field
-                                    as="textarea"
+                                    className="form-control"
+                                    type="text"
+                                    name="nit"
+                                    id="nit_id"
+                                    autoComplete="off"
+                                    disabled={disabled}
+                                    maxLength={20}
+                                />
+                                <ErrorMessage name="nit" withCount max={20}/>
+                            </div>
+                            <div className="col-6">
+                                <label htmlFor="description_id" className="form-label">
+                                    Teléfono
+                                </label>
+                                <Field
+                                    type="text"
                                     className="form-control"
                                     id="description_id"
-                                    aria-describedby="emailHelp"
-                                    placeholder="Descripción del Proyecto"
-                                    name="description"
+                                    name="phone"
                                     disabled={disabled}
                                     autoComplete="off"
-                                    maxLength={1000}
+                                    maxLength={20}
                                 />
-                                <ErrorMessage name="description" withCount max={1000} />
+                                <ErrorMessage name="phone" withCount max={20}/>
                             </div>
                         </div>
                         <div className="row justify-content-end">
@@ -130,7 +132,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
     );
 };
 
-ProjectForm.defaultProps = {
+InsuranceCompanyForm.defaultProps = {
     onSubmit: (v) => Promise.resolve(),
 };
-export default ProjectForm;
+export default InsuranceCompanyForm;

@@ -11,7 +11,6 @@ const CreateUser = () => {
     const history = useHistory();
 
     const createUser = async (dataPolicy) => {
-        console.log(dataPolicy)
         await dispatch(actions.createUser(dataPolicy));
     };
 

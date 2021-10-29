@@ -46,9 +46,7 @@ export const withSuspense = (props: any, dr: any, suspense: boolean = true): FC<
             }
         }
         /*
-            else if (render) {
-            console.log("this have a render", render);
-        }
+            else if (render) {}
          */
         return dr;
     };

@@ -141,3 +141,19 @@
 .ant-select-selection-overflow {
     padding: 1px;
 }
+
+.ant-upload-list-item-card-actions {
+    display: none;
+}
+
+.deck {
+    display: none;
+    &.active {
+        display: block;
+        position: absolute;
+        z-index: 200;
+        height: 100%;
+        width: 100%;
+        background: rgba(205, 218, 229, 0.7);
+    }
+}

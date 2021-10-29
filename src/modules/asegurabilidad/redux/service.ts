@@ -12,7 +12,6 @@ const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
     try {
 
         let URI = `/insurabilities`;
-        // console.log(data);
         let res: AxiosResponse<IPolicyResponse> = await http.post(URI, data);
         await swal.fire("poliza creada", res.data.message, "success");
         return res.data.results;
@@ -53,7 +52,6 @@ export const getPolicy = async (
 
 // Services: PUT
 export const updatePolicy = async (data: any, id: number) => {
-    console.log(data);
     try {
         let URI = `/insurabilities`;
         let res: AxiosResponse<IPolicyResponse> = await http.put(URI, data, {

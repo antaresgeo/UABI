@@ -9,14 +9,33 @@ import TemplateProvider from './utils/components/template/template_context';
 
 declare global {
     interface Window {
+        __uabi: {
+            cancel_mapper?: Object;
+            number_formatter: Intl.NumberFormat;
+            is_in_refresh: boolean;
+            retry_pending: Array<any>;
+            date_format: string;
+        }
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: Function;
-        cancel_mapper?: Object;
-        number_formatter: Intl.NumberFormat;
-        is_in_refresh: boolean;
-        retry_pending: Array<any>;
-        date_format: string;
+
     }
 }
+
+if (!window.__uabi) {
+    window.__uabi = {
+        cancel_mapper: {},
+        is_in_refresh: false,
+        retry_pending: [],
+        date_format: "YYYY-MM-DD",
+        number_formatter: new Intl.NumberFormat("es-CO", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        })
+    };
+}
+
+
+// borrar esto cuando se termine la autenticacion
 
 ReactDOM.render(
     // <React.StrictMode>

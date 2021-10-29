@@ -1,30 +1,30 @@
 import { useEffect, useState /*, useState*/ } from 'react';
-import { IProjectAttributes /*, IProjectsResponse*/ } from '../../../../utils/interfaces';
-// import ItemProject from "../../components/ItemProject";
+// import { IInsuranceCompanyAttributes /*, IInsuranceCompaniesResponse*/ } from '../../../../utils/interfaces';
+// import ItemInsuranceCompany from "../../components/ItemInsuranceCompany";
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 import { formatDate, swal } from '../../../../utils';
 
-const Projects = () => {
+const InsuranceCompanies = () => {
     const dispatch = useDispatch();
-    const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
-    const loading: boolean = useSelector((states: any) => states.acquisitions.projects.loading);
-    const { total_results } = useSelector((store: any) => store.acquisitions.projects.pagination);
+    // const insurance_companies: IInsuranceCompanyAttributes[] = useSelector((states: any) => states.insurabilities.insurance_companies.value);
+    // const loading: boolean = useSelector((store: any) => store.insurabilities.insurance_companies.loading);
+    // const { total_results } = useSelector((store: any) => store.insurabilities.insurance_companies.pagination);
     const [query, set_query] = useState<string>('');
 
     const filter = () => {
-        dispatch(actions.getProjects({ page: 1, q: query }));
+        // dispatch(actions.getInsuranceCompanies({ page: 1, q: query }));
     };
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.getProjects({ page, pageSize, q: query }));
+        // dispatch(actions.getInsuranceCompanies({ page, pageSize, q: query }));
     };
 
-    const deleteProject = (id) => async () => {
+    const deleteInsuranceCompany = (id) => async () => {
         let res: any;
         if (id !== '' && id !== undefined) {
-            res = await dispatch(actions.getRealEstatesByProject(id));
+            // res = await dispatch(actions.getRealEstatesByInsuranceCompany(id));
         }
         if (res.length !== 0) {
             const result = await swal.fire({
@@ -48,8 +48,8 @@ const Projects = () => {
                     denyButtonText: `Cancelar`,
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        await dispatch(actions.deleteProject(id));
-                        await dispatch(actions.getProjects());
+                        // await dispatch(actions.deleteInsuranceCompany(id));
+                        // await dispatch(actions.getInsuranceCompanies());
                         // swal.fire({
                         //     title: "Proyecto Inactivado",
                         //     text: message,
@@ -76,11 +76,9 @@ const Projects = () => {
             });
 
             if (result.isConfirmed) {
-                await dispatch(actions.deleteProject(id));
-                await dispatch(actions.getProjects());
-                // const _res: any = await dispatch(actions.deleteProject(id));
-
-
+                // await dispatch(actions.deleteInsuranceCompany(id));
+                // await dispatch(actions.getInsuranceCompanies());
+                // const _res: any = await dispatch(actions.deleteInsuranceCompany(id));
                 // swal.fire({
                 //     title: "Proyecto Inactivado",
                 //     text: message,
@@ -106,16 +104,14 @@ const Projects = () => {
             align: 'center' as 'center',
         },
         {
-            title: 'Dependencia',
-            dataIndex: 'dependency',
+            title: 'Nit',
+            dataIndex: 'nit',
             align: 'center' as 'center',
         },
         {
-            title: 'Fecha Creación',
-            dataIndex: 'audit_trail',
+            title: 'Telefono',
+            dataIndex: 'phone',
             align: 'center' as 'center',
-
-            render: (audit_trail) => formatDate(audit_trail?.created_on),
         },
         {
             title: 'Creado por',
@@ -128,28 +124,13 @@ const Projects = () => {
             fixed: true,
             children: [
                 {
-                    title: 'Ver',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/acquisitions/projects/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
                     title: 'Editar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <Link
-                                to={`/acquisitions/projects/edit/${id}/`}
+                                to={`/insurabilities/company/edit/${id}/`}
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-pencil" aria-hidden="true" />}
@@ -163,7 +144,7 @@ const Projects = () => {
                     align: 'center' as 'center',
                     render: (id) => {
                         return (
-                            <div className="text-danger" onClick={deleteProject(id)}>
+                            <div className="text-danger" onClick={deleteInsuranceCompany(id)}>
                                 <i className="fa fa-trash" aria-hidden="true" />
                             </div>
                         );
@@ -174,7 +155,7 @@ const Projects = () => {
     ];
 
     useEffect(() => {
-        dispatch(actions.getProjects());
+        // dispatch(actions.getInsuranceCompanies());
     }, []);
 
     return (
@@ -182,8 +163,8 @@ const Projects = () => {
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card
-                        title="Administrar Proyectos"
-                        extra={<Link to="/acquisitions/projects/create/" name="Crear" iconText="+" />}
+                        title="Empresas Aseguradoras"
+                        extra={<Link to="/insurabilities/company/create/" name="Crear" iconText="+" />}
                     >
                         <form>
                             <div className="row justify-content-between">
@@ -213,11 +194,11 @@ const Projects = () => {
                         </form>
                         <UiTable
                             columns={table_columns}
-                            items={projects}
+                            items={[]}
                             with_pagination
                             change_page={change_page}
-                            count={total_results}
-                            loading={loading}
+                            // count={total_results}
+                            // loading={loading}
                         />
                     </Card>
                 </div>
@@ -226,4 +207,4 @@ const Projects = () => {
     );
 };
 
-export default Projects;
+export default InsuranceCompanies;
