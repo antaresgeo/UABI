@@ -20,14 +20,27 @@ const table_columns = [
         align: "center" as "center",
     },
     {
-        title: "Proyecto",
-        dataIndex: "",
-        align: "center" as "center",
-    },
-    {
         title: "Bien Inmueble",
         dataIndex: "real_estate_id",
         align: "center" as "center",
+    },
+    {
+        title: "Estado",
+        dataIndex: "status_name",
+        align: "center" as "center",
+    },
+
+    {
+        title: "Fecha de Póliza",
+        dataIndex: "audit_trail",
+        align: "center" as "center",
+        render: (dates) => formatDate(dates?.created_on),
+    },
+    {
+        title: "Creada por",
+        dataIndex: "audit_trail",
+        align: "center" as "center",
+        render: (data) => data.created_by,
     },
     {
         title: 'Acciones',

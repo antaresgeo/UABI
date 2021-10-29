@@ -4,7 +4,8 @@ import { Card } from '../../../utils/ui';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import LocationModal from '../../../utils/components/LocationModal';
 import { Formik, Form, Field } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import ProjectModal from './../../acquisitions/components/ProjectModal';
 
 interface IUserFormPros {
     user?: IUserAttributes;
@@ -16,7 +17,9 @@ interface IUserFormPros {
 
 
 const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
+    const history = useHistory();
     const initial_values: IUserAttributes = {
+        id: 0,
         society_type: '',
         entity_type: '',
         id_type: '',
@@ -35,6 +38,9 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
         });
+    }
+    const hanleOnclick = () => {
+        history.push(`/users/edit/${initial_values.id}`)
     }
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} >
@@ -281,6 +287,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     <button
                                         className="btn btn-primary my-3"
                                         disabled={isSubmitting || disabled}
+                                        onClick={hanleOnclick}
                                     >
                                         Guardar
                                     </button>

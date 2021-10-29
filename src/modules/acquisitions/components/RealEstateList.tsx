@@ -94,7 +94,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
             ? [
                   {
                       title: 'Estado',
-                      dataIndex: 'status',
+                      dataIndex: 'status_name',
                       align: 'center' as 'center',
                   },
               ]
