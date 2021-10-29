@@ -4,13 +4,23 @@ import Policies from './views/Policies';
 import CreateInsurability from './views/CreatePolicy';
 import DetailInsurability from './views/DetailPolicies';
 import EditPolicy from './views/EditPolicy';
+import { Permit } from '../..';
+
+export const guards = {
+    create: (props?) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const { permits } = user;
+        return permits.includes( Permit.CREATE_PROJECT );
+    },
+
+}
 
 const get_routes = (): IRoute[] => {
     return [
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.create,
             path: '/insurabilities/policy',
             template_props: {
                 breadcrumbs: [{ name: 'Polizas' }],

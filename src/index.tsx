@@ -17,6 +17,53 @@ declare global {
         date_format: string;
     }
 }
+export enum Role {
+    ADMINISTRATOR = 'Administrador',
+    SUPERVISOR = 'Supervisor',
+    ACQUISITION = 'Adquisiciones',
+    UABI = 'UABI',
+    INSURABILITY = 'Asegurabilidad',
+    INSPECTION = 'Inspeccion',
+    PROVISION = 'Disposicion',
+    SUPERVISION = 'Supervision',
+    MAINTENANCE = 'Mantenimiento',
+    BILLING = 'Facturacion',
+
+}
+
+
+export enum Permit {
+    CREATE_USER = 'createUser',
+    DETAIL_USER = 'detail_user',
+    UPDATE_USER = 'update_user',
+    DELETE_USER = 'delete_user',
+    CREATE_POLICY = 'create_policy',
+    DETAIL_POLICY = 'detail_policy',
+    UPDATE_POLICY = 'update_policy',
+    CREATE_PROJECT = 'create_project',
+    DETAIL_PROJECT = 'detail_project',
+    UPDATE_PROJECT = 'update_project',
+    DELETE_PROJECT = 'delete_project',
+    CREATE_REALESTATE = 'create_realEstate',
+    DETAIL_REALESTATE = 'detail_realEstate',
+    UPDATE_REALESTATE = 'update_realEstate',
+    DELETE_REALESTATE = 'delete_realEstate'
+}
+
+
+const user = {
+    role: Role.ADMINISTRATOR,
+    permits: [Permit.CREATE_PROJECT, Permit.CREATE_REALESTATE, Permit.CREATE_USER, Permit.CREATE_POLICY]
+
+}
+
+// const user = {
+//     role: Role.INSURABILITY,
+//     permits: Permit.CREATE_POLICY
+
+// }
+
+localStorage.setItem('user', JSON.stringify(user));
 
 ReactDOM.render(
     // <React.StrictMode>
