@@ -33,8 +33,6 @@ const EditUser = ({view }: IProps) => {
                 id
             )
         );
-
-        console.log(res);
         await swal('Usuario actualizado', res.data.message, 'success');
         history.push(`/users/${user.id}`);
     };

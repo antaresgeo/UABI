@@ -1,12 +1,12 @@
-import { Card } from '../../../utils/ui';
+import { Card } from '../../../../utils/ui';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { IPolicyAttributes } from '../../../utils/interfaces/insurability';
+import { IPolicyAttributes } from '../../../../utils/interfaces/insurability';
 import { useEffect } from 'react';
-import { actions } from '../redux';
-import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
-import { getRealEstates } from "../../acquisitions/redux/actions/realEstates";
-import PolizaForm from '../components/PolizaForm';
+import { actions } from '../../redux';
+import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
+import { getRealEstates } from "../../../acquisitions/redux/actions/realEstates";
+import PolizaForm from '../../components/PolizaForm';
 import { useHistory } from 'react-router-dom';
 
 
@@ -18,7 +18,7 @@ const DetailInsurability = () => {
     const dispatch = useDispatch();
 
     const { id } = useParams<IParams>();
-    const policy: IPolicyAttributes = useSelector((store: any) => store.asegurabilty.policy.value);
+    const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
     const realEstate: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     useEffect(() => {
         //dispatch(getRealEstates({}));
@@ -26,7 +26,6 @@ const DetailInsurability = () => {
     }, [])
 
     const getPolicy = async (dataPolicy) => {
-        console.log(dataPolicy);
         const action = actions.getPolicy(id);
         await dispatch(action);
 

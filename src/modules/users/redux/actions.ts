@@ -5,7 +5,6 @@ import { request_dispatch } from "../../../utils";
 // const example = (filters = {}) =>
 //     request_dispatch(types.example_type, service.example_service(filters));
 const getUser = (id: number) =>{
-    console.log(id)
     return request_dispatch(types.user, service.getUser(id));}
 
 const getUsers = (filters: {

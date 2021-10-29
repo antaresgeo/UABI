@@ -1,12 +1,12 @@
 // export {default as Insurability} from './CreatePolicy';
 import { useDispatch } from 'react-redux';
-import { IPolicyAttributes } from '../../../utils/interfaces/insurability';
+import { IPolicyAttributes } from '../../../../utils/interfaces/insurability';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-import { formatDate } from '../../../utils';
-import { actions } from '../redux';
-import { Link, Card, Table as UiTable } from '../../../utils/ui';
+import { formatDate } from '../../../../utils';
+import { actions } from '../../redux';
+import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 
 const table_columns = [
     {
@@ -99,7 +99,7 @@ const table_columns = [
 
 const Policies = () => {
     const dispatch = useDispatch();
-    const policies: IPolicyAttributes[] = useSelector((store: any) => store.asegurabilty.policies.value);
+    const policies: IPolicyAttributes[] = useSelector((store: any) => store.insurability.policies.value);
 
     useEffect(() => {
         dispatch(actions.getPolicies());

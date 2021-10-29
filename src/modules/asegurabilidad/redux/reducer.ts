@@ -55,7 +55,6 @@ const emptyInitialState: any = {
 const initialState = emptyInitialState;
 
 const reducer = (state: any = initialState, action: any): any => {
-    // console.log(action.payload)
     switch (action.type) {
         case types.policy.default: {
             return {

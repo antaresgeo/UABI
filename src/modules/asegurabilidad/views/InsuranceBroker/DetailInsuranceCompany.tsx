@@ -1,47 +1,33 @@
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom';
-import { actions } from '../redux';
-import { useDispatch, useSelector } from 'react-redux';
-import { IUserAttributes } from './../../../utils/interfaces/users';
-import { useHistory } from 'react-router-dom';
-import { Card } from '../../../utils/ui';
-import GeneralForm from './../components/GerenalForm';
+import { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from '../../redux';
+import { Card, Link } from '../../../../utils/ui';
+import InsuranceBrokerForm from '../../components/InsuranceBrokerForm';
 
 interface IParams {
-
     id: string;
 }
 
-const DetailUser = () => {
+const DetailInsuranceBroker = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
     const history = useHistory();
-    const user: IUserAttributes = useSelector((states: any) => states.users.value);
+
+    // const insurance_broker: IInsuranceBrokerAttributes = useSelector((states: any) => states.insurabilities.insurance_broker.value);
 
     useEffect(() => {
-        dispatch(actions.getUser(parseInt(id)));
+        // dispatch(actions.getInsuranceBroker(id));
     }, []);
 
-    const getUser = async (dataPolicy) => {
-        const action = actions.getUser(parseInt(id));
-        await dispatch(action);
-
-    }
-    const initial_values = {}
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card title="información Usuario">
-                                <GeneralForm
-                                    type="create"
-                                    disabled
-                                    onSubmit={(values) => {
-                                        return getUser(values);
-                                    }}
-                                />
+                            <Card title={<>{/*<b>Proyecto:</b> {insurance_broker?.name}*/}</>}>
+                                <InsuranceBrokerForm disabled type="view" />
                             </Card>
                         </div>
                     </div>
@@ -63,8 +49,7 @@ const DetailUser = () => {
                 <div className="flex-fill" />
             </div>
         </div>
+    );
+};
 
-    )
-}
-
-export default DetailUser
+export default DetailInsuranceBroker;

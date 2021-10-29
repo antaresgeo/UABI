@@ -2,7 +2,7 @@
 import { FC } from 'react';
 import { Card } from '../../../utils/ui';
 import { IUserAttributes } from '../../../utils/interfaces/users';
-import LocationModal from '../../../utils/components/LocationModal';
+import LocationModal from '../../../utils/components/Location/LocationModal';
 import { Formik, Form, Field } from 'formik';
 import { Link, useHistory } from 'react-router-dom';
 import ProjectModal from './../../acquisitions/components/ProjectModal';

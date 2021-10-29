@@ -6,10 +6,10 @@ import { actions } from '../../redux';
 import { useSelector, useDispatch } from 'react-redux';
 
 // INTERFACES
-import { IProjectAttributes } from '../../../../utils/interfaces';
+// import { IInsuranceBrokerAttributes } from '../../../../utils/interfaces';
 import swal from 'sweetalert';
 import { Card } from '../../../../utils/ui';
-import ProjectForm from '../../components/ProjectForm';
+import InsuranceBrokerForm from '../../components/InsuranceBrokerForm';
 
 interface IParams {
     id: string;
@@ -19,27 +19,28 @@ interface IProps {
     view?: string;
 }
 
-const DetailProject = ({ view }: IProps) => {
+const EditInsuranceBroker = ({ view }: IProps) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
     const { id } = useParams<IParams>();
-    const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
+    // const insurance_broker: IInsuranceBrokerAttributes = useSelector((states: any) => states.insurabilities.insurance_broker.value);
 
-    const _updateProject = async (projectForm) => {
+    const _updateInsuranceBroker = async (InsuranceBrokerForm) => {
         let res: any;
-        res = await dispatch(
-            actions.updateProject(
-                { name: projectForm.name, description: projectForm.description, dependency: projectForm.dependency },
-                id
-            )
-        );
+        // res = await dispatch(
+        //     actions.updateInsuranceBroker(
+        //         { name: InsuranceBrokerForm.name, description: InsuranceBrokerForm.description, dependency: InsuranceBrokerForm.dependency },
+        //         id
+        //     )
+        // );
+
         await swal('Proyecto actualizado', res.data.message, 'success');
-        history.push(`/acquisitions/projects/${project.id}`);
+        // history.push(`/insurabilities/broker/${insurance_broker.id}`);
     };
 
     useEffect(() => {
-        dispatch(actions.getProject(id));
+        // dispatch(actions.getInsuranceBroker(id));
     }, []);
 
     return (
@@ -48,17 +49,11 @@ const DetailProject = ({ view }: IProps) => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card
-                                title={
-                                    <>
-                                        <b>Proyecto:</b> {project?.name}
-                                    </>
-                                }
-                            >
-                                <ProjectForm
-                                    project={project}
+                            <Card title={<>{/*<b>Proyecto:</b> {insurance_broker?.name}*/}</>}>
+                                <InsuranceBrokerForm
                                     onSubmit={(values) => {
-                                        return _updateProject(values);
+                                        // return _updateInsuranceBroker(values);
+                                        return Promise.resolve();
                                     }}
                                 />
                             </Card>
@@ -85,4 +80,4 @@ const DetailProject = ({ view }: IProps) => {
     );
 };
 
-export default DetailProject;
+export default EditInsuranceBroker;
