@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Field, ErrorMessage } from 'formik';
 import { Card } from '../../../../utils/ui';
-import LocationModal from '../../../../utils/components/LocationModal';
+import LocationModal from '../../../../utils/components/Location/LocationModal';
 import { service } from '../../redux';
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { extractMonth, formatDate } from '../../../../utils';

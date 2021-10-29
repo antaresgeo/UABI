@@ -11,7 +11,6 @@ import RealEstateForm from '../../components/RealEstateForm';
 const RealEstate = () => {
     const history: any = useHistory();
     const dispatch = useDispatch();
-    console.log(history.location.state?.project_id);
     const [project_id, set_project_id] = useState(history.location.state?.project_id);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
@@ -53,7 +52,6 @@ const RealEstate = () => {
         if (project_id !== value) {
             set_project_id(value);
             if (value) {
-                console.log(value);
                 dispatch(actions.getRealEstatesByProject(value));
             }
         }

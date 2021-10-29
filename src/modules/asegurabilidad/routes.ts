@@ -1,9 +1,20 @@
 // import store from "../../config/store";
 import { IRoute } from '../../utils/components/app_router/custom_types';
-import Policies from './views/Policies';
-import CreateInsurability from './views/CreatePolicy';
-import DetailInsurability from './views/DetailPolicies';
-import EditPolicy from './views/EditPolicy';
+
+import Policies from './views/Policies/Policies';
+import CreateInsurability from './views/Policies/CreatePolicy';
+import DetailInsurability from './views/Policies/DetailPolicies';
+import EditPolicy from './views/Policies/EditPolicy';
+
+import InsuranceCompanies from './views/InsuranceCompany';
+import CreateInsuranceCompany from './views/InsuranceCompany/CreateInsuranceCompany';
+import DetailInsuranceCompany from './views/InsuranceCompany/DetailInsuranceCompany';
+import EditInsuranceCompany from './views/InsuranceCompany/EditInsuranceCompany';
+
+import InsuranceBrokers from "./views/InsuranceBroker";
+import EditInsuranceBroker from "./views/InsuranceBroker/EditInsuranceCompany";
+import DetailInsuranceBroker from "./views/InsuranceBroker/DetailInsuranceCompany";
+import CreateInsuranceBroker from "./views/InsuranceBroker/CreateInsuranceCompany";
 
 const get_routes = (): IRoute[] => {
     return [
@@ -21,7 +32,7 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/insurability/policy/create/',
+            path: '/insurabilities/policy/create/',
             template_props: {
                 breadcrumbs: [
                     { name: 'Poliza', to: '/insurabilities/policy' },
@@ -35,7 +46,7 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/insurability/policy/:id/',
+            path: '/insurabilities/policy/:id/',
             component: DetailInsurability,
             template_props: {
                 breadcrumbs: [
@@ -48,7 +59,7 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/insurability/policy/edit/:id/',
+            path: '/insurabilities/policy/edit/:id/',
             template_props: {
                 breadcrumbs: [
                     { name: 'Poliza', to: '/insurabilities/policy' },
@@ -56,6 +67,126 @@ const get_routes = (): IRoute[] => {
                 ],
             },
             component: EditPolicy,
+        },
+
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/insurabilities/company/',
+            template_props: {
+                breadcrumbs: [{ name: 'Empresas Aseguradoras' }],
+            },
+            component: InsuranceCompanies,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/insurabilities/company/create/',
+            template_props: {
+                breadcrumbs: [
+                    {
+                        name: 'Empresas Aseguradoras',
+                        to: '/insurabilities/company/',
+                    },
+                    { name: 'Crear' },
+                ],
+            },
+
+            component: CreateInsuranceCompany,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/insurabilities/company/:id/',
+            component: DetailInsuranceCompany,
+            template_props: {
+                breadcrumbs: [
+                    {
+                        name: 'Empresas Aseguradoras',
+                        to: '/insurabilities/company/',
+                    },
+                    { name: 'Detalle' },
+                ],
+            },
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/insurabilities/company/edit/:id/',
+            template_props: {
+                breadcrumbs: [
+                    {
+                        name: 'Empresas Aseguradoras',
+                        to: '/insurabilities/company/',
+                    },
+                    { name: 'Editar' },
+                ],
+            },
+            component: EditInsuranceCompany,
+        },
+
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/insurabilities/broker/',
+            template_props: {
+                breadcrumbs: [{ name: 'Empresas Aseguradoras' }],
+            },
+            component: InsuranceBrokers,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/insurabilities/broker/create/',
+            template_props: {
+                breadcrumbs: [
+                    {
+                        name: 'Empresas Aseguradoras',
+                        to: '/insurabilities/broker/',
+                    },
+                    { name: 'Crear' },
+                ],
+            },
+
+            component: CreateInsuranceBroker,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/insurabilities/broker/:id/',
+            component: DetailInsuranceBroker,
+            template_props: {
+                breadcrumbs: [
+                    {
+                        name: 'Empresas Aseguradoras',
+                        to: '/insurabilities/broker/',
+                    },
+                    { name: 'Detalle' },
+                ],
+            },
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/insurabilities/broker/edit/:id/',
+            template_props: {
+                breadcrumbs: [
+                    {
+                        name: 'Empresas Aseguradoras',
+                        to: '/insurabilities/company/',
+                    },
+                    { name: 'Editar' },
+                ],
+            },
+            component: EditInsuranceBroker,
         },
     ];
 };

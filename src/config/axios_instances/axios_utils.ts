@@ -1,10 +1,7 @@
-import axios from 'axios';
-import { FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from './index';
-// import store, { AppDispatch } from "../../store";
-import { swal } from '../../utils';
-
-const BASE_URL = `${process.env.REACT_APP_URI_SERVICE_AUTH}`;
-const API_URL = `${BASE_URL}${process.env.REACT_APP_API_AUTH_VERSION}`;
+import axios from "axios";
+import {FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED} from "./index";
+import {swal} from "../../utils";
+import {http} from "./documents";
 
 const response_error_interceptor = (error: any) => {
     if (!axios.isCancel(error)) {
@@ -34,18 +31,6 @@ const response_error_interceptor = (error: any) => {
     }
 };
 
-export const http = axios.create({
-    baseURL: API_URL,
-});
-http.interceptors.request.use((config) => {
-    const token = localStorage.getItem('_tk_');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-});
-http.interceptors.response?.use(undefined, response_error_interceptor);
-
 const compute_token = (token: string) => `Bearer ${token}`;
 
 const get_on_hold = (original_config: any) => {
@@ -73,21 +58,6 @@ const validate_refresh = (original_config: any) => {
     window.__uabi.is_in_refresh = true;
     return original_config;
 };
-
-// const processQueue = ({ error = null, token = null }) => {
-//     if (window.__uabi.retry_pending.length) {
-//         window.__uabi.retry_pending.forEach((prom) => {
-//             if (error) {
-//                 prom.reject(error);
-//             } else if (token) {
-//                 prom.resolve(token);
-//             } else {
-//                 prom.reject(null);
-//             }
-//         });
-//         window.__uabi.retry_pending = [];
-//     }
-// };
 
 const onUnauthorized = (original_error: any) => {
     let original_config = original_error.config;
@@ -141,3 +111,23 @@ const onForbidden = (original_error: any) => {
     }
     return Promise.reject(original_error);
 };
+
+
+
+
+// const processQueue = ({ error = null, token = null }) => {
+//     if (window.__uabi.retry_pending.length) {
+//         window.__uabi.retry_pending.forEach((prom) => {
+//             if (error) {
+//                 prom.reject(error);
+//             } else if (token) {
+//                 prom.resolve(token);
+//             } else {
+//                 prom.reject(null);
+//             }
+//         });
+//         window.__uabi.retry_pending = [];
+//     }
+// };
+
+export default response_error_interceptor;

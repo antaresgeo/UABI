@@ -24,9 +24,8 @@ import {
 
 export const create_realEstate = () => {
     /*const user = */
-    //console.log(store.getState().users);
+
     //store.getState().users.user.value[0].id_rol
-    //console.log( user.hasOwnProperty("") );
 }
 const get_routes = (): IRoute[] => {
     create_realEstate();

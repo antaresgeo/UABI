@@ -1,11 +1,11 @@
 import axios from 'axios';
-import response_error_interceptor from './axios_utils';
+import response_error_interceptor from "./axios_utils";
 
-const BASE_URL_LOCATION = `${process.env.REACT_APP_URI_SERVICE_LOCATION}`;
-const API_URL_LOCATION = `${BASE_URL_LOCATION}${process.env.REACT_APP_API_LOCATION_VERSION}`;
+const BASE_URL_DOCUMENTS = `${process.env.REACT_APP_URI_SERVICE_DOCUMENTS}`;
+const API_URL_DOCUMENTS = `${BASE_URL_DOCUMENTS}${process.env.REACT_APP_API_DOCUMENTS_VERSION}`;
 
 export const http = axios.create({
-    baseURL: API_URL_LOCATION,
+    baseURL: API_URL_DOCUMENTS,
 });
 
 http.interceptors.request.use((config) => {
@@ -17,3 +17,12 @@ http.interceptors.request.use((config) => {
 });
 
 http.interceptors.response?.use(undefined, response_error_interceptor);
+
+
+
+
+
+
+
+
+
