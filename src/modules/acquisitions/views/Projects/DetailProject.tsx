@@ -6,6 +6,7 @@ import { actions } from '../../redux';
 import { Card, Link } from '../../../../utils/ui';
 import RealEstateList from '../../components/RealEstateList';
 import ProjectForm from '../../components/ProjectForm';
+import ProjectModal from './../../components/ProjectModal';
 
 interface IParams {
     id: string;
@@ -71,6 +72,8 @@ const DetailProject = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <ProjectModal />
+
             </div>
         </div>
     );

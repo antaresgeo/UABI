@@ -139,7 +139,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled,ty
                             {realEstates?.map((realEstates, i) => {
                                 const { name, id } = realEstates;
                                 return (
-                                    <option key={`project_${i}`} value={id}>
+                                    <option key={`project_${i}`} value={name}>
                                         {name.toUpperCase()}
                                     </option>
                                 );
