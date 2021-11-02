@@ -48,12 +48,13 @@ const DetailProject = ({ view }: IProps) => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
+                        <h5 style={{ fontWeight: 600, marginLeft: 20 }}>
+                                <>
+                                    Proyecto: {project?.name}
+                                </>
+                            </h5>
                             <Card
-                                title={
-                                    <>
-                                        <b>Proyecto:</b> {project?.name}
-                                    </>
-                                }
+                                title="Información del Proyecto"
                             >
                                 <ProjectForm
                                     project={project}

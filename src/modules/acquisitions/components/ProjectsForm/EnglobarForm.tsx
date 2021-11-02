@@ -207,7 +207,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="active_code_id" className="form-label">
-                        Codigo Activo
+                        Código Activo
                     </label>
                     <Field
                         disabled={disabled}
@@ -303,7 +303,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="reconstruction_value_id" className="form-label">
-                        Valor de reconstruccion
+                        Valor de reconstrucción
                     </label>
                     <div className="input-group">
                         <div className="input-group-prepend">
@@ -323,7 +323,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="total_area_id" className="form-label">
-                        Area Total
+                        Área Total
                     </label>
                     <div className="input-group">
                         <Field
@@ -369,7 +369,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
             <div className="row">
                 <div className="form-group col-6">
                     <label htmlFor="material_id" className="form-label">
-                        Materiales de construccion
+                        Materiales de construcción
                     </label>
                     <Field
                         component={Select}

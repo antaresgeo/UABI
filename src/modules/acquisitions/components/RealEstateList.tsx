@@ -58,7 +58,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
             align: 'center' as 'center',
         },
         {
-            title: 'Matricula',
+            title: 'Matrícula',
             dataIndex: 'registry_number',
             align: 'center' as 'center',
         },
@@ -132,13 +132,13 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
                     },
                 },
                 {
-                    title: 'Eliminar',
+                    title: 'Inactivar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <div className="text-danger" onClick={deleteRealEstate(id)}>
-                                <i className="fa fa-trash" aria-hidden="true" />
+                               <i className="fa fa-times-circle" aria-hidden="true"></i>
                             </div>
                         );
                     },

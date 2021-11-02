@@ -19,7 +19,8 @@ const CreateRealEstate = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card title="Creación de Proyecto">
+                            <h5 style={{fontWeight: 600, marginLeft: 20}}>Crear Proyecto</h5>
+                            <Card title="Información del Proyecto">
                                 <ProjectForm
                                     onSubmit={(values) => {
                                         return createProject(values.name, values.description, values.dependency);

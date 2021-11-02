@@ -208,7 +208,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                 </div>
                                 <div className="col-3">
                                     <label htmlFor="exampleInputEmail1" className="form-label">
-                                        Area Total Lote
+                                        Área Total del Lote
                                     </label>
                                     <div className="input-group">
                                         <input
@@ -234,7 +234,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                             <div className="row">
                                 <div className="col-3">
                                     <label htmlFor="exampleInputEmail1" className="form-label">
-                                        Area Construccion
+                                        Área Construcción
                                     </label>
                                     <div className="input-group">
                                         <input

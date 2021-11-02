@@ -41,7 +41,7 @@ const get_routes = (): IRoute[] => {
                         name: 'Bienes Inmuebles',
                         to: '/acquisitions/real-estates/',
                     },
-                    { name: 'Crear' },
+                    { name: 'Crear bien inmueble' },
                 ],
             },
             component: CreateRealEstate,
@@ -57,7 +57,7 @@ const get_routes = (): IRoute[] => {
                         name: 'Bienes Inmuebles',
                         to: '/acquisitions/real-estates/',
                     },
-                    { name: 'Editar' },
+                    { name: 'Editar bien inmueble' },
                 ],
             },
             component: EditRealEstate,
@@ -73,7 +73,7 @@ const get_routes = (): IRoute[] => {
                         name: 'Bienes Inmuebles',
                         to: '/acquisitions/real-estates/',
                     },
-                    { name: 'Detalle' },
+                    { name: 'Ver bien inmueble' },
                 ],
             },
             component: DetailRealEstate,
@@ -96,7 +96,7 @@ const get_routes = (): IRoute[] => {
             template_props: {
                 breadcrumbs: [
                     { name: 'Proyectos', to: '/acquisitions/projects/' },
-                    { name: 'Crear' },
+                    { name: 'Crear proyecto' },
                 ],
             },
             component: CreateProject,
@@ -109,7 +109,7 @@ const get_routes = (): IRoute[] => {
             template_props: {
                 breadcrumbs: [
                     { name: 'Proyectos', to: '/acquisitions/projects/' },
-                    { name: 'Editar' },
+                    { name: 'Editar proyecto' },
                 ],
             },
             component: EditProject,
@@ -122,7 +122,7 @@ const get_routes = (): IRoute[] => {
             template_props: {
                 breadcrumbs: [
                     { name: 'Proyectos', to: '/acquisitions/projects/' },
-                    { name: 'Detalle' },
+                    { name: 'Ver proyecto' },
                 ],
             },
             component: DetailProject,

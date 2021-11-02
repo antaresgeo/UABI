@@ -13,6 +13,7 @@ const CreateInsurability = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const realEstate: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+
     useEffect(() => {
         //dispatch(getRealEstates({}));
     }, [])
@@ -28,8 +29,9 @@ const CreateInsurability = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card title="Creación de Póliza">
+                            <Card title="Crear Póliza">
                                 <PolizaForm
+                                    type='create'
                                     realEstates={realEstate}
                                     onSubmit={(values) => {
                                         return createPolicy(values);
