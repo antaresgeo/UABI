@@ -38,6 +38,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs }) =>
                         <AppHeader collapsible={collapsible} />
                     </Header>
                     <Content>
+                        <div className="deck" />
                         <div className="d-flex flex-column w-100">
                             {show_breadcrumbs && (
                                 <div
@@ -53,6 +54,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs }) =>
                                 </div>
                             )}
                             <div className="content uabi-main-content overflow-auto">{children}</div>
+
                         </div>
                     </Content>
                 </Layout>

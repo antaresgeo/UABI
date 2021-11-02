@@ -23,7 +23,6 @@ const DetailUser = () => {
     }, []);
 
     const getUser = async (dataPolicy) => {
-        console.log(dataPolicy);
         const action = actions.getUser(parseInt(id));
         await dispatch(action);
 

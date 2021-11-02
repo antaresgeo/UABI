@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { IProjectAttributes } from '../../../utils/interfaces/';
+import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
 
 interface ProjectFormPros {
@@ -22,7 +23,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
         name: Yup.string().required('Campo obligatorio').max(200, 'El nombre debe tener maximo 200 caracteres'),
         description: Yup.string()
             .required('Campo obligatorio')
-            .max(1000, 'La Descripción debe tener maximo 200 caracteres'),
+            .max(1000, 'La Descripción debe tener maximo 1000 caracteres'),
         dependency: Yup.string().required('Campo obligatorio'),
     });
 
@@ -51,12 +52,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                         name="id"
                                         autoComplete="off"
                                     />
-                                    <span
-                                        className="text-danger text-left d-block w-100 mt-1"
-                                        style={{ height: '22px' }}
-                                    >
-                                        <ErrorMessage name="id" />
-                                    </span>
+                                    <ErrorMessage name="id" />
                                 </div>
                             )}
                             <div className={`col-${project ? 4 : 6}`}>
@@ -68,15 +64,13 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                     className="form-control"
                                     id="name_id"
                                     aria-describedby="nombre del projecto"
-                                    placeholder="Ej.: Puente de la Madre Laura"
+
                                     name="name"
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={201}
                                 />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="name" />
-                                </span>
+                                <ErrorMessage name="name" />
                             </div>
                             <div className={`col-${project ? 4 : 6}`}>
                                 <label htmlFor="dependency_id" className="form-label">
@@ -98,9 +92,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                     <option value="Dependencia Salud">Dependencia Salud</option>
                                     <option value="Dependencia Educación">Dependencia Educación</option>
                                 </Field>
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="dependency" />
-                                </span>
+                                <ErrorMessage name="dependency" />
                             </div>
                         </div>
                         <div className="row">
@@ -117,26 +109,9 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                     name="description"
                                     disabled={disabled}
                                     autoComplete="off"
-                                    maxLength={1001}
+                                    maxLength={1000}
                                 />
-                                <div className="row">
-                                    <div className="col">
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="description" />
-                                        </span>
-                                    </div>
-                                    <div className="col">
-                                        <span
-                                            className="text-end d-block w-100 mt-1"
-                                            style={{ height: '22px', color: '#F28C02' }}
-                                        >
-                                            {values.description.length}/1000
-                                        </span>
-                                    </div>
-                                </div>
+                                <ErrorMessage name="description" withCount max={1000} />
                             </div>
                         </div>
                         <div className="row justify-content-end">

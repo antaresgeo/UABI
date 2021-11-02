@@ -1,12 +1,14 @@
 import { FC } from 'react';
-import { Field, ErrorMessage } from 'formik';
+import { Field } from 'formik';
 import { Card } from '../../../../utils/ui';
-import LocationModal from '../../../../utils/components/LocationModal';
+import ErrorMessage from '../../../../utils/ui/error_messge';
+import LocationModal from '../../../../utils/components/Location/LocationModal';
 import { service } from '../../redux';
 import { IProjectAttributes } from '../../../../utils/interfaces';
 import { extractMonth, formatDate } from '../../../../utils';
 import Select from '../../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
+import InputNumber from '../../../../utils/ui/input_number';
 
 interface GeneralDataFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -39,15 +41,12 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         disabled={disabled}
                         className="w-100"
                         options={projects}
-                        mode="multiple"
                         name="project_id"
                         component={Select}
                         id="project_id_id"
                         validate={onProjectSelectedChange}
                     />
-                    <span className="form-error">
-                        <ErrorMessage name="project_id" />
-                    </span>
+                    <ErrorMessage name="project_id" />
                 </div>
                 <div className="form-group col-6">
                     <label htmlFor="dependency_id" className="form-label">
@@ -62,9 +61,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         <option value="Secretaría Cultura">Secretaría Cultura</option>
                         <option value="POR DEFINIR">POR DEFINIR</option>
                     </Field>
-                    <span className="form-error">
-                        <ErrorMessage name="dependency" />
-                    </span>
+                    <ErrorMessage name="dependency" />
                 </div>
             </div>
             <div className="row">
@@ -82,9 +79,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         <option value="MIXTO">Mixto</option>
                         <option value="POR DEFINIR">POR DEFINIR</option>
                     */}
-                    <span className="form-error">
-                        <ErrorMessage name="cost_center" />
-                    </span>
+                    <ErrorMessage name="cost_center" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="tipology_id" className="form-label">
@@ -113,9 +108,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         <option value="Especiales">Especiales</option>
                         <option value="Uso Publico">Uso Publico</option>
                     </Field>
-                    <span className="form-error">
-                        <ErrorMessage name="tipology" />
-                    </span>
+                    <ErrorMessage name="tipology" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="accounting_account_id" className="form-label">
@@ -137,9 +130,8 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         <option value="MIXTO">Mixto</option>
                         <option value="POR DEFINIR">POR DEFINIR</option>
                     */}
-                    <span className="form-error">
-                        <ErrorMessage name="accounting_account" />
-                    </span>
+
+                    <ErrorMessage name="accounting_account" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="destination_type_id" className="form-label">
@@ -159,9 +151,8 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         <option value="FISCAL">Fiscal</option>
                         <option value="MIXTO">Mixto</option>
                     </Field>
-                    <span className="form-error">
-                        <ErrorMessage name="destination_type" />
-                    </span>
+
+                    <ErrorMessage name="destination_type" />
                 </div>
             </div>
             <div className="row">
@@ -179,10 +170,10 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         type="text"
                         className="form-control"
                         autoComplete="off"
+                        maxLength={200}
                     />
-                    <span className="form-error">
-                        <ErrorMessage name="name" />
-                    </span>
+
+                    <ErrorMessage name="name" withCount max={200} />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="active_code_id" className="form-label">
@@ -196,9 +187,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         className="form-control"
                         autoComplete="off"
                     />
-                    <span className="form-error">
-                        <ErrorMessage name="active_code" />
-                    </span>
+                    <ErrorMessage name="active_code" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="zone_id" className="form-label">
@@ -231,9 +220,8 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                             Rural
                         </label>
                     </div>
-                    <span className="form-error">
-                        <ErrorMessage name="zone"></ErrorMessage>
-                    </span>
+
+                    <ErrorMessage name="zone"></ErrorMessage>
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="registry_number_noc" className="form-label">
@@ -250,11 +238,9 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         autoComplete="off"
                         placeholder=""
                         disabled={disabled}
-                        maxLength={21}
+                        maxLength={20}
                     />
-                    <span className="form-error">
-                        <ErrorMessage name="registry_number" />
-                    </span>
+                    <ErrorMessage name="registry_number" withCount max={20} />
                 </div>
             </div>
             <div className="row">
@@ -262,7 +248,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                     <label htmlFor="patrimonial_value_id" className="form-label">
                         Valor Patrimonial
                     </label>
-                    <div className="input-group">
+                    <div className="input-group w-100">
                         <div className="input-group-prepend">
                             <span className="input-group-text bg-white border-end-0">$</span>
                         </div>
@@ -273,12 +259,11 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                             type="number"
                             className="form-control text-end"
                             style={{ borderLeft: 'none' }}
-                            maxLength={200}
+                            min={0}
+                            max={99999999999999999999}
                         />
                     </div>
-                    <span className="form-error">
-                        <ErrorMessage name="patrimonial_value"></ErrorMessage>
-                    </span>
+                    <ErrorMessage name="patrimonial_value" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="reconstruction_value_id" className="form-label">
@@ -293,12 +278,13 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                             name="reconstruction_value"
                             type="number"
                             id="reconstruction_value_id"
-                            className="form-control border-start-0"
+                            className="form-control border-start-0 text-end"
+                            min={0}
+                            max={9999999999}
                         />
                     </div>
-                    <span className="form-error">
-                        <ErrorMessage name="reconstruction_value" />
-                    </span>
+
+                    <ErrorMessage name="reconstruction_value" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="total_area_id" className="form-label">
@@ -311,6 +297,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                             type="number"
                             id="total_area_id"
                             className="form-control border-end-0"
+                            min={0}
                         />
                         <div className="input-group-prepend">
                             <span className="input-group-text bg-white border-start-0">
@@ -318,9 +305,8 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                             </span>
                         </div>
                     </div>
-                    <span className="form-error">
-                        <ErrorMessage name="total_area" />
-                    </span>
+
+                    <ErrorMessage name="total_area" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="total_percentage_id" className="form-label">
@@ -340,9 +326,8 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                             <span className="input-group-text bg-white border-start-0">%</span>
                         </div>
                     </div>
-                    <span className="form-error">
-                        <ErrorMessage name="total_percentage"></ErrorMessage>
-                    </span>
+
+                    <ErrorMessage name="total_percentage"></ErrorMessage>
                 </div>
             </div>
             <div className="row">
@@ -362,18 +347,16 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         ]}
                         mode="multiple"
                     />
-                    <span className="form-error">
-                        <ErrorMessage name="materials"></ErrorMessage>
-                    </span>
+
+                    <ErrorMessage name="materials"></ErrorMessage>
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="address" className="form-label">
                         CBML
                     </label>
                     <Field name="cbml" id="address" type="text" className="form-control" disabled />
-                    <span className="form-error">
-                        <ErrorMessage name="cbml" />
-                    </span>
+
+                    <ErrorMessage name="cbml" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="address" className="form-label">
@@ -395,9 +378,8 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                             />
                         </div>
                     </div>
-                    <span className="form-error">
-                        <ErrorMessage name="location" />
-                    </span>
+
+                    <ErrorMessage name="location" />
                 </div>
             </div>
             <div className="row">
@@ -414,19 +396,9 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                         id="description_id"
                         as="textarea"
                         className="form-control"
+                        maxLength={1000}
                     />
-                    <div className="row">
-                        <div className="col">
-                            <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                <ErrorMessage name="description" />
-                            </span>
-                        </div>
-                        <div className="col">
-                            <span className="text-end d-block w-100 mt-1" style={{ height: '22px', color: '#F28C02' }}>
-                                {formik.values.description.length}/1000
-                            </span>
-                        </div>
-                    </div>
+                    <ErrorMessage name="description" withCount max={1000} />
                 </div>
             </div>
             {type === 'view' && (
@@ -443,7 +415,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                                 name="audit_trail.created_by"
                                 disabled
                             />
-                            <span className="form-error" />
+                            <ErrorMessage />
                         </div>
                         <div className="col-4">
                             <label htmlFor="audit_trail_created_on_id" className="form-label">
@@ -457,7 +429,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                                 value={formatDate(formik.values.audit_trail?.created_on)}
                                 disabled
                             />
-                            <span className="form-error" />
+                            <ErrorMessage />
                         </div>
                         <div className="col-4">
                             <label htmlFor="sociedad_id" className="form-label">
@@ -471,7 +443,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                                 value="FIMM"
                                 disabled
                             />
-                            <span className="form-error" />
+                            <ErrorMessage />
                         </div>
                     </div>
                     <div className="row">
@@ -486,7 +458,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                                 name="importe_contabilidad"
                                 disabled
                             />
-                            <span className="form-error" />
+                            <ErrorMessage />
                         </div>
                         <div className="col-4">
                             <label htmlFor="periodo_contable_id" className="form-label">
@@ -502,7 +474,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
 
                                 // EL MES
                             />
-                            <span className="form-error" />
+                            <ErrorMessage />
                         </div>
                         <div className="col-4">
                             <label htmlFor="contrapartida_id" className="form-label">
@@ -515,7 +487,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                                 name="contrapartida"
                                 disabled
                             />
-                            <span className="form-error" />
+                            <ErrorMessage />
                         </div>
                     </div>
                     <div className="row">
@@ -530,7 +502,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                                 name="comentarios"
                                 placeholder="Comentarios y anotaciones"
                             />
-                            <span className="form-error" />
+                            <ErrorMessage />
                         </div>
                     </div>
                 </>

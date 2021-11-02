@@ -35,6 +35,16 @@ const Home = () => {
                                 ]}
                             />
                         </div>
+                        <div className="row justify-content-center mt-3">
+                            <Card name="Disposición" links={[]} />
+                            <Card name="Supervición" links={[]} />
+                            <Card name="Facturación" links={[]} />
+                        </div>
+                        <div className="row justify-content-center mt-3">
+                            <Card name="Mantenimiento" links={[]} />
+                            <Card name="Mantenimiento" links={[]} />
+                            <Card name="Informes y Logs" links={[]} />
+                        </div>
                     </div>
                 </section>
             </div>

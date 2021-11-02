@@ -11,9 +11,6 @@ const Projects = () => {
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
     const loading: boolean = useSelector((states: any) => states.acquisitions.projects.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.projects.pagination);
-
-    console.log(total_results)
-
     const [query, set_query] = useState<string>('');
 
     const filter = () => {
@@ -82,9 +79,7 @@ const Projects = () => {
                 await dispatch(actions.deleteProject(id));
                 await dispatch(actions.getProjects());
                 // const _res: any = await dispatch(actions.deleteProject(id));
-                // console.log(_res);
 
-                // console.log(_res.message);
 
                 // swal.fire({
                 //     title: "Proyecto Inactivado",

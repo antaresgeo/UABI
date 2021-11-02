@@ -1,6 +1,9 @@
 import { IRoute } from "../../utils/components/app_router/custom_types";
 import Registers from './views/Registers/Registers';
 // import store from './../../config/store';
+import EnglobeProject from './views/Projects/EnglobeProject';
+import DesenglobeProject from './views/Projects/DesenglobeProject';
+
 import {
 
 
@@ -14,13 +17,15 @@ import {
     DetailProject,
     Projects,
 
+
 } from "./views";
+
+
 
 export const create_realEstate = () => {
     /*const user = */
-    //console.log(store.getState().users);
+
     //store.getState().users.user.value[0].id_rol
-    //console.log( user.hasOwnProperty("") );
 }
 const get_routes = (): IRoute[] => {
     create_realEstate();
@@ -132,7 +137,6 @@ const get_routes = (): IRoute[] => {
             },
             component: Projects,
         },
-
         {
             exact: true,
             is_private: true,
@@ -142,6 +146,32 @@ const get_routes = (): IRoute[] => {
                 breadcrumbs: [{ name: "Registros" }],
             },
             component: Registers
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: "/acquisitions/projects/englobar/:id/",
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Proyectos', to: '/acquisitions/projects/' },
+                    { name: 'Englobar Proyecto' },
+                ],
+            },
+            component: EnglobeProject
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: "/acquisitions/projects/desenglobar/:id/",
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Proyectos', to: '/acquisitions/projects/' },
+                    { name: 'Desenglobar proyecto' },
+                ],
+            },
+            component: DesenglobeProject
         },
     ];
 };

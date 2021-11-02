@@ -19,7 +19,7 @@ const getRealEstates = async ({
 }): Promise<IPaginable<IRealEstateAttributes> | string> => {
     try {
         let URI = `/real-estates/lists/`;
-        console.log(q);
+        console.log('servicio:',q);
         let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
             await http.get(URI, {
                 params: {

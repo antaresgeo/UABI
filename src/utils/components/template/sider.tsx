@@ -26,16 +26,12 @@ const Sider: FC<{ width: number }> = ({ width }) => {
             </div>
             {/*<SideBar />*/}
 
-            <Menu
-                onClick={handleClick}
-                style={{ width }}
-                mode="vertical"
-            >
-                <SubMenu key="sub1" title="Inicio">
-                    <Menu.Item key="1" onClick={goTo('/')}>
-                        Inicio
-                    </Menu.Item>
-                </SubMenu>
+            <Menu onClick={handleClick} style={{ width }} mode="vertical" onOpenChange={(...args) => {
+                console.log('onOpenChange', args)
+            }}>
+                <Menu.Item key="1" onClick={goTo('/')}>
+                    Inicio
+                </Menu.Item>
                 <SubMenu key="sub2" title="Usuarios">
                     <Menu.Item key="2" onClick={goTo('/users')}>
                         Usuarios
@@ -48,20 +44,26 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                     <Menu.Item key="4" onClick={goTo('/acquisitions/real-estates/')}>
                         Bienes Inmuebles
                     </Menu.Item>
-                    <Menu.Item key="4s" onClick={goTo('/acquisitions/registers/')}>
+                    <Menu.Item key="5" onClick={goTo('/acquisitions/registers/')}>
                         Registros
                     </Menu.Item>
                 </SubMenu>
 
                 <SubMenu key="sub4" title="Asegurabilidad">
-                    <Menu.Item key="5" onClick={goTo('/insurabilities/policy/')}>
-                        Asegurabilidad
+                    <Menu.Item key="6" onClick={goTo('/insurabilities/policy/')}>
+                        Polizas de Seguro
+                    </Menu.Item>
+                    <Menu.Item key="7" onClick={goTo('/insurabilities/company/')}>
+                        Empresas Aseguradoras
+                    </Menu.Item>
+                    <Menu.Item key="8" onClick={goTo('/insurabilities/broker/')}>
+                        Corredores de Seguros
                     </Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub5" title="Disposición">
-                    <Menu.Item key="6" onClick={goTo('/acquisitions/real-estates/areas/')}>
-                        Áreas
-                    </Menu.Item>
+                    {/*<Menu.Item key="9" onClick={goTo('/acquisitions/real-estates/areas/')}>*/}
+                    {/*    Áreas*/}
+                    {/*</Menu.Item>*/}
                 </SubMenu>
                 <SubMenu key="sub6" title="Supervisión" />
                 <SubMenu key="sub7" title="Facturación" />

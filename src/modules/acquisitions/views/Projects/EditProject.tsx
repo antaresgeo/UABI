@@ -34,8 +34,6 @@ const DetailProject = ({ view }: IProps) => {
                 id
             )
         );
-
-        console.log(res);
         await swal('Proyecto actualizado', res.data.message, 'success');
         history.push(`/acquisitions/projects/${project.id}`);
     };

@@ -5,9 +5,10 @@ import GeneralDataForm from './GeneralDataForm';
 import AcquisitionsFrom from './AdquisitionsForm';
 import RealEstateList from '../RealEstateList';
 import { Card } from '../../../../utils/ui';
-import { Input } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
+import DocumentsModal from '../../../../utils/components/DocumentsModal/Modal';
+import SupportDocumentsForm from './SupportDocumentsForm';
 
 interface RealEstateFormProps {
     realEstate?: IRealEstateAttributes;
@@ -36,23 +37,23 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         sap_id: '',
         dependency: '',
         destination_type: '',
-        accounting_account: '',
-        cost_center: '',
+        accounting_account: 'Fiscal',
+        cost_center: 'Fiscal',
         registry_number: '',
         registry_number_document_id: '',
         name: '',
         description: '',
         patrimonial_value: 0,
         reconstruction_value: 0,
-        location: 'Kr 1a # 34',
-        cbml: '46446',
+        location: '',
+        cbml: '',
         total_area: 0,
         total_percentage: 0,
         zone: '',
         tipology: '',
         materials: [],
-        supports_documents: null,
-        project_id: [],
+        supports_documents: [],
+        project_id: '',
         status: 0,
         audit_trail: null,
         acquisitions: [],
@@ -66,17 +67,22 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         destination_type: Yup.string().required('Campo obligatorio'),
         accounting_account: Yup.string(),
         cost_center: Yup.string(),
-        registry_number: Yup.string()
-            .required('Campo obligatorio')
-            .max(20, 'El Número Matricula debe tener maximo 20 caracteres'),
+        registry_number: Yup.string().required('Campo obligatorio').max(20, 'El maximo 20 es caracteres'),
         name: Yup.string().required('Campo obligatorio'),
         description: Yup.string().required('Campo obligatorio'),
-        patrimonial_value: Yup.number().required('Campo obligatorio'),
+        patrimonial_value: Yup.number()
+            .required('Campo obligatorio')
+            .min(0, 'El minimo es 0')
+            .max(99999999999999999999, 'El maximo 20 es caracteres'),
+        reconstruction_value: Yup.number()
+            .required('Campo obligatorio')
+            .min(0, 'El minimo es 0')
+            .max(9999999999, 'El maximo 10 es caracteres'),
         total_area: Yup.number().required('Campo obligatorio'),
         total_percentage: Yup.number()
             .required('Campo obligatorio')
-            .min(0, 'El procentaje minimo es 0')
-            .max(100, 'El procentaje maximo es 100'),
+            .min(0, 'El minimo es 0')
+            .max(100, 'El maximo es 100'),
         zone: Yup.string().required('Campo obligatorio'),
         tipology: Yup.string().required('Campo obligatorio'),
         project_id: Yup.number().required('Campo obligatorio'),
@@ -87,6 +93,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         const isFinish = aux_values._type === 'finish';
         const values: any = { ...aux_values };
         delete values._type;
+        values.materials = values.materials.join(', ');
         onSubmit(values, form, isFinish).then(() => {
             form.setSubmitting(false);
             form.resetForm();
@@ -134,58 +141,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
                                             <AcquisitionsFrom type={type} disabled={type === 'view'} formik={formik} />
-                                            <Card
-                                                title="Documentos Soporte"
-                                                actions={
-                                                    [
-                                                        // <div className="d-flex flex-row-reverse px-3 py-1">
-                                                        //     <button type="button" className="btn btn-primary">
-                                                        //         Guardar
-                                                        //     </button>
-                                                        // </div>,
-                                                    ]
-                                                }
-                                            >
-                                                <div className="row">
-                                                    <div className="col-3">
-                                                        <label htmlFor="form-select" className="form-label">
-                                                            Nombre del Documento
-                                                        </label>
-                                                        <Input />
-                                                    </div>
-                                                    <div className="col-3">
-                                                        <div className="mb-3">
-                                                            <label htmlFor="formFile" className="form-label">
-                                                                Default file input example
-                                                            </label>
-                                                            <input className="form-control" type="file" id="formFile" />
-                                                            <div id="emailHelp" className="form-text">
-                                                                Escritura.pdf
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-1">
-                                                        <label htmlFor=""></label>
-                                                        <button type="submit" className="btn btn-primary mr-3">
-                                                            Subir
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div className="row justify-content-center">
-                                                    <div className="col text-start">
-                                                        <button type="submit" className="btn btn-primary mr-3">
-                                                            Guardar
-                                                        </button>
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-primary mx-3"
-                                                            onClick={() => {} /*_createRealEstate*/}
-                                                        >
-                                                            Agregar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </Card>
+                                            <SupportDocumentsForm type={type} formik={formik} />
                                             <Card title="Bienes Inmuebles del Proyecto">
                                                 <RealEstateList project_id={project_id} init={false} />
                                             </Card>

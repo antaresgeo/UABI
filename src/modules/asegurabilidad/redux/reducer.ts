@@ -13,7 +13,7 @@ const emptyInitialState: any = {
             insurance_company: "",
             insurance_value: "",
             insurance_document_id: 0,
-            real_estate_id: 0,
+            real_estate_name: "",
             audit_trail: {
                 created_by: "",
                 created_on: "",
@@ -21,7 +21,7 @@ const emptyInitialState: any = {
                 updated_on: null,
                 updated_values: null,
             },
-            status: -1,
+            status_name: "",
         },
         loading: false,
         loaded: false,
@@ -37,7 +37,7 @@ const emptyInitialState: any = {
                 insurance_company: "",
                 insurance_value: "",
                 insurance_document_id: 0,
-                real_estate_id: 0,
+                real_estate_name: "",
                 audit_trail: {
                     created_by: '',
                     created_on: '',
@@ -45,7 +45,7 @@ const emptyInitialState: any = {
                     updated_on: null,
                     updated_values: null,
                 },
-                status: -1,
+                status_name: "",
             },
         ],
         loading: false,
@@ -55,7 +55,6 @@ const emptyInitialState: any = {
 const initialState = emptyInitialState;
 
 const reducer = (state: any = initialState, action: any): any => {
-    // console.log(action.payload)
     switch (action.type) {
         case types.policy.default: {
             return {

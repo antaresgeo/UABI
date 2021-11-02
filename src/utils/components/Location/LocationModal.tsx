@@ -1,6 +1,6 @@
 import { FC, useRef, useState } from 'react';
 import Modal from 'antd/lib/modal/Modal';
-import Location from './Location';
+import Location from './index';
 
 interface LocationModalProps {
     onSave?: (values) => Promise<any>;
@@ -25,7 +25,6 @@ const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone })
                     innerRef={ref}
                     zone={zone}
                     modalClose={(values, callback) => {
-                        console.log(values);
                         onSave &&
                             onSave(values)
                                 .then(() => {

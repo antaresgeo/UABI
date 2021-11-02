@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { getList } from './service';
 import { ICountryAddressAttributes } from '../../interfaces';
 import Tooltip from 'antd/lib/tooltip';
+import ErrorMessage from '../../../utils/ui/error_messge';
 
 interface LocationProps {
     modalClose?: (values, callback) => void;
@@ -132,9 +133,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                     {renderOptions('country_code', 'country', countries)}
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="country" />
-                                </span>
+                                <ErrorMessage name="country" />
                             </div>
                             <div className="form-group col-4">
                                 <label htmlFor="" className="form-label">
@@ -160,9 +159,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                     {renderOptions('state_code', 'state', states)}
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="state" />
-                                </span>
+                                <ErrorMessage name="state" />
                             </div>
                             <div className="form-group col-4">
                                 <label htmlFor="" className="form-label">
@@ -188,9 +185,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                     {renderOptions('city_code', 'city', city)}
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="city" />
-                                </span>
+                                <ErrorMessage name="city" />
                             </div>
                         </div>
                         {(view === 'general' || view === 'user') && (
@@ -218,12 +213,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         {renderOptions('commune_code', 'commune', commune, true)}
                                     </Field>
 
-                                    <span
-                                        className="text-danger text-left d-block w-100 mt-1"
-                                        style={{ height: '22px' }}
-                                    >
-                                        <ErrorMessage name="commune" />
-                                    </span>
+                                    <ErrorMessage name="commune" />
                                 </div>
                                 <div className="form-group col-6">
                                     <label htmlFor="" className="form-label">
@@ -245,12 +235,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         {renderOptions('neighborhood_code', 'neighborhood', neighborhood, true)}
                                     </Field>
 
-                                    <span
-                                        className="text-danger text-left d-block w-100 mt-1"
-                                        style={{ height: '22px' }}
-                                    >
-                                        <ErrorMessage name="neighborhood" />
-                                    </span>
+                                    <ErrorMessage name="neighborhood" />
                                 </div>
                                 {view !== 'user' && (
                                     <>
@@ -259,10 +244,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 CB
                                             </label>
                                             <input className="w-100 form-control" type="text" value={cb} disabled />
-                                            <span
-                                                className="text-danger text-left d-block w-100 mt-1"
-                                                style={{ height: '22px' }}
-                                            ></span>
+                                            <ErrorMessage />
                                         </div>
                                         <div className="form-group col">
                                             <label htmlFor="" className="form-label">
@@ -282,12 +264,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 autoComplete="off"
                                             />
 
-                                            <span
-                                                className="text-danger text-left d-block w-100 mt-1"
-                                                style={{ height: '22px' }}
-                                            >
-                                                <ErrorMessage name="block" />
-                                            </span>
+                                            <ErrorMessage name="block" />
                                         </div>
 
                                         <div className="form-group col">
@@ -308,12 +285,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 autoComplete="off"
                                             />
 
-                                            <span
-                                                className="text-danger text-left d-block w-100 mt-1"
-                                                style={{ height: '22px' }}
-                                            >
-                                                <ErrorMessage name="lot" />
-                                            </span>
+                                            <ErrorMessage name="lot" />
                                         </div>
                                     </>
                                 )}
@@ -355,24 +327,15 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             </option>
                                         </Field>
 
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="tipo" />
-                                        </span>
+                                        <ErrorMessage name="tipo" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
                                             Número <span className="text-danger">*</span>
                                         </label>
                                         <Field name="number_one" type="number" className="w-100 form-control" />
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="number_one" />
-                                        </span>
+
+                                        <ErrorMessage name="number_one" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
@@ -447,12 +410,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             </option>
                                         </Field>
 
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="word_one" />
-                                        </span>
+                                        <ErrorMessage name="word_one" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
@@ -476,12 +434,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             </option>
                                         </Field>
 
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="orientation_one" />
-                                        </span>
+                                        <ErrorMessage name="orientation_one" />
                                     </div>
                                 </div>
                                 <div className="row align-items-center">
@@ -505,12 +458,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             />
                                         </div>
 
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="number_two" />
-                                        </span>
+                                        <ErrorMessage name="number_two" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
@@ -584,12 +532,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 DE
                                             </option>
                                         </Field>
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="word_one" />
-                                        </span>
+
+                                        <ErrorMessage name="word_one" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
@@ -613,12 +557,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             </option>
                                         </Field>
 
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="orientation_one" />
-                                        </span>
+                                        <ErrorMessage name="orientation_one" />
                                     </div>{' '}
                                     -
                                     <div className="form-group col">
@@ -626,12 +565,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             Indicativo <span className="text-danger">*</span>
                                         </label>
                                         <Field name="indicative" type="number" className="w-100 form-control" />
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="indicative" />
-                                        </span>
+
+                                        <ErrorMessage name="indicative" />
                                     </div>
                                 </div>
                                 <div className="from-row row">
@@ -651,13 +586,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             className="w-100 form-control"
                                             placeholder="Manzana, Urbanización, Núcleo, Bloque, apartamento"
                                         />
-
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="indicaciones" />
-                                        </span>
+                                        <ErrorMessage name="indicaciones" />
                                     </div>
                                 </div>
                             </>
