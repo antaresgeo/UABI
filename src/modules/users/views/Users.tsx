@@ -4,6 +4,7 @@ import { Card, Link } from '../../../utils/ui';
 import { actions } from '../redux';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import UserList from './UserList'
+import { guards } from './../routes';
 
 const Users = () => {
     const dispatch = useDispatch();
@@ -30,7 +31,11 @@ const Users = () => {
                 <div className="col-md-12">
                     <Card
                         title="Usuarios"
-                        extra={<Link to="/users/create" name="Crear" iconText="+" />}
+                        extra={
+                            <>
+                                { guards.create() && <Link to="/users/create" name="Crear" iconText="+" /> }
+                            </>
+                        }
                     >
                         <form>
                             <div className="row justify-content-between">

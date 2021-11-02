@@ -43,6 +43,7 @@ export const getPolicy = async (
         let res: AxiosResponse<IPolicyResponse> = await http.get(URI, {
             params: { id },
         });
+        console.log('ok')
         return res.data.results;
     } catch (error) {
         console.error(error);
@@ -54,9 +55,9 @@ export const getPolicy = async (
 export const updatePolicy = async (data: any, id: number) => {
     try {
         let URI = `/insurabilities`;
-        let res: AxiosResponse<IPolicyResponse> = await http.put(URI, data, {
-            params: { id },
-        });
+        let res: AxiosResponse<IPolicyResponse> = await http.put(URI, data, { params: { id } });
+        await swal.fire("poliza actualizada", res.data.message, "success");
+
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');

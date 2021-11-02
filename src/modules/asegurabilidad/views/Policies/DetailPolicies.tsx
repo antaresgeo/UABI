@@ -21,7 +21,7 @@ const DetailInsurability = () => {
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
     const realEstate: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     useEffect(() => {
-        dispatch(getRealEstates({}));
+        //dispatch(getRealEstates({}));
         dispatch(actions.getPolicy(id));
     }, [])
 
