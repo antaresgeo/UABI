@@ -9,9 +9,10 @@ interface LocationProps {
     modalClose?: (values, callback) => void;
     view?: string;
     zone?: string;
+    innerRef?: any;
 }
 
-const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
+const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...props }) => {
     const [countries, setCountries] = useState<ICountryAddressAttributes[]>([]);
     const [states, setStates] = useState([]);
     const [city, setCity] = useState([]);
@@ -84,6 +85,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
     return (
         <Formik
             enableReinitialize
+            innerRef={innerRef}
             initialValues={initialValues}
             validationSchema={view === 'general' && schema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -317,7 +319,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                 )}
                             </div>
                         )}
-                        {(view === 'general' || view === "user") && (
+                        {(view === 'general' || view === 'user') && (
                             <>
                                 <h5>Dirección</h5>
                                 <hr />
@@ -467,10 +469,10 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                                 Norte
                                             </option>
                                             <option key="oeste" value="Oeste">
-                                                Oeste
+                                                Occidente
                                             </option>
                                             <option key="este" value="Este">
-                                                Este
+                                                Oriente
                                             </option>
                                         </Field>
 
@@ -604,10 +606,10 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                                 Norte
                                             </option>
                                             <option key="oeste" value="Oeste">
-                                                Oeste
+                                                Occidente
                                             </option>
                                             <option key="este" value="Este">
-                                                Este
+                                                Oriente
                                             </option>
                                         </Field>
 
@@ -621,7 +623,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                     -
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
-                                            indicative <span className="text-danger">*</span>
+                                            Indicativo <span className="text-danger">*</span>
                                         </label>
                                         <Field name="indicative" type="number" className="w-100 form-control" />
                                         <span
@@ -635,7 +637,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                 <div className="from-row row">
                                     <div className="form-group col-9">
                                         <label htmlFor="" className="form-label">
-                                            indicaciones
+                                            Indicaciones
+                                            <Tooltip title="Lorem impsu texto descriptivo">
+                                                <i
+                                                    className="fa fa-info-circle text-muted ms-2 me-2"
+                                                    style={{ fontSize: 14 }}
+                                                />
+                                            </Tooltip>
                                         </label>
                                         <Field
                                             name="indicaciones"
