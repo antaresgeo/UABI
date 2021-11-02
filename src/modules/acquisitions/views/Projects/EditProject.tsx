@@ -28,12 +28,7 @@ const DetailProject = ({ view }: IProps) => {
 
     const _updateProject = async (projectForm) => {
         let res: any;
-        res = await dispatch(
-            actions.updateProject(
-                { name: projectForm.name, description: projectForm.description, dependency: projectForm.dependency },
-                id
-            )
-        );
+        res = await dispatch(actions.updateProject(projectForm, id));
         await swal('Proyecto actualizado', res.data.message, 'success');
         history.push(`/acquisitions/projects/${project.id}`);
     };

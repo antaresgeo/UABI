@@ -31,13 +31,6 @@ export const getList = async (
     | ICommuneAddressAttributes[]
     | INeighborhoodAddressAttributes[]
 > => {
-    let params: IParams;
-
-    if (nameList === 'country') params = { country: 'true' };
-    if (nameList === 'state') params = { state: 'true' };
-    if (nameList === 'city') params = { city: 'true' };
-    if (nameList === 'commune') params = { commune: 'true' };
-    if (nameList === 'neighborhood') params = { neighborhood: 'true' };
 
     try {
         let URI = `/localizations/lists`;
@@ -45,7 +38,6 @@ export const getList = async (
             URI,
             {
                 params: {
-                    ...params,
                     ...filters,
                 },
             }

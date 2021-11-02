@@ -8,8 +8,8 @@ const CreateRealEstate = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const createProject = async (projectName, projectDescription, dependency) => {
-        const res: any = await dispatch(actions.createProject(projectName, projectDescription, dependency));
+    const createProject = async (values) => {
+        const res: any = await dispatch(actions.createProject(values));
         history.push(`/acquisitions/projects/${res.id}`);
     };
 
@@ -22,7 +22,7 @@ const CreateRealEstate = () => {
                             <Card title="Creación de Proyecto">
                                 <ProjectForm
                                     onSubmit={(values) => {
-                                        return createProject(values.name, values.description, values.dependency);
+                                        return createProject(values);
                                     }}
                                 />
                             </Card>

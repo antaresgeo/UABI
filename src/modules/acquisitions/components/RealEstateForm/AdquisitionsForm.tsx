@@ -164,9 +164,12 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         value={acquisition.title_type}
                                     >
                                         <option value="None">-- Seleccione Tipo de Título --</option>
-                                        <option value="Acta">Acta</option>
-                                        <option value="Mejora">Mejora</option>
-                                        <option value="Construcción">Construcción para demoler</option>
+                                        <option value="Escritura">Escritura</option>
+                                        <option value="Certificado tradición y libertad">
+                                            Certificado tradición y libertad
+                                        </option>
+                                        <option value="Acta de liquidación">Acta de liquidación</option>
+                                        <option value="Acta de liquidación">Resolucion</option>
                                     </select>
                                     <ErrorMessage />
                                 </div>
@@ -384,8 +387,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         </div>
                                     </div>
 
-                                        <ErrorMessage name="location" />
-
+                                    <ErrorMessage name="location" />
                                 </div>
                                 <div className="col-3" />
                                 <div className="col-3 d-flex justify-content-end">
