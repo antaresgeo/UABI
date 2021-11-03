@@ -18,7 +18,7 @@ const RealEstates = () => {
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card
-                        title="Administrar Bienes Inmuebles"
+                        title="Bienes Inmuebles"
                         extra={<Link to="/acquisitions/real-estates/create" name="Crear" iconText="+" />}
                     >
                         <form>

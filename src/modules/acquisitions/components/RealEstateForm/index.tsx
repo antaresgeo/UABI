@@ -62,7 +62,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         _type: null,
         ...realEstate,
     };
-
+    
     const schema = Yup.object().shape({
         dependency: Yup.string().required('Campo obligatorio'),
         destination_type: Yup.string().required('Campo obligatorio'),
@@ -157,9 +157,23 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             />
                                             <AcquisitionsFrom type={type} disabled={type === 'view'} formik={formik} />
                                             <SupportDocumentsForm type={type} formik={formik} />
-                                            <Card title="Bienes Inmuebles del Proyecto">
-                                                <RealEstateList project_id={project_id} init={false} />
-                                            </Card>
+                                            {type === 'view' && (
+                                                <Card title={
+                                                <>
+                                                    <b>Inmuebles del Proyecto: {}</b>
+                                                </>
+                                                }>
+                                                    <RealEstateList project_id={project_id} init={false} />
+                                                </Card>
+                                            )}
+                                            {(type === 'create') && (
+                                                <Card title="Inmuebles del Proyecto">
+                                                    <RealEstateList project_id={project_id} init={false} />
+                                                </Card>
+                                            )}
+
+
+
                                         </div>
                                     </div>
                                 </div>

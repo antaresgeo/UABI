@@ -158,13 +158,13 @@ const Projects = () => {
                     },
                 },
                 {
-                    title: 'Eliminar',
+                    title: 'Inactivar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <div className="text-danger" onClick={deleteProject(id)}>
-                                <i className="fa fa-trash" aria-hidden="true" />
+                                <i className="fa fa-times-circle" aria-hidden="true" />
                             </div>
                         );
                     },
@@ -182,7 +182,7 @@ const Projects = () => {
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card
-                        title="Administrar Proyectos"
+                        title="Proyectos"
                         extra={<Link to="/acquisitions/projects/create/" name="Crear" iconText="+" />}
                     >
                         <form>

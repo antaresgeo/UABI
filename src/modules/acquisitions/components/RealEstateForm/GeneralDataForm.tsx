@@ -23,7 +23,7 @@ interface GeneralDataFormProps {
 const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, projects, project, onProjectSelectedChange }) => {
     return (
         <Card
-            title="Información del proyecto"
+            title="Información del Inmueble"
             actions={
                 [
                     // <div className="d-flex flex-row-reverse px-3 py-1">
@@ -181,7 +181,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="active_code_id" className="form-label">
-                        Codigo Activo
+                        Código Activo
                     </label>
                     <Field
                         disabled
@@ -271,7 +271,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="reconstruction_value_id" className="form-label">
-                        Valor de reconstruccion
+                        Valor de reconstrucción
                     </label>
                     <div className="input-group">
                         <div className="input-group-prepend">
@@ -292,7 +292,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="total_area_id" className="form-label">
-                        Area Total
+                        Área Total
                     </label>
                     <div className="input-group">
                         <Field
@@ -337,7 +337,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="material_id" className="form-label">
-                        Materiales de construccion
+                        Materiales de construcción
                     </label>
                     <Field
                         component={Select}

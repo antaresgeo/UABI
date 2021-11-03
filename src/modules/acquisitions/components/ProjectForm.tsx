@@ -5,7 +5,7 @@ import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
 import Select from '../../../utils/ui/select';
 import dependencias from '../dependencias';
-import axios_utils from '../../../config/axios_instances/axios_utils';
+import { formatDate } from '../../../utils';
 
 interface ProjectFormPros {
     project?: IProjectAttributes;
@@ -74,7 +74,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                             {project && (
                                 <div className="col-3">
                                     <label htmlFor="id_id" className="form-label">
-                                        Código
+                                        Código del proyecto
                                     </label>
                                     <Field
                                         type="text"
@@ -90,7 +90,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                             )}
                             <div className={`col-${project ? 3 : 4}`}>
                                 <label htmlFor="name_id" className="form-label">
-                                    Nombre
+                                    Nombre del proyecto
                                 </label>
                                 <Field
                                     type="text"
@@ -212,6 +212,41 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                 />
                                 <ErrorMessage name="description" withCount max={1000} />
                             </div>
+                        </div>
+                        <div className="row">
+                            {type === 'view' && (
+                                <>
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <label htmlFor="audit_trail_created_on_id" className="form-label">
+                                                Fecha de creación
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                className="form-control"
+                                                id="audit_trail_created_on_id"
+                                                name="audit_trail.created_on"
+                                                value={formatDate(project?.audit_trail?.created_on)}
+                                                disabled
+                                            />
+                                            <ErrorMessage />
+                                        </div>
+                                        <div className="col-6">
+                                            <label htmlFor="audit_trail_created_by_id" className="form-label">
+                                                Creado por
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                className="form-control"
+                                                id="audit_trail_created_by_id"
+                                                name="audit_trail.created_by"
+                                                disabled
+                                            />
+                                            <ErrorMessage />
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                         </div>
                         <div className="row justify-content-end">
                             <div className="col text-end">

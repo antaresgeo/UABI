@@ -42,6 +42,7 @@ const DetailInsurability = () => {
                         title="Póliza"
                     >
                         <PolizaForm
+                            type= 'view'
                             disabled
                             realEstates={realEstate}
                             policy={policy}

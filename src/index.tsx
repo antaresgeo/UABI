@@ -43,6 +43,15 @@ export enum Permit {
     CREATE_POLICY = 'create_policy',
     DETAIL_POLICY = 'detail_policy',
     UPDATE_POLICY = 'update_policy',
+    LIST_POLICY = 'list_policy',
+    CREATE_INSURANCE_COMPANY = 'create_InsuranceCompany',
+    DETAIL_INSURANCE_COMPANY = 'detail_InsuranceCompany',
+    UPDATE_INSURANCE_COMPANY = 'update_InsuranceCompany',
+    LIST_INSURANCE_COMPANY = 'list_InsuranceCompany',
+    CREATE_INSURANCE_BROKER = 'create_InsuranceBroker',
+    DETAIL_INSURANCE_BROKER = 'detail_InsuranceBroker',
+    UPDATE_INSURANCE_BROKER = 'update_InsuranceBroker',
+    LIST_INSURANCE_BROKER = 'list_InsuranceBrokery',
     CREATE_PROJECT = 'create_project',
     DETAIL_PROJECT = 'detail_project',
     UPDATE_PROJECT = 'update_project',
@@ -56,7 +65,20 @@ export enum Permit {
 
 const user = {
     role: Role.ADMINISTRATOR,
-    permits: [Permit.CREATE_PROJECT, Permit.CREATE_REALESTATE, Permit.CREATE_USER, Permit.CREATE_POLICY]
+    permits: [
+        Permit.CREATE_POLICY,
+        Permit.DETAIL_POLICY,
+        Permit.UPDATE_POLICY,
+        Permit.LIST_POLICY,
+        Permit.CREATE_INSURANCE_COMPANY,
+        Permit.DETAIL_INSURANCE_COMPANY,
+        Permit.UPDATE_INSURANCE_COMPANY,
+        Permit.DETAIL_INSURANCE_COMPANY,
+        Permit.CREATE_INSURANCE_BROKER,
+        Permit.DETAIL_INSURANCE_BROKER,
+        Permit.UPDATE_INSURANCE_BROKER,
+        Permit.LIST_INSURANCE_BROKER
+    ]
 
 }
 

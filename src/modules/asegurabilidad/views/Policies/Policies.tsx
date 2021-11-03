@@ -15,7 +15,7 @@ const table_columns = [
         align: 'center' as 'center',
     },
     {
-        title: "Matricula",
+        title: "Matrícula",
         dataIndex: "registry_number",
         align: "center" as "center",
     },
@@ -53,7 +53,7 @@ const table_columns = [
                 render: (id) => {
                     return (
                         <Link
-                            to={`/insurability/policy/${id}/`}
+                            to={`/insurabilities/policy/${id}/`}
                             name=""
                             avatar={false}
                             icon={<i className="fa fa-eye" aria-hidden="true" />}
@@ -68,7 +68,7 @@ const table_columns = [
                 render: (id) => {
                     return (
                         <Link
-                            to={`/insurability/policy/edit/${id}/`}
+                            to={`/insurabilities/policy/edit/${id}/`}
                             name=""
                             avatar={false}
                             icon={<i className="fa fa-pencil" aria-hidden="true" />}
@@ -76,23 +76,23 @@ const table_columns = [
                     );
                 },
             },
-            {
-                title: 'Eliminar',
-                dataIndex: 'id',
-                align: 'center' as 'center',
-                render: (id) => {
-                    return (
-                        <div
-                            className="text-danger"
-                            onClick={async () => {
-                                //await altStatusPolicy(parseInt(id));
-                            }}
-                        >
-                            <i className="fa fa-trash" aria-hidden="true" />
-                        </div>
-                    );
-                },
-            },
+            // {
+            //     title: 'Inactivar',
+            //     dataIndex: 'id',
+            //     align: 'center' as 'center',
+            //     render: (id) => {
+            //         return (
+            //             <div
+            //                 className="text-danger"
+            //                 onClick={async () => {
+            //                     //await altStatusPolicy(parseInt(id));
+            //                 }}
+            //             >
+            //                 <i className="fa fa-times-circle" aria-hidden="true" />
+            //             </div>
+            //         );
+            //     },
+            // },
         ],
     },
 ];
@@ -110,8 +110,8 @@ const Policies = () => {
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card
-                        title="Administrar Polizas"
-                        extra={<Link to="/insurability/policy/create/" name="Crear" iconText="+" />}
+                        title="Polizas"
+                        extra={<Link to="/insurabilities/policy/create/" name="Crear" iconText="+" />}
                     >
                         <form>
                             <div className="row justify-content-between">
