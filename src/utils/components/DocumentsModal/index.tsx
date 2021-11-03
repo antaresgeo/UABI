@@ -2,17 +2,26 @@ import { FieldProps } from 'formik';
 import React, { FC } from 'react';
 import DocumentsModal from './Modal';
 interface SelectProps extends FieldProps {
-    multiple?: boolean;
     className?: string;
 }
-const DocumentModal: FC<SelectProps> = ({ field, form, multiple, className, ...props }) => {
+const DocumentModal: FC<SelectProps> = ({ field, form, className, ...props }) => {
     const on_change = (value) => {
-        if (multiple) {
-            form.setFieldValue(field.name, [...field.value, value.id]);
-        } else {
-            form.setFieldValue(field.name, value.id);
-        }
+        const new_value = {
+            label: '',
+            name: '',
+            pdf: null,
+            ...field.value,
+            ...value,
+        };
+        form.setFieldValue(field.name, new_value, false);
     };
-    return <DocumentsModal {...props} btn_class={[className].join(' ')} onChange={on_change} />;
+    return (
+        <DocumentsModal
+            {...props}
+            btn_class={[className].join(' ')}
+            modal_name={field.value?.label}
+            onChange={on_change}
+        />
+    );
 };
 export default DocumentModal;

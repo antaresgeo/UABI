@@ -1,6 +1,6 @@
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { Formik, Form } from 'formik';
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import GeneralDataForm from './GeneralDataForm';
 import AcquisitionsFrom from './AdquisitionsForm';
 import RealEstateList from '../RealEstateList';
@@ -39,7 +39,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         id: 0,
         sap_id: '',
         destination_type: '',
-        accounting_account: '',
+        accounting_account: '0000',
         registry_number: '',
         registry_number_document_id: '',
         name: '',
@@ -53,7 +53,14 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         zone: '',
         tipology: '',
         materials: [],
-        supports_documents: [],
+        supports_documents: [
+            {
+                type: 'Documento de Matricula',
+            },
+            {
+                type: 'Documento de Titulo',
+            },
+        ],
         project_id: '',
         status: 0,
         audit_trail: null,
@@ -62,7 +69,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         _type: null,
         ...realEstate,
     };
-    
+
     const schema = Yup.object().shape({
         destination_type: Yup.string().required('Campo obligatorio'),
         // accounting_account: Yup.string(),
@@ -92,7 +99,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         const isFinish = aux_values._type === 'finish';
         const values: any = { ...aux_values };
         delete values._type;
-        values.project_id = [values.project_id]
+        values.project_id = [values.project_id];
         values.materials = values.materials.join(', ');
         console.log(values);
 
@@ -106,12 +113,12 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     const [project, set_project] = useState(null);
 
     useEffect(() => {
-        if(projectId){
-            service.getProject(projectId + '').then(_project => {
+        if (projectId) {
+            service.getProject(projectId + '').then((_project) => {
                 set_project(_project);
-            })
-        }else {
-            set_project(null)
+            });
+        } else {
+            set_project(null);
         }
     }, [projectId]);
 
