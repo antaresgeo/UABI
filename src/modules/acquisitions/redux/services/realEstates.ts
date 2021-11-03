@@ -7,7 +7,7 @@ import {
     AdquisitionsItf,
     IPaginable,
     IRealEstateAttributes,
-    IRealEstateResponse
+    IRealEstateResponse,
 } from '../../../../utils/interfaces';
 
 // REAL ESTATES
@@ -77,14 +77,24 @@ export const createRealEstate = async (
 ): Promise<IRealEstateAttributes | string> => {
     try {
         let URI = `/real-estates`;
-        const aux_data = { ...data };
+
+        const aux_data = {
+            ...data,
+            address: {
+                name: data.location,
+            },
+            accounting_account: '0000',
+            projects_id: data.project_id,
+        };
         delete aux_data.id;
+        delete aux_data.project_id;
+        delete aux_data.active_code;
+        delete aux_data.cbml;
         delete aux_data.status;
         delete aux_data.acquisitions;
         delete aux_data.audit_trail;
         delete aux_data.supports_documents;
         delete aux_data.registry_number_document_id;
-        delete aux_data.reconstruction_value;
 
         let res: AxiosResponse<IRealEstateResponse> = await http.post(
             URI,
@@ -248,7 +258,7 @@ const services = {
     getAddress,
     deleteRealEstate,
     createAcquisitionForRealEstate,
-    getAcquisitionForRealEstate
+    getAcquisitionForRealEstate,
 };
 
 export default services;

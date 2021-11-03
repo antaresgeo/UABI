@@ -26,11 +26,11 @@ const Projects = () => {
         if (id !== '' && id !== undefined) {
             res = await dispatch(actions.getRealEstatesByProject(id));
         }
-        if (res.length !== 0) {
+        if (res.total !== 0) {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
-                text: `El proyecto contiene ${res.length} bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
+                text: `El proyecto contiene ${res.total} bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -79,7 +79,6 @@ const Projects = () => {
                 await dispatch(actions.deleteProject(id));
                 await dispatch(actions.getProjects());
                 // const _res: any = await dispatch(actions.deleteProject(id));
-
 
                 // swal.fire({
                 //     title: "Proyecto Inactivado",
