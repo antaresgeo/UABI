@@ -8,6 +8,14 @@
         border: 1px solid #f27503 !important;
         color: #fff !important;
     }
+    &.btn-clear {
+        border-radius: 0.25rem !important;
+        &.input-group-text {
+            margin-left: -1px !important;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+        }
+    }
 }
 
 .btn-primary {

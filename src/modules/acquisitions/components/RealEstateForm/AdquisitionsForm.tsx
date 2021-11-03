@@ -24,10 +24,10 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
         active_type: [],
         title_type: '',
         act_number: '',
-        act_value: '',
-        plot_area: '',
-        acquired_percentage: '',
-        seller: '',
+        act_value: 0,
+        plot_area: 0,
+        acquired_percentage: 0,
+        origin: '',
         entity_type: '',
         entity_number: '',
         city: '',
@@ -36,18 +36,22 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
     const [acquisition, set_acquisition] = useState<any>(initial_values);
 
     const handleChange = (e: any) => {
-        const { name, value } = e.target;
+        const { name, value, type } = e.target;
+        let new_value = value;
+        if (type === 'number') {
+            new_value = parseInt(value);
+        }
         const data = {
             ...acquisition,
-            [name]: value,
+            [name]: new_value,
         };
         set_acquisition(data);
     };
 
-    const addAcquisition = (new_acquisition: AdquisitionsItf) => {
-        const data = clearObjectNulls(new_acquisition);
-        if (!is_empty(data)) {
-            formik.setFieldValue(`acquisitions[${count}]`, data);
+    const addAcquisition = (new_acquisition) => {
+        if (!is_empty(new_acquisition)) {
+            new_acquisition.active_type = new_acquisition.active_type.join(', ')
+            formik.setFieldValue(`acquisitions[${count}]`, new_acquisition);
             set_count((c) => c + 1);
         }
     };
@@ -197,15 +201,15 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                     </label>
                                     <select
                                         className="form-select"
-                                        aria-label="seller"
-                                        id="seller"
-                                        name="seller"
+                                        aria-label="origin"
+                                        id="origin"
+                                        name="origin"
                                         onChange={handleChange}
-                                        value={acquisition.seller}
+                                        value={acquisition.origin}
                                     >
-                                        <option value="1">Alexander</option>
-                                        <option value="2">Sergio</option>
-                                        <option value="3">Ximena</option>
+                                        <option value={1}>Alexander</option>
+                                        <option value={2}>Sergio</option>
+                                        <option value={3}>Ximena</option>
                                     </select>
                                     <ErrorMessage />
                                 </div>
@@ -341,9 +345,9 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         onChange={handleChange}
                                         value={acquisition.entity_type}
                                     >
-                                        <option value="1">Notaría</option>
-                                        <option value="2">Sergio</option>
-                                        <option value="3">Ximena</option>
+                                        <option value="Notaría">Notaría</option>
+                                        <option value="Sergio">Sergio</option>
+                                        <option value="Ximena">Ximena</option>
                                     </select>
                                     <ErrorMessage />
                                 </div>

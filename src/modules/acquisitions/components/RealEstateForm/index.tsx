@@ -39,7 +39,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         id: 0,
         sap_id: '',
         destination_type: '',
-        accounting_account: '',
+        accounting_account: '0000',
         registry_number: '',
         registry_number_document_id: '',
         name: '',
@@ -53,7 +53,14 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         zone: '',
         tipology: '',
         materials: [],
-        supports_documents: [],
+        supports_documents: [
+            {
+                type: 'Documento de Matricula',
+            },
+            {
+                type: 'Documento de Titulo',
+            },
+        ],
         project_id: '',
         status: 0,
         audit_trail: null,
