@@ -58,9 +58,13 @@ export const qsToArray = (qs: string) => {
 export const setTitle = (title: string) => (document.title = title);
 
 export const formatDate = (date) => {
-    const tmpDate = new Date(date);
-    const newDate = moment(tmpDate).format('MM/DD/YYYY - h:mm A');
-    return date && newDate;
+    if(date) {
+        const tmpDate = new Date(date);
+        const newDate = moment(tmpDate).format('MM/DD/YYYY - h:mm A');
+        return date && newDate;
+    }
+    return '';
+
 };
 
 export const extractMonth = (date) => {

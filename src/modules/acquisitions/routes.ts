@@ -19,21 +19,58 @@ import {
 
 
 } from "./views";
+import { Permit } from "../..";
 
-
-
-export const create_realEstate = () => {
-    /*const user = */
-
-    //store.getState().users.user.value[0].id_rol
+export const guards = {
+    createProject: (props?) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const { permits } = user;
+        return permits.includes( Permit.CREATE_POLICY );
+    },
+    detailProject: (props?) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const { permits } = user;
+        return permits.includes( Permit.DETAIL_PROJECT );
+    },
+    editProject: (props?) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const { permits } = user;
+        return permits.includes( Permit.UPDATE_PROJECT );
+    },
+    listProject: (props?) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const { permits } = user;
+        return permits.includes( Permit.LIST_PROJECT );
+    },
+    createRealEstate: (props?) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const { permits } = user;
+        return permits.includes( Permit.CREATE_REALESTATE );
+    },detailRealEstate: (props?) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const { permits } = user;
+        return permits.includes( Permit.DETAIL_REALESTATE );
+    },
+    editRealEstate: (props?) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const { permits } = user;
+        return permits.includes( Permit.UPDATE_REALESTATE );
+    },
+    listRealEstate: (props?) => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const { permits } = user;
+        return permits.includes( Permit.LIST_REALESTATE );
+    },
 }
+
+
 const get_routes = (): IRoute[] => {
-    create_realEstate();
+
     return [
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.createRealEstate,
             path: '/acquisitions/real-estates/create/',
             template_props: {
                 breadcrumbs: [
@@ -49,7 +86,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.editRealEstate,
             path: '/acquisitions/real-estates/edit/:id/',
             template_props: {
                 breadcrumbs: [
@@ -65,7 +102,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.detailRealEstate,
             path: '/acquisitions/real-estates/:id/',
             template_props: {
                 breadcrumbs: [
@@ -81,7 +118,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.listRealEstate,
             path: '/acquisitions/real-estates/',
             template_props: {
                 breadcrumbs: [{ name: 'Bienes Inmuebles' }],
@@ -91,7 +128,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.createProject,
             path: '/acquisitions/projects/create/',
             template_props: {
                 breadcrumbs: [
@@ -104,7 +141,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.editProject,
             path: '/acquisitions/projects/edit/:id/',
             template_props: {
                 breadcrumbs: [
@@ -117,7 +154,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.detailProject,
             path: '/acquisitions/projects/:id/',
             template_props: {
                 breadcrumbs: [
@@ -130,7 +167,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.listProject,
             path: '/acquisitions/projects/',
             template_props: {
                 breadcrumbs: [{ name: 'Proyectos' }],
