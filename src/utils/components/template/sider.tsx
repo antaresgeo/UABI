@@ -60,16 +60,17 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                         Corredores de Seguros
                     </Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub5" title="Disposición">
+                <SubMenu key="sub5" title="Inspección" />
+                <SubMenu key="sub6" title="Disposición">
                     {/*<Menu.Item key="9" onClick={goTo('/acquisitions/real-estates/areas/')}>*/}
                     {/*    Áreas*/}
                     {/*</Menu.Item>*/}
                 </SubMenu>
-                <SubMenu key="sub6" title="Supervisión" />
-                <SubMenu key="sub7" title="Facturación" />
-                <SubMenu key="sub8" title="Mantenimiento" />
-                <SubMenu key="sub9" title="Consultas" />
-                <SubMenu key="sub10" title="Informes y Logs" />
+                <SubMenu key="sub7" title="Supervisión" />
+                <SubMenu key="sub8" title="Facturación" />
+                <SubMenu key="sub9" title="Mantenimiento" />
+                <SubMenu key="sub10" title="Consultas" />
+                <SubMenu key="sub11" title="Informes y Logs" />
             </Menu>
         </>
     );

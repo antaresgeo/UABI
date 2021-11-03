@@ -56,10 +56,12 @@ export enum Permit {
     DETAIL_PROJECT = 'detail_project',
     UPDATE_PROJECT = 'update_project',
     DELETE_PROJECT = 'delete_project',
+    LIST_PROJECT = 'list_project',
     CREATE_REALESTATE = 'create_realEstate',
     DETAIL_REALESTATE = 'detail_realEstate',
     UPDATE_REALESTATE = 'update_realEstate',
-    DELETE_REALESTATE = 'delete_realEstate'
+    DELETE_REALESTATE = 'delete_realEstate',
+    LIST_REALESTATE = 'list_realEstate',
 }
 
 
@@ -77,7 +79,15 @@ const user = {
         Permit.CREATE_INSURANCE_BROKER,
         Permit.DETAIL_INSURANCE_BROKER,
         Permit.UPDATE_INSURANCE_BROKER,
-        Permit.LIST_INSURANCE_BROKER
+        Permit.LIST_INSURANCE_BROKER,
+        Permit.CREATE_REALESTATE,
+        Permit.DETAIL_REALESTATE,
+        Permit.UPDATE_REALESTATE,
+        Permit.LIST_REALESTATE,
+        Permit.CREATE_PROJECT,
+        Permit.DETAIL_PROJECT,
+        Permit.UPDATE_PROJECT,
+        Permit.LIST_PROJECT
     ]
 
 }

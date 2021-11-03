@@ -18,9 +18,10 @@ const CreateInsurability = () => {
         dispatch(getRealEstates({}));
     }, []);
     const createPolicy = async (dataPolicy) => {
+        console.log(dataPolicy);
         const response: any = await dispatch(actions.createPolicy(dataPolicy));
         //await swal("Message", response.message, "success");
-        //history.push(`/insurabilities/`);
+        // history.push(`/insurabilities/`);
     };
     return (
         <div className="h-100 d-flex flex-column">
@@ -30,6 +31,7 @@ const CreateInsurability = () => {
                         <div className="col-md-12">
                             <Card title="Crear Póliza">
                                 <PolizaForm
+                                    type_assurance = "Normal"
                                     type='create'
                                     realEstates={realEstate}
                                     onSubmit={(values) => {

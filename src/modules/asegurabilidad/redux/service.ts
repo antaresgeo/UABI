@@ -9,6 +9,7 @@ import {
 
 // Services: POST
 const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
+
     try {
         let URI = `/insurabilities`;
         let res: AxiosResponse<IPolicyResponse> = await http.post(URI, data);
@@ -18,6 +19,7 @@ const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
     } catch (error) {
         console.error(error);
         await swal.fire('Error', '', 'error');
+
 
         return Promise.reject('Error');
     }
