@@ -1,6 +1,6 @@
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { Formik, Form } from 'formik';
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import GeneralDataForm from './GeneralDataForm';
 import AcquisitionsFrom from './AdquisitionsForm';
 import RealEstateList from '../RealEstateList';
@@ -62,12 +62,10 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         _type: null,
         ...realEstate,
     };
-    
+
     const schema = Yup.object().shape({
-        dependency: Yup.string().required('Campo obligatorio'),
         destination_type: Yup.string().required('Campo obligatorio'),
-        accounting_account: Yup.string(),
-        cost_center: Yup.string(),
+        // accounting_account: Yup.string(),
         registry_number: Yup.string().required('Campo obligatorio').max(20, 'El maximo 20 es caracteres'),
         name: Yup.string().required('Campo obligatorio'),
         description: Yup.string().required('Campo obligatorio'),
@@ -94,8 +92,10 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         const isFinish = aux_values._type === 'finish';
         const values: any = { ...aux_values };
         delete values._type;
-        values.project_id = [values.project_id]
+        values.project_id = [values.project_id];
         values.materials = values.materials.join(', ');
+        console.log(values);
+
         onSubmit(values, form, isFinish).then(() => {
             form.setSubmitting(false);
             form.resetForm();
@@ -106,12 +106,12 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     const [project, set_project] = useState(null);
 
     useEffect(() => {
-        if(projectId){
-            service.getProject(projectId + '').then(_project => {
+        if (projectId) {
+            service.getProject(projectId + '').then((_project) => {
                 set_project(_project);
-            })
-        }else {
-            set_project(null)
+            });
+        } else {
+            set_project(null);
         }
     }, [projectId]);
 
@@ -158,22 +158,21 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             <AcquisitionsFrom type={type} disabled={type === 'view'} formik={formik} />
                                             <SupportDocumentsForm type={type} formik={formik} />
                                             {type === 'view' && (
-                                                <Card title={
-                                                <>
-                                                    <b>Inmuebles del Proyecto: {}</b>
-                                                </>
-                                                }>
+                                                <Card
+                                                    title={
+                                                        <>
+                                                            <b>Inmuebles del Proyecto: {}</b>
+                                                        </>
+                                                    }
+                                                >
                                                     <RealEstateList project_id={project_id} init={false} />
                                                 </Card>
                                             )}
-                                            {(type === 'create') && (
+                                            {type === 'create' && (
                                                 <Card title="Inmuebles del Proyecto">
                                                     <RealEstateList project_id={project_id} init={false} />
                                                 </Card>
                                             )}
-
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -208,6 +207,9 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             type="button"
                                             className="btn btn-primary"
                                             onClick={() => {
+                                                console.log('Works');
+                                                console.log(formik.isValid);
+
                                                 formik.setFieldValue('_type', 'normal');
                                                 formik.submitForm();
                                             }}
