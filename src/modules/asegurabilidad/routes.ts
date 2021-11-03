@@ -1,12 +1,6 @@
 // import store from "../../config/store";
 import { IRoute } from '../../utils/components/app_router/custom_types';
-// import Policies from './views/Policies';
-// import CreateInsurability from './views/CreatePolicy';
-// import DetailInsurability from './views/DetailPolicies';
-// import EditPolicy from './views/EditPolicy';
 import { Permit } from '../..';
-
-
 import Policies from './views/Policies/Policies';
 import CreateInsurability from './views/Policies/CreatePolicy';
 import DetailInsurability from './views/Policies/DetailPolicies';

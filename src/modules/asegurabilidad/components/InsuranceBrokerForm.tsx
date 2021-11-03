@@ -10,7 +10,7 @@ export interface IInsuranceBrokerAttributes {
     name: string;
     nit: string;
     phone: string;
-    location: string;
+    location_id: string;
     contact_information: { name: string; email: string; phone_number: string };
     audit_trail?: {
         created_by: string;
@@ -155,6 +155,56 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                         />
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <br />
+                        <h5>Informacion de Contacto</h5>
+                        <hr />
+                        <div className="row">
+                            <div className="form-group col-4">
+                                <label htmlFor="contact_name_id" className="form-label">
+                                    Nombre de contacto
+                                </label>
+                                <Field
+                                    type="text"
+                                    className="form-control"
+                                    id="contact_name_id"
+                                    name="contact_information.name"
+                                    disabled={disabled}
+                                    autoComplete="off"
+                                    maxLength={50}
+                                />
+                                <ErrorMessage name="email" />
+                            </div>
+                            <div className="form-group col-4">
+                                <label htmlFor="contact_email_id" className="form-label">
+                                    Correo Electronico de contacto
+                                </label>
+                                <Field
+                                    type="email"
+                                    className="form-control"
+                                    id="contact_email_id"
+                                    name="contact_information.email"
+                                    disabled={disabled}
+                                    autoComplete="off"
+                                    maxLength={50}
+                                />
+                                <ErrorMessage name="email" />
+                            </div>
+                            <div className="form-group col-4">
+                                <label htmlFor="contact_phone_id" className="form-label">
+                                    Telefono de contacto
+                                </label>
+                                <Field
+                                    type="email"
+                                    className="form-control"
+                                    id="contact_phone_id"
+                                    name="contact_information.phone_number"
+                                    disabled={disabled}
+                                    autoComplete="off"
+                                    maxLength={50}
+                                />
+                                <ErrorMessage name="email" />
                             </div>
                         </div>
                         <div className="row justify-content-end">

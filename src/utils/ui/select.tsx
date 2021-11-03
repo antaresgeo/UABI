@@ -3,12 +3,20 @@ import { FC } from 'react';
 import { FieldProps } from 'formik';
 interface SelectProps extends FieldProps {
     options?: any[];
+    className?: string;
+    extra_on_change?: (value) => void;
 }
-const Select: FC<SelectProps> = ({ field, form, options, ...props }) => {
+const Select: FC<SelectProps> = ({ field, form, options, className, extra_on_change, ...props }) => {
     const { Option } = AntdSelect;
-    options = options || [];
+    options = options;
+    if (options && Array.isArray(options)) {
+        options = [...options];
+    } else {
+        options = [];
+    }
     const on_change = (value) => {
         form.setFieldValue(field.name, value);
+        extra_on_change && extra_on_change(value);
     };
     const render_options = (items) =>
         items.map((item, i) => {
@@ -28,6 +36,7 @@ const Select: FC<SelectProps> = ({ field, form, options, ...props }) => {
             value={field.value}
             onChange={on_change}
             optionLabelProp="label"
+            className={['w-100', className].join(' ')}
             {...props}
         >
             {render_options(options)}

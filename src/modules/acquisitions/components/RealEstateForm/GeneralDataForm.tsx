@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Field } from 'formik';
 import { Card } from '../../../../utils/ui';
 import ErrorMessage from '../../../../utils/ui/error_messge';
@@ -9,6 +9,7 @@ import { extractMonth, formatDate } from '../../../../utils';
 import Select from '../../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
 import InputNumber from '../../../../utils/ui/input_number';
+import dependencias from '../../dependencias';
 
 interface GeneralDataFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -16,9 +17,10 @@ interface GeneralDataFormProps {
     formik: any;
     projects: IProjectAttributes[];
     onProjectSelectedChange?: (value) => void;
+    project?: any;
 }
 
-const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, projects, onProjectSelectedChange }) => {
+const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, projects, project, onProjectSelectedChange }) => {
     return (
         <Card
             title="Información del Inmueble"
@@ -39,46 +41,48 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                     </label>
                     <Field
                         disabled={disabled}
-                        className="w-100"
                         options={projects}
                         name="project_id"
                         component={Select}
                         id="project_id_id"
-                        validate={onProjectSelectedChange}
+                        extra_on_change={onProjectSelectedChange}
                     />
                     <ErrorMessage name="project_id" />
                 </div>
-                <div className="form-group col-6">
+                <div className="col-3">
                     <label htmlFor="dependency_id" className="form-label">
-                        Dependencia a cargo
+                        Dependecia
                     </label>
-                    <Field disabled={disabled} name="dependency" as="select" className="form-select" id="dependency_id">
-                        <option value="" disabled hidden>
-                            -- Seleccione Dependencia --
-                        </option>
-                        <option value="Secretaría Suministros">Secretaría Suministros</option>
-                        <option value="Secretaría Salud">Secretaría Salud</option>
-                        <option value="Secretaría Cultura">Secretaría Cultura</option>
-                        <option value="POR DEFINIR">POR DEFINIR</option>
-                    </Field>
+                    <input type="text" id="dependency_id" disabled className="form-control" value={project?.dependency || ''} />
                     <ErrorMessage name="dependency" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="subdependency_id" className="form-label">
+                        Sub. Dependecia
+                    </label>
+                    <input type="text" name="subdependency" id="subdependency_id" disabled className="form-control" value={project?.subdependency || ''} />
+                    <ErrorMessage name="subdependency" />
                 </div>
             </div>
             <div className="row">
                 <div className="form-group col-3">
+                    <label htmlFor="management_center_id" className="form-label">
+                        Centro Gestor
+                    </label>
+                    <input
+                        disabled
+                        type="text"
+                        className="form-control"
+                        id="management_center_id"
+                        value={project?.management_center || ''}
+                    />
+                    <ErrorMessage name="cost_center" />
+                </div>
+                <div className="form-group col-3">
                     <label htmlFor="cost_center_id" className="form-label">
                         Centro de Costos
                     </label>
-                    <Field disabled name="cost_center" type="text" className="form-control" id="cost_center_id" />
-                    {/*
-                        <option value="" disabled hidden>
-                            -- Seleccione Centro de Costos --
-                        </option>
-                        <option value="PÚBLICO">Público</option>
-                        <option value="FISCAL">Fiscal</option>
-                        <option value="MIXTO">Mixto</option>
-                        <option value="POR DEFINIR">POR DEFINIR</option>
-                    */}
+                    <input disabled type="text" className="form-control" id="cost_center_id" value={project?.cost_center || ''} />
                     <ErrorMessage name="cost_center" />
                 </div>
                 <div className="form-group col-3">
@@ -133,27 +137,6 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
 
                     <ErrorMessage name="accounting_account" />
                 </div>
-                <div className="form-group col-3">
-                    <label htmlFor="destination_type_id" className="form-label">
-                        Tipo Destinación
-                    </label>
-                    <Field
-                        disabled={disabled}
-                        name="destination_type"
-                        as="select"
-                        className="form-select"
-                        id="destination_type_id"
-                    >
-                        <option value="" disabled hidden>
-                            -- Seleccione Destinación --
-                        </option>
-                        <option value="PÚBLICO">Uso Público</option>
-                        <option value="FISCAL">Fiscal</option>
-                        <option value="MIXTO">Mixto</option>
-                    </Field>
-
-                    <ErrorMessage name="destination_type" />
-                </div>
             </div>
             <div className="row">
                 <div className="form-group col-3">
@@ -176,11 +159,32 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                     <ErrorMessage name="name" withCount max={200} />
                 </div>
                 <div className="form-group col-3">
+                    <label htmlFor="destination_type_id" className="form-label">
+                        Tipo Destinación
+                    </label>
+                    <Field
+                        disabled={disabled}
+                        name="destination_type"
+                        as="select"
+                        className="form-select"
+                        id="destination_type_id"
+                    >
+                        <option value="" disabled hidden>
+                            -- Seleccione Destinación --
+                        </option>
+                        <option value="PÚBLICO">Uso Público</option>
+                        <option value="FISCAL">Fiscal</option>
+                        <option value="MIXTO">Mixto</option>
+                    </Field>
+
+                    <ErrorMessage name="destination_type" />
+                </div>
+                <div className="form-group col-3">
                     <label htmlFor="active_code_id" className="form-label">
                         Código Activo
                     </label>
                     <Field
-                        disabled={disabled}
+                        disabled
                         name="active_code"
                         id="active_code_id"
                         type="text"
@@ -223,6 +227,8 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
 
                     <ErrorMessage name="zone"></ErrorMessage>
                 </div>
+            </div>
+            <div className="row">
                 <div className="form-group col-3">
                     <label htmlFor="registry_number_noc" className="form-label">
                         Número de matrícula
@@ -242,8 +248,6 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                     />
                     <ErrorMessage name="registry_number" withCount max={20} />
                 </div>
-            </div>
-            <div className="row">
                 <div className="form-group col-3">
                     <label htmlFor="patrimonial_value_id" className="form-label">
                         Valor Patrimonial
@@ -308,6 +312,8 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
 
                     <ErrorMessage name="total_area" />
                 </div>
+            </div>
+            <div className="row">
                 <div className="form-group col-3">
                     <label htmlFor="total_percentage_id" className="form-label">
                         Porcentaje Total
@@ -329,9 +335,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
 
                     <ErrorMessage name="total_percentage"></ErrorMessage>
                 </div>
-            </div>
-            <div className="row">
-                <div className="form-group col-6">
+                <div className="form-group col-3">
                     <label htmlFor="material_id" className="form-label">
                         Materiales de construcción
                     </label>

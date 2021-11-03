@@ -1,6 +1,6 @@
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { Formik, Form } from 'formik';
-import React, { FC } from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import GeneralDataForm from './GeneralDataForm';
 import AcquisitionsFrom from './AdquisitionsForm';
 import RealEstateList from '../RealEstateList';
@@ -9,7 +9,8 @@ import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import DocumentsModal from '../../../../utils/components/DocumentsModal/Modal';
 import SupportDocumentsForm from './SupportDocumentsForm';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { service } from '../../redux';
 
 interface RealEstateFormProps {
     realEstate?: IRealEstateAttributes;
@@ -32,14 +33,13 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     onProjectSelectedChange,
     projectId,
 }) => {
+    const dispatch = useDispatch();
     const history = useHistory();
     const initial_values = {
         id: 0,
         sap_id: '',
-        dependency: '',
         destination_type: '',
-        accounting_account: 'Fiscal',
-        cost_center: 'Fiscal',
+        accounting_account: '',
         registry_number: '',
         registry_number_document_id: '',
         name: '',
@@ -62,9 +62,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         _type: null,
         ...realEstate,
     };
-
-    const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
-
+    
     const schema = Yup.object().shape({
         dependency: Yup.string().required('Campo obligatorio'),
         destination_type: Yup.string().required('Campo obligatorio'),
@@ -96,6 +94,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         const isFinish = aux_values._type === 'finish';
         const values: any = { ...aux_values };
         delete values._type;
+        values.project_id = [values.project_id]
         values.materials = values.materials.join(', ');
         onSubmit(values, form, isFinish).then(() => {
             form.setSubmitting(false);
@@ -103,6 +102,18 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             form.setFieldValue('project_id', projectId || '');
         });
     };
+
+    const [project, set_project] = useState(null);
+
+    useEffect(() => {
+        if(projectId){
+            service.getProject(projectId + '').then(_project => {
+                set_project(_project);
+            })
+        }else {
+            set_project(null)
+        }
+    }, [projectId]);
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
@@ -141,6 +152,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 disabled={type === 'view'}
                                                 formik={formik}
                                                 projects={projects}
+                                                project={project}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
                                             <AcquisitionsFrom type={type} disabled={type === 'view'} formik={formik} />

@@ -34,7 +34,6 @@ const Registers = () => {
     }
 
     const filter = () => {
-        console.log(query);
         dispatch(actions.getRealEstates({ page: 1, q: query }));
     };
 

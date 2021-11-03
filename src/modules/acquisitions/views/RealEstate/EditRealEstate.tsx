@@ -26,7 +26,7 @@ const DetailProjects = () => {
         dispatch(actions.getProjects());
         const promise: any = dispatch(actions.getRealEstate(id));
         promise.then((res) => {
-            set_project_id(res.project_id);
+            set_project_id(res?.project_id);
         });
     }, []);
 

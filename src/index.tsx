@@ -106,6 +106,22 @@ if (!window.__uabi) {
 
 // borrar esto cuando se termine la autenticacion
 
+if (!window.__uabi) {
+    window.__uabi = {
+        cancel_mapper: {},
+        is_in_refresh: false,
+        retry_pending: [],
+        date_format: "YYYY-MM-DD",
+        number_formatter: new Intl.NumberFormat("es-CO", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        })
+    };
+}
+
+
+// borrar esto cuando se termine la autenticacion
+
 ReactDOM.render(
     // <React.StrictMode>
     <Provider store={store}>

@@ -15,9 +15,8 @@ const CreateInsurability = () => {
     const realEstate: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
     useEffect(() => {
-        //dispatch(getRealEstates({}));
-    }, [])
-    console.log(realEstate);
+        dispatch(getRealEstates({}));
+    }, []);
     const createPolicy = async (dataPolicy) => {
         const response: any = await dispatch(actions.createPolicy(dataPolicy));
         //await swal("Message", response.message, "success");
