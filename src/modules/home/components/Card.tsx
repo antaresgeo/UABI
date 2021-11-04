@@ -11,7 +11,7 @@ const Card: FC<CardProps> = ({ name, links }) => {
     return (
         <div className="col-4">
             <UabiCard
-                className="h-100"
+                className="h-100 dash-card"
                 title={
                     <span style={{ color: '#FF8403', fontWeight: 400 }}>
                         ACCESOS RÁPIDOS{' '}
@@ -28,7 +28,7 @@ const Card: FC<CardProps> = ({ name, links }) => {
                     </span>
                 }
             >
-                <ul className="custom-list-style">
+                <ul className="custom-list-style p-0">
                     {links.map((link, i) => {
                         return (
                             <li key={`link_${i}`} data-icon=">">

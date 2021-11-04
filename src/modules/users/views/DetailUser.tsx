@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { actions } from '../redux';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +8,6 @@ import { Card } from '../../../utils/ui';
 import GeneralForm from './../components/GerenalForm';
 
 interface IParams {
-
     id: string;
 }
 
@@ -23,12 +22,10 @@ const DetailUser = () => {
     }, []);
 
     const getUser = async (dataPolicy) => {
-        console.log(dataPolicy);
         const action = actions.getUser(parseInt(id));
         await dispatch(action);
-
-    }
-    const initial_values = {}
+    };
+    const initial_values = {};
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -64,8 +61,7 @@ const DetailUser = () => {
                 <div className="flex-fill" />
             </div>
         </div>
+    );
+};
 
-    )
-}
-
-export default DetailUser
+export default DetailUser;

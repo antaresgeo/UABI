@@ -15,7 +15,7 @@ interface RealEstateFormProps {
     onSubmit?: (values, form?, isFinish?: boolean) => Promise<any>;
     disabled?: boolean;
     projects: IProjectAttributes[];
-    type: 'desenglobar' | 'englobar'
+    type: 'desenglobar' | 'englobar';
     onProjectSelectedChange?: (value) => void;
     realEstates?: IRealEstateAttributes[];
     projectId?: number;
@@ -116,11 +116,11 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                         <div className="col-md-12">
                                             {type === 'desenglobar' && (
                                                 <h4 className="ms-4 mb-3">
-                                                    Desenglobar bien Inmueble
+                                                    Desenglobar proyecto
                                                     <TitleSpan name={name} registry_number={registry_number} />
                                                 </h4>
                                             )}
-                                            {type === 'englobar' && <h4 className="ms-4 mb-3">Englobar bien inmueble</h4>}
+                                            {type === 'englobar' && <h4 className="ms-4 mb-3">Englobar proyecto</h4>}
 
                                             <EnglobarForm
                                                 type={type}
@@ -175,7 +175,7 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                                         <button
                                                             type="button"
                                                             className="btn btn-primary mx-3"
-                                                            onClick={() => { } /*_createRealEstate*/}
+                                                            onClick={() => {} /*_createRealEstate*/}
                                                         >
                                                             Agregar
                                                         </button>

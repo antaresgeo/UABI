@@ -1,9 +1,10 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { actions } from '../redux';
 import { formatDate, swal } from '../../../utils';
 import { Link, Table } from '../../../utils/ui';
 import { IUserAttributes } from '../../../utils/interfaces/users';
+import { guards } from './../routes';
 
 interface UserListProps {
     users: IUserAttributes[];
@@ -29,6 +30,51 @@ const UserList: FC<UserListProps> = ({ users, change_page, total }) => {
         } else if (result.isDenied) {
             swal.close();
         }
+    };
+
+    const ver = {
+        title: 'Ver',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <Link
+                    to={`/users/${id}/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-eye" aria-hidden="true" />}
+                />
+            );
+        },
+    };
+
+    const editar = {
+        title: 'Editar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <Link
+                    to={`/users/edit/${id}/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                />
+            );
+        },
+    };
+
+    const eliminar = {
+        title: 'Inactivar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <div className="text-danger" onClick={deleteUser(id)}>
+                    <i className="fa fa-trash" aria-hidden="true" />
+                </div>
+            );
+        },
     };
 
     const table_columns = [
@@ -61,57 +107,21 @@ const UserList: FC<UserListProps> = ({ users, change_page, total }) => {
         {
             title: 'Acciones',
             fixed: true,
-            children: [
-                {
-                    title: 'Ver',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/users/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
-                    title: 'Editar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/users/edit/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
-                    title: 'Eliminar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <div className="text-danger" onClick={deleteUser(id)}>
-                                <i className="fa fa-trash" aria-hidden="true" />
-                            </div>
-                        );
-                    },
-                },
-            ],
+            children: [],
         },
     ];
 
-    return (
-        <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} />
-    );
+    if (guards.detail()) {
+        table_columns[5].children[0] = ver;
+    }
+    if (guards.edit()) {
+        table_columns[5].children[1] = editar;
+    }
+    if (guards.delete()) {
+        table_columns[5].children[2] = eliminar;
+    }
+
+    return <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} />;
 };
 
-
-export default UserList
+export default UserList;

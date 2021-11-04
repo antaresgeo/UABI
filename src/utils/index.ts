@@ -13,33 +13,31 @@ export const swal = withReactContent(Swal);
  * @param {function} effect  In the event that the generic action is successful and you want to trigger more actions depending on the generic action, you must pass this function
  */
 type EffectFn = (payload: any) => void;
-export const request_dispatch =
-    (
-        type: { default: string; success: string; fail: string },
-        request: Promise<any>,
-        creators: [Function?, Function?] = [],
-        effect?: EffectFn
-    ) =>{
-        return (dispatch: any): Promise<any> => {
-            const [success, fail] = creators || [];
-            dispatch({ type: type.default });
-            return request
-                .then((payload) => {
-                    success
-                        ? dispatch(success(payload))
-                        : dispatch({ type: type.success, payload });
-                    if (effect) effect(payload);
-                    return Promise.resolve(payload);
-                })
-                .catch((error) => {
-                    fail
-                        ? dispatch(fail(error))
-                        : dispatch({ type: type.fail, error });
-                    return Promise.reject(error);
-                });
-        };
-    }
-
+export const request_dispatch = (
+    type: { default: string; success: string; fail: string },
+    request: Promise<any>,
+    creators: [Function?, Function?] = [],
+    effect?: EffectFn
+) => {
+    return (dispatch: any): Promise<any> => {
+        const [success, fail] = creators || [];
+        dispatch({ type: type.default });
+        return request
+            .then((payload) => {
+                success
+                    ? dispatch(success(payload))
+                    : dispatch({ type: type.success, payload });
+                if (effect) effect(payload);
+                return Promise.resolve(payload);
+            })
+            .catch((error) => {
+                fail
+                    ? dispatch(fail(error))
+                    : dispatch({ type: type.fail, error });
+                return Promise.reject(error);
+            });
+    };
+};
 
 export const qsToArray = (qs: string) => {
     let qsAsArray = [];
@@ -58,9 +56,12 @@ export const qsToArray = (qs: string) => {
 export const setTitle = (title: string) => (document.title = title);
 
 export const formatDate = (date) => {
-    const tmpDate = new Date(parseInt(date));
-    const newDate = moment(tmpDate).format('MM/DD/YYYY - h:mm A');
-    return date && newDate;
+    if (date) {
+        const tmpDate = new Date(date);
+        const newDate = moment(tmpDate).format('MM/DD/YYYY - h:mm A');
+        return date && newDate;
+    }
+    return '';
 };
 
 export const extractMonth = (date) => {

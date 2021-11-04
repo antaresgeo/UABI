@@ -1,4 +1,3 @@
-
 import { actions } from '../redux';
 import { useDispatch } from 'react-redux';
 import { Card } from '../../../utils/ui';
@@ -11,7 +10,6 @@ const CreateUser = () => {
     const history = useHistory();
 
     const createUser = async (dataPolicy) => {
-        console.log(dataPolicy)
         await dispatch(actions.createUser(dataPolicy));
     };
 
@@ -49,7 +47,7 @@ const CreateUser = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CreateUser
+export default CreateUser;

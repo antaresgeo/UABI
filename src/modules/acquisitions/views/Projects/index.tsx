@@ -11,9 +11,6 @@ const Projects = () => {
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
     const loading: boolean = useSelector((states: any) => states.acquisitions.projects.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.projects.pagination);
-
-    console.log(total_results)
-
     const [query, set_query] = useState<string>('');
 
     const filter = () => {
@@ -29,11 +26,11 @@ const Projects = () => {
         if (id !== '' && id !== undefined) {
             res = await dispatch(actions.getRealEstatesByProject(id));
         }
-        if (res.length !== 0) {
+        if (res.total !== 0) {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
-                text: `El proyecto contiene ${res.length} bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
+                text: `El proyecto contiene ${res.total} bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -82,9 +79,6 @@ const Projects = () => {
                 await dispatch(actions.deleteProject(id));
                 await dispatch(actions.getProjects());
                 // const _res: any = await dispatch(actions.deleteProject(id));
-                // console.log(_res);
-
-                // console.log(_res.message);
 
                 // swal.fire({
                 //     title: "Proyecto Inactivado",
@@ -163,13 +157,13 @@ const Projects = () => {
                     },
                 },
                 {
-                    title: 'Eliminar',
+                    title: 'Inactivar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <div className="text-danger" onClick={deleteProject(id)}>
-                                <i className="fa fa-trash" aria-hidden="true" />
+                                <i className="fa fa-times-circle" aria-hidden="true" />
                             </div>
                         );
                     },
@@ -187,7 +181,7 @@ const Projects = () => {
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card
-                        title="Administrar Proyectos"
+                        title="Proyectos"
                         extra={<Link to="/acquisitions/projects/create/" name="Crear" iconText="+" />}
                     >
                         <form>

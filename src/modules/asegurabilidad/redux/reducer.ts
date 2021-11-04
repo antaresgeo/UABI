@@ -2,26 +2,61 @@ import types from './types';
 
 //interface State {}
 
+const fake_company = {
+    id: 1,
+    name: 'ColSeguros',
+    nit: '1111111-1',
+    phone: '6016555555',
+    audit_trail: {
+        created_by: 'Administrador',
+        created_on: '11/03/2021',
+        updated_by: 'Administrador',
+        updated_on: '11/03/2021',
+        updated_values: '',
+    },
+};
+
+const fake_broker = {
+    id: 1,
+    name: 'Aseguradora Paz',
+    nit: '2222222-2',
+    phone: '6042558866',
+    email: 'info@aseguradorapaz.com.co',
+    location_id: 'Hola',
+    contact_information: {
+        name: 'Pedro Gomez',
+        email: 'pedro.gomez@aseguradorapaz.com.co',
+        phone_number: '6042558866',
+    },
+    audit_trail: {
+        created_by: 'Administrador',
+        created_on: '11/03/2021',
+        updated_by: 'Administrador',
+        updated_on: '11/03/2021',
+        updated_values: '',
+    },
+};
+
 const emptyInitialState: any = {
     policy: {
         value: {
-            id: "-1",
-            registry_number: "",
-            vigency_start: "",
-            vigency_end: "",
-            insurance_broker: "",
-            insurance_company: "",
-            insurance_value: "",
+            id: '-1',
+            registry_number: '',
+            vigency_start: '',
+            vigency_end: '',
+            insurance_broker: '',
+            insurance_company: '',
+            insurance_value: '',
             insurance_document_id: 0,
-            real_estate_name: "",
+            real_estate_name: '',
             audit_trail: {
-                created_by: "",
-                created_on: "",
+                created_by: '',
+                created_on: '',
                 updated_by: null,
                 updated_on: null,
                 updated_values: null,
             },
-            status_name: "",
+            status_name: '',
         },
         loading: false,
         loaded: false,
@@ -29,15 +64,15 @@ const emptyInitialState: any = {
     policies: {
         value: [
             {
-                id: "-1",
-                registry_number: "",
-                vigency_start: "",
-                vigency_end: "",
-                insurance_broker: "",
-                insurance_company: "",
-                insurance_value: "",
+                id: '-1',
+                registry_number: '',
+                vigency_start: '',
+                vigency_end: '',
+                insurance_broker: '',
+                insurance_company: '',
+                insurance_value: '',
                 insurance_document_id: 0,
-                real_estate_name: "",
+                real_estate_name: '',
                 audit_trail: {
                     created_by: '',
                     created_on: '',
@@ -45,9 +80,50 @@ const emptyInitialState: any = {
                     updated_on: null,
                     updated_values: null,
                 },
-                status_name: "",
+                status_name: '',
             },
         ],
+        pagination: {
+            page: 1,
+            count: 0,
+            next_page: null,
+            previous_page: null,
+            total_results: 0,
+        },
+        loading: false,
+        loaded: false,
+    },
+    company: {
+        value: fake_company,
+        loading: false,
+        loaded: false,
+    },
+    companies: {
+        value: [fake_company],
+        pagination: {
+            page: 1,
+            count: 0,
+            next_page: null,
+            previous_page: null,
+            total_results: 0,
+        },
+        loading: false,
+        loaded: false,
+    },
+    broker: {
+        value: fake_broker,
+        loading: false,
+        loaded: false,
+    },
+    brokers: {
+        value: [fake_broker],
+        pagination: {
+            page: 1,
+            count: 0,
+            next_page: null,
+            previous_page: null,
+            total_results: 0,
+        },
         loading: false,
         loaded: false,
     },
@@ -55,7 +131,6 @@ const emptyInitialState: any = {
 const initialState = emptyInitialState;
 
 const reducer = (state: any = initialState, action: any): any => {
-    // console.log(action.payload)
     switch (action.type) {
         case types.policy.default: {
             return {
@@ -65,9 +140,7 @@ const reducer = (state: any = initialState, action: any): any => {
         }
 
         case types.policy.success: {
-
             return {
-
                 ...state,
                 policy: {
                     ...state.policy,

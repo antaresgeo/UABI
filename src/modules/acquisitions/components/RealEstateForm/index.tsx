@@ -1,13 +1,16 @@
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { Formik, Form } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import GeneralDataForm from './GeneralDataForm';
 import AcquisitionsFrom from './AdquisitionsForm';
 import RealEstateList from '../RealEstateList';
 import { Card } from '../../../../utils/ui';
-import { Input } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
+import DocumentsModal from '../../../../utils/components/DocumentsModal/Modal';
+import SupportDocumentsForm from './SupportDocumentsForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { service } from '../../redux';
 
 interface RealEstateFormProps {
     realEstate?: IRealEstateAttributes;
@@ -30,29 +33,35 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     onProjectSelectedChange,
     projectId,
 }) => {
+    const dispatch = useDispatch();
     const history = useHistory();
     const initial_values = {
         id: 0,
         sap_id: '',
-        dependency: '',
         destination_type: '',
-        accounting_account: '',
-        cost_center: '',
+        accounting_account: '0000',
         registry_number: '',
         registry_number_document_id: '',
         name: '',
         description: '',
         patrimonial_value: 0,
         reconstruction_value: 0,
-        location: 'Kr 1a # 34',
-        cbml: '46446',
+        location: '',
+        cbml: '',
         total_area: 0,
         total_percentage: 0,
         zone: '',
         tipology: '',
         materials: [],
-        supports_documents: null,
-        project_id: [],
+        supports_documents: [
+            {
+                type: 'Documento de Matricula',
+            },
+            {
+                type: 'Documento de Titulo',
+            },
+        ],
+        project_id: '',
         status: 0,
         audit_trail: null,
         acquisitions: [],
@@ -62,21 +71,24 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     };
 
     const schema = Yup.object().shape({
-        dependency: Yup.string().required('Campo obligatorio'),
         destination_type: Yup.string().required('Campo obligatorio'),
-        accounting_account: Yup.string(),
-        cost_center: Yup.string(),
-        registry_number: Yup.string()
-            .required('Campo obligatorio')
-            .max(20, 'El Número Matricula debe tener maximo 20 caracteres'),
+        // accounting_account: Yup.string(),
+        registry_number: Yup.string().required('Campo obligatorio').max(20, 'El maximo 20 es caracteres'),
         name: Yup.string().required('Campo obligatorio'),
         description: Yup.string().required('Campo obligatorio'),
-        patrimonial_value: Yup.number().required('Campo obligatorio'),
+        patrimonial_value: Yup.number()
+            .required('Campo obligatorio')
+            .min(0, 'El minimo es 0')
+            .max(99999999999999999999, 'El maximo 20 es caracteres'),
+        reconstruction_value: Yup.number()
+            .required('Campo obligatorio')
+            .min(0, 'El minimo es 0')
+            .max(9999999999, 'El maximo 10 es caracteres'),
         total_area: Yup.number().required('Campo obligatorio'),
         total_percentage: Yup.number()
             .required('Campo obligatorio')
-            .min(0, 'El procentaje minimo es 0')
-            .max(100, 'El procentaje maximo es 100'),
+            .min(0, 'El minimo es 0')
+            .max(100, 'El maximo es 100'),
         zone: Yup.string().required('Campo obligatorio'),
         tipology: Yup.string().required('Campo obligatorio'),
         project_id: Yup.number().required('Campo obligatorio'),
@@ -87,12 +99,28 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         const isFinish = aux_values._type === 'finish';
         const values: any = { ...aux_values };
         delete values._type;
+        values.project_id = [values.project_id];
+        values.materials = values.materials.join(', ');
+        console.log(values);
+
         onSubmit(values, form, isFinish).then(() => {
             form.setSubmitting(false);
             form.resetForm();
             form.setFieldValue('project_id', projectId || '');
         });
     };
+
+    const [project, set_project] = useState(null);
+
+    useEffect(() => {
+        if (projectId) {
+            service.getProject(projectId + '').then((_project) => {
+                set_project(_project);
+            });
+        } else {
+            set_project(null);
+        }
+    }, [projectId]);
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
@@ -131,64 +159,27 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 disabled={type === 'view'}
                                                 formik={formik}
                                                 projects={projects}
+                                                project={project}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
                                             <AcquisitionsFrom type={type} disabled={type === 'view'} formik={formik} />
-                                            <Card
-                                                title="Documentos Soporte"
-                                                actions={
-                                                    [
-                                                        // <div className="d-flex flex-row-reverse px-3 py-1">
-                                                        //     <button type="button" className="btn btn-primary">
-                                                        //         Guardar
-                                                        //     </button>
-                                                        // </div>,
-                                                    ]
-                                                }
-                                            >
-                                                <div className="row">
-                                                    <div className="col-3">
-                                                        <label htmlFor="form-select" className="form-label">
-                                                            Nombre del Documento
-                                                        </label>
-                                                        <Input />
-                                                    </div>
-                                                    <div className="col-3">
-                                                        <div className="mb-3">
-                                                            <label htmlFor="formFile" className="form-label">
-                                                                Default file input example
-                                                            </label>
-                                                            <input className="form-control" type="file" id="formFile" />
-                                                            <div id="emailHelp" className="form-text">
-                                                                Escritura.pdf
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-1">
-                                                        <label htmlFor=""></label>
-                                                        <button type="submit" className="btn btn-primary mr-3">
-                                                            Subir
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div className="row justify-content-center">
-                                                    <div className="col text-start">
-                                                        <button type="submit" className="btn btn-primary mr-3">
-                                                            Guardar
-                                                        </button>
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-primary mx-3"
-                                                            onClick={() => {} /*_createRealEstate*/}
-                                                        >
-                                                            Agregar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </Card>
-                                            <Card title="Bienes Inmuebles del Proyecto">
-                                                <RealEstateList project_id={project_id} init={false} />
-                                            </Card>
+                                            <SupportDocumentsForm type={type} formik={formik} />
+                                            {type === 'view' && (
+                                                <Card
+                                                    title={
+                                                        <>
+                                                            <b>Inmuebles del Proyecto: {}</b>
+                                                        </>
+                                                    }
+                                                >
+                                                    <RealEstateList project_id={project_id} init={false} />
+                                                </Card>
+                                            )}
+                                            {type === 'create' && (
+                                                <Card title="Inmuebles del Proyecto">
+                                                    <RealEstateList project_id={project_id} init={false} />
+                                                </Card>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -223,6 +214,9 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             type="button"
                                             className="btn btn-primary"
                                             onClick={() => {
+                                                console.log('Works');
+                                                console.log(formik.isValid);
+
                                                 formik.setFieldValue('_type', 'normal');
                                                 formik.submitForm();
                                             }}

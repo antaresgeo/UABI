@@ -1,4 +1,3 @@
-
 import { location_http } from '../../../../config/axios_instances';
 import { IDocumentResponse } from '../../../../utils/interfaces';
 
@@ -27,7 +26,6 @@ const getIdFromLocation = async ({
             await location_http.get(URI, {
                 params: { city, state, country, commune, neighborhood },
             });
-        console.log(res);
 
         return res.data.results.id;
     } catch (e) {
@@ -52,7 +50,6 @@ export const getAddressById = async (id) => {
     try {
         let URI = '/addresses/formated/';
         let res = await location_http.get(URI, { params: { id } });
-        console.log(res);
 
         return res.data.results;
     } catch (e) {

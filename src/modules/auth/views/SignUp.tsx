@@ -49,7 +49,6 @@ const Register = () => {
                 fecha_creacion,
                 fecha_actualizacion,
             });
-            console.log(data);
             history.push('/auth');
         } catch (error: any) {
             console.error(error.response);

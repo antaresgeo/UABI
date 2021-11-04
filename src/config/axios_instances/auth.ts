@@ -50,7 +50,7 @@ const compute_token = (token: string) => `Bearer ${token}`;
 
 const get_on_hold = (original_config: any) => {
     return new Promise((resolve, reject) => {
-        window.retry_pending.push({
+        window.__uabi.retry_pending.push({
             resolve,
             reject,
             url: original_config.url,
@@ -66,17 +66,17 @@ const get_on_hold = (original_config: any) => {
 };
 
 const validate_refresh = (original_config: any) => {
-    if (window.is_in_refresh) {
+    if (window.__uabi.is_in_refresh) {
         return get_on_hold(original_config);
     }
     original_config._retry = true;
-    window.is_in_refresh = true;
+    window.__uabi.is_in_refresh = true;
     return original_config;
 };
 
 // const processQueue = ({ error = null, token = null }) => {
-//     if (window.retry_pending.length) {
-//         window.retry_pending.forEach((prom) => {
+//     if (window.__uabi.retry_pending.length) {
+//         window.__uabi.retry_pending.forEach((prom) => {
 //             if (error) {
 //                 prom.reject(error);
 //             } else if (token) {
@@ -85,7 +85,7 @@ const validate_refresh = (original_config: any) => {
 //                 prom.reject(null);
 //             }
 //         });
-//         window.retry_pending = [];
+//         window.__uabi.retry_pending = [];
 //     }
 // };
 
@@ -112,7 +112,7 @@ const onUnauthorized = (original_error: any) => {
             //         dispatch(logOut());
             //     })
             //     .then(() => {
-            //         window.is_in_refresh = false;
+            //         window.__uabi.is_in_refresh = false;
             //     });
         });
     }

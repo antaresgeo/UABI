@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { Field, Formik, Form, ErrorMessage } from 'formik';
+import { Field, Formik, Form } from 'formik';
+import ErrorMessage from '../../../utils/ui/error_messge';
 // import * as Yup from 'yup';
 import { IUserAttributes } from './../../../utils/interfaces/users';
 import React, { useState } from 'react';
@@ -25,13 +26,13 @@ const UserForm: FC<IUserFormPros> = ({ disabled, user, type, onSubmit }) => {
         phone_number: '',
         gender: '',
         id_rol: 0,
-        ...user
+        ...user,
     };
     const submit = (values, actions) => {
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
         });
-    }
+    };
 
     const mockData = [];
     for (let i = 0; i < 20; i++) {
@@ -42,20 +43,15 @@ const UserForm: FC<IUserFormPros> = ({ disabled, user, type, onSubmit }) => {
         });
     }
 
-    const initialTargetKeys = mockData.filter(item => +item.key > 10).map(item => item.key);
+    const initialTargetKeys = mockData.filter((item) => +item.key > 10).map((item) => item.key);
 
     const [targetKeys, setTargetKeys] = useState(initialTargetKeys);
     const [selectedKeys, setSelectedKeys] = useState([]);
     const onChange = (nextTargetKeys, direction, moveKeys) => {
-        console.log('targetKeys:', nextTargetKeys);
-        console.log('direction:', direction);
-        console.log('moveKeys:', moveKeys);
         setTargetKeys(nextTargetKeys);
     };
 
     const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
-        console.log('sourceSelectedKeys:', sourceSelectedKeys);
-        console.log('targetSelectedKeys:', targetSelectedKeys);
         setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
     };
 
@@ -64,14 +60,13 @@ const UserForm: FC<IUserFormPros> = ({ disabled, user, type, onSubmit }) => {
         console.log('target:', e.target);
     };
 
-
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} >
+        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues}>
             {({ values, isValid, isSubmitting }) => {
                 return (
                     <Form>
                         <div className="row">
-                        <div className="col-6">
+                            <div className="col-6">
                                 <label htmlFor="id_rol" className="form-label">
                                     Rol
                                 </label>
@@ -96,9 +91,8 @@ const UserForm: FC<IUserFormPros> = ({ disabled, user, type, onSubmit }) => {
                                     <option value="9">Mantenimiento</option>
                                     <option value="10">Facturación</option>
                                 </Field>
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="name" />
-                                </span>
+
+                                <ErrorMessage name="name" />
                             </div>
                             <div className="col-6">
                                 <label htmlFor="location" className="form-label">
@@ -112,34 +106,26 @@ const UserForm: FC<IUserFormPros> = ({ disabled, user, type, onSubmit }) => {
                                     onChange={onChange}
                                     onSelectChange={onSelectChange}
                                     onScroll={onScroll}
-                                    render={item => item.title}
+                                    render={(item) => item.title}
                                     disabled
-
                                 />
                             </div>
-
                         </div>
 
                         <div className="row justify-content-end">
                             <div className="col text-end">
                                 {type !== 'view' && (
-                                    <button
-                                        className="btn btn-primary my-3"
-                                        disabled={isSubmitting || disabled}
-                                    >
+                                    <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
                                         Guardar
                                     </button>
                                 )}
                             </div>
                         </div>
-
                     </Form>
                 );
             }}
         </Formik>
-    )
-}
+    );
+};
 
-
-
-export default UserForm
+export default UserForm;

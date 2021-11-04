@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import {
-    IProjectAttributes,
-    IRealEstateAttributes
-} from '../../../../utils/interfaces';
+import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { actions } from '../../redux';
 import RealEstateForm from '../../components/RealEstateForm';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,7 +23,7 @@ const DetailProjects = () => {
         dispatch(actions.getProjects());
         const promise: any = dispatch(actions.getRealEstate(id));
         promise.then((res) => {
-            set_project_id(res.project_id);
+            set_project_id(res?.project_id);
         });
     }, []);
 

@@ -1,8 +1,7 @@
-
 import { FC } from 'react';
 import { Card } from '../../../utils/ui';
 import { IUserAttributes } from '../../../utils/interfaces/users';
-import LocationModal from '../../../utils/components/LocationModal';
+import LocationModal from '../../../utils/components/Location/LocationModal';
 import { Formik, Form, Field } from 'formik';
 import { Link, useHistory } from 'react-router-dom';
 import ProjectModal from './../../acquisitions/components/ProjectModal';
@@ -13,8 +12,6 @@ interface IUserFormPros {
     type?: 'view' | 'create' | 'edit';
     onSubmit: (values, actions?) => Promise<any>;
 }
-
-
 
 const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
     const history = useHistory();
@@ -31,19 +28,18 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
         cellphone_number: '',
         phone_number: '',
         gender: '',
-    }
-
+    };
 
     const submit = (values, actions) => {
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
         });
-    }
+    };
     const hanleOnclick = () => {
-        history.push(`/users/edit/${initial_values.id}`)
-    }
+        history.push(`/users/edit/${initial_values.id}`);
+    };
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} >
+        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values}>
             {({ values, isValid, isSubmitting }) => {
                 return (
                     <Form>
@@ -224,7 +220,6 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     <option value="f">Femenino</option>
                                     <option value="m">Masculino</option>
                                     <option value="o">Otro</option>
-
                                 </Field>
                             </div>
                             <div className="form-group col-3">
@@ -241,7 +236,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     />
                                     <div className="input-group-prepend">
                                         <LocationModal
-                                            view='user'
+                                            view="user"
                                             disabled={disabled}
                                             onSave={(values) => {
                                                 return values;
@@ -276,7 +271,6 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                         <option value="9">Mantenimiento</option>
                                         <option value="10">Facturación</option>
                                     </Field>
-
                                 </div>
                             )}
                         </div>
@@ -294,13 +288,11 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                 )}
                             </div>
                         </div>
-
                     </Form>
                 );
             }}
         </Formik>
+    );
+};
 
-    )
-}
-
-export default GeneralForm
+export default GeneralForm;

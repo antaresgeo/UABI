@@ -1,14 +1,14 @@
 import { useParams, useHistory } from 'react-router-dom';
-import { IPolicyAttributes } from '../../../utils/interfaces/insurability';
+import { IPolicyAttributes } from '../../../../utils/interfaces/insurability';
 import { useEffect } from 'react';
-import PolizaForm from './../components/PolizaForm';
+import PolizaForm from '../../components/PolizaForm';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { Card } from '../../../utils/ui';
-import { swal } from '../../../utils';
-import { actions } from '../redux';
-import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
-import { getRealEstates } from "../../acquisitions/redux/actions/realEstates";
+import { Card } from '../../../../utils/ui';
+import { swal } from '../../../../utils';
+import { actions } from '../../redux';
+import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
+import { getRealEstates } from '../../../acquisitions/redux/actions/realEstates';
 
 interface IParams {
     id: string;
@@ -18,23 +18,17 @@ const EditPolicy = () => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
-    const policy: IPolicyAttributes = useSelector((store: any) => store.asegurabilty.policy.value);
+    const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
     const realEstate: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
     useEffect(() => {
         dispatch(getRealEstates({}));
-    }, [])
-
+    }, []);
 
     const _updatePolicy = async (policyForm) => {
         let res: any;
-        res = await dispatch(
-            actions.updatePolicy(
-                { policyForm },
-                id
-            )
-        );
-        await swal("Proyecto actualizado", res.data.message, "success");
+        res = await dispatch(actions.updatePolicy({ policyForm }, id));
+        await swal('Proyecto actualizado', res.data.message, 'success');
         history.push(`/insurability/policy/${policy.id}`);
     };
 
@@ -48,18 +42,16 @@ const EditPolicy = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                    <Card
-                        title="Póliza"
-                    >
-                        <PolizaForm
-                            realEstates={realEstate}
-                            policy={policy}
-                            onSubmit={(values) => {
-                                return _updatePolicy(values);
-                            }}
-                        />
-                    </Card>
-                    </div>
+                            <Card title="Póliza">
+                                <PolizaForm
+                                    realEstates={realEstate}
+                                    policy={policy}
+                                    onSubmit={(values) => {
+                                        return _updatePolicy(values);
+                                    }}
+                                />
+                            </Card>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -14,6 +14,11 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
             dataIndex: 'acquisition_type',
         },
         {
+            title: 'Proyecto',
+            align: 'center' as 'center',
+            dataIndex: '',
+        },
+        {
             title: 'No Acto administrativo',
             align: 'center' as 'center',
             dataIndex: 'act_number',
@@ -68,7 +73,7 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
               ]
             : []),
         {
-            title: 'Eliminar',
+            title: 'Inactivar',
             dataIndex: '',
             align: 'center' as 'center',
             render: (id) => {
@@ -77,7 +82,7 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
                         to=""
                         name=""
                         avatar={false}
-                        icon={<i className="fa fa-trash text-danger" aria-hidden="true" />}
+                        icon={<i className="fa fa-times-circle" aria-hidden="true"></i>}
                     />
                 );
             },

@@ -4,6 +4,8 @@ import { Form, Image, Header, Input, Button, Grid, Icon, SemanticICONS } from 's
 import loginimage from './../../../utils/assets/img/login.jpeg';
 import logo from './../../../utils/assets/img/escudoAlcaldia.png';
 import { authenticationUme } from '../../../utils';
+import { Permit, Role } from '../../../index';
+import { Redirect, useHistory } from 'react-router-dom';
 
 export default function SignIn() {
     const [idusuario, setIdusuario] = useState('');
@@ -12,11 +14,48 @@ export default function SignIn() {
     const [tipopassword, setTipoPassword] = useState('password');
     const [passwordVisibled, setPasswordVisibled] = useState(false);
     const [iconVisibility, setIconVisibility] = useState<SemanticICONS>('eye');
-
+    const history = useHistory();
     async function ingresarUsuario() {
+        const pass_is_valid = contraseña === '@sabi2021';
+        const user_is_valid = idusuario === '1020729179';
+        if (pass_is_valid && user_is_valid) {
+            const user = {
+                role: Role.ADMINISTRATOR,
+                permits: [
+                    Permit.CREATE_USER,
+                    Permit.DETAIL_USER,
+                    Permit.UPDATE_USER,
+                    Permit.DELETE_USER,
+                    Permit.CREATE_POLICY,
+                    Permit.DETAIL_POLICY,
+                    Permit.UPDATE_POLICY,
+                    Permit.LIST_POLICY,
+                    Permit.CREATE_INSURANCE_COMPANY,
+                    Permit.DETAIL_INSURANCE_COMPANY,
+                    Permit.UPDATE_INSURANCE_COMPANY,
+                    Permit.LIST_INSURANCE_COMPANY,
+                    Permit.CREATE_INSURANCE_BROKER,
+                    Permit.DETAIL_INSURANCE_BROKER,
+                    Permit.UPDATE_INSURANCE_BROKER,
+                    Permit.LIST_INSURANCE_BROKER,
+                    Permit.CREATE_PROJECT,
+                    Permit.DETAIL_PROJECT,
+                    Permit.UPDATE_PROJECT,
+                    Permit.DELETE_PROJECT,
+                    Permit.LIST_PROJECT,
+                    Permit.CREATE_REALESTATE,
+                    Permit.DETAIL_REALESTATE,
+                    Permit.UPDATE_REALESTATE,
+                    Permit.DELETE_REALESTATE,
+                    Permit.LIST_REALESTATE,
+                ],
+            };
+            localStorage.setItem('user', JSON.stringify(user));
+            history.push('/');
+        }
+
         // try {
         //     let res: AxiosResponse<any> | any = await signIn(idusuario, contraseña);
-        //     console.log(res);
 
         //     if (res.status === 200) {
         //         localStorage.setItem("token", res.data);
@@ -30,8 +69,7 @@ export default function SignIn() {
         // } catch (error) {
         //     console.error(error);
         // }
-        const auth = authenticationUme();
-        console.log(auth);
+        // const auth = authenticationUme();
     }
 
     const handleAltVisibility = () => {
@@ -50,8 +88,11 @@ export default function SignIn() {
         altVisibilityPassword();
     }, [passwordVisibled]);
 
+    const user = JSON.parse(localStorage.getItem('user'));
+
     return (
         <div>
+            {user && <Redirect to="/" />}
             <Grid columns={2} style={{ height: '100vh' }} className="no-margin">
                 <Grid.Row className="no-padding-bottom no-padding-top">
                     <Grid.Column className="no-padding-right no-padding-left">

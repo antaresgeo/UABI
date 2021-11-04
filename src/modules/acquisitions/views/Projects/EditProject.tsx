@@ -28,14 +28,7 @@ const DetailProject = ({ view }: IProps) => {
 
     const _updateProject = async (projectForm) => {
         let res: any;
-        res = await dispatch(
-            actions.updateProject(
-                { name: projectForm.name, description: projectForm.description, dependency: projectForm.dependency },
-                id
-            )
-        );
-
-        console.log(res);
+        res = await dispatch(actions.updateProject(projectForm, id));
         await swal('Proyecto actualizado', res.data.message, 'success');
         history.push(`/acquisitions/projects/${project.id}`);
     };
@@ -50,13 +43,10 @@ const DetailProject = ({ view }: IProps) => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card
-                                title={
-                                    <>
-                                        <b>Proyecto:</b> {project?.name}
-                                    </>
-                                }
-                            >
+                            <h5 style={{ fontWeight: 600, marginLeft: 20 }}>
+                                <>Proyecto: {project?.name}</>
+                            </h5>
+                            <Card title="Información del Proyecto">
                                 <ProjectForm
                                     project={project}
                                     onSubmit={(values) => {

@@ -7,8 +7,11 @@ import { AdquisitionsItf } from '../../../../utils/interfaces';
 export const getRealEstates = (filters: {
     page?: number;
     pageSize?: 10 | 20 | 30;
-    q?: string;
-}) =>request_dispatch(types.realEstates, service.getRealEstates(filters));
+    q?: {};
+}) => {
+    console.log('action:', filters.q);
+    return request_dispatch(types.realEstates, service.getRealEstates(filters));
+};
 
 export const getRealEstatesByProject = (id) =>
     request_dispatch(

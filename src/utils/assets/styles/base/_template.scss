@@ -34,8 +34,6 @@
     }
 }
 
-
-
 .ant-drawer-close {
     color: rgba(255, 255, 255, 0.45);
     &:focus,
@@ -91,6 +89,11 @@
     box-shadow: 0 3px 10px #00000029;
     background: #fff 0 0 no-repeat padding-box;
     border-radius: 11px;
+    &.dash-card {
+        .ant-card-body {
+            padding: 16px 24px 0 24px;
+        }
+    }
 }
 
 .uabi-link {
@@ -140,4 +143,20 @@
 
 .ant-select-selection-overflow {
     padding: 1px;
+}
+
+.ant-upload-list-item-card-actions {
+    display: none;
+}
+
+.deck {
+    display: none;
+    &.active {
+        display: block;
+        position: absolute;
+        z-index: 200;
+        height: 100%;
+        width: 100%;
+        background: rgba(205, 218, 229, 0.7);
+    }
 }

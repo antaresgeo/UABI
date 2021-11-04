@@ -23,11 +23,8 @@ const getProject = (id: string) =>
 const getProjects = (filters?: any) =>
     request_dispatch(types.projects, service.getProjects({ ...filters }));
 
-const createProject = (name, description, dependecy) =>
-    request_dispatch(
-        types.project,
-        service.createProject(name, description, dependecy)
-    );
+const createProject = (values) =>
+    request_dispatch(types.project, service.createProject(values));
 
 const updateProject = (data: any, id) =>
     request_dispatch(types.project, service.updateProject(data, id));

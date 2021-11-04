@@ -7,7 +7,6 @@ export const DropdownNotification = () => {
     const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const history = useHistory();
     const handleClick = (e) => {
-        console.log('click ', e.key);
         if (e.key !== 'ver mas') {
             history.push(`/notification/${e.key}/`);
         }

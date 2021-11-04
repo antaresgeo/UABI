@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import {useEffect} from 'react'
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IUserAttributes } from './../../../utils/interfaces/users';
 import { actions } from '../redux';
@@ -10,7 +10,6 @@ import UserForm from './../components/UserForm';
 import GeneralForm from './../components/GerenalForm';
 
 interface IParams {
-
     id: string;
 }
 
@@ -18,7 +17,7 @@ interface IProps {
     view?: string;
 }
 
-const EditUser = ({view }: IProps) => {
+const EditUser = ({ view }: IProps) => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -27,14 +26,7 @@ const EditUser = ({view }: IProps) => {
 
     const _updateUser = async (userForm) => {
         let res: any;
-        res = await dispatch(
-            actions.updateUser(
-                { userForm },
-                id
-            )
-        );
-
-        console.log(res);
+        res = await dispatch(actions.updateUser({ userForm }, id));
         await swal('Usuario actualizado', res.data.message, 'success');
         history.push(`/users/${user.id}`);
     };
@@ -51,7 +43,7 @@ const EditUser = ({view }: IProps) => {
                         <div className="col-md-12">
                             <Card title="Edición de Usuario">
                                 <GeneralForm
-                                    type='edit'
+                                    type="edit"
                                     onSubmit={(values) => {
                                         return _updateUser(values);
                                     }}
@@ -59,7 +51,7 @@ const EditUser = ({view }: IProps) => {
                             </Card>
                             <Card title="Permisos del Usuario">
                                 <UserForm
-                                    type='edit'
+                                    type="edit"
                                     onSubmit={(values) => {
                                         return _updateUser(values);
                                     }}
@@ -85,7 +77,7 @@ const EditUser = ({view }: IProps) => {
                 <div className="flex-fill" />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default EditUser
+export default EditUser;

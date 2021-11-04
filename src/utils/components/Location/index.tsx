@@ -1,17 +1,19 @@
 import { FC, useEffect, useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { getList } from './service';
 import { ICountryAddressAttributes } from '../../interfaces';
 import Tooltip from 'antd/lib/tooltip';
+import ErrorMessage from '../../../utils/ui/error_messge';
 
 interface LocationProps {
     modalClose?: (values, callback) => void;
     view?: string;
     zone?: string;
+    innerRef?: any;
 }
 
-const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
+const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...props }) => {
     const [countries, setCountries] = useState<ICountryAddressAttributes[]>([]);
     const [states, setStates] = useState([]);
     const [city, setCity] = useState([]);
@@ -64,12 +66,12 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
         let res =
             options.length > 0 &&
             options.map((option, i) => {
-                const code = option[id];
+                const code = option[id] ? option[id] + '' : '';
                 const _name = option[name];
                 if (_name) {
                     return (
-                        <option key={`${name}${i}`} value={code}>
-                            {show_id && code ? `${code} - ${_name}` : _name}
+                        <option key={`${name}${i}`} value={code?.padStart(2, '0')}>
+                            {show_id && code ? `${code.padStart(2, '0')} - ${_name}` : _name}
                         </option>
                     );
                 }
@@ -84,6 +86,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
     return (
         <Formik
             enableReinitialize
+            innerRef={innerRef}
             initialValues={initialValues}
             validationSchema={view === 'general' && schema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -130,9 +133,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                     {renderOptions('country_code', 'country', countries)}
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="country" />
-                                </span>
+                                <ErrorMessage name="country" />
                             </div>
                             <div className="form-group col-4">
                                 <label htmlFor="" className="form-label">
@@ -158,9 +159,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                     {renderOptions('state_code', 'state', states)}
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="state" />
-                                </span>
+                                <ErrorMessage name="state" />
                             </div>
                             <div className="form-group col-4">
                                 <label htmlFor="" className="form-label">
@@ -186,9 +185,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                     {renderOptions('city_code', 'city', city)}
                                 </Field>
 
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="city" />
-                                </span>
+                                <ErrorMessage name="city" />
                             </div>
                         </div>
                         {(view === 'general' || view === 'user') && (
@@ -205,7 +202,10 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                         disabled={!has_city}
                                         onChange={async (e) => {
                                             handleChange(e);
-                                            const list = await getList('neighborhood', { commune: e.target.value });
+                                            const list = await getList('neighborhood', {
+                                                city: values.city,
+                                                commune: e.target.value,
+                                            });
                                             setNeighborhood(list);
                                             setFieldValue('neighborhood', '');
                                         }}
@@ -216,12 +216,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                         {renderOptions('commune_code', 'commune', commune, true)}
                                     </Field>
 
-                                    <span
-                                        className="text-danger text-left d-block w-100 mt-1"
-                                        style={{ height: '22px' }}
-                                    >
-                                        <ErrorMessage name="commune" />
-                                    </span>
+                                    <ErrorMessage name="commune" />
                                 </div>
                                 <div className="form-group col-6">
                                     <label htmlFor="" className="form-label">
@@ -243,12 +238,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                         {renderOptions('neighborhood_code', 'neighborhood', neighborhood, true)}
                                     </Field>
 
-                                    <span
-                                        className="text-danger text-left d-block w-100 mt-1"
-                                        style={{ height: '22px' }}
-                                    >
-                                        <ErrorMessage name="neighborhood" />
-                                    </span>
+                                    <ErrorMessage name="neighborhood" />
                                 </div>
                                 {view !== 'user' && (
                                     <>
@@ -257,10 +247,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                                 CB
                                             </label>
                                             <input className="w-100 form-control" type="text" value={cb} disabled />
-                                            <span
-                                                className="text-danger text-left d-block w-100 mt-1"
-                                                style={{ height: '22px' }}
-                                            ></span>
+                                            <ErrorMessage />
                                         </div>
                                         <div className="form-group col">
                                             <label htmlFor="" className="form-label">
@@ -280,12 +267,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                                 autoComplete="off"
                                             />
 
-                                            <span
-                                                className="text-danger text-left d-block w-100 mt-1"
-                                                style={{ height: '22px' }}
-                                            >
-                                                <ErrorMessage name="block" />
-                                            </span>
+                                            <ErrorMessage name="block" />
                                         </div>
 
                                         <div className="form-group col">
@@ -306,18 +288,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                                 autoComplete="off"
                                             />
 
-                                            <span
-                                                className="text-danger text-left d-block w-100 mt-1"
-                                                style={{ height: '22px' }}
-                                            >
-                                                <ErrorMessage name="lot" />
-                                            </span>
+                                            <ErrorMessage name="lot" />
                                         </div>
                                     </>
                                 )}
                             </div>
                         )}
-                        {(view === 'general' || view === "user") && (
+                        {(view === 'general' || view === 'user') && (
                             <>
                                 <h5>Dirección</h5>
                                 <hr />
@@ -353,24 +330,15 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                             </option>
                                         </Field>
 
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="tipo" />
-                                        </span>
+                                        <ErrorMessage name="tipo" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
                                             Número <span className="text-danger">*</span>
                                         </label>
                                         <Field name="number_one" type="number" className="w-100 form-control" />
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="number_one" />
-                                        </span>
+
+                                        <ErrorMessage name="number_one" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
@@ -445,12 +413,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                             </option>
                                         </Field>
 
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="word_one" />
-                                        </span>
+                                        <ErrorMessage name="word_one" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
@@ -467,19 +430,14 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                                 Norte
                                             </option>
                                             <option key="oeste" value="Oeste">
-                                                Oeste
+                                                Occidente
                                             </option>
                                             <option key="este" value="Este">
-                                                Este
+                                                Oriente
                                             </option>
                                         </Field>
 
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="orientation_one" />
-                                        </span>
+                                        <ErrorMessage name="orientation_one" />
                                     </div>
                                 </div>
                                 <div className="row align-items-center">
@@ -503,12 +461,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                             />
                                         </div>
 
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="number_two" />
-                                        </span>
+                                        <ErrorMessage name="number_two" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
@@ -582,12 +535,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                                 DE
                                             </option>
                                         </Field>
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="word_one" />
-                                        </span>
+
+                                        <ErrorMessage name="word_one" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
@@ -604,38 +553,35 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                                 Norte
                                             </option>
                                             <option key="oeste" value="Oeste">
-                                                Oeste
+                                                Occidente
                                             </option>
                                             <option key="este" value="Este">
-                                                Este
+                                                Oriente
                                             </option>
                                         </Field>
 
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="orientation_one" />
-                                        </span>
+                                        <ErrorMessage name="orientation_one" />
                                     </div>{' '}
                                     -
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
-                                            indicative <span className="text-danger">*</span>
+                                            Indicativo <span className="text-danger">*</span>
                                         </label>
                                         <Field name="indicative" type="number" className="w-100 form-control" />
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="indicative" />
-                                        </span>
+
+                                        <ErrorMessage name="indicative" />
                                     </div>
                                 </div>
                                 <div className="from-row row">
                                     <div className="form-group col-9">
                                         <label htmlFor="" className="form-label">
-                                            indicaciones
+                                            Indicaciones
+                                            <Tooltip title="Lorem impsu texto descriptivo">
+                                                <i
+                                                    className="fa fa-info-circle text-muted ms-2 me-2"
+                                                    style={{ fontSize: 14 }}
+                                                />
+                                            </Tooltip>
                                         </label>
                                         <Field
                                             name="indicaciones"
@@ -643,13 +589,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, ...props }) => {
                                             className="w-100 form-control"
                                             placeholder="Manzana, Urbanización, Núcleo, Bloque, apartamento"
                                         />
-
-                                        <span
-                                            className="text-danger text-left d-block w-100 mt-1"
-                                            style={{ height: '22px' }}
-                                        >
-                                            <ErrorMessage name="indicaciones" />
-                                        </span>
+                                        <ErrorMessage name="indicaciones" />
                                     </div>
                                 </div>
                             </>

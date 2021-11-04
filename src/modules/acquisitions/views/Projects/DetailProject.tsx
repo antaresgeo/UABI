@@ -29,13 +29,10 @@ const DetailProject = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card
-                                title={
-                                    <>
-                                        <b>Proyecto:</b> {project?.name}
-                                    </>
-                                }
-                            >
+                            <h5 style={{ fontWeight: 600, marginLeft: 20 }}>
+                                <>Proyecto: {project?.name}</>
+                            </h5>
+                            <Card title="Información del Proyecto">
                                 <ProjectForm disabled project={project} type="view" />
                             </Card>
 
@@ -73,7 +70,6 @@ const DetailProject = () => {
                 </button>
                 <div className="flex-fill" />
                 <ProjectModal />
-
             </div>
         </div>
     );

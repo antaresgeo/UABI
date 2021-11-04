@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    IProjectAttributes,
-    IRealEstateAttributes,
-} from '../../../../utils/interfaces';
+import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { actions } from '../../redux';
 import { useHistory } from 'react-router-dom';
 import RealEstateForm from '../../components/RealEstateForm';
@@ -11,7 +8,6 @@ import RealEstateForm from '../../components/RealEstateForm';
 const RealEstate = () => {
     const history: any = useHistory();
     const dispatch = useDispatch();
-    console.log(history.location.state?.project_id);
     const [project_id, set_project_id] = useState(history.location.state?.project_id);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
@@ -53,7 +49,6 @@ const RealEstate = () => {
         if (project_id !== value) {
             set_project_id(value);
             if (value) {
-                console.log(value);
                 dispatch(actions.getRealEstatesByProject(value));
             }
         }

@@ -1,8 +1,12 @@
-import {AxiosResponse} from 'axios';
-import {http} from '../../../../config/axios_instances';
-import {swal} from '../../../../utils';
+import { AxiosResponse } from 'axios';
+import { http } from '../../../../config/axios_instances';
+import { swal } from '../../../../utils';
 
-import {IProjectAttributes, IProjectResponse, IProjectsResponse,} from '../../../../utils/interfaces';
+import {
+    IProjectAttributes,
+    IProjectResponse,
+    IProjectsResponse,
+} from '../../../../utils/interfaces';
 
 // REAL ESTATES
 // Services: GET
@@ -45,16 +49,12 @@ const getProjects = async ({
 
 // Services: POST
 export const createProject = async (
-    name: string,
-    description: string,
-    dependency: string
+    values
 ): Promise<IProjectAttributes | string> => {
     try {
         let URI = `/projects`;
         let res: AxiosResponse<IProjectResponse> = await http.post(URI, {
-            name,
-            description,
-            dependency,
+            ...values,
         });
 
         await swal.fire('Proyecto creado', res.data.message, 'success');
@@ -73,7 +73,7 @@ export const updateProject = async (data: any, id: number) => {
     try {
         let URI = `/projects`;
         return await http.put(URI, data, {
-            params: {id},
+            params: { id },
         });
     } catch (error) {
         console.error(error);
