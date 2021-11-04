@@ -80,9 +80,6 @@ export const createRealEstate = async (
 
         const aux_data = {
             ...data,
-            address: {
-                name: data.location,
-            },
             accounting_account: '0000',
             projects_id: data.project_id,
         };
