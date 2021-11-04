@@ -26,44 +26,44 @@ export const guards = {
     },
     detailProject: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
-        const { permits } = user;
         if (!user) return false;
+        const { permits } = user;
         return permits.includes(Permit.DETAIL_PROJECT);
     },
     editProject: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
-        const { permits } = user;
         if (!user) return false;
+        const { permits } = user;
         return permits.includes(Permit.UPDATE_PROJECT);
     },
     listProject: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
-        const { permits } = user;
         if (!user) return false;
+        const { permits } = user;
         return permits.includes(Permit.LIST_PROJECT);
     },
     createRealEstate: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
-        const { permits } = user;
         if (!user) return false;
+        const { permits } = user;
         return permits.includes(Permit.CREATE_REALESTATE);
     },
     detailRealEstate: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
-        const { permits } = user;
         if (!user) return false;
+        const { permits } = user;
         return permits.includes(Permit.DETAIL_REALESTATE);
     },
     editRealEstate: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
-        const { permits } = user;
         if (!user) return false;
+        const { permits } = user;
         return permits.includes(Permit.UPDATE_REALESTATE);
     },
     listRealEstate: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
-        const { permits } = user;
         if (!user) return false;
+        const { permits } = user;
         return permits.includes(Permit.LIST_REALESTATE);
     },
 };

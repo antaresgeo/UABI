@@ -8,23 +8,28 @@ import { Role } from '../..';
 export const guards = {
     view: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         return user.role === Role.ADMINISTRATOR;
     },
     create: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         return user.role === Role.ADMINISTRATOR;
     },
     detail: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         return user.role === Role.ADMINISTRATOR;
         // return false;
     },
     edit: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         return user.role === Role.ADMINISTRATOR;
     },
     delete: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         return user.role === Role.ADMINISTRATOR;
     },
 };
