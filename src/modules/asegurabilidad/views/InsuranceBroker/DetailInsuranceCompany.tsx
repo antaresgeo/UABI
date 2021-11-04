@@ -27,7 +27,7 @@ const DetailInsuranceBroker = () => {
                     <div className="row justify-content-center">
                         <div className="col-md-12">
                             <Card title={<>{/*<b>Proyecto:</b> {insurance_broker?.name}*/}</>}>
-                                <InsuranceBrokerForm disabled type="view" insurance_broker={insurance_broker}/>
+                                <InsuranceBrokerForm disabled type="view" insurance_broker={insurance_broker} />
                             </Card>
                         </div>
                     </div>
