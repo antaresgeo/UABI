@@ -48,12 +48,10 @@ const UserForm: FC<IUserFormPros> = ({ disabled, user, type, onSubmit }) => {
     const [targetKeys, setTargetKeys] = useState(initialTargetKeys);
     const [selectedKeys, setSelectedKeys] = useState([]);
     const onChange = (nextTargetKeys, direction, moveKeys) => {
-
         setTargetKeys(nextTargetKeys);
     };
 
     const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
-
         setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
     };
 

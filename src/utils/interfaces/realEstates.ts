@@ -3,7 +3,7 @@ import { AdquisitionsItf, IAuditTrail } from '.';
 export interface IRealEstateAttributes {
     id?: number;
     sap_id?: string;
-
+    projects: { id: number, name: string}
     dependency: string;
     destination_type: string;
     accounting_account: string;

@@ -5,10 +5,9 @@ import { IPolicyAttributes } from '../../../../utils/interfaces/insurability';
 import { useEffect } from 'react';
 import { actions } from '../../redux';
 import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
-import { getRealEstates } from "../../../acquisitions/redux/actions/realEstates";
+import { getRealEstates } from '../../../acquisitions/redux/actions/realEstates';
 import PolizaForm from '../../components/PolizaForm';
 import { useHistory } from 'react-router-dom';
-
 
 interface IParams {
     id: string;
@@ -23,14 +22,12 @@ const DetailInsurability = () => {
     useEffect(() => {
         //dispatch(getRealEstates({}));
         dispatch(actions.getPolicy(id));
-    }, [])
+    }, []);
 
     const getPolicy = async (dataPolicy) => {
         const action = actions.getPolicy(id);
         await dispatch(action);
-
-    }
-
+    };
 
     return (
         <div className="h-100 d-flex flex-column">
@@ -71,7 +68,6 @@ const DetailInsurability = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-
     );
 };
 

@@ -1,12 +1,10 @@
-import { IRoute } from "../../utils/components/app_router/custom_types";
+import { IRoute } from '../../utils/components/app_router/custom_types';
 import Registers from './views/Registers/Registers';
 // import store from './../../config/store';
 import EnglobeProject from './views/Projects/EnglobeProject';
 import DesenglobeProject from './views/Projects/DesenglobeProject';
 
 import {
-
-
     CreateProject,
     CreateRealEstate,
     DetailRealEstate,
@@ -16,56 +14,61 @@ import {
     RealEstate,
     DetailProject,
     Projects,
-
-
-} from "./views";
-import { Permit } from "../..";
+} from './views';
+import { Permit } from '../..';
 
 export const guards = {
     createProject: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         const { permits } = user;
-        return permits.includes( Permit.CREATE_POLICY );
+        return permits.includes(Permit.CREATE_POLICY);
     },
     detailProject: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         const { permits } = user;
-        return permits.includes( Permit.DETAIL_PROJECT );
+        return permits.includes(Permit.DETAIL_PROJECT);
     },
     editProject: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         const { permits } = user;
-        return permits.includes( Permit.UPDATE_PROJECT );
+        return permits.includes(Permit.UPDATE_PROJECT);
     },
     listProject: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         const { permits } = user;
-        return permits.includes( Permit.LIST_PROJECT );
+        return permits.includes(Permit.LIST_PROJECT);
     },
     createRealEstate: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         const { permits } = user;
-        return permits.includes( Permit.CREATE_REALESTATE );
-    },detailRealEstate: (props?) => {
+        return permits.includes(Permit.CREATE_REALESTATE);
+    },
+    detailRealEstate: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         const { permits } = user;
-        return permits.includes( Permit.DETAIL_REALESTATE );
+        return permits.includes(Permit.DETAIL_REALESTATE);
     },
     editRealEstate: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         const { permits } = user;
-        return permits.includes( Permit.UPDATE_REALESTATE );
+        return permits.includes(Permit.UPDATE_REALESTATE);
     },
     listRealEstate: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         const { permits } = user;
-        return permits.includes( Permit.LIST_REALESTATE );
+        return permits.includes(Permit.LIST_REALESTATE);
     },
-}
-
+};
 
 const get_routes = (): IRoute[] => {
-
     return [
         {
             exact: true,
@@ -178,37 +181,37 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/registers/",
+            path: '/acquisitions/registers/',
             template_props: {
-                breadcrumbs: [{ name: "Registros" }],
+                breadcrumbs: [{ name: 'Registros' }],
             },
-            component: Registers
+            component: Registers,
         },
         {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/projects/englobar/:id/",
+            path: '/acquisitions/projects/englobar/:id/',
             template_props: {
                 breadcrumbs: [
                     { name: 'Proyectos', to: '/acquisitions/projects/' },
                     { name: 'Englobar Proyecto' },
                 ],
             },
-            component: EnglobeProject
+            component: EnglobeProject,
         },
         {
             exact: true,
             is_private: true,
             can_access: true,
-            path: "/acquisitions/projects/desenglobar/:id/",
+            path: '/acquisitions/projects/desenglobar/:id/',
             template_props: {
                 breadcrumbs: [
                     { name: 'Proyectos', to: '/acquisitions/projects/' },
                     { name: 'Desenglobar proyecto' },
                 ],
             },
-            component: DesenglobeProject
+            component: DesenglobeProject,
         },
     ];
 };

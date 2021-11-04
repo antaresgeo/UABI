@@ -6,7 +6,6 @@ import { swal } from '../../../utils';
 import { IRealEstateAttributes } from '../../../utils/interfaces';
 import { actions } from '../redux';
 
-
 interface RealEstateListProps {
     withProject?: boolean;
     filters?: any;
@@ -37,7 +36,6 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
             await dispatch(actions.deleteRealEstate(id));
             await dispatch(actions.getRealEstates({}));
             // const _res: any = await dispatch(actions.deleteProject(id));
-
 
             // swal.fire({
             //     title: "Proyecto Inactivado",
@@ -71,7 +69,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
             ? [
                   {
                       title: 'Proyecto Asociado',
-                      dataIndex: 'project_id',
+                      dataIndex: 'project_name',
                       align: 'center' as 'center',
                   },
               ]
@@ -138,7 +136,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
                     render: (id) => {
                         return (
                             <div className="text-danger" onClick={deleteRealEstate(id)}>
-                               <i className="fa fa-times-circle" aria-hidden="true"></i>
+                                <i className="fa fa-times-circle" aria-hidden="true"></i>
                             </div>
                         );
                     },

@@ -76,7 +76,6 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
                                     type="text"
                                     className="form-control"
                                     id="name_id"
-
                                     name="name"
                                     autoComplete="off"
                                     disabled={disabled}
@@ -98,7 +97,7 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
                                     disabled={disabled}
                                     maxLength={20}
                                 />
-                                <ErrorMessage name="nit" withCount max={20}/>
+                                <ErrorMessage name="nit" withCount max={20} />
                             </div>
                             <div className="col-6">
                                 <label htmlFor="description_id" className="form-label">
@@ -113,7 +112,7 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
                                     autoComplete="off"
                                     maxLength={20}
                                 />
-                                <ErrorMessage name="phone" withCount max={20}/>
+                                <ErrorMessage name="phone" withCount max={20} />
                             </div>
                         </div>
                         <div className="row justify-content-end">

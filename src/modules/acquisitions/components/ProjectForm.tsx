@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { IProjectAttributes } from '../../../utils/interfaces/';
 import ErrorMessage from '../../../utils/ui/error_messge';
@@ -52,18 +52,17 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
         return [];
     };
 
-
     const dependency_ops = format_list(dependencias);
 
     useEffect(() => {
-        if(project){
+        if (project) {
             const dependency = dependencias.find((d) => d.name === project.dependency);
             const _subs = format_list(dependency?.subs);
-            set_subs(_subs)
-        }else {
-            set_subs([])
+            set_subs(_subs);
+        } else {
+            set_subs([]);
         }
-    }, [project])
+    }, [project]);
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
@@ -158,14 +157,19 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                 />
                                 <ErrorMessage name="subdependency" />
                             </div>
-
                         </div>
                         <div className="row">
                             <div className="form-group col-6">
                                 <label htmlFor="management_center_id" className="form-label">
                                     Centro Gestor
                                 </label>
-                                <Field disabled name="management_center" type="text" className="form-control" id="management_center_id" />
+                                <Field
+                                    disabled
+                                    name="management_center"
+                                    type="text"
+                                    className="form-control"
+                                    id="management_center_id"
+                                />
                                 {/*
                         <option value="" disabled hidden>
                             -- Seleccione Centro de Costos --
@@ -181,7 +185,13 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                 <label htmlFor="cost_center_id" className="form-label">
                                     Centro de Costos
                                 </label>
-                                <Field disabled name="cost_center" type="text" className="form-control" id="cost_center_id" />
+                                <Field
+                                    disabled
+                                    name="cost_center"
+                                    type="text"
+                                    className="form-control"
+                                    id="cost_center_id"
+                                />
                                 {/*
                         <option value="" disabled hidden>
                             -- Seleccione Centro de Costos --

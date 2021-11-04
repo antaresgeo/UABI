@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import {
-    IProjectAttributes,
-    IRealEstateAttributes
-} from '../../../../utils/interfaces';
-import { actions } from '../../redux';
+import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
+import {actions, service} from '../../redux';
 import RealEstateForm from '../../components/RealEstateForm';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,14 +17,20 @@ const DetailProjects = () => {
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
-    const [project_id, set_project_id] = useState(realEstate?.project_id);
+    const [acquisitions, set_acquisitions] = useState([]);
+    const [project_id, set_project_id] = useState(realEstate?.projects.id);
 
     useEffect(() => {
         dispatch(actions.getProjects());
-        const promise: any = dispatch(actions.getRealEstate(id));
-        promise.then((res) => {
-            set_project_id(res?.project_id);
-        });
+        if (id) {
+            const promise: any = dispatch(actions.getRealEstate(id));
+            promise.then((res) => {
+                select_project(res.projects.id);
+                service.getAcquisitionForRealEstate(id).then((res2) => {
+                    set_acquisitions(res2);
+                });
+            });
+        }
     }, []);
 
     useEffect(() => {
@@ -36,19 +39,22 @@ const DetailProjects = () => {
         }
     }, [project_id]);
 
+    const select_project = (value) => {
+        if (project_id !== value) {
+            set_project_id(value);
+            if (Number.isInteger(value)) dispatch(actions.getRealEstatesByProject(value));
+        }
+    };
+
     return (
         <RealEstateForm
             type="edit"
             projects={projects}
             realEstates={realEstates}
             realEstate={realEstate}
-            projectId={parseInt(project_id + '')}
-            onProjectSelectedChange={(value) => {
-                if (project_id !== value) {
-                    set_project_id(value);
-                    if (value) dispatch(actions.getRealEstatesByProject(value));
-                }
-            }}
+            acquisitions={acquisitions}
+            projectId={project_id}
+            onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
                 const { acquisitions } = values;
                 try {

@@ -37,7 +37,7 @@ const getRealEstates = async ({
 export const getRealEstatesByProject = async (
     id: number
 ): Promise<IPaginable<IRealEstateAttributes> | string> => {
-    if (id) {
+    if (Number.isInteger(id)) {
         try {
             let URI = `/real-estates/project/`;
             let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
@@ -228,7 +228,19 @@ const createAcquisitionForRealEstate = async (
 ) => {
     try {
         let URI = '/real-estates/adquisitions/';
-        let res: AxiosResponse = await http.post(URI, acquisitions);
+
+        let res: AxiosResponse = await http.post(
+            URI,
+            {
+                data: acquisitions,
+            },
+            {
+                params: {
+                    action: 'many',
+                },
+            }
+        );
+
         return res.data.results;
     } catch (e) {
         return Promise.reject('Error in  create acquisition for real estate');
@@ -236,6 +248,9 @@ const createAcquisitionForRealEstate = async (
 };
 
 const getAcquisitionForRealEstate = async (real_estate_id) => {
+
+    console.log('real_estate_id', real_estate_id);
+
     try {
         let URI = '/real-estates/adquisitions/';
         let res: AxiosResponse = await http.get(URI, {

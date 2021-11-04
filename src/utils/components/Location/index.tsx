@@ -62,13 +62,11 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
         })();
     }, []);
 
-
-
     const renderOptions = (id, name, options = [], show_id = false) => {
         let res =
             options.length > 0 &&
             options.map((option, i) => {
-                const code =  option[id]? option[id]+'': '';
+                const code = option[id] ? option[id] + '' : '';
                 const _name = option[name];
                 if (_name) {
                     return (
@@ -204,7 +202,9 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         disabled={!has_city}
                                         onChange={async (e) => {
                                             handleChange(e);
-                                            const list = await getList('neighborhood', { commune: e.target.value });
+                                            const list = await getList('neighborhood', {
+                                                commune: e.target.value,
+                                            });
                                             setNeighborhood(list);
                                             setFieldValue('neighborhood', '');
                                         }}
@@ -613,3 +613,18 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
 };
 
 export default Location;
+
+const a = {
+    acquisition_type: 'Compraventa',
+    active_type: 'Lote',
+    title_type: 'Escritura',
+    act_number: 10000,
+    act_value: 100,
+    plot_area: 100,
+    acquired_percentage: 100,
+    origin: '2',
+    entity_type: '',
+    entity_number: 1111,
+    city: '05001',
+    real_estate_id: 6,
+};

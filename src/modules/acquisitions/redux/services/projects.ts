@@ -98,7 +98,13 @@ export const deleteProject = async (id: number) => {
 
         return res.data;
     } catch (error) {
-        console.error(error);
+        if (error?.response && error.response?.status === 400) {
+            await swal.fire(
+                'No se pudo inactivar',
+                error.response?.data?.message || 'Error',
+                'warning'
+            );
+        }
         return Promise.reject('Error in delete Project');
     }
 };

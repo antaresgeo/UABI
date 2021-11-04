@@ -1,4 +1,3 @@
-
 import { location_http } from '../../../../config/axios_instances';
 import { IDocumentResponse } from '../../../../utils/interfaces';
 

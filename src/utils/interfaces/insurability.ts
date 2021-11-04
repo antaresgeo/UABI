@@ -2,7 +2,7 @@ import { IAuditTrail } from '.';
 
 interface ICompanies {
     insurance_company: string;
-    total_percentage: number
+    total_percentage: number;
 }
 
 export interface IPolicyAttributes {

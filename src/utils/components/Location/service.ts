@@ -31,7 +31,6 @@ export const getList = async (
     | ICommuneAddressAttributes[]
     | INeighborhoodAddressAttributes[]
 > => {
-
     try {
         let URI = `/localizations/lists`;
         let res: AxiosResponse<IAddressResponse> = await location_http.get(

@@ -8,14 +8,15 @@ export const getRealEstates = (filters: {
     page?: number;
     pageSize?: 10 | 20 | 30;
     q?: {};
-}) =>{
-    console.log('action:',filters.q);
-    return request_dispatch(types.realEstates, service.getRealEstates(filters)); }
+}) => {
+    console.log('action:', filters.q);
+    return request_dispatch(types.realEstates, service.getRealEstates(filters));
+};
 
 export const getRealEstatesByProject = (id) =>
     request_dispatch(
         types.realEstates,
-        service.getRealEstatesByProject(parseInt(id))
+        service.getRealEstatesByProject(id)
     );
 
 export const getRealEstate = (id: string) =>

@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const inspectionForm = () => {
-    return (
-        <div>
+    return <div></div>;
+};
 
-        </div>
-    )
-}
-
-export default inspectionForm
+export default inspectionForm;

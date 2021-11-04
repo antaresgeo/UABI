@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { actions } from '../../redux';
 import { useEffect } from 'react';
 
-
 import { formatDate } from '../../../../utils';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 
@@ -16,9 +15,9 @@ const table_columns = [
         align: 'center' as 'center',
     },
     {
-        title: "Matrícula",
-        dataIndex: "registry_number",
-        align: "center" as "center",
+        title: 'Matrícula',
+        dataIndex: 'registry_number',
+        align: 'center' as 'center',
     },
     {
         title: "Bien Inmueble",
@@ -46,9 +45,9 @@ const table_columns = [
         render: (dates) => formatDate(parseInt(dates)),
     },
     {
-        title: "Creada por",
-        dataIndex: "audit_trail",
-        align: "center" as "center",
+        title: 'Creada por',
+        dataIndex: 'audit_trail',
+        align: 'center' as 'center',
         render: (data) => data.created_by,
     },
     {
