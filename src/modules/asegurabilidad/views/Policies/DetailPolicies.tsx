@@ -19,7 +19,7 @@ const DetailInsurability = () => {
 
     const { id } = useParams<IParams>();
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
-    const realEstate: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstates.value);
     useEffect(() => {
         //dispatch(getRealEstates({}));
         dispatch(actions.getPolicy(id));
@@ -44,7 +44,7 @@ const DetailInsurability = () => {
                         <PolizaForm
                             type= 'view'
                             disabled
-                            realEstates={realEstate}
+                            realEstate={realEstate}
                             policy={policy}
                             onSubmit={(values) => {
                                 return getPolicy(values);

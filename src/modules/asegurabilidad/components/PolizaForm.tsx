@@ -9,23 +9,41 @@ import ErrorMessage from '../../../utils/ui/error_messge';
 import Select from '../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
 import { LinkButton } from '../../../utils/ui/link';
-import { swal } from '../../../utils';
 import DocumentModal from './../../../utils/components/DocumentsModal/index';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { actions } from './../../acquisitions/redux';
+
+
+
 
 
 
 interface InsurabilityFormPros {
     policy?: IPolicyAttributes;
-    realEstates?: IRealEstateAttributes[];
+    realEstate?: IRealEstateAttributes;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
     type_assurance?: "Normal";
     onSubmit: (values, actions?) => Promise<any>;
 }
 
-const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, type, onSubmit }) => {
+const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, type, onSubmit }) => {
+    let valor;
+    if(realEstate){
+        valor = true;
+    }else {
+        valor = false;
+    }
+    const dispatch = useDispatch();
+    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+    useEffect(() => {
+        dispatch(actions.getRealEstates({}))
+    }, []);
+
     const initialValues = {
-        registry_number: '',
+        registry_number: realEstate?.registry_number,
         policy_type: '',
         vigency_start: '',
         vigency_end: '',
@@ -38,22 +56,22 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
                 total_percentage: 0
             }
         ],
-        insurance_document_id: 0,
+        insurance_document_id: "123",
         insurance_document: {
             name: '',
             pdf: null
         },
-        real_estate_id: 0,
+        real_estate_id: realEstate?.id,
         ...policy
     };
 
     const schema = Yup.object().shape({
         //registry_number: Yup.string().required('obligatorio'),
-        Policy_type: Yup.string().required('obligatorio'),
+        policy_type: Yup.string().required('obligatorio'),
         vigency_start: Yup.string().required('obligatorio'),
         vigency_end: Yup.string().required('obligatorio'),
         insurance_broker: Yup.string().required('obligatorio'),
-        rebuild_value: Yup.string().required('obligatorio'),
+        insurance_value: Yup.string().required('obligatorio'),
         insurance_companies: Yup.array().of(Yup.object().shape({
             insurance_company: Yup.string().required('obligatorio'),
             total_percentage: Yup.number().required('obligatorio'),
@@ -78,22 +96,27 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
     });
 
     const submit = (values, actions) => {
-        let total = 0;
-        values.insurance_companies.map(valor => {
-            total = total + valor.total_percentage
-        })
-        if (total > 100) {
-            swal.fire('Revise los porcentajes', '', 'error')
-        } else {
-            onSubmit(values, actions).then(() => {
-                actions.setSubmitting(false);
-                actions.resetForm();
-            });
+        const finalValues = {
+            ...values,
+            vigency_end: new Date(values.vigency_end).getTime(),
+            vigency_start: new Date(values.vigency_start).getTime()
+
         }
+        delete finalValues.insurance_document;
+        //console.log(finalValues);
+        onSubmit(finalValues, actions).then(() => {
+            actions.setSubmitting(false);
+            actions.resetForm();
+        });
+        // let total = 0;
+        // finalValues.insurance_companies.map(valor => {
+        //     total = total + valor.total_percentage
+        // })
+        // if (total > 100) {
+        //     swal.fire('Revise los porcentajes', '', 'error')
+        // } else {
 
-
-
-
+        // }
 
     };
 
@@ -109,27 +132,50 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
                 return (
                     <Form>
                         <div className="row">
-                            {(type !== 'view') && (
+                            {(type !== 'view' && valor) && (
                                 <div className="form-group col-6">
                                     <label htmlFor="registry_number" className="form-label">
                                         Matrícula
                                     </label>
-                                    <Field as="select" id="registry_number" name="registry_number" className="w-100 form-select form-control" disabled={disabled}>
-                                        <option value="" selected disabled>
-                                            --Seleccione Matricula--
-                                        </option>
-                                        {/* {realEstates.map( realEstate => console.log(realEstate))} */}
-                                        <option value="vera1">Tipo 1</option>
-                                        <option value="vera2">Tipo 2</option>
-                                        <option value="vera3">Tipo 3</option>
-                                    </Field>
+                                    <Field
+                                        name="registry_number"
+                                        id="registry_number"
+                                        className="form-control"
+                                        value={realEstate?.registry_number}
+                                        type="text"
+                                        style={{ borderLeft: 'none' }}
+                                        disabled
+                                    />
                                     {/* <ErrorMessage name="registry_number" /> */}
                                 </div>
                             )}
+                            {!valor &&
+                                <div className="form-group col-6">
+                                    <label htmlFor="registry_number" className="form-label">
+                                        Matrícula
+                                    </label>
+                                    <Field
+                                        as="select"
+                                        name="registry_number"
+                                        id="registry_number"
+                                        className="form-control"
+                                        type="text"
+                                        style={{ borderLeft: 'none' }}
 
+                                    >
+                                        <option value="" selected disabled>
+                                            --Seleccione el tipo de póliza--
+                                        </option>
+                                        { realEstates.map( real_estate =>
+                                            <option value={real_estate?.registry_number}>{real_estate?.registry_number}</option>
+                                        )}
+                                    </Field>
+                                    {/* <ErrorMessage name="registry_number" /> */}
+                                </div>
+                            }
                             <div className={`col-${type === 'view' ? 3 : 6}`}>
-                                <label htmlFor="Policy_type" className="form-label">Tipo de Póliza</label>
-                                <Field as="select" id="Policy_type" name="Policy_type" className="w-100 form-select form-control" disabled={disabled}>
+                                <label htmlFor="policy_type" className="form-label">Tipo de Póliza</label>
+                                <Field as="select" id="policy_type" name="policy_type" className="w-100 form-select form-control" disabled={disabled}>
                                     <option value="" selected disabled>
                                         --Seleccione el tipo de póliza--
                                     </option>
@@ -141,7 +187,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
                                     className="text-danger text-left d-block w-100 mt-1"
                                     style={{ height: '22px' }}
                                 >
-                                    <ErrorMessage name="Policy_type" />
+                                    <ErrorMessage name="policy_type" />
                                 </span>
                             </div>
                             {(type !== 'view') && (
@@ -191,6 +237,20 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
                             </div>
                         </div>
                         <div className="row">
+                            <div className="col-6">
+                                <label htmlFor="form-select" className="form-label">
+                                    Adjuntar Póliza
+                                </label>
+                                <Field
+                                    name="insurance_document"
+                                    component={DocumentModal}
+                                    btn_label="Adjuntar"
+
+                                />
+                                <ErrorMessage name="supports_documents" />
+                            </div>
+                        </div>
+                        <div className="row">
                             <div className={`col-${type === 'view' ? 6 : 6}`}>
                                 <label htmlFor="rebuild_value" className="form-label">
                                     Valor de reconstrucción
@@ -200,8 +260,8 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
                                         <span className="input-group-text bg-white border-end-0">$</span>
                                     </div>
                                     <Field
-                                        name="rebuild_value"
-                                        id="rebuild_value"
+                                        name="insurance_value"
+                                        id="insurance_value"
                                         type="number"
                                         className="form-control text-end"
                                         style={{ borderLeft: 'none' }}
@@ -212,7 +272,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
                                         className="text-danger text-left d-block w-100 mt-1"
                                         style={{ height: '22px' }}
                                     >
-                                        <ErrorMessage name="rebuild_value" />
+                                        <ErrorMessage name="insurance_value" />
                                     </span>
                                 </div>
                             </div>
@@ -279,7 +339,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
                                     <label htmlFor="companies" className="form-label" >Compañía Aseguradora</label>
                                     <Field
                                         disabled={disabled}
-                                        options={realEstates} //lista de compañias aseguradoras
+                                        options={realEstate} //lista de compañias aseguradoras
                                         name="companies"
                                         component={Select}
                                         id="companies"
@@ -288,20 +348,6 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
 
                                 </div>
                             )}
-                        </div>
-                        <div className="row">
-                            <div className="col-6">
-                                <label htmlFor="form-select" className="form-label">
-                                    Adjuntar Póliza
-                                </label>
-                                <Field
-                                    name="insurance_document"
-                                    component={DocumentModal}
-                                    btn_label="Adjuntar"
-
-                                />
-                                <ErrorMessage name="supports_documents" />
-                            </div>
                         </div>
 
                         {

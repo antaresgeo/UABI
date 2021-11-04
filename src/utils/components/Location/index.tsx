@@ -204,7 +204,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         disabled={!has_city}
                                         onChange={async (e) => {
                                             handleChange(e);
-                                            const list = await getList('neighborhood', { city: values.city, commune: e.target.value });
+                                            const list = await getList('neighborhood', { commune: e.target.value });
                                             setNeighborhood(list);
                                             setFieldValue('neighborhood', '');
                                         }}

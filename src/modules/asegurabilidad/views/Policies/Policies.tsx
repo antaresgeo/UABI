@@ -22,12 +22,13 @@ const table_columns = [
     },
     {
         title: "Bien Inmueble",
-        dataIndex: "real_estate_name",
+        dataIndex: "real_estate",
         align: "center" as "center",
+        render: (data) => data?.name,
     },
     {
         title: "Estado",
-        dataIndex: "status_name_real_estate",
+        dataIndex: "status",
         align: "center" as "center",
     },
 
@@ -35,14 +36,14 @@ const table_columns = [
         title: "Fecha de Inicio",
         dataIndex: "vigency_start",
         align: "center" as "center",
-        render: (dates) => formatDate(dates)
+        render: (dates) => formatDate(parseInt(dates))
 
     },
     {
         title: "Fecha finalización",
         dataIndex: "vigency_end",
         align: "center" as "center",
-        render: (dates) => formatDate(dates),
+        render: (dates) => formatDate(parseInt(dates)),
     },
     {
         title: "Creada por",
@@ -67,6 +68,7 @@ const table_columns = [
                             icon={<i className="fa fa-eye" aria-hidden="true" />}
                         />
                     );
+
                 },
             },
             {
@@ -86,17 +88,21 @@ const table_columns = [
             },
             {
                 title: 'Crear',
-                dataIndex: 'id',
+                dataIndex: 'real_estate',
                 align: 'center' as 'center',
-                render: (id) => {
-                    return (
-                        <Link
-                            to={`/insurabilities/policy/create/`}
-                            name=""
-                            avatar={false}
-                            icon={<i className="fa fa-plus" aria-hidden="true" />}
-                        />
-                    );
+                render: (data) => {
+                    if (data) {
+                        return (
+                            <Link
+                                to={`/insurabilities/policy/create/${data?.id}/`}
+                                name=""
+                                avatar={false}
+                                icon={<i className="fa fa-plus" aria-hidden="true" />}
+                            />
+                        );
+                    }else {
+                        return "";
+                    }
                 },
             },
         ],
@@ -106,7 +112,7 @@ const table_columns = [
 const Policies = () => {
     const dispatch = useDispatch();
     const policies: IPolicyAttributes[] = useSelector((store: any) => store.insurability.policies.value);
-
+    console.log(policies);
     useEffect(() => {
         dispatch(actions.getPolicies());
     }, []);
@@ -154,7 +160,7 @@ const Policies = () => {
                             items={policies}
                             with_pagination
                             count={10}
-                            change_page={() => {}}
+                            change_page={() => { }}
                         />
                     </Card>
                 </div>

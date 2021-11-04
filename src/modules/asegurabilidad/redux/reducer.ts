@@ -4,16 +4,24 @@ import types from './types';
 
 const emptyInitialState: any = {
     policy: {
-        value: {
+        value:
+        {
             id: "-1",
             registry_number: "",
             vigency_start: "",
             vigency_end: "",
+            policy_type: "",
             insurance_broker: "",
-            insurance_company: "",
+            insurance_companies:[
+                {
+                    insurance_company: "",
+                    total_percentage: 0
+                }
+            ],
+            type_assurance: "",
             insurance_value: "",
             insurance_document_id: 0,
-            real_estate_name: "",
+            real_estate_id: "",
             audit_trail: {
                 created_by: "",
                 created_on: "",
@@ -21,7 +29,7 @@ const emptyInitialState: any = {
                 updated_on: null,
                 updated_values: null,
             },
-            status_name: "",
+            status: 1,
         },
         loading: false,
         loaded: false,
@@ -33,11 +41,19 @@ const emptyInitialState: any = {
                 registry_number: "",
                 vigency_start: "",
                 vigency_end: "",
+                policy_type:"",
                 insurance_broker: "",
-                insurance_company: "",
+                insurance_companies: [
+                    {
+                        insurance_company: "",
+                        total_percentage: 0
+                    }
+                ],
+                type_assurance: "",
                 insurance_value: "",
                 insurance_document_id: 0,
-                real_estate_name: "",
+                real_estate_id: 0,
+                name_real_estate: "",
                 audit_trail: {
                     created_by: '',
                     created_on: '',
@@ -45,7 +61,7 @@ const emptyInitialState: any = {
                     updated_on: null,
                     updated_values: null,
                 },
-                status_name: "",
+                status: 1,
             },
         ],
         loading: false,

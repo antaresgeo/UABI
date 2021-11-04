@@ -9,7 +9,7 @@ import {
 
 // Services: POST
 const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
-
+    console.log(data);
     try {
         let URI = `/insurabilities`;
         let res: AxiosResponse<IPolicyResponse> = await http.post(URI, data);

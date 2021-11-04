@@ -19,7 +19,7 @@ const EditPolicy = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
-    const realEstate: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstates.value);
 
     useEffect(() => {
         dispatch(getRealEstates({}));
@@ -52,7 +52,7 @@ const EditPolicy = () => {
                         title="Póliza"
                     >
                         <PolizaForm
-                            realEstates={realEstate}
+                            realEstate={realEstate}
                             policy={policy}
                             onSubmit={(values) => {
                                 return _updatePolicy(values);
