@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
-import { actions } from '../../redux';
+import {actions, service} from '../../redux';
 import RealEstateForm from '../../components/RealEstateForm';
 
 interface IParams {
@@ -15,15 +15,22 @@ const DetailRealEstate = () => {
     const dispatch = useDispatch();
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const [acquisitions, set_acquisitions] = useState([]);
     const [project_id, set_project_id] = useState(realEstate?.project_id);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
 
     useEffect(() => {
         dispatch(actions.getProjects());
-        const promise: any = dispatch(actions.getRealEstate(id));
-        promise.then((res) => {
-            set_project_id(res.project_id);
-        });
+        if(id){
+            const promise: any = dispatch(actions.getRealEstate(id));
+            promise.then((res) => {
+                set_project_id(res.project_id);
+                service.getAcquisitionForRealEstate(id).then((res2) => {
+                    set_acquisitions(res2)
+                });
+            });
+        }
+
     }, []);
 
     useEffect(() => {
@@ -36,6 +43,7 @@ const DetailRealEstate = () => {
         <RealEstateForm
             type="view"
             projects={projects}
+            acquisitions={acquisitions}
             realEstates={project_id ? realEstates : []}
             realEstate={realEstate}
             projectId={parseInt(project_id + '')}

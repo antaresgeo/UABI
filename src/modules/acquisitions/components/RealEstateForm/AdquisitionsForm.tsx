@@ -21,6 +21,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
     const [count, set_count] = useState<number>(formik?.values?.acquisitions?.length || 0);
     const initial_values = {
         acquisition_type: '',
+        construction_area: 0,
         active_type: [],
         title_type: '',
         act_number: '',

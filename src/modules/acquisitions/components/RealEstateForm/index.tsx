@@ -21,6 +21,7 @@ interface RealEstateFormProps {
     onProjectSelectedChange?: (value) => void;
     realEstates?: IRealEstateAttributes[];
     projectId?: number;
+    acquisitions?: any[];
 }
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
@@ -32,6 +33,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     type,
     onProjectSelectedChange,
     projectId,
+    acquisitions,
 }) => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -64,7 +66,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         project_id: '',
         status: 0,
         audit_trail: null,
-        acquisitions: [],
+        acquisitions: acquisitions || [],
         active_code: '',
         _type: null,
         ...realEstate,
