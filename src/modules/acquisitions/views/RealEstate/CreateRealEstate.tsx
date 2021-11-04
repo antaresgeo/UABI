@@ -8,7 +8,7 @@ import RealEstateForm from '../../components/RealEstateForm';
 const RealEstate = () => {
     const history: any = useHistory();
     const dispatch = useDispatch();
-    const [project_id, set_project_id] = useState(history.location.state?.project_id);
+    const [project_id, set_project_id] = useState(history.location.state?.project_id || 0);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
 
