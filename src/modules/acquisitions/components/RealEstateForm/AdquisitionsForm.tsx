@@ -182,7 +182,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         N° acto administrativo
                                     </label>
                                     <input
-                                        type="number"
+                                        type="text"
                                         className="form-control"
                                         id="act_number_id"
                                         aria-describedby="act_number"
@@ -358,7 +358,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         N° de entidad
                                     </label>
                                     <input
-                                        type="number"
+                                        type="test"
                                         className="form-control"
                                         id="entity_number"
                                         aria-describedby="entity_number"

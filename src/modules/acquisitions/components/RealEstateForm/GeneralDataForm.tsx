@@ -401,7 +401,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 zone={formik.values.zone}
                                 onSave={(values) => {
                                     return service.getAddress(values).then((res) => {
-                                        formik.setFieldValue('location', `${res.id} | ${res.addressAsString}`, null);
+                                        formik.setFieldValue('location', `${res.addressAsString}`, null);
                                         formik.setFieldValue('cbml', `${res.cbml}`, null);
                                     });
                                 }}
