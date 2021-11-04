@@ -2,10 +2,11 @@
 import { useDispatch } from 'react-redux';
 import { IPolicyAttributes } from '../../../../utils/interfaces/insurability';
 import { useSelector } from 'react-redux';
+import { actions } from '../../redux';
 import { useEffect } from 'react';
 
+
 import { formatDate } from '../../../../utils';
-import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 
 const table_columns = [
@@ -21,20 +22,27 @@ const table_columns = [
     },
     {
         title: "Bien Inmueble",
-        dataIndex: "real_estate_id",
+        dataIndex: "real_estate_name",
         align: "center" as "center",
     },
     {
         title: "Estado",
-        dataIndex: "status_name",
+        dataIndex: "status_name_real_estate",
         align: "center" as "center",
     },
 
     {
-        title: "Fecha de Póliza",
-        dataIndex: "audit_trail",
+        title: "Fecha de Inicio",
+        dataIndex: "vigency_start",
         align: "center" as "center",
-        render: (dates) => formatDate(dates?.created_on),
+        render: (dates) => formatDate(dates)
+
+    },
+    {
+        title: "Fecha finalización",
+        dataIndex: "vigency_end",
+        align: "center" as "center",
+        render: (dates) => formatDate(dates),
     },
     {
         title: "Creada por",
@@ -76,23 +84,21 @@ const table_columns = [
                     );
                 },
             },
-            // {
-            //     title: 'Inactivar',
-            //     dataIndex: 'id',
-            //     align: 'center' as 'center',
-            //     render: (id) => {
-            //         return (
-            //             <div
-            //                 className="text-danger"
-            //                 onClick={async () => {
-            //                     //await altStatusPolicy(parseInt(id));
-            //                 }}
-            //             >
-            //                 <i className="fa fa-times-circle" aria-hidden="true" />
-            //             </div>
-            //         );
-            //     },
-            // },
+            {
+                title: 'Crear',
+                dataIndex: 'id',
+                align: 'center' as 'center',
+                render: (id) => {
+                    return (
+                        <Link
+                            to={`/insurabilities/policy/create/`}
+                            name=""
+                            avatar={false}
+                            icon={<i className="fa fa-plus" aria-hidden="true" />}
+                        />
+                    );
+                },
+            },
         ],
     },
 ];
