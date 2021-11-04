@@ -18,16 +18,16 @@ const DetailProjects = () => {
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
     const [acquisitions, set_acquisitions] = useState([]);
-    const [project_id, set_project_id] = useState(realEstate?.project_id);
+    const [project_id, set_project_id] = useState(realEstate?.projects.id);
 
     useEffect(() => {
         dispatch(actions.getProjects());
-        if(id){
+        if (id) {
             const promise: any = dispatch(actions.getRealEstate(id));
             promise.then((res) => {
-                set_project_id(res.project_id);
+                select_project(res.projects.id);
                 service.getAcquisitionForRealEstate(id).then((res2) => {
-                    set_acquisitions(res2)
+                    set_acquisitions(res2);
                 });
             });
         }
@@ -39,6 +39,13 @@ const DetailProjects = () => {
         }
     }, [project_id]);
 
+    const select_project = (value) => {
+        if (project_id !== value) {
+            set_project_id(value);
+            if (Number.isInteger(value)) dispatch(actions.getRealEstatesByProject(value));
+        }
+    };
+
     return (
         <RealEstateForm
             type="edit"
@@ -46,13 +53,8 @@ const DetailProjects = () => {
             realEstates={realEstates}
             realEstate={realEstate}
             acquisitions={acquisitions}
-            projectId={parseInt(project_id + '')}
-            onProjectSelectedChange={(value) => {
-                if (project_id !== value) {
-                    set_project_id(value);
-                    if (value) dispatch(actions.getRealEstatesByProject(value));
-                }
-            }}
+            projectId={project_id}
+            onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
                 const { acquisitions } = values;
                 try {

@@ -37,7 +37,7 @@ const getRealEstates = async ({
 export const getRealEstatesByProject = async (
     id: number
 ): Promise<IPaginable<IRealEstateAttributes> | string> => {
-    if (id) {
+    if (Number.isInteger(id)) {
         try {
             let URI = `/real-estates/project/`;
             let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =

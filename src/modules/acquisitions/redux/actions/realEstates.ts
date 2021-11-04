@@ -16,7 +16,7 @@ export const getRealEstates = (filters: {
 export const getRealEstatesByProject = (id) =>
     request_dispatch(
         types.realEstates,
-        service.getRealEstatesByProject(parseInt(id))
+        service.getRealEstatesByProject(id)
     );
 
 export const getRealEstate = (id: string) =>

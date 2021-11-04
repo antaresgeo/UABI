@@ -14,7 +14,7 @@ const RealEstate = () => {
 
     useEffect(() => {
         dispatch(actions.getProjects());
-        if (project_id) {
+        if (Number.isInteger(project_id)) {
             dispatch(actions.getRealEstatesByProject(history.location.state?.project_id));
         }
     }, []);

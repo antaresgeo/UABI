@@ -37,7 +37,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
 }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const initial_values = {
+    let initial_values: any = {
         id: 0,
         sap_id: '',
         destination_type: '',
@@ -50,6 +50,9 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         reconstruction_value: 0,
         location: '',
         cbml: '',
+        address: {
+            name: '',
+        },
         total_area: 0,
         total_percentage: 0,
         zone: '',
@@ -63,7 +66,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 type: 'Documento de Titulo',
             },
         ],
-        project_id: '',
+        project_id: Number.isInteger(projectId) ? projectId : 0,
         status: 0,
         audit_trail: null,
         acquisitions: acquisitions || [],
@@ -103,8 +106,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         delete values._type;
         values.project_id = [values.project_id];
         values.materials = values.materials.join(', ');
-        console.log(values);
-
         onSubmit(values, form, isFinish).then(() => {
             form.setSubmitting(false);
             form.resetForm();
@@ -113,9 +114,9 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     };
 
     const [project, set_project] = useState(null);
-
+    console.log(projectId)
     useEffect(() => {
-        if (projectId) {
+        if (Number.isInteger(projectId)) {
             service.getProject(projectId + '').then((_project) => {
                 set_project(_project);
             });
