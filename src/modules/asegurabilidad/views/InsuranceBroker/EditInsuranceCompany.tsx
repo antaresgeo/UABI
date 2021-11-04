@@ -24,7 +24,7 @@ const EditInsuranceBroker = ({ view }: IProps) => {
     const dispatch = useDispatch();
 
     const { id } = useParams<IParams>();
-    // const insurance_broker: IInsuranceBrokerAttributes = useSelector((states: any) => states.insurabilities.insurance_broker.value);
+    const insurance_broker: any = useSelector((states: any) => states.insurability.broker.value);
 
     const _updateInsuranceBroker = async (InsuranceBrokerForm) => {
         let res: any;
@@ -51,6 +51,7 @@ const EditInsuranceBroker = ({ view }: IProps) => {
                         <div className="col-md-12">
                             <Card title={<>{/*<b>Proyecto:</b> {insurance_broker?.name}*/}</>}>
                                 <InsuranceBrokerForm
+                                    insurance_broker={insurance_broker}
                                     onSubmit={(values) => {
                                         // return _updateInsuranceBroker(values);
                                         return Promise.resolve();

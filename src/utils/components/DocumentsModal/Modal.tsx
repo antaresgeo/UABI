@@ -15,7 +15,15 @@ interface LocationModalProps {
     onChange: (data) => void;
 }
 
-const DocumentsModal: FC<LocationModalProps> = ({ btn_delete, doc_name, modal_name, disabled, btn_class, btn_label, onChange }) => {
+const DocumentsModal: FC<LocationModalProps> = ({
+    btn_delete,
+    doc_name,
+    modal_name,
+    disabled,
+    btn_class,
+    btn_label,
+    onChange,
+}) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
     const [file_name, set_file_name] = useState<string>(doc_name || '');
     const title = modal_name ? modal_name : 'Agregar Documento';

@@ -20,7 +20,14 @@ interface GeneralDataFormProps {
     project?: any;
 }
 
-const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, projects, project, onProjectSelectedChange }) => {
+const GeneralDataForm: FC<GeneralDataFormProps> = ({
+    type,
+    disabled,
+    formik,
+    projects,
+    project,
+    onProjectSelectedChange,
+}) => {
     return (
         <Card
             title="Información del Inmueble"
@@ -53,14 +60,27 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                     <label htmlFor="dependency_id" className="form-label">
                         Dependecia
                     </label>
-                    <input type="text" id="dependency_id" disabled className="form-control" value={project?.dependency || ''} />
+                    <input
+                        type="text"
+                        id="dependency_id"
+                        disabled
+                        className="form-control"
+                        value={project?.dependency || ''}
+                    />
                     <ErrorMessage name="dependency" />
                 </div>
                 <div className="col-3">
                     <label htmlFor="subdependency_id" className="form-label">
                         Sub. Dependecia
                     </label>
-                    <input type="text" name="subdependency" id="subdependency_id" disabled className="form-control" value={project?.subdependency || ''} />
+                    <input
+                        type="text"
+                        name="subdependency"
+                        id="subdependency_id"
+                        disabled
+                        className="form-control"
+                        value={project?.subdependency || ''}
+                    />
                     <ErrorMessage name="subdependency" />
                 </div>
             </div>
@@ -82,7 +102,13 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, pro
                     <label htmlFor="cost_center_id" className="form-label">
                         Centro de Costos
                     </label>
-                    <input disabled type="text" className="form-control" id="cost_center_id" value={project?.cost_center || ''} />
+                    <input
+                        disabled
+                        type="text"
+                        className="form-control"
+                        id="cost_center_id"
+                        value={project?.cost_center || ''}
+                    />
                     <ErrorMessage name="cost_center" />
                 </div>
                 <div className="form-group col-3">

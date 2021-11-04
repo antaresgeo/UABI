@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
@@ -15,23 +15,22 @@ const Registers = () => {
     const [query, set_query] = useState({
         enrollment: '',
         dependence: '',
-        project: ''
+        project: '',
     });
 
-
-    const {enrollment, dependence, project} = query;
+    const { enrollment, dependence, project } = query;
     // const [page_size, set_pageSize] = useState<number>(10);
 
     useEffect(() => {
         dispatch(actions.getRealEstates({}));
     }, []);
 
-    const handleInputChange = ({target}) => {
+    const handleInputChange = ({ target }) => {
         set_query({
             ...query,
-            [target.name] : target.value
+            [target.name]: target.value,
         });
-    }
+    };
 
     const filter = () => {
         dispatch(actions.getRealEstates({ page: 1, q: query }));
@@ -44,9 +43,7 @@ const Registers = () => {
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-md-12">
-                    <Card
-                        title="Filtros"
-                    >
+                    <Card title="Filtros">
                         <div className="row">
                             <div className="col-4">
                                 <input
@@ -59,34 +56,31 @@ const Registers = () => {
                                 />
                             </div>
                             <div className="col-4">
-                            <input type="text"
+                                <input
+                                    type="text"
                                     className="form-control"
                                     placeholder="Dependencia a Cargo"
                                     name="dependence"
                                     value={dependence}
                                     onChange={handleInputChange}
-                                 />
+                                />
                             </div>
                             <div className="col-4">
-                            <input type="text"
+                                <input
+                                    type="text"
                                     className="form-control"
                                     placeholder="Proyecto Asignado / sin proyecto"
                                     name="project"
                                     value={project}
                                     onChange={handleInputChange}
-                                 />
+                                />
                             </div>
                         </div>
                         <div className="row justify-content-end">
                             <div className="col text-end">
-
-                                    <button
-                                        onClick={filter}
-                                        className="btn btn-primary my-3"
-                                    >
-                                        Buscar
-                                    </button>
-
+                                <button onClick={filter} className="btn btn-primary my-3">
+                                    Buscar
+                                </button>
                             </div>
                         </div>
                     </Card>
@@ -94,16 +88,13 @@ const Registers = () => {
                         title="Administrar Bienes Inmuebles"
                         extra={<Link to="/acquisitions/real-estates/create" name="Crear" iconText="+" />}
                     >
-                        <form>
-
-                        </form>
+                        <form></form>
                         <RealEstateList withProject register />
                     </Card>
-
                 </div>
             </div>
         </div>
     );
-}
+};
 
-export default Registers
+export default Registers;

@@ -23,7 +23,7 @@ const CreateInsuranceBroker = () => {
                                 <InsuranceBrokerForm
                                     onSubmit={(values) => {
                                         // return createInsuranceBroker(values.name, values.description, values.dependency);
-                                        return Promise.resolve()
+                                        return Promise.resolve();
                                     }}
                                 />
                             </Card>

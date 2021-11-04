@@ -8,7 +8,7 @@ import { Card } from '../../../../utils/ui';
 import { swal } from '../../../../utils';
 import { actions } from '../../redux';
 import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
-import { getRealEstates } from "../../../acquisitions/redux/actions/realEstates";
+import { getRealEstates } from '../../../acquisitions/redux/actions/realEstates';
 
 interface IParams {
     id: string;
@@ -23,18 +23,12 @@ const EditPolicy = () => {
 
     useEffect(() => {
         dispatch(getRealEstates({}));
-    }, [])
-
+    }, []);
 
     const _updatePolicy = async (policyForm) => {
         let res: any;
-        res = await dispatch(
-            actions.updatePolicy(
-                { policyForm },
-                id
-            )
-        );
-        await swal("Proyecto actualizado", res.data.message, "success");
+        res = await dispatch(actions.updatePolicy({ policyForm }, id));
+        await swal('Proyecto actualizado', res.data.message, 'success');
         history.push(`/insurability/policy/${policy.id}`);
     };
 
@@ -48,18 +42,16 @@ const EditPolicy = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                    <Card
-                        title="Póliza"
-                    >
-                        <PolizaForm
-                            realEstates={realEstate}
-                            policy={policy}
-                            onSubmit={(values) => {
-                                return _updatePolicy(values);
-                            }}
-                        />
-                    </Card>
-                    </div>
+                            <Card title="Póliza">
+                                <PolizaForm
+                                    realEstates={realEstate}
+                                    policy={policy}
+                                    onSubmit={(values) => {
+                                        return _updatePolicy(values);
+                                    }}
+                                />
+                            </Card>
+                        </div>
                     </div>
                 </div>
             </div>

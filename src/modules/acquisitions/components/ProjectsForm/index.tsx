@@ -15,7 +15,7 @@ interface RealEstateFormProps {
     onSubmit?: (values, form?, isFinish?: boolean) => Promise<any>;
     disabled?: boolean;
     projects: IProjectAttributes[];
-    type: 'desenglobar' | 'englobar'
+    type: 'desenglobar' | 'englobar';
     onProjectSelectedChange?: (value) => void;
     realEstates?: IRealEstateAttributes[];
     projectId?: number;
@@ -175,7 +175,7 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                                         <button
                                                             type="button"
                                                             className="btn btn-primary mx-3"
-                                                            onClick={() => { } /*_createRealEstate*/}
+                                                            onClick={() => {} /*_createRealEstate*/}
                                                         >
                                                             Agregar
                                                         </button>

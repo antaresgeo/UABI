@@ -15,9 +15,8 @@ declare global {
             is_in_refresh: boolean;
             retry_pending: Array<any>;
             date_format: string;
-        }
+        };
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: Function;
-
     }
 }
 export enum Role {
@@ -31,9 +30,7 @@ export enum Role {
     SUPERVISION = 'Supervision',
     MAINTENANCE = 'Mantenimiento',
     BILLING = 'Facturacion',
-
 }
-
 
 export enum Permit {
     CREATE_USER = 'createUser',
@@ -64,55 +61,18 @@ export enum Permit {
     LIST_REALESTATE = 'list_realEstate',
 }
 
-
-const user = {
-    role: Role.ADMINISTRATOR,
-    permits: [
-        Permit.CREATE_POLICY,
-        Permit.DETAIL_POLICY,
-        Permit.UPDATE_POLICY,
-        Permit.LIST_POLICY,
-        Permit.CREATE_INSURANCE_COMPANY,
-        Permit.DETAIL_INSURANCE_COMPANY,
-        Permit.UPDATE_INSURANCE_COMPANY,
-        Permit.DETAIL_INSURANCE_COMPANY,
-        Permit.CREATE_INSURANCE_BROKER,
-        Permit.DETAIL_INSURANCE_BROKER,
-        Permit.UPDATE_INSURANCE_BROKER,
-        Permit.LIST_INSURANCE_BROKER,
-        Permit.CREATE_REALESTATE,
-        Permit.DETAIL_REALESTATE,
-        Permit.UPDATE_REALESTATE,
-        Permit.LIST_REALESTATE,
-        Permit.CREATE_PROJECT,
-        Permit.DETAIL_PROJECT,
-        Permit.UPDATE_PROJECT,
-        Permit.LIST_PROJECT
-    ]
-
-}
-
-// const user = {
-//     role: Role.INSURABILITY,
-//     permits: Permit.CREATE_POLICY
-
-// }
-
-localStorage.setItem('user', JSON.stringify(user));
-
 if (!window.__uabi) {
     window.__uabi = {
         cancel_mapper: {},
         is_in_refresh: false,
         retry_pending: [],
-        date_format: "YYYY-MM-DD",
-        number_formatter: new Intl.NumberFormat("es-CO", {
+        date_format: 'YYYY-MM-DD',
+        number_formatter: new Intl.NumberFormat('es-CO', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
-        })
+        }),
     };
 }
-
 
 // borrar esto cuando se termine la autenticacion
 
@@ -121,14 +81,13 @@ if (!window.__uabi) {
         cancel_mapper: {},
         is_in_refresh: false,
         retry_pending: [],
-        date_format: "YYYY-MM-DD",
-        number_formatter: new Intl.NumberFormat("es-CO", {
+        date_format: 'YYYY-MM-DD',
+        number_formatter: new Intl.NumberFormat('es-CO', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
-        })
+        }),
     };
 }
-
 
 // borrar esto cuando se termine la autenticacion
 

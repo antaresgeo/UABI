@@ -8,9 +8,9 @@ import { formatDate, swal } from '../../../../utils';
 
 const InsuranceCompanies = () => {
     const dispatch = useDispatch();
-    // const insurance_companies: IInsuranceCompanyAttributes[] = useSelector((states: any) => states.insurabilities.insurance_companies.value);
-    // const loading: boolean = useSelector((store: any) => store.insurabilities.insurance_companies.loading);
-    // const { total_results } = useSelector((store: any) => store.insurabilities.insurance_companies.pagination);
+    const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
+    const loading: boolean = useSelector((store: any) => store.insurability.companies.loading);
+    const { total_results } = useSelector((store: any) => store.insurability.companies.pagination);
     const [query, set_query] = useState<string>('');
 
     const filter = () => {
@@ -26,11 +26,11 @@ const InsuranceCompanies = () => {
         if (id !== '' && id !== undefined) {
             // res = await dispatch(actions.getRealEstatesByInsuranceCompany(id));
         }
-        if (res.length !== 0) {
+        if (res?.length !== 0) {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
-                text: `El proyecto contiene ${res.length} bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
+                text: `La Empresa contiene ${res?.length || ''} valores asociados.\n\.`,
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -41,7 +41,7 @@ const InsuranceCompanies = () => {
                 swal.fire({
                     icon: 'info',
                     title: '¡Última oportunidad!',
-                    text: '¿Está seguro que quiere inactivar el proyecto?',
+                    text: '¿Está seguro que quiere inactivar la empresa?',
                     showDenyButton: true,
                     showCancelButton: false,
                     confirmButtonText: 'Continuar',
@@ -68,7 +68,7 @@ const InsuranceCompanies = () => {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¿Está seguro?',
-                text: '¿Está seguro que quiere inactivar el proyecto?',
+                text: '¿Está seguro que quiere inactivar la empresa?',
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -139,7 +139,7 @@ const InsuranceCompanies = () => {
                     },
                 },
                 {
-                    title: 'Eliminar',
+                    title: 'Inactivar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
@@ -194,11 +194,11 @@ const InsuranceCompanies = () => {
                         </form>
                         <UiTable
                             columns={table_columns}
-                            items={[]}
+                            items={insurance_companies}
                             with_pagination
                             change_page={change_page}
-                            // count={total_results}
-                            // loading={loading}
+                            count={total_results}
+                            loading={loading}
                         />
                     </Card>
                 </div>

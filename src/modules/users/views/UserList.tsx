@@ -6,7 +6,6 @@ import { Link, Table } from '../../../utils/ui';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import { guards } from './../routes';
 
-
 interface UserListProps {
     users: IUserAttributes[];
     change_page?: (page: number, pageSize?: number) => void;
@@ -66,7 +65,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total }) => {
     };
 
     const eliminar = {
-        title: 'Eliminar',
+        title: 'Inactivar',
         dataIndex: 'id',
         align: 'center' as 'center',
         render: (id) => {
@@ -108,32 +107,21 @@ const UserList: FC<UserListProps> = ({ users, change_page, total }) => {
         {
             title: 'Acciones',
             fixed: true,
-            children: [
-
-            ],
+            children: [],
         },
     ];
 
-
-
-    if(guards.detail()) {
-       table_columns[5].children[0] = ver;
+    if (guards.detail()) {
+        table_columns[5].children[0] = ver;
     }
-    if(guards.edit()) {
+    if (guards.edit()) {
         table_columns[5].children[1] = editar;
     }
-    if(guards.delete()) {
+    if (guards.delete()) {
         table_columns[5].children[2] = eliminar;
     }
 
-
-
-
-
-    return (
-        <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} />
-    );
+    return <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} />;
 };
 
-
-export default UserList
+export default UserList;

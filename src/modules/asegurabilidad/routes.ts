@@ -11,72 +11,85 @@ import CreateInsuranceCompany from './views/InsuranceCompany/CreateInsuranceComp
 import DetailInsuranceCompany from './views/InsuranceCompany/DetailInsuranceCompany';
 import EditInsuranceCompany from './views/InsuranceCompany/EditInsuranceCompany';
 
-import InsuranceBrokers from "./views/InsuranceBroker";
-import EditInsuranceBroker from "./views/InsuranceBroker/EditInsuranceCompany";
-import DetailInsuranceBroker from "./views/InsuranceBroker/DetailInsuranceCompany";
-import CreateInsuranceBroker from "./views/InsuranceBroker/CreateInsuranceCompany";
+import InsuranceBrokers from './views/InsuranceBroker';
+import EditInsuranceBroker from './views/InsuranceBroker/EditInsuranceCompany';
+import DetailInsuranceBroker from './views/InsuranceBroker/DetailInsuranceCompany';
+import CreateInsuranceBroker from './views/InsuranceBroker/CreateInsuranceCompany';
 
 export const guards = {
     createPolicy: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.CREATE_POLICY );
+        if (!user) return false;
+        return permits.includes(Permit.CREATE_POLICY);
     },
     detailPolicy: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.DETAIL_POLICY );
+        if (!user) return false;
+        return permits.includes(Permit.DETAIL_POLICY);
     },
     editPolicy: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.UPDATE_POLICY );
+        if (!user) return false;
+        return permits.includes(Permit.UPDATE_POLICY);
     },
     listPolicy: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.LIST_POLICY );
+        if (!user) return false;
+        return permits.includes(Permit.LIST_POLICY);
     },
     createInsuranceCompany: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.CREATE_INSURANCE_COMPANY );
-    },detailInsuranceCompany: (props?) => {
+        if (!user) return false;
+        return permits.includes(Permit.CREATE_INSURANCE_COMPANY);
+    },
+    detailInsuranceCompany: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.DETAIL_INSURANCE_COMPANY );
+        if (!user) return false;
+        return permits.includes(Permit.DETAIL_INSURANCE_COMPANY);
     },
     editInsuranceCompany: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.UPDATE_INSURANCE_COMPANY );
+        if (!user) return false;
+        return permits.includes(Permit.UPDATE_INSURANCE_COMPANY);
     },
     listInsuranceCompany: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.LIST_INSURANCE_COMPANY );
+        if (!user) return false;
+        return permits.includes(Permit.LIST_INSURANCE_COMPANY);
     },
     createInsuranceBroker: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.CREATE_INSURANCE_BROKER );
+        if (!user) return false;
+        return permits.includes(Permit.CREATE_INSURANCE_BROKER);
     },
     detailInsuranceBroker: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.DETAIL_INSURANCE_BROKER );
+        if (!user) return false;
+        return permits.includes(Permit.DETAIL_INSURANCE_BROKER);
     },
     editInsuranceBroker: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.UPDATE_INSURANCE_BROKER );
+        if (!user) return false;
+        return permits.includes(Permit.UPDATE_INSURANCE_BROKER);
     },
     listInsuranceBroker: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
         const { permits } = user;
-        return permits.includes( Permit.LIST_INSURANCE_BROKER );
+        if (!user) return false;
+        return permits.includes(Permit.LIST_INSURANCE_BROKER);
     },
-}
+};
 const get_routes = (): IRoute[] => {
     return [
         {
@@ -96,7 +109,10 @@ const get_routes = (): IRoute[] => {
             path: '/insurabilities/policy/create/',
             template_props: {
                 breadcrumbs: [
-                    { name: 'Registro de Pólizas', to: '/insurabilities/policy' },
+                    {
+                        name: 'Registro de Pólizas',
+                        to: '/insurabilities/policy',
+                    },
                     { name: 'Crear Nueva Póliza' },
                 ],
             },
@@ -111,7 +127,10 @@ const get_routes = (): IRoute[] => {
             component: DetailInsurability,
             template_props: {
                 breadcrumbs: [
-                    { name: 'Registro de Pólizas', to: '/insurabilities/policy' },
+                    {
+                        name: 'Registro de Pólizas',
+                        to: '/insurabilities/policy',
+                    },
                     { name: 'Ver Póliza' },
                 ],
             },
@@ -123,7 +142,10 @@ const get_routes = (): IRoute[] => {
             path: '/insurabilities/policy/edit/:id/',
             template_props: {
                 breadcrumbs: [
-                    { name: 'Registro de Pólizas', to: '/insurabilities/policy' },
+                    {
+                        name: 'Registro de Pólizas',
+                        to: '/insurabilities/policy',
+                    },
                     { name: 'Editar Póliza' },
                 ],
             },

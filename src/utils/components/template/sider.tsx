@@ -26,9 +26,14 @@ const Sider: FC<{ width: number }> = ({ width }) => {
             </div>
             {/*<SideBar />*/}
 
-            <Menu onClick={handleClick} style={{ width }} mode="vertical" onOpenChange={(...args) => {
-                console.log('onOpenChange', args)
-            }}>
+            <Menu
+                onClick={handleClick}
+                style={{ width }}
+                mode="vertical"
+                onOpenChange={(...args) => {
+                    console.log('onOpenChange', args);
+                }}
+            >
                 <Menu.Item key="1" onClick={goTo('/')}>
                     Inicio
                 </Menu.Item>
