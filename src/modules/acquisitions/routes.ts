@@ -26,6 +26,7 @@ export const guards = {
     },
     detailProject: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.DETAIL_PROJECT);
     },
