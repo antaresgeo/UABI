@@ -225,10 +225,6 @@ const createAcquisitionForRealEstate = async (
 ) => {
     try {
         let URI = '/real-estates/adquisitions/';
-<<<<<<< HEAD
-=======
-
->>>>>>> c313aa8731a23b389c47799db94658ec89fad1e6
         let res: AxiosResponse = await http.post(
             URI,
             {
@@ -240,10 +236,6 @@ const createAcquisitionForRealEstate = async (
                 },
             }
         );
-<<<<<<< HEAD
-=======
-
->>>>>>> c313aa8731a23b389c47799db94658ec89fad1e6
         return res.data.results;
     } catch (e) {
         return Promise.reject('Error in  create acquisition for real estate');
