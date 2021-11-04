@@ -10,6 +10,7 @@ import Select from '../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
 import { LinkButton } from '../../../utils/ui/link';
 import { swal } from '../../../utils';
+import DocumentModal from './../../../utils/components/DocumentsModal/index';
 
 
 
@@ -38,6 +39,10 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
             }
         ],
         insurance_document_id: 0,
+        insurance_document: {
+            name: '',
+            pdf: null
+        },
         real_estate_id: 0,
         ...policy
     };
@@ -268,6 +273,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
                                     <ErrorMessage name="type_assurance"></ErrorMessage>
                                 </div>
                             )}
+
                             {(type === 'view') && (
                                 <div className={`form-inline col-5`}>
                                     <label htmlFor="companies" className="form-label" >Compañía Aseguradora</label>
@@ -282,6 +288,20 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
 
                                 </div>
                             )}
+                        </div>
+                        <div className="row">
+                            <div className="col-6">
+                                <label htmlFor="form-select" className="form-label">
+                                    Adjuntar Póliza
+                                </label>
+                                <Field
+                                    name="insurance_document"
+                                    component={DocumentModal}
+                                    btn_label="Adjuntar"
+
+                                />
+                                <ErrorMessage name="supports_documents" />
+                            </div>
                         </div>
 
                         {
@@ -331,7 +351,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstates, disabled, t
                                             </div>
 
 
-                                            <div className="col-1 " style={{ display: 'flex', alignItems: 'center'}}>
+                                            <div className="col-1 " style={{ display: 'flex', alignItems: 'center' }}>
                                                 {(i !== 0) &&
                                                     <LinkButton name='' icon={<i className="fa fa-times" aria-hidden="true" />} onClick={() => {
 
