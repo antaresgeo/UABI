@@ -14,11 +14,6 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
             dataIndex: 'acquisition_type',
         },
         {
-            title: 'Proyecto',
-            align: 'center' as 'center',
-            dataIndex: '',
-        },
-        {
             title: 'No Acto administrativo',
             align: 'center' as 'center',
             dataIndex: 'act_number',
@@ -69,6 +64,29 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
                       title: 'Dirección',
                       align: 'center' as 'center',
                       dataIndex: 'address',
+                  },
+                  {
+                      title: 'Ver',
+                      dataIndex: 'id',
+                      align: 'center' as 'center',
+                      render: (id) => {
+                          return <i className="fa fa-eye" aria-hidden="true" style={{ color: '#aaa' }} />;
+                      },
+                  },
+              ]
+            : []),
+        ...(type === 'edit'
+            ? [
+                  {
+                      title: 'Editar',
+                      dataIndex: 'id',
+                      align: 'center' as 'center',
+                      render: (id) => {
+                          return (
+                              <i className="fa fa-pencil" aria-hidden="true" style={{ color: '#aaa' }} />
+
+                          );
+                      },
                   },
               ]
             : []),

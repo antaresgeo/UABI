@@ -203,7 +203,6 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         onChange={async (e) => {
                                             handleChange(e);
                                             const list = await getList('neighborhood', {
-                                                city: values.city,
                                                 commune: e.target.value,
                                             });
                                             setNeighborhood(list);
@@ -614,3 +613,18 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
 };
 
 export default Location;
+
+const a = {
+    acquisition_type: 'Compraventa',
+    active_type: 'Lote',
+    title_type: 'Escritura',
+    act_number: 10000,
+    act_value: 100,
+    plot_area: 100,
+    acquired_percentage: 100,
+    origin: '2',
+    entity_type: '',
+    entity_number: 1111,
+    city: '05001',
+    real_estate_id: 6,
+};

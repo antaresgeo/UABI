@@ -393,7 +393,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                         Dirección
                     </label>
                     <div className="input-group">
-                        <Field name="location" id="address" type="text" className="form-control" disabled />
+                        <Field name="address.name" id="address" type="text" className="form-control" disabled />
                         <div className="input-group-prepend">
                             <LocationModal
                                 disabled={disabled}
@@ -401,8 +401,9 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 zone={formik.values.zone}
                                 onSave={(values) => {
                                     return service.getAddress(values).then((res) => {
-                                        formik.setFieldValue('location', `${res.id} | ${res.addressAsString}`, null);
-                                        formik.setFieldValue('cbml', `${res.cbml}`, null);
+                                        formik.setFieldValue('address.name', `${res.addressAsString}`, false)
+                                        formik.setFieldValue('location', `${res.addressAsString}`, false);
+                                        formik.setFieldValue('cbml', `${res.cbml}`, false);
                                     });
                                 }}
                             />

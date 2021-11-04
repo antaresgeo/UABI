@@ -26,11 +26,11 @@ const Projects = () => {
         if (id !== '' && id !== undefined) {
             res = await dispatch(actions.getRealEstatesByProject(id));
         }
-        if (res.total !== 0) {
+        if (res?.total && res.total !== 0) {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
-                text: `El proyecto contiene ${res.total} bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
+                text: `El proyecto contiene ${res?.total || ''} bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -146,14 +146,19 @@ const Projects = () => {
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
-                        return (
-                            <Link
-                                to={`/acquisitions/projects/edit/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                            />
-                        );
+                        if(id !== 0){
+                            return (
+                                <Link
+                                    to={`/acquisitions/projects/edit/${id}/`}
+                                    name=""
+                                    avatar={false}
+                                    icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                                />
+                            );
+                        }else {
+                            return <i className="fa fa-pencil" aria-hidden="true" style={{color: '#aaa'}}/>
+                        }
+
                     },
                 },
                 {
@@ -161,11 +166,16 @@ const Projects = () => {
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
-                        return (
-                            <div className="text-danger" onClick={deleteProject(id)}>
-                                <i className="fa fa-times-circle" aria-hidden="true" />
-                            </div>
-                        );
+                        if(id !== 0){
+                            return (
+                                <div className="text-danger" onClick={deleteProject(id)}>
+                                    <i className="fa fa-times-circle" aria-hidden="true" />
+                                </div>
+                            );
+                        }else {
+                            return <i className="fa fa-times-circle" aria-hidden="true"  style={{color: '#aaa'}} />
+                        }
+
                     },
                 },
             ],
