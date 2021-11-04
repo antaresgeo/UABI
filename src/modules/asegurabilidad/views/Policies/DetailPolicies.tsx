@@ -18,7 +18,7 @@ const DetailInsurability = () => {
 
     const { id } = useParams<IParams>();
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
-    const realEstate: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstates.value);
     useEffect(() => {
         //dispatch(getRealEstates({}));
         dispatch(actions.getPolicy(id));
@@ -35,18 +35,20 @@ const DetailInsurability = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card title="Póliza">
-                                <PolizaForm
-                                    type="view"
-                                    disabled
-                                    realEstates={realEstate}
-                                    policy={policy}
-                                    onSubmit={(values) => {
-                                        return getPolicy(values);
-                                    }}
-                                />
-                            </Card>
-                        </div>
+                    <Card
+                        title="Póliza"
+                    >
+                        <PolizaForm
+                            type= 'view'
+                            disabled
+                            realEstate={realEstate}
+                            policy={policy}
+                            onSubmit={(values) => {
+                                return getPolicy(values);
+                            }}
+                        />
+                    </Card>
+                    </div>
                     </div>
                 </div>
             </div>

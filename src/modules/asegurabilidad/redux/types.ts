@@ -14,5 +14,6 @@ const types = Object.freeze({
         success: 'Se consulta endpoint de servicio polizas [success]',
         fail: 'Se consulta endpoint de servicio polizas [fail]',
     },
+
 });
 export default types;
