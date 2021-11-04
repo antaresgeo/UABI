@@ -1,5 +1,4 @@
-import types from "./types";
-
+import types from './types';
 
 // interface State {}
 
@@ -21,14 +20,14 @@ const emptyInitialState: any = {
                 gender: '',
                 id_rol: 0,
                 audit_trail: {
-                    created_by: "",
-                    created_on: "",
+                    created_by: '',
+                    created_on: '',
                     updated_by: null,
                     updated_on: null,
                     updated_values: null,
                 },
                 status: -1,
-            }
+            },
         ],
         pagination: {
             page: 1,
@@ -39,7 +38,6 @@ const emptyInitialState: any = {
         },
         loading: false,
         loaded: false,
-
     },
     user: {
         value: [
@@ -58,19 +56,18 @@ const emptyInitialState: any = {
                 gender: '',
                 id_rol: 0,
                 audit_trail: {
-                    created_by: "",
-                    created_on: "",
+                    created_by: '',
+                    created_on: '',
                     updated_by: null,
                     updated_on: null,
                     updated_values: null,
                 },
                 status: -1,
-            }
+            },
         ],
         loading: false,
         loaded: false,
-
-    }
+    },
 };
 const initialState = emptyInitialState;
 
@@ -79,7 +76,7 @@ const reducer = (state: any = initialState, action: any): any => {
         case types.users.default: {
             return {
                 ...state,
-                users: { ...state.users, loading: true }
+                users: { ...state.users, loading: true },
             };
         }
 
@@ -97,7 +94,7 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
                 loading: false,
                 loaded: true,
-            }
+            };
         }
 
         case types.users.fail: {
@@ -107,15 +104,15 @@ const reducer = (state: any = initialState, action: any): any => {
                     ...state.users,
                     loading: false,
                     loaded: false,
-                    value: emptyInitialState.users.value
-                }
-            }
+                    value: emptyInitialState.users.value,
+                },
+            };
         }
 
         case types.user.default: {
             return {
                 ...state,
-                user: { ...state.user, loading: true }
+                user: { ...state.user, loading: true },
             };
         }
 
@@ -129,7 +126,7 @@ const reducer = (state: any = initialState, action: any): any => {
 
                     loading: false,
                     loaded: true,
-                }
+                },
             };
         }
 
@@ -141,8 +138,8 @@ const reducer = (state: any = initialState, action: any): any => {
                     message: emptyInitialState.user.message,
                     loading: false,
                     loaded: false,
-                    value: emptyInitialState.user.value
-                }
+                    value: emptyInitialState.user.value,
+                },
             };
         }
         default: {

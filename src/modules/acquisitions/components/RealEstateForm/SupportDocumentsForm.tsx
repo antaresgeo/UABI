@@ -43,7 +43,7 @@ const SupportDocumentsForm: FC<AcquisitionsFromProps> = ({ type, disabled, formi
             }
         >
             <div className="row">
-                {formik.values.supports_documents.map((doc, i) => {
+                {formik.values?.supports_documents?.map((doc, i) => {
                     return (
                         <Fragment key={i}>
                             <div className="col-5">
@@ -84,5 +84,3 @@ const SupportDocumentsForm: FC<AcquisitionsFromProps> = ({ type, disabled, formi
     );
 };
 export default SupportDocumentsForm;
-
-

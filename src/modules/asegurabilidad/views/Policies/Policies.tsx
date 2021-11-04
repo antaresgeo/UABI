@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { actions } from '../../redux';
 import { useEffect } from 'react';
 
-
 import { formatDate } from '../../../../utils';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 
@@ -16,38 +15,37 @@ const table_columns = [
         align: 'center' as 'center',
     },
     {
-        title: "Matrícula",
-        dataIndex: "registry_number",
-        align: "center" as "center",
+        title: 'Matrícula',
+        dataIndex: 'registry_number',
+        align: 'center' as 'center',
     },
     {
-        title: "Bien Inmueble",
-        dataIndex: "real_estate_name",
-        align: "center" as "center",
+        title: 'Bien Inmueble',
+        dataIndex: 'real_estate_name',
+        align: 'center' as 'center',
     },
     {
-        title: "Estado",
-        dataIndex: "status_name_real_estate",
-        align: "center" as "center",
+        title: 'Estado',
+        dataIndex: 'status_name_real_estate',
+        align: 'center' as 'center',
     },
 
     {
-        title: "Fecha de Inicio",
-        dataIndex: "vigency_start",
-        align: "center" as "center",
-        render: (dates) => formatDate(dates)
-
-    },
-    {
-        title: "Fecha finalización",
-        dataIndex: "vigency_end",
-        align: "center" as "center",
+        title: 'Fecha de Inicio',
+        dataIndex: 'vigency_start',
+        align: 'center' as 'center',
         render: (dates) => formatDate(dates),
     },
     {
-        title: "Creada por",
-        dataIndex: "audit_trail",
-        align: "center" as "center",
+        title: 'Fecha finalización',
+        dataIndex: 'vigency_end',
+        align: 'center' as 'center',
+        render: (dates) => formatDate(dates),
+    },
+    {
+        title: 'Creada por',
+        dataIndex: 'audit_trail',
+        align: 'center' as 'center',
         render: (data) => data.created_by,
     },
     {

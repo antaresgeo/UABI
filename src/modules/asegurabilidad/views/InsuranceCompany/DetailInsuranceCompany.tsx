@@ -14,7 +14,7 @@ const DetailInsuranceCompany = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    // const insurance_company: IInsuranceCompanyAttributes = useSelector((states: any) => states.insurabilities.insurance_company.value);
+    const insurance_company: any = useSelector((store: any) => store.insurability.company.value);
 
     useEffect(() => {
         // dispatch(actions.getInsuranceCompany(id));
@@ -27,7 +27,7 @@ const DetailInsuranceCompany = () => {
                     <div className="row justify-content-center">
                         <div className="col-md-12">
                             <Card title={<>{/*<b>Proyecto:</b> {insurance_company?.name}*/}</>}>
-                                <InsuranceCompanyForm disabled type="view" />
+                                <InsuranceCompanyForm disabled type="view" insurance_company={insurance_company} />
                             </Card>
                         </div>
                     </div>

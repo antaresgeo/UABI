@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    IProjectAttributes,
-    IRealEstateAttributes,
-} from '../../../../utils/interfaces';
+import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { actions } from '../../redux';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -20,11 +17,9 @@ const EnglobeProject = () => {
     const [project_id, set_project_id] = useState(id);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
-    const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value)
-
+    const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
 
     useEffect(() => {
-
         dispatch(actions.getProjects());
         if (project_id) {
             console.log(project_id);
@@ -69,15 +64,15 @@ const EnglobeProject = () => {
     return (
         <div>
             <ProjectEnglobarForm
-            type="englobar"
-            projects={projects}
-            realEstates={project_id ? realEstates : []}
-            projectId={parseInt(project_id)}
-            onProjectSelectedChange={onProjectSelectedChange}
-            onSubmit={createRealEstate}
-        />
+                type="englobar"
+                projects={projects}
+                realEstates={project_id ? realEstates : []}
+                projectId={parseInt(project_id)}
+                onProjectSelectedChange={onProjectSelectedChange}
+                onSubmit={createRealEstate}
+            />
         </div>
-    )
-}
+    );
+};
 
-export default EnglobeProject
+export default EnglobeProject;

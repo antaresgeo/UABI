@@ -1,15 +1,14 @@
-import { IRoute } from "../../utils/components/app_router/custom_types";
+import { IRoute } from '../../utils/components/app_router/custom_types';
 import CreateUser from './views/CreateUser';
 import Users from './views/Users';
 import DetailUser from './views/DetailUser';
 import EditUser from './views/EditUser';
-import { Role } from "../..";
-
+import { Role } from '../..';
 
 export const guards = {
     view: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
-        return user.role === Role.ADMINISTRATOR ;
+        return user.role === Role.ADMINISTRATOR;
     },
     create: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -19,7 +18,6 @@ export const guards = {
         const user = JSON.parse(localStorage.getItem('user'));
         return user.role === Role.ADMINISTRATOR;
         // return false;
-
     },
     edit: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -29,7 +27,7 @@ export const guards = {
         const user = JSON.parse(localStorage.getItem('user'));
         return user.role === Role.ADMINISTRATOR;
     },
-}
+};
 
 const get_routes = (): IRoute[] => {
     return [
@@ -37,9 +35,9 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: guards.view,
-            path: "/users/",
+            path: '/users/',
             template_props: {
-                breadcrumbs: [{ name: "Usuarios" }],
+                breadcrumbs: [{ name: 'Usuarios' }],
             },
             component: Users,
         },
@@ -47,11 +45,11 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: guards.create,
-            path: "/users/create/",
+            path: '/users/create/',
             template_props: {
                 breadcrumbs: [
-                    { name: "Usuario", to: "/users/" },
-                    { name: "Crear" },
+                    { name: 'Usuario', to: '/users/' },
+                    { name: 'Crear' },
                 ],
             },
             component: CreateUser,
@@ -60,12 +58,12 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: guards.detail,
-            path: "/users/:id/",
+            path: '/users/:id/',
             template_props: {
                 breadcrumbs: [
-                    { name: "Usuario", to: "/users/" },
-                    { name: "Detalle" },
-                ]
+                    { name: 'Usuario', to: '/users/' },
+                    { name: 'Detalle' },
+                ],
             },
             component: DetailUser,
         },
@@ -73,11 +71,11 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: guards.edit,
-            path: "/users/edit/:id/",
+            path: '/users/edit/:id/',
             template_props: {
                 breadcrumbs: [
-                    { name: "Usuario", to: "/users/" },
-                    { name: "Editar" },
+                    { name: 'Usuario', to: '/users/' },
+                    { name: 'Editar' },
                 ],
             },
             component: EditUser,

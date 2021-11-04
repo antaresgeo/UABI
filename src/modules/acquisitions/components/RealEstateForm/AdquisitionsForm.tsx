@@ -50,7 +50,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
 
     const addAcquisition = (new_acquisition) => {
         if (!is_empty(new_acquisition)) {
-            new_acquisition.active_type = new_acquisition.active_type.join(', ')
+            new_acquisition.active_type = new_acquisition.active_type.join(', ');
             formik.setFieldValue(`acquisitions[${count}]`, new_acquisition);
             set_count((c) => c + 1);
         }

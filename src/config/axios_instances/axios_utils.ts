@@ -1,7 +1,7 @@
-import axios from "axios";
-import {FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED} from "./index";
-import {swal} from "../../utils";
-import {http} from "./documents";
+import axios from 'axios';
+import { FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from './index';
+import { swal } from '../../utils';
+import { http } from './documents';
 
 const response_error_interceptor = (error: any) => {
     if (!axios.isCancel(error)) {
@@ -111,9 +111,6 @@ const onForbidden = (original_error: any) => {
     }
     return Promise.reject(original_error);
 };
-
-
-
 
 // const processQueue = ({ error = null, token = null }) => {
 //     if (window.__uabi.retry_pending.length) {

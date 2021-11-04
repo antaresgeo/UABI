@@ -85,7 +85,7 @@ const PolizaList: FC<InsurabilityListProps> = ({ policies }) => {
                     },
                 },
                 {
-                    title: 'Eliminar',
+                    title: 'Inactivar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {

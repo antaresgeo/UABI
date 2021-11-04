@@ -8,7 +8,6 @@ import { extractMonth, formatDate } from '../../../../utils';
 import Select from '../../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
 
-
 interface GeneralDataFormProps {
     type: 'desenglobar' | 'englobar';
     disabled?: boolean;
@@ -19,8 +18,6 @@ interface GeneralDataFormProps {
 }
 
 const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEstates, onProjectSelectedChange }) => {
-
-
     function handleChange(value) {
         console.log(`selected ${value}`);
     }
@@ -39,20 +36,18 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
         >
             <div className="row">
                 <div className="form-group col-6">
-                    {type === 'englobar' &&
+                    {type === 'englobar' && (
                         <label htmlFor="project_id_id" className="form-label">
                             BI a Englobar
                         </label>
-                    }
-                    {type === 'desenglobar' &&
+                    )}
+                    {type === 'desenglobar' && (
                         <label htmlFor="bi" className="form-label">
                             BI a Desenglobar
                         </label>
-                    }
-
+                    )}
 
                     <Field
-
                         disabled={disabled}
                         allowClear
                         className="w-100"
@@ -451,109 +446,103 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                 </div>
             </div>
 
-                    <div className="row">
-                        <div className="col-4">
-                            <label htmlFor="audit_trail_created_by_id" className="form-label">
-                                Creado por
-                            </label>
-                            <Field
-                                type="text"
-                                className="form-control"
-                                id="audit_trail_created_by_id"
-                                name="audit_trail.created_by"
-                                disabled
-                            />
-                            <span className="form-error" />
-                        </div>
-                        <div className="col-4">
-                            <label htmlFor="audit_trail_created_on_id" className="form-label">
-                                Fecha creación
-                            </label>
-                            <Field
-                                type="text"
-                                className="form-control"
-                                id="audit_trail_created_on_id"
-                                name="audit_trail.created_on"
-                                value={formatDate(formik.values.audit_trail?.created_on)}
-                                disabled
-                            />
-                            <span className="form-error" />
-                        </div>
-                        <div className="col-4">
-                            <label htmlFor="sociedad_id" className="form-label">
-                                Sociedad
-                            </label>
-                            <Field
-                                type="text"
-                                className="form-control"
-                                id="sociedad_id"
-                                name="sociedad"
-                                value="FIMM"
-                                disabled
-                            />
-                            <span className="form-error" />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-4">
-                            <label htmlFor="importe_contabilidad_id" className="form-label">
-                                Importe Contabilidad
-                            </label>
-                            <Field
-                                type="number"
-                                className="form-control"
-                                id="importe_contabilidad_id"
-                                name="importe_contabilidad"
-                                // disablimport { IRealEstateAttributes } from './../../../../utils/interfaces/realEstates';
-ed
-                            />
-                            <span className="form-error" />
-                        </div>
-                        <div className="col-4">
-                            <label htmlFor="periodo_contable_id" className="form-label">
-                                Periodo contable
-                            </label>
-                            <Field
-                                type="text"
-                                className="form-control"
-                                id="periodo_contable_id"
-                                name="periodo_contable"
-                                value={extractMonth(formik.values.audit_trail?.created_on)}
-                                disabled
+            <div className="row">
+                <div className="col-4">
+                    <label htmlFor="audit_trail_created_by_id" className="form-label">
+                        Creado por
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="audit_trail_created_by_id"
+                        name="audit_trail.created_by"
+                        disabled
+                    />
+                    <span className="form-error" />
+                </div>
+                <div className="col-4">
+                    <label htmlFor="audit_trail_created_on_id" className="form-label">
+                        Fecha creación
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="audit_trail_created_on_id"
+                        name="audit_trail.created_on"
+                        value={formatDate(formik.values.audit_trail?.created_on)}
+                        disabled
+                    />
+                    <span className="form-error" />
+                </div>
+                <div className="col-4">
+                    <label htmlFor="sociedad_id" className="form-label">
+                        Sociedad
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="sociedad_id"
+                        name="sociedad"
+                        value="FIMM"
+                        disabled
+                    />
+                    <span className="form-error" />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-4">
+                    <label htmlFor="importe_contabilidad_id" className="form-label">
+                        Importe Contabilidad
+                    </label>
+                    <Field
+                        type="number"
+                        className="form-control"
+                        id="importe_contabilidad_id"
+                        name="importe_contabilidad"
+                        // disablimport { IRealEstateAttributes } from './../../../../utils/interfaces/realEstates';
+                        ed
+                    />
+                    <span className="form-error" />
+                </div>
+                <div className="col-4">
+                    <label htmlFor="periodo_contable_id" className="form-label">
+                        Periodo contable
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="periodo_contable_id"
+                        name="periodo_contable"
+                        value={extractMonth(formik.values.audit_trail?.created_on)}
+                        disabled
 
-                            // EL MES
-                            />
-                            <span className="form-error" />
-                        </div>
-                        <div className="col-4">
-                            <label htmlFor="contrapartida_id" className="form-label">
-                                Contrapartida
-                            </label>
-                            <Field
-                                type="number"
-                                className="form-control"
-                                id="contrapartida_id"
-                                name="contrapartida"
-                                disabled
-                            />
-                            <span className="form-error" />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12">
-                            <label htmlFor="comentarios_id" className="form-label">
-                                Comentarios
-                            </label>
-                            <Field
-                                as="textarea"
-                                className="form-control"
-                                id="comentarios_id"
-                                name="comentarios"
-                                placeholder="Comentarios y anotaciones"
-                            />
-                            <span className="form-error" />
-                        </div>
-                    </div>
+                        // EL MES
+                    />
+                    <span className="form-error" />
+                </div>
+                <div className="col-4">
+                    <label htmlFor="contrapartida_id" className="form-label">
+                        Contrapartida
+                    </label>
+                    <Field type="number" className="form-control" id="contrapartida_id" name="contrapartida" disabled />
+                    <span className="form-error" />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-12">
+                    <label htmlFor="comentarios_id" className="form-label">
+                        Comentarios
+                    </label>
+                    <Field
+                        as="textarea"
+                        className="form-control"
+                        id="comentarios_id"
+                        name="comentarios"
+                        placeholder="Comentarios y anotaciones"
+                    />
+                    <span className="form-error" />
+                </div>
+            </div>
         </Card>
     );
 };

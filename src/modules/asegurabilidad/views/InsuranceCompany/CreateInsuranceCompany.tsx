@@ -23,7 +23,7 @@ const CreateInsuranceCompany = () => {
                                 <InsuranceCompanyForm
                                     onSubmit={(values) => {
                                         // return createInsuranceCompany(values.name, values.description, values.dependency);
-                                        return Promise.resolve()
+                                        return Promise.resolve();
                                     }}
                                 />
                             </Card>

@@ -34,6 +34,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
         name: '',
         nit: '',
         phone: '',
+        email: '',
         location_id: '',
         contact_information: { name: '', email: '', phone_number: '' },
         ...insurance_broker,

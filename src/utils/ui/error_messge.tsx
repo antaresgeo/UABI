@@ -10,13 +10,13 @@ interface ErrorMessageProps {
 const ErrorMessage: FC<ErrorMessageProps> = ({ name, withCount, max }) => {
     const context = useFormikContext<any>();
     const value = context.values[name];
-    const hasCount = withCount && (typeof value === 'string' || typeof value === 'number')
+    const hasCount = withCount && (typeof value === 'string' || typeof value === 'number');
     return (
         <div className="row">
             <div className="col">
                 <span className="form-error">{name && <AntErrorMessage name={name} />}</span>
             </div>
-            { hasCount && (
+            {hasCount && (
                 <div className="col">
                     <span className="text-end d-block w-100 mt-1" style={{ height: '22px', color: '#F28C02' }}>
                         {`${`${value}`.length}${max ? `/${max}` : ''}`}

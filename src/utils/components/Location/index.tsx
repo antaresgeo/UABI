@@ -62,13 +62,11 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
         })();
     }, []);
 
-
-
     const renderOptions = (id, name, options = [], show_id = false) => {
         let res =
             options.length > 0 &&
             options.map((option, i) => {
-                const code =  option[id]? option[id]+'': '';
+                const code = option[id] ? option[id] + '' : '';
                 const _name = option[name];
                 if (_name) {
                     return (
@@ -204,7 +202,10 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         disabled={!has_city}
                                         onChange={async (e) => {
                                             handleChange(e);
-                                            const list = await getList('neighborhood', { city: values.city, commune: e.target.value });
+                                            const list = await getList('neighborhood', {
+                                                city: values.city,
+                                                commune: e.target.value,
+                                            });
                                             setNeighborhood(list);
                                             setFieldValue('neighborhood', '');
                                         }}

@@ -1,13 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { swal } from "../../../../utils";
-import { Card } from "../../../../utils/ui";
-import { actions } from "../../redux";
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { swal } from '../../../../utils';
+import { Card } from '../../../../utils/ui';
+import { actions } from '../../redux';
 import { useEffect } from 'react';
-import { getRealEstates } from "../../../acquisitions/redux/actions/realEstates";
+import { getRealEstates } from '../../../acquisitions/redux/actions/realEstates';
 import PolizaForm from '../../components/PolizaForm';
 import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
-
 
 const CreateInsurability = () => {
     const history = useHistory();
@@ -31,8 +30,8 @@ const CreateInsurability = () => {
                         <div className="col-md-12">
                             <Card title="Crear Póliza">
                                 <PolizaForm
-                                    type_assurance = "Normal"
-                                    type='create'
+                                    type_assurance="Normal"
+                                    type="create"
                                     realEstates={realEstate}
                                     onSubmit={(values) => {
                                         return createPolicy(values);

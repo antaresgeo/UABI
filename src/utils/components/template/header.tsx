@@ -19,7 +19,7 @@ const Header: FC<{ collapsible: boolean }> = ({ collapsible }) => {
                 </span>
                 <span className="d-flex align-items-center">
                     <span>
-                        Hola, <b>Luisa María Sánchez Cadavid</b>
+                        Hola, <b>Administrador</b>
                     </span>
                     <Dropdown overlay={<DropdownNotification />}>
                         <Badge

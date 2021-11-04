@@ -31,36 +31,47 @@ const ProjectModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone }) 
 
     const handleClickEnglobar = () => {
         history.push(`/acquisitions/projects/englobar/${project?.id}`);
-    }
+    };
     const handleClickDesenglobar = () => {
         history.push(`/acquisitions/projects/desenglobar/${project?.id}`);
-    }
+    };
     return (
         <>
-            <button
-                type="button"
-                className="btn btn-primary"
-                onClick={open}
-
-            >
+            <button type="button" className="btn btn-primary" onClick={open}>
                 Finalizar Proyecto
             </button>
 
-            <Modal footer={[
-                <button type="submit" className="btn btn-outline-primary " key="1"onClick={handleClickEnglobar} >
-                    Englobar
-                </button>,
-                <button type="submit" style={{ marginLeft: '40px', marginRight: '190px' }}key="2" className="btn btn-outline-primary" onClick={handleClickDesenglobar}>
-                    Desenglobar
-                </button>
-            ]} title="" centered visible={is_visible}  width={700} onCancel={close}>
+            <Modal
+                footer={[
+                    <button type="submit" className="btn btn-outline-primary " key="1" onClick={handleClickEnglobar}>
+                        Englobar
+                    </button>,
+                    <button
+                        type="submit"
+                        style={{ marginLeft: '40px', marginRight: '190px' }}
+                        key="2"
+                        className="btn btn-outline-primary"
+                        onClick={handleClickDesenglobar}
+                    >
+                        Desenglobar
+                    </button>,
+                ]}
+                title=""
+                centered
+                visible={is_visible}
+                width={700}
+                onCancel={close}
+            >
                 {/* <FinishProject /> */}
-                <h4 className="text-center" style={{ color: '#FF8403' }}>Finalizar Proyecto: {project?.name}</h4>
-                <p className="text-center" style={{ margin: 25 }}>Para finalizar el proyecto por favor selecciona una de las siguientes opciones</p>
-
+                <h4 className="text-center" style={{ color: '#FF8403' }}>
+                    Finalizar Proyecto: {project?.name}
+                </h4>
+                <p className="text-center" style={{ margin: 25 }}>
+                    Para finalizar el proyecto por favor selecciona una de las siguientes opciones
+                </p>
             </Modal>
         </>
-    )
-}
+    );
+};
 
-export default ProjectModal
+export default ProjectModal;

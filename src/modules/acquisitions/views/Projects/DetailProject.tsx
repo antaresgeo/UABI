@@ -30,13 +30,9 @@ const DetailProject = () => {
                     <div className="row justify-content-center">
                         <div className="col-md-12">
                             <h5 style={{ fontWeight: 600, marginLeft: 20 }}>
-                                <>
-                                    Proyecto: {project?.name}
-                                </>
+                                <>Proyecto: {project?.name}</>
                             </h5>
-                            <Card
-                                title="Información del Proyecto"
-                            >
+                            <Card title="Información del Proyecto">
                                 <ProjectForm disabled project={project} type="view" />
                             </Card>
 
@@ -74,7 +70,6 @@ const DetailProject = () => {
                 </button>
                 <div className="flex-fill" />
                 <ProjectModal />
-
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import response_error_interceptor from "./axios_utils";
+import response_error_interceptor from './axios_utils';
 
 const BASE_URL = `${process.env.REACT_APP_URI_SERVICE_UABI}`;
 const API_URL = `${BASE_URL}${process.env.REACT_APP_API_UABI_VERSION}`;

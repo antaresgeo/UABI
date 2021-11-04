@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    IProjectAttributes,
-    IRealEstateAttributes,
-} from '../../../../utils/interfaces';
+import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { actions } from '../../redux';
 import { useHistory } from 'react-router-dom';
 
@@ -61,16 +58,15 @@ const DesenglobeProject = () => {
     return (
         <div>
             <ProjectEnglobarForm
-            type="desenglobar"
-            projects={projects}
-            realEstates={project_id ? realEstates : []}
-            projectId={project_id}
-            onProjectSelectedChange={onProjectSelectedChange}
-            onSubmit={createRealEstate}
-        />
+                type="desenglobar"
+                projects={projects}
+                realEstates={project_id ? realEstates : []}
+                projectId={project_id}
+                onProjectSelectedChange={onProjectSelectedChange}
+                onSubmit={createRealEstate}
+            />
         </div>
-    )
-}
+    );
+};
 
-
-export default DesenglobeProject
+export default DesenglobeProject;
