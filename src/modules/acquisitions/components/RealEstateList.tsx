@@ -69,7 +69,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
             ? [
                   {
                       title: 'Proyecto Asociado',
-                      dataIndex: 'project_id',
+                      dataIndex: 'project_name',
                       align: 'center' as 'center',
                   },
               ]
