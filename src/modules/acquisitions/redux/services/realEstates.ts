@@ -80,9 +80,6 @@ export const createRealEstate = async (
 
         const aux_data = {
             ...data,
-            address: {
-                name: data.location,
-            },
             accounting_account: '0000',
             projects_id: data.project_id,
         };
@@ -228,7 +225,6 @@ const createAcquisitionForRealEstate = async (
 ) => {
     try {
         let URI = '/real-estates/adquisitions/';
-
         let res: AxiosResponse = await http.post(
             URI,
             {
@@ -240,7 +236,6 @@ const createAcquisitionForRealEstate = async (
                 },
             }
         );
-
         return res.data.results;
     } catch (e) {
         return Promise.reject('Error in  create acquisition for real estate');
@@ -248,9 +243,7 @@ const createAcquisitionForRealEstate = async (
 };
 
 const getAcquisitionForRealEstate = async (real_estate_id) => {
-
     console.log('real_estate_id', real_estate_id);
-
     try {
         let URI = '/real-estates/adquisitions/';
         let res: AxiosResponse = await http.get(URI, {
