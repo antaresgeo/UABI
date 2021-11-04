@@ -106,6 +106,20 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: guards.createPolicy,
+            path: '/insurabilities/policy/create/:id/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Registro de Pólizas', to: '/insurabilities/policy' },
+                    { name: 'Crear Nueva Póliza' },
+                ],
+            },
+
+            component: CreateInsurability,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: guards.createPolicy,
             path: '/insurabilities/policy/create/',
             template_props: {
                 breadcrumbs: [
