@@ -22,7 +22,7 @@ const DetailInsurability = () => {
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const policiesRealEstate: IPolicyAttributes[] = useSelector((states: any) => states.insurability.policies.value);
 
-    console.log(realEstate);
+    console.log(policiesRealEstate);
     //console.log("@policiesRealState", policiesRealEstate.length - 1)
     //console.log(JSON.parse(policy.insurance_companies as string) )
     useEffect(() => {
@@ -48,7 +48,7 @@ const DetailInsurability = () => {
                         <div className="" style={{ backgroundColor: '#F2F2F2'}}>
                            <div style={{fontSize: '14px', marginLeft: 20,  marginTop: 10, borderBottom: '2px solid #ddd' }}>Datos del bien inmueble</div>
                             <table className="" style={{width: '90%', marginLeft: 20,  marginBottom: 20}}>
-                                <tr style={{height: 40, }}>
+                                <tr style={{height: 40, color: '#6C6868', fontWeight: 600 }}>
                                     <td>ID</td>
                                     <td>Nombre</td>
                                     <td>Localización</td>
@@ -69,10 +69,18 @@ const DetailInsurability = () => {
 
                         </div>
 
-                        {policiesRealEstate.map(policy => (
+                        {policiesRealEstate.map((policy, i) => (
                             <div className="col-md-12">
                                 <Card
-                                    title="Póliza"
+                                    title={
+                                        <>
+                                            <b>Póliza {i+1}</b>
+                                            {i+1 !== 1 &&
+                                                <b style={{color: '#AD0808', marginLeft: 15}}>Vencida</b>
+                                            }
+
+                                        </>
+                                    }
                                 >
 
                                     <PolizaForm

@@ -128,6 +128,7 @@ const table_columns = [
 const Policies = () => {
     const dispatch = useDispatch();
     const policies: IPolicyAttributes[] = useSelector((store: any) => store.insurability.policies.value);
+    // console.log(policies)
     useEffect(() => {
         dispatch(actions.getPolicies());
     }, []);

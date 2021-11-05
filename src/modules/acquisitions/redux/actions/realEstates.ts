@@ -38,3 +38,6 @@ export const createAcquisitionForRealEstate = (
         types.acquisition_create,
         service.createAcquisitionForRealEstate(acquisitions)
     );
+
+export const clearRealEstate = () =>
+        request_dispatch(types.clearRealEstate, Promise.resolve(null) )

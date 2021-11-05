@@ -50,6 +50,7 @@ export const getPolicy = async (
 // Services: PUT
 export const updatePolicy = async (data: any, id: number) => {
     try {
+        console.log('servicio',data)
         let URI = `/insurabilities`;
         let res: AxiosResponse<IPolicyResponse> = await http.put(URI, data, {
             params: { id },

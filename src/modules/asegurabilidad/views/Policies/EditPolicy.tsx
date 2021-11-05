@@ -5,7 +5,6 @@ import PolizaForm from '../../components/PolizaForm';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Card } from '../../../../utils/ui';
-import { swal } from '../../../../utils';
 import { actions } from '../../redux';
 import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
 import { getRealEstates } from '../../../acquisitions/redux/actions/realEstates';
@@ -22,7 +21,7 @@ const EditPolicy = () => {
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstates.value);
     const policiesRealEstate: IPolicyAttributes[] = useSelector((states: any) => states.insurability.policies.value);
 
-    // console.log("@policiesRealState",policiesRealEstate)
+    console.log("@policiesRealState",policiesRealEstate)
     // console.log(policiesRealEstate[policiesRealEstate?.length -1])
     useEffect(() => {
         dispatch(getRealEstates({}));
@@ -31,9 +30,14 @@ const EditPolicy = () => {
     }, []);
 
     const _updatePolicy = async (policyForm) => {
-        console.log(policyForm);
+        let idPolicy = parseInt(policyForm.id);
+        const data = {
+            ...policyForm
+        }
+        delete data.id;
+        console.log(data, idPolicy);
         let res: any;
-        res = await dispatch(actions.updatePolicy({ policyForm }, id));
+        res = await dispatch(actions.updatePolicy( data ,idPolicy ));
         //await swal('Proyecto actualizado', res.data.message, 'success');
         //history.push(`/insurabilities/policy`);
     };
@@ -53,7 +57,7 @@ const EditPolicy = () => {
                     >
                         <PolizaForm
                             type='edit'
-                            policy={policiesRealEstate[policiesRealEstate?.length -1]}
+                            policy={policiesRealEstate[0]}
                             onSubmit={(values) => {
                                 return _updatePolicy(values);
                             }}
