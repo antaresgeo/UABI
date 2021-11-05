@@ -264,6 +264,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 type="number"
                                                 name="block"
                                                 autoComplete="off"
+                                                min={0}
+                                                max={999}
                                             />
 
                                             <ErrorMessage name="block" />
@@ -285,6 +287,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 type="number"
                                                 name="lot"
                                                 autoComplete="off"
+                                                min={0}
+                                                max={999}
                                             />
 
                                             <ErrorMessage name="lot" />
@@ -306,27 +310,11 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             <option value="" disabled>
                                                 --Tipo--
                                             </option>
-                                            <option key="calle" value="Calle">
-                                                Calle
-                                            </option>
-                                            <option key="carrera" value="Carrera">
-                                                Carrera
-                                            </option>
-                                            <option key="avenida" value="Avenida">
-                                                Avenida
-                                            </option>
-                                            <option key="circular" value="Circular">
-                                                Circular
-                                            </option>
-                                            <option key="transversal" value="Transversal">
-                                                Transversal
-                                            </option>
-                                            <option key="circunvalar" value="Circunvalar">
-                                                Circunvalar
-                                            </option>
-                                            <option key="diagonal" value="Diagonal">
-                                                Diagonal
-                                            </option>
+                                            <option key="CL" value="CL">Calle</option>
+                                            <option key="CR" value="CR">Carrera</option>
+                                            <option key="CQ" value="CQ">Circular</option>
+                                            <option key="DG" value="DG">Diagonal</option>
+                                            <option key="TV" value="TV">Transversal</option>
                                         </Field>
 
                                         <ErrorMessage name="tipo" />
@@ -470,11 +458,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 />
                                             </Tooltip>
                                         </label>
-                                        <Field
-                                            name="indicaciones"
-                                            type="number"
-                                            className="w-100 form-control"
-                                        />
+                                        <Field name="indicaciones" type="number" className="w-100 form-control" />
                                         <ErrorMessage name="indicaciones" />
                                     </div>
                                 </div>
