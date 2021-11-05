@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 import { formatDate, swal } from '../../../../utils';
+import {Switch} from "antd";
 
 const Projects = () => {
     const dispatch = useDispatch();
@@ -169,11 +170,12 @@ const Projects = () => {
                         if(id !== 0){
                             return (
                                 <div className="text-danger" onClick={deleteProject(id)}>
-                                    <i className="fa fa-times-circle" aria-hidden="true" />
+                                    {/*<i className="fa fa-times-circle" aria-hidden="true" />*/}
+                                    <Switch size="small" />
                                 </div>
                             );
                         }else {
-                            return <i className="fa fa-times-circle" aria-hidden="true"  style={{color: '#aaa'}} />
+                            return <Switch size="small" disabled/>
                         }
 
                     },

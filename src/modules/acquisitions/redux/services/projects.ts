@@ -83,7 +83,7 @@ export const updateProject = async (data: any, id: number) => {
 
 export const deleteProject = async (id: number) => {
     try {
-        let URI = `/projects/delete`;
+        let URI = `/projects/delete/`;
         let res: AxiosResponse<IProjectResponse> = await http.delete(URI, {
             params: { id },
         });
