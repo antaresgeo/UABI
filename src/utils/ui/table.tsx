@@ -16,22 +16,25 @@ const getPaginator = (
     total: number,
     change_page?: (page: number, pageSize?: number) => void
 ): TablePaginationConfig => {
-    const paginator_format = 'Mostrando $FROM a $TO de $TOTAL entradas';
+    const paginator_format = 'Total de resultados: $TOTAL';
     return {
-        position: ['bottomRight'],
+        position: ['bottomRight', 'topRight'],
         total: total || 0,
         ...(change_page
             ? {
                   onChange: change_page,
                   defaultPageSize: 10,
                   showSizeChanger: true,
+                  showQuickJumper: true,
               }
             : {}),
         showTotal: (total, current) => {
-            return paginator_format
-                .replace('$FROM', `${current[0]}`)
-                .replace('$TO', `${current[1]}`)
-                .replace('$TOTAL', `${total}`);
+            return (
+                <>
+                    <span>Total de resultados</span>:<span style={{ color: '#F28C02' }}>: {total}</span>
+                    <span style={{ fontSize: '11px', marginLeft: '16px' }}> Registros por página: </span>
+                </>
+            );
         },
     };
 };

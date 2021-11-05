@@ -27,13 +27,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
         commune: '',
         neighborhood: '',
         type: '',
-        number_one: '',
-        word_one: '',
-        orientation_one: '',
-        number_two: '',
-        word_two: '',
-        orientation_two: '',
-        indicative: '',
+        first_number: '',
+        first_appendix: '',
+        first_orientation: '',
+        second_number: '',
+        second_appendix: '',
+        second_orientation: '',
+        identifier: '',
         indicaciones: '',
     };
 
@@ -44,9 +44,9 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
         commune: Yup.string().required('Campo obligatorio'),
         neighborhood: Yup.string().required('Campo obligatorio'),
         type: Yup.string().required('Campo obligatorio'),
-        number_one: Yup.string().required('Campo obligatorio'),
-        number_two: Yup.string().required('Campo obligatorio'),
-        indicative: Yup.string().required('Campo obligatorio'),
+        first_number: Yup.string().required('Campo obligatorio'),
+        second_number: Yup.string().required('Campo obligatorio'),
+        identifier: Yup.string().required('Campo obligatorio'),
     });
 
     useEffect(() => {
@@ -82,7 +82,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
         }
         return res;
     };
-
+    const letters = generate_two_letters_combination();
     return (
         <Formik
             enableReinitialize
@@ -335,90 +335,34 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         <label htmlFor="" className="form-label">
                                             Número <span className="text-danger">*</span>
                                         </label>
-                                        <Field name="number_one" type="number" className="w-100 form-control" />
+                                        <Field name="first_number" type="number" className="w-100 form-control" />
 
-                                        <ErrorMessage name="number_one" />
+                                        <ErrorMessage name="first_number" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
                                             Letra
                                         </label>
-                                        <Field name="word_one" as="select" className="w-100 form-select">
+                                        <Field name="first_appendix" as="select" className="w-100 form-select">
                                             <option value="" disabled>
                                                 --Letra--
                                             </option>
-                                            <option key="A" value="A">
-                                                A
-                                            </option>
-                                            <option key="B" value="B">
-                                                B
-                                            </option>
-                                            <option key="C" value="B">
-                                                C
-                                            </option>
-                                            <option key="D" value="D">
-                                                D
-                                            </option>
-                                            <option key="E" value="E">
-                                                E
-                                            </option>
-                                            <option key="F" value="F">
-                                                F
-                                            </option>
-                                            <option key="G" value="G">
-                                                G
-                                            </option>
-                                            <option key="H" value="H">
-                                                H
-                                            </option>
-                                            <option key="I" value="I">
-                                                I
-                                            </option>
-                                            <option key="AA" value="AA">
-                                                AA
-                                            </option>
-                                            <option key="AB" value="AB">
-                                                AB
-                                            </option>
-                                            <option key="AC" value="AC">
-                                                AC
-                                            </option>
-                                            <option key="AD" value="AD">
-                                                AD
-                                            </option>
-                                            <option key="AE" value="AE">
-                                                AE
-                                            </option>
-                                            <option key="BB" value="BB">
-                                                BB
-                                            </option>
-                                            <option key="BC" value="BC">
-                                                BC
-                                            </option>
-                                            <option key="CC" value="CC">
-                                                CC
-                                            </option>
-                                            <option key="CD" value="CD">
-                                                CD
-                                            </option>
-                                            <option key="CE" value="CE">
-                                                CE
-                                            </option>
-                                            <option key="DD" value="DD">
-                                                DD
-                                            </option>
-                                            <option key="DE" value="DE">
-                                                DE
-                                            </option>
+                                            {letters.map((letter, i) => {
+                                                return (
+                                                    <option key={`${letter}${i}`} value={letter}>
+                                                        {letter}
+                                                    </option>
+                                                );
+                                            })}
                                         </Field>
 
-                                        <ErrorMessage name="word_one" />
+                                        <ErrorMessage name="first_appendix" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
                                             Orientación
                                         </label>
-                                        <Field name="orientation_one" as="select" className="w-100 form-select">
+                                        <Field name="first_orientation" as="select" className="w-100 form-select">
                                             <option value="" disabled>
                                                 --Orientación--
                                             </option>
@@ -436,7 +380,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             </option>
                                         </Field>
 
-                                        <ErrorMessage name="orientation_one" />
+                                        <ErrorMessage name="first_orientation" />
                                     </div>
                                 </div>
                                 <div className="row align-items-center">
@@ -453,95 +397,39 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 #
                                             </span>
                                             <Field
-                                                name="number_two"
+                                                name="second_number"
                                                 type="number"
                                                 className="form-control"
                                                 style={{ borderLeft: 'none' }}
                                             />
                                         </div>
 
-                                        <ErrorMessage name="number_two" />
+                                        <ErrorMessage name="second_number" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
                                             Letra
                                         </label>
-                                        <Field name="word_two" as="select" className="w-100 form-select">
+                                        <Field name="second_appendix" as="select" className="w-100 form-select">
                                             <option value="" disabled>
                                                 --Letra--
                                             </option>
-                                            <option key="A" value="A">
-                                                A
-                                            </option>
-                                            <option key="B" value="B">
-                                                B
-                                            </option>
-                                            <option key="C" value="B">
-                                                C
-                                            </option>
-                                            <option key="D" value="D">
-                                                D
-                                            </option>
-                                            <option key="E" value="E">
-                                                E
-                                            </option>
-                                            <option key="F" value="F">
-                                                F
-                                            </option>
-                                            <option key="G" value="G">
-                                                G
-                                            </option>
-                                            <option key="H" value="H">
-                                                H
-                                            </option>
-                                            <option key="I" value="I">
-                                                I
-                                            </option>
-                                            <option key="AA" value="AA">
-                                                AA
-                                            </option>
-                                            <option key="AB" value="AB">
-                                                AB
-                                            </option>
-                                            <option key="AC" value="AC">
-                                                AC
-                                            </option>
-                                            <option key="AD" value="AD">
-                                                AD
-                                            </option>
-                                            <option key="AE" value="AE">
-                                                AE
-                                            </option>
-                                            <option key="BB" value="BB">
-                                                BB
-                                            </option>
-                                            <option key="BC" value="BC">
-                                                BC
-                                            </option>
-                                            <option key="CC" value="CC">
-                                                CC
-                                            </option>
-                                            <option key="CD" value="CD">
-                                                CD
-                                            </option>
-                                            <option key="CE" value="CE">
-                                                CE
-                                            </option>
-                                            <option key="DD" value="DD">
-                                                DD
-                                            </option>
-                                            <option key="DE" value="DE">
-                                                DE
-                                            </option>
+                                            {letters.map((letter, i) => {
+                                                return (
+                                                    <option key={`${letter}${i}`} value={letter}>
+                                                        {letter}
+                                                    </option>
+                                                );
+                                            })}
                                         </Field>
 
-                                        <ErrorMessage name="word_one" />
+                                        <ErrorMessage name="first_appendix" />
                                     </div>
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
                                             Orientación
                                         </label>
-                                        <Field name="orientation_two" as="select" className="w-100 form-select">
+                                        <Field name="second_orientation" as="select" className="w-100 form-select">
                                             <option value="" disabled>
                                                 --Orientación--
                                             </option>
@@ -559,16 +447,16 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             </option>
                                         </Field>
 
-                                        <ErrorMessage name="orientation_one" />
+                                        <ErrorMessage name="first_orientation" />
                                     </div>{' '}
                                     -
                                     <div className="form-group col">
                                         <label htmlFor="" className="form-label">
                                             Indicativo <span className="text-danger">*</span>
                                         </label>
-                                        <Field name="indicative" type="number" className="w-100 form-control" />
+                                        <Field name="identifier" type="number" className="w-100 form-control" />
 
-                                        <ErrorMessage name="indicative" />
+                                        <ErrorMessage name="identifier" />
                                     </div>
                                 </div>
                                 <div className="from-row row">
@@ -584,9 +472,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         </label>
                                         <Field
                                             name="indicaciones"
-                                            type="text"
+                                            type="number"
                                             className="w-100 form-control"
-                                            placeholder="Manzana, Urbanización, Núcleo, Bloque, apartamento"
                                         />
                                         <ErrorMessage name="indicaciones" />
                                     </div>
@@ -627,4 +514,23 @@ const a = {
     entity_number: 1111,
     city: '05001',
     real_estate_id: 6,
+};
+
+const generate_two_letters_combination = () => {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const arr = letters.split('');
+    for (let i = 0; i < letters.length; i++) {
+        const first_letter = letters[i];
+        for (let j = 0; j < letters.length; j++) {
+            const new_letter = first_letter + letters[j];
+            arr.push(new_letter);
+            if (new_letter === 'HH') {
+                break;
+            }
+        }
+        if (first_letter === 'H') {
+            break;
+        }
+    }
+    return arr;
 };
