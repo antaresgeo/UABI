@@ -38,7 +38,7 @@ export interface ILocationAttributes {
 }
 
 export interface ICountryAddressAttributes {
-    country_code: string;
+    country_code: number;
     country: string;
 }
 

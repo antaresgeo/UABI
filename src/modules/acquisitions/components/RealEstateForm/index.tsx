@@ -46,15 +46,15 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         registry_number_document_id: '',
         name: '',
         description: '',
-        patrimonial_value: 0,
-        reconstruction_value: 0,
+        patrimonial_value: '',
+        reconstruction_value: '',
         address: {
             id: '',
             name: '',
-            cbml: ''
+            cbml: '',
         },
-        total_area: 0,
-        total_percentage: 0,
+        total_area: '',
+        total_percentage: '',
         zone: '',
         tipology: '',
         materials: [],
@@ -74,6 +74,10 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         _type: null,
         ...realEstate,
     };
+
+    if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
+        initial_values.materials = initial_values.materials.split(',');
+    }
 
     const schema = Yup.object().shape({
         destination_type: Yup.string().required('Campo obligatorio'),
@@ -114,7 +118,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     };
 
     const [project, set_project] = useState(null);
-    console.log(projectId)
+    console.log(projectId);
     useEffect(() => {
         if (Number.isInteger(projectId)) {
             service.getProject(projectId + '').then((_project) => {

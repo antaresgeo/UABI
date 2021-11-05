@@ -176,3 +176,6 @@ export const is_empty = (obj) =>
     obj && // 👈 null and undefined check
     Object.keys(obj).length === 0 &&
     Object.getPrototypeOf(obj) === Object.prototype;
+
+
+// export const regex_number_positive_with_decimals = /^[+]?\d{0,3}(?:\.\d*)?$/;
