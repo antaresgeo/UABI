@@ -32,6 +32,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
         entity_type: '',
         entity_number: '',
         city: '',
+        city_name: '',
         real_estate_id: '',
     };
     const [acquisition, set_acquisition] = useState<any>(initial_values);
@@ -378,12 +379,15 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                             type="text"
                                             className="form-control"
                                             disabled
+                                            value={acquisition.city_name || ''}
                                         />
                                         <div className="input-group-prepend">
                                             <LocationModal
                                                 disabled={disabled}
                                                 onSave={(values) => {
+                                                    console.log(values);
                                                     handleChange({ target: { value: values.city, name: 'city' } });
+                                                    handleChange({ target: { value: values.city_name, name: 'city_name' } });
                                                     return Promise.resolve();
                                                 }}
                                             />

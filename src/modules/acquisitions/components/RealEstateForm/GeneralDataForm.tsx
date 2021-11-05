@@ -372,8 +372,8 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                         disabled={disabled}
                         className="w-100"
                         options={[
-                            { name: 'Hormigón', id: 1 },
-                            { name: 'Madera', id: 2 },
+                            { name: 'Hormigón', id: 'Hormigón' },
+                            { name: 'Madera', id: 'Madera' },
                         ]}
                         mode="multiple"
                     />
@@ -400,8 +400,13 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 view="general"
                                 zone={formik.values.zone}
                                 onSave={(values) => {
+                                    delete values.country_name;
+                                    delete values.state_name;
+                                    delete values.city_name;
+                                    delete values.commune_name;
+                                    delete values.neighborhood_name;
                                     return service.getAddress(values).then((res) => {
-                                        formik.setFieldValue('address.id', `${res.id}`, false)
+                                        formik.setFieldValue('address.id', `${res.id}`, false);
                                         formik.setFieldValue('address.name', `${res.addressAsString}`, false);
                                         formik.setFieldValue('address.cbml', `${res.cbml}`, false);
                                     });

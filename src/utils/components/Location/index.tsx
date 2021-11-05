@@ -16,16 +16,21 @@ interface LocationProps {
 const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...props }) => {
     const [countries, setCountries] = useState<ICountryAddressAttributes[]>([]);
     const [states, setStates] = useState([]);
-    const [city, setCity] = useState([]);
+    const [cities, setCities] = useState([]);
     const [commune, setCommune] = useState([]);
     const [neighborhood, setNeighborhood] = useState([]);
 
-    const initialValues = {
-        country: '57',
-        state: '05',
-        city: '05001',
+    const initialValues: any = {
+        country: 57,
+        country_name: '',
+        state: 5,
+        state_name: '',
+        city: 5001,
+        city_name: '',
         commune: '',
+        commune_name: '',
         neighborhood: '',
+        neighborhood_name: '',
         block: '',
         lot: '',
         type: '',
@@ -58,7 +63,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
             const arrStates = await getList('state', { country: initialValues.country });
             setStates(arrStates);
             const arrCity = await getList('city', { state: initialValues.state });
-            setCity(arrCity);
+            setCities(arrCity);
             const arrCommune = await getList('commune', { city: initialValues.city });
             setCommune(arrCommune);
         })();
@@ -108,6 +113,19 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                 const cb = `${has_commune ? values.commune : ''}${
                     has_commune && has_neighborhood ? values.neighborhood : ''
                 }`;
+
+                if (values.country === 57 && values.country_name === '' && countries.length > 0) {
+                    const country = countries.find((c) => c.country_code === 57)?.country || '';
+                    setFieldValue('country_name', country, false);
+                }
+                if (values.state === 5 && values.state_name === '' && states.length > 0) {
+                    const state = states.find((c) => c.state_code === 5)?.state || '';
+                    setFieldValue('state_name', state, false);
+                }
+                if (values.city === 5001 && values.city_name === '' && cities.length > 0) {
+                    const city = cities.find((c) => c.city_code === 5001)?.city || '';
+                    setFieldValue('city_name', city, false);
+                }
                 return (
                     <Form>
                         <div className="form-row row">
@@ -127,6 +145,9 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         setFieldValue('city', '');
                                         setFieldValue('commune', '');
                                         setFieldValue('neighborhood', '');
+                                        const country_r =
+                                            countries.find((c) => c.country_code === parseInt(e.target.value))?.country || '';
+                                        setFieldValue('country_name', country_r, false);
                                     }}
                                 >
                                     <option value="" disabled>
@@ -149,13 +170,16 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                     onChange={async (e) => {
                                         handleChange(e);
                                         const list = await getList('city', { state: e.target.value });
-                                        setCity(list);
+                                        setCities(list);
                                         setFieldValue('city', '');
                                         setFieldValue('commune', '');
                                         setFieldValue('neighborhood', '');
+                                        const state_r =
+                                            states.find((c) => c.state_code === parseInt(e.target.value))?.state || '';
+                                        setFieldValue('state_name', state_r, false);
                                     }}
                                 >
-                                    <option value="" selected disabled>
+                                    <option value="" disabled>
                                         --departamento--
                                     </option>
                                     {renderOptions('state_code', 'state', states)}
@@ -179,12 +203,14 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         setCommune(list);
                                         setFieldValue('commune', '');
                                         setFieldValue('neighborhood', '');
+                                        const city_r = cities.find((c) => c.city_code === parseInt(e.target.value))?.city || '';
+                                        setFieldValue('city_name', city_r, false);
                                     }}
                                 >
                                     <option value="" disabled>
                                         --{zone && zone === 'Rural' ? 'municipio' : 'ciudad'}--
                                     </option>
-                                    {renderOptions('city_code', 'city', city)}
+                                    {renderOptions('city_code', 'city', cities)}
                                 </Field>
 
                                 <ErrorMessage name="city" />
@@ -209,6 +235,9 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             });
                                             setNeighborhood(list);
                                             setFieldValue('neighborhood', '');
+                                            const commune_r =
+                                                commune.find((c) => c.commune_code === parseInt(e.target.value))?.commune || '';
+                                            setFieldValue('commune_name', commune_r, false);
                                         }}
                                     >
                                         <option value="" disabled>
@@ -231,9 +260,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         disabled={!has_commune}
                                         onChange={async (e) => {
                                             handleChange(e);
+                                            const neighborhood_r =
+                                                neighborhood.find((c) => c.neighborhood_code === e.target.value)
+                                                    ?.neighborhood || '';
+                                            setFieldValue('neighborhood_name', neighborhood_r, false);
                                         }}
                                     >
-                                        <option value="" selected disabled>
+                                        <option value="" disabled>
                                             --{zone && zone === 'Rural' ? 'vereda' : 'barrio'}--
                                         </option>
                                         {renderOptions('neighborhood_code', 'neighborhood', neighborhood, true)}
@@ -268,6 +301,14 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 autoComplete="off"
                                                 min={0}
                                                 max={999}
+                                                onChange={(e) => {
+                                                    e.preventDefault();
+                                                    const { value } = e.target;
+                                                    const regex = /^[+]?\d{0,3}$/;
+                                                    if (regex.test(value.toString())) {
+                                                        handleChange(e);
+                                                    }
+                                                }}
                                             />
 
                                             <ErrorMessage name="block" />
@@ -291,6 +332,14 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 autoComplete="off"
                                                 min={0}
                                                 max={999}
+                                                onChange={(e) => {
+                                                    e.preventDefault();
+                                                    const { value } = e.target;
+                                                    const regex = /^[+]?\d{0,3}$/;
+                                                    if (regex.test(value.toString())) {
+                                                        handleChange(e);
+                                                    }
+                                                }}
                                             />
 
                                             <ErrorMessage name="lot" />
@@ -308,26 +357,41 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         <label htmlFor="" className="form-label">
                                             Tipo <span className="text-danger">*</span>
                                         </label>
-                                        <Field name="type" as="select" className="w-100 form-select" onChange={(e) => {
-                                            handleChange(e);
-                                            console.log(e.target.value);
-                                            if(e.target.value === 'CL'){
-                                                setFieldValue('first_orientation', 'Sur', false);
-                                                setFieldValue('second_orientation', 'Sur', false)
-                                            }
-                                            if(e.target.value === 'CR'){
-                                                setFieldValue('first_orientation', 'Este', false);
-                                                setFieldValue('second_orientation', 'Este', false)
-                                            }
-                                        }}>
+                                        <Field
+                                            name="type"
+                                            as="select"
+                                            className="w-100 form-select"
+                                            onChange={(e) => {
+                                                handleChange(e);
+                                                console.log(e.target.value);
+                                                if (e.target.value === 'CL') {
+                                                    setFieldValue('first_orientation', 'Sur', false);
+                                                    setFieldValue('second_orientation', 'Sur', false);
+                                                }
+                                                if (e.target.value === 'CR') {
+                                                    setFieldValue('first_orientation', 'Este', false);
+                                                    setFieldValue('second_orientation', 'Este', false);
+                                                }
+                                            }}
+                                        >
                                             <option value="" disabled>
                                                 --Tipo--
                                             </option>
-                                            <option key="CL" value="CL">Calle</option>
-                                            <option key="CR" value="CR">Carrera</option>
-                                            <option key="CQ" value="CQ">Circular</option>
-                                            <option key="DG" value="DG">Diagonal</option>
-                                            <option key="TV" value="TV">Transversal</option>
+                                            <option key="CL" value="CL">
+                                                Calle
+                                            </option>
+                                            <option key="CR" value="CR">
+                                                Carrera
+                                            </option>
+                                            <option key="CQ" value="CQ">
+                                                Circular
+                                            </option>
+                                            <option key="DG" value="DG">
+                                                Diagonal
+                                            </option>
+                                            <option key="TV" value="TV">
+                                                Transversal
+                                            </option>
                                         </Field>
 
                                         <ErrorMessage name="tipo" />
@@ -336,7 +400,20 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         <label htmlFor="" className="form-label">
                                             Número <span className="text-danger">*</span>
                                         </label>
-                                        <Field name="first_number" type="number" className="w-100 form-control" />
+                                        <Field
+                                            name="first_number"
+                                            type="number"
+                                            className="w-100 form-control"
+                                            min={0}
+                                            onChange={(e) => {
+                                                e.preventDefault();
+                                                const { value } = e.target;
+                                                const regex = /^[+]?\d*$/;
+                                                if (regex.test(value.toString())) {
+                                                    handleChange(e);
+                                                }
+                                            }}
+                                        />
 
                                         <ErrorMessage name="first_number" />
                                     </div>
@@ -363,8 +440,12 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         <label htmlFor="" className="form-label">
                                             Orientación
                                         </label>
-                                        <Field name="first_orientation" type="text" className="w-100 form-select" disabled/>
-
+                                        <Field
+                                            name="first_orientation"
+                                            type="text"
+                                            className="w-100 form-control"
+                                            disabled
+                                        />
 
                                         <ErrorMessage name="first_orientation" />
                                     </div>
@@ -387,6 +468,15 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 type="number"
                                                 className="form-control"
                                                 style={{ borderLeft: 'none' }}
+                                                min={0}
+                                                onChange={(e) => {
+                                                    e.preventDefault();
+                                                    const { value } = e.target;
+                                                    const regex = /^[+]?\d*$/;
+                                                    if (regex.test(value.toString())) {
+                                                        handleChange(e);
+                                                    }
+                                                }}
                                             />
                                         </div>
 
@@ -415,8 +505,12 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         <label htmlFor="" className="form-label">
                                             Orientación
                                         </label>
-                                        <Field name="second_orientation" type="text" className="w-100 form-control" disabled/>
-
+                                        <Field
+                                            name="second_orientation"
+                                            type="text"
+                                            className="w-100 form-control"
+                                            disabled
+                                        />
 
                                         <ErrorMessage name="first_orientation" />
                                     </div>{' '}
@@ -425,7 +519,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         <label htmlFor="" className="form-label">
                                             Indicativo <span className="text-danger">*</span>
                                         </label>
-                                        <Field name="identifier" type="number" className="w-100 form-control" />
+                                        <Field name="identifier" type="number" className="w-100 form-control" min={0} />
 
                                         <ErrorMessage name="identifier" />
                                     </div>
@@ -442,7 +536,20 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             </Tooltip>
                                         </label>
 
-                                        <Field name="indicaciones" type="number" className="w-100 form-control" />
+                                        <Field
+                                            name="indicaciones"
+                                            type="number"
+                                            className="w-100 form-control"
+                                            min={0}
+                                            onChange={(e) => {
+                                                e.preventDefault();
+                                                const { value } = e.target;
+                                                const regex = /^[+]?\d*$/;
+                                                if (regex.test(value.toString())) {
+                                                    handleChange(e);
+                                                }
+                                            }}
+                                        />
 
                                         <ErrorMessage name="indicaciones" />
                                     </div>

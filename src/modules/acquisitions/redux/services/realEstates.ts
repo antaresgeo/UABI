@@ -86,7 +86,6 @@ export const createRealEstate = async (
         delete aux_data.id;
         delete aux_data.project_id;
         delete aux_data.active_code;
-        delete aux_data.cbml;
         delete aux_data.status;
         delete aux_data.acquisitions;
         delete aux_data.audit_trail;
