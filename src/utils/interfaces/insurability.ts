@@ -12,7 +12,7 @@ export interface IPolicyAttributes {
     vigency_start:  number | string;
     vigency_end:  number | string;
     insurance_broker: string;
-    insurance_companies: ICompanies;
+    insurance_companies: [{ insurance_company: string, total_percentage: number }];
     type_assurance: string;
     insurance_value: string;
     insurance_document_id: number;

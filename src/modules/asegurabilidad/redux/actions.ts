@@ -16,12 +16,16 @@ const getPolicies = () =>
 const updatePolicy = (data: any, id) =>
     request_dispatch(types.policy, service.updatePolicy(data, id));
 
+const policiesRealEstate = (id: number) =>
+    request_dispatch(types.policies, service.policiesRealEstate(id))
+
 const actions = {
     // example
     createPolicy,
     getPolicy,
     getPolicies,
     updatePolicy,
+    policiesRealEstate,
 };
 
 export default actions;

@@ -20,16 +20,22 @@ const EditPolicy = () => {
     const dispatch = useDispatch();
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const policiesRealEstate: IPolicyAttributes[] = useSelector((states: any) => states.insurability.policies.value);
 
+    // console.log("@policiesRealState",policiesRealEstate)
+    // console.log(policiesRealEstate[policiesRealEstate?.length -1])
     useEffect(() => {
         dispatch(getRealEstates({}));
+        dispatch(actions.getPolicy((policiesRealEstate?.length - 1).toString()));
+        dispatch(actions.policiesRealEstate(parseInt(id)))
     }, []);
 
     const _updatePolicy = async (policyForm) => {
+        console.log(policyForm);
         let res: any;
         res = await dispatch(actions.updatePolicy({ policyForm }, id));
-        await swal('Proyecto actualizado', res.data.message, 'success');
-        history.push(`/insurability/policy/${policy.id}`);
+        //await swal('Proyecto actualizado', res.data.message, 'success');
+        //history.push(`/insurabilities/policy`);
     };
 
     useEffect(() => {
@@ -46,8 +52,8 @@ const EditPolicy = () => {
                         title="Póliza"
                     >
                         <PolizaForm
-                            realEstate={realEstate}
-                            policy={policy}
+                            type='edit'
+                            policy={policiesRealEstate[policiesRealEstate?.length -1]}
                             onSubmit={(values) => {
                                 return _updatePolicy(values);
                             }}

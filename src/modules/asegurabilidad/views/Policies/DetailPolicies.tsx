@@ -8,6 +8,7 @@ import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates'
 import { getRealEstates } from '../../../acquisitions/redux/actions/realEstates';
 import PolizaForm from '../../components/PolizaForm';
 import { useHistory } from 'react-router-dom';
+import { getRealEstate } from './../../../acquisitions/redux/actions/realEstates';
 
 interface IParams {
     id: string;
@@ -18,11 +19,20 @@ const DetailInsurability = () => {
 
     const { id } = useParams<IParams>();
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
-    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
+    const policiesRealEstate: IPolicyAttributes[] = useSelector((states: any) => states.insurability.policies.value);
+
+    console.log(realEstate);
+    //console.log("@policiesRealState", policiesRealEstate.length - 1)
+    //console.log(JSON.parse(policy.insurance_companies as string) )
     useEffect(() => {
         //dispatch(getRealEstates({}));
+        dispatch(getRealEstate(id))
         dispatch(actions.getPolicy(id));
+        dispatch(actions.policiesRealEstate(parseInt(id)))
     }, []);
+
+
 
     const getPolicy = async (dataPolicy) => {
         const action = actions.getPolicy(id);
@@ -34,21 +44,51 @@ const DetailInsurability = () => {
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
-                        <div className="col-md-12">
-                    <Card
-                        title="Póliza"
-                    >
-                        <PolizaForm
-                            type= 'view'
-                            disabled
-                            realEstate={realEstate}
-                            policy={policy}
-                            onSubmit={(values) => {
-                                return getPolicy(values);
-                            }}
-                        />
-                    </Card>
-                    </div>
+
+                        <div className="" style={{ backgroundColor: '#F2F2F2'}}>
+                           <div style={{fontSize: '14px', marginLeft: 20,  marginTop: 10, borderBottom: '2px solid #ddd' }}>Datos del bien inmueble</div>
+                            <table className="" style={{width: '90%', marginLeft: 20,  marginBottom: 20}}>
+                                <tr style={{height: 40, }}>
+                                    <td>ID</td>
+                                    <td>Nombre</td>
+                                    <td>Localización</td>
+                                    <td>Tipología</td>
+                                    <td>Tipo de activo</td>
+                                    <td style={{borderLeft: '2px solid #ddd'}} >Proyectos a los que pertenece</td>
+                                </tr>
+                                <tr  style={{height: 40}}>
+                                    <td>{realEstate?.id}</td>
+                                    <td>{realEstate?.name}</td>
+                                    <td>falta</td>
+                                    <td>{realEstate?.tipology}</td>
+                                    <td>falta</td>
+                                    {}
+                                    <td style={{borderLeft: '2px solid #ddd'}}>{realEstate?.projects.name}</td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                        {policiesRealEstate.map(policy => (
+                            <div className="col-md-12">
+                                <Card
+                                    title="Póliza"
+                                >
+
+                                    <PolizaForm
+                                        type='view'
+                                        disabled
+                                        policy={policy}
+                                        onSubmit={(values) => {
+                                            return getPolicy(values);
+                                        }}
+                                    />
+
+
+                                </Card>
+
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -70,5 +110,7 @@ const DetailInsurability = () => {
         </div>
     );
 };
+
+
 
 export default DetailInsurability;
