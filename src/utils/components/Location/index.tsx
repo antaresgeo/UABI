@@ -308,7 +308,18 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         <label htmlFor="" className="form-label">
                                             Tipo <span className="text-danger">*</span>
                                         </label>
-                                        <Field name="type" as="select" className="w-100 form-select">
+                                        <Field name="type" as="select" className="w-100 form-select" onChange={(e) => {
+                                            handleChange(e);
+                                            console.log(e.target.value);
+                                            if(e.target.value === 'CL'){
+                                                setFieldValue('first_orientation', 'Sur', false);
+                                                setFieldValue('second_orientation', 'Sur', false)
+                                            }
+                                            if(e.target.value === 'CR'){
+                                                setFieldValue('first_orientation', 'Este', false);
+                                                setFieldValue('second_orientation', 'Este', false)
+                                            }
+                                        }}>
                                             <option value="" disabled>
                                                 --Tipo--
                                             </option>
@@ -352,23 +363,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         <label htmlFor="" className="form-label">
                                             Orientación
                                         </label>
-                                        <Field name="first_orientation" as="select" className="w-100 form-select">
-                                            <option value="" disabled>
-                                                --Orientación--
-                                            </option>
-                                            <option key="sur" value="Sur">
-                                                Sur
-                                            </option>
-                                            <option key="norte" value="Norte">
-                                                Norte
-                                            </option>
-                                            <option key="oeste" value="Oeste">
-                                                Occidente
-                                            </option>
-                                            <option key="este" value="Este">
-                                                Oriente
-                                            </option>
-                                        </Field>
+                                        <Field name="first_orientation" type="text" className="w-100 form-select" disabled/>
+
 
                                         <ErrorMessage name="first_orientation" />
                                     </div>
@@ -419,23 +415,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         <label htmlFor="" className="form-label">
                                             Orientación
                                         </label>
-                                        <Field name="second_orientation" as="select" className="w-100 form-select">
-                                            <option value="" disabled>
-                                                --Orientación--
-                                            </option>
-                                            <option key="sur" value="Sur">
-                                                Sur
-                                            </option>
-                                            <option key="norte" value="Norte">
-                                                Norte
-                                            </option>
-                                            <option key="oeste" value="Oeste">
-                                                Occidente
-                                            </option>
-                                            <option key="este" value="Este">
-                                                Oriente
-                                            </option>
-                                        </Field>
+                                        <Field name="second_orientation" type="text" className="w-100 form-control" disabled/>
+
 
                                         <ErrorMessage name="first_orientation" />
                                     </div>{' '}
