@@ -347,8 +347,6 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, formik, disabled })
                                         value={acquisition.entity_type}
                                     >
                                         <option value="Notaría">Notaría</option>
-                                        <option value="Sergio">Sergio</option>
-                                        <option value="Ximena">Ximena</option>
                                     </select>
                                     <ErrorMessage />
                                 </div>
