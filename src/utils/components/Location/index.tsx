@@ -458,7 +458,9 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 />
                                             </Tooltip>
                                         </label>
+
                                         <Field name="indicaciones" type="number" className="w-100 form-control" />
+
                                         <ErrorMessage name="indicaciones" />
                                     </div>
                                 </div>
