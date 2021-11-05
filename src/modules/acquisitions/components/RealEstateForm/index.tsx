@@ -48,10 +48,10 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         description: '',
         patrimonial_value: 0,
         reconstruction_value: 0,
-        location: '',
-        cbml: '',
         address: {
+            id: '',
             name: '',
+            cbml: ''
         },
         total_area: 0,
         total_percentage: 0,

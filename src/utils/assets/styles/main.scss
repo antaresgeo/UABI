@@ -204,3 +204,21 @@ main {
     border: 1px solid #c3c3c3;
     border-radius: 5px;
 }
+.ant-table-wrapper {
+    font-size: 12px;
+    .ant-spin-container {
+        ul.ant-pagination.ant-table-pagination:first-child {
+            .ant-pagination-prev,
+            .ant-pagination-next,
+            .ant-pagination-item {
+                display: none;
+            }
+        }
+        ul.ant-pagination.ant-table-pagination:last-child {
+            .ant-pagination-total-text,
+            .ant-pagination-options {
+                display: none;
+            }
+        }
+    }
+}
