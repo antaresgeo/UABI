@@ -26,6 +26,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
         city: '05001',
         commune: '',
         neighborhood: '',
+        block: '',
+        lot: '',
         type: '',
         first_number: '',
         first_appendix: '',
