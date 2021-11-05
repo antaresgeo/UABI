@@ -193,6 +193,18 @@ const reducer = (state: any = initialState, action: any): any => {
             };
         }
 
+        case types.clearRealEstate.success: {
+            return {
+                ...state,
+                realEstate: {
+                    ...state.realEstate,
+                    loading: false,
+                    loaded: true,
+                    value: action.payload
+                }
+            }
+        }
+
         default: {
             return state;
         }

@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { Card } from "../../../../utils/ui";
 import { actions } from "../../redux";
 import { useEffect } from 'react';
-import { getRealEstate } from "../../../acquisitions/redux/actions/realEstates";
+import { clearRealEstate, getRealEstate } from "../../../acquisitions/redux/actions/realEstates";
 import PolizaForm from '../../components/PolizaForm';
 import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
 
@@ -19,10 +19,16 @@ const CreateInsurability = () => {
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
 
     useEffect(() => {
-        if(id){
+        dispatch(clearRealEstate());
+        console.log(id, realEstate)
+        if (id) {
             dispatch(getRealEstate(id));
         }
     }, [id])
+
+    useEffect(() => {
+        dispatch(clearRealEstate());
+    }, [])
 
 
     const createPolicy = async (dataPolicy) => {
@@ -38,7 +44,7 @@ const CreateInsurability = () => {
                         <div className="col-md-12">
                             <Card title="Crear Póliza">
                                 <PolizaForm
-                                    type_assurance = "Normal"
+                                    type_assurance="Normal"
                                     type='create'
                                     realEstate={realEstate}
                                     onSubmit={(values) => {

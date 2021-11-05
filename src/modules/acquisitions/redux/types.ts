@@ -30,6 +30,11 @@ const types = Object.freeze({
         success: 'Se consulta endpoint de servicio Real Estate [success]',
         fail: 'Se consulta endpoint de servicio Real Estate [fail]',
     },
+    clearRealEstate: {
+        default: 'Se limpia el Real Estate [default]',
+        success: 'Se limpia el Real Estate [success]',
+        fail: 'Se limpia el Real Estate [fail]',
+    },
     deleteRealEstate: {
         default:
             'Se consulta endpoint delete de servicio Real Estate [default]',
