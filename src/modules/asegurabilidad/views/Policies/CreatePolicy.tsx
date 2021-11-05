@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { swal } from "../../../../utils";
 import { Card } from "../../../../utils/ui";
 import { actions } from "../../redux";
 import { useEffect } from 'react';
-import { getRealEstate, getRealEstates } from "../../../acquisitions/redux/actions/realEstates";
+import { getRealEstate } from "../../../acquisitions/redux/actions/realEstates";
 import PolizaForm from '../../components/PolizaForm';
 import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
 
@@ -18,9 +17,13 @@ const CreateInsurability = () => {
     const dispatch = useDispatch();
 
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
+
     useEffect(() => {
-        dispatch(getRealEstate(id));
-    }, [id]);
+        if(id){
+            dispatch(getRealEstate(id));
+        }
+    }, [id])
+
 
     const createPolicy = async (dataPolicy) => {
         await dispatch(actions.createPolicy(dataPolicy));

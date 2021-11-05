@@ -41,10 +41,8 @@ export const getPolicy = async (
         let res: AxiosResponse<IPolicyResponse> = await http.get(URI, {
             params: { id },
         });
-        console.log('ok');
         return res.data.results;
     } catch (error) {
-        console.error(error);
         return Promise.reject('Error');
     }
 };
@@ -63,11 +61,24 @@ export const updatePolicy = async (data: any, id: number) => {
     }
 };
 
+export const policiesRealEstate = async (real_estate_id: number) => {
+    try {
+        let URI = `/insurabilities`
+        let res: AxiosResponse<IPolicyResponse> = await http.get(URI, {
+            params: { real_estate_id },
+        });
+        return res.data.results;
+    } catch (error) {
+        return Promise.reject('Error');
+    }
+}
+
 const services = {
     createPolicy,
     getPolicies,
     getPolicy,
     updatePolicy,
+    policiesRealEstate,
 };
 
 export default services;

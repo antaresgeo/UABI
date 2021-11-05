@@ -73,21 +73,21 @@ const getAddress = async (values) => {
     }
 
     // INSERT ADDRESS WITH ID LOCATION
-    let addressValues: IAddress = {
+    let addressValues: any = {
         type: values.type,
-        number_one: values.number_one,
-        number_two: values.number_two,
-        indicative: values.indicative,
+        first_number: values.first_number,
+        second_number: values.second_number,
+        identifier: values.identifier,
         user_id: 'Administrador',
         location_id: idLocation,
     };
 
-    if (values.word_one) addressValues.word_one = values.word_one;
-    if (values.orientation_one)
-        addressValues.orientation_one = values.orientation_one;
-    if (values.word_two) addressValues.word_two = values.word_two;
-    if (values.orientation_two)
-        addressValues.orientation_two = values.orientation_two;
+    if (values.first_appendix) addressValues.first_appendix = values.first_appendix;
+    if (values.first_orientation)
+        addressValues.first_orientation = values.first_orientation;
+    if (values.second_appendix) addressValues.second_appendix = values.second_appendix;
+    if (values.second_orientation)
+        addressValues.second_orientation = values.second_orientation;
     if (values.block) addressValues.block = values.block;
     if (values.lot) addressValues.lot = values.lot;
     if (values.indications) addressValues.indications = values.indications;
