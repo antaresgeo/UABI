@@ -7,14 +7,18 @@ import {
     IPolicyAttributes,
     IPolicyResponse,
 } from '../../../../utils/interfaces/insurability';
+import { compute_doc_policy } from '../../views/Policies/poliza.utils';
 
 // Services: POST
 export const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
     try {
         let URI = `/insurabilities`;
-        let res: AxiosResponse<IPolicyResponse> = await http.post(URI, data);
-        await swal.fire('poliza creada', res.data.message, 'success');
-        return res.data.results;
+        console.log(data);
+        const doc: any = await compute_doc_policy(data.insurance_document);
+
+        //let res: AxiosResponse<IPolicyResponse> = await http.post(URI, data);
+        //await swal.fire('poliza creada', res.data.message, 'success');
+        //return res.data.results;
     } catch (error) {
         console.error(error);
         await swal.fire('Error', '', 'error');

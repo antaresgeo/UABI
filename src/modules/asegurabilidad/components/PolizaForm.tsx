@@ -69,7 +69,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
         ],
         insurance_document_id: "123",
         insurance_document: {
-            name: '',
+            type: 'poliza',
             pdf: null
         },
         real_estate_id: realEstate?.id || 0,
@@ -89,7 +89,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
 
 
     const schema = Yup.object().shape({
-        //registry_number: Yup.string().required('obligatorio'),
+        registry_number: Yup.string().required('obligatorio'),
         policy_type: Yup.string().required('obligatorio'),
         vigency_start: Yup.string().required('obligatorio'),
         vigency_end: Yup.string().required('obligatorio'),
@@ -123,7 +123,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
             vigency_start: new Date(newDate).getTime(),
             vigency_end: new Date(newDate2).getTime(),
         }
-        delete finalValues.insurance_document;
+        //delete finalValues.insurance_document;
         let total = 0;
         Array.isArray(values.insurance_companies) && finalValues.insurance_companies.map(valor => total = total + valor.total_percentage)
         if (total > 100) {
@@ -139,7 +139,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
     };
 
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} >
+        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema} >
             {({ isSubmitting, setFieldValue, values, handleChange }) => {
                 //console.log(values);
                 return (
@@ -468,7 +468,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                             <div className="col text-end">
                                 {type !== 'view' && (
                                     <button
-                                        // type ="button"
+                                        type ="submit"
                                         className="btn btn-primary my-3"
                                         disabled={disabled}
                                     >

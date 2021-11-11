@@ -9,6 +9,11 @@ import Prueba from './views/Prueba';
  *
  * @return {*}  {IRoute[]}
  */
+import ListInspection from './views/ListInspection';
+
+
+
+
 const get_routes = (): IRoute[] => {
     return [
         {
@@ -31,6 +36,13 @@ const get_routes = (): IRoute[] => {
             can_access: true,
             path: '/inspection/upgrade/',
             component: CreateUpgrade,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/inspection',
+            component: ListInspection,
         },
         {
             exact: true,
