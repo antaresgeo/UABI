@@ -1,44 +1,28 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { actions } from '../redux';
-import { useDispatch, useSelector } from 'react-redux';
-import { IUserAttributes } from './../../../utils/interfaces/users';
+import React from 'react'
+import { Card } from '../../../../utils/ui';
 import { useHistory } from 'react-router-dom';
-import { Card } from '../../../utils/ui';
-import GeneralForm from './../components/GerenalForm';
+import RoleForm from './../../components/RoleForm';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../redux';
 
-interface IParams {
-    id: string;
-}
-
-const DetailUser = () => {
-    const { id } = useParams<IParams>();
-    const dispatch = useDispatch();
+export const CreateRoles = () => {
     const history = useHistory();
-    const user: IUserAttributes = useSelector((states: any) => states.users.value);
-
-    useEffect(() => {
-        dispatch(actions.getUser(parseInt(id)));
-    }, []);
-
-    const getUser = async (dataPolicy) => {
-        console.log()
-        const action = actions.getUser(1);
-        await dispatch(action);
-    };
-    const initial_values = {};
+    const dispatch = useDispatch();
+    const createUser = async (values) => {
+        console.log(values);
+        await dispatch(actions.createRole(values))
+    }
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card title="información Usuario">
-                                <GeneralForm
+                            <Card title="Crear Rol">
+                                <RoleForm
                                     type="create"
-                                    disabled
                                     onSubmit={(values) => {
-                                        return getUser(values);
+                                        return createUser(values);
                                     }}
                                 />
                             </Card>
@@ -62,7 +46,5 @@ const DetailUser = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-    );
-};
-
-export default DetailUser;
+    )
+}

@@ -1,31 +1,18 @@
-import { actions } from '../redux';
-import { useDispatch } from 'react-redux';
+import React from 'react'
 import { Card } from '../../../utils/ui';
 import { useHistory } from 'react-router-dom';
-import GeneralForm from './../components/GerenalForm';
+import UpgradeForm from './../components/UpgradeForm';
 
-
-const CreateUser = () => {
-    const dispatch = useDispatch();
+const CreateUpgrade = () => {
     const history = useHistory();
-    const createUser = async (dataPolicy) => {
-        await dispatch(actions.createUser(dataPolicy));
-        // await dispatch(actions.getUsers({}));
-
-    };
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card title="información Usuario">
-                                <GeneralForm
-                                    type="create"
-                                    onSubmit={(values) => {
-                                        return createUser(values);
-                                    }}
-                                />
+                            <Card title="Actualizar datos del poseedor del bien inmueble" >
+                                <UpgradeForm />
                             </Card>
                         </div>
                     </div>
@@ -47,7 +34,7 @@ const CreateUser = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default CreateUser;
+export default CreateUpgrade

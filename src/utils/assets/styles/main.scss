@@ -222,3 +222,50 @@ main {
         }
     }
 }
+
+
+
+.content_box_table {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #F2F2F2;
+    height: 150px;
+}
+
+.title_inspection {
+    margin-left: 30px;
+    margin-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    //border-bottom: 2px solid rgb(185, 184, 184);
+}
+
+#table_physical_inspection_id {
+    border-top: 1px solid #b8b8b8;
+    border-right: 1px solid #b8b8b8;
+    border-bottom: 1px solid #b8b8b8;
+    width: 100%;
+}
+
+#table_physical_inspection_id th, td {
+    padding: 10px;
+    text-align: left;
+    color: #8d8c8c;
+}
+
+#table_content_id {
+    margin-left: 30px;
+    margin-right: 30px;
+    height: 100px;
+    display: flex;
+}
+
+
+
+
+
+
+
+
+

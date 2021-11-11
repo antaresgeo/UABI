@@ -35,12 +35,12 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     let valor;
     useEffect(() => {
-        console.log(realEstate)
+        //console.log(realEstate)
         if (realEstate) {
 
             valor = true;
         } else {
-            console.log('no llego')
+            //console.log('no llego')
             valor = false;
         }
         dispatch(actions.getRealEstates({}))
@@ -75,7 +75,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
         real_estate_id: realEstate?.id || 0,
         ...policy
     };
-    console.log(initialValues);
+    //console.log(initialValues);
 
     if (initialValues.vigency_start) {
         const tmpDate = new Date(Number(initialValues.vigency_start));
@@ -141,7 +141,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} >
             {({ isSubmitting, setFieldValue, values, handleChange }) => {
-                console.log(values);
+                //console.log(values);
                 return (
 
                     <Form>
@@ -180,7 +180,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                             <div className={`col-${type === 'view' ? 3 : 6}`}>
                                 <label htmlFor="policy_type" className="form-label">Tipo de Póliza</label>
                                 <Field as="select" id="policy_type" name="policy_type" className="w-100 form-select form-control" disabled={disabled}>
-                                    <option key="policy_type" value="" selected disabled>
+                                    <option key="policy_type" value=""  disabled>
                                         --Seleccione el tipo de póliza--
                                     </option>
                                     <option key="vera1" value="vera1">Tipo 1</option>
@@ -243,7 +243,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                                     className="w-100 form-select form-control"
                                     disabled={disabled}
                                 >
-                                    <option key="insurance_broker" value="" selected disabled>
+                                    <option key="insurance_broker" value=""  disabled>
                                         --Corredor--
                                     </option>
                                     <option key="v1" value="vera1">Vera 1</option>
@@ -410,7 +410,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                                                     className="w-100 form-select form-control"
                                                     disabled={disabled}
                                                 >
-                                                    <option key="insurance_company" value="" selected disabled>
+                                                    <option key="insurance_company" value=""  disabled>
                                                         --Seleccione Compañía Aseguradora--
                                                     </option>
                                                     <option key="Sura 1" value="Sura 1">Sura 1</option>

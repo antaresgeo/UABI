@@ -1,16 +1,17 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Field } from 'formik';
 import { Card } from '../../../../utils/ui';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 import { service } from '../../redux';
-import { IProjectAttributes } from '../../../../utils/interfaces';
+import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import { extractMonth, formatDate } from '../../../../utils';
 import Select from '../../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
 import InputNumber from '../../../../utils/ui/input_number';
 import dependencias from '../../dependencias';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from './../../redux';
 interface GeneralDataFormProps {
     type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
@@ -283,10 +284,11 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                             <span className="input-group-text bg-white border-end-0">$</span>
                         </div>
                         <Field
-                            disabled={disabled}
+                            disabled
                             name="patrimonial_value"
                             id="patrimonial_value_id"
                             type="number"
+
                             className="form-control text-end"
                             style={{ borderLeft: 'none' }}
                             min={0}
@@ -503,13 +505,54 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 value={extractMonth(formik.values.audit_trail?.created_on)}
                                 disabled
 
-                                // EL MES
+                            // EL MES
                             />
                             <ErrorMessage />
                         </div>
                         <div className="col-4">
                             <label htmlFor="contrapartida_id" className="form-label">
                                 Contrapartida
+                            </label>
+                            <Field
+                                type="number"
+                                className="form-control"
+                                id="contrapartida_id"
+                                name="contrapartida"
+                                disabled
+                            />
+                            <ErrorMessage />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4">
+                            <label htmlFor="assignments" className="form-label">
+                                Asignaciones
+                            </label>
+                            <Field
+                                type="number"
+                                className="form-control"
+                                id="assignments"
+                                name="assignments"
+                                disabled
+                            />
+                            <ErrorMessage />
+                        </div>
+                        <div className="col-4">
+                            <label htmlFor="availability_type" className="form-label">
+                                Tipo de uso disponibilidad
+                            </label>
+                            <Field
+                                type="number"
+                                className="form-control"
+                                id="availability_type"
+                                name="availability_type"
+                                disabled
+                            />
+                            <ErrorMessage />
+                        </div>
+                        <div className="col-4">
+                            <label htmlFor="contrapartida_id" className="form-label">
+                                Valor
                             </label>
                             <Field
                                 type="number"

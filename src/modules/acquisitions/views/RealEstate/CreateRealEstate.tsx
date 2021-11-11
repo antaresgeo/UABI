@@ -5,6 +5,7 @@ import { actions } from '../../redux';
 import { useHistory } from 'react-router-dom';
 import RealEstateForm from '../../components/RealEstateForm';
 
+
 const RealEstate = () => {
     const history: any = useHistory();
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const RealEstate = () => {
             dispatch(actions.getRealEstatesByProject(history.location.state?.project_id));
         }
     }, []);
+
 
     const createRealEstate = async (values, form, isFinish) => {
         try {

@@ -125,13 +125,22 @@ const table_columns = [
     },
 ];
 
+
 const Policies = () => {
     const dispatch = useDispatch();
     const policies: IPolicyAttributes[] = useSelector((store: any) => store.insurability.policies.value);
-    // console.log(policies)
+    const loading: boolean = useSelector((store: any) => store.insurability.policies.loading);
+    const { total_results } = useSelector((store: any) => store.insurability.policies.pagination);
+
+    //console.log(policies)
+    const change_page = (page, pageSize) => {
+        dispatch(actions.getPolicies({ page, pageSize }));
+    };
+
     useEffect(() => {
-        dispatch(actions.getPolicies());
-    }, []);
+        dispatch(actions.getPolicies({}));
+    }, [])
+
 
     return (
         <div className="container-fluid">
@@ -145,8 +154,9 @@ const Policies = () => {
                             columns={table_columns}
                             items={policies}
                             with_pagination
-                            count={10}
-                            change_page={() => { }}
+                            count={total_results}
+                            loading={loading}
+                            change_page={change_page}
                         />
                     </Card>
                 </div>

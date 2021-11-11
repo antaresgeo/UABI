@@ -22,7 +22,7 @@ export const guards = {
         const user = JSON.parse(localStorage.getItem('user'));
         if (!user) return false;
         const { permits } = user;
-        return permits.includes(Permit.CREATE_POLICY);
+        return permits.includes(Permit.CREATE_PROJECT);
     },
     detailProject: (props?) => {
         const user = JSON.parse(localStorage.getItem('user'));

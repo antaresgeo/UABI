@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { Card } from '../../../utils/ui';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import LocationModal from '../../../utils/components/Location/LocationModal';
 import { Formik, Form, Field } from 'formik';
-import { Link, useHistory } from 'react-router-dom';
-import ProjectModal from './../../acquisitions/components/ProjectModal';
+import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
+import ErrorMessage from '../../../utils/ui/error_messge';
 
 interface IUserFormPros {
     user?: IUserAttributes;
@@ -30,16 +30,33 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
         gender: '',
     };
 
+    const schema = Yup.object().shape({
+        society_type: Yup.string().required('Campo obligatorio'),
+        entity_type: Yup.string().required('Campo obligatorio'),
+        id_type: Yup.string().required('Campo obligatorio'),
+        id_number: Yup.number().required('Campo obligatorio'),
+        names: Yup.string().required('Campo obligatorio'),
+        surnames: Yup.string().required('Campo obligatorio'),
+        email:  Yup.string().required('Campo obligatorio'),
+        cellphone_number: Yup.number().required('Campo obligatorio'),
+        phone_number: Yup.number().required('Campo obligatorio'),
+        gender: Yup.string().required('Campo obligatorio'),
+
+    });
+
     const submit = (values, actions) => {
-        onSubmit(values, actions).then(() => {
-            actions.setSubmitting(false);
-        });
+        console.log(values);
+        // onSubmit(values, actions).then(() => {
+        //     actions.setSubmitting(false);
+        // });
+
+        //type === 'create' && history.push(`/users/permits/${initial_values.id}/`);
+
     };
     const hanleOnclick = () => {
-        history.push(`/users/edit/${initial_values.id}`);
     };
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values}>
+        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
             {({ values, isValid, isSubmitting }) => {
                 return (
                     <Form>
@@ -62,6 +79,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     <option value="Persona Natural">Persona Natural</option>
                                     <option value="Persona Juridica">Persona Juridica</option>
                                 </Field>
+                                <ErrorMessage name="society_type" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="id" className="form-label">
@@ -83,6 +101,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     <option value="Privada">Privada</option>
                                     <option value="Publica">Publica</option>
                                 </Field>
+                                <ErrorMessage name="entity_type" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="id" className="form-label">
@@ -104,6 +123,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     <option value="2">Cedula de Extranjeria</option>
                                     <option value="3">NIT</option>
                                 </Field>
+                                <ErrorMessage name="id_type" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
@@ -118,6 +138,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     autoComplete="off"
                                     disabled={disabled}
                                 />
+                                <ErrorMessage name="id_number" />
                             </div>
                         </div>
 
@@ -136,6 +157,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     disabled={disabled}
                                     maxLength={201}
                                 />
+                                <ErrorMessage name="names" />
                             </div>
                             <div className="col-6">
                                 <label htmlFor="username" className="form-label">
@@ -151,6 +173,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     disabled={disabled}
                                     maxLength={201}
                                 />
+                                <ErrorMessage name="surnames" />
                             </div>
                         </div>
                         <div className="row">
@@ -168,6 +191,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     disabled={disabled}
                                     maxLength={201}
                                 />
+                                <ErrorMessage name="email" />
                             </div>
 
                             <div className="col-3">
@@ -184,6 +208,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     disabled={disabled}
                                     maxLength={201}
                                 />
+                                <ErrorMessage name="cellphone_number" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
@@ -199,6 +224,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     disabled={disabled}
                                     maxLength={201}
                                 />
+                                <ErrorMessage name="phone_number" />
                             </div>
                         </div>
                         <div className="row">
@@ -221,6 +247,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     <option value="m">Masculino</option>
                                     <option value="o">Otro</option>
                                 </Field>
+                                <ErrorMessage name="gender" />
                             </div>
                             <div className="form-group col-3">
                                 <label htmlFor="location" className="form-label">
@@ -271,6 +298,8 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                         <option value="9">Mantenimiento</option>
                                         <option value="10">Facturación</option>
                                     </Field>
+                                    <ErrorMessage name="id_rol" />
+
                                 </div>
                             )}
                         </div>

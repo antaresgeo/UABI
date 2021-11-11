@@ -41,6 +41,9 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                     <Menu.Item key="2" onClick={goTo('/users')}>
                         Usuarios
                     </Menu.Item>
+                    <Menu.Item key="11" onClick={goTo('/roles')}>
+                        Roles y permisos
+                    </Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub3" title="Adquisición">
                     <Menu.Item key="3" onClick={goTo('/acquisitions/projects/')}>
@@ -65,7 +68,14 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                         Corredores de Seguros
                     </Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub5" title="Inspección" />
+                <SubMenu key="sub5" title="Inspección" >
+                    <Menu.Item key="9" onClick={goTo('/inspection/occupation/')}>
+                        Ocupación
+                    </Menu.Item>
+                    <Menu.Item key="10" onClick={goTo('/inspection/physical')}>
+                        inspección fisíca
+                    </Menu.Item>
+                </SubMenu>
                 <SubMenu key="sub6" title="Disposición">
                     {/*<Menu.Item key="9" onClick={goTo('/acquisitions/real-estates/areas/')}>*/}
                     {/*    Áreas*/}

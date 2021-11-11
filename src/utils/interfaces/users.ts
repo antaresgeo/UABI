@@ -14,6 +14,7 @@ export interface IUserAttributes {
     phone_number: string;
     gender: string;
     id_rol?: number;
+    permits?: [{ id_permit: string, name_permit: number }];
     audit_trail?: IAuditTrail;
     status?: number;
 }
@@ -27,3 +28,5 @@ export interface IUserResponse {
     results: IUserAttributes;
     message: string;
 }
+
+

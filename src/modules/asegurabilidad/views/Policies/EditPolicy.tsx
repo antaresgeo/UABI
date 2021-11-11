@@ -19,9 +19,12 @@ const EditPolicy = () => {
     const dispatch = useDispatch();
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstates.value);
-    const policiesRealEstate: IPolicyAttributes[] = useSelector((states: any) => states.insurability.policies.value);
+    const policiesRealEstate: IPolicyAttributes[] = useSelector((states: any) => {
+        console.log(states)
+        return states.insurability.policies.value
+    });
 
-    console.log("@policiesRealState",policiesRealEstate)
+    //console.log("@policiesRealState",policiesRealEstate)
     // console.log(policiesRealEstate[policiesRealEstate?.length -1])
     useEffect(() => {
         dispatch(getRealEstates({}));

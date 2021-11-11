@@ -68,6 +68,77 @@ const emptyInitialState: any = {
         loading: false,
         loaded: false,
     },
+    rol: {
+        value: [
+            {
+                id: -1,
+                permits: [],
+                rol: '',
+                audit_trail: {
+                    created_by: '',
+                    created_on: '',
+                    updated_by: null,
+                    updated_on: null,
+                    updated_values: null,
+                },
+                status: -1,
+            },
+        ],
+        loading: false,
+        loaded: false,
+    },
+    roles: {
+        value: [
+            {
+                id: -1,
+                id_rol: '',
+                permits: [],
+                audit_trail: {
+                    created_by: '',
+                    created_on: '',
+                    updated_by: null,
+                    updated_on: null,
+                    updated_values: null,
+                },
+                status: -1,
+            },
+        ],
+        pagination: {
+            page: 1,
+            count: 0,
+            next_page: null,
+            previous_page: null,
+            total_results: 0,
+        },
+        loading: false,
+        loaded: false,
+    },
+    rolesSelect: {
+        value: [
+            {
+                id: 0,
+                name: "",
+                status: -1,
+                audit_trail: {
+                    created_by: '',
+                    created_on: '',
+                    updated_by: null,
+                    updated_on: null,
+                    updated_values: null,
+                },
+            },
+        ]
+    },
+    permits: {
+        value: [
+            {
+                id: 0,
+                name: ""
+            }
+        ],
+        loading: false,
+        loaded: false,
+    },
 };
 const initialState = emptyInitialState;
 
@@ -142,6 +213,138 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
+
+        case types.roles.default: {
+            return {
+                ...state,
+                roles: { ...state.roles, loading: true },
+            };
+        }
+
+        case types.roles.success: {
+            return {
+                ...state,
+                value: action.payload,
+
+                pagination: {
+                    page: action.payload?.page || 1,
+                    count: action.payload?.count || 0,
+                    next_page: action.payload?.next_page,
+                    previous_page: action.payload?.previous_page,
+                    total_results: action.payload?.total_results || 0,
+                },
+                loading: false,
+                loaded: true,
+            };
+        }
+
+        case types.roles.fail: {
+            return {
+                ...state,
+                roles: {
+                    ...state.roles,
+                    loading: false,
+                    loaded: false,
+                    value: emptyInitialState.roles.value,
+                },
+            };
+        }
+
+        case types.rol.default: {
+            return {
+                ...state,
+                rol: { ...state.rol, loading: true },
+            };
+        }
+
+        case types.rol.success: {
+            return {
+                ...state,
+                rol: {
+                    ...state.rol,
+
+                    value: action.payload,
+
+                    loading: false,
+                    loaded: true,
+                },
+            };
+        }
+
+        case types.rol.fail: {
+            return {
+                ...state,
+                rol: {
+                    ...state.rol,
+                    message: emptyInitialState.rol.message,
+                    loading: false,
+                    loaded: false,
+                    value: emptyInitialState.rol.value,
+                },
+            };
+        }
+
+        case types.permits.default: {
+            return {
+                ...state,
+                permits: { ...state.permits, loading: true },
+            };
+        }
+
+        case types.permits.success: {
+            return {
+                ...state,
+                permits: {
+                    value: action.payload,
+                    loading: false,
+                    loaded: true,
+                }
+            };
+        }
+
+        case types.permits.fail: {
+            return {
+                ...state,
+                permits: {
+                    ...state.permits,
+                    loading: false,
+                    loaded: false,
+                    value: emptyInitialState.permits.value,
+                },
+            };
+        }
+
+        case types.rolesSelect.default: {
+            return {
+                ...state,
+                rolesSelect: { ...state.rolesSelect, loading: true },
+            };
+        }
+
+        case types.rolesSelect.success: {
+            console.log(action.payload)
+            return {
+                ...state,
+                rolesSelect: {
+                    value: action.payload,
+                    loading: false,
+                    loaded: true,
+                }
+            };
+        }
+
+        case types.rolesSelect.fail: {
+            return {
+                ...state,
+                rolesSelect: {
+                    ...state.rolesSelect,
+                    loading: false,
+                    loaded: false,
+                    value: emptyInitialState.rolesSelect.value,
+                },
+            };
+        }
+
         default: {
             return state;
         }

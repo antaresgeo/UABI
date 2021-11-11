@@ -22,6 +22,30 @@ const updateUser = (data: any, id) =>
 
 const deleteUser = (id) => request_dispatch(types.user, service.deleteUser(id));
 
+
+// ROLES //
+const getRole = (id: number) => {
+    return request_dispatch(types.rol, service.getRole(id));
+};
+
+const getRolesList = (filters: {
+    page?: number;
+    pageSize?: 10 | 20 | 30;
+    q?: string;
+}) => request_dispatch(types.roles, service.getRolesList(filters));
+
+const getRoles = () => request_dispatch(types.rolesSelect, service.getRoles());
+
+const createRole = (data) =>
+    request_dispatch(types.rol, service.createRole(data));
+
+const updateRole = (data: any, id) =>
+    request_dispatch(types.rol, service.updateRole(data, id));
+
+const deleteRole = (id) => request_dispatch(types.rol, service.deleteRole(id));
+
+const getPermits = () => request_dispatch(types.permits, service.getPermits());
+
 const actions = {
     // example
     getUser,
@@ -29,6 +53,13 @@ const actions = {
     createUser,
     updateUser,
     deleteUser,
+    getRole,
+    getRolesList,
+    getRoles,
+    createRole,
+    updateRole,
+    deleteRole,
+    getPermits
 };
 
 export default actions;
