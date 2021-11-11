@@ -1,29 +1,14 @@
 import { FC } from 'react';
 import { Formik, Form, Field } from 'formik';
-// import { IInsuranceBrokerAttributes } from '../../../utils/interfaces/';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
 import LocationModal from '../../../utils/components/Location/LocationModal';
-
-export interface IInsuranceBrokerAttributes {
-    id?: number | string;
-    name: string;
-    nit: string;
-    phone: string;
-    location_id: string;
-    contact_information: { name: string; email: string; phone_number: string };
-    audit_trail?: {
-        created_by: string;
-        created_on: string;
-        updated_by?: any;
-        updated_on?: any;
-        updated_values?: any;
-    };
-}
+import { Broker } from '../redux/service';
+import { service } from '../../acquisitions/redux';
 
 interface InsuranceBrokerFormPros {
-    insurance_broker?: IInsuranceBrokerAttributes;
-    onSubmit?: (values, form?) => Promise<any>;
+    insurance_broker?: Broker;
+    onSubmit?: (values: Broker, form?) => Promise<any>;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
 }
@@ -34,9 +19,11 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
         name: '',
         nit: '',
         phone: '',
-        email: '',
         location_id: '',
-        contact_information: { name: '', email: '', phone_number: '' },
+        state: '',
+        city: '',
+        address: '',
+        contact_information: { name: '', email: '', phone: '' },
         ...insurance_broker,
     };
 
@@ -49,7 +36,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
     const submit = (values, form) => {
         onSubmit(values, form).then(() => {
             form.setSubmitting(false);
-        });
+        }).catch(() => form.setSubmitting(false));
     };
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
@@ -58,7 +45,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                     <Form>
                         <div className="row">
                             {insurance_broker && (
-                                <div className="col-3">
+                                <div className="col-4">
                                     <label htmlFor="id_id" className="form-label">
                                         Código
                                     </label>
@@ -74,7 +61,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                     <ErrorMessage name="id" />
                                 </div>
                             )}
-                            <div className={`col-${insurance_broker ? 3 : 4}`}>
+                            <div className={`col-${insurance_broker ? 4 : 6}`}>
                                 <label htmlFor="name_id" className="form-label">
                                     Nombre del corredor de seguros
                                 </label>
@@ -89,7 +76,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                 />
                                 <ErrorMessage name="name" withCount max={100} />
                             </div>
-                            <div className={`col-${insurance_broker ? 3 : 4}`}>
+                            <div className={`col-${insurance_broker ? 4 : 6}`}>
                                 <label htmlFor="nit_id" className="form-label">
                                     NIT
                                 </label>
@@ -104,14 +91,14 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                 />
                                 <ErrorMessage name="nit" withCount max={20} />
                             </div>
-                            <div className={`col-${insurance_broker ? 3 : 4}`}>
-                                <label htmlFor="description_id" className="form-label">
+                            <div className="col-6">
+                                <label htmlFor="phone_id" className="form-label">
                                     Teléfono
                                 </label>
                                 <Field
                                     type="text"
                                     className="form-control"
-                                    id="description_id"
+                                    id="phone_id"
                                     name="phone"
                                     disabled={disabled}
                                     autoComplete="off"
@@ -119,28 +106,27 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                 />
                                 <ErrorMessage name="phone" withCount max={20} />
                             </div>
-                            <div className="col-6">
-                                <label htmlFor="description_id" className="form-label">
-                                    Correo Electronico
+                            <div className="col-3">
+                                <label htmlFor="state_id" className="form-label">
+                                    Departamento
                                 </label>
-                                <Field
-                                    type="email"
-                                    className="form-control"
-                                    id="description_id"
-                                    name="email"
-                                    disabled={disabled}
-                                    autoComplete="off"
-                                    maxLength={50}
-                                />
-                                <ErrorMessage name="email" />
+                                <Field type="text" className="form-control" id="state_id" name="state" disabled />
+                                <ErrorMessage name="state" />
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="city_id" className="form-label">
+                                    Ciudad
+                                </label>
+                                <Field type="text" className="form-control" id="city_id" name="city" disabled />
+                                <ErrorMessage name="city" />
                             </div>
                             <div className="form-group col-6">
                                 <label htmlFor="location" className="form-label">
                                     Dirección
                                 </label>
                                 <div className="input-group">
-                                    <input
-                                        name="location"
+                                    <Field
+                                        name="address"
                                         id="location"
                                         type="text"
                                         className="form-control"
@@ -151,18 +137,19 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                             view="user"
                                             disabled={disabled}
                                             onSave={(values) => {
-                                                return values;
+                                                return service.getAddress(values).then((res) => {
+                                                    console.log(res);
+                                                    setFieldValue('state', values.state_name, false);
+                                                    setFieldValue('city', values.city_name, false);
+                                                    setFieldValue('address', res.addressAsString, false);
+                                                    setFieldValue('location_id', res.id+'', false);
+                                                });
                                             }}
                                         />
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <br />
-                        <h5>Informacion de Contacto</h5>
-                        <hr />
-                        <div className="row">
-                            <div className="form-group col-4">
+                            <div className="form-group col-6">
                                 <label htmlFor="contact_name_id" className="form-label">
                                     Nombre de contacto
                                 </label>
@@ -175,9 +162,9 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                     autoComplete="off"
                                     maxLength={50}
                                 />
-                                <ErrorMessage name="email" />
+                                <ErrorMessage name="contact_information.name" withCount max={50} />
                             </div>
-                            <div className="form-group col-4">
+                            <div className="form-group col-6">
                                 <label htmlFor="contact_email_id" className="form-label">
                                     Correo Electronico de contacto
                                 </label>
@@ -188,26 +175,26 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                     name="contact_information.email"
                                     disabled={disabled}
                                     autoComplete="off"
-                                    maxLength={50}
                                 />
-                                <ErrorMessage name="email" />
+                                <ErrorMessage name="contact_information.email" />
                             </div>
-                            <div className="form-group col-4">
+                            <div className="form-group col-6">
                                 <label htmlFor="contact_phone_id" className="form-label">
                                     Telefono de contacto
                                 </label>
                                 <Field
-                                    type="email"
+                                    type="text"
                                     className="form-control"
                                     id="contact_phone_id"
-                                    name="contact_information.phone_number"
+                                    name="contact_information.phone"
                                     disabled={disabled}
                                     autoComplete="off"
-                                    maxLength={50}
+                                    maxLength={20}
                                 />
-                                <ErrorMessage name="email" />
+                                <ErrorMessage name="contact_information.phone" withCount max={20} />
                             </div>
                         </div>
+
                         <div className="row justify-content-end">
                             <div className="col text-end">
                                 {type !== 'view' && (

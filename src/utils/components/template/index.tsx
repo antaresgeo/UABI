@@ -39,7 +39,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs }) =>
                         <AppHeader collapsible={collapsible} />
                     </Header>
                     <Content>
-                        <div className="deck" />
+                        <div className={`deck ${context.drawer_menu_collapsed ? 'active' : ''}`} />
                         <div className="d-flex flex-column w-100">
                             {show_breadcrumbs && (
                                 <div

@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { getAddressById, insertAddress } from '.';
-import { http } from '../../../../config/axios_instances';
+import { http, documents_http } from '../../../../config/axios_instances';
 import { swal } from '../../../../utils';
 
 import {
@@ -9,6 +9,12 @@ import {
     IRealEstateAttributes,
     IRealEstateResponse,
 } from '../../../../utils/interfaces';
+import {
+    compute_docs,
+    upload_documents,
+} from '../../views/RealEstate/realEstate.utils';
+import { get_documents_by_ids } from '../../../../utils/components/DocumentsModal/services';
+import { log } from 'util';
 
 // REAL ESTATES
 // Services: GET
@@ -63,11 +69,33 @@ export const getRealEstate = async (
             params: { id },
         });
 
-        // const auxRes = {...res.data.results, audit_trail: {...res.data.}}
+        res.data.results.supports_documents = await get_docucments_whit_service(
+            res.data.results.supports_documents
+        );
 
         return res.data.results;
     } catch (error) {
         console.error(error);
+        return Promise.reject('Error');
+    }
+};
+
+const get_docucments_whit_service = async (docs) => {
+    try {
+        if (!Array.isArray(docs) && typeof docs === 'string') {
+            docs = docs.split(',');
+        }
+        if (Array.isArray(docs) && docs.length > 0) {
+            console.log(docs);
+            let documents: any = await get_documents_by_ids(docs.join(','));
+            return documents.map((doc) => ({
+                ...doc,
+                label:
+                    doc.type === 'anexo' ? 'Anexo' : `Documento de ${doc.type}`,
+            }));
+        }
+        return [];
+    } catch (e) {
         return Promise.reject('Error');
     }
 };
@@ -78,11 +106,13 @@ export const createRealEstate = async (
 ): Promise<IRealEstateAttributes | string> => {
     try {
         let URI = `/real-estates`;
-
+        const docs: any = await compute_docs(data.supports_documents);
+        const docs_ids = await upload_documents(docs);
         const aux_data = {
             ...data,
             accounting_account: '0000',
             projects_id: data.project_id,
+            supports_documents: docs_ids,
         };
         delete aux_data.id;
         delete aux_data.project_id;
@@ -90,7 +120,6 @@ export const createRealEstate = async (
         delete aux_data.status;
         delete aux_data.acquisitions;
         delete aux_data.audit_trail;
-        delete aux_data.supports_documents;
         delete aux_data.registry_number_document_id;
 
         let res: AxiosResponse<IRealEstateResponse> = await http.post(
@@ -109,15 +138,24 @@ export const createRealEstate = async (
 export const updateRealEstate = async (data: any, id: number) => {
     try {
         let URI = `/real-estates`;
-
-        const aux_data = { ...data };
+        const docs: any = await compute_docs(data.supports_documents);
+        const docs_ids = await upload_documents(docs);
+        const aux_data = { ...data, supports_documents: docs_ids };
         delete aux_data.id;
         delete aux_data.status;
         delete aux_data.acquisitions;
         delete aux_data.audit_trail;
-        delete aux_data.supports_documents;
         delete aux_data.registry_number_document_id;
         delete aux_data.reconstruction_value;
+
+        delete aux_data.project_id;
+        delete aux_data.active_code;
+        delete aux_data.dependency;
+        delete aux_data.subdependency;
+        delete aux_data.cost_center;
+        delete aux_data.management_center;
+        delete aux_data.sap_id;
+        // delete aux_data.supports_documents
 
         let res: AxiosResponse<IRealEstateResponse> = await http.put(
             URI,
@@ -135,16 +173,11 @@ export const updateRealEstate = async (data: any, id: number) => {
             timer: 1500,
         });
 
+        res.data.results.supports_documents = await get_docucments_whit_service(
+            res.data.results.supports_documents
+        );
         return res.data.results;
     } catch (error) {
-        console.error(error);
-        swal.fire({
-            title: 'Bien Inmueble actualizado con error.',
-            text: 'Error',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 1500,
-        });
         return Promise.reject('Error');
     }
 };
@@ -243,7 +276,6 @@ const createAcquisitionForRealEstate = async (
 };
 
 const getAcquisitionForRealEstate = async (real_estate_id) => {
-    console.log('real_estate_id', real_estate_id);
     try {
         let URI = '/real-estates/adquisitions/';
         let res: AxiosResponse = await http.get(URI, {

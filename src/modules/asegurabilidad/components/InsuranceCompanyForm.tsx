@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Formik, Form, Field } from 'formik';
-// import { IInsuranceCompanyAttributes } from '../../../utils/interfaces/';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
+import {Company} from "../redux/service";
 
 export interface IInsuranceCompanyAttributes {
     id?: number | string;
@@ -19,8 +19,8 @@ export interface IInsuranceCompanyAttributes {
 }
 
 interface InsuranceCompanyFormPros {
-    insurance_company?: IInsuranceCompanyAttributes;
-    onSubmit?: (values, form?) => Promise<any>;
+    insurance_company?: Company;
+    onSubmit?: (values: Company, form?) => Promise<any>;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
 }
@@ -31,6 +31,7 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
         name: '',
         nit: '',
         phone: '',
+        location_id: '1',
         ...insurance_company,
     };
 
@@ -43,7 +44,7 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
     const submit = (values, form) => {
         onSubmit(values, form).then(() => {
             form.setSubmitting(false);
-        });
+        }).catch(() => form.setSubmitting(false));
     };
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
@@ -70,7 +71,7 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
                             )}
                             <div className={`col-${insurance_company ? 9 : 12}`}>
                                 <label htmlFor="name_id" className="form-label">
-                                    Nombre de la empresa
+                                    Nombre de la compañia
                                 </label>
                                 <Field
                                     type="text"
@@ -100,13 +101,13 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
                                 <ErrorMessage name="nit" withCount max={20} />
                             </div>
                             <div className="col-6">
-                                <label htmlFor="description_id" className="form-label">
+                                <label htmlFor="phone_id" className="form-label">
                                     Teléfono
                                 </label>
                                 <Field
                                     type="text"
                                     className="form-control"
-                                    id="description_id"
+                                    id="phone_id"
                                     name="phone"
                                     disabled={disabled}
                                     autoComplete="off"

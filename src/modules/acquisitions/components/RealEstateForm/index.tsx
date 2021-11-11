@@ -38,7 +38,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     const dispatch = useDispatch();
     const history = useHistory();
     let initial_values: any = {
-        id: 0,
+        id: '',
         sap_id: '',
         destination_type: '',
         accounting_account: '0000',
@@ -60,10 +60,12 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         materials: [],
         supports_documents: [
             {
-                type: 'Documento de Matricula',
+                label: 'Documento de Matricula',
+                type: 'poliza',
             },
             {
-                type: 'Documento de Titulo',
+                label: 'Documento de Titulo',
+                type: 'titulo',
             },
         ],
         project_id: Number.isInteger(projectId) ? projectId : 0,
@@ -114,11 +116,10 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             form.setSubmitting(false);
             form.resetForm();
             form.setFieldValue('project_id', projectId || '');
-        });
+        }).catch(() => form.setSubmitting(false));
     };
 
     const [project, set_project] = useState(null);
-    console.log(projectId);
     useEffect(() => {
         if (Number.isInteger(projectId)) {
             service.getProject(projectId + '').then((_project) => {
@@ -169,7 +170,14 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 project={project}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
-                                            <AcquisitionsFrom type={type} disabled={type === 'view'} formik={formik} />
+                                            <AcquisitionsFrom
+                                                type={type}
+                                                disabled={type === 'view'}
+                                                formik={formik}
+                                                onChange={(value, i) => {
+                                                    formik.setFieldValue(`acquisitions[${i}]`, value, false);
+                                                }}
+                                            />
                                             <SupportDocumentsForm type={type} formik={formik} />
                                             {type === 'view' && (
                                                 <Card
@@ -221,9 +229,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             type="button"
                                             className="btn btn-primary"
                                             onClick={() => {
-                                                console.log('Works');
-                                                console.log(formik.isValid);
-
                                                 formik.setFieldValue('_type', 'normal');
                                                 formik.submitForm();
                                             }}

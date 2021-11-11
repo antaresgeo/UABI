@@ -3,27 +3,37 @@ import { useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 import { Card } from '../../../../utils/ui';
 import InsuranceCompanyForm from '../../components/InsuranceCompanyForm';
+import { useEffect } from 'react';
+import swal from 'sweetalert';
+import { Company } from '../../redux/service';
 
 const CreateInsuranceCompany = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const createInsuranceCompany = async (insuranceCompanyName, insuranceCompanyDescription, dependency) => {
-        // const res: any = await dispatch(actions.createInsuranceCompany(insuranceCompanyName, insuranceCompanyDescription, dependency));
-        // history.push(`/insurabilities/company/${res.id}`);
+    const createInsuranceCompany = async (data: Company) => {
+        const res: any = await dispatch(actions.create_company(data));
+        await swal('Compañia aseguradora creada', res.message, 'success');
+        history.push(`/insurabilities/company/${res.results.id}`);
     };
+
+    useEffect(() => {
+        dispatch(actions.clear_company());
+    }, []);
 
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
+                        <div className="d-flex flex-row mb-3">
+                            <h5>Crear compañía aseguradora</h5>
+                        </div>
                         <div className="col-md-12">
-                            <Card title="Creación de Proyecto">
+                            <Card title="Información de la empresa">
                                 <InsuranceCompanyForm
                                     onSubmit={(values) => {
-                                        // return createInsuranceCompany(values.name, values.description, values.dependency);
-                                        return Promise.resolve();
+                                        return createInsuranceCompany(values);
                                     }}
                                 />
                             </Card>

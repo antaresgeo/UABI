@@ -23,7 +23,7 @@ export interface IRealEstateAttributes {
     tipology: string;
     materials?: string;
 
-    supports_documents?: object;
+    supports_documents?: any[];
 
     project_id: number | string;
 

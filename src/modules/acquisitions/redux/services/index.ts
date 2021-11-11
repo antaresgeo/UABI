@@ -71,7 +71,6 @@ const getAddress = async (values) => {
         console.error(error);
         return Promise.reject('Error');
     }
-
     // INSERT ADDRESS WITH ID LOCATION
     let addressValues: any = {
         type: values.type,

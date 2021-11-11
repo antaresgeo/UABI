@@ -63,7 +63,7 @@ const CompressTable: FC<CompressTableProps> = ({
         ...(scroll ? { scroll: { x: 'max-content' } } : {}),
     };
     return (
-        <div style={{ marginTop: 16 }}>
+        <div>
             {title && (
                 <>
                     <h3 style={{ fontWeight: 300 }}>{title}</h3>

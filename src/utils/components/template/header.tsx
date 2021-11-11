@@ -3,7 +3,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, PicRightOutlined } from '@ant-des
 import { TemplateContext } from './template_context';
 import Badge from 'antd/lib/badge';
 import { DropdownNotification } from '../../../modules/notificacions/views/DropdownNotification';
-import { Dropdown } from 'antd';
+import Dropdown from 'antd/lib/dropdown';
 
 const Header: FC<{ collapsible: boolean }> = ({ collapsible }) => {
     const context = useContext(TemplateContext);

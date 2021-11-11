@@ -363,7 +363,6 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             className="w-100 form-select"
                                             onChange={(e) => {
                                                 handleChange(e);
-                                                console.log(e.target.value);
                                                 if (e.target.value === 'CL') {
                                                     setFieldValue('first_orientation', 'Sur', false);
                                                     setFieldValue('second_orientation', 'Sur', false);

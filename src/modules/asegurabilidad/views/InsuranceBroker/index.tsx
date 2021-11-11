@@ -14,11 +14,13 @@ const InsuranceBrokers = () => {
     const [query, set_query] = useState<string>('');
 
     const filter = () => {
-        // dispatch(actions.getInsuranceBrokers({ page: 1, q: query }));
+        const filters = { page: 1, ...(query ? { q: query } : {}) };
+        dispatch(actions.get_all_brokers(filters));
     };
 
     const change_page = (page, pageSize) => {
-        // dispatch(actions.getInsuranceBrokers({ page, pageSize, q: query }));
+        const filters = { page, pageSize, ...(query ? { q: query } : {}) };
+        dispatch(actions.get_all_brokers(filters));
     };
 
     const deleteInsuranceBroker = (id) => async () => {
@@ -26,7 +28,7 @@ const InsuranceBrokers = () => {
         if (id !== '' && id !== undefined) {
             // res = await dispatch(actions.getRealEstatesByInsuranceBroker(id));
         }
-        if (res?.length !== 0) {
+        if (res && res.length !== 0) {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
@@ -48,15 +50,8 @@ const InsuranceBrokers = () => {
                     denyButtonText: `Cancelar`,
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        // await dispatch(actions.deleteInsuranceBroker(id));
-                        // await dispatch(actions.getInsuranceBrokers());
-                        // swal.fire({
-                        //     title: "Proyecto Inactivado",
-                        //     text: message,
-                        //     icon: "success",
-                        //     showConfirmButton: false,
-                        //     timer: 1500,
-                        // });
+                        await dispatch(actions.delete_broker(id));
+                        await filter();
                     } else if (result.isDenied) {
                         swal.close();
                     }
@@ -76,16 +71,8 @@ const InsuranceBrokers = () => {
             });
 
             if (result.isConfirmed) {
-                // await dispatch(actions.deleteInsuranceBroker(id));
-                // await dispatch(actions.getInsuranceBrokers());
-                // const _res: any = await dispatch(actions.deleteInsuranceBroker(id));
-                // swal.fire({
-                //     title: "Proyecto Inactivado",
-                //     text: message,
-                //     icon: "success",
-                //     showConfirmButton: false,
-                //     timer: 1500,
-                // });
+                await dispatch(actions.delete_broker(id));
+                await filter();
             } else if (result.isDenied) {
                 swal.close();
             }
@@ -101,28 +88,43 @@ const InsuranceBrokers = () => {
         {
             title: 'Nombre',
             dataIndex: 'name',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         {
             title: 'Nit',
             dataIndex: 'nit',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         {
             title: 'Telefono',
             dataIndex: 'phone',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         {
             title: 'Creado por',
             dataIndex: 'audit_trail',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
             render: (audit_trail) => audit_trail?.created_by,
         },
         {
             title: 'Acciones',
             fixed: true,
             children: [
+                {
+                    title: 'Ver',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
+                    render: (id) => {
+                        return (
+                            <Link
+                                to={`/insurabilities/broker/${id}/`}
+                                name=""
+                                avatar={false}
+                                icon={<i className="fa fa-eye" aria-hidden="true" />}
+                            />
+                        );
+                    },
+                },
                 {
                     title: 'Editar',
                     dataIndex: 'id',
@@ -139,7 +141,7 @@ const InsuranceBrokers = () => {
                     },
                 },
                 {
-                    title: 'Inactivar',
+                    title: 'Desactivar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
@@ -155,7 +157,7 @@ const InsuranceBrokers = () => {
     ];
 
     useEffect(() => {
-        // dispatch(actions.getInsuranceBrokers());
+        dispatch(actions.get_all_brokers());
     }, []);
 
     return (
@@ -163,7 +165,7 @@ const InsuranceBrokers = () => {
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card
-                        title="Corredores de Seguros"
+                        title="Corredoras de seguros"
                         extra={<Link to="/insurabilities/broker/create/" name="Crear" iconText="+" />}
                     >
                         <form>

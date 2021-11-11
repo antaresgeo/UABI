@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Field, Form as FormF, Formik } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
-import { Upload } from 'antd';
+import Upload from 'antd/lib/upload';
 
 interface DocumentsFormProps {
     name?: string;
@@ -19,10 +19,11 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, onSubmit }) => 
     const submit = (values, form) => {
         const res_values = { ...values };
         delete res_values.fileList;
+        res_values.name = res_values.name + '.pdf'
         form.setSubmitting(true);
         onSubmit(res_values).then(() => {
             form.setSubmitting(false);
-        });
+        }).catch(() => form.setSubmitting(false));
     };
 
     return (

@@ -2,17 +2,125 @@ import { FC, useContext } from 'react';
 import tmpImg from '../../assets/img/medellin.png';
 import Menu from 'antd/lib/menu';
 import { TemplateContext } from './template_context';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const Sider: FC<{ width: number }> = ({ width }) => {
     const { SubMenu } = Menu;
     const context = useContext(TemplateContext);
     const history = useHistory();
-    const handleClick = (e) => {
-        context.set_menu_key_path(e.keyPath);
+    const location = useLocation<{ menu: any[] }>();
+    const goTo = (to) => (ev) => {
+        history.push({ pathname: to, state: { menu: ev.keyPath } });
     };
+    const menu_selected: any = location.state?.menu || [];
 
-    const goTo = (to) => () => history.push(to);
+    let menu_config: any = [
+        {
+            path: '/',
+            name: 'Inicio',
+        },
+        {
+            name: 'Usuarios',
+            children: [
+                {
+                    path: '/users/',
+                    name: 'Usuarios',
+                },
+            ],
+        },
+        {
+            name: 'Adquisición',
+            children: [
+                {
+                    path: '/acquisitions/projects/',
+                    name: 'Proyectos',
+                },
+                {
+                    path: '/acquisitions/real-estates/',
+                    name: 'Bienes Inmuebles',
+                },
+                {
+                    path: '/acquisitions/registers/',
+                    name: 'Registros',
+                },
+            ],
+        },
+        {
+            name: 'Asegurabilidad',
+            children: [
+                {
+                    path: '/insurabilities/policy/',
+                    name: 'Polizas de Seguro',
+                },
+                {
+                    path: '/insurabilities/company/',
+                    name: 'Compañias Aseguradoras',
+                },
+                {
+                    path: '/insurabilities/broker/',
+                    name: 'Corredores de Seguros',
+                },
+            ],
+        },
+        {
+            name: 'Inspección',
+            children: [
+                {
+                    name: 'ocupacion',
+                    path: '/inspection/occupation/',
+                },
+                {
+                    name: 'inspección física',
+                    path: '/inspection/physical/',
+                },
+                {
+                    name: 'actualización',
+                    path: '/inspection/upgrade/',
+                },
+            ],
+        },
+        {
+            name: 'Disposición',
+            children: [],
+        },
+        {
+            name: 'Supervisión',
+            children: [],
+        },
+        {
+            name: 'Facturación',
+            children: [],
+        },
+        {
+            name: 'Mantenimiento',
+            children: [],
+        },
+        {
+            name: 'Consultas',
+            children: [],
+        },
+        {
+            name: 'Informes y Logs',
+            children: [],
+        },
+    ];
+
+    menu_config = menu_config.map((m, i) => {
+        return {
+            ...m,
+            is_submenu: !!m.children,
+            is_disabled: m.children?.length === 0 || false,
+            ...(m.children
+                ? {
+                      children: m.children.map((s, j) => {
+                          return { ...s, key: `s${i}-${j}`, is_disabled: false };
+                      }),
+                  }
+                : {}),
+            key: `p${i}`,
+        };
+    });
+
     return (
         <>
             <div className="text-center" style={{ backgroundColor: '#6DA3FC', borderRight: '1px solid #2ea1fe' }}>
@@ -27,65 +135,34 @@ const Sider: FC<{ width: number }> = ({ width }) => {
             {/*<SideBar />*/}
 
             <Menu
-                onClick={handleClick}
                 style={{ width }}
                 mode="vertical"
-                onOpenChange={(...args) => {
-                    console.log('onOpenChange', args);
+                defaultSelectedKeys={menu_selected}
+                onOpenChange={(open) => {
+                    if (open.length > 0) {
+                        context.set_drawer_menu_collapsed(true);
+                    } else {
+                        context.set_drawer_menu_collapsed(false);
+                    }
                 }}
             >
-                <Menu.Item key="1" onClick={goTo('/')}>
-                    Inicio
-                </Menu.Item>
-                <SubMenu key="sub2" title="Usuarios">
-                    <Menu.Item key="2" onClick={goTo('/users')}>
-                        Usuarios
-                    </Menu.Item>
-                    <Menu.Item key="11" onClick={goTo('/roles')}>
-                        Roles y permisos
-                    </Menu.Item>
-                </SubMenu>
-                <SubMenu key="sub3" title="Adquisición">
-                    <Menu.Item key="3" onClick={goTo('/acquisitions/projects/')}>
-                        Proyectos
-                    </Menu.Item>
-                    <Menu.Item key="4" onClick={goTo('/acquisitions/real-estates/')}>
-                        Bienes Inmuebles
-                    </Menu.Item>
-                    <Menu.Item key="5" onClick={goTo('/acquisitions/registers/')}>
-                        Registros
-                    </Menu.Item>
-                </SubMenu>
-
-                <SubMenu key="sub4" title="Asegurabilidad">
-                    <Menu.Item key="6" onClick={goTo('/insurabilities/policy/')}>
-                        Polizas de Seguro
-                    </Menu.Item>
-                    <Menu.Item key="7" onClick={goTo('/insurabilities/company/')}>
-                        Empresas Aseguradoras
-                    </Menu.Item>
-                    <Menu.Item key="8" onClick={goTo('/insurabilities/broker/')}>
-                        Corredores de Seguros
-                    </Menu.Item>
-                </SubMenu>
-                <SubMenu key="sub5" title="Inspección" >
-                    <Menu.Item key="9" onClick={goTo('/inspection/occupation/')}>
-                        Ocupación
-                    </Menu.Item>
-                    <Menu.Item key="10" onClick={goTo('/inspection/physical')}>
-                        inspección fisíca
-                    </Menu.Item>
-                </SubMenu>
-                <SubMenu key="sub6" title="Disposición">
-                    {/*<Menu.Item key="9" onClick={goTo('/acquisitions/real-estates/areas/')}>*/}
-                    {/*    Áreas*/}
-                    {/*</Menu.Item>*/}
-                </SubMenu>
-                <SubMenu key="sub7" title="Supervisión" />
-                <SubMenu key="sub8" title="Facturación" />
-                <SubMenu key="sub9" title="Mantenimiento" />
-                <SubMenu key="sub10" title="Consultas" />
-                <SubMenu key="sub11" title="Informes y Logs" />
+                {menu_config.map((menu, i) => {
+                    return !menu.is_submenu ? (
+                        <Menu.Item key={menu.key} onClick={goTo(menu.path)} disabled={menu.is_disabled}>
+                            {menu.name}
+                        </Menu.Item>
+                    ) : (
+                        <SubMenu key={menu.key} title={menu.name} disabled={menu.is_disabled}>
+                            {menu.children.map((sub, j) => {
+                                return (
+                                    <Menu.Item key={`s${i}-${j}`} disabled={sub.is_disabled} onClick={goTo(sub.path)}>
+                                        {sub.name}
+                                    </Menu.Item>
+                                );
+                            })}
+                        </SubMenu>
+                    );
+                })}
             </Menu>
         </>
     );

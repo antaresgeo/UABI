@@ -408,6 +408,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                     delete values.commune_name;
                                     delete values.neighborhood_name;
                                     return service.getAddress(values).then((res) => {
+                                        console.log(res)
                                         formik.setFieldValue('address.id', `${res.id}`, false);
                                         formik.setFieldValue('address.name', `${res.addressAsString}`, false);
                                         formik.setFieldValue('address.cbml', `${res.cbml}`, false);

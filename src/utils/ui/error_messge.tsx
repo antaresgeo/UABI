@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { ErrorMessage as AntErrorMessage, useFormikContext } from 'formik';
+import get from 'lodash/get';
 
 interface ErrorMessageProps {
     name?: string;
@@ -9,7 +10,7 @@ interface ErrorMessageProps {
 
 const ErrorMessage: FC<ErrorMessageProps> = ({ name, withCount, max }) => {
     const context = useFormikContext<any>();
-    const value = context.values[name];
+    const value = get(context.values, name);
     const hasCount = withCount && (typeof value === 'string' || typeof value === 'number');
     return (
         <div className="row">

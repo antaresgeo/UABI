@@ -1,10 +1,9 @@
 import { useEffect, useState /*, useState*/ } from 'react';
-// import { IInsuranceCompanyAttributes /*, IInsuranceCompaniesResponse*/ } from '../../../../utils/interfaces';
-// import ItemInsuranceCompany from "../../components/ItemInsuranceCompany";
+
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
-import { formatDate, swal } from '../../../../utils';
+import {  swal } from '../../../../utils';
 
 const InsuranceCompanies = () => {
     const dispatch = useDispatch();
@@ -14,11 +13,13 @@ const InsuranceCompanies = () => {
     const [query, set_query] = useState<string>('');
 
     const filter = () => {
-        // dispatch(actions.getInsuranceCompanies({ page: 1, q: query }));
+        const filters = { page: 1, ...(query ? { q: query } : {}) };
+        dispatch(actions.get_all_companies(filters));
     };
 
     const change_page = (page, pageSize) => {
-        // dispatch(actions.getInsuranceCompanies({ page, pageSize, q: query }));
+        const filters = { page, pageSize, ...(query ? { q: query } : {}) };
+        dispatch(actions.get_all_companies(filters));
     };
 
     const deleteInsuranceCompany = (id) => async () => {
@@ -26,11 +27,11 @@ const InsuranceCompanies = () => {
         if (id !== '' && id !== undefined) {
             // res = await dispatch(actions.getRealEstatesByInsuranceCompany(id));
         }
-        if (res?.length !== 0) {
+        if (res && res.length !== 0) {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
-                text: `La Empresa contiene ${res?.length || ''} valores asociados.\n\.`,
+                text: `La Compañia contiene ${res?.length || ''} valores asociados.\n\.`,
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -41,22 +42,16 @@ const InsuranceCompanies = () => {
                 swal.fire({
                     icon: 'info',
                     title: '¡Última oportunidad!',
-                    text: '¿Está seguro que quiere inactivar la empresa?',
+                    text: '¿Está seguro que quiere inactivar la compañia?',
                     showDenyButton: true,
                     showCancelButton: false,
                     confirmButtonText: 'Continuar',
                     denyButtonText: `Cancelar`,
+
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        // await dispatch(actions.deleteInsuranceCompany(id));
-                        // await dispatch(actions.getInsuranceCompanies());
-                        // swal.fire({
-                        //     title: "Proyecto Inactivado",
-                        //     text: message,
-                        //     icon: "success",
-                        //     showConfirmButton: false,
-                        //     timer: 1500,
-                        // });
+                        await dispatch(actions.delete_company(id));
+                        await filter();
                     } else if (result.isDenied) {
                         swal.close();
                     }
@@ -68,7 +63,7 @@ const InsuranceCompanies = () => {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¿Está seguro?',
-                text: '¿Está seguro que quiere inactivar la empresa?',
+                text: '¿Está seguro que quiere inactivar la compañia?',
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -76,16 +71,8 @@ const InsuranceCompanies = () => {
             });
 
             if (result.isConfirmed) {
-                // await dispatch(actions.deleteInsuranceCompany(id));
-                // await dispatch(actions.getInsuranceCompanies());
-                // const _res: any = await dispatch(actions.deleteInsuranceCompany(id));
-                // swal.fire({
-                //     title: "Proyecto Inactivado",
-                //     text: message,
-                //     icon: "success",
-                //     showConfirmButton: false,
-                //     timer: 1500,
-                // });
+                await dispatch(actions.delete_company(id));
+                await filter();
             } else if (result.isDenied) {
                 swal.close();
             }
@@ -101,28 +88,43 @@ const InsuranceCompanies = () => {
         {
             title: 'Nombre',
             dataIndex: 'name',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         {
             title: 'Nit',
             dataIndex: 'nit',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         {
             title: 'Telefono',
             dataIndex: 'phone',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         {
             title: 'Creado por',
             dataIndex: 'audit_trail',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
             render: (audit_trail) => audit_trail?.created_by,
         },
         {
             title: 'Acciones',
             fixed: true,
             children: [
+                {
+                    title: 'Ver',
+                    dataIndex: 'id',
+                    align: 'center' as 'center',
+                    render: (id) => {
+                        return (
+                            <Link
+                                to={`/insurabilities/company/${id}/`}
+                                name=""
+                                avatar={false}
+                                icon={<i className="fa fa-eye" aria-hidden="true" />}
+                            />
+                        );
+                    },
+                },
                 {
                     title: 'Editar',
                     dataIndex: 'id',
@@ -139,7 +141,7 @@ const InsuranceCompanies = () => {
                     },
                 },
                 {
-                    title: 'Inactivar',
+                    title: 'Desactivar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
@@ -155,7 +157,7 @@ const InsuranceCompanies = () => {
     ];
 
     useEffect(() => {
-        // dispatch(actions.getInsuranceCompanies());
+        dispatch(actions.get_all_companies());
     }, []);
 
     return (
@@ -163,7 +165,7 @@ const InsuranceCompanies = () => {
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card
-                        title="Empresas Aseguradoras"
+                        title="Compañias Aseguradoras"
                         extra={<Link to="/insurabilities/company/create/" name="Crear" iconText="+" />}
                     >
                         <form>

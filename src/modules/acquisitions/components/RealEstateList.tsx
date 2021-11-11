@@ -58,32 +58,32 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
         {
             title: 'Matrícula',
             dataIndex: 'registry_number',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         {
             title: 'Nombre',
             dataIndex: 'name',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         ...(withProject
             ? [
                   {
                       title: 'Proyecto Asociado',
                       dataIndex: 'project_name',
-                      align: 'center' as 'center',
+                      align: 'left' as 'left',
                   },
               ]
             : []),
         {
             title: 'Fecha Creación',
             dataIndex: 'audit_trail',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
             render: (dates) => formatDate(dates?.created_on),
         },
         {
             title: 'Creado por',
             dataIndex: 'audit_trail',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
             render: (data) => data.created_by,
         },
         ...(register
@@ -130,7 +130,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
                     },
                 },
                 {
-                    title: 'Inactivar',
+                    title: 'Desactivar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {

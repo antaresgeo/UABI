@@ -6,18 +6,13 @@ interface SelectProps extends FieldProps {
 }
 const DocumentModal: FC<SelectProps> = ({ field, form, className, ...props }) => {
     const on_change = (value) => {
-        const new_value = {
-            label: '',
-            name: '',
-            pdf: null,
-            ...field.value,
-            ...value,
-        };
-        form.setFieldValue(field.name, new_value, false);
+        console.log(value);
+        form.setFieldValue(field.name, value, false);
     };
     return (
         <DocumentsModal
             {...props}
+            doc={field.value}
             btn_class={[className].join(' ')}
             modal_name={field.value?.label}
             onChange={on_change}

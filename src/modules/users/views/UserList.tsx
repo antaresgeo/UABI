@@ -65,7 +65,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total }) => {
     };
 
     const eliminar = {
-        title: 'Inactivar',
+        title: 'Desactivar',
         dataIndex: 'id',
         align: 'center' as 'center',
         render: (id) => {
