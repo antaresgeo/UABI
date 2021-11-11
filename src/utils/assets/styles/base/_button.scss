@@ -8,6 +8,10 @@
         border: 1px solid #f27503 !important;
         color: #fff !important;
     }
+    &:focus {
+        box-shadow: none !important;
+        outline: 0 !important;
+    }
     &.btn-clear {
         border-radius: 0.25rem !important;
         &.input-group-text {
@@ -25,5 +29,6 @@
 
 .btn-outline-primary {
     color: $azulClarito !important;
+    background: transparent !important;
     border: 1px solid $azulClarito !important;
 }

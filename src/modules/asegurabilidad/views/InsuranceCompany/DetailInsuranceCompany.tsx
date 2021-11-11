@@ -17,7 +17,7 @@ const DetailInsuranceCompany = () => {
     const insurance_company: any = useSelector((store: any) => store.insurability.company.value);
 
     useEffect(() => {
-        // dispatch(actions.getInsuranceCompany(id));
+        dispatch(actions.get_company_by_id(id));
     }, []);
 
     return (
@@ -25,8 +25,11 @@ const DetailInsuranceCompany = () => {
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
+                        <div className="d-flex flex-row mb-3">
+                            <h5>Compañía aseguradora</h5>
+                        </div>
                         <div className="col-md-12">
-                            <Card title={<>{/*<b>Proyecto:</b> {insurance_company?.name}*/}</>}>
+                            <Card title="Información de la empresa">
                                 <InsuranceCompanyForm disabled type="view" insurance_company={insurance_company} />
                             </Card>
                         </div>

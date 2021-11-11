@@ -83,6 +83,7 @@ const reducer = (state: any = initialState, action: any): any => {
                     loading: false,
                     loaded: false,
                     value: emptyInitialState.projects.value,
+                    pagination: emptyInitialState.projects.pagination,
                 },
             };
         }
@@ -157,6 +158,7 @@ const reducer = (state: any = initialState, action: any): any => {
                     loading: false,
                     loaded: false,
                     value: emptyInitialState.realEstates.value,
+                    pagination: emptyInitialState.realEstates.pagination,
                 },
             };
         }

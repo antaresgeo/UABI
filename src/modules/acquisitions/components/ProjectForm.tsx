@@ -36,7 +36,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
         const aux_values = { ...values };
         onSubmit(values, form).then(() => {
             form.setSubmitting(false);
-        });
+        }).catch(() => form.setSubmitting(false));
     };
     const format_list = (list) => {
         if (list && Array.isArray(list)) {

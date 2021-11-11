@@ -1,5 +1,5 @@
 import types from './types';
-import service from './service';
+import service, { Broker, Company } from './service';
 import { request_dispatch } from '../../../utils';
 
 // const example = (filters = {}) =>
@@ -19,6 +19,43 @@ const updatePolicy = (data: any, id) =>
 const policiesRealEstate = (id: number) =>
     request_dispatch(types.policiesRealEstate, service.policiesRealEstate(id))
 
+    
+/*----------------Companies---------------------*/
+const get_list_companies = () =>
+    request_dispatch(types.get_list_companies, service.get_list_companies());
+const get_all_companies = (filters?) =>
+    request_dispatch(
+        types.get_all_companies,
+        service.get_all_companies(filters)
+    );
+const create_company = (data: Company) =>
+    request_dispatch(types.create_company, service.create_company(data));
+const delete_company = (id) =>
+    request_dispatch(types.delete_company, service.delete_company(id));
+const get_company_by_id = (id) =>
+    request_dispatch(types.get_company, service.get_company_by_id(id));
+const update_company = (id, data: Company) =>
+    request_dispatch(types.update_company, service.update_company(id, data));
+const clear_company = () =>
+    request_dispatch(types.clear_company, Promise.resolve());
+
+/*----------------Brokers---------------------*/
+
+const get_list_brokers = () =>
+    request_dispatch(types.get_list_brokers, service.get_list_brokers());
+const get_all_brokers = (filters?) =>
+    request_dispatch(types.get_all_brokers, service.get_all_brokers(filters));
+const create_broker = (data: Broker) =>
+    request_dispatch(types.create_broker, service.create_broker(data));
+const delete_broker = (id) =>
+    request_dispatch(types.delete_broker, service.delete_broker(id));
+const get_broker_by_id = (id) =>
+    request_dispatch(types.get_broker, service.get_broker_by_id(id));
+const update_broker = (id, data: Broker) =>
+    request_dispatch(types.update_broker, service.update_broker(id, data));
+const clear_broker = () =>
+    request_dispatch(types.clear_broker, Promise.resolve());
+
 const actions = {
     // example
     createPolicy,
@@ -26,6 +63,20 @@ const actions = {
     getPolicies,
     updatePolicy,
     policiesRealEstate,
+    get_list_companies,
+    get_all_companies,
+    create_company,
+    delete_company,
+    clear_company,
+    get_company_by_id,
+    update_company,
+    get_list_brokers,
+    get_all_brokers,
+    create_broker,
+    delete_broker,
+    get_broker_by_id,
+    update_broker,
+    clear_broker
 };
 
 export default actions;

@@ -1,9 +1,9 @@
-import { FC, useState, useRef } from 'react';
+import { FC, useState, useRef, useEffect } from 'react';
 import Modal from 'antd/lib/modal/Modal';
 import Form from './Form';
-import { Field, FormikProps, FormikValues } from 'formik';
-import { create_document } from './services';
-import ErrorMessage from '../../ui/error_messge';
+import { FormikProps, FormikValues } from 'formik';
+import Tag from 'antd/lib/tag';
+import { delete_document } from './services';
 
 interface LocationModalProps {
     doc_name?: string;
@@ -11,21 +11,22 @@ interface LocationModalProps {
     disabled?: boolean;
     btn_class?: string;
     btn_label?: string;
-    btn_delete?: any;
+    onDelete?: (doc) => void;
     onChange: (data) => void;
+    doc?: any;
 }
 
 const DocumentsModal: FC<LocationModalProps> = ({
-    btn_delete,
+    doc,
     doc_name,
     modal_name,
     disabled,
     btn_class,
     btn_label,
+    onDelete,
     onChange,
 }) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
-    const [file_name, set_file_name] = useState<string>(doc_name || '');
     const title = modal_name ? modal_name : 'Agregar Documento';
     const form_ref = useRef<FormikProps<FormikValues>>();
 
@@ -43,7 +44,33 @@ const DocumentsModal: FC<LocationModalProps> = ({
     return (
         <>
             <div className={['input-group', btn_class].join(' ')}>
-                <input type="text" className="form-control form-control-lg" value={file_name} disabled />
+                <div className="form-control form-control-lg">
+                    {doc.name && (
+                        <Tag
+                            closable
+                            onClose={() => {
+                                const new_doc = {
+                                    type: doc.type,
+                                    label: doc.label,
+                                };
+                                if (doc.hasOwnProperty('id') && doc.id) {
+                                    delete_document(doc.id).then(() => {
+                                        onChange(new_doc);
+                                        onDelete && onDelete(new_doc);
+                                    });
+                                } else {
+                                    onChange(new_doc);
+                                    onDelete && onDelete(new_doc);
+                                }
+                            }}
+                            onClick={() => {
+                                console.log(doc);
+                            }}
+                        >
+                            {doc.name}
+                        </Tag>
+                    )}
+                </div>
                 <span className="input-group-text btn btn-clear btn-outline-primary" onClick={open}>
                     {btn_label ? btn_label : title}
                 </span>
@@ -73,8 +100,11 @@ const DocumentsModal: FC<LocationModalProps> = ({
                     name={doc_name}
                     innerRef={form_ref}
                     onSubmit={(values) => {
-                        set_file_name(values.name + '.pdf');
-                        onChange(values);
+                        onChange({
+                            label: doc.label,
+                            type: doc.type,
+                            ...values,
+                        });
                         close();
                         return Promise.resolve();
                     }}

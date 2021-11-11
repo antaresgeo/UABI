@@ -2,7 +2,7 @@ import Card from 'antd/lib/card';
 import { FC } from 'react';
 
 interface UabiCardProps {
-    title: any;
+    title?: any;
     extra?: any;
     actions?: any;
     className?: string;

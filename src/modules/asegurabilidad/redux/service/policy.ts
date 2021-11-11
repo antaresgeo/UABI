@@ -1,15 +1,15 @@
 import { AxiosResponse } from 'axios';
-import { http } from '../../../config/axios_instances';
-import { swal } from '../../../utils';
-import { IPaginable } from './../../../utils/interfaces/index';
+import { http } from '../../../../config/axios_instances';
+import { swal } from '../../../../utils';
+import { IPaginable } from './../../../../utils/interfaces/index';
 import {
     IPoliciesResponse,
     IPolicyAttributes,
     IPolicyResponse,
-} from './../../../utils/interfaces/insurability';
+} from '../../../../utils/interfaces/insurability';
 
 // Services: POST
-const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
+export const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
     try {
         let URI = `/insurabilities`;
         let res: AxiosResponse<IPolicyResponse> = await http.post(URI, data);
@@ -23,7 +23,7 @@ const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
     }
 };
 
-const getPolicies = async ({
+export const getPolicies = async ({
     page = 1,
     pageSize = 10,
     q = null,
@@ -59,7 +59,7 @@ export const getPolicy = async (
 };
 
 // Services: PUT
-export const updatePolicy = async (data: any, id: number) => {
+ export const updatePolicy = async (data: any, id: number) => {
     try {
         console.log('servicio',data)
         let URI = `/insurabilities`;

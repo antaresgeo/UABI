@@ -92,7 +92,7 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
             form.setSubmitting(false);
             form.resetForm();
             form.setFieldValue('project_id', projectId || '');
-        });
+        }).catch(() => form.setSubmitting(false));;
     };
 
     return (
@@ -129,7 +129,12 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                                 projects={projects}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
-                                            <AcquisitionsFrom formik={formik} />
+                                            <AcquisitionsFrom
+                                                formik={formik}
+                                                onChange={(value, i) => {
+                                                    formik.setFieldValue(`acquisitions[${i}]`, value, false);
+                                                }}
+                                            />
                                             <Card
                                                 title="Documentos Soporte"
                                                 actions={

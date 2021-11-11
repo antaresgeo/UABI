@@ -208,6 +208,7 @@ main {
     font-size: 12px;
     .ant-spin-container {
         ul.ant-pagination.ant-table-pagination:first-child {
+            margin-top: 0;
             .ant-pagination-prev,
             .ant-pagination-next,
             .ant-pagination-item {
@@ -220,7 +221,11 @@ main {
                 display: none;
             }
         }
+        .ant-table{
+            margin-top: 8px;
+        }
     }
+
 }
 
 

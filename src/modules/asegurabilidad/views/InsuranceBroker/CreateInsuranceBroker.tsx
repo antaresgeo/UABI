@@ -3,14 +3,22 @@ import { useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 import { Card } from '../../../../utils/ui';
 import InsuranceBrokerForm from '../../components/InsuranceBrokerForm';
+import { useEffect } from 'react';
+import { Broker } from '../../redux/service';
+import swal from "sweetalert";
 
 const CreateInsuranceBroker = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const createInsuranceBroker = async (InsuranceBrokerName, InsuranceBrokerDescription, dependency) => {
-        // const res: any = await dispatch(actions.createInsuranceBroker(InsuranceBrokerName, InsuranceBrokerDescription, dependency));
-        // history.push(`/insurabilities/broker/${res.id}`);
+    useEffect(() => {
+        dispatch(actions.clear_broker());
+    }, []);
+
+    const createInsuranceBroker = async (data: Broker) => {
+        const res: any = await dispatch(actions.create_broker(data));
+        await swal('Corredor de seguros creado', res.message, 'success');
+        history.push(`/insurabilities/broker/${res.results.id}`);
     };
 
     return (
@@ -18,12 +26,14 @@ const CreateInsuranceBroker = () => {
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
+                        <div className="d-flex flex-row mb-3">
+                            <h5>Crear corredora de seguros</h5>
+                        </div>
                         <div className="col-md-12">
-                            <Card title="Creación de Proyecto">
+                            <Card title={<h5>{'Información de la empresa'}</h5>}>
                                 <InsuranceBrokerForm
-                                    onSubmit={(values) => {
-                                        // return createInsuranceBroker(values.name, values.description, values.dependency);
-                                        return Promise.resolve();
+                                    onSubmit={(values: Broker) => {
+                                        return createInsuranceBroker(values);
                                     }}
                                 />
                             </Card>

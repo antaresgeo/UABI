@@ -25,6 +25,7 @@ const DetailProjects = () => {
         if (id) {
             const promise: any = dispatch(actions.getRealEstate(id));
             promise.then((res) => {
+                console.log(3, res)
                 select_project(res.projects.id);
                 service.getAcquisitionForRealEstate(id).then((res2) => {
                     set_acquisitions(res2);
@@ -57,6 +58,7 @@ const DetailProjects = () => {
             onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
                 const { acquisitions } = values;
+
                 try {
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));
                     if (acquisitions.length > 0) {

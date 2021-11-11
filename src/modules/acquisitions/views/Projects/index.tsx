@@ -103,24 +103,24 @@ const Projects = () => {
         {
             title: 'Nombre',
             dataIndex: 'name',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         {
             title: 'Dependencia',
             dataIndex: 'dependency',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         {
             title: 'Fecha Creación',
             dataIndex: 'audit_trail',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
 
             render: (audit_trail) => formatDate(audit_trail?.created_on),
         },
         {
             title: 'Creado por',
             dataIndex: 'audit_trail',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
             render: (audit_trail) => audit_trail?.created_by,
         },
         {
@@ -163,7 +163,7 @@ const Projects = () => {
                     },
                 },
                 {
-                    title: 'Inactivar',
+                    title: 'Desactivar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {

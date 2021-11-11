@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { actions } from '../../redux';
 import { useEffect } from 'react';
 import moment from 'moment';
-import { formatDate } from '../../../../utils';
+
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 
 const table_columns = [
@@ -21,37 +21,36 @@ const table_columns = [
         align: 'center' as 'center',
     },
     {
-        title: "Bien Inmueble",
-        dataIndex: "real_estate",
-        align: "center" as "center",
+        title: 'Bien Inmueble',
+        dataIndex: 'real_estate',
+        align: 'center' as 'center',
         render: (data) => data?.name,
     },
     {
-        title: "Estado",
-        dataIndex: "status",
-        align: "center" as "center",
+        title: 'Estado',
+        dataIndex: 'status',
+        align: 'center' as 'center',
     },
 
     {
-        title: "Fecha de Inicio",
-        dataIndex: "vigency_start",
-        align: "center" as "center",
+        title: 'Fecha de Inicio',
+        dataIndex: 'vigency_start',
+        align: 'center' as 'center',
         render: (dates) => {
             const tmpDate = new Date(parseInt(dates));
             const newDate = moment(tmpDate).format('MM/DD/YYYY');
-            return newDate
-        }
-
+            return newDate;
+        },
     },
     {
-        title: "Fecha finalización",
-        dataIndex: "vigency_end",
-        align: "center" as "center",
+        title: 'Fecha finalización',
+        dataIndex: 'vigency_end',
+        align: 'center' as 'center',
         render: (dates) => {
             const tmpDate = new Date(parseInt(dates));
             const newDate = moment(tmpDate).format('MM/DD/YYYY');
-            return newDate
-        }
+            return newDate;
+        },
     },
     {
         title: 'Creada por',
@@ -80,7 +79,6 @@ const table_columns = [
                     } else {
                         return '';
                     }
-
                 },
             },
             {
@@ -97,7 +95,7 @@ const table_columns = [
                                 icon={<i className="fa fa-pencil" aria-hidden="true" />}
                             />
                         );
-                    }else {
+                    } else {
                         return '';
                     }
                 },
@@ -117,14 +115,13 @@ const table_columns = [
                             />
                         );
                     } else {
-                        return "";
+                        return '';
                     }
                 },
             },
         ],
     },
 ];
-
 
 const Policies = () => {
     const dispatch = useDispatch();
@@ -139,8 +136,7 @@ const Policies = () => {
 
     useEffect(() => {
         dispatch(actions.getPolicies({}));
-    }, [])
-
+    }, []);
 
     return (
         <div className="container-fluid">

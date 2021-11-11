@@ -1,12 +1,14 @@
 import { FC } from 'react';
 import { Link, Table } from '../../../../utils/ui';
+import AcquisitionModal from './AcquisitionModal';
 
 interface AcquisitionListProps {
     acquisitions: any[];
     type: 'view' | 'edit' | 'create';
+    disabled?: boolean;
 }
 
-const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
+const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disabled }) => {
     const acquisition_columns = [
         {
             title: 'Tipo de Adquisición',
@@ -70,7 +72,7 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
                       dataIndex: 'id',
                       align: 'center' as 'center',
                       render: (id) => {
-                          return <i className="fa fa-eye" aria-hidden="true" style={{ color: '#aaa' }} />;
+                          return <i className="fa fa-eye text-muted" aria-hidden="true" />;
                       },
                   },
               ]
@@ -81,17 +83,27 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
                       title: 'Editar',
                       dataIndex: 'id',
                       align: 'center' as 'center',
-                      render: (id) => {
+                      render: (id, acquisition, index) => {
                           return (
-                              <i className="fa fa-pencil" aria-hidden="true" style={{ color: '#aaa' }} />
-
+                              <AcquisitionModal
+                                  acquisition={{ ...acquisition, index }}
+                                  btn_label={
+                                      <i
+                                          className={['fa fa-pencil', ...(disabled ? ['text-muted'] : [])].join(' ')}
+                                          aria-hidden="true"
+                                      />
+                                  }
+                                  onChange={(values) => {
+                                      console.log('acquisitions list', values);
+                                  }}
+                              />
                           );
                       },
                   },
               ]
             : []),
         {
-            title: 'Inactivar',
+            title: 'Desactivar',
             dataIndex: '',
             align: 'center' as 'center',
             render: (id) => {
@@ -107,6 +119,10 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type }) => {
         },
     ];
     return <Table columns={acquisition_columns} items={acquisitions} />;
+};
+
+AcquisitionList.defaultProps = {
+    disabled: false,
 };
 
 export default AcquisitionList;

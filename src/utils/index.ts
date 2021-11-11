@@ -3,7 +3,42 @@ import withReactContent from 'sweetalert2-react-content';
 import moment from 'moment';
 import crypto from 'crypto';
 
-export const swal = withReactContent(Swal);
+export const swal = withReactContent(
+    Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-outline-primary',
+            denyButton: 'btn btn-outline-primary',
+        },
+        backdrop: 'rgba(205, 218, 229, 0.75)',
+    })
+);
+
+export const swal_warning = withReactContent(
+    Swal.mixin({
+        icon: 'warning',
+        customClass: {
+            popup: 'warning',
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-outline-primary',
+            denyButton: 'btn btn-outline-primary',
+        },
+        backdrop: 'rgba(149, 118, 70, 0.75)',
+    })
+);
+
+export const swal_success = withReactContent(
+    Swal.mixin({
+        icon: 'success',
+        customClass: {
+            popup: 'success',
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-outline-primary',
+            denyButton: 'btn btn-outline-primary',
+        },
+        backdrop: 'rgba(75 ,100 ,59,0.75)',
+    })
+);
 
 /**
  * Function to create generic actions from a request
@@ -176,6 +211,5 @@ export const is_empty = (obj) =>
     obj && // 👈 null and undefined check
     Object.keys(obj).length === 0 &&
     Object.getPrototypeOf(obj) === Object.prototype;
-
 
 // export const regex_number_positive_with_decimals = /^[+]?\d{0,3}(?:\.\d*)?$/;

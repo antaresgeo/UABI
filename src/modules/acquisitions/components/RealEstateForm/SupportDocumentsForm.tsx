@@ -24,7 +24,8 @@ const SupportDocumentsForm: FC<AcquisitionsFromProps> = ({ type, disabled, formi
                         const supports_documents_list = [
                             ...formik.values.supports_documents,
                             {
-                                type: 'Anexo',
+                                label: 'Anexo',
+                                type: 'anexo',
                                 can_delete: true,
                             },
                         ];
@@ -54,26 +55,15 @@ const SupportDocumentsForm: FC<AcquisitionsFromProps> = ({ type, disabled, formi
                                     name={`supports_documents[${i}]`}
                                     component={DocumentModal}
                                     btn_label="Adjuntar"
-                                    btn_delete={
-                                        <>
-                                            {doc.can_delete && (
-                                                <LinkButton
-                                                    name=""
-                                                    icon={<i className="fa fa-times" />}
-                                                    onClick={() => {
-                                                        const list: any[] = formik.values.supports_documents;
-                                                        const supports_documents_list = list.filter((v, j) => i !== j);
-                                                        formik.setFieldValue(
-                                                            'supports_documents',
-                                                            supports_documents_list,
-                                                            false
-                                                        );
-                                                    }}
-                                                />
-                                            )}
-                                        </>
-                                    }
+                                    onDelete={(doc) => {
+                                        if(doc.type === 'anexo') {
+                                            const list: any[] = formik.values.supports_documents;
+                                            const supports_documents_list = list.filter((v, j) => i !== j);
+                                            formik.setFieldValue('supports_documents', supports_documents_list, false);
+                                        }
+                                    }}
                                 />
+
                                 <ErrorMessage name="supports_documents" />
                             </div>
                         </Fragment>

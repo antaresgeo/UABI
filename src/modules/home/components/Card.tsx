@@ -13,11 +13,10 @@ const Card: FC<CardProps> = ({ name, links }) => {
             <UabiCard
                 className="h-100 dash-card"
                 title={
-                    <span style={{ color: '#FF8403', fontWeight: 400 }}>
+                    <span style={{ fontWeight: 400 }}>
                         ACCESOS RÁPIDOS{' '}
                         <h5
                             style={{
-                                color: '#FF8403',
                                 fontWeight: 'bold',
                                 fontSize: '14px',
                                 marginBottom: 5,

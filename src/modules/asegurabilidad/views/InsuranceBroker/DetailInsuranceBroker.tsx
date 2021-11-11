@@ -17,16 +17,20 @@ const DetailInsuranceBroker = () => {
     const insurance_broker: any = useSelector((states: any) => states.insurability.broker.value);
 
     useEffect(() => {
-        // dispatch(actions.getInsuranceBroker(id));
+        dispatch(actions.get_broker_by_id(id));
     }, []);
 
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
+
                     <div className="row justify-content-center">
+                        <div className="d-flex flex-row mb-3">
+                            <h5>Corredora de seguros</h5>
+                        </div>
                         <div className="col-md-12">
-                            <Card title={<>{/*<b>Proyecto:</b> {insurance_broker?.name}*/}</>}>
+                            <Card title='Información de la empresa'>
                                 <InsuranceBrokerForm disabled type="view" insurance_broker={insurance_broker} />
                             </Card>
                         </div>

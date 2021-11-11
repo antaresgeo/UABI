@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import swal from 'sweetalert';
 import { Card } from '../../../../utils/ui';
 import InsuranceBrokerForm from '../../components/InsuranceBrokerForm';
+import { Broker } from '../../redux/service';
 
 interface IParams {
     id: string;
@@ -26,21 +27,15 @@ const EditInsuranceBroker = ({ view }: IProps) => {
     const { id } = useParams<IParams>();
     const insurance_broker: any = useSelector((states: any) => states.insurability.broker.value);
 
-    const _updateInsuranceBroker = async (InsuranceBrokerForm) => {
+    const _updateInsuranceBroker = async (data: Broker) => {
         let res: any;
-        // res = await dispatch(
-        //     actions.updateInsuranceBroker(
-        //         { name: InsuranceBrokerForm.name, description: InsuranceBrokerForm.description, dependency: InsuranceBrokerForm.dependency },
-        //         id
-        //     )
-        // );
-
-        await swal('Proyecto actualizado', res.data.message, 'success');
-        // history.push(`/insurabilities/broker/${insurance_broker.id}`);
+        res = await dispatch(actions.update_broker(data.id, data));
+        await swal('Corredor de seguros actualizado', res.message, 'success');
+        history.push(`/insurabilities/broker/${res.results.id}`);
     };
 
     useEffect(() => {
-        // dispatch(actions.getInsuranceBroker(id));
+        dispatch(actions.get_broker_by_id(id));
     }, []);
 
     return (
@@ -48,13 +43,15 @@ const EditInsuranceBroker = ({ view }: IProps) => {
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
+                        <div className="d-flex flex-row mb-3">
+                            <h5>Editar Corredora de seguros</h5>
+                        </div>
                         <div className="col-md-12">
-                            <Card title={<>{/*<b>Proyecto:</b> {insurance_broker?.name}*/}</>}>
+                            <Card title={<h5>{'Información de la empresa'}</h5>}>
                                 <InsuranceBrokerForm
                                     insurance_broker={insurance_broker}
                                     onSubmit={(values) => {
-                                        // return _updateInsuranceBroker(values);
-                                        return Promise.resolve();
+                                        return _updateInsuranceBroker(values);
                                     }}
                                 />
                             </Card>
