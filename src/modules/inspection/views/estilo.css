@@ -1,0 +1,20 @@
+.tabla_inspection {
+    background-color: #6df569;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-bottom: 10;
+
+}
+
+.tabla_inspection table {
+    overflow-x:scroll;
+    height:200px;
+    width:500px;
+
+}
+
+.tabla_inspection table#space {
+    border-collapse: separate;
+    border-spacing: 40px 20px;
+}

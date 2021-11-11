@@ -26,6 +26,10 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                     path: '/users/',
                     name: 'Usuarios',
                 },
+                {
+                    path: '/roles/',
+                    name: 'Roles y permisos',
+                },
             ],
         },
         {
