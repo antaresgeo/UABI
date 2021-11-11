@@ -4,6 +4,11 @@ import Users from './views/Users';
 import DetailUser from './views/DetailUser';
 import EditUser from './views/EditUser';
 import { Role } from '../..';
+import PermitsUser from './views/PermitsUser';
+import { ListRoles } from './views/roles/ListRoles';
+import { CreateRoles } from './views/roles/CreateRoles';
+import DetailRoles from './views/roles/DetailRoles';
+import { EditRoles } from './views/roles/EditRoles';
 
 export const guards = {
     view: (props?) => {
@@ -84,6 +89,68 @@ const get_routes = (): IRoute[] => {
                 ],
             },
             component: EditUser,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/users/permits/:id/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Usuario', to: '/users/' },
+                    { name: 'Asignar permisos al Usuario' },
+                ],
+            },
+            component: PermitsUser,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/roles/',
+            template_props: {
+                breadcrumbs: [{ name: 'Roles' }],
+            },
+            component: ListRoles,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/roles/create/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Roles', to: '/roles/' },
+                    { name: 'Crear un nuevo Rol' },
+                ],
+            },
+            component: CreateRoles,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/roles/:id/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Roles', to: '/roles/' },
+                    { name: 'ver Rol' },
+                ],
+            },
+            component: DetailRoles,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/roles/edit/:id/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Roles', to: '/roles/' },
+                    { name: 'Editar Rol' },
+                ],
+            },
+            component: EditRoles,
         },
     ];
 };

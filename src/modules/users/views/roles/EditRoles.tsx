@@ -1,44 +1,45 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { actions } from '../redux';
+import {useEffect} from 'react'
+import { Card } from '../../../../utils/ui';
+import { useHistory, useParams } from 'react-router-dom';
+import RoleForm from './../../components/RoleForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { IUserAttributes } from './../../../utils/interfaces/users';
-import { useHistory } from 'react-router-dom';
-import { Card } from '../../../utils/ui';
-import GeneralForm from './../components/GerenalForm';
+import { actions } from '../../redux';
+import { IRolAttributes } from '../../../../utils/interfaces/roles';
 
 interface IParams {
     id: string;
 }
-
-const DetailUser = () => {
+export const EditRoles = () => {
     const { id } = useParams<IParams>();
-    const dispatch = useDispatch();
     const history = useHistory();
-    const user: IUserAttributes = useSelector((states: any) => states.users.value);
-
+    const dispatch = useDispatch();
+    const role: IRolAttributes = useSelector((store: any) => store.users.rol.value);
+    console.log(role);
     useEffect(() => {
-        dispatch(actions.getUser(parseInt(id)));
+        dispatch(actions.getRole(Number(id)))
     }, []);
 
-    const getUser = async (dataPolicy) => {
-        console.log()
-        const action = actions.getUser(1);
-        await dispatch(action);
-    };
-    const initial_values = {};
+    const finalRole = {
+        name: role?.role?.name,
+        permits: role?.permits,
+    }
+
+    const editRol = async (values) =>{
+        console.log(values)
+        await dispatch(actions.updateRole(values, id))
+    }
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card title="información Usuario">
-                                <GeneralForm
-                                    type="create"
-                                    disabled
+                            <Card title="Editar Rol">
+                                <RoleForm
+                                    role={finalRole}
+                                    type="edit"
                                     onSubmit={(values) => {
-                                        return getUser(values);
+                                        return editRol(values);
                                     }}
                                 />
                             </Card>
@@ -62,7 +63,5 @@ const DetailUser = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-    );
-};
-
-export default DetailUser;
+    )
+}

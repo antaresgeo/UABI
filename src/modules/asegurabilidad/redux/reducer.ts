@@ -1,4 +1,5 @@
 import types from './types';
+import { policiesRealEstate } from './service';
 
 //interface State {}
 
@@ -109,6 +110,39 @@ const emptyInitialState: any = {
         loading: false,
         loaded: false,
     },
+    policiesRealEstate: {
+        value: [
+            {
+                id: "-1",
+                registry_number: "",
+                vigency_start: "",
+                vigency_end: "",
+                policy_type:"",
+                insurance_broker: "",
+                insurance_companies: [
+                    {
+                        insurance_company: "",
+                        total_percentage: 0
+                    }
+                ],
+                type_assurance: "",
+                insurance_value: "",
+                insurance_document_id: 0,
+                real_estate_id: 0,
+                name_real_estate: "",
+                audit_trail: {
+                    created_by: '',
+                    created_on: '',
+                    updated_by: null,
+                    updated_on: null,
+                    updated_values: null,
+                },
+                status: 1,
+            },
+        ],
+        loading: false,
+        loaded: false,
+    },
     company: {
         value: fake_company,
         loading: false,
@@ -191,10 +225,16 @@ const reducer = (state: any = initialState, action: any): any => {
                 ...state,
                 policies: {
                     ...state.policies,
-
+                    value: action.payload?.results || [],
+                    pagination: {
+                        page: action.payload?.page || 1,
+                        count: action.payload?.count || 0,
+                        next_page: action.payload?.next_page,
+                        previous_page: action.payload?.previous_page,
+                        total_results: action.payload?.total_results || 0,
+                    },
                     loading: false,
                     loaded: true,
-                    value: action.payload,
                 },
             };
         }
@@ -210,6 +250,38 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
+
+        case types.policiesRealEstate.default: {
+            return {
+                ...state,
+                policiesRealEstate: { ...state.policiesRealEstate, loading: true },
+            };
+        }
+
+        case types.policiesRealEstate.success: {
+            return {
+                ...state,
+                policiesRealEstate: {
+                    ...state.policiesRealEstate,
+                    value: action.payload,
+                    loading: false,
+                    loaded: true,
+                },
+            };
+        }
+
+        case types.policiesRealEstate.fail: {
+            return {
+                ...state,
+                policiesRealEstate: {
+                    ...state.policiesRealEstate,
+                    loading: false,
+                    loaded: false,
+                    value: emptyInitialState.policiesRealEstate.value,
+                },
+            };
+        }
+
 
         default: {
             return state;

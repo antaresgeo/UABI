@@ -27,6 +27,7 @@ const getRealEstates = async ({
                     ...(q ? { q } : {}),
                 },
             });
+            //console.log(res);
         return res.data;
     } catch (error) {
         console.error(error);

@@ -23,31 +23,15 @@ export default function SignIn() {
                 role: Role.ADMINISTRATOR,
                 permits: [
                     Permit.CREATE_USER,
-                    Permit.DETAIL_USER,
-                    Permit.UPDATE_USER,
-                    Permit.DELETE_USER,
+                    Permit.CREATE_PROJECT,
+                    Permit.LIST_PROJECT,
+                    Permit.LIST_POLICY,
                     Permit.CREATE_POLICY,
                     Permit.DETAIL_POLICY,
                     Permit.UPDATE_POLICY,
-                    Permit.LIST_POLICY,
-                    Permit.CREATE_INSURANCE_COMPANY,
-                    Permit.DETAIL_INSURANCE_COMPANY,
-                    Permit.UPDATE_INSURANCE_COMPANY,
-                    Permit.LIST_INSURANCE_COMPANY,
-                    Permit.CREATE_INSURANCE_BROKER,
-                    Permit.DETAIL_INSURANCE_BROKER,
-                    Permit.UPDATE_INSURANCE_BROKER,
-                    Permit.LIST_INSURANCE_BROKER,
-                    Permit.CREATE_PROJECT,
-                    Permit.DETAIL_PROJECT,
-                    Permit.UPDATE_PROJECT,
-                    Permit.DELETE_PROJECT,
-                    Permit.LIST_PROJECT,
-                    Permit.CREATE_REALESTATE,
-                    Permit.DETAIL_REALESTATE,
-                    Permit.UPDATE_REALESTATE,
-                    Permit.DELETE_REALESTATE,
-                    Permit.LIST_REALESTATE,
+
+
+
                 ],
             };
             localStorage.setItem('user', JSON.stringify(user));

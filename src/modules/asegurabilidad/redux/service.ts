@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { http } from '../../../config/axios_instances';
 import { swal } from '../../../utils';
+import { IPaginable } from './../../../utils/interfaces/index';
 import {
     IPoliciesResponse,
     IPolicyAttributes,
@@ -22,11 +23,21 @@ const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
     }
 };
 
-const getPolicies = async (): Promise<IPolicyAttributes[] | string> => {
+const getPolicies = async ({
+    page = 1,
+    pageSize = 10,
+    q = null,
+}):  Promise<IPaginable<IPolicyAttributes> | string> => {
     try {
         let URI = `/insurabilities`;
-        let res: AxiosResponse<IPoliciesResponse> = await http.get(URI);
-        return res.data.results;
+        let res: AxiosResponse<IPaginable<IPolicyAttributes>> = await http.get(URI,{
+            params: {
+                page,
+                pageSize,
+                ...(q ? { q } : {}),
+            },
+        });
+        return res.data;
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');

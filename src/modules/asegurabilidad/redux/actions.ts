@@ -10,14 +10,14 @@ const createPolicy = (dataPolicy) =>
 const getPolicy = (id: string) => {
     return request_dispatch(types.policy, service.getPolicy(id));
 };
-const getPolicies = () =>
-    request_dispatch(types.policies, service.getPolicies());
+const getPolicies = (data) =>
+    request_dispatch(types.policies, service.getPolicies(data));
 
 const updatePolicy = (data: any, id) =>
     request_dispatch(types.policy, service.updatePolicy(data, id));
 
 const policiesRealEstate = (id: number) =>
-    request_dispatch(types.policies, service.policiesRealEstate(id))
+    request_dispatch(types.policiesRealEstate, service.policiesRealEstate(id))
 
 const actions = {
     // example

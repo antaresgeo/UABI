@@ -9,7 +9,7 @@ export const getRealEstates = (filters: {
     pageSize?: 10 | 20 | 30;
     q?: {};
 }) => {
-    console.log('action:', filters.q);
+    //console.log('action:', filters.q);
     return request_dispatch(types.realEstates, service.getRealEstates(filters));
 };
 

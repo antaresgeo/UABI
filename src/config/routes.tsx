@@ -7,6 +7,8 @@ import { routes as asegurabilidadRoutes } from '../modules/asegurabilidad';
 import { routes as homeRoutes } from '../modules/home';
 import { routes as notificationRoutes } from '../modules/notificacions';
 import { routes as usersRoutes } from '../modules/users';
+import { routes as occupationRoutes } from '../modules/inspection';
+
 
 const useRoutes = (props = null): IRoute[] => {
     return combineRoutes(props, [
@@ -16,6 +18,7 @@ const useRoutes = (props = null): IRoute[] => {
         asegurabilidadRoutes,
         notificationRoutes,
         usersRoutes,
+        occupationRoutes
     ]);
 };
 

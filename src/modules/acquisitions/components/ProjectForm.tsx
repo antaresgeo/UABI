@@ -159,7 +159,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                             </div>
                         </div>
                         <div className="row">
-                            <div className="form-group col-6">
+                            <div className="form-group col-4">
                                 <label htmlFor="management_center_id" className="form-label">
                                     Centro Gestor
                                 </label>
@@ -181,7 +181,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                     */}
                                 <ErrorMessage name="cost_center" />
                             </div>
-                            <div className="form-group col-6">
+                            <div className="form-group col-4">
                                 <label htmlFor="cost_center_id" className="form-label">
                                     Centro de Costos
                                 </label>
@@ -202,6 +202,25 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                         <option value="POR DEFINIR">POR DEFINIR</option>
                     */}
                                 <ErrorMessage name="cost_center" />
+                            </div>
+                            <div className="col-4">
+                                <label htmlFor="budget_value" className="form-label">
+                                    Valor Presupuestal
+                                </label>
+                                <div className="input-group">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text bg-white border-end-0">$</span>
+                                    </div>
+                                    <Field
+                                        disabled={disabled}
+                                        name="budget_value"
+                                        type="number"
+                                        id="budget_value_id"
+                                        className="form-control border-start-0 text-end"
+                                        min={0}
+                                        max={9999999999}
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div className="row">
