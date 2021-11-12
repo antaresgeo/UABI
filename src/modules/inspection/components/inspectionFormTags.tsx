@@ -1,17 +1,27 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Tabs } from 'antd';
-import { Card } from '../../../utils/ui';
-import OccupationForm from './OccupationForm';
-import TableInspectionPhysycal from './TableInspectionPhysycal';
-import InspectionPhysicalForm from './InspectionPhysicalForm';
-import UpgradeForm from './UpgradeForm';
+import CreateOccupation from './CreateOccupation';
+import CreateInspectionPhysical from './CreateInspectionPhysical';
+import CreateUpgrade from './CreateUpgrade';
+
 interface InspectionFormTagsProps {}
 const InspectionFormTags: FC<InspectionFormTagsProps> = ({}) => {
     const history = useHistory();
     const { TabPane } = Tabs;
+
+    const [activeKey, set_activeKey] = useState<string>('1');
+
+    const next_tab = () => {
+        const key = parseInt(activeKey);
+        const next = key + 1;
+        if(next <= 5){
+            set_activeKey(`${next}`);
+        }
+    };
+    
     function callback(key) {
-        console.log(key);
+        set_activeKey(key);
     }
 
     return (
@@ -22,52 +32,15 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({}) => {
                         <h5>Crear nueva Inspección</h5>
                     </div>
 
-                    <Tabs defaultActiveKey="1" onChange={callback} className="w-100 h-100">
+                    <Tabs activeKey={activeKey} className="w-100 h-100" onChange={callback}>
                         <TabPane tab="Ocupación" key="1">
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <Card title="Datos de ocupación inspección anterior del BI">
-                                            <OccupationForm disabled />
-                                        </Card>
-                                        <Card title="Datos de ocupación del bien inmueble">
-                                            <OccupationForm />
-                                        </Card>
-                                    </div>
-                                </div>
-                            </div>
+                            <CreateOccupation />
                         </TabPane>
                         <TabPane tab="Inspección física" key="2">
-                            <div className="container-fluid">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <TableInspectionPhysycal />
-                                        <Card
-                                            title={
-                                                <>
-                                                    <div className="row">
-                                                        <b className="col-3">Estado anterior</b>
-                                                        <b className="col-4">Estado actual del bien inmueble</b>
-                                                    </div>
-                                                </>
-                                            }
-                                        >
-                                            <InspectionPhysicalForm />
-                                        </Card>
-                                    </div>
-                                </div>
-                            </div>
+                            <CreateInspectionPhysical />
                         </TabPane>
                         <TabPane tab="Actualización" key="3">
-                            <div className="container-fluid">
-                                <div className="row ">
-                                    <div className="col-md-12">
-                                        <Card title="Actualizar datos del poseedor del bien inmueble">
-                                            <UpgradeForm />
-                                        </Card>
-                                    </div>
-                                </div>
-                            </div>
+                            <CreateUpgrade />
                         </TabPane>
                         <TabPane tab="Registro fotográfico" key="4">
                             <div className="container-fluid">Content of Tab Pane 4</div>
@@ -92,6 +65,15 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({}) => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        next_tab();
+                    }}
+                >
+                    Siguiente
+                </button>
             </div>
         </div>
     );

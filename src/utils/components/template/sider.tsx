@@ -68,20 +68,7 @@ const Sider: FC<{ width: number }> = ({ width }) => {
         },
         {
             name: 'Inspección',
-            children: [
-                {
-                    name: 'ocupacion',
-                    path: '/inspection/occupation/',
-                },
-                {
-                    name: 'inspección física',
-                    path: '/inspection/physical/',
-                },
-                {
-                    name: 'actualización',
-                    path: '/inspection/upgrade/',
-                },
-            ],
+            path: "/inspection/",
         },
         {
             name: 'Disposición',

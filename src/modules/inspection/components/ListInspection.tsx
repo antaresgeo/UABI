@@ -1,34 +1,33 @@
-import React from 'react'
+import React from 'react';
 import { Card, Link, Table as UiTable } from '../../../utils/ui';
 
-const ListInspection = () => {
-
+const ListInspection = ({ inspections, change_page, total_results, loading }) => {
     const table_columns = [
         {
             title: 'ID',
-            dataIndex: '',
+            dataIndex: 'id',
             align: 'center' as 'center',
         },
         {
             title: 'Bien Inmueble',
             dataIndex: '',
-            align: 'center' as 'center',
+            align: 'left' as 'left',
         },
         {
-            title: "Matrícula",
-            dataIndex: "",
-            align: "center" as "center",
+            title: 'Matrícula',
+            dataIndex: '',
+            align: 'left' as 'left',
         },
         {
-            title: "Dirección",
-            dataIndex: "status",
-            align: "center" as "center",
+            title: 'Dirección',
+            dataIndex: 'status',
+            align: 'left' as 'left',
         },
 
         {
-            title: "Fecha de Inspección",
-            dataIndex: "",
-            align: "center" as "center",
+            title: 'Fecha de Inspección',
+            dataIndex: '',
+            align: 'left' as 'left',
         },
         {
             title: 'Acciones',
@@ -46,12 +45,12 @@ const ListInspection = () => {
                                 avatar={false}
                                 icon={<i className="fa fa-eye" aria-hidden="true" />}
                             />
-                        )
+                        );
                     },
                 },
                 {
                     title: 'Editar',
-                    dataIndex: 'real_estate',
+                    dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
                         return (
@@ -66,12 +65,12 @@ const ListInspection = () => {
                 },
                 {
                     title: 'Crear',
-                    dataIndex: 'real_estate',
+                    dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
                         return (
                             <Link
-                                to={`/`}
+                                to={`/inspection/create/`}
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-plus" aria-hidden="true" />}
@@ -86,19 +85,20 @@ const ListInspection = () => {
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-md-12">
-                    <Card
-                        title="Inspección"
-                    >
+                    <Card title="Inspección">
                         <UiTable
                             columns={table_columns}
-                            items={[]}
+                            items={inspections}
                             with_pagination
+                            change_page={change_page}
+                            count={total_results}
+                            loading={loading}
                         />
                     </Card>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ListInspection
+export default ListInspection;
