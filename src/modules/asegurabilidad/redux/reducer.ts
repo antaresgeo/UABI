@@ -1,7 +1,16 @@
 import types from './types';
-import { policiesRealEstate } from './service';
+import {Broker, Company} from './service';
+import {Loadable, Pageable} from "../../../custom_types";
 
-//interface State {}
+interface State {
+    policy: Loadable<any>;
+    policies: Pageable<any>;
+    policiesRealEstate: Loadable<any[]>;
+    company: Loadable<Company>;
+    companies: Pageable<Company>
+    broker: Loadable<Broker>
+    brokers: Pageable<Broker>
+}
 
 const fake_policy = {
     id: '-1',
@@ -29,8 +38,35 @@ const fake_policy = {
     },
     status: 1,
 };
+const fake_policiesRealEstate = {
+        id: "-1",
+        registry_number: "",
+        vigency_start: "",
+        vigency_end: "",
+        policy_type:"",
+        insurance_broker: "",
+        insurance_companies: [
+            {
+                insurance_company: "",
+                total_percentage: 0
+            }
+        ],
+        type_assurance: "",
+        insurance_value: "",
+        insurance_document_id: 0,
+        real_estate_id: 0,
+        name_real_estate: "",
+        audit_trail: {
+            created_by: '',
+            created_on: '',
+            updated_by: null,
+            updated_on: null,
+            updated_values: null,
+        },
+        status: 1,
+    };
 
-const emptyInitialState: any = {
+const emptyInitialState: State = {
     policy: {
         value: fake_policy,
         loading: false,
@@ -49,35 +85,7 @@ const emptyInitialState: any = {
         loaded: false,
     },
     policiesRealEstate: {
-        value: [
-            {
-                id: "-1",
-                registry_number: "",
-                vigency_start: "",
-                vigency_end: "",
-                policy_type:"",
-                insurance_broker: "",
-                insurance_companies: [
-                    {
-                        insurance_company: "",
-                        total_percentage: 0
-                    }
-                ],
-                type_assurance: "",
-                insurance_value: "",
-                insurance_document_id: 0,
-                real_estate_id: 0,
-                name_real_estate: "",
-                audit_trail: {
-                    created_by: '',
-                    created_on: '',
-                    updated_by: null,
-                    updated_on: null,
-                    updated_values: null,
-                },
-                status: 1,
-            },
-        ],
+        value: [ fake_policiesRealEstate ],
         loading: false,
         loaded: false,
     },
@@ -118,7 +126,18 @@ const emptyInitialState: any = {
 };
 const initialState = emptyInitialState;
 
-const reducer = (state: any = initialState, action: any): any => {
+const reducer = (state: State = initialState, action: any): State => {
+    return {
+        ...state,
+        ...policyReducer(state, action),
+        ...companyReducer(state, action),
+        ...brokerReducer(state, action),
+    };
+};
+
+const policyReducer = (aux_state: State, action: any) => {
+    const { policy, policies, policiesRealEstate } = aux_state;
+    const state = { policy, policies, policiesRealEstate }
     switch (action.type) {
         case types.policy.default: {
             return {
@@ -183,14 +202,12 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
-
         case types.policiesRealEstate.default: {
             return {
                 ...state,
                 policiesRealEstate: { ...state.policiesRealEstate, loading: true },
             };
         }
-
         case types.policiesRealEstate.success: {
             return {
                 ...state,
@@ -202,7 +219,27 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
+        case types.policiesRealEstate.fail: {
+            return {
+                ...state,
+                policiesRealEstate: {
+                    ...state.policiesRealEstate,
+                    loading: false,
+                    loaded: false,
+                    value: emptyInitialState.policiesRealEstate.value,
+                },
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+}
 
+const companyReducer = (aux_state: State, action: any) => {
+    const { company, companies } = aux_state;
+    const state = { company, companies };
+    switch (action.type) {
         case types.create_company.default:
         case types.update_company.default:
         case types.delete_company.default:
@@ -229,19 +266,6 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
-
-        case types.policiesRealEstate.fail: {
-            return {
-                ...state,
-                policiesRealEstate: {
-                    ...state.policiesRealEstate,
-                    loading: false,
-                    loaded: false,
-                    value: emptyInitialState.policiesRealEstate.value,
-                },
-            };
-        }
-        
         case types.create_company.fail:
         case types.update_company.fail:
         case types.delete_company.fail:
@@ -312,7 +336,16 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
+        default: {
+            return state;
+        }
+    }
+}
 
+const brokerReducer = (aux_state: State, action: any): any => {
+    const { broker, brokers } = aux_state;
+    const state = { broker, brokers };
+    switch (action.type) {
         case types.create_broker.default:
         case types.update_broker.default:
         case types.delete_broker.default:

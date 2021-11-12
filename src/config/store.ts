@@ -1,11 +1,10 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-
-// import { reducer as exampleReducer } from "./modules/example_module/redux";
 import { reducer as acquisitionReducer } from './../modules/acquisitions/redux';
 import { reducer as insurabilityReducer } from './../modules/asegurabilidad/redux';
 import { reducer as notificationReducer } from './../modules/notificacions/redux';
 import { reducer as userReducer } from './../modules/users/redux';
+import { reducer as inspectionReducer } from './../modules/inspection/redux';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -16,6 +15,7 @@ const store = createStore(
         insurability: insurabilityReducer,
         notifications: notificationReducer,
         users: userReducer,
+        inspection: inspectionReducer,
     }),
     composeEnhancer(applyMiddleware(thunk))
 );
