@@ -21,18 +21,7 @@ export default function SignIn() {
         if (pass_is_valid && user_is_valid) {
             const user = {
                 role: Role.ADMINISTRATOR,
-                permits: [
-                    Permit.CREATE_USER,
-                    Permit.CREATE_PROJECT,
-                    Permit.LIST_PROJECT,
-                    Permit.LIST_POLICY,
-                    Permit.CREATE_POLICY,
-                    Permit.DETAIL_POLICY,
-                    Permit.UPDATE_POLICY,
-
-
-
-                ],
+                permits: [...Object.values(Permit)],
             };
             localStorage.setItem('user', JSON.stringify(user));
             history.push('/');
