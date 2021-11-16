@@ -121,7 +121,9 @@
 
 .form-control:disabled,
 .form-control[readonly],
-.form-select:disabled {
+.form-select:disabled,
+.ant-select-disabled.ant-select:not(.ant-select-customize-input)
+    .ant-select-selector {
     background-color: #f0f6fb;
     opacity: 1;
 }
@@ -180,7 +182,8 @@
     background: #ff8403 !important;
     color: white !important;
     transition: all 300ms;
-    .ant-menu-submenu-arrow, .ant-menu-submenu-expand-icon {
+    .ant-menu-submenu-arrow,
+    .ant-menu-submenu-expand-icon {
         color: white;
     }
 }
@@ -192,7 +195,8 @@
 .ant-menu-light .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open {
     background: #ff8403 !important;
     color: white !important;
-    .ant-menu-submenu-arrow, .ant-menu-submenu-expand-icon {
+    .ant-menu-submenu-arrow,
+    .ant-menu-submenu-expand-icon {
         color: white;
     }
 }
