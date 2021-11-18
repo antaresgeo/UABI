@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { getAddressById, insertAddress } from '.';
 import { http, documents_http } from '../../../../config/axios_instances';
-import { swal } from '../../../../utils';
+import { formatDate, swal } from '../../../../utils';
 
 import {
     AdquisitionsItf,
@@ -33,7 +33,7 @@ const getRealEstates = async ({
                     ...(q ? { q } : {}),
                 },
             });
-            //console.log(res);
+        //console.log(res);
         return res.data;
     } catch (error) {
         console.error(error);
@@ -86,12 +86,15 @@ const get_docucments_whit_service = async (docs) => {
             docs = docs.split(',');
         }
         if (Array.isArray(docs) && docs.length > 0) {
-            console.log(docs);
             let documents: any = await get_documents_by_ids(docs.join(','));
             return documents.map((doc) => ({
                 ...doc,
                 label:
-                    doc.type === 'anexo' ? 'Anexo' : `Documento de ${doc.type}`,
+                    doc.type === 3
+                        ? 'Documento de Matricula'
+                        : doc.type === 4
+                        ? 'Documento de Titulo'
+                        : 'Anexo',
             }));
         }
         return [];
@@ -99,6 +102,8 @@ const get_docucments_whit_service = async (docs) => {
         return Promise.reject('Error');
     }
 };
+
+
 
 // Services: POST
 export const createRealEstate = async (
@@ -150,10 +155,12 @@ export const updateRealEstate = async (data: any, id: number) => {
 
         delete aux_data.project_id;
         delete aux_data.active_code;
-        delete aux_data.dependency;
-        delete aux_data.subdependency;
-        delete aux_data.cost_center;
-        delete aux_data.management_center;
+        if (aux_data.projects.id !== 0) {
+            delete aux_data.dependency;
+            delete aux_data.subdependency;
+            delete aux_data.cost_center;
+            delete aux_data.management_center;
+        }
         delete aux_data.sap_id;
         // delete aux_data.supports_documents
 

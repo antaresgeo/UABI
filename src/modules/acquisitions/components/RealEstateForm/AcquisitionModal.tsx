@@ -1,18 +1,27 @@
-import { FC, useState, useRef } from 'react';
+import React, { FC, useState, useRef } from 'react';
 import Modal from 'antd/lib/modal/Modal';
-import { FormikProps, FormikValues } from 'formik';
-import AcquisitionsFrom from './AdquisitionsForm';
+import AcquisitionsFrom from './AcquisitionForm';
+import { LinkButton } from '../../../../utils/ui/link';
 
 interface AcquisitionModalProps {
+    type: 'create' | 'edit';
     modal_name?: string;
     disabled?: boolean;
     btn_label?: any;
-    onChange: (data) => void;
+    onChange: (data, i) => Promise<any>;
     acquisition?: any;
 }
 
-const AcquisitionModal: FC<AcquisitionModalProps> = ({ modal_name, disabled, btn_label, onChange, acquisition }) => {
+const AcquisitionModal: FC<AcquisitionModalProps> = ({
+    modal_name,
+    disabled,
+    btn_label,
+    onChange,
+    acquisition,
+    type,
+}) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
+    const form_ref = useRef<any>();
     const title = modal_name ? modal_name : 'Agregar Adquisicion';
     const close = () => {
         set_is_visible(false);
@@ -24,8 +33,20 @@ const AcquisitionModal: FC<AcquisitionModalProps> = ({ modal_name, disabled, btn
 
     return (
         <>
-            <span onClick={open}>{btn_label ? btn_label : title}</span>
-
+            <LinkButton
+                name={type === 'create' ? (btn_label ? btn_label : title) : ''}
+                iconText={type === 'create' ? '+' : undefined}
+                icon={
+                    type === 'edit' ? (
+                        <i
+                            className={['fa fa-pencil', ...(disabled ? ['text-muted'] : [])].join(' ')}
+                            aria-hidden="true"
+                        />
+                    ) : undefined
+                }
+                avatar={type === 'create'}
+                onClick={open}
+            />
             <Modal
                 title={title}
                 centered
@@ -42,20 +63,28 @@ const AcquisitionModal: FC<AcquisitionModalProps> = ({ modal_name, disabled, btn
                     >
                         Cancelar
                     </button>,
-                    <button key={2} className="btn btn-primary ms-2" type="button" disabled={disabled}>
+                    <button
+                        key={2}
+                        className="btn btn-primary ms-2"
+                        type="button"
+                        disabled={disabled}
+                        onClick={() => {
+                            form_ref.current.submitForm();
+                        }}
+                    >
                         Guardar
                     </button>,
                 ]}
             >
-                {is_visible && (
-                    <AcquisitionsFrom
-                        type="modal"
-                        acquisition_in={is_visible ? acquisition : null}
-                        onChange={(v, i) => {
-                            console.log('AcquisitionsFrom onChange', { v, i });
-                        }}
-                    />
-                )}
+                <AcquisitionsFrom
+                    innerRef={form_ref}
+                    acquisition={acquisition}
+                    onChange={(v, f) => {
+                        return onChange(v, f).then(() => {
+                            close();
+                        });
+                    }}
+                />
             </Modal>
         </>
     );

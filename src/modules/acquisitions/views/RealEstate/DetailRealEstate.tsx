@@ -16,7 +16,7 @@ const DetailRealEstate = () => {
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const [acquisitions, set_acquisitions] = useState([]);
-    const [project_id, set_project_id] = useState(realEstate?.projects.id);
+    const [project_id, set_project_id] = useState(realEstate?.project.id);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const DetailRealEstate = () => {
         if (id) {
             const promise: any = dispatch(actions.getRealEstate(id));
             promise.then((res) => {
-                select_project(res.projects.id);
+                select_project(res.project.id);
                 service.getAcquisitionForRealEstate(id).then((res2) => {
                     set_acquisitions(res2);
                 });

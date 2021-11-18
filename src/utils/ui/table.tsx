@@ -16,7 +16,7 @@ const getPaginator = (
     total: number,
     change_page?: (page: number, pageSize?: number) => void
 ): TablePaginationConfig => {
-    const paginator_format = 'Total de resultados: $TOTAL';
+
     return {
         position: ['bottomRight', 'topRight'],
         total: total || 0,
@@ -51,6 +51,7 @@ const CompressTable: FC<CompressTableProps> = ({
 }) => {
     items = Array.isArray(items) ? items : [];
     const data = items?.map((item, i) => ({ ...item, key: `compress_table_${i}` }));
+    console.log(data);
     const ops = {
         columns: columns,
         dataSource: data,

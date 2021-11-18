@@ -11,7 +11,6 @@ interface AcquisitionsFromProps {
 }
 const SupportDocumentsForm: FC<AcquisitionsFromProps> = ({ type, disabled, formik }) => {
     disabled = disabled || type === 'view' || false;
-    // console.log(formik.values.supports_documents);
     return (
         <Card
             title="Documentos Soporte"
@@ -25,8 +24,7 @@ const SupportDocumentsForm: FC<AcquisitionsFromProps> = ({ type, disabled, formi
                             ...formik.values.supports_documents,
                             {
                                 label: 'Anexo',
-                                type: 'anexo',
-                                can_delete: true,
+                                type: 6,
                             },
                         ];
                         formik.setFieldValue('supports_documents', supports_documents_list, false);
@@ -55,8 +53,9 @@ const SupportDocumentsForm: FC<AcquisitionsFromProps> = ({ type, disabled, formi
                                     name={`supports_documents[${i}]`}
                                     component={DocumentModal}
                                     btn_label="Adjuntar"
+                                    disabled={disabled}
                                     onDelete={(doc) => {
-                                        if(doc.type === 'anexo') {
+                                        if(doc.type === 6) {
                                             const list: any[] = formik.values.supports_documents;
                                             const supports_documents_list = list.filter((v, j) => i !== j);
                                             formik.setFieldValue('supports_documents', supports_documents_list, false);

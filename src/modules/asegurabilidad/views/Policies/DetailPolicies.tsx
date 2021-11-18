@@ -67,7 +67,7 @@ const DetailInsurability = () => {
                                             <td>-</td>
                                             <td>{realEstate?.tipology}</td>
                                             <td>{realEstate?.destination_type}</td>
-                                            <td>{realEstate?.projects.name}</td>
+                                            <td>{realEstate?.project.name}</td>
                                         </tr>
                                         </tbody>
                                     </table>

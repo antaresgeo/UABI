@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { IProjectAttributes } from '../../../utils/interfaces/';
 import ErrorMessage from '../../../utils/ui/error_messge';
+import { IProjectAttributes } from '../../../utils/interfaces/';
 import * as Yup from 'yup';
 import Select from '../../../utils/ui/select';
 import dependencias from '../dependencias';
@@ -119,7 +119,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                         if (value) {
                                             const dependency = dependencias.find((d) => d.name === value);
                                             const _subs = format_list(dependency.subs);
-                                            setFieldValue('subdependency', '');
+                                            setFieldValue('subdependency', dependency.name);
                                             setFieldValue('cost_center', dependency.cost_center);
                                             setFieldValue('management_center', dependency.management_center);
                                             set_subs(_subs);
@@ -170,15 +170,6 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                     className="form-control"
                                     id="management_center_id"
                                 />
-                                {/*
-                        <option value="" disabled hidden>
-                            -- Seleccione Centro de Costos --
-                        </option>
-                        <option value="PÚBLICO">Público</option>
-                        <option value="FISCAL">Fiscal</option>
-                        <option value="MIXTO">Mixto</option>
-                        <option value="POR DEFINIR">POR DEFINIR</option>
-                    */}
                                 <ErrorMessage name="cost_center" />
                             </div>
                             <div className="form-group col-4">
@@ -192,15 +183,6 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                     className="form-control"
                                     id="cost_center_id"
                                 />
-                                {/*
-                        <option value="" disabled hidden>
-                            -- Seleccione Centro de Costos --
-                        </option>
-                        <option value="PÚBLICO">Público</option>
-                        <option value="FISCAL">Fiscal</option>
-                        <option value="MIXTO">Mixto</option>
-                        <option value="POR DEFINIR">POR DEFINIR</option>
-                    */}
                                 <ErrorMessage name="cost_center" />
                             </div>
                             <div className="col-4">
