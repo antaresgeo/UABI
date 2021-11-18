@@ -1,5 +1,6 @@
 import { documents_http } from './../../../config/axios_instances';
 import { AxiosResponse } from 'axios';
+import {formatDate} from "../../index";
 
 export interface CreateDocumentResponse {
     message: string;
@@ -63,6 +64,33 @@ export const get_documents_by_ids = async (ids) => {
     } catch (e) {
         return Promise.reject('Error get_documents_by_ids');
     }
+};
+
+export const download_document = async (doc_id, name) => {
+    try {
+        let URI = `/docs/download/${doc_id}`
+        let res: any = await download(name, documents_http.get(URI));
+        console.log(res);
+    }catch (e) {
+        return Promise.reject('Error download_document');
+    }
+}
+
+const download = async (filename, service) => {
+    return service.then((response) => {
+        if (response) {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.target = '_blank';
+            link.setAttribute(
+                'download',
+                `${filename}_${formatDate(new Date())}.pdf`
+            );
+            document.body.appendChild(link);
+            link.click();
+        }
+    });
 };
 
 export const get_all_documents = async (): Promise<Document[] | string> => {

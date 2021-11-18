@@ -52,9 +52,11 @@ export const createProject = async (
     values
 ): Promise<IProjectAttributes | string> => {
     try {
+        const aux_values = {...values}
+        delete aux_values.id
         let URI = `/projects`;
         let res: AxiosResponse<IProjectResponse> = await http.post(URI, {
-            ...values,
+            ...aux_values,
         });
 
         await swal.fire('Proyecto creado', res.data.message, 'success');

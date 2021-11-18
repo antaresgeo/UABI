@@ -17,9 +17,11 @@ interface RealEstateListProps {
 const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project_id, init, register }) => {
     const dispatch = useDispatch();
 
+
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
     const loading: boolean = useSelector((store: any) => store.acquisitions.realEstates.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.realEstates.pagination);
+
 
     const deleteRealEstate = (id) => async () => {
         const result = await swal.fire({
@@ -69,8 +71,9 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
             ? [
                   {
                       title: 'Proyecto Asociado',
-                      dataIndex: 'project_name',
+                      dataIndex: 'project',
                       align: 'left' as 'left',
+                      render: (p) => p?.name || '',
                   },
               ]
             : []),
@@ -166,6 +169,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
             change_page={change_page}
             loading={loading}
         />
+
     );
 };
 

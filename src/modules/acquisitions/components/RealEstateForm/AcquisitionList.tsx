@@ -86,6 +86,7 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disable
                       render: (id, acquisition, index) => {
                           return (
                               <AcquisitionModal
+                                  type="edit"
                                   acquisition={{ ...acquisition, index }}
                                   btn_label={
                                       <i
@@ -95,6 +96,7 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disable
                                   }
                                   onChange={(values) => {
                                       console.log('acquisitions list', values);
+                                      return Promise.resolve()
                                   }}
                               />
                           );

@@ -3,7 +3,7 @@ import Modal from 'antd/lib/modal/Modal';
 import Form from './Form';
 import { FormikProps, FormikValues } from 'formik';
 import Tag from 'antd/lib/tag';
-import { delete_document } from './services';
+import {delete_document, download_document} from './services';
 
 interface LocationModalProps {
     doc_name?: string;
@@ -64,6 +64,7 @@ const DocumentsModal: FC<LocationModalProps> = ({
                                 }
                             }}
                             onClick={() => {
+                                download_document(doc.id, doc.name)
                                 console.log(doc);
                             }}
                         >

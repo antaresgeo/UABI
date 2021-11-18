@@ -18,15 +18,14 @@ const DetailProjects = () => {
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
     const [acquisitions, set_acquisitions] = useState([]);
-    const [project_id, set_project_id] = useState(realEstate?.projects.id);
+    const [project_id, set_project_id] = useState(realEstate?.project?.id || 0);
 
     useEffect(() => {
         dispatch(actions.getProjects());
         if (id) {
             const promise: any = dispatch(actions.getRealEstate(id));
             promise.then((res) => {
-                console.log(3, res)
-                select_project(res.projects.id);
+                select_project(res.project.id);
                 service.getAcquisitionForRealEstate(id).then((res2) => {
                     set_acquisitions(res2);
                 });
@@ -58,7 +57,6 @@ const DetailProjects = () => {
             onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
                 const { acquisitions } = values;
-
                 try {
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));
                     if (acquisitions.length > 0) {

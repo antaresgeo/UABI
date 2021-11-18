@@ -2,7 +2,7 @@ import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/int
 import { Formik, Form } from 'formik';
 import React, { FC, useEffect, useState } from 'react';
 import GeneralDataForm from './GeneralDataForm';
-import AcquisitionsFrom from './AdquisitionsForm';
+import AdquisitionView from './AdquisitionView';
 import RealEstateList from '../RealEstateList';
 import { Card } from '../../../../utils/ui';
 import { useHistory } from 'react-router-dom';
@@ -61,24 +61,46 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         supports_documents: [
             {
                 label: 'Documento de Matricula',
-                type: 'poliza',
+                type: 3,
             },
             {
                 label: 'Documento de Titulo',
-                type: 'titulo',
+                type: 4,
             },
         ],
+        active_type: 'Lote',
         project_id: Number.isInteger(projectId) ? projectId : 0,
         status: 0,
         audit_trail: null,
         acquisitions: acquisitions || [],
         active_code: '',
         _type: null,
+        dependency: '',
+        subdependency: '',
+        management_center: '',
+        cost_center: '',
         ...realEstate,
     };
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
         initial_values.materials = initial_values.materials.split(',');
+    }
+
+    if (initial_values.supports_documents.length === 0) {
+        initial_values.supports_documents = [
+            {
+                label: 'Documento de Matricula',
+                type: 3,
+            },
+            {
+                label: 'Documento de Titulo',
+                type: 4,
+            },
+        ];
+    }
+
+    if (!initial_values.address.cbml) {
+        initial_values.address.cbml = ""
     }
 
     const schema = Yup.object().shape({
@@ -88,7 +110,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         name: Yup.string().required('Campo obligatorio'),
         description: Yup.string().required('Campo obligatorio'),
         patrimonial_value: Yup.number()
-            .required('Campo obligatorio')
+            // .required('Campo obligatorio')
             .min(0, 'El minimo es 0')
             .max(99999999999999999999, 'El maximo 20 es caracteres'),
         reconstruction_value: Yup.number()
@@ -112,11 +134,13 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         delete values._type;
         values.project_id = [values.project_id];
         values.materials = values.materials.join(', ');
-        onSubmit(values, form, isFinish).then(() => {
-            form.setSubmitting(false);
-            form.resetForm();
-            form.setFieldValue('project_id', projectId || '');
-        }).catch(() => form.setSubmitting(false));
+        onSubmit(values, form, isFinish)
+            .then(() => {
+                form.setSubmitting(false);
+                form.resetForm();
+                form.setFieldValue('project_id', projectId || '');
+            })
+            .catch(() => form.setSubmitting(false));
     };
 
     const [project, set_project] = useState(null);
@@ -129,6 +153,18 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             set_project(null);
         }
     }, [projectId]);
+
+    if (project && project.id !== 0) {
+        initial_values = {
+            ...initial_values,
+            dependency: project.dependency,
+            subdependency: project.subdependency,
+            management_center: project.management_center,
+            cost_center: project.cost_center,
+        };
+    }
+
+    const _disabled =  disabled || type === 'view';
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
@@ -164,19 +200,16 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             )}
                                             <GeneralDataForm
                                                 type={type}
-                                                disabled={type === 'view'}
+                                                disabled={_disabled}
                                                 formik={formik}
                                                 projects={projects}
                                                 project={project}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
-                                            <AcquisitionsFrom
+                                            <AdquisitionView
                                                 type={type}
-                                                disabled={type === 'view'}
-                                                formik={formik}
-                                                onChange={(value, i) => {
-                                                    formik.setFieldValue(`acquisitions[${i}]`, value, false);
-                                                }}
+                                                disabled={_disabled}
+                                                acquisitions={formik.values.acquisitions}
                                             />
                                             <SupportDocumentsForm type={type} formik={formik} />
                                             {type === 'view' && (

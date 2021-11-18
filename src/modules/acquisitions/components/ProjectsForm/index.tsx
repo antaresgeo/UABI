@@ -2,7 +2,7 @@ import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/int
 import { Formik, Form } from 'formik';
 import React, { FC } from 'react';
 
-import AcquisitionsFrom from '../RealEstateForm/AdquisitionsForm';
+import AdquisitionView from '../RealEstateForm/AdquisitionView';
 import RealEstateList from '../RealEstateList';
 import { Card } from '../../../../utils/ui';
 import { Input } from 'semantic-ui-react';
@@ -129,11 +129,8 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                                 projects={projects}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
-                                            <AcquisitionsFrom
-                                                formik={formik}
-                                                onChange={(value, i) => {
-                                                    formik.setFieldValue(`acquisitions[${i}]`, value, false);
-                                                }}
+                                            <AdquisitionView
+                                                acquisitions={formik.values.acquisitions}
                                             />
                                             <Card
                                                 title="Documentos Soporte"

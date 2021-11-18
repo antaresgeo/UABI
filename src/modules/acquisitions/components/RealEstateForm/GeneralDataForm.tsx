@@ -8,10 +8,8 @@ import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/int
 import { extractMonth, formatDate } from '../../../../utils';
 import Select from '../../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
-import InputNumber from '../../../../utils/ui/input_number';
 import dependencias from '../../dependencias';
-import { useSelector, useDispatch } from 'react-redux';
-import { actions } from './../../redux';
+
 interface GeneralDataFormProps {
     type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
@@ -25,10 +23,27 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
     type,
     disabled,
     formik,
-    projects,
     project,
+    projects,
     onProjectSelectedChange,
 }) => {
+    const [subs, set_subs] = useState<any[]>([]);
+    const format_list = (list) => {
+        if (list && Array.isArray(list)) {
+            let aux_list = [...list];
+            aux_list = aux_list.map((d: any) => ({
+                name: d.name,
+                id: d.name,
+            }));
+            if (aux_list.length > 0) {
+                return aux_list;
+            }
+        }
+        return [];
+    };
+
+    const dependency_ops = format_list(dependencias);
+
     return (
         <Card
             title="Información del Inmueble"
@@ -61,12 +76,27 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                     <label htmlFor="dependency_id" className="form-label">
                         Dependecia
                     </label>
-                    <input
-                        type="text"
+                    <Field
+                        component={Select}
+                        name="dependency"
                         id="dependency_id"
-                        disabled
-                        className="form-control"
-                        value={project?.dependency || ''}
+                        disabled={disabled || project?.id !== 0}
+                        placeholder="Selecciona una Dependencia"
+                        options={dependency_ops}
+                        showSearch
+                        extra_on_change={(value) => {
+                            if (value) {
+                                const dependency = dependencias.find((d) => d.name === value);
+                                const _subs = format_list(dependency.subs);
+                                formik.setFieldValue('subdependency', dependency.name);
+                                formik.setFieldValue('cost_center', dependency.management_center);
+                                formik.setFieldValue('management_center', dependency.management_center);
+                                set_subs(_subs);
+                            }
+                        }}
+                        filterOption={(input, option) => {
+                            return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                        }}
                     />
                     <ErrorMessage name="dependency" />
                 </div>
@@ -74,13 +104,25 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                     <label htmlFor="subdependency_id" className="form-label">
                         Sub. Dependecia
                     </label>
-                    <input
-                        type="text"
+                    <Field
+                        component={Select}
                         name="subdependency"
                         id="subdependency_id"
-                        disabled
-                        className="form-control"
-                        value={project?.subdependency || ''}
+                        disabled={disabled || !formik.values.dependency || subs.length === 0 || project?.id !== 0}
+                        placeholder="Selecciona una Sub. Dependencia"
+                        options={subs}
+                        showSearch
+                        allowClear
+                        extra_on_change={(value) => {
+                            if (value) {
+                                const dependency = dependencias.find((d) => d.name === formik.values.dependency);
+                                const subdependency = dependency.subs.find((d) => d.name === value);
+                                formik.setFieldValue('cost_center', subdependency.cost_center);
+                            }
+                        }}
+                        filterOption={(input, option) => {
+                            return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                        }}
                     />
                     <ErrorMessage name="subdependency" />
                 </div>
@@ -90,12 +132,12 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                     <label htmlFor="management_center_id" className="form-label">
                         Centro Gestor
                     </label>
-                    <input
+                    <Field
                         disabled
                         type="text"
                         className="form-control"
                         id="management_center_id"
-                        value={project?.management_center || ''}
+                        name="management_center"
                     />
                     <ErrorMessage name="cost_center" />
                 </div>
@@ -103,13 +145,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                     <label htmlFor="cost_center_id" className="form-label">
                         Centro de Costos
                     </label>
-                    <input
-                        disabled
-                        type="text"
-                        className="form-control"
-                        id="cost_center_id"
-                        value={project?.cost_center || ''}
-                    />
+                    <Field disabled type="text" className="form-control" id="cost_center_id" name="cost_center" />
                     <ErrorMessage name="cost_center" />
                 </div>
                 <div className="form-group col-3">
@@ -284,11 +320,10 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                             <span className="input-group-text bg-white border-end-0">$</span>
                         </div>
                         <Field
-                            disabled
+                            // disabled
                             name="patrimonial_value"
                             id="patrimonial_value_id"
                             type="number"
-
                             className="form-control text-end"
                             style={{ borderLeft: 'none' }}
                             min={0}
@@ -341,6 +376,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                     <ErrorMessage name="total_area" />
                 </div>
             </div>
+
             <div className="row">
                 <div className="form-group col-3">
                     <label htmlFor="total_percentage_id" className="form-label">
@@ -382,14 +418,17 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
 
                     <ErrorMessage name="materials"></ErrorMessage>
                 </div>
+
                 <div className="form-group col-3">
                     <label htmlFor="address" className="form-label">
                         CBML
                     </label>
-                    <Field name="address.cbml" id="address" type="text" className="form-control" disabled />
-
-                    <ErrorMessage name="cbml" />
+                    <section>
+                        <Field name="address.cbml" id="address" type="text" className="form-control" disabled />
+                    </section>
+                    <ErrorMessage name="address.cbml" />
                 </div>
+
                 <div className="form-group col-3">
                     <label htmlFor="address" className="form-label">
                         Dirección
@@ -408,7 +447,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                     delete values.commune_name;
                                     delete values.neighborhood_name;
                                     return service.getAddress(values).then((res) => {
-                                        console.log(res)
+                                        console.log(res);
                                         formik.setFieldValue('address.id', `${res.id}`, false);
                                         formik.setFieldValue('address.name', `${res.addressAsString}`, false);
                                         formik.setFieldValue('address.cbml', `${res.cbml}`, false);
@@ -421,6 +460,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                     <ErrorMessage name="location" />
                 </div>
             </div>
+
             <div className="row">
                 <div className="form-group col-12">
                     <label htmlFor="description_id" className="form-label">
@@ -511,7 +551,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                                 value={extractMonth(formik.values.audit_trail?.created_on)}
                                 disabled
 
-                            // EL MES
+                                // EL MES
                             />
                             <ErrorMessage />
                         </div>
