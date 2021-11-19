@@ -1,5 +1,6 @@
 import { IRoute } from '../../utils/components/app_router/custom_types';
 import { Login, SignUp } from './views';
+import LoginForm from './components/LoginForm';
 
 const get_routes = (): IRoute[] => {
     return [

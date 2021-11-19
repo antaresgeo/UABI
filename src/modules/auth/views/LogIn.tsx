@@ -6,18 +6,14 @@ import logo from './../../../utils/assets/img/escudoAlcaldia.png';
 import { authenticationUme } from '../../../utils';
 import { Permit, Role } from '../../../index';
 import { Redirect, useHistory } from 'react-router-dom';
+import LoginForm from './../components/LoginForm';
 
 export default function SignIn() {
-    const [idusuario, setIdusuario] = useState('');
-    const [contraseña, setContraseña] = useState('');
-    const [contenidopassword, setContenidopassword] = useState('VER');
-    const [tipopassword, setTipoPassword] = useState('password');
-    const [passwordVisibled, setPasswordVisibled] = useState(false);
-    const [iconVisibility, setIconVisibility] = useState<SemanticICONS>('eye');
     const history = useHistory();
-    async function ingresarUsuario() {
-        const pass_is_valid = contraseña === '@sabi2021';
-        const user_is_valid = idusuario === '1020729179';
+
+    const onLogin = (values) => {
+        const pass_is_valid = values.password === '@sabi2021';
+        const user_is_valid = values.user === '1020729179';
         if (pass_is_valid && user_is_valid) {
             const user = {
                 role: Role.ADMINISTRATOR,
@@ -26,40 +22,7 @@ export default function SignIn() {
             localStorage.setItem('user', JSON.stringify(user));
             history.push('/');
         }
-
-        // try {
-        //     let res: AxiosResponse<any> | any = await signIn(idusuario, contraseña);
-
-        //     if (res.status === 200) {
-        //         localStorage.setItem("token", res.data);
-
-        //         history.push("/");
-        //         window.location.reload();
-        //     } else {
-        //         console.error(res[0]);
-        //         await alert(res[0].response.data.mensaje);
-        //     }
-        // } catch (error) {
-        //     console.error(error);
-        // }
-        // const auth = authenticationUme();
     }
-
-    const handleAltVisibility = () => {
-        setPasswordVisibled(!passwordVisibled);
-    };
-
-    const altVisibilityPassword = () => {
-        if (contraseña.trim() === '') return;
-
-        setTipoPassword(passwordVisibled ? 'input' : 'password');
-        setContenidopassword(passwordVisibled ? 'Ocultar' : 'Mostrar');
-        setIconVisibility(passwordVisibled ? 'eye slash' : 'eye');
-    };
-
-    useEffect(() => {
-        altVisibilityPassword();
-    }, [passwordVisibled]);
 
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -72,66 +35,20 @@ export default function SignIn() {
                         <Image className="image-container-login" src={loginimage} />
                     </Grid.Column>
                     <Grid.Column className="no-padding-right no-padding-left container-form-creacion-cuentas">
-                        <Form className="container-form-login">
-                            <Form.Field className="container-center">
+                        <div className="container-form-login">
+                            <div className="container-center">
                                 <Image className="image-logo-container-login" src={logo} />
-                            </Form.Field>
-                            <Form.Field>
-                                <Header as="h2" className="sub-header-login">
+                            </div>
+                            <div>
+                                <h5 className="sub-header-login text-center">
                                     Sistema para la Administración de Bienes Inmuebles
-                                </Header>
-                            </Form.Field>
-                            <Form.Field className="container-inputs-login usuario-item-login">
-                                <label>Usuario</label>
-                                <Input
-                                    onChange={(e) => setIdusuario(e.target.value)}
-                                    onKeyPress={(e: any) => {
-                                        if (e.charCode === 13) {
-                                            ingresarUsuario();
-                                        }
-                                    }}
-                                    placeholder="Ej.: maria.paulina"
-                                    value={idusuario}
-                                />
-                            </Form.Field>
-                            <Form.Field className="container-inputs-login">
-                                <label>Contraseña</label>
-                                <Input
-                                    onChange={(e) => setContraseña(e.target.value)}
-                                    onKeyPress={(e: any) => {
-                                        if (e.charCode === 13) {
-                                            ingresarUsuario();
-                                        }
-                                    }}
-                                    value={contraseña}
-                                    type={tipopassword}
-                                    placeholder="Ej.: Y7ai-*892mndUH"
-                                    action={
-                                        <Button animated="vertical" basic color="blue" onClick={handleAltVisibility}>
-                                            <Button.Content hidden>{contenidopassword}</Button.Content>
-                                            <Button.Content visible>
-                                                <Icon name={iconVisibility} />
-                                            </Button.Content>
-                                        </Button>
-                                    }
-                                />
-                            </Form.Field>
-
-                            <Form.Field className="container-flex-end">
-                                {/* <Button
-									color='black'
-									className='boton-ingresar-login'
-									onClick={() =>
-										(window.location.href = 'http://localhost:3000/auth/signup')
-									}
-								>
-									Registrarme
-								</Button> */}
-                                <Button color="blue" className="boton-ingresar-login" onClick={ingresarUsuario}>
-                                    Ingresar
-                                </Button>
-                            </Form.Field>
-                        </Form>
+                                </h5>
+                                <p style={{fontWeight: 'bold', marginTop: '15px', fontSize: '14px'}}>Ingrese sus datos para Iniciar sesión</p>
+                            </div>
+                            <LoginForm
+                                onSubmit={onLogin}
+                            />
+                        </div>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

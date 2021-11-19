@@ -20,33 +20,32 @@ import { clearRealEstate } from '../../acquisitions/redux/actions/realEstates';
 
 
 
+
 interface InsurabilityFormPros {
     policy?: IPolicyAttributes;
     realEstate?: IRealEstateAttributes;
+    companies?: any;
+    brokers?: any;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
     type_assurance?: 'Normal';
     onSubmit: (values, actions?) => Promise<any>;
 }
 
-const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, type, onSubmit }) => {
+const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, brokers, disabled, type, onSubmit }) => {
 
     const dispatch = useDispatch();
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+
+
     let valor;
     useEffect(() => {
-        //console.log(realEstate)
         if (realEstate) {
-
             valor = true;
         } else {
-            //console.log('no llego')
             valor = false;
         }
         dispatch(actions.getRealEstates({}))
-
-        //console.log(realEstate)
-
     }, []);
 
 
@@ -67,16 +66,15 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                 total_percentage: 0,
             },
         ],
-        insurance_document_id: "123",
+        insurance_document_id: "",
         insurance_document: {
-            type: 'poliza',
+            label: "póliza",
+            type: 5,
             pdf: null
         },
         real_estate_id: realEstate?.id || 0,
         ...policy
     };
-    //console.log(initialValues);
-
     if (initialValues.vigency_start) {
         const tmpDate = new Date(Number(initialValues.vigency_start));
         const tmpDate2 = new Date(Number(initialValues.vigency_end));
@@ -86,8 +84,6 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
         initialValues.vigency_end = newDate2
 
     }
-
-
     const schema = Yup.object().shape({
         registry_number: Yup.string().required('obligatorio'),
         policy_type: Yup.string().required('obligatorio'),
@@ -123,7 +119,6 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
             vigency_start: new Date(newDate).getTime(),
             vigency_end: new Date(newDate2).getTime(),
         }
-        //delete finalValues.insurance_document;
         let total = 0;
         Array.isArray(values.insurance_companies) && finalValues.insurance_companies.map(valor => total = total + valor.total_percentage)
         if (total > 100) {
@@ -141,30 +136,28 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema} >
             {({ isSubmitting, setFieldValue, values, handleChange }) => {
-                //console.log(values);
                 return (
 
                     <Form>
                         <div className="row">
-                            {(type !== 'view' ) &&
+                            {(type !== 'view') &&
                                 <div className="form-group col-6">
                                     <label htmlFor="registry_number" className="form-label">
                                         Matrícula
                                     </label>
                                     <Field
-                                        as="select"
+                                        component={Select}
                                         name="registry_number"
                                         id="registry_number"
-                                        className="form-select"
-                                        type="text"
-                                        style={{ borderLeft: 'none' }}
-                                        onChange={(e) => {
-                                            handleChange(e)
-                                            const realEstate = realEstates.find((r) => {
-                                                return e.target.value === r.registry_number
-                                            })
-                                            setFieldValue('real_estate_id', realEstate.id, false);
-                                        }}
+                                        className="w-100"
+                                        options={realEstates}
+                                    // onChange={(e) => {
+                                    //     handleChange(e)
+                                    //     const realEstate = realEstates.find((r) => {
+                                    //         return e.target.value === r.registry_number
+                                    //     })
+                                    //     setFieldValue('real_estate_id', realEstate.id, false);
+                                    // }}
 
                                     >
                                         <option key="matricula" value="" disabled>
@@ -180,7 +173,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                             <div className={`col-${type === 'view' ? 3 : 6}`}>
                                 <label htmlFor="policy_type" className="form-label">Tipo de Póliza</label>
                                 <Field as="select" id="policy_type" name="policy_type" className="w-100 form-select form-control" disabled={disabled}>
-                                    <option key="policy_type" value=""  disabled>
+                                    <option key="policy_type" value="" disabled>
                                         --Seleccione el tipo de póliza--
                                     </option>
                                     <option key="vera1" value="vera1">Tipo 1</option>
@@ -243,12 +236,12 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                                     className="w-100 form-select form-control"
                                     disabled={disabled}
                                 >
-                                    <option key="insurance_broker" value=""  disabled>
-                                        --Corredor--
+                                    <option key="insurance_broker" value="" disabled>
+                                        --Seleccione Corredor de Seguros--
                                     </option>
-                                    <option key="v1" value="vera1">Vera 1</option>
-                                    <option key="v2" value="vera2">Vera 2</option>
-                                    <option key="v3" value="vera3">Vera 3</option>
+                                    {brokers?.map(broker =>
+                                        <option key={broker?.id} value={broker?.name}>{broker?.name}</option>
+                                    )}
                                 </Field>
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
                                     <ErrorMessage name="insurance_broker" />
@@ -373,12 +366,11 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                                     <ErrorMessage name="type_assurance"></ErrorMessage>
                                 </div>
                             }
-                            {console.log()}
                             {/* {Array.isArray(values.insurance_companies)  && console.log(values.insurance_companies?.map( company => company.join(", ")))} */}
                             {type === 'view' &&
                                 <div className={`form-inline col-6`}>
                                     <label htmlFor="companies" className="form-label">
-                                        Compañía Aseguradora
+                                        Compañías Aseguradoras
                                     </label>
                                     <Field
                                         type="text"
@@ -394,8 +386,29 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                             }
 
                         </div>
+                        {type === 'view' &&
+                            <div className="row">
+                                <div className={`form-inline col-6`}>
+                                    <label htmlFor="realEstates" className="form-label">
+                                        Bienes Inmuebles asociados
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        name="realEstates"
+                                        id="realEstates"
+                                        className="form-control"
+                                        //value={(values.insurance_companies).map((a) => a.insurance_company).join(",  ")}
+                                        style={{ borderLeft: 'none' }}
+                                        disabled={disabled}
+                                    />
+                                    <ErrorMessage name="realEstates" />
+                                </div>
+                            </div>
+                        }
+
                         {type !== 'view' &&
                             <>
+                                {/* {console.log('compañias',values.insurance_companies)} */}
                                 {Array.isArray(values.insurance_companies) && values.insurance_companies?.map((item, i) => {
                                     return (
                                         <div className="row form-group" key={i}>
@@ -410,12 +423,12 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                                                     className="w-100 form-select form-control"
                                                     disabled={disabled}
                                                 >
-                                                    <option key="insurance_company" value=""  disabled>
+                                                    <option key="insurance_company" value="" disabled>
                                                         --Seleccione Compañía Aseguradora--
                                                     </option>
-                                                    <option key="Sura 1" value="Sura 1">Sura 1</option>
-                                                    <option key="Sura 2" value="Sura 2">Sura 2</option>
-                                                    <option key="Sura 3" value="Sura 3">Sura 3</option>
+                                                    {companies?.results?.map(company =>
+                                                        <option key={company?.id} value={company?.name}>{company?.name}</option>
+                                                    )}
                                                 </Field>
                                                 <ErrorMessage name={`insurance_companies[${i}].insurance_company`} />
                                             </div>
@@ -468,7 +481,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, disabled, ty
                             <div className="col text-end">
                                 {type !== 'view' && (
                                     <button
-                                        type ="submit"
+                                        type="submit"
                                         className="btn btn-primary my-3"
                                         disabled={disabled}
                                     >

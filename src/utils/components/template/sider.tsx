@@ -44,10 +44,14 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                     name: 'Bienes Inmuebles',
                 },
                 {
-                    path: '/acquisitions/registers/',
-                    name: 'Registros',
+                    path: '/acquisitions/real-estates/create/',
+                    name: 'Registro de BI',
                 },
             ],
+        },
+        {
+            path: '/InventoryRecordList',
+            name: 'Registro de inventario',
         },
         {
             name: 'Asegurabilidad',

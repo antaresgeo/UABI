@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { IProjectAttributes } from '../../../../utils/interfaces';
@@ -7,6 +7,8 @@ import { Card, Link } from '../../../../utils/ui';
 import RealEstateList from '../../components/RealEstateList';
 import ProjectForm from '../../components/ProjectForm';
 import ProjectModal from './../../components/ProjectModal';
+import { AreasModal } from './../../components/en_des_globe/AreasModal';
+
 
 interface IParams {
     id: string;
@@ -18,7 +20,8 @@ const DetailProject = () => {
     const history = useHistory();
 
     const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
-
+    const [is_visibleArea, set_is_visible_area] = useState<boolean>(false);
+    const [action, setAction] = useState();
     useEffect(() => {
         dispatch(actions.getProject(id));
     }, []);
@@ -69,7 +72,11 @@ const DetailProject = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
-                <ProjectModal />
+                <ProjectModal openArea={(a)=> {
+                    setAction(a)
+                    set_is_visible_area(true)
+                }}/>
+                <AreasModal open={is_visibleArea} setOpen={set_is_visible_area} project={project?.id} action={action}/>
             </div>
         </div>
     );

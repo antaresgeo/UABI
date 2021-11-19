@@ -11,27 +11,24 @@ import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 const table_columns = [
     {
         title: 'ID',
-        dataIndex: 'real_estate',
-        align: 'center' as 'center',
-        render: (data) => data?.id,
-    },
-    {
-        title: 'Matrícula',
-        dataIndex: 'registry_number',
+        dataIndex: 'id',
         align: 'center' as 'center',
     },
     {
-        title: 'Bien Inmueble',
-        dataIndex: 'real_estate',
+        title: 'Tipo de Póliza',
+        dataIndex: 'policy_type',
         align: 'center' as 'center',
-        render: (data) => data?.name,
+    },
+    {
+        title: 'Corredor de seguros',
+        dataIndex: 'insurance_broker',
+        align: 'center' as 'center',
     },
     {
         title: 'Estado',
         dataIndex: 'status',
         align: 'center' as 'center',
     },
-
     {
         title: 'Fecha de Inicio',
         dataIndex: 'vigency_start',
@@ -64,59 +61,32 @@ const table_columns = [
         children: [
             {
                 title: 'Ver',
-                dataIndex: 'real_estate',
+                dataIndex: 'id',
                 align: 'center' as 'center',
-                render: (data) => {
-                    if (data) {
-                        return (
-                            <Link
-                                to={`/insurabilities/policy/${data?.id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
-                    } else {
-                        return '';
-                    }
+                render: (id) => {
+                    return (
+                        <Link
+                            to={`/insurabilities/policy/${id}/`}
+                            name=""
+                            avatar={false}
+                            icon={<i className="fa fa-eye" aria-hidden="true" />}
+                        />
+                    );
                 },
             },
             {
                 title: 'Editar',
-                dataIndex: 'real_estate',
+                dataIndex: 'id',
                 align: 'center' as 'center',
-                render: (data) => {
-                    if (data) {
-                        return (
-                            <Link
-                                to={`/insurabilities/policy/edit/${data?.id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                            />
-                        );
-                    } else {
-                        return '';
-                    }
-                },
-            },
-            {
-                title: 'Crear',
-                dataIndex: 'real_estate',
-                align: 'center' as 'center',
-                render: (data) => {
-                    if (data) {
-                        return (
-                            <Link
-                                to={`/insurabilities/policy/create/${data?.id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-plus" aria-hidden="true" />}
-                            />
-                        );
-                    } else {
-                        return '';
-                    }
+                render: (id) => {
+                    return (
+                        <Link
+                            to={`/insurabilities/policy/edit/${id}/`}
+                            name=""
+                            avatar={false}
+                            icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                        />
+                    );
                 },
             },
         ],
@@ -128,8 +98,7 @@ const Policies = () => {
     const policies: IPolicyAttributes[] = useSelector((store: any) => store.insurability.policies.value);
     const loading: boolean = useSelector((store: any) => store.insurability.policies.loading);
     const { total_results } = useSelector((store: any) => store.insurability.policies.pagination);
-
-    //console.log(policies)
+    console.log(policies);
     const change_page = (page, pageSize) => {
         dispatch(actions.getPolicies({ page, pageSize }));
     };

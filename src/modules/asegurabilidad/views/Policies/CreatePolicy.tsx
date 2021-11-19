@@ -17,9 +17,13 @@ const CreateInsurability = () => {
     const dispatch = useDispatch();
 
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
-
+    const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
+    const insurance_brokers: any = useSelector((store: any) => store.insurability.brokers.value);
+    console.log(insurance_brokers)
     useEffect(() => {
         dispatch(clearRealEstate());
+        dispatch(actions.get_list_companies());
+        dispatch(actions.get_all_brokers());
         console.log(id, realEstate)
         if (id) {
             dispatch(getRealEstate(id));
@@ -47,6 +51,8 @@ const CreateInsurability = () => {
                                     type_assurance="Normal"
                                     type='create'
                                     realEstate={realEstate}
+                                    companies={insurance_companies}
+                                    brokers={insurance_brokers}
                                     onSubmit={(values) => {
                                         return createPolicy(values);
                                     }}

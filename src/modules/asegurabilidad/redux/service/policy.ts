@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { http } from '../../../../config/axios_instances';
+import { documents_http, http } from '../../../../config/axios_instances';
 import { swal } from '../../../../utils';
 import { IPaginable } from './../../../../utils/interfaces/index';
 import {
@@ -8,20 +8,26 @@ import {
     IPolicyResponse,
 } from '../../../../utils/interfaces/insurability';
 import { compute_doc_policy } from '../../views/Policies/poliza.utils';
+import { create_document } from './../../../../utils/components/DocumentsModal/services';
 
 // Services: POST
 export const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
     try {
         let URI = `/insurabilities`;
-        console.log(data);
         const doc: any = await compute_doc_policy(data.insurance_document);
-
-        //let res: AxiosResponse<IPolicyResponse> = await http.post(URI, data);
-        //await swal.fire('poliza creada', res.data.message, 'success');
-        //return res.data.results;
+        const create_doc: any = await create_document(doc);
+        delete data.insurance_document;
+        const dataFinal = {
+            ...data,
+            insurance_document_id: create_doc.id
+        }
+        let res: AxiosResponse<IPolicyResponse> = await http.post(URI, dataFinal);
+        await swal.fire('poliza creada', res.data.message, 'success');
+        return res.data.results;
     } catch (error) {
         console.error(error);
-        await swal.fire('Error', '', 'error');
+        console.log('error')
+        //await swal.fire('Error', '', 'error');
 
         return Promise.reject('Error');
     }
@@ -56,11 +62,29 @@ export const getPolicy = async (
         let res: AxiosResponse<IPolicyResponse> = await http.get(URI, {
             params: { id },
         });
+        console.log(res.data.results);
+        res.data.results.insurance_document = await getDocument(
+            res.data.results.insurance_document_id
+        );
+        console.log(res.data.results);
+
         return res.data.results;
     } catch (error) {
         return Promise.reject('Error');
     }
 };
+
+const getDocument = async (id_document) => {
+    try {
+        let URI = `/docs/`;
+        let res: AxiosResponse<IPolicyResponse> = await documents_http.get(URI, {
+            params: { id_document },
+        });
+        return res.data.results;
+    } catch (error) {
+        return Promise.reject('Error');
+    }
+}
 
 // Services: PUT
  export const updatePolicy = async (data: any, id: number) => {

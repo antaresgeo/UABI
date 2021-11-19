@@ -51,8 +51,8 @@ export const getRealEstatesByProject = async (
                 await http.get(URI, {
                     params: { id },
                 });
-
             return res.data;
+
         } catch (error) {
             console.error(error);
             return Promise.reject('Error');

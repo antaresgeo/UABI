@@ -31,6 +31,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
         commune_name: '',
         neighborhood: '',
         neighborhood_name: '',
+        stratum: '',
         block: '',
         lot: '',
         type: '',
@@ -218,7 +219,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                         </div>
                         {(view === 'general' || view === 'user') && (
                             <div className="form-row row">
-                                <div className="form-group col-6">
+                                <div className="form-group col-4">
                                     <label htmlFor="" className="form-label">
                                         {zone && zone === 'Rural' ? 'Corregimiento ' : 'Comuna '}
                                         <span className="text-danger">*</span>
@@ -248,7 +249,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
 
                                     <ErrorMessage name="commune" />
                                 </div>
-                                <div className="form-group col-6">
+                                <div className="form-group col-4">
                                     <label htmlFor="" className="form-label">
                                         {zone && zone === 'Rural' ? 'Vereda ' : 'Barrio '}
                                         <span className="text-danger">*</span>
@@ -273,6 +274,29 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                     </Field>
 
                                     <ErrorMessage name="neighborhood" />
+                                </div>
+                                <div className="form-group col-4">
+                                    <label htmlFor="" className="form-label">
+                                        Estrato
+                                        <span className="text-danger">*</span>
+                                    </label>
+                                    <Field
+                                        className="w-100 form-select"
+                                        name="stratum"
+                                        as="select"
+                                        onChange={''}
+                                    >
+                                        <option value="" disabled>--estrato---</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+
+                                    </Field>
+
+                                    <ErrorMessage name="stratum" />
                                 </div>
                                 {view !== 'user' && (
                                     <>

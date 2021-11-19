@@ -15,10 +15,8 @@ const types = Object.freeze({
         fail: 'Se consulta endpoint de servicio polizas [fail]',
     },
     policiesRealEstate: {
-        default:
-            'Se consulta endpoint de servicio polizas por bien inmueble [default]',
-        success:
-            'Se consulta endpoint de servicio polizas por bien inmueble [success]',
+        default:'Se consulta endpoint de servicio polizas por bien inmueble [default]',
+        success:'Se consulta endpoint de servicio polizas por bien inmueble [success]',
         fail: 'Se consulta endpoint de servicio polizas por bien inmueble [fail]',
     },
 

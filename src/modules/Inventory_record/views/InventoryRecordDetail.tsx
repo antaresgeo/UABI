@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { actions, service } from '../../acquisitions/redux/';
+import RealEstateForm from '../../acquisitions/components/RealEstateForm';
+import { IProjectAttributes, IRealEstateAttributes } from '../../../utils/interfaces';
 
-import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
-import { actions, service } from '../../redux';
-import RealEstateForm from '../../components/RealEstateForm';
+
 
 interface IParams {
     id: string;
 }
 
-const DetailRealEstate = () => {
+export const InventoryRecordDetail = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
@@ -24,7 +25,7 @@ const DetailRealEstate = () => {
         if (id) {
             const promise: any = dispatch(actions.getRealEstate(id));
             promise.then((res) => {
-                select_project(res.project.id);
+                select_project(res.projects.id);
                 service.getAcquisitionForRealEstate(id).then((res2) => {
                     set_acquisitions(res2);
                 });
@@ -53,13 +54,19 @@ const DetailRealEstate = () => {
             realEstates={project_id ? realEstates : []}
             realEstate={realEstate}
             projectId={project_id}
-            inventory={true}
+            inventory={false}
             onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
-                return Promise.reject();
+                const confirmation = {
+                    availability_type: values.availability_type,
+                    utilization_value: values.utilization_value,
+                    authorization_value: values.authorization_value,
+                    canon_value: values.canon_value
+                }
+                console.log(values);
+                //createconfirmation(confirmation);
+                //return Promise.reject();
             }}
         />
-    );
-};
-
-export default DetailRealEstate;
+    )
+}

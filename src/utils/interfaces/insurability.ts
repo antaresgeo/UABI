@@ -1,9 +1,5 @@
 import { IAuditTrail } from '.';
 
-interface ICompanies {
-    insurance_company: string;
-    total_percentage: number;
-}
 
 export interface IPolicyAttributes {
     id?: number | string;
@@ -16,6 +12,7 @@ export interface IPolicyAttributes {
     type_assurance: string;
     insurance_value: string;
     insurance_document_id: number;
+    insurance_document?: any;
     real_estate_id: number;
     name_real_estate?: string;
     audit_trail?: IAuditTrail;
