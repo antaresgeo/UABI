@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Table, Popconfirm, Form, Typography } from 'antd';
 import { EditableCell } from '../../../../utils/ui/editableCell';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux';
 import { useParams, useHistory } from 'react-router-dom';
+import { swal_warning } from '../../../../utils';
 
 interface IParams {
     id: string;
 }
 
-export const TablaGlobe = () => {
+
+interface TableGlobeProps {
+    action: any;
+
+}
+
+export const TablaGlobe: FC<TableGlobeProps> = ({action}) => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -21,7 +28,6 @@ export const TablaGlobe = () => {
     const [valueArea, setValueArea] = useState(0);
     const [editingKey, setEditingKey] = useState('');
     const [form] = Form.useForm();
-
 
     useEffect(() => {
         dispatch(actions.getProjects());
@@ -196,7 +202,20 @@ export const TablaGlobe = () => {
                     disabled={disabled}
                 ></input>
             </div>
-            <button className="btn btn-primary" onClick={() => history.push({pathname:`/englobar/realEstates/`,state:{numberRealEstates, valueArea, data}})}>
+            <button className="btn btn-primary" onClick={(e) =>{
+                console.log(action)
+                if(valueArea === 0){
+                    e.preventDefault();
+                    console.log("debe elegir valores ")
+                    swal_warning.fire(
+                        {
+                            title: "Valor de Área a utilizar Obligatorio", text: `El valor del área a ${action} no puede ser cero`
+                        }
+                    )
+                }else {
+                    history.push({pathname:`/englobar/realEstates/`,state:{numberRealEstates, valueArea, data}})
+                }
+            }}>
                 enviar
             </button>
         </Form>

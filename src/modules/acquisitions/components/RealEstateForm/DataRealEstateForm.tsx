@@ -1,5 +1,5 @@
 import { Field } from 'formik';
-import { FC} from 'react'
+import { FC } from 'react'
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import Select from '../../../../utils/ui/select';
@@ -7,6 +7,8 @@ import Tooltip from 'antd/lib/tooltip';
 import { service } from '../../redux';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 import { extractMonth, formatDate } from '../../../../utils';
+import CheckboxGroup from 'react-checkbox-group';
+import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 
 interface DataRealEstateFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -16,6 +18,8 @@ interface DataRealEstateFormProps {
     onProjectSelectedChange?: (value) => void;
     project?: any;
     inventory?: boolean;
+    englobe?: boolean;
+
 }
 
 
@@ -26,8 +30,31 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     projects,
     project,
     inventory,
+    englobe,
     onProjectSelectedChange,
 }) => {
+    const onChageActiveType = (active_types, setFieldValue) => (e) => {
+        const data_now = [...active_types];
+        const new_value = e.target.value;
+        const key = 'Lote';
+        let aux_data = [];
+        if (!data_now.includes(new_value)) {
+            if (data_now.includes(key)) {
+                aux_data = [key, new_value];
+            } else {
+                if (new_value === key) {
+                    aux_data = [key, ...data_now];
+                } else {
+                    aux_data = [new_value];
+                }
+            }
+        } else {
+            aux_data = [...data_now].filter((x) => x !== new_value);
+        }
+        setFieldValue('active_type', aux_data, false);
+    };
+
+    const active_type = ['Lote', 'Mejora', 'Construccion', 'Construccion para demoler', 'Mejora para demoler'];
     return (
         <>
             <div className="row">
@@ -44,61 +71,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         extra_on_change={onProjectSelectedChange}
                     />
                     <ErrorMessage name="project_id" />
-                </div>
-                <div className="col-3">
-                    <label htmlFor="dependency_id" className="form-label">
-                        Dependecia
-                    </label>
-                    <input
-                        type="text"
-                        id="dependency_id"
-                        disabled
-                        className="form-control"
-                        value={project?.dependency || ''}
-                    />
-                    <ErrorMessage name="dependency" />
-                </div>
-                <div className="col-3">
-                    <label htmlFor="subdependency_id" className="form-label">
-                        Sub. Dependecia
-                    </label>
-                    <input
-                        type="text"
-                        name="subdependency"
-                        id="subdependency_id"
-                        disabled
-                        className="form-control"
-                        value={project?.subdependency || ''}
-                    />
-                    <ErrorMessage name="subdependency" />
-                </div>
-            </div>
-            <div className="row">
-                <div className="form-group col-3">
-                    <label htmlFor="management_center_id" className="form-label">
-                        Centro Gestor
-                    </label>
-                    <input
-                        disabled
-                        type="text"
-                        className="form-control"
-                        id="management_center_id"
-                        value={project?.management_center || ''}
-                    />
-                    <ErrorMessage name="cost_center" />
-                </div>
-                <div className="form-group col-3">
-                    <label htmlFor="cost_center_id" className="form-label">
-                        Centro de Costos
-                    </label>
-                    <input
-                        disabled
-                        type="text"
-                        className="form-control"
-                        id="cost_center_id"
-                        value={project?.cost_center || ''}
-                    />
-                    <ErrorMessage name="cost_center" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="tipology_id" className="form-label">
@@ -154,6 +126,63 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
             </div>
             <div className="row">
+                <div className="col-3">
+                    <label htmlFor="dependency_id" className="form-label">
+                        Dependecia
+                    </label>
+                    <input
+                        type="text"
+                        id="dependency_id"
+                        disabled
+                        className="form-control"
+                        value={project?.dependency || ''}
+                    />
+                    <ErrorMessage name="dependency" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="subdependency_id" className="form-label">
+                        Sub. Dependecia
+                    </label>
+                    <input
+                        type="text"
+                        name="subdependency"
+                        id="subdependency_id"
+                        disabled
+                        className="form-control"
+                        value={project?.subdependency || ''}
+                    />
+                    <ErrorMessage name="subdependency" />
+                </div>
+                <div className="form-group col-3">
+                    <label htmlFor="management_center_id" className="form-label">
+                        Centro Gestor
+                    </label>
+                    <input
+                        disabled
+                        type="text"
+                        className="form-control"
+                        id="management_center_id"
+                        value={project?.management_center || ''}
+                    />
+                    <ErrorMessage name="cost_center" />
+                </div>
+                <div className="form-group col-3">
+                    <label htmlFor="cost_center_id" className="form-label">
+                        Centro de Costos
+                    </label>
+                    <input
+                        disabled
+                        type="text"
+                        className="form-control"
+                        id="cost_center_id"
+                        value={project?.cost_center || ''}
+                    />
+                    <ErrorMessage name="cost_center" />
+                </div>
+
+
+            </div>
+            <div className="row">
                 <div className="form-group col-3">
                     <label htmlFor="name_id" className="form-label">
                         Nombre Inmueble
@@ -172,6 +201,39 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     />
 
                     <ErrorMessage name="name" withCount max={200} />
+                </div>
+                <div className="form-group col-3">
+                    <label htmlFor="registry_number_noc" className="form-label">
+                        Número matrícula
+                        <Tooltip title="Lorem impsu texto descriptivo">
+                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
+                        </Tooltip>
+                    </label>
+                    <Field
+                        type="text"
+                        name="registry_number"
+                        className="form-control"
+                        id="registry_number_noc"
+                        autoComplete="off"
+                        placeholder=""
+                        disabled={disabled}
+                        maxLength={20}
+                    />
+                    <ErrorMessage name="registry_number" withCount max={20} />
+                </div>
+                <div className="form-group col-3">
+                    <label htmlFor="active_code_id" className="form-label">
+                        Código Activo
+                    </label>
+                    <Field
+                        disabled
+                        name="active_code"
+                        id="active_code_id"
+                        type="text"
+                        className="form-control"
+                        autoComplete="off"
+                    />
+                    <ErrorMessage name="active_code" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="destination_type_id" className="form-label">
@@ -194,75 +256,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="destination_type" />
                 </div>
-                <div className="form-group col-3">
-                    <label htmlFor="active_code_id" className="form-label">
-                        Código Activo
-                    </label>
-                    <Field
-                        disabled
-                        name="active_code"
-                        id="active_code_id"
-                        type="text"
-                        className="form-control"
-                        autoComplete="off"
-                    />
-                    <ErrorMessage name="active_code" />
-                </div>
-                <div className="form-group col-3">
-                    <label htmlFor="zone_id" className="form-label">
-                        Zona del Bien Inmueble
-                    </label>
-
-                    <div className="form-check-inline me-5">
-                        <label style={{ fontWeight: 400 }}>
-                            <Field
-                                disabled={disabled}
-                                name="zone"
-                                id="zone_id"
-                                type="radio"
-                                className="form-check-input"
-                                value="Urbano"
-                            />{' '}
-                            Urbano
-                        </label>
-                    </div>
-                    <div className="form-check-inline me-5">
-                        <label style={{ fontWeight: 400 }}>
-                            <Field
-                                disabled={disabled}
-                                name="zone"
-                                id="zone_id"
-                                type="radio"
-                                className="form-check-input"
-                                value="Rural"
-                            />{' '}
-                            Rural
-                        </label>
-                    </div>
-
-                    <ErrorMessage name="zone"></ErrorMessage>
-                </div>
             </div>
             <div className="row">
-                <div className="form-group col-3">
-                    <label htmlFor="registry_number_noc" className="form-label">
-                        Número de matrícula
-                        <Tooltip title="Lorem impsu texto descriptivo">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
-                    </label>
-                    <Field
-                        type="text"
-                        name="registry_number"
-                        className="form-control"
-                        id="registry_number_noc"
-                        autoComplete="off"
-                        placeholder=""
-                        disabled={disabled}
-                        maxLength={20}
-                    />
-                    <ErrorMessage name="registry_number" withCount max={20} />
-                </div>
                 <div className="form-group col-3">
                     <label htmlFor="patrimonial_value_id" className="form-label">
                         Valor Patrimonial
@@ -328,8 +323,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="total_area" />
                 </div>
-            </div>
-            <div className="row">
                 <div className="form-group col-3">
                     <label htmlFor="total_percentage_id" className="form-label">
                         Porcentaje Total
@@ -351,6 +344,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="total_percentage"></ErrorMessage>
                 </div>
+            </div>
+            <div className="row">
                 <div className="form-group col-3">
                     <label htmlFor="material_id" className="form-label">
                         Materiales de construcción
@@ -369,6 +364,40 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     />
 
                     <ErrorMessage name="materials"></ErrorMessage>
+                </div>
+                <div className="form-group col-3">
+                    <label htmlFor="zone_id" className="form-label">
+                        Zona del Bien Inmueble
+                    </label>
+
+                    <div className="form-check-inline me-5">
+                        <label style={{ fontWeight: 400 }}>
+                            <Field
+                                disabled={disabled}
+                                name="zone"
+                                id="zone_id"
+                                type="radio"
+                                className="form-check-input"
+                                value="Urbano"
+                            />{' '}
+                            Urbano
+                        </label>
+                    </div>
+                    <div className="form-check-inline me-5">
+                        <label style={{ fontWeight: 400 }}>
+                            <Field
+                                disabled={disabled}
+                                name="zone"
+                                id="zone_id"
+                                type="radio"
+                                className="form-check-input"
+                                value="Rural"
+                            />{' '}
+                            Rural
+                        </label>
+                    </div>
+
+                    <ErrorMessage name="zone"></ErrorMessage>
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="address" className="form-label">
@@ -409,6 +438,44 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <ErrorMessage name="location" />
                 </div>
             </div>
+            <div className="row">
+                <div className="col-12">
+                    <label className="form-label">Tipo de activo</label>
+                    <div style={{ height: '33.5px', lineHeight: '33.5px' }}>
+                        {active_type.map((item) => {
+                            return (
+                                <label className="d-inline-block ms-1 me-1">
+                                    <Field
+                                        type="checkbox"
+                                        name="active_type"
+                                        value={item}
+                                        className="me-2"
+                                        onChange={onChageActiveType(formik.values.active_type, formik.setFieldValue)}
+                                    />
+                                    {item}
+                                </label>
+                            );
+                        })}
+                    </div>
+                    <ErrorMessage name="active_type" />
+                </div>
+            </div>
+            {englobe &&
+                <div className="row">
+                    <div className="col-8">
+                        <label htmlFor="form-select" className="form-label">
+                            Adjuntar Póliza
+                        </label>
+                        <Field
+                            name="supports_documents"
+                            component={DocumentModal}
+                            btn_label="Adjuntar"
+
+                        />
+                        <ErrorMessage name="supports_documents" />
+                    </div>
+                </div>
+            }
             <div className="row">
                 <div className="form-group col-12">
                     <label htmlFor="description_id" className="form-label">
@@ -587,6 +654,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             <ErrorMessage />
                         </div>
                     </div>
+
                     <div className="row">
                         <div className="col-12">
                             <label htmlFor="comentarios_id" className="form-label">

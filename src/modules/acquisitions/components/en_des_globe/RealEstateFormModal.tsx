@@ -5,19 +5,24 @@ import RealEstateForm from '../RealEstateForm';
 import { IRealEstateAttributes } from '../../../../utils/interfaces';
 import { IProjectAttributes } from './../../../../utils/interfaces/components.interfaces';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../redux';
+import { actions, service } from '../../redux';
 import GeneralDataForm from '../RealEstateForm/GeneralDataForm';
 import { Formik, Form } from 'formik';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 
-interface LocationModalProps {
+interface RealEstateModalProps {
     disabled?: boolean;
+    realEstateData?: any;
 }
 
-export const RealEstateFormModal: FC<LocationModalProps> = ({ disabled, }) => {
+export const RealEstateFormModal: FC<RealEstateModalProps> = ({ disabled,realEstateData }) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
-    const open = () => !disabled && set_is_visible(true);
+    console.log('valores', is_visible,realEstateData)
+    const open = () => {
+        ref.current?.resetForm();
+        !disabled && set_is_visible(true)
+    };
     const close = () => set_is_visible(false);
 
     const history: any = useHistory();
@@ -26,6 +31,18 @@ export const RealEstateFormModal: FC<LocationModalProps> = ({ disabled, }) => {
     const [project_id, set_project_id] = useState(history.location.state?.project_id || 0);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
+    const [project, set_project] = useState(null);
+    useEffect(() => {
+        if (Number.isInteger(project_id)) {
+            service.getProject(project_id + '').then((_project) => {
+                set_project(_project);
+            });
+        } else {
+            set_project(null);
+        }
+    }, [project_id]);
+
+
 
     useEffect(() => {
         dispatch(actions.getProjects());
@@ -72,21 +89,36 @@ export const RealEstateFormModal: FC<LocationModalProps> = ({ disabled, }) => {
         supports_documents: [
             {
                 label: 'Documento de Matricula',
-                type: 'matricula',
+                type: 3,
             },
             {
                 label: 'Documento de Titulo',
-                type: 'titulo',
+                type: 4,
             },
         ],
-        project_id: 0, //Number.isInteger(projectId) ? projectId : 0,
+        active_type: 'Lote',
+        project_id: Number.isInteger(project_id) ? project_id : 0,
         status: 0,
         audit_trail: null,
-        acquisitions: /*acquisitions ||*/[],
+        acquisitions: [],
         active_code: '',
         _type: null,
-        // ...realEstate,
+        dependency: '',
+        subdependency: '',
+        management_center: '',
+        cost_center: ''
+        //...realEstate,
     };
+
+    if (project && project.id !== 0) {
+        initial_values = {
+            ...initial_values,
+            dependency: project.dependency,
+            subdependency: project.subdependency,
+            management_center: project.management_center,
+            cost_center: project.cost_center,
+        };
+    }
 
     const schema = Yup.object().shape({
         destination_type: Yup.string().required('Campo obligatorio'),
@@ -116,7 +148,9 @@ export const RealEstateFormModal: FC<LocationModalProps> = ({ disabled, }) => {
 
     return (
         <>
-            <i style={{ color: '#1FAEEF', fontSize: 16 }} className="fa fa-pencil" aria-hidden="true" onClick={open}></i>
+            <span className="input-group-text" onClick={open}>
+                #
+            </span>
             <Modal
                 footer={
                     [
@@ -159,6 +193,8 @@ export const RealEstateFormModal: FC<LocationModalProps> = ({ disabled, }) => {
                                                         type="create"
                                                         formik={formik}
                                                         projects={projects}
+                                                        project={project}
+                                                        englobe={true}
                                                         onProjectSelectedChange={onProjectSelectedChange}
                                                     />
                                                 </div>
