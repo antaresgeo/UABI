@@ -22,6 +22,7 @@ interface RealEstateFormProps {
     realEstates?: IRealEstateAttributes[];
     projectId?: number;
     acquisitions?: any[];
+    inventory?: boolean;
 }
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
@@ -34,6 +35,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     onProjectSelectedChange,
     projectId,
     acquisitions,
+    inventory,
 }) => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -55,7 +57,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         },
         total_area: '',
         total_percentage: '',
-        zone: '',
+        zone: 'Urbano',
         tipology: '',
         materials: [],
         supports_documents: [
@@ -129,6 +131,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     });
 
     const submit = (aux_values, form) => {
+
         const isFinish = aux_values._type === 'finish';
         const values: any = { ...aux_values };
         delete values._type;
@@ -204,6 +207,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 formik={formik}
                                                 projects={projects}
                                                 project={project}
+                                                inventory={inventory}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
                                             <AdquisitionView
@@ -216,7 +220,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 <Card
                                                     title={
                                                         <>
-                                                            <b>Inmuebles del Proyecto: {}</b>
+                                                            <b>Inmuebles del Proyecto: { }</b>
                                                         </>
                                                     }
                                                 >
@@ -270,6 +274,18 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                         </button>
                                     </>
                                 )}
+                                {(inventory !== undefined && !(inventory)) &&
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                            formik.setFieldValue('_type', 'normal');
+                                            formik.submitForm();
+                                        }}
+                                    >
+                                        Confirmar y finalizar
+                                    </button>
+                                }
                             </div>
                         </div>
                     </Form>

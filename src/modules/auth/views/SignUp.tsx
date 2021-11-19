@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import loginimage from './../../../utils/assets/img/login.jpeg';
 import logo from './../../../utils/assets/img/escudoAlcaldia.png';
+import SignUpForm from '../components/SignUpForm';
 
 const Register = () => {
     const history = useHistory();
@@ -21,10 +22,10 @@ const Register = () => {
     const [email, setEmail] = React.useState('');
     // TIPO DE IDENTIFICACIONES
     const tiposidentificacion = [
-        { key: 'CC', value: 'CC', text: 'CEDULA DE CIUDADANIA' },
         { key: 'TI', value: 'TI', text: 'TARJETA IDENTIDAD' },
         { key: 'CE', value: 'CE', text: 'CEDULA EXTRANJERIA' },
         { key: 'TE', value: 'TE', text: 'TARJETA EXTRANGERIA' },
+        { key: 'CC', value: 'CC', text: 'CEDULA DE CIUDADANIA' },
         { key: 'NI', value: 'NI', text: 'NIT' },
         { key: 'PA', value: 'PA', text: 'PASAPORTE' },
         { key: 'TDE', value: 'TDE', text: 'TIPO DE DOCUMENTO EXTRANJERO' },
@@ -63,9 +64,19 @@ const Register = () => {
                         <Image className="image-container-login" src={loginimage} />
                     </Grid.Column>
                     <Grid.Column className="no-padding-right no-padding-left container-form-creacion-cuentas">
-                        <Form className="form-creacion-cuentas">
+                        <div className="form-creacion-cuentas">
+                            <div className="container-center">
+                                <img width="200" src={logo} />
+
+                            </div>
+                            <h5 className="sub-header-login">
+                                Registro de Usuario
+                            </h5>
+                            <SignUpForm />
+                        </div>
+                        {/* <Form className="form-creacion-cuentas">
                             <Form.Field className="container-center">
-                                <Image className="image-logo-container-login" src={logo} />
+                                <img width="240" src={logo} />
                             </Form.Field>
                             <Form.Field>
                                 <Header as="h2" className="sub-header-login">
@@ -109,7 +120,7 @@ const Register = () => {
                                             }
                                         }}
                                     />
-                                    {/* <Input onChange={(e) => setTipo_identificacion(e.target.value)} value={tipo_identificacion} /> */}
+                                    <Input onChange={(e) => setTipo_identificacion(e.target.value)} value={tipo_identificacion} />
                                 </Form.Field>
                                 <Form.Field>
                                     <label>identificacion</label>
@@ -142,7 +153,7 @@ const Register = () => {
                                     Registrar
                                 </Button>
                             </Form.Field>
-                        </Form>
+                        </Form> */}
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

@@ -1,5 +1,4 @@
 import { IRoute } from '../../utils/components/app_router/custom_types';
-import Registers from './views/Registers/Registers';
 // import store from './../../config/store';
 import EnglobeProject from './views/Projects/EnglobeProject';
 import DesenglobeProject from './views/Projects/DesenglobeProject';
@@ -16,6 +15,7 @@ import {
     Projects,
 } from './views';
 import { Permit } from '../..';
+import { TableAreas } from './components/en_des_globe/TableAreas';
 
 export const guards = {
     createProject: (props?) => {
@@ -181,16 +181,6 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/acquisitions/registers/',
-            template_props: {
-                breadcrumbs: [{ name: 'Registros' }],
-            },
-            component: Registers,
-        },
-        {
-            exact: true,
-            is_private: true,
-            can_access: true,
             path: '/acquisitions/projects/englobar/:id/',
             template_props: {
                 breadcrumbs: [
@@ -212,6 +202,18 @@ const get_routes = (): IRoute[] => {
                 ],
             },
             component: DesenglobeProject,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/englobar/realEstates/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Desenglobar proyecto' },
+                ],
+            },
+            component: TableAreas,
         },
     ];
 };

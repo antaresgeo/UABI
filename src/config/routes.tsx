@@ -8,6 +8,8 @@ import { routes as homeRoutes } from '../modules/home';
 import { routes as notificationRoutes } from '../modules/notificacions';
 import { routes as usersRoutes } from '../modules/users';
 import { routes as occupationRoutes } from '../modules/inspection';
+import { routes as InventoryRecordRoutes } from '../modules/Inventory_record';
+
 
 
 const useRoutes = (props = null): IRoute[] => {
@@ -18,7 +20,8 @@ const useRoutes = (props = null): IRoute[] => {
         asegurabilidadRoutes,
         notificationRoutes,
         usersRoutes,
-        occupationRoutes
+        occupationRoutes,
+        InventoryRecordRoutes,
     ]);
 };
 

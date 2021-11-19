@@ -6,8 +6,8 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Card } from '../../../../utils/ui';
 import { actions } from '../../redux';
-import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
 import { getRealEstates } from '../../../acquisitions/redux/actions/realEstates';
+
 
 interface IParams {
     id: string;
@@ -18,36 +18,19 @@ const EditPolicy = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
-    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstates.value);
-    const policiesRealEstate: IPolicyAttributes[] = useSelector((states: any) => {
-        console.log(states)
-        return states.insurability.policies.value
-    });
+    const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
 
-    //console.log("@policiesRealState",policiesRealEstate)
-    // console.log(policiesRealEstate[policiesRealEstate?.length -1])
     useEffect(() => {
-        dispatch(getRealEstates({}));
-        dispatch(actions.getPolicy((policiesRealEstate?.length - 1).toString()));
-        dispatch(actions.policiesRealEstate(parseInt(id)))
+        dispatch(actions.get_list_companies());
+        dispatch(actions.getPolicy(id));
+
     }, []);
 
     const _updatePolicy = async (policyForm) => {
-        let idPolicy = parseInt(policyForm.id);
-        const data = {
-            ...policyForm
-        }
-        delete data.id;
-        console.log(data, idPolicy);
+        console.log(policyForm);
         let res: any;
-        res = await dispatch(actions.updatePolicy( data ,idPolicy ));
-        //await swal('Proyecto actualizado', res.data.message, 'success');
-        //history.push(`/insurabilities/policy`);
+        res = await dispatch(actions.updatePolicy(policyForm, id ));
     };
-
-    useEffect(() => {
-        dispatch(actions.getPolicy(id));
-    }, []);
 
     return (
         <div className="h-100 d-flex flex-column">
@@ -60,7 +43,8 @@ const EditPolicy = () => {
                     >
                         <PolizaForm
                             type='edit'
-                            policy={policiesRealEstate[0]}
+                            policy={policy}
+                            companies={insurance_companies}
                             onSubmit={(values) => {
                                 return _updatePolicy(values);
                             }}

@@ -22,10 +22,10 @@ const EnglobeProject = () => {
     useEffect(() => {
         dispatch(actions.getProjects());
         if (project_id) {
-            console.log(project_id);
-            dispatch(actions.getRealEstatesByProject(project_id));
+            dispatch(actions.getRealEstatesByProject(Number(project_id)));
         }
-    }, []);
+    }, [id]);
+    const registration_number = realEstates.map(realEstate => realEstate.registry_number);
     const createRealEstate = async (values, form, isFinish) => {
         try {
             const res: any = await dispatch(actions.createRealEstate(values));

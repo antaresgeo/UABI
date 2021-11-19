@@ -48,17 +48,16 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                     )}
 
                     <Field
-                        disabled={disabled}
+                        //disabled={disabled}
                         allowClear
                         className="w-100"
                         name="bi"
                         id="bi"
-                        mode="multiple"
                         optionLabelProp="label"
                         component={Select}
-                        options={realEstates}
+                        options={realEstates.map(realestate => ({id: realestate.id, name: realestate.registry_number}))}
+                        mode="multiple"
                         defaultValue={realEstates.length === 1 ? [realEstates[0]] : []}
-                        validate={onProjectSelectedChange}
                     />
 
                     <span className="form-error">

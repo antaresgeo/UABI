@@ -17,7 +17,7 @@ interface RealEstateFormProps {
     projects: IProjectAttributes[];
     type: 'desenglobar' | 'englobar';
     onProjectSelectedChange?: (value) => void;
-    realEstates?: IRealEstateAttributes[];
+    realEstates?: any;
     projectId?: number;
 }
 

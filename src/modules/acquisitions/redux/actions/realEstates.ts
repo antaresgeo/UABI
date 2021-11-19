@@ -13,11 +13,14 @@ export const getRealEstates = (filters: {
     return request_dispatch(types.realEstates, service.getRealEstates(filters));
 };
 
-export const getRealEstatesByProject = (id) =>
-    request_dispatch(
+export const getRealEstatesByProject = (id) =>{
+    return request_dispatch(
         types.realEstates,
         service.getRealEstatesByProject(id)
     );
+
+}
+
 
 export const getRealEstate = (id: string) =>
     request_dispatch(types.realEstate, service.getRealEstate(id));

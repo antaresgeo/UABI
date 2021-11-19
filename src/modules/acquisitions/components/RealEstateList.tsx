@@ -109,7 +109,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
                     render: (id) => {
                         return (
                             <Link
-                                to={`/acquisitions/real-estates/${id}/`}
+                                to={register ? `/InventoryRecord/real-estates/${id}/` : `/acquisitions/real-estates/${id}/` }
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-eye" aria-hidden="true" />}
