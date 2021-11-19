@@ -209,6 +209,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 project={project}
                                                 inventory={inventory}
                                                 onProjectSelectedChange={onProjectSelectedChange}
+
                                             />
                                             <AdquisitionView
                                                 type={type}

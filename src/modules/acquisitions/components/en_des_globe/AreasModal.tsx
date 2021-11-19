@@ -16,8 +16,8 @@ interface AreaModalProps {
 
 }
 
-export const AreasModal: FC<AreaModalProps> = ({ disabled,open,setOpen,project   }) => {
-
+export const AreasModal: FC<AreaModalProps> = ({ disabled,open,setOpen,project, action}) => {
+    console.log(action)
     const ref = useRef(null);
     const _open = () => {
         ref.current?.resetForm();
@@ -25,8 +25,8 @@ export const AreasModal: FC<AreaModalProps> = ({ disabled,open,setOpen,project  
     };
     const close = () => setOpen(false);
     return (
-        <Modal title="Bienes Inmuebles del proyecto" centered visible={open} footer={null} width={700} onCancel={close}>
-            <TablaGlobe />
+        <Modal title={`Proyecto ${project?.name} ${action} `} centered visible={open} footer={null} width={700} onCancel={close}>
+            <TablaGlobe action={action} />
         </Modal>
 
     )

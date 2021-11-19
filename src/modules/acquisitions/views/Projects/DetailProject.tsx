@@ -76,7 +76,7 @@ const DetailProject = () => {
                     setAction(a)
                     set_is_visible_area(true)
                 }}/>
-                <AreasModal open={is_visibleArea} setOpen={set_is_visible_area} project={project?.id} action={action}/>
+                <AreasModal open={is_visibleArea} setOpen={set_is_visible_area} project={project} action={action}/>
             </div>
         </div>
     );

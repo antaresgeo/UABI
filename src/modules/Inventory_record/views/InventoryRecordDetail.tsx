@@ -25,7 +25,7 @@ export const InventoryRecordDetail = () => {
         if (id) {
             const promise: any = dispatch(actions.getRealEstate(id));
             promise.then((res) => {
-                select_project(res.projects.id);
+                select_project(res.project.id);
                 service.getAcquisitionForRealEstate(id).then((res2) => {
                     set_acquisitions(res2);
                 });
