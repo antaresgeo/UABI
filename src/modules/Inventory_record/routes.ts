@@ -9,7 +9,7 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/InventoryRecordList',
+            path: '/inventoryrecordlist',
             template_props: {
                 breadcrumbs: [{ name: 'Registros de inventario' }],
             },
@@ -19,7 +19,7 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/InventoryRecord/real-estates/:id/',
+            path: '/inventoryrecord/real-estates/:id/',
             template_props: {
                 breadcrumbs: [
                     {

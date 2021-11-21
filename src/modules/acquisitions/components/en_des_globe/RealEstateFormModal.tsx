@@ -10,15 +10,20 @@ import GeneralDataForm from '../RealEstateForm/GeneralDataForm';
 import { Formik, Form } from 'formik';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
+import { swal_warning } from '../../../../utils';
 
 interface RealEstateModalProps {
     disabled?: boolean;
     realEstateData?: any;
+    position?: any;
+    arrayRealEstates?: any;
+    onSubmit: (values, actions?) => Promise<any>;
 }
 
-export const RealEstateFormModal: FC<RealEstateModalProps> = ({ disabled,realEstateData }) => {
+export const RealEstateFormModal: FC<RealEstateModalProps> = ({ disabled, realEstateData, position, arrayRealEstates,onSubmit }) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
-    console.log('valores', is_visible,realEstateData)
+    //console.log('valores', is_visible,realEstateData)
+    //console.log(arrayRealEstates)
     const open = () => {
         ref.current?.resetForm();
         !disabled && set_is_visible(true)
@@ -28,7 +33,7 @@ export const RealEstateFormModal: FC<RealEstateModalProps> = ({ disabled,realEst
     const history: any = useHistory();
     const dispatch = useDispatch();
     const ref = useRef<any>();
-    const [project_id, set_project_id] = useState(history.location.state?.project_id || 0);
+    const [project_id, set_project_id] = useState(0);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
     const [project, set_project] = useState(null);
@@ -62,9 +67,30 @@ export const RealEstateFormModal: FC<RealEstateModalProps> = ({ disabled,realEst
 
 
     const submit = (values, actions) => {
-        console.log(values);
+        const doc: any =  compute_doc_enrollment(values.document);
+        onSubmit(values, position).then(() => {
+            actions.setSubmitting(false);
+            console.log(values)
+            close();
+            //actions.resetForm();
+        });
 
     }
+
+    const compute_doc_enrollment = async (document) => {
+        console.log(document)
+        if (document.hasOwnProperty('pdf') && document.pdf) {
+            return document;
+        } else {
+            console.log("documento requerdido")
+            await swal_warning.fire(
+                {
+                    title: "el documento es obligatorio", text: "El documento de Matrícula es obligatorio"
+                }
+            )
+            return Promise.reject();
+        }
+    };
     let initial_values: any = {
         id: '',
         sap_id: '',
@@ -86,28 +112,22 @@ export const RealEstateFormModal: FC<RealEstateModalProps> = ({ disabled,realEst
         zone: 'Urbano',
         tipology: '',
         materials: [],
-        supports_documents: [
+        document:
             {
                 label: 'Documento de Matricula',
                 type: 3,
             },
-            {
-                label: 'Documento de Titulo',
-                type: 4,
-            },
-        ],
         active_type: 'Lote',
-        project_id: Number.isInteger(project_id) ? project_id : 0,
+        project_id: 0,
         status: 0,
         audit_trail: null,
         acquisitions: [],
         active_code: '',
-        _type: null,
         dependency: '',
         subdependency: '',
         management_center: '',
-        cost_center: ''
-        //...realEstate,
+        cost_center: '',
+        ...realEstateData,
     };
 
     if (project && project.id !== 0) {
@@ -123,8 +143,8 @@ export const RealEstateFormModal: FC<RealEstateModalProps> = ({ disabled,realEst
     const schema = Yup.object().shape({
         destination_type: Yup.string().required('Campo obligatorio'),
         // accounting_account: Yup.string(),
-        registry_number: Yup.string().required('Campo obligatorio').max(20, 'El maximo 20 es caracteres'),
-        name: Yup.string().required('Campo obligatorio'),
+        registry_number: Yup.string().required('obligatorio').max(20, 'El maximo 20 es caracteres'),
+        name: Yup.string().required('obligatorio'),
         description: Yup.string().required('Campo obligatorio'),
         patrimonial_value: Yup.number()
             .required('Campo obligatorio')
@@ -142,22 +162,22 @@ export const RealEstateFormModal: FC<RealEstateModalProps> = ({ disabled,realEst
         zone: Yup.string().required('Campo obligatorio'),
         tipology: Yup.string().required('Campo obligatorio'),
         project_id: Yup.number().required('Campo obligatorio'),
-        acquisitions: Yup.array(),
+        //acquisitions: Yup.array(),
     });
 
 
     return (
         <>
-            <span className="input-group-text" onClick={open}>
-                #
-            </span>
+            <i className="fa fa-pencil" aria-hidden="true" onClick={open} style={{color: "#1FAEEF", fontSize: 16}}/>
             <Modal
                 footer={
                     [
                         <button
                             type="submit"
                             className="btn btn-primary my-3"
-                            onClick={() => ref.current?.submitForm()}
+                            onClick={() => {
+                                ref.current?.submitForm();
+                            }}
                         >
                             Guardar
                         </button>
@@ -170,18 +190,8 @@ export const RealEstateFormModal: FC<RealEstateModalProps> = ({ disabled,realEst
                 onCancel={close}
             >
                 {/* <DataRealEstateForm formik={''} projects={[]} /> */}
-                <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} innerRef={ref} >
+                <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} innerRef={ref} validationSchema={schema} >
                     {(formik) => {
-                        const { name, registry_number, project_id } = formik.values;
-                        const TitleSpan = ({ name, registry_number }) => {
-                            return (
-                                <>
-                                    {name ? ': ' : ''}
-                                    <span>{name}</span> {registry_number ? '-' : ''} <span>{registry_number}</span>
-                                </>
-                            );
-                        };
-
                         return (
                             <Form className="h-100" autoComplete="off">
                                 <div className="h-100 d-flex flex-column">

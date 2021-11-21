@@ -15,6 +15,8 @@ export interface IUserAttributes {
     gender: string;
     id_rol?: number;
     permits?: [{ id_permit: string, name_permit: number }];
+    dependency: string;
+    subdependency: string;
     audit_trail?: IAuditTrail;
     status?: number;
 }

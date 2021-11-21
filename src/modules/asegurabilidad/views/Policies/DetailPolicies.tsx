@@ -10,6 +10,7 @@ import PolizaForm from '../../components/PolizaForm';
 import { useHistory } from 'react-router-dom';
 import { getRealEstate } from './../../../acquisitions/redux/actions/realEstates';
 import { LinkButton } from '../../../../utils/ui/link';
+import RealEstateList from '../../../acquisitions/components/RealEstateList';
 
 interface IParams {
     id: string;
@@ -104,6 +105,11 @@ const DetailInsurability = () => {
                                         return getPolicy(values);
                                     }}
                                 />
+                            </Card>
+                            <Card
+                                title="Bienes Inmuebles de la póliza"
+                            >
+                                <RealEstateList  />
                             </Card>
                         </div>
 
