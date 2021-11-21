@@ -227,13 +227,13 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     </label>
                     <Field
                         disabled
-                        name="active_code"
-                        id="active_code_id"
+                        name="sap_id"
+                        id="sap_id_id"
                         type="text"
                         className="form-control"
                         autoComplete="off"
                     />
-                    <ErrorMessage name="active_code" />
+                    <ErrorMessage name="sap_id" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="destination_type_id" className="form-label">
@@ -464,15 +464,15 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 <div className="row">
                     <div className="col-8">
                         <label htmlFor="form-select" className="form-label">
-                            Adjuntar Póliza
+                            Adjuntar Matrícula
                         </label>
                         <Field
-                            name="supports_documents"
+                            name="document"
                             component={DocumentModal}
                             btn_label="Adjuntar"
 
                         />
-                        <ErrorMessage name="supports_documents" />
+                        <ErrorMessage name="document" />
                     </div>
                 </div>
             }

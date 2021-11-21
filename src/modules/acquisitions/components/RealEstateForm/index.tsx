@@ -70,7 +70,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 type: 4,
             },
         ],
-        active_type: 'Lote',
+        active_type: ['Lote'],
         project_id: Number.isInteger(projectId) ? projectId : 0,
         status: 0,
         audit_trail: null,

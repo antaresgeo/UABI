@@ -1,40 +1,40 @@
 import { FC, useState, useEffect } from 'react';
 import Modal from 'antd/lib/modal/Modal';
 import { IProjectAttributes } from './../../../utils/interfaces/projects';
-import { useSelector, useDispatch } from 'react-redux';
-import { actions } from '../redux';
-import { useParams } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import { TablaGlobe } from './en_des_globe/TablaGlobe';
-import { AreasModal } from './en_des_globe/AreasModal';
+import { useSelector } from 'react-redux';
+import { swal_warning } from '../../../utils';
 
-interface IParams {
-    id: string;
-}
+
 interface LocationModalProps {
     onSave?: (values) => Promise<any>;
     disabled?: boolean;
-    view?: string;
-    zone?: string;
     openArea: any;
+    realEstates?: any;
 }
 
-const ProjectModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone, openArea }) => {
-    const dispatch = useDispatch();
-    const { id } = useParams<IParams>();
-    const history = useHistory();
-    console.log(history);
+const ProjectModal: FC<LocationModalProps> = ({ onSave, disabled, openArea, realEstates }) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
     const open = () => !disabled && set_is_visible(true);
     const close = () => set_is_visible(false);
     const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
     useEffect(() => {
-        dispatch(actions.getProject(id));
+        //dispatch(actions.getProject(id));
     }, []);
 
     return (
         <>
-            <button type="button" className="btn btn-primary" onClick={open}>
+            <button type="button" className="btn btn-primary" onClick={()=> {
+                if(realEstates.length > 0){
+                    open();
+                }else{
+                    swal_warning.fire(
+                        {
+                            title: "No se puede realizar esta acción", text: `el proyecto no tiene bienes Inmuebles relacionados`
+                        }
+                    )
+                }
+            }}
+            >
                 Finalizar Proyecto
             </button>
 
@@ -42,8 +42,17 @@ const ProjectModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone, op
                 footer={[
 
                     <button type="submit" className="btn btn-outline-primary " key="1" onClick={()=> {
-                        openArea('englobar');
-                        close();
+                        if(realEstates.length === 1){
+                            swal_warning.fire(
+                                {
+                                    title: "No se puede realizar esta acción", text: `el proyecto solo tiene un bien inmueble relacionado`
+                                }
+                            )
+                        }else {
+                            openArea('englobar');
+                            close();
+                        }
+
                     }}>
                         Englobar
                     </button>,

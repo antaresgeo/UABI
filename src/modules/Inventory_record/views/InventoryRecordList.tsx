@@ -13,8 +13,7 @@ import RealEstateList from '../../acquisitions/components/RealEstateList';
 const InventoryRecordList = () => {
     const dispatch = useDispatch();
     const [table, setTable] = useState(false);
-    const registers: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
-    //const { total_results } = useSelector((store: any) => store.acquisitions.realEstates.pagination);
+    const [realEstateFilter, setRealEstateFilter] = useState([])
 
     const [query, set_query] = useState({
         enrollment: ''
@@ -23,7 +22,6 @@ const InventoryRecordList = () => {
     });
 
     const { enrollment } = query;
-    // const [page_size, set_pageSize] = useState<number>(10);
 
     useEffect(() => {
         dispatch(getRealEstates({}));
@@ -36,27 +34,27 @@ const InventoryRecordList = () => {
         });
     };
 
-    const filter = () => {
+    const filter = async () => {
+        console.log(enrollment);
+        const resultado: any = await dispatch(getRealEstates({ page: 1, q: enrollment }));
+        setRealEstateFilter(resultado.results)
         setTable(true);
-        //dispatch(getRealEstates({ page: 1, q: query }));
     };
 
-    // const change_page = (page, pageSize) => {
-    //     dispatch(getRealEstates({ page, pageSize, q: query }));
-    // };
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card>
                         <div className="row justify-content-center">
-                            <div className="col" style={{ marginLeft: '200px'}}>
+                            <div className="col" style={{ marginLeft: '300px'}}>
                                 <div className="input-group" >
                                     <input
-                                        type="text"
+                                        type="number"
                                         className="form-control form-control-lg"
                                         placeholder="Matricula"
                                         aria-label="Matricula"
+                                        name="enrollment"
                                         value={enrollment}
                                         onChange={handleInputChange}
                                     />
@@ -102,7 +100,7 @@ const InventoryRecordList = () => {
                             extra={<Link to="/acquisitions/real-estates/create" name="Crear" iconText="+" />}
                         >
                             <form></form>
-                            <RealEstateList withProject filters={enrollment} register />
+                            <RealEstateList withProject filters={enrollment} register realEstateFilter={realEstateFilter} />
                         </Card>
 
                     }

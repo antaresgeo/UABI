@@ -51,7 +51,6 @@ const CompressTable: FC<CompressTableProps> = ({
 }) => {
     items = Array.isArray(items) ? items : [];
     const data = items?.map((item, i) => ({ ...item, key: `compress_table_${i}` }));
-    console.log(data);
     const ops = {
         columns: columns,
         dataSource: data,

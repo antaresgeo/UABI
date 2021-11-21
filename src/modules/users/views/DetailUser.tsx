@@ -35,7 +35,7 @@ const DetailUser = () => {
                         <div className="col-md-12">
                             <Card title="información Usuario">
                                 <GeneralForm
-                                    type="create"
+                                    type="view"
                                     disabled
                                     onSubmit={(values) => {
                                         return getUser(values);
