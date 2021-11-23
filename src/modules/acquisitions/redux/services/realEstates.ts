@@ -52,7 +52,6 @@ export const getRealEstatesByProject = async (
                     params: { id },
                 });
             return res.data;
-
         } catch (error) {
             console.error(error);
             return Promise.reject('Error');
@@ -103,29 +102,35 @@ const get_docucments_whit_service = async (docs) => {
     }
 };
 
-
-
 // Services: POST
 export const createRealEstate = async (
     data: any
 ): Promise<IRealEstateAttributes | string> => {
     try {
         let URI = `/real-estates`;
-        const docs: any = await compute_docs(data.supports_documents);
-        const docs_ids = await upload_documents(docs);
+        // const docs: any = await compute_docs(data.supports_documents);
+        // const docs_ids = await upload_documents(docs);
+
         const aux_data = {
             ...data,
-            accounting_account: '0000',
-            projects_id: data.project_id,
-            supports_documents: docs_ids,
+            supports_documents: '',
         };
         delete aux_data.id;
-        delete aux_data.project_id;
-        delete aux_data.active_code;
         delete aux_data.status;
         delete aux_data.acquisitions;
         delete aux_data.audit_trail;
         delete aux_data.registry_number_document_id;
+        delete aux_data.project_id;
+        delete aux_data.sap_id;
+        delete aux_data.active_code;
+        delete aux_data.fixed_assets;
+
+        if (aux_data.project?.id !== 0) {
+            delete aux_data.dependency;
+            delete aux_data.subdependency;
+            delete aux_data.cost_center;
+            delete aux_data.management_center;
+        }
 
         let res: AxiosResponse<IRealEstateResponse> = await http.post(
             URI,
@@ -145,6 +150,7 @@ export const updateRealEstate = async (data: any, id: number) => {
         let URI = `/real-estates`;
         const docs: any = await compute_docs(data.supports_documents);
         const docs_ids = await upload_documents(docs);
+
         const aux_data = { ...data, supports_documents: docs_ids };
         delete aux_data.id;
         delete aux_data.status;
@@ -152,17 +158,17 @@ export const updateRealEstate = async (data: any, id: number) => {
         delete aux_data.audit_trail;
         delete aux_data.registry_number_document_id;
         delete aux_data.reconstruction_value;
-
         delete aux_data.project_id;
+        delete aux_data.sap_id;
         delete aux_data.active_code;
-        if (aux_data.projects.id !== 0) {
+        delete aux_data.fixed_assets;
+
+        if (aux_data.project?.id !== 0) {
             delete aux_data.dependency;
             delete aux_data.subdependency;
             delete aux_data.cost_center;
             delete aux_data.management_center;
         }
-        delete aux_data.sap_id;
-        // delete aux_data.supports_documents
 
         let res: AxiosResponse<IRealEstateResponse> = await http.put(
             URI,
@@ -185,6 +191,7 @@ export const updateRealEstate = async (data: any, id: number) => {
         );
         return res.data.results;
     } catch (error) {
+        console.log('error', { ...error });
         return Promise.reject('Error');
     }
 };
@@ -268,7 +275,7 @@ const createAcquisitionForRealEstate = async (
         let res: AxiosResponse = await http.post(
             URI,
             {
-                data: acquisitions,
+                data: acquisitions.filter((a: any) => !a.hasOwnProperty('id')),
             },
             {
                 params: {

@@ -12,30 +12,31 @@ import { EditRoles } from './views/roles/EditRoles';
 
 export const guards = {
     view: (props?) => {
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = props.user
         if (!user) return false;
-        return user.role === Role.ADMINISTRATOR;
+        return user.roles.includes(Role.ADMINISTRATOR);
     },
     create: (props?) => {
-        const user = JSON.parse(localStorage.getItem('user'));
+        console.log(props)
+        const user = props.user
         if (!user) return false;
-        return user.role === Role.ADMINISTRATOR;
+        return user.roles.includes(Role.ADMINISTRATOR);
     },
     detail: (props?) => {
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = props.user
         if (!user) return false;
-        return user.role === Role.ADMINISTRATOR;
+        return user.roles.includes(Role.ADMINISTRATOR);
         // return false;
     },
     edit: (props?) => {
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = props.user
         if (!user) return false;
-        return user.role === Role.ADMINISTRATOR;
+        return user.roles.includes(Role.ADMINISTRATOR);
     },
     delete: (props?) => {
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = props.user
         if (!user) return false;
-        return user.role === Role.ADMINISTRATOR;
+        return user.roles.includes(Role.ADMINISTRATOR);
     },
 };
 

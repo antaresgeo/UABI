@@ -29,6 +29,7 @@ const RealEstate = () => {
                     actions.createAcquisitionForRealEstate(
                         values.acquisitions.map((a) => {
                             a.real_estate_id = res.id;
+                            delete a.city_name;
                             return a;
                         })
                     )

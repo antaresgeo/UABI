@@ -3,7 +3,7 @@ import { BrowserRouter, Switch } from 'react-router-dom';
 import Route from './RouteWithSubRoutes';
 import { IAppRouter } from './custom_types';
 
-const AppRouter: React.FC<IAppRouter> = ({ routes, defaultRedirect, privateRedirect, lazy, template }) => {
+const AppRouter: React.FC<IAppRouter> = ({ routes, defaultRedirect, privateRedirect, lazy, template, user }) => {
     return (
         <BrowserRouter>
             <Switch>
@@ -17,6 +17,11 @@ const AppRouter: React.FC<IAppRouter> = ({ routes, defaultRedirect, privateRedir
                             {...route}
                             lazy={lazy}
                             template={template}
+                            user={{
+                                ...user,
+                                permits: user?.permits.map((a) => a.name) || [],
+                                roles: user?.roles.map((a) => a.name) || [],
+                            }}
                         />
                     );
                 })}

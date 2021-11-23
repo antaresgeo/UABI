@@ -5,7 +5,7 @@ import Badge from 'antd/lib/badge';
 import { DropdownNotification } from '../../../modules/notificacions/views/DropdownNotification';
 import Dropdown from 'antd/lib/dropdown';
 
-const Header: FC<{ collapsible: boolean }> = ({ collapsible }) => {
+const Header: FC<{ collapsible: boolean; name: string }> = ({ collapsible, name }) => {
     const context = useContext(TemplateContext);
     return (
         <div className="bar">
@@ -19,7 +19,7 @@ const Header: FC<{ collapsible: boolean }> = ({ collapsible }) => {
                 </span>
                 <span className="d-flex align-items-center">
                     <span>
-                        Hola, <b>Administrador</b>
+                        Hola, <b>{name}</b>
                     </span>
                     <Dropdown overlay={<DropdownNotification />}>
                         <Badge

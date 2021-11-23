@@ -128,8 +128,8 @@ const RoleForm: FC<IUserFormPros> = ({ disabled, user, type,role,onSubmit }) => 
                                         Selecciona un rol
                                     </option>
                                     <option value="2">Supervisor</option>
-                                    <option value="3">Adquisiciones</option>
-                                    <option value="4">UABI</option>
+                                    <option value="3">Adquisiciónes</option>
+                                    <option value="4">SABI</option>
                                     <option value="5">Asegurabilidad</option>
                                     <option value="6">Inspección</option>
                                     <option value="7">Disposición</option>

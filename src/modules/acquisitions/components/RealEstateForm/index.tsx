@@ -39,11 +39,12 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
 }) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const [project, set_project] = useState(null);
     let initial_values: any = {
         id: '',
         sap_id: '',
         destination_type: '',
-        accounting_account: '0000',
+        accounting_account: 0,
         registry_number: '',
         registry_number_document_id: '',
         name: '',
@@ -70,11 +71,9 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 type: 4,
             },
         ],
-        active_type: 'Lote',
-        project_id: Number.isInteger(projectId) ? projectId : 0,
+        active_type: ['Lote'],
         status: 0,
         audit_trail: null,
-        acquisitions: acquisitions || [],
         active_code: '',
         _type: null,
         dependency: '',
@@ -82,6 +81,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         management_center: '',
         cost_center: '',
         ...realEstate,
+        acquisitions: acquisitions || [],
+        project_id: Number.isInteger(projectId) ? projectId : 0,
     };
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
@@ -102,7 +103,11 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     }
 
     if (!initial_values.address.cbml) {
-        initial_values.address.cbml = ""
+        initial_values.address.cbml = '';
+    }
+
+    if (!initial_values.project && project) {
+        initial_values.project = { id: project.id, name: project.name };
     }
 
     const schema = Yup.object().shape({
@@ -131,7 +136,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     });
 
     const submit = (aux_values, form) => {
-
         const isFinish = aux_values._type === 'finish';
         const values: any = { ...aux_values };
         delete values._type;
@@ -140,13 +144,13 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         onSubmit(values, form, isFinish)
             .then(() => {
                 form.setSubmitting(false);
-                form.resetForm();
                 form.setFieldValue('project_id', projectId || '');
             })
-            .catch(() => form.setSubmitting(false));
+            .catch(() => {
+                form.setSubmitting(false);
+            });
     };
 
-    const [project, set_project] = useState(null);
     useEffect(() => {
         if (Number.isInteger(projectId)) {
             service.getProject(projectId + '').then((_project) => {
@@ -167,7 +171,9 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         };
     }
 
-    const _disabled =  disabled || type === 'view';
+    // console.log(initial_values);
+
+    const _disabled = disabled || type === 'view';
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
@@ -209,10 +215,10 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 project={project}
                                                 inventory={inventory}
                                                 onProjectSelectedChange={onProjectSelectedChange}
-
                                             />
                                             <AdquisitionView
                                                 type={type}
+                                                formik={formik}
                                                 disabled={_disabled}
                                                 acquisitions={formik.values.acquisitions}
                                             />
@@ -221,7 +227,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 <Card
                                                     title={
                                                         <>
-                                                            <b>Inmuebles del Proyecto: { }</b>
+                                                            <b>Inmuebles del Proyecto: {}</b>
                                                         </>
                                                     }
                                                 >
@@ -263,19 +269,21 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                         >
                                             Guardar y Finalizar
                                         </button>
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary"
-                                            onClick={() => {
-                                                formik.setFieldValue('_type', 'normal');
-                                                formik.submitForm();
-                                            }}
-                                        >
-                                            Guardar y Crear otro
-                                        </button>
+                                        {type === 'create' && (
+                                            <button
+                                                type="button"
+                                                className="btn btn-primary"
+                                                onClick={() => {
+                                                    formik.setFieldValue('_type', 'normal');
+                                                    formik.submitForm();
+                                                }}
+                                            >
+                                                Guardar y Crear otro
+                                            </button>
+                                        )}
                                     </>
                                 )}
-                                {(inventory !== undefined && !(inventory)) &&
+                                {inventory !== undefined && !inventory && (
                                     <button
                                         type="button"
                                         className="btn btn-primary"
@@ -286,7 +294,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                     >
                                         Confirmar y finalizar
                                     </button>
-                                }
+                                )}
                             </div>
                         </div>
                     </Form>
