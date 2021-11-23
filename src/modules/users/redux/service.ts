@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { http, auth_http } from '../../../config/axios_instances';
+import { auth_http } from '../../../config/axios_instances';
 import {
     IUserAttributes,
     IUserResponse,
@@ -18,7 +18,7 @@ import { IPermitAttributes, IPermitsResponse } from '../../../utils/interfaces/p
 const getUser = async (id: number): Promise<IUserAttributes | number> => {
     try {
         let URI = `/users`;
-        let res: AxiosResponse<IUserResponse> = await http.get(URI, {
+        let res: AxiosResponse<IUserResponse> = await auth_http.get(URI, {
             params: { id },
         });
         return res.data.results;
@@ -34,7 +34,7 @@ const getUsers = async ({
 }): Promise<IUserAttributes[] | string> => {
     try {
         let URI = `/users/list`;
-        let res: AxiosResponse<IUsersResponse> = await http.get(URI, {
+        let res: AxiosResponse<IUsersResponse> = await auth_http.get(URI, {
             params: {
                 page,
                 pageSize,
@@ -52,7 +52,7 @@ const createUser = async (data: any): Promise<IUserAttributes | string> => {
     try {
         console.log(data);
         let URI = `/users`;
-        let res: AxiosResponse<IUserResponse> = await http.post(URI, data);
+        let res: AxiosResponse<IUserResponse> = await auth_http.post(URI, data);
         await swal.fire('Usuario Creado', res.data.message, 'success');
         return res.data.results;
     } catch (error) {
@@ -66,7 +66,7 @@ const createUser = async (data: any): Promise<IUserAttributes | string> => {
 const updateUser = async (data: any, id: number) => {
     try {
         let URI = `/users`;
-        let res: AxiosResponse<IUserResponse> = await http.put(URI, data, {
+        let res: AxiosResponse<IUserResponse> = await auth_http.put(URI, data, {
             params: id,
         });
         return res;
@@ -79,7 +79,7 @@ const updateUser = async (data: any, id: number) => {
 const deleteUser = async (id: number) => {
     try {
         let URI = `users/delete`;
-        let res: AxiosResponse<IUserResponse> = await http.delete(URI, {
+        let res: AxiosResponse<IUserResponse> = await auth_http.delete(URI, {
             params: { id },
         });
         swal.fire({
@@ -116,7 +116,7 @@ const getRolesList = async ({
 }): Promise<IRolAttributes[] | string> => {
     try {
         let URI = `/roles/`;
-        let res: AxiosResponse<IRolesResponse> = await http.get(URI, {
+        let res: AxiosResponse<IRolesResponse> = await auth_http.get(URI, {
             params: {
                 page,
                 pageSize,

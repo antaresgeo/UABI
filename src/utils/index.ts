@@ -131,7 +131,7 @@ export const authenticationUme = () => {
     //usuario
 
     // let user = ConfigEnv.UME_USER;
-    let user = 'USR_UABI_UME';
+    let user = 'USR_SABI_UME';
 
     let userBase64 = base64encode(user).toString();
 
@@ -212,4 +212,29 @@ export const is_empty = (obj) =>
     Object.keys(obj).length === 0 &&
     Object.getPrototypeOf(obj) === Object.prototype;
 
-// export const regex_number_positive_with_decimals = /^[+]?\d{0,3}(?:\.\d*)?$/;
+export const decodeJWT = (token: string) => {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(
+        atob(base64)
+            .split('')
+            .map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join('')
+    );
+
+    return JSON.parse(jsonPayload);
+};
+
+export const base64Encode = async (string: string) => {
+    let tmp: any;
+    try {
+        const buff = await Buffer.from(string, 'utf-8');
+        tmp = await buff.toString('base64');
+    } catch (error) {
+        console.log({...error})
+        tmp = Promise.reject('Error');
+    }
+    return tmp;
+};

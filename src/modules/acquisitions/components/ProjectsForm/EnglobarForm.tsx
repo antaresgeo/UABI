@@ -432,9 +432,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                     />
                     <div className="row">
                         <div className="col">
-                            <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                <ErrorMessage name="description" />
-                            </span>
+                            <ErrorMessage name="description" />
                         </div>
                         <div className="col">
                             <span className="text-end d-block w-100 mt-1" style={{ height: '22px', color: '#F28C02' }}>

@@ -10,6 +10,7 @@ interface AcquisitionModalProps {
     btn_label?: any;
     onChange: (data, i) => Promise<any>;
     acquisition?: any;
+    active_type?: string[];
 }
 
 const AcquisitionModal: FC<AcquisitionModalProps> = ({
@@ -18,13 +19,15 @@ const AcquisitionModal: FC<AcquisitionModalProps> = ({
     btn_label,
     onChange,
     acquisition,
+    active_type,
     type,
 }) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
     const form_ref = useRef<any>();
-    const title = modal_name ? modal_name : 'Agregar Adquisicion';
+    const title = modal_name ? modal_name : 'Agregar Adquisición';
     const close = () => {
         set_is_visible(false);
+        // form_ref.current?.resetForm();
     };
 
     const open = () => {
@@ -79,6 +82,7 @@ const AcquisitionModal: FC<AcquisitionModalProps> = ({
                 <AcquisitionsFrom
                     innerRef={form_ref}
                     acquisition={acquisition}
+                    active_type={active_type}
                     onChange={(v, f) => {
                         return onChange(v, f).then(() => {
                             close();

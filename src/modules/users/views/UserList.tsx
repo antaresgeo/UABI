@@ -10,8 +10,9 @@ interface UserListProps {
     users: IUserAttributes[];
     change_page?: (page: number, pageSize?: number) => void;
     total?: number;
+    user: any
 }
-const UserList: FC<UserListProps> = ({ users, change_page, total }) => {
+const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
     const dispatch = useDispatch();
     const deleteUser = (id) => async () => {
         const result = await swal.fire({
@@ -111,13 +112,13 @@ const UserList: FC<UserListProps> = ({ users, change_page, total }) => {
         },
     ];
 
-    if (guards.detail()) {
+    if (guards.detail({ user})) {
         table_columns[5].children[0] = ver;
     }
-    if (guards.edit()) {
+    if (guards.edit({ user})) {
         table_columns[5].children[1] = editar;
     }
-    if (guards.delete()) {
+    if (guards.delete({ user})) {
         table_columns[5].children[2] = eliminar;
     }
 

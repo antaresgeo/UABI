@@ -12,26 +12,30 @@ interface AcquisitionsFromProps {
     type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
     acquisition?: AdquisitionsItf;
+    active_type?: string[];
     onChange: (values, count) => Promise<any>;
 }
 
-const active_type = ['Lote', 'Mejora', 'Construccion', 'Construccion para demoler', 'Mejora para demoler'];
-
-const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisition, onChange, innerRef }) => {
+const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
+    type,
+    disabled,
+    acquisition,
+    onChange,
+    innerRef,
+    active_type,
+}) => {
     const initial_values = {
         acquisition_type: '',
-        construction_area: 0,
-        active_type: [],
+        construction_area: '',
         title_type: '',
         act_number: '',
-        act_value: 0,
-        plot_area: 0,
-        acquired_percentage: 0,
+        act_value: '',
+        plot_area: '',
+        acquired_percentage: '',
         origin: '',
         entity_type: '',
         entity_number: '',
         city: '',
-        city_name: '',
         real_estate_id: '',
         ...acquisition,
     };
@@ -40,6 +44,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
 
     const submit = (values, form) => {
         form.setSubmitting(true);
+
         onChange(values, form).then(() => {
             form.setSubmitting(false);
             form.resetForm();
@@ -54,7 +59,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
             validationSchema={schema}
             innerRef={innerRef}
         >
-            {({ values, isValid, isSubmitting, setFieldValue, setValues }) => {
+            {({ values, setFieldValue }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -81,8 +86,6 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                                 </Field>
                                 <ErrorMessage name="acquisition_type" />
                             </div>
-                        </div>
-                        <div className="row">
                             <div className="col-3">
                                 <label htmlFor="title_type_id" className="form-label">
                                     Tipo de Título
@@ -112,14 +115,16 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                                         <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
                                     </Tooltip>
                                 </label>
-                                <select className="form-select" aria-label="origin" id="origin_id" name="origin">
+                                <Field as="select" className="form-select" aria-label="origin" id="origin_id" name="origin">
                                     <option value="">-- Seleccione Procedencia --</option>
-                                    <option value={1}>Alexander</option>
-                                    <option value={2}>Sergio</option>
-                                    <option value={3}>Ximena</option>
-                                </select>
+                                    <option value="Alexander">Alexander</option>
+                                    <option value="Sergio">Sergio</option>
+                                    <option value="Ximena">Ximena</option>
+                                </Field>
                                 <ErrorMessage name="origin" />
                             </div>
+                        </div>
+                        <div className="row">
                             <div className="col-3">
                                 <label htmlFor="plot_area_id" className="form-label">
                                     Área Total del Lote
@@ -130,7 +135,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                                         className="form-control border-end-0"
                                         id="plot_area_id"
                                         name="plot_area"
-                                        disabled={!acquisition?.active_type?.includes('Lote')}
+                                        disabled={!active_type?.includes('Lote')}
                                         min={0}
                                     />
                                     <div className="input-group-prepend">
@@ -141,8 +146,6 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                                 </div>
                                 <ErrorMessage name="plot_area" />
                             </div>
-                        </div>
-                        <div className="row">
                             <div className="col-3">
                                 <label htmlFor="area_construccion_id" className="form-label">
                                     Área Construcción
@@ -156,9 +159,9 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                                         min={0}
                                         disabled={
                                             !(
-                                                acquisition?.active_type?.includes('Construccion') ||
-                                                acquisition?.active_type?.includes('Construccion para Mejora') ||
-                                                acquisition?.active_type?.includes('Construcción para demoler')
+                                                active_type?.includes('Construccion') ||
+                                                active_type?.includes('Construccion para Mejora') ||
+                                                active_type?.includes('Construcción para demoler')
                                             )
                                         }
                                     />
@@ -199,6 +202,8 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                                 </div>
                                 <ErrorMessage name="acquired_percentage" />
                             </div>
+                        </div>
+                        <div className="row">
                             <div className="col-3">
                                 <label htmlFor="entity_type_id" className="form-label">
                                     Tipo de Entidad
@@ -206,14 +211,9 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                                 <Field as="select" className="form-select" id="entity_type_id" name="entity_type">
                                     <option value="">-- Seleccione Tipo de Entidad --</option>
                                     <option value="Notaría">Notaría</option>
-                                    <option value="Sergio">Sergio</option>
-                                    <option value="Ximena">Ximena</option>
                                 </Field>
                                 <ErrorMessage name="entity_type" />
                             </div>
-                        </div>
-
-                        <div className="row">
                             <div className="col-3">
                                 <label htmlFor="entity_number_id" className="form-label">
                                     N° de entidad
@@ -232,8 +232,8 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                                     Ciudad
                                 </label>
                                 <div className="input-group">
-                                    <input
-                                        name="location"
+                                    <Field
+                                        name="city"
                                         id="address_id"
                                         type="text"
                                         className="form-control"
@@ -242,25 +242,28 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                                     <div className="input-group-prepend">
                                         <LocationModal
                                             disabled={disabled}
-                                            onSave={(_values) => {
-                                                console.log("LocationModal", _values)
-                                                setValues(
-                                                    {
-                                                        ...values,
-                                                        city: _values.city,
-                                                        city_name: _values.city_name,
-                                                    },
-                                                    false
-                                                );
-                                                return Promise.resolve();
+                                            onSave={async (_values) => {
+                                                setFieldValue('city', _values.city_name, false);
                                             }}
                                         />
                                     </div>
                                 </div>
 
-                                <ErrorMessage name="location" />
+                                <ErrorMessage name="city_name" />
                             </div>
-                            <div className="col-3" />
+                            <div className="col-3">
+                                <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">
+                                    Fecha de Adquisición
+                                </label>
+                                <Field
+                                    type="date"
+                                    id="vigency_start"
+                                    name="acquisition_date"
+                                    className="form-control"
+                                    disabled={disabled}
+                                />
+                                <ErrorMessage name="acquisition_date" />
+                            </div>
                         </div>
                     </Form>
                 );
@@ -272,58 +275,3 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
 AcquisitionsFrom.defaultProps = {};
 
 export default AcquisitionsFrom;
-
-/*
-<div className="col-9">
-                                <label htmlFor="form-select" className="form-label">
-                                    Tipo de activo
-                                </label>
-
-                                <CheckboxGroup
-                                    name="active_type"
-                                    value={acquisition?.active_type || []}
-                                    onChange={(data, ...args) => {
-                                        const data_now = [...acquisition?.active_type];
-                                        const diff = data
-                                            .filter((x) => !data_now.includes(x))
-                                            .concat(data_now.filter((x) => !data.includes(x)))[0];
-                                        const key = 'Lote';
-                                        let aux_data = [];
-                                        if (!data_now.includes(diff)) {
-                                            if (data_now.includes(key)) {
-                                                aux_data = [key, diff];
-                                            } else {
-                                                if (diff === key) {
-                                                    aux_data = [key, ...data_now];
-                                                } else {
-                                                    aux_data = [diff];
-                                                }
-                                            }
-                                        } else {
-                                            aux_data = [...data_now].filter((x) => x !== diff);
-                                        }
-                                        // set_acquisition({
-                                        //     ...acquisition,
-                                        //     active_type: data.length > 0 ? aux_data : [],
-                                        // });
-                                    }}
-                                >
-                                    {(Checkbox) => (
-                                        <>
-                                            {active_type.map((op, i) => (
-                                                <label
-                                                    key={`active_type_${i}`}
-                                                    className="d-inline-block me-3 align-middle"
-                                                >
-                                                    <Checkbox value={op} />
-                                                    <span className="ms-2" style={{ fontWeight: 500 }}>
-                                                        {op}
-                                                    </span>
-                                                </label>
-                                            ))}
-                                        </>
-                                    )}
-                                </CheckboxGroup>
-                                <ErrorMessage />
-                            </div>
-* */
