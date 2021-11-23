@@ -1,10 +1,12 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import LocationModal from '../../../utils/components/Location/LocationModal';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import ErrorMessage from '../../../utils/ui/error_messge';
+import dependencias from '../../acquisitions/dependencias';
+import Select from '../../../utils/ui/select';
 
 interface IUserFormPros {
     user?: IUserAttributes;
@@ -13,8 +15,9 @@ interface IUserFormPros {
     onSubmit: (values, actions?) => Promise<any>;
 }
 
-const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
+const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
     const history = useHistory();
+    const [subs, set_subs] = useState<any[]>([]);
     const initial_values: IUserAttributes = {
         id: 0,
         society_type: '',
@@ -28,6 +31,9 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
         cellphone_number: '',
         phone_number: '',
         gender: '',
+        dependency: '',
+        subdependency: '',
+        ...user
     };
 
     const schema = Yup.object().shape({
@@ -37,7 +43,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
         id_number: Yup.number().required('Campo obligatorio'),
         names: Yup.string().required('Campo obligatorio'),
         surnames: Yup.string().required('Campo obligatorio'),
-        email:  Yup.string().required('Campo obligatorio'),
+        email: Yup.string().required('Campo obligatorio'),
         cellphone_number: Yup.number().required('Campo obligatorio'),
         phone_number: Yup.number().required('Campo obligatorio'),
         gender: Yup.string().required('Campo obligatorio'),
@@ -55,9 +61,25 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
     };
     const hanleOnclick = () => {
     };
+
+    const format_list = (list) => { //cpopiar
+        if (list && Array.isArray(list)) {
+            let aux_list = [...list];
+            aux_list = aux_list.map((d: any) => ({
+                name: d.name,
+                id: d.name,
+            }));
+            if (aux_list.length > 0) {
+                return aux_list;
+            }
+        }
+        return [];
+    };
+
+    const dependency_ops = format_list(dependencias);
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
-            {({ values, isValid, isSubmitting }) => {
+            {({ values, isValid, isSubmitting, setFieldValue }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -104,6 +126,96 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                 <ErrorMessage name="entity_type" />
                             </div>
                             <div className="col-3">
+                                <label htmlFor="dependency_id" className="form-label">
+                                    Dependecia
+                                </label>
+                                <Field
+                                    component={Select}
+                                    name="dependency"
+                                    id="dependency_id"
+                                    disabled={disabled}
+                                    placeholder="Selecciona una Dependencia"
+                                    options={dependency_ops}
+                                    showSearch
+                                    extra_on_change={(value) => {
+                                        if (value) {
+                                            const dependency = dependencias.find((d) => d.name === value);
+                                            const _subs = format_list(dependency.subs);
+                                            setFieldValue('subdependency', dependency.name);
+                                            setFieldValue('cost_center', dependency.cost_center);
+                                            setFieldValue('management_center', dependency.management_center);
+                                            set_subs(_subs);
+                                        }
+                                    }}
+                                    filterOption={(input, option) => {
+                                        return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                    }}
+                                />
+                                <ErrorMessage name="dependency" />
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="subdependency_id" className="form-label">
+                                    Sub. Dependecia
+                                </label>
+                                <Field
+                                    component={Select}
+                                    name="subdependency"
+                                    id="subdependency_id"
+                                    disabled={disabled || !values.dependency || subs.length === 0}
+                                    placeholder="Selecciona una Sub. Dependencia"
+                                    options={subs}
+                                    showSearch
+                                    allowClear
+                                    extra_on_change={(value) => {
+                                        if (value) {
+                                            const dependency = dependencias.find((d) => d.name === values.dependency);
+                                            const subdependency = dependency.subs.find((d) => d.name === value);
+                                            setFieldValue('cost_center', subdependency.cost_center);
+                                        }
+                                    }}
+                                    filterOption={(input, option) => {
+                                        return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                    }}
+                                />
+                                <ErrorMessage name="subdependency" />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-6">
+                                <label htmlFor="username" className="form-label">
+                                    Nombres
+                                </label>
+                                <Field
+                                    type="text"
+                                    className="form-control"
+                                    id="names"
+                                    placeholder="Nombre de Usuario"
+                                    name="names"
+                                    autoComplete="off"
+                                    disabled={disabled}
+                                    maxLength={201}
+                                />
+                                <ErrorMessage name="names" />
+                            </div>
+                            <div className="col-6">
+                                <label htmlFor="username" className="form-label">
+                                    Apellidos
+                                </label>
+                                <Field
+                                    type="text"
+                                    className="form-control"
+                                    id="surnames"
+                                    name="surnames"
+                                    placeholder="Apellidos de Usuario"
+                                    autoComplete="off"
+                                    disabled={disabled}
+                                    maxLength={201}
+                                />
+                                <ErrorMessage name="surnames" />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-3">
                                 <label htmlFor="id" className="form-label">
                                     Tipo de Documento
                                 </label>
@@ -140,43 +252,6 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                 />
                                 <ErrorMessage name="id_number" />
                             </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col-6">
-                                <label htmlFor="username" className="form-label">
-                                    Nombres
-                                </label>
-                                <Field
-                                    type="text"
-                                    className="form-control"
-                                    id="names"
-                                    placeholder="Nombre de Usuario"
-                                    name="names"
-                                    autoComplete="off"
-                                    disabled={disabled}
-                                    maxLength={201}
-                                />
-                                <ErrorMessage name="names" />
-                            </div>
-                            <div className="col-6">
-                                <label htmlFor="username" className="form-label">
-                                    Apellidos
-                                </label>
-                                <Field
-                                    type="text"
-                                    className="form-control"
-                                    id="surnames"
-                                    name="surnames"
-                                    placeholder="Apellidos de Usuario"
-                                    autoComplete="off"
-                                    disabled={disabled}
-                                    maxLength={201}
-                                />
-                                <ErrorMessage name="surnames" />
-                            </div>
-                        </div>
-                        <div className="row">
                             <div className="col-6">
                                 <label htmlFor="username" className="form-label">
                                     Correo Electronico
@@ -193,7 +268,8 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                 />
                                 <ErrorMessage name="email" />
                             </div>
-
+                        </div>
+                        <div className="row">
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
                                     Celular
@@ -226,8 +302,6 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                 />
                                 <ErrorMessage name="phone_number" />
                             </div>
-                        </div>
-                        <div className="row">
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
                                     Genero
@@ -272,8 +346,10 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     </div>
                                 </div>
                             </div>
-                            {type === 'view' && (
-                                <div className="col-2">
+                        </div>
+                        {type === 'view' && (
+                            <div className="row">
+                                <div className="col-3">
                                     <label htmlFor="id_rol" className="form-label">
                                         Rol
                                     </label>
@@ -301,9 +377,8 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit }) => {
                                     <ErrorMessage name="id_rol" />
 
                                 </div>
-                            )}
-                        </div>
-
+                            </div>
+                        )}
                         <div className="row justify-content-end">
                             <div className="col text-end">
                                 {type !== 'view' && (

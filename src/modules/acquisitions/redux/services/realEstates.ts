@@ -144,6 +144,34 @@ export const createRealEstate = async (
     }
 };
 
+//TODO: Crear realEstates englobe - desenglobe
+export const createRealEstates = async (
+    data: any
+): Promise<any | []> => {
+    try {
+        let URI = `/real-estates`;
+        data.map(realEstate => {
+            delete realEstate.id;
+            delete realEstate.project_id;
+            delete realEstate.active_code;
+            delete realEstate.status;
+            delete realEstate.acquisitions;
+            delete realEstate.audit_trail;
+            delete realEstate.registry_number_document_id;
+            delete realEstate._type;
+            delete realEstate.key;
+            delete realEstate.document;
+            delete realEstate.document;
+            delete realEstate.supports_documents;
+        })
+        console.log(data)
+
+    } catch (error) {
+        console.error(error);
+        return Promise.reject('Error');
+    }
+};
+
 // Services: PUT
 export const updateRealEstate = async (data: any, id: number) => {
     try {
@@ -308,6 +336,7 @@ const services = {
     getRealEstatesByProject,
     getRealEstate,
     createRealEstate,
+    createRealEstates,
     updateRealEstate,
     getAddress,
     deleteRealEstate,

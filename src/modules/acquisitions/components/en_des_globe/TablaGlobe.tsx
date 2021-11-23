@@ -13,10 +13,9 @@ interface IParams {
 
 interface TableGlobeProps {
     action: any;
-
 }
 
-export const TablaGlobe: FC<TableGlobeProps> = ({action}) => {
+export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -27,6 +26,9 @@ export const TablaGlobe: FC<TableGlobeProps> = ({action}) => {
     const [disabled, setDisabled] = useState(true);
     const [valueArea, setValueArea] = useState(0);
     const [editingKey, setEditingKey] = useState('');
+    const [selectRealEsates, setSelectRealEsates] = useState(0)
+    const [selectRowKeys, setSelectRowKeys] = useState([])
+    const [areaUse, setareaUse] = useState(0);
     const [form] = Form.useForm();
 
     useEffect(() => {
@@ -48,21 +50,23 @@ export const TablaGlobe: FC<TableGlobeProps> = ({action}) => {
     }, [realEstates])
 
     useEffect(() => {
-        const areaCalculada =calculateTotalSArea();
+        const areaCalculada = calculateTotalSArea();
         setValueArea(areaCalculada);
-        if(areaCalculada > 0) {
+        if (areaCalculada > 0) {
             setDisabled(false)
-        }else {
+        } else {
             setDisabled(true);
         }
     }, [data])
 
+
+    // Input numero bienes Inmuebles a dividir
     const handleInputChange = (e) => {
         setNumberRealEstates([e.target.name] = e.target.value);
     }
 
     const calculateTotalSArea = () => {
-        if(Array.isArray(data)) {
+        if (Array.isArray(data)) {
             let totalAreaUse = 0;
             data.map(row => totalAreaUse = totalAreaUse + row.use_area)
             return totalAreaUse;
@@ -112,6 +116,14 @@ export const TablaGlobe: FC<TableGlobeProps> = ({action}) => {
 
     };
 
+    // filas seleccionadas de la tabla
+    const rowSelection = {
+        onChange: (selectedRowKeys: [], selectedRows: any[]) => {
+            setSelectRealEsates(selectedRows.length)
+            setSelectRowKeys(selectedRowKeys);
+        }
+    };
+
     const columns = [
         {
             title: 'ID',
@@ -146,7 +158,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({action}) => {
                         </Popconfirm>
                     </span>
                 ) : (
-                    <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+                    <Typography.Link disabled={!selectRowKeys.includes(record.key)} onClick={() => edit(record)}>
                         Editar
                     </Typography.Link>
                 );
@@ -170,15 +182,19 @@ export const TablaGlobe: FC<TableGlobeProps> = ({action}) => {
         };
     });
 
-
-
     return (
         <Form form={form} component={false}>
+            <div className="row">
+                Seleccione los bienes Inmuebles que desea {action}
+            </div>
             <Table
                 components={{
                     body: {
                         cell: EditableCell,
                     },
+                }}
+                rowSelection={{
+                    ...rowSelection,
                 }}
                 bordered
                 dataSource={data}
@@ -196,24 +212,68 @@ export const TablaGlobe: FC<TableGlobeProps> = ({action}) => {
                     className="form-control"
                     placeholder="numero a dividir bien inmueble"
                     autoComplete="off"
-                    value= {numberRealEstates}
-                    onChange={ handleInputChange }
+                    value={numberRealEstates}
+                    onChange={handleInputChange}
                     min={0}
                     disabled={disabled}
                 ></input>
             </div>
-            <button className="btn btn-primary" onClick={(e) =>{
-                console.log(action)
-                if(valueArea === 0){
-                    e.preventDefault();
-                    console.log("debe elegir valores ")
-                    swal_warning.fire(
-                        {
-                            title: "Valor de Área a utilizar Obligatorio", text: `El valor del área a ${action} no puede ser cero`
+            <button className="btn btn-primary" onClick={(e) => {
+                const dataSelect = data.filter(a => selectRowKeys.includes(a.key));
+                let areaSelect = dataSelect.every(b => b.use_area > 0)
+                switch (action) {
+                    case 'englobar':
+                        if (numberRealEstates < selectRealEsates) {
+                            if(areaSelect) {
+                                history.push({ pathname: `/englobar/realEstates/`, state: { numberRealEstates, valueArea, data, action, realEstates } })
+                            }else {
+                                swal_warning.fire(
+                                    {
+                                        title: "Valor de Área a utilizar Obligatorio", text: `El valor del área a ${action} no puede ser cero`
+                                    }
+                                )
+                            }
+                            // if (valueArea === 0) {
+                            //     e.preventDefault();
+                            //     console.log("debe elegir valores ")
+                            //     swal_warning.fire(
+                            //         {
+                            //             title: "Valor de Área a utilizar Obligatorio", text: `El valor del área a ${action} no puede ser cero`
+                            //         }
+                            //     )
+                            // } else {
+                            //     history.push({ pathname: `/englobar/realEstates/`, state: { numberRealEstates, valueArea, data, action, realEstates } })
+                            // }
+                        } else {
+                            swal_warning.fire(
+                                {
+                                    title: "No se puede englobar", text: ``
+                                }
+                            )
                         }
-                    )
-                }else {
-                    history.push({pathname:`/englobar/realEstates/`,state:{numberRealEstates, valueArea, data}})
+
+                        break;
+
+                    case 'desenglobar':
+                        if (numberRealEstates > selectRealEsates) {
+                            if (valueArea === 0) {
+                                e.preventDefault();
+                                console.log("debe elegir valores ")
+                                swal_warning.fire(
+                                    {
+                                        title: "Valor de Área a utilizar Obligatorio", text: `El valor del área a ${action} no puede ser cero`
+                                    }
+                                )
+                            } else {
+                                history.push({ pathname: `/englobar/realEstates/`, state: { numberRealEstates, valueArea, data, action, realEstates } })
+                            }
+                        } else {
+                            console.log('no valido');
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
             }}>
                 enviar

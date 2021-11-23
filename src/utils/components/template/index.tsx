@@ -29,8 +29,9 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
               }
             : {}),
     };
-    console.log(user);
-    const name = `${user && Object.values(user?.names).join(' ')} ${user && Object.values(user?.surnames).join(' ')}`;
+    const name = `${(user && Object.values(user?.names).join(' ')) || ''} ${
+        (user && Object.values(user?.surnames).join(' ')) || ''
+    }`;
     return (
         <>
             <Layout className="w-100 h-100">
@@ -39,7 +40,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                 </Sider>
                 <Layout className="site-layout">
                     <Header className="uabi-header p-0">
-                        <AppHeader collapsible={collapsible} name={name}/>
+                        <AppHeader collapsible={collapsible} name={name} />
                     </Header>
                     <Content>
                         <div className={`deck ${context.drawer_menu_collapsed ? 'active' : ''}`} />
@@ -74,8 +75,17 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                 >
                     <div className="d-flex align-start flex-column">
                         <span style={{ fontWeight: 'bold', fontSize: 22 }}>{name}</span>
-                        {/*<span style={{ fontWeight: 'bold', fontSize: 16, lineHeight: '12px' }}>Sánchez Cadavid</span>*/}
-                        <span style={{ fontWeight: 400, fontSize: 16, lineHeight: '40px' }}>C.C. {new Intl.NumberFormat().format(user.id_number)}</span>
+                        {user && (
+                            <span
+                                style={{
+                                    fontWeight: 400,
+                                    fontSize: 16,
+                                    lineHeight: '40px',
+                                }}
+                            >
+                                C.C. {new Intl.NumberFormat().format(user.id_number)}
+                            </span>
+                        )}
                     </div>
                 </div>
                 <div className="drawer-content"></div>

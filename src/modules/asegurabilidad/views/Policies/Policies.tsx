@@ -15,12 +15,12 @@ const table_columns = [
         align: 'center' as 'center',
     },
     {
-        title: 'Tipo de Póliza',
+        title: 'Compañias Aseguradoras',
         dataIndex: 'policy_type',
         align: 'center' as 'center',
     },
     {
-        title: 'Corredor de seguros',
+        title: 'Bienes Inmuebles',
         dataIndex: 'insurance_broker',
         align: 'center' as 'center',
     },

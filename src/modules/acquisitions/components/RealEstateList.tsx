@@ -13,9 +13,10 @@ interface RealEstateListProps {
     project_id?: number;
     init?: boolean;
     register?: boolean;
+    realEstateFilter?: any;
 }
 
-const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project_id, init, register }) => {
+const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project_id, init, register, realEstateFilter }) => {
     const dispatch = useDispatch();
 
 
@@ -70,13 +71,13 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
         },
         ...(withProject
             ? [
-                  {
-                      title: 'Proyecto Asociado',
-                      dataIndex: 'project',
-                      align: 'left' as 'left',
-                      render: (p) => p?.name || '',
-                  },
-              ]
+                {
+                    title: 'Proyecto Asociado',
+                    dataIndex: 'project',
+                    align: 'left' as 'left',
+                    render: (p) => p?.name || '',
+                },
+            ]
             : []),
         {
             title: 'Fecha Creación',
@@ -91,66 +92,85 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
             render: (data) => data.created_by,
         },
         ...(register
-            ? [
-                  {
-                      title: 'Estado',
-                      dataIndex: 'status',
-                      align: 'center' as 'center',
-                      render: (s) => {
-                          if(s === 'Activo') return <Tag color="success">{s}</Tag>
-                          return <Tag color="default">{s}</Tag>
-                      }
-                  },
-              ]
-            : []),
-        {
-            title: 'Acciones',
-            fixed: true,
-            children: [
-                {
-                    title: 'Ver',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={register ? `/InventoryRecord/real-estates/${id}/` : `/acquisitions/real-estates/${id}/` }
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
+            ?
+                [
+                    {
+                        title: 'Estado',
+                        dataIndex: 'status',
+                        align: 'center' as 'center',
+                        render: (s) => {
+                            if(s === 'Activo') return <Tag color="success">{s}</Tag>
+                            return <Tag color="default">{s}</Tag>
+                        }
                     },
-                },
-                {
-                    title: 'Editar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/acquisitions/real-estates/edit/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                            />
-                        );
+                    {
+                        title: 'Ver',
+                        dataIndex: 'id',
+                        align: 'center' as 'center',
+                        render: (id) => {
+                            return (
+                                <Link
+                                    to={register ? `/inventoryrecord/real-estates/${id}/` : `/acquisitions/real-estates/${id}/`}
+                                    name=""
+                                    avatar={false}
+                                    icon={<i className="fa fa-eye" aria-hidden="true" />}
+                                />
+                            );
+                        },
                     },
-                },
-                {
-                    title: 'Desactivar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <div className="text-danger" onClick={deleteRealEstate(id)}>
-                                <i className="fa fa-times-circle" aria-hidden="true"></i>
-                            </div>
-                        );
+                ]
+            :
+                [
+                    {
+                        title: 'Acciones',
+                        fixed: true,
+                        children: [
+                            {
+                                title: 'Ver',
+                                dataIndex: 'id',
+                                align: 'center' as 'center',
+                                render: (id) => {
+                                    return (
+                                        <Link
+                                            to={register ? `/inventoryrecord/real-estates/${id}/` : `/acquisitions/real-estates/${id}/`}
+                                            name=""
+                                            avatar={false}
+                                            icon={<i className="fa fa-eye" aria-hidden="true" />}
+                                        />
+                                    );
+                                },
+                            },
+                            {
+                                title: 'Editar',
+                                dataIndex: 'id',
+                                align: 'center' as 'center',
+                                render: (id) => {
+                                    return (
+                                        <Link
+                                            to={`/acquisitions/real-estates/edit/${id}/`}
+                                            name=""
+                                            avatar={false}
+                                            icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                                        />
+                                    );
+                                },
+                            },
+                            {
+                                title: 'Desactivar',
+                                dataIndex: 'id',
+                                align: 'center' as 'center',
+                                render: (id) => {
+                                    return (
+                                        <div className="text-danger" onClick={deleteRealEstate(id)}>
+                                            <i className="fa fa-times-circle" aria-hidden="true"></i>
+                                        </div>
+                                    );
+                                },
+                            },
+                        ],
                     },
-                },
-            ],
-        },
+                ]),
+
     ];
 
     const change_page = (page, pageSize) => {
@@ -161,14 +181,14 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
         if (project_id) {
             dispatch(actions.getRealEstatesByProject(project_id));
         } else if (init) {
-            dispatch(actions.getRealEstates({}));
+            dispatch(actions.getRealEstates({})); //TODO: mirar filtro de poliza
         }
     }, [project_id]);
 
     return (
         <Table
             columns={table_columns}
-            items={realEstates}
+            items={Array.isArray(realEstateFilter) ? realEstateFilter : realEstates}
             with_pagination
             count={total_results}
             change_page={change_page}
