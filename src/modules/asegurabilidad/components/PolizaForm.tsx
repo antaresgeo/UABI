@@ -57,12 +57,12 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
         policy_type: '',
         vigency_start: '',
         vigency_end: '',
-        insurance_broker: '',
+        insurance_broker_id: '',
         insurance_value: '',
-        type_assurance: 'Normal',
+        type_assurance: 'NORMAL',
         insurance_companies: [
             {
-                insurance_company: '',
+                id: '',
                 total_percentage: 0,
             },
         ],
@@ -85,14 +85,14 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
 
     }
     const schema = Yup.object().shape({
-        // registry_number: Yup.array().required('obligatorio'),
+        //registry_number: Yup.array().required('obligatorio'),
         policy_type: Yup.string().required('obligatorio'),
         vigency_start: Yup.string().required('obligatorio'),
         vigency_end: Yup.string().required('obligatorio'),
-        insurance_broker: Yup.string().required('obligatorio'),
+        insurance_broker_id: Yup.string().required('obligatorio'),
         insurance_value: Yup.string().required('obligatorio'),
         insurance_companies: Yup.array().of(Yup.object().shape({
-            insurance_company: Yup.string().required('obligatorio'),
+            id: Yup.string().required('obligatorio'),
             total_percentage: Yup.number().required('obligatorio'),
         }))
         // .test({
@@ -107,7 +107,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
         //     }
         // })
         //type_assurance: Yup.string().required('obligatorio'),
-        //insurance_company: Yup.string().required('obligatorio'),
+        //id: Yup.string().required('obligatorio'),
     });
 
     const submit = (values, actions) => {
@@ -124,7 +124,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
         if (total > 100) {
             swal.fire('Revise los porcentajes', '', 'error')
         } else {
-            console.log(finalValues);
+            //console.log(finalValues);
             onSubmit(finalValues, actions).then(() => {
                 actions.setSubmitting(false);
                 actions.resetForm();
@@ -186,9 +186,9 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                     <option key="policy_type" value="" disabled>
                                         --Seleccione el tipo de póliza--
                                     </option>
-                                    <option key="vera1" value="vera1">Tipo 1</option>
-                                    <option key="vera2" value="vera2">Tipo 2</option>
-                                    <option key="vera3" value="vera3">Tipo 3</option>
+                                    <option key="Seguro" value="Seguro">Seguro</option>
+                                    <option key="Contables" value="Contables">Contables</option>
+                                    <option key="De" value="De Crédito">De Crédito</option>
                                 </Field>
                                 <span
                                     className="text-danger text-left d-block w-100 mt-1"
@@ -232,23 +232,24 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                 <ErrorMessage name="vigency_end" />
                             </div>
                             <div className={`col-${type === 'view' ? 3 : 6}`}>
-                                <label htmlFor="insurance_broker" className="form-label">
+                                <label htmlFor="insurance_broker_id_id" className="form-label">
                                     Corredor de Seguros
                                 </label>
                                 <Field
                                     component={Select}
-                                    id="insurance_broker"
-                                    name="insurance_broker"
+                                    id="insurance_broker_id_id"
+                                    name="insurance_broker_id"
                                     placeholder="Selecciona una corredor de seguros"
                                     disabled={disabled}
                                     options={brokers?.map(broker => ({ id: broker.id, name:`${broker.nit} - ${broker.name}`  }))}
                                     showSearch // habilitar para buscar
+                                    value={values?.insurance_broker?.name}
                                     filterOption={(input, option) => {
                                         return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                     }}
                                 />
                                 <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="insurance_broker" />
+                                    <ErrorMessage name="insurance_broker_id" />
                                 </span>
                             </div>
                         </div>
@@ -311,14 +312,14 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                                 id="type_assurance_id"
                                                 type="radio"
                                                 className="form-check-input"
-                                                value="Normal"
+                                                value="NORMAL"
                                                 onChange={(e) => {
                                                     handleChange(e);
                                                     const insurance_companies_list = [
                                                         values.insurance_companies[0],
                                                     ] || [
                                                             {
-                                                                insurance_company: '',
+                                                                id: '',
                                                                 total_percentage: '',
                                                             },
                                                         ];
@@ -340,19 +341,19 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                                 id="type_assurance_id"
                                                 type="radio"
                                                 className="form-check-input"
-                                                value="Coaseguramiento"
+                                                value="COASEGURADA"
                                             />{' '}
                                             Coaseguramiento
                                         </label>
                                     </div>
-                                    {values.type_assurance === 'Coaseguramiento' && (
+                                    {values.type_assurance === 'COASEGURADA' && (
                                         <div className="form-check-inline" style={{ marginLeft: '75px' }}>
                                             <LinkButton
                                                 onClick={() => {
                                                     const insurance_companies_list = [
                                                         ...values.insurance_companies,
                                                         {
-                                                            insurance_company: '',
+                                                            id: '',
                                                             total_percentage: '',
                                                         },
                                                     ];
@@ -381,7 +382,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                         name="companies"
                                         id="companies"
                                         className="form-control"
-                                        value={(values.insurance_companies).map((a) => a.insurance_company).join(",  ")}
+                                        value={(values.insurance_companies).map((a) => a.name).join(",  ")}
                                         style={{ borderLeft: 'none' }}
                                         disabled={disabled}
                                     />
@@ -390,26 +391,6 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                             }
 
                         </div>
-                        {type === 'view' &&
-                            <div className="row">
-                                <div className={`form-inline col-6`}>
-                                    <label htmlFor="realEstates" className="form-label">
-                                        Bienes Inmuebles asociados
-                                    </label>
-                                    <Field
-                                        type="text"
-                                        name="realEstates"
-                                        id="realEstates"
-                                        className="form-control"
-                                        //value={(values.insurance_companies).map((a) => a.insurance_company).join(",  ")}
-                                        style={{ borderLeft: 'none' }}
-                                        disabled={disabled}
-                                    />
-                                    <ErrorMessage name="realEstates" />
-                                </div>
-                            </div>
-                        }
-
                         {type !== 'view' &&
                             <>
                                 {/* {console.log('compañias',values.insurance_companies)} */}
@@ -417,13 +398,13 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                     return (
                                         <div className="row form-group" key={i}>
                                             <div className={`form-inline col-6`}>
-                                                <label htmlFor={`insurance_company_${i}`} className="form-label">
+                                                <label htmlFor={`id_${i}`} className="form-label">
                                                     Compañía Aseguradora
                                                 </label>
                                                 <Field
                                                     component={Select}
-                                                    id={`insurance_company_${i}`}
-                                                    name={`insurance_companies[${i}].insurance_company`}
+                                                    id={`id_${i}`}
+                                                    name={`insurance_companies[${i}].id`}
                                                     //className="w-100 form-select form-control"
                                                     placeholder="Selecciona una Compañía aseguradora"
                                                     disabled={disabled}
@@ -433,14 +414,14 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                                         return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                                     }}
                                                 />
-                                                {/* <option key="insurance_company" value="" disabled>
+                                                {/* <option key="id" value="" disabled>
                                                         --Seleccione Compañía Aseguradora--
                                                     </option>
                                                     {companies?.results?.map(company =>
                                                         <option key={company?.id} value={company?.name}>{company?.name}</option>
                                                     )}
                                                 </Field> */}
-                                                <ErrorMessage name={`insurance_companies[${i}].insurance_company`} />
+                                                <ErrorMessage name={`insurance_companies[${i}].id`} />
                                             </div>
 
                                             <div className="col-5 form-inline">

@@ -36,6 +36,7 @@ const CreateInsurability = () => {
 
 
     const createPolicy = async (dataPolicy) => {
+        //console.log(dataPolicy)
         await dispatch(actions.createPolicy(dataPolicy));
         //await swal("Message", response.message, "success");
         // history.push(`/insurabilities/`);

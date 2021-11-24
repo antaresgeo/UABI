@@ -4,12 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IPolicyAttributes } from '../../../../utils/interfaces/insurability';
 import { useEffect } from 'react';
 import { actions } from '../../redux';
-import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
-import { getRealEstates } from '../../../acquisitions/redux/actions/realEstates';
 import PolizaForm from '../../components/PolizaForm';
 import { useHistory } from 'react-router-dom';
-import { getRealEstate } from './../../../acquisitions/redux/actions/realEstates';
-import { LinkButton } from '../../../../utils/ui/link';
 import RealEstateList from '../../../acquisitions/components/RealEstateList';
 
 interface IParams {

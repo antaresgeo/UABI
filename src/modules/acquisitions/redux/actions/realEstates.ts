@@ -5,6 +5,7 @@ import { AdquisitionsItf } from '../../../../utils/interfaces';
 
 // REAL ESTATES
 export const getRealEstates = (filters: {
+    pagination?: string;
     page?: number;
     pageSize?: 10 | 20 | 30;
     q?: {};

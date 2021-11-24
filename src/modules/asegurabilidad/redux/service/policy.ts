@@ -9,21 +9,24 @@ import {
 } from '../../../../utils/interfaces/insurability';
 import { compute_doc_policy } from '../../views/Policies/poliza.utils';
 import { create_document } from './../../../../utils/components/DocumentsModal/services';
+import { Pagination } from './../../../../custom_types';
 
 // Services: POST
 export const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
     try {
-        let URI = `/insurabilities`;
-        const doc: any = await compute_doc_policy(data.insurance_document);
-        const create_doc: any = await create_document(doc);
-        delete data.insurance_document;
-        const dataFinal = {
-            ...data,
-            insurance_document_id: create_doc.id
-        }
-        let res: AxiosResponse<IPolicyResponse> = await http.post(URI, dataFinal);
-        await swal.fire('poliza creada', res.data.message, 'success');
-        return res.data.results;
+        console.log('service',data);
+        // let URI = `/insurabilities`;
+        // const doc: any = await compute_doc_policy(data.insurance_document);
+        // const create_doc: any = await create_document(doc);
+        // delete data.insurance_document;
+        // delete data.registry_numbers;
+        // const dataFinal = {
+        //     ...data,
+        //     insurance_document_id: create_doc.id
+        // }
+        // let res: AxiosResponse<IPolicyResponse> = await http.post(URI, dataFinal);
+        // await swal.fire('poliza creada', res.data.message, 'success');
+        // return res.data.results;
     } catch (error) {
         console.error(error);
         console.log('error')
@@ -34,6 +37,7 @@ export const createPolicy = async (data: any): Promise<IPolicyAttributes | strin
 };
 
 export const getPolicies = async ({
+    pagination,
     page = 1,
     pageSize = 10,
     q = null,
@@ -44,6 +48,7 @@ export const getPolicies = async ({
             params: {
                 page,
                 pageSize,
+                with: pagination,
                 ...(q ? { q } : {}),
             },
         });
