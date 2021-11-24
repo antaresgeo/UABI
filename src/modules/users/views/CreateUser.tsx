@@ -4,14 +4,11 @@ import { Card } from '../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 import GeneralForm from './../components/GerenalForm';
 
-
 const CreateUser = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const createUser = async (dataPolicy) => {
-        await dispatch(actions.create_user(dataPolicy));
-        // await dispatch(actions.getUsers({}));
-
+    const createUser = async (values) => {
+        await dispatch(actions.create_user(values));
     };
     return (
         <div className="h-100 d-flex flex-column">

@@ -36,7 +36,8 @@ const RoleForm: FC<IUserFormPros> = ({ disabled, user, type,role,onSubmit }) => 
 
 
     useEffect(() => {
-        const allPermits = permitsAll?.map(per => per.name)
+        console.log(permitsAll)
+        const allPermits = permitsAll?.map(per => per.permit_name)
         const permitUser = role?.permits?.map(p => p.name) || [];
 
         const mockData = [];

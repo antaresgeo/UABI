@@ -68,13 +68,6 @@ export const get_all_users = async (filters?) => {
                 ...filters,
             },
         });
-        res.data = {
-            ...res.data,
-            results: res.data.results.map((a: any) => {
-                a.id = a.id + 1;
-                return a;
-            }),
-        };
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -91,10 +84,21 @@ export const get_list_users = async () => {
     }
 };
 
-export const create_user = async (data: User) => {
+export const create_user = async (data) => {
+    delete data.user.password;
+    delete data.detailsUser.id;
+    delete data.detailsUser.politics;
+    delete data.detailsUser.notification;
+    delete data.detailsUser.status;
+    delete data.detailsUser.audit_trail;
+    delete data.detailsUser.str_location;
+    if(data.detailsUser.entity_type !== 'P'){
+        delete data.detailsUser.dependency;
+        delete data.detailsUser.subdependency;
+    }
     try {
         const URI = '/users/';
-        const res: AxiosResponse<UserResponse> = await auth_http.post(URI, {});
+        const res: AxiosResponse<UserResponse> = await auth_http.post(URI, data);
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -114,17 +118,22 @@ export const get_user_by_id = async (id) => {
 };
 
 export const update_user = async (id, data) => {
+    delete data.user.password;
+    delete data.detailsUser.id;
+    delete data.detailsUser.politics;
+    delete data.detailsUser.notification;
+    delete data.detailsUser.status;
+    delete data.detailsUser.audit_trail;
+    if(data.detailsUser.entity_type !== 'P'){
+        delete data.detailsUser.dependency;
+        delete data.detailsUser.subdependency;
+    }
+
     try {
         const URI = '/users/';
         const res: AxiosResponse<UserResponse> = await auth_http.put(
             URI,
-            {
-                name: data.name,
-                nit: data.nit,
-                location_id: data.location_id,
-                phone: data.phone,
-                contact_information: data.contact_information,
-            },
+            data,
             {
                 params: {
                     id,
