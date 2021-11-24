@@ -24,8 +24,10 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
         entity_type: '',
         id_type: '',
         id_number: '',
-        names: '',
-        surnames: '',
+        first_name: '',
+        second_name: '',
+        surname: '',
+        second_surname: '',
         email: '',
         location: '',
         cellphone_number: '',
@@ -41,8 +43,8 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
         entity_type: Yup.string().required('Campo obligatorio'),
         id_type: Yup.string().required('Campo obligatorio'),
         id_number: Yup.number().required('Campo obligatorio'),
-        names: Yup.string().required('Campo obligatorio'),
-        surnames: Yup.string().required('Campo obligatorio'),
+        first_name: Yup.string().required('Campo obligatorio'),
+        surname: Yup.string().required('Campo obligatorio'),
         email: Yup.string().required('Campo obligatorio'),
         cellphone_number: Yup.number().required('Campo obligatorio'),
         phone_number: Yup.number().required('Campo obligatorio'),
@@ -83,7 +85,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                 return (
                     <Form>
                         <div className="row">
-                            <div className="col-3">
+                            <div className={`col-${values.entity_type === "Publica" ? 3 : 6}`}>
                                 <label htmlFor="id" className="form-label">
                                     Tipo de Sociedad
                                 </label>
@@ -103,7 +105,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 </Field>
                                 <ErrorMessage name="society_type" />
                             </div>
-                            <div className="col-3">
+                            <div className={`col-${values.entity_type === "Publica" ? 3 : 6}`}>
                                 <label htmlFor="id" className="form-label">
                                     Tipo Entidad
                                 </label>
@@ -125,93 +127,129 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 </Field>
                                 <ErrorMessage name="entity_type" />
                             </div>
-                            <div className="col-3">
-                                <label htmlFor="dependency_id" className="form-label">
-                                    Dependecia
-                                </label>
-                                <Field
-                                    component={Select}
-                                    name="dependency"
-                                    id="dependency_id"
-                                    disabled={disabled}
-                                    placeholder="Selecciona una Dependencia"
-                                    options={dependency_ops}
-                                    showSearch
-                                    extra_on_change={(value) => {
-                                        if (value) {
-                                            const dependency = dependencias.find((d) => d.name === value);
-                                            const _subs = format_list(dependency.subs);
-                                            setFieldValue('subdependency', dependency.name);
-                                            setFieldValue('cost_center', dependency.cost_center);
-                                            setFieldValue('management_center', dependency.management_center);
-                                            set_subs(_subs);
-                                        }
-                                    }}
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-                                    }}
-                                />
-                                <ErrorMessage name="dependency" />
-                            </div>
-                            <div className="col-3">
-                                <label htmlFor="subdependency_id" className="form-label">
-                                    Sub. Dependecia
-                                </label>
-                                <Field
-                                    component={Select}
-                                    name="subdependency"
-                                    id="subdependency_id"
-                                    disabled={disabled || !values.dependency || subs.length === 0}
-                                    placeholder="Selecciona una Sub. Dependencia"
-                                    options={subs}
-                                    showSearch
-                                    allowClear
-                                    extra_on_change={(value) => {
-                                        if (value) {
-                                            const dependency = dependencias.find((d) => d.name === values.dependency);
-                                            const subdependency = dependency.subs.find((d) => d.name === value);
-                                            setFieldValue('cost_center', subdependency.cost_center);
-                                        }
-                                    }}
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-                                    }}
-                                />
-                                <ErrorMessage name="subdependency" />
-                            </div>
+                            {values.entity_type === "Publica" &&
+                                <>
+                                    <div className="col-3">
+                                        <label htmlFor="dependency_id" className="form-label">
+                                            Dependecia
+                                        </label>
+                                        <Field
+                                            component={Select}
+                                            name="dependency"
+                                            id="dependency_id"
+                                            disabled={disabled}
+                                            placeholder="Selecciona una Dependencia"
+                                            options={dependency_ops}
+                                            showSearch
+                                            extra_on_change={(value) => {
+                                                if (value) {
+                                                    const dependency = dependencias.find((d) => d.name === value);
+                                                    const _subs = format_list(dependency.subs);
+                                                    setFieldValue('subdependency', dependency.name);
+                                                    setFieldValue('cost_center', dependency.cost_center);
+                                                    setFieldValue('management_center', dependency.management_center);
+                                                    set_subs(_subs);
+                                                }
+                                            }}
+                                            filterOption={(input, option) => {
+                                                return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                            }}
+                                        />
+                                        <ErrorMessage name="dependency" />
+                                    </div>
+                                    <div className="col-3">
+                                        <label htmlFor="subdependency_id" className="form-label">
+                                            Sub. Dependecia
+                                        </label>
+                                        <Field
+                                            component={Select}
+                                            name="subdependency"
+                                            id="subdependency_id"
+                                            disabled={disabled || !values.dependency || subs.length === 0}
+                                            placeholder="Selecciona una Sub. Dependencia"
+                                            options={subs}
+                                            showSearch
+                                            allowClear
+                                            extra_on_change={(value) => {
+                                                if (value) {
+                                                    const dependency = dependencias.find((d) => d.name === values.dependency);
+                                                    const subdependency = dependency.subs.find((d) => d.name === value);
+                                                    setFieldValue('cost_center', subdependency.cost_center);
+                                                }
+                                            }}
+                                            filterOption={(input, option) => {
+                                                return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                            }}
+                                        />
+                                        <ErrorMessage name="subdependency" />
+                                    </div>
+                                </>
+                            }
                         </div>
                         <div className="row">
-                            <div className="col-6">
-                                <label htmlFor="username" className="form-label">
-                                    Nombres
+                            <div className="col-3">
+                                <label htmlFor="first_name_id" className="form-label">
+                                    Primer Nombre
                                 </label>
                                 <Field
                                     type="text"
                                     className="form-control"
-                                    id="names"
-                                    placeholder="Nombre de Usuario"
-                                    name="names"
+                                    id="first_name_id"
+                                    name="first_name"
+                                    placeholder="Primer nombre"
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={201}
                                 />
-                                <ErrorMessage name="names" />
+                                <ErrorMessage name="first_name" />
                             </div>
-                            <div className="col-6">
-                                <label htmlFor="username" className="form-label">
-                                    Apellidos
+                            <div className="col-3">
+                                <label htmlFor="second_name_id" className="form-label">
+                                    Segundo Nombre
                                 </label>
                                 <Field
                                     type="text"
                                     className="form-control"
-                                    id="surnames"
-                                    name="surnames"
-                                    placeholder="Apellidos de Usuario"
+                                    id="second_name_id"
+                                    name="second_name"
+                                    placeholder="Segundo nombre"
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={201}
                                 />
-                                <ErrorMessage name="surnames" />
+                                <ErrorMessage name="second_name" />
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="surname_id" className="form-label">
+                                    Primer apellido
+                                </label>
+                                <Field
+                                    type="text"
+                                    className="form-control"
+                                    id="surname_id"
+                                    name="surname"
+                                    placeholder="Primer pellido"
+                                    autoComplete="off"
+                                    disabled={disabled}
+                                    maxLength={201}
+                                />
+                                <ErrorMessage name="surname" />
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="second_surname_id" className="form-label">
+                                    Segundo apellido
+                                </label>
+                                <Field
+                                    type="text"
+                                    className="form-control"
+                                    id="second_surname_id"
+                                    name="second_surname"
+                                    placeholder="Segundo apellido"
+                                    autoComplete="off"
+                                    disabled={disabled}
+                                    maxLength={201}
+                                />
+                                <ErrorMessage name="second_surname" />
                             </div>
                         </div>
                         <div className="row">

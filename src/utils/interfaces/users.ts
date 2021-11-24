@@ -6,8 +6,10 @@ export interface IUserAttributes {
     entity_type?: string;
     id_type: string;
     id_number: string;
-    names: string;
-    surnames: string;
+    first_name: string,
+    second_name: string,
+    surname: string,
+    second_surname: string,
     email: string;
     location: string;
     cellphone_number?: string;

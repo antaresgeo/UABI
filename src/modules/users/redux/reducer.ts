@@ -322,7 +322,6 @@ const reducer = (state: any = initialState, action: any): any => {
         }
 
         case types.rolesSelect.success: {
-            console.log(action.payload)
             return {
                 ...state,
                 rolesSelect: {

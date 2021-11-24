@@ -10,7 +10,6 @@ import { IRolAttributes, IRoleSelectAttributes } from '../../../../utils/interfa
 export const ListRoles = () => {
     const dispatch = useDispatch();
     const roles: IRoleSelectAttributes[] = useSelector((store: any) => {
-        console.log(store)
 
         return store.users.rolesSelect.value
 
@@ -18,7 +17,6 @@ export const ListRoles = () => {
     //  const loading: boolean = useSelector((store: any) => store.users.roles.loading);
     //  const { total_results } = useSelector((store: any) => store.users.roles.pagination);
 
-    console.log(roles)
     // const change_page = (page, pageSize) => {
     //     dispatch(actions.getRoles());
     // };
