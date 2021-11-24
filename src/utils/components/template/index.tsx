@@ -94,6 +94,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                     style={{ outline: ' 1px solid #ccc', textAlign: 'center' }}
                     onClick={() => {
                         localStorage.removeItem('_tk_');
+                        context.drawer_close();
                         history.push('/auth/login/');
                     }}
                 >

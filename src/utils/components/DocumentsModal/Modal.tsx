@@ -45,7 +45,7 @@ const DocumentsModal: FC<LocationModalProps> = ({
         <>
             <div className={['input-group', btn_class].join(' ')}>
                 <div className="form-control form-control-lg">
-                    {doc.name && (
+                    {doc?.name && (
                         <Tag
                             closable
                             onClose={() => {

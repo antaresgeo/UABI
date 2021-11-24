@@ -1,27 +1,6 @@
 import types from './types';
-import service from './service';
+import service, {User} from './service';
 import { request_dispatch } from '../../../utils';
-
-// const example = (filters = {}) =>
-//     request_dispatch(types.example_type, service.example_service(filters));
-const getUser = (id: number) => {
-    return request_dispatch(types.user, service.getUser(id));
-};
-
-const getUsers = (filters: {
-    page?: number;
-    pageSize?: 10 | 20 | 30;
-    q?: string;
-}) => request_dispatch(types.users, service.getUsers(filters));
-
-const createUser = (data) =>
-    request_dispatch(types.user, service.createUser(data));
-
-const updateUser = (data: any, id) =>
-    request_dispatch(types.user, service.updateUser(data, id));
-
-const deleteUser = (id) => request_dispatch(types.user, service.deleteUser(id));
-
 
 // ROLES //
 const getRole = (id: number) => {
@@ -46,20 +25,37 @@ const deleteRole = (id) => request_dispatch(types.rol, service.deleteRole(id));
 
 const getPermits = () => request_dispatch(types.permits, service.getPermits());
 
+// ----------------users-----------------------
+const get_list_users = () =>
+    request_dispatch(types.get_list_users, service.get_list_users());
+const get_all_users = (filters?) =>
+    request_dispatch(types.get_all_users, service.get_all_users(filters));
+const create_user = (data: User) =>
+    request_dispatch(types.create_user, service.create_user(data));
+const delete_user = (id) =>
+    request_dispatch(types.delete_user, service.delete_user(id));
+const get_user_by_id = (id) =>
+    request_dispatch(types.get_user, service.get_user_by_id(id));
+const update_user = (id, data: User) =>
+    request_dispatch(types.update_user, service.update_user(id, data));
+const clear_user = () => request_dispatch(types.clear_user, Promise.resolve());
+
 const actions = {
     // example
-    getUser,
-    getUsers,
-    createUser,
-    updateUser,
-    deleteUser,
+    get_list_users,
+    get_all_users,
+    create_user,
+    delete_user,
+    get_user_by_id,
+    update_user,
+    clear_user,
     getRole,
     getRolesList,
     getRoles,
     createRole,
     updateRole,
     deleteRole,
-    getPermits
+    getPermits,
 };
 
 export default actions;

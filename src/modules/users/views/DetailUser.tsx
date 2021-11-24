@@ -15,18 +15,16 @@ const DetailUser = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
     const history = useHistory();
-    const user: IUserAttributes = useSelector((states: any) => states.users.value);
-
+    const user: IUserAttributes = useSelector((store: any) => store.users.user.value?.detailsUser);
     useEffect(() => {
-        dispatch(actions.getUser(parseInt(id)));
+        dispatch(actions.get_user_by_id(parseInt(id)));
     }, []);
 
     const getUser = async (dataPolicy) => {
-        console.log()
-        const action = actions.getUser(1);
+        const action = actions.get_user_by_id(1);
         await dispatch(action);
     };
-    const initial_values = {};
+
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -36,6 +34,7 @@ const DetailUser = () => {
                             <Card title="información Usuario">
                                 <GeneralForm
                                     type="view"
+                                    user={user}
                                     disabled
                                     onSubmit={(values) => {
                                         return getUser(values);

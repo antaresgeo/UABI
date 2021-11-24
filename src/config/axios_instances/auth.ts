@@ -7,7 +7,7 @@ export const http = axios.create({
 });
 
 http.interceptors.request.use((config) => {
-    if(config.url === '/users/roles-and-permits/') {
+    if(config.url !== '/auth/login/') {
         const token = localStorage.getItem('_tk_');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;

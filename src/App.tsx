@@ -11,17 +11,18 @@ function App() {
     const token: string = localStorage.getItem('_tk_');
 
     useEffect(() => {
-        if (token) {
+        if (token && !user) {
             dispatch(actions.get_user(token));
         }
     }, []);
 
     const routes = useRoutes();
-    return (
-        <>
-            <Router routes={routes} template={Template} user={user} />
-        </>
-    );
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    }
+    return <Router routes={routes} template={Template} user={aux_user} />;
 }
 
 export default App;

@@ -9,7 +9,7 @@ const CreateUser = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const createUser = async (dataPolicy) => {
-        await dispatch(actions.createUser(dataPolicy));
+        await dispatch(actions.create_user(dataPolicy));
         // await dispatch(actions.getUsers({}));
 
     };
