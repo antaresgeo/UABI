@@ -12,27 +12,27 @@ import { EditRoles } from './views/roles/EditRoles';
 
 export const guards = {
     view: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         return user.roles.includes(Role.ADMINISTRATOR);
     },
     create: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         return user.roles.includes(Role.ADMINISTRATOR);
     },
     detail: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         return user.roles.includes(Role.ADMINISTRATOR);
     },
     edit: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         return user.roles.includes(Role.ADMINISTRATOR);
     },
     delete: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         return user.roles.includes(Role.ADMINISTRATOR);
     },

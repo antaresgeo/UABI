@@ -124,6 +124,7 @@ export const update_user = async (id, data) => {
     delete data.detailsUser.notification;
     delete data.detailsUser.status;
     delete data.detailsUser.audit_trail;
+    delete data.detailsUser.str_location;
     if(data.detailsUser.entity_type !== 'P'){
         delete data.detailsUser.dependency;
         delete data.detailsUser.subdependency;
