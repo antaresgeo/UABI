@@ -9,6 +9,13 @@ function App() {
     const user = useSelector((store: any) => store.auth.user);
     const dispatch = useDispatch();
     const token: string = localStorage.getItem('_tk_');
+    const routes = useRoutes();
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    }
+    const show = token? !!(token && user): true;
 
     useEffect(() => {
         if (token && !user) {
@@ -16,13 +23,9 @@ function App() {
         }
     }, []);
 
-    const routes = useRoutes();
-    const aux_user = {
-        ...user,
-        permits: user?.permits.map((a) => a.name) || [],
-        roles: user?.roles.map((a) => a.name) || [],
-    }
-    return <Router routes={routes} template={Template} user={aux_user} />;
+    return <>
+        {show &&  <Router routes={routes} template={Template} user={aux_user}/>}
+    </>;
 }
 
 export default App;
