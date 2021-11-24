@@ -32,11 +32,12 @@ const getProjects = async ({
     q = null,
 }): Promise<any | string> => {
     try {
-        let URI = `/projects/lists`;
+        let URI = `/projects/list`;
         let res: AxiosResponse<IProjectsResponse> = await http.get(URI, {
             params: {
                 page,
                 pageSize,
+                with: "pagination",
                 ...(q ? { q } : {}),
             },
         });

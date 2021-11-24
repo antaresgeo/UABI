@@ -16,12 +16,14 @@ const table_columns = [
     },
     {
         title: 'Compañias Aseguradoras',
-        dataIndex: 'policy_type',
+        dataIndex: 'insurance_companies',
         align: 'center' as 'center',
+        render: (date) => date.map(d =>  `${d.nit} - `)
+
     },
     {
         title: 'Bienes Inmuebles',
-        dataIndex: 'insurance_broker',
+        dataIndex: 'real_estates',
         align: 'center' as 'center',
     },
     {
@@ -100,11 +102,11 @@ const Policies = () => {
     const { total_results } = useSelector((store: any) => store.insurability.policies.pagination);
     console.log(policies);
     const change_page = (page, pageSize) => {
-        dispatch(actions.getPolicies({ page, pageSize }));
+        dispatch(actions.getPolicies({ page, pageSize, pagination: 'pagination' }));
     };
 
     useEffect(() => {
-        dispatch(actions.getPolicies({}));
+        dispatch(actions.getPolicies({pagination: 'pagination'}));
     }, []);
 
     return (

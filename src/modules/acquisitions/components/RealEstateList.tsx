@@ -38,7 +38,7 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
 
         if (result.isConfirmed) {
             await dispatch(actions.deleteRealEstate(id));
-            await dispatch(actions.getRealEstates({}));
+            await dispatch(actions.getRealEstates({pagination: 'pagination'}));
             // const _res: any = await dispatch(actions.deleteProject(id));
 
             // swal.fire({
@@ -174,14 +174,14 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
     ];
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.getRealEstates({ page, pageSize, ...filters }));
+        dispatch(actions.getRealEstates({ page, pageSize, pagination: 'pagination', ...filters }));
     };
 
     useEffect(() => {
         if (project_id) {
             dispatch(actions.getRealEstatesByProject(project_id));
         } else if (init) {
-            dispatch(actions.getRealEstates({})); //TODO: mirar filtro de poliza
+            dispatch(actions.getRealEstates({pagination: 'pagination'})); //TODO: mirar filtro de poliza
         }
     }, [project_id]);
 
