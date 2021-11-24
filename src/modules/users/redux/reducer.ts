@@ -1,34 +1,21 @@
 import types from './types';
+import {Loadable, Pageable} from "../../../custom_types";
+import {Broker, Company} from "../../asegurabilidad/redux/service";
+import {User} from "./service";
 
-// interface State {}
+interface State {
+    rol: Loadable<any>;
+    roles: Pageable<any>;
+    user: Loadable<User>;
+    users: Pageable<User>;
+    rolesSelect: Loadable<any>;
+    permits: Loadable<any>;
 
-const emptyInitialState: any = {
+}
+
+const emptyInitialState: State = {
     users: {
-        value: [
-            {
-                id: -1,
-                society_type: 'N-Persona Natural',
-                entity_type: 'Ninguno',
-                id_type: '',
-                id_number: '',
-                names: '',
-                surnames: '',
-                email: '',
-                location: '',
-                cellphone_number: '',
-                phone_number: '',
-                gender: '',
-                id_rol: 0,
-                audit_trail: {
-                    created_by: '',
-                    created_on: '',
-                    updated_by: null,
-                    updated_on: null,
-                    updated_values: null,
-                },
-                status: -1,
-            },
-        ],
+        value: [],
         pagination: {
             page: 1,
             count: 0,
@@ -40,31 +27,7 @@ const emptyInitialState: any = {
         loaded: false,
     },
     user: {
-        value: [
-            {
-                id: -1,
-                society_type: 'N-Persona Natural',
-                entity_type: 'Ninguno',
-                id_type: '',
-                id_number: '',
-                names: '',
-                surnames: '',
-                email: '',
-                location: '',
-                cellphone_number: '',
-                phone_number: '',
-                gender: '',
-                id_rol: 0,
-                audit_trail: {
-                    created_by: '',
-                    created_on: '',
-                    updated_by: null,
-                    updated_on: null,
-                    updated_values: null,
-                },
-                status: -1,
-            },
-        ],
+        value: null,
         loading: false,
         loaded: false,
     },
@@ -127,7 +90,9 @@ const emptyInitialState: any = {
                     updated_values: null,
                 },
             },
-        ]
+        ],
+        loading: false,
+        loaded: false
     },
     permits: {
         value: [
@@ -142,85 +107,133 @@ const emptyInitialState: any = {
 };
 const initialState = emptyInitialState;
 
-const reducer = (state: any = initialState, action: any): any => {
+const reducer = (state: State = initialState, action: any): State => {
+    const dataUsers = userReducer(state, action)
+    return {
+        ...state,
+        ...dataUsers,
+        ...reducerRol(state, action),
+    };
+};
+
+export default reducer;
+
+const userReducer = (aux_state: any, action: any) => {
+    const { user, users } = aux_state;
+    const state = { user, users };
     switch (action.type) {
-        case types.users.default: {
-            return {
-                ...state,
-                users: { ...state.users, loading: true },
-            };
-        }
-
-        case types.users.success: {
-            return {
-                ...state,
-                value: action.payload,
-
-                pagination: {
-                    page: action.payload?.page || 1,
-                    count: action.payload?.count || 0,
-                    next_page: action.payload?.next_page,
-                    previous_page: action.payload?.previous_page,
-                    total_results: action.payload?.total_results || 0,
-                },
-                loading: false,
-                loaded: true,
-            };
-        }
-
-        case types.users.fail: {
-            return {
-                ...state,
-                users: {
-                    ...state.users,
-                    loading: false,
-                    loaded: false,
-                    value: emptyInitialState.users.value,
-                },
-            };
-        }
-
-        case types.user.default: {
-            return {
-                ...state,
-                user: { ...state.user, loading: true },
-            };
-        }
-
-        case types.user.success: {
+        case types.create_user.default:
+        case types.update_user.default:
+        case types.delete_user.default:
+        case types.get_user.default: {
             return {
                 ...state,
                 user: {
                     ...state.user,
-
+                    loading: true,
+                    loaded: false,
+                },
+            };
+        }
+        case types.update_user.success:
+        case types.create_user.success:
+        case types.get_user.success: {
+            return {
+                ...state,
+                user: {
+                    ...state.user,
                     value: action.payload,
-
                     loading: false,
                     loaded: true,
                 },
             };
         }
-
-        case types.user.fail: {
+        case types.create_user.fail:
+        case types.update_user.fail:
+        case types.delete_user.fail:
+        case types.delete_user.success:
+        case types.clear_user:
+        case types.get_user.fail: {
             return {
                 ...state,
                 user: {
                     ...state.user,
-                    message: emptyInitialState.user.message,
+                    value: emptyInitialState.user.value,
                     loading: false,
                     loaded: false,
-                    value: emptyInitialState.user.value,
                 },
             };
         }
+        case types.get_list_users.default:
+        case types.get_all_users.default: {
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    loading: true,
+                    loaded: false,
+                },
+            };
+        }
+        case types.get_all_users.success: {
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    value: action.payload?.results || [],
+                    pagination: {
+                        page: action.payload?.page || 1,
+                        count: action.payload?.count || 0,
+                        next_page: action.payload?.next_page,
+                        previous_page: action.payload?.previous_page,
+                        total_results: action.payload?.total_results || 0,
+                    },
+                    loading: false,
+                    loaded: true,
+                },
+            };
+        }
+        case types.get_list_users.fail:
+        case types.get_all_users.fail: {
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    value: emptyInitialState.users.value,
+                    pagination: emptyInitialState.users.pagination,
+                    loading: false,
+                    loaded: false,
+                },
+            };
+        }
+        case types.get_list_users.success: {
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    value: action.payload || [],
+                    pagination: emptyInitialState.users.pagination,
+                    loading: false,
+                    loaded: true,
+                },
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+}
 
+const reducerRol = (aux_state: State = initialState, action: any): any => {
+    const { rol, roles, rolesSelect, permits } = aux_state;
+    const state = { rol, roles, rolesSelect, permits };
+    switch (action.type) {
         case types.roles.default: {
             return {
                 ...state,
                 roles: { ...state.roles, loading: true },
             };
         }
-
         case types.roles.success: {
             return {
                 ...state,
@@ -237,7 +250,6 @@ const reducer = (state: any = initialState, action: any): any => {
                 loaded: true,
             };
         }
-
         case types.roles.fail: {
             return {
                 ...state,
@@ -249,14 +261,12 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
-
         case types.rol.default: {
             return {
                 ...state,
                 rol: { ...state.rol, loading: true },
             };
         }
-
         case types.rol.success: {
             return {
                 ...state,
@@ -270,7 +280,6 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
-
         case types.rol.fail: {
             return {
                 ...state,
@@ -283,14 +292,12 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
-
         case types.permits.default: {
             return {
                 ...state,
                 permits: { ...state.permits, loading: true },
             };
         }
-
         case types.permits.success: {
             return {
                 ...state,
@@ -301,7 +308,6 @@ const reducer = (state: any = initialState, action: any): any => {
                 }
             };
         }
-
         case types.permits.fail: {
             return {
                 ...state,
@@ -313,14 +319,12 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
-
         case types.rolesSelect.default: {
             return {
                 ...state,
                 rolesSelect: { ...state.rolesSelect, loading: true },
             };
         }
-
         case types.rolesSelect.success: {
             return {
                 ...state,
@@ -331,7 +335,6 @@ const reducer = (state: any = initialState, action: any): any => {
                 }
             };
         }
-
         case types.rolesSelect.fail: {
             return {
                 ...state,
@@ -349,5 +352,3 @@ const reducer = (state: any = initialState, action: any): any => {
         }
     }
 };
-
-export default reducer;

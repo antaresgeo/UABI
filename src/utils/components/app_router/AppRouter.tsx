@@ -17,11 +17,7 @@ const AppRouter: React.FC<IAppRouter> = ({ routes, defaultRedirect, privateRedir
                             {...route}
                             lazy={lazy}
                             template={template}
-                            user={{
-                                ...user,
-                                permits: user?.permits.map((a) => a.name) || [],
-                                roles: user?.roles.map((a) => a.name) || [],
-                            }}
+                            user={user}
                         />
                     );
                 })}

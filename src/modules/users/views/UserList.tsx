@@ -10,7 +10,7 @@ interface UserListProps {
     users: IUserAttributes[];
     change_page?: (page: number, pageSize?: number) => void;
     total?: number;
-    user: any
+    user: any;
 }
 const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
     const dispatch = useDispatch();
@@ -26,8 +26,8 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
         });
 
         if (result.isConfirmed) {
-            await dispatch(actions.deleteUser(id));
-            await dispatch(actions.getUsers({}));
+            await dispatch(actions.delete_user(id));
+            await dispatch(actions.get_all_users({}));
         } else if (result.isDenied) {
             swal.close();
         }
@@ -86,8 +86,13 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
         },
         {
             title: 'Nombre',
-            dataIndex: 'username',
-            align: 'center' as 'center',
+            dataIndex: 'names',
+            align: 'left' as 'left',
+            render: (_, user) => {
+                return `${(user && Object.values(user?.names).join(' ')) || ''} ${
+                    (user && Object.values(user?.surnames).join(' ')) || ''
+                }`;
+            },
         },
         {
             title: 'rol',
@@ -98,12 +103,13 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
             title: 'Fecha Creación',
             dataIndex: 'audit_trail',
             align: 'center' as 'center',
-            render: (dates) => formatDate(dates?.created_on),
+            render: (_) => formatDate(_?.created_on),
         },
         {
             title: 'Creado por',
-            dataIndex: 'audit_trail.created_by',
+            dataIndex: 'audit_trail',
             align: 'center' as 'center',
+            render: (_) => _?.created_by
         },
         {
             title: 'Acciones',
@@ -112,13 +118,13 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
         },
     ];
 
-    if (guards.detail({ user})) {
+    if (guards.detail({ user })) {
         table_columns[5].children[0] = ver;
     }
-    if (guards.edit({ user})) {
+    if (guards.edit({ user })) {
         table_columns[5].children[1] = editar;
     }
-    if (guards.delete({ user})) {
+    if (guards.delete({ user })) {
         table_columns[5].children[2] = eliminar;
     }
 

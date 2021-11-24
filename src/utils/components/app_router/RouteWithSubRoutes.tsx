@@ -25,6 +25,7 @@ const Route: FC<RouteWithSubRoutesProps> = ({
     template_props,
     ..._props
 }) => {
+
     const has_access = get_can_access(can_access, _props);
     const custom_render = (props: any) => {
         const dr = compute_redirect(defaultRedirect, location);

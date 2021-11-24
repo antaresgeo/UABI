@@ -8,23 +8,29 @@ import { guards } from './../routes';
 
 const Users = () => {
     const dispatch = useDispatch();
-    const users: IUserAttributes[] = useSelector((store: any) => store.users.value);
-    const user: IUserAttributes[] = useSelector((store: any) => store.auth.user);
+    const users: IUserAttributes[] = useSelector((store: any) => store.users.users.value);
+    const user: any = useSelector((store: any) => store.auth.user);
     //const { total_results } = useSelector((store: any) => store.users.pagination);
 
     const [query, set_query] = useState<string>('');
 
     const filter = () => {
-        dispatch(actions.getUsers({ page: 1, q: query }));
+        dispatch(actions.get_all_users({ page: 1, q: query }));
     };
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.getUsers({ page, pageSize, q: query }));
+        dispatch(actions.get_all_users({ page, pageSize, q: query }));
     };
 
     useEffect(() => {
-        dispatch(actions.getUsers({}));
+        dispatch(actions.get_all_users({}));
     }, []);
+
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    }
 
     return (
         <div className="container-fluid">
@@ -32,7 +38,7 @@ const Users = () => {
                 <div className="col-md-12">
                     <Card
                         title="Usuarios"
-                        extra={<>{guards.create({ user}) && <Link to="/users/create" name="Crear" iconText="+" />}</>}
+                        extra={<>{guards.create({ user: aux_user}) && <Link to="/users/create" name="Crear" iconText="+" />}</>}
                     >
                         <form>
                             <div className="row justify-content-between">
@@ -62,7 +68,7 @@ const Users = () => {
                         </form>
                         <UserList
                             users={users}
-                            user={user}
+                            user={aux_user}
                             change_page={change_page}
                             //total={total_results}
                         />

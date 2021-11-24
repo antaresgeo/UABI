@@ -5,8 +5,6 @@ import RoleForm from './../components/RoleForm';
 
 const PermitsUser = () => {
     const history = useHistory();
-
-
     //const user: IUserAttributes = useSelector((states: any) => states.users.value);
     //console.log(user);
     const user = {

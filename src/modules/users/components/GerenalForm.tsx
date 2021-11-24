@@ -1,12 +1,13 @@
 import { FC, useState } from 'react';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import LocationModal from '../../../utils/components/Location/LocationModal';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FormikProps, FormikValues, FormikState } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import dependencias from '../../acquisitions/dependencias';
 import Select from '../../../utils/ui/select';
+import { DetailsUser, User } from '../redux/service';
 
 interface IUserFormPros {
     user?: IUserAttributes;
@@ -18,38 +19,51 @@ interface IUserFormPros {
 const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
     const history = useHistory();
     const [subs, set_subs] = useState<any[]>([]);
-    const initial_values: IUserAttributes = {
-        id: 0,
-        society_type: '',
-        entity_type: '',
-        id_type: '',
-        id_number: '',
-        first_name: '',
-        second_name: '',
-        surname: '',
-        second_surname: '',
-        email: '',
-        location: '',
-        cellphone_number: '',
-        phone_number: '',
-        gender: '',
-        dependency: '',
-        subdependency: '',
-        ...user
+
+    const initial_values = {
+        user: {
+            id_number: '',
+            password: '',
+        },
+        detailsUser: {
+            id: '',
+            society_type: '',
+            entity_type: '',
+            id_type: '',
+            names: { firstName: '', lastName: '' },
+            surnames: { firstSurname: '', lastSurname: '' },
+            email: '',
+            location: '',
+            cellphone_number: '',
+            phone_number: '',
+            gender: '',
+            dependency: '',
+            subdependency: '',
+            ...user,
+        },
     };
 
     const schema = Yup.object().shape({
-        society_type: Yup.string().required('Campo obligatorio'),
-        entity_type: Yup.string().required('Campo obligatorio'),
-        id_type: Yup.string().required('Campo obligatorio'),
-        id_number: Yup.number().required('Campo obligatorio'),
-        first_name: Yup.string().required('Campo obligatorio'),
-        surname: Yup.string().required('Campo obligatorio'),
-        email: Yup.string().required('Campo obligatorio'),
-        cellphone_number: Yup.number().required('Campo obligatorio'),
-        phone_number: Yup.number().required('Campo obligatorio'),
-        gender: Yup.string().required('Campo obligatorio'),
-
+        user: Yup.object().shape({
+            id_number: Yup.number().required('Campo obligatorio'),
+        }),
+        detailsUser: Yup.object().shape({
+            society_type: Yup.string().required('Campo obligatorio'),
+            entity_type: Yup.string().required('Campo obligatorio'),
+            id_type: Yup.string().required('Campo obligatorio'),
+            names: Yup.object().shape({
+                firstName: Yup.string().required('Campo obligatorio'),
+                lastName: Yup.string().required('Campo obligatorio'),
+            }),
+            surnames: Yup.object().shape({
+                firstSurname: Yup.string().required('Campo obligatorio'),
+                lastSurname: Yup.string().required('Campo obligatorio'),
+            }),
+            email: Yup.string().required('Campo obligatorio'),
+            cellphone_number: Yup.number().required('Campo obligatorio'),
+            phone_number: Yup.number().required('Campo obligatorio'),
+            gender: Yup.string().required('Campo obligatorio'),
+        }),
     });
 
     const submit = (values, actions) => {
@@ -59,12 +73,10 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
         // });
 
         //type === 'create' && history.push(`/users/permits/${initial_values.id}/`);
-
-    };
-    const hanleOnclick = () => {
     };
 
-    const format_list = (list) => { //cpopiar
+    const format_list = (list) => {
+        //cpopiar
         if (list && Array.isArray(list)) {
             let aux_list = [...list];
             aux_list = aux_list.map((d: any) => ({
@@ -85,7 +97,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                 return (
                     <Form>
                         <div className="row">
-                            <div className={`col-${values.entity_type === "Publica" ? 3 : 6}`}>
+                            <div className={`col-${values.entity_type === 'Publica' ? 3 : 6}`}>
                                 <label htmlFor="id" className="form-label">
                                     Tipo de Sociedad
                                 </label>
@@ -93,19 +105,19 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     as="select"
                                     className="form-select"
                                     id="society_type"
-                                    name="society_type"
+                                    name="detailsUser.society_type"
                                     autoComplete="off"
                                     disabled={disabled}
                                 >
                                     <option value="" hidden>
                                         --Tipo de Sociedad--
                                     </option>
-                                    <option value="Persona Natural">Persona Natural</option>
-                                    <option value="Persona Juridica">Persona Juridica</option>
+                                    <option value="N">Persona Natural</option>
+                                    <option value="J">Persona Juridica</option>
                                 </Field>
-                                <ErrorMessage name="society_type" />
+                                <ErrorMessage name="detailsUser.society_type" />
                             </div>
-                            <div className={`col-${values.entity_type === "Publica" ? 3 : 6}`}>
+                            <div className={`col-${values.entity_type === 'Publica' ? 3 : 6}`}>
                                 <label htmlFor="id" className="form-label">
                                     Tipo Entidad
                                 </label>
@@ -113,21 +125,21 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     as="select"
                                     className="form-select"
                                     id="entity_type"
-                                    name="entity_type"
+                                    name="detailsUser.entity_type"
                                     autoComplete="off"
                                     disabled={disabled}
                                 >
                                     <option value="" hidden>
                                         --Tipo de Entidad--
                                     </option>
-                                    <option value="sin Animo de lucro">Organizacion sin Animo de lucro</option>
-                                    <option value="Otro">Otro</option>
-                                    <option value="Privada">Privada</option>
-                                    <option value="Publica">Publica</option>
+                                    <option value="O">Organizacion sin Animo de lucro</option>
+                                    <option value="T">Otro</option>
+                                    <option value="R">Privada</option>
+                                    <option value="P">Publica</option>
                                 </Field>
-                                <ErrorMessage name="entity_type" />
+                                <ErrorMessage name="detailsUser.entity_type" />
                             </div>
-                            {values.entity_type === "Publica" &&
+                            {values.entity_type === 'P' && (
                                 <>
                                     <div className="col-3">
                                         <label htmlFor="dependency_id" className="form-label">
@@ -135,7 +147,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                         </label>
                                         <Field
                                             component={Select}
-                                            name="dependency"
+                                            name="detailsUser.dependency"
                                             id="dependency_id"
                                             disabled={disabled}
                                             placeholder="Selecciona una Dependencia"
@@ -152,10 +164,12 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                                 }
                                             }}
                                             filterOption={(input, option) => {
-                                                return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                                return (
+                                                    option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                );
                                             }}
                                         />
-                                        <ErrorMessage name="dependency" />
+                                        <ErrorMessage name="detailsUser.dependency" />
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="subdependency_id" className="form-label">
@@ -163,7 +177,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                         </label>
                                         <Field
                                             component={Select}
-                                            name="subdependency"
+                                            name="detailsUser.subdependency"
                                             id="subdependency_id"
                                             disabled={disabled || !values.dependency || subs.length === 0}
                                             placeholder="Selecciona una Sub. Dependencia"
@@ -172,19 +186,23 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                             allowClear
                                             extra_on_change={(value) => {
                                                 if (value) {
-                                                    const dependency = dependencias.find((d) => d.name === values.dependency);
+                                                    const dependency = dependencias.find(
+                                                        (d) => d.name === values.dependency
+                                                    );
                                                     const subdependency = dependency.subs.find((d) => d.name === value);
                                                     setFieldValue('cost_center', subdependency.cost_center);
                                                 }
                                             }}
                                             filterOption={(input, option) => {
-                                                return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                                return (
+                                                    option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                );
                                             }}
                                         />
-                                        <ErrorMessage name="subdependency" />
+                                        <ErrorMessage name="detailsUser.subdependency" />
                                     </div>
                                 </>
-                            }
+                            )}
                         </div>
                         <div className="row">
                             <div className="col-3">
@@ -195,13 +213,13 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     type="text"
                                     className="form-control"
                                     id="first_name_id"
-                                    name="first_name"
+                                    name="detailsUser.names.firstName"
                                     placeholder="Primer nombre"
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={201}
                                 />
-                                <ErrorMessage name="first_name" />
+                                <ErrorMessage name="detailsUser.names.firstName" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="second_name_id" className="form-label">
@@ -211,13 +229,13 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     type="text"
                                     className="form-control"
                                     id="second_name_id"
-                                    name="second_name"
+                                    name="detailsUser.names.lastName"
                                     placeholder="Segundo nombre"
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={201}
                                 />
-                                <ErrorMessage name="second_name" />
+                                <ErrorMessage name="detailsUser.names.lastName" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="surname_id" className="form-label">
@@ -227,13 +245,13 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     type="text"
                                     className="form-control"
                                     id="surname_id"
-                                    name="surname"
+                                    name="detailsUser.surnames.firstSurname"
                                     placeholder="Primer pellido"
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={201}
                                 />
-                                <ErrorMessage name="surname" />
+                                <ErrorMessage name="detailsUser.surnames.firstSurname" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="second_surname_id" className="form-label">
@@ -243,13 +261,13 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     type="text"
                                     className="form-control"
                                     id="second_surname_id"
-                                    name="second_surname"
+                                    name="detailsUser.surnames.lastSurname"
                                     placeholder="Segundo apellido"
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={201}
                                 />
-                                <ErrorMessage name="second_surname" />
+                                <ErrorMessage name="detailsUser.surnames.lastSurname" />
                             </div>
                         </div>
                         <div className="row">
@@ -261,19 +279,19 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     as="select"
                                     className="form-select"
                                     id="id_type"
-                                    name="id_type"
+                                    name="detailsUser.id_type"
                                     autoComplete="off"
                                     disabled={disabled}
                                 >
                                     <option value="" hidden>
                                         --Tipo de Documento--
                                     </option>
-                                    <option value="2">Cedula de Ciudadania</option>
-                                    <option value="3">Tarjeta de identidad</option>
-                                    <option value="2">Cedula de Extranjeria</option>
-                                    <option value="3">NIT</option>
+                                    <option value={1}>Cedula de Ciudadania</option>
+                                    <option value={2}>Tarjeta de identidad</option>
+                                    <option value={3}>Cedula de Extranjeria</option>
+                                    <option value={4}>NIT</option>
                                 </Field>
-                                <ErrorMessage name="id_type" />
+                                <ErrorMessage name="detailsUser.id_type" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
@@ -284,11 +302,11 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     className="form-control"
                                     id="id_number"
                                     placeholder="Número de documento"
-                                    name="id_number"
+                                    name="user.id_number"
                                     autoComplete="off"
                                     disabled={disabled}
                                 />
-                                <ErrorMessage name="id_number" />
+                                <ErrorMessage name="detailsUser.id_number" />
                             </div>
                             <div className="col-6">
                                 <label htmlFor="username" className="form-label">
@@ -299,12 +317,12 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     className="form-control"
                                     id="email"
                                     placeholder="Correo"
-                                    name="email"
+                                    name="detailsUser.email"
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={201}
                                 />
-                                <ErrorMessage name="email" />
+                                <ErrorMessage name="detailsUser.email" />
                             </div>
                         </div>
                         <div className="row">
@@ -316,13 +334,13 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     type="number"
                                     className="form-control"
                                     id="cellphone_number"
-                                    name="cellphone_number"
+                                    name="detailsUser.cellphone_number"
                                     placeholder="celular"
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={201}
                                 />
-                                <ErrorMessage name="cellphone_number" />
+                                <ErrorMessage name="detailsUser.cellphone_number" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
@@ -332,13 +350,13 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     type="number"
                                     className="form-control"
                                     id="phone_number"
-                                    name="phone_number"
+                                    name="detailsUser.phone_number"
                                     placeholder="Telefono"
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={201}
                                 />
-                                <ErrorMessage name="phone_number" />
+                                <ErrorMessage name="detailsUser.phone_number" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
@@ -348,7 +366,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     as="select"
                                     className="form-select"
                                     id="gender"
-                                    name="gender"
+                                    name="detailsUser.gender"
                                     autoComplete="off"
                                     disabled={disabled}
                                 >
@@ -359,7 +377,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     <option value="m">Masculino</option>
                                     <option value="o">Otro</option>
                                 </Field>
-                                <ErrorMessage name="gender" />
+                                <ErrorMessage name="detailsUser.gender" />
                             </div>
                             <div className="form-group col-3">
                                 <label htmlFor="location" className="form-label">
@@ -367,7 +385,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 </label>
                                 <div className="input-group">
                                     <input
-                                        name="location"
+                                        name="detailsUser.location"
                                         id="location"
                                         type="text"
                                         className="form-control"
@@ -395,7 +413,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                         as="select"
                                         className="form-select"
                                         id="id_rol"
-                                        name="id_rol"
+                                        name="detailsUser.id_rol"
                                         autoComplete="off"
                                         disabled={disabled}
                                     >
@@ -412,8 +430,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                         <option value="9">Mantenimiento</option>
                                         <option value="10">Facturación</option>
                                     </Field>
-                                    <ErrorMessage name="id_rol" />
-
+                                    <ErrorMessage name="detailsUser.id_rol" />
                                 </div>
                             </div>
                         )}
@@ -423,9 +440,9 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     <button
                                         className="btn btn-primary my-3"
                                         disabled={isSubmitting || disabled}
-                                        onClick={hanleOnclick}
+                                        type="submit"
                                     >
-                                        Guardar
+                                        Guardar 1
                                     </button>
                                 )}
                             </div>

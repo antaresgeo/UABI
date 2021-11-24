@@ -41,7 +41,7 @@ const bad_login = (dispatch) => (error) => {
 const get_user = (token: string) => {
     return (dispatch) => {
         const user_id = decodeJWT(token)?.id;
-        return user_service.getUser(user_id).then((user) => {
+        return user_service.get_user_by_id(user_id).then((user) => {
             dispatch(newToken({ access: token }));
             dispatch(loginSuccess(user));
             return Promise.resolve(user);

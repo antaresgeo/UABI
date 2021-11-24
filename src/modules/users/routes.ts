@@ -17,7 +17,6 @@ export const guards = {
         return user.roles.includes(Role.ADMINISTRATOR);
     },
     create: (props?) => {
-        console.log(props)
         const user = props.user
         if (!user) return false;
         return user.roles.includes(Role.ADMINISTRATOR);
@@ -26,7 +25,6 @@ export const guards = {
         const user = props.user
         if (!user) return false;
         return user.roles.includes(Role.ADMINISTRATOR);
-        // return false;
     },
     edit: (props?) => {
         const user = props.user

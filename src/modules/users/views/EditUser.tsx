@@ -6,7 +6,6 @@ import { IUserAttributes } from './../../../utils/interfaces/users';
 import { actions } from '../redux';
 import swal from 'sweetalert';
 import { Card } from '../../../utils/ui';
-import UserForm from '../components/RoleForm';
 import GeneralForm from './../components/GerenalForm';
 import RoleForm from './../components/RoleForm';
 
@@ -23,17 +22,17 @@ const EditUser = ({ view }: IProps) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const user: IUserAttributes = useSelector((states: any) => states.users.value);
+    const user: IUserAttributes = useSelector((store: any) => store.users.user.value?.detailsUser);
 
     const _updateUser = async (userForm) => {
         let res: any;
-        res = await dispatch(actions.updateUser({ userForm }, id));
+        res = await dispatch(actions.update_user(id, null /*{ userForm }*/ ));
         await swal('Usuario actualizado', res.data.message, 'success');
         history.push(`/users/${user.id}`);
     };
 
     useEffect(() => {
-        dispatch(actions.getUser(parseInt(id)));
+        dispatch(actions.get_user_by_id(parseInt(id)));
     }, []);
 
     return (
@@ -45,6 +44,7 @@ const EditUser = ({ view }: IProps) => {
                             <Card title="Edición de Usuario">
                                 <GeneralForm
                                     type="edit"
+                                    user={user}
                                     onSubmit={(values) => {
                                         return _updateUser(values);
                                     }}

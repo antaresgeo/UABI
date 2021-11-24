@@ -65,7 +65,6 @@ const reducer = (state = initialState, action) => {
 
         case authTypes.NEW_TOKEN: {
             const { access }: TokenPayload = action.payload;
-            console.log(access);
             if (access) {
                 localStorage.setItem('_tk_', access);
             }

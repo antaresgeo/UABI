@@ -14,4 +14,5 @@ export interface Loadable<L> {
     value: L;
     loading: boolean;
     loaded: boolean;
+    message?: any
 }
