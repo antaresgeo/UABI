@@ -5,6 +5,7 @@ import { reducer as insurabilityReducer } from './../modules/asegurabilidad/redu
 import { reducer as notificationReducer } from './../modules/notificacions/redux';
 import { reducer as userReducer } from './../modules/users/redux';
 import { reducer as inspectionReducer } from './../modules/inspection/redux';
+import { reducer as authReducer } from './../modules/auth/redux';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -16,6 +17,7 @@ const store = createStore(
         notifications: notificationReducer,
         users: userReducer,
         inspection: inspectionReducer,
+        auth: authReducer
     }),
     composeEnhancer(applyMiddleware(thunk))
 );

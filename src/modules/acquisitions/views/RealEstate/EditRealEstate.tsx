@@ -4,6 +4,8 @@ import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/int
 import {actions, service} from '../../redux';
 import RealEstateForm from '../../components/RealEstateForm';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from "moment";
+import {clearObjectNulls} from "../../../../utils";
 
 interface IProps {
     id: string;
@@ -59,12 +61,14 @@ const DetailProjects = () => {
                 const { acquisitions } = values;
                 try {
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));
+                    console.log('ok3', isFinish);
                     if (acquisitions.length > 0) {
                         await dispatch(
                             actions.createAcquisitionForRealEstate(
                                 acquisitions.map((a) => {
                                     a.real_estate_id = res.id;
-                                    return a;
+                                    a.acquisition_date = new Date(moment(a.acquisition_date).format('YYYY/MM/DD')).getTime();
+                                    return clearObjectNulls(a);
                                 })
                             )
                         );
@@ -74,7 +78,6 @@ const DetailProjects = () => {
                     } else {
                         if (res.project_id) return dispatch(actions.getRealEstatesByProject(res.project_id));
                     }
-                    return Promise.resolve();
                 } catch (e) {
                     return Promise.reject();
                 }

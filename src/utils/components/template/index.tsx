@@ -10,9 +10,10 @@ import { Breadcrumb } from '../app_router/custom_types';
 interface ITemplate {
     breadcrumbs?: Breadcrumb[];
     show_breadcrumbs?: boolean;
+    user: any;
 }
 
-const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs }) => {
+const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user }) => {
     const { Header, Sider, Content } = Layout;
     const history = useHistory();
     const context = useContext(TemplateContext);
@@ -28,6 +29,9 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs }) =>
               }
             : {}),
     };
+    const name = `${(user && Object.values(user?.names).join(' ')) || ''} ${
+        (user && Object.values(user?.surnames).join(' ')) || ''
+    }`;
     return (
         <>
             <Layout className="w-100 h-100">
@@ -36,7 +40,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs }) =>
                 </Sider>
                 <Layout className="site-layout">
                     <Header className="uabi-header p-0">
-                        <AppHeader collapsible={collapsible} />
+                        <AppHeader collapsible={collapsible} name={name} />
                     </Header>
                     <Content>
                         <div className={`deck ${context.drawer_menu_collapsed ? 'active' : ''}`} />
@@ -70,9 +74,18 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs }) =>
                     }}
                 >
                     <div className="d-flex align-start flex-column">
-                        <span style={{ fontWeight: 'bold', fontSize: 22 }}>Administrador</span>
-                        {/*<span style={{ fontWeight: 'bold', fontSize: 16, lineHeight: '12px' }}>Sánchez Cadavid</span>*/}
-                        <span style={{ fontWeight: 400, fontSize: 16, lineHeight: '40px' }}>C.C. 1.020.729.179</span>
+                        <span style={{ fontWeight: 'bold', fontSize: 22 }}>{name}</span>
+                        {user && (
+                            <span
+                                style={{
+                                    fontWeight: 400,
+                                    fontSize: 16,
+                                    lineHeight: '40px',
+                                }}
+                            >
+                                C.C. {new Intl.NumberFormat().format(user.id_number)}
+                            </span>
+                        )}
                     </div>
                 </div>
                 <div className="drawer-content"></div>
@@ -80,7 +93,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs }) =>
                     className="text-danger p-4"
                     style={{ outline: ' 1px solid #ccc', textAlign: 'center' }}
                     onClick={() => {
-                        localStorage.removeItem('user');
+                        localStorage.removeItem('_tk_');
                         history.push('/auth/login/');
                     }}
                 >

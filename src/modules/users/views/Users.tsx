@@ -8,7 +8,8 @@ import { guards } from './../routes';
 
 const Users = () => {
     const dispatch = useDispatch();
-    const users: IUserAttributes[] = useSelector((states: any) => states.users.value);
+    const users: IUserAttributes[] = useSelector((store: any) => store.users.value);
+    const user: IUserAttributes[] = useSelector((store: any) => store.auth.user);
     //const { total_results } = useSelector((store: any) => store.users.pagination);
 
     const [query, set_query] = useState<string>('');
@@ -31,7 +32,7 @@ const Users = () => {
                 <div className="col-md-12">
                     <Card
                         title="Usuarios"
-                        extra={<>{guards.create() && <Link to="/users/create" name="Crear" iconText="+" />}</>}
+                        extra={<>{guards.create({ user}) && <Link to="/users/create" name="Crear" iconText="+" />}</>}
                     >
                         <form>
                             <div className="row justify-content-between">
@@ -61,6 +62,7 @@ const Users = () => {
                         </form>
                         <UserList
                             users={users}
+                            user={user}
                             change_page={change_page}
                             //total={total_results}
                         />

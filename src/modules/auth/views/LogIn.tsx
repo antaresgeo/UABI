@@ -1,34 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Form, Image, Header, Input, Button, Grid, Icon, SemanticICONS } from 'semantic-ui-react';
-
+import { Image, Grid } from 'semantic-ui-react';
 import loginimage from './../../../utils/assets/img/login.jpeg';
 import logo from './../../../utils/assets/img/escudoAlcaldia.png';
-import { authenticationUme } from '../../../utils';
-import { Permit, Role } from '../../../index';
 import { Redirect, useHistory } from 'react-router-dom';
 import LoginForm from './../components/LoginForm';
+import actions from '../redux/actions';
+import { useDispatch } from 'react-redux';
 
 export default function SignIn() {
     const history = useHistory();
+    const dispatch = useDispatch();
+    const [disabled, setDisabled] = useState(parseInt(localStorage.getItem('attemp')) >= 9);
 
     const onLogin = (values) => {
-        const pass_is_valid = values.password === '@sabi2021';
-        const user_is_valid = values.user === '1020729179';
-        if (pass_is_valid && user_is_valid) {
-            const user = {
-                role: Role.ADMINISTRATOR,
-                permits: [...Object.values(Permit)],
-            };
-            localStorage.setItem('user', JSON.stringify(user));
-            history.push('/');
-        }
-    }
+        dispatch(actions.login(values.user, values.password));
+    };
 
-    const user = JSON.parse(localStorage.getItem('user'));
+    const token: string = localStorage.getItem('_tk_');
 
     return (
         <div>
-            {user && <Redirect to="/" />}
+            {token && <Redirect to="/" />}
             <Grid columns={2} style={{ height: '100vh' }} className="no-margin">
                 <Grid.Row className="no-padding-bottom no-padding-top">
                     <Grid.Column className="no-padding-right no-padding-left">
@@ -43,11 +35,11 @@ export default function SignIn() {
                                 <h5 className="sub-header-login text-center">
                                     Sistema para la Administración de Bienes Inmuebles
                                 </h5>
-                                <p style={{fontWeight: 'bold', marginTop: '15px', fontSize: '14px'}}>Ingrese sus datos para Iniciar sesión</p>
+                                <p style={{ fontWeight: 'bold', marginTop: '15px', fontSize: '14px' }}>
+                                    Ingrese sus datos para Iniciar sesión
+                                </p>
                             </div>
-                            <LoginForm
-                                onSubmit={onLogin}
-                            />
+                            <LoginForm onSubmit={onLogin} disabled={disabled} />
                         </div>
                     </Grid.Column>
                 </Grid.Row>

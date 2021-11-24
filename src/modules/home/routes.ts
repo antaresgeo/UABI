@@ -5,7 +5,7 @@ import { Permit } from '../../index';
 
 export const guards = {
     general: (props?) => {
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = props.user
         if (!user) return false;
         return true;
     },

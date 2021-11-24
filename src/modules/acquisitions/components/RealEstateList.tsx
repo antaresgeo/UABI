@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { swal } from '../../../utils';
 import { IRealEstateAttributes } from '../../../utils/interfaces';
 import { actions } from '../redux';
+import Tag from "antd/lib/tag";
 
 interface RealEstateListProps {
     withProject?: boolean;
@@ -97,6 +98,10 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
                         title: 'Estado',
                         dataIndex: 'status',
                         align: 'center' as 'center',
+                        render: (s) => {
+                            if(s === 'Activo') return <Tag color="success">{s}</Tag>
+                            return <Tag color="default">{s}</Tag>
+                        }
                     },
                     {
                         title: 'Ver',

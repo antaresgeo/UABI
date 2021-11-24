@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 import { formatDate, swal } from '../../../../utils';
-import {Switch} from "antd";
+import { Switch } from 'antd';
+import Tag from 'antd/lib/tag';
 
 const Projects = () => {
     const dispatch = useDispatch();
@@ -31,7 +32,9 @@ const Projects = () => {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
-                text: `El proyecto contiene ${res?.total || ''} bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
+                text: `El proyecto contiene ${
+                    res?.total || ''
+                } bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -124,6 +127,15 @@ const Projects = () => {
             render: (audit_trail) => audit_trail?.created_by,
         },
         {
+            title: 'Estado',
+            dataIndex: 'status',
+            align: 'center' as 'center',
+            render: (s) => {
+                if (s === 'Activo') return <Tag color="success">{s}</Tag>;
+                return <Tag color="default">{s}</Tag>;
+            },
+        },
+        {
             title: 'Acciones',
             fixed: true,
             children: [
@@ -147,7 +159,7 @@ const Projects = () => {
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
-                        if(id !== 0){
+                        if (id !== 0) {
                             return (
                                 <Link
                                     to={`/acquisitions/projects/edit/${id}/`}
@@ -156,10 +168,9 @@ const Projects = () => {
                                     icon={<i className="fa fa-pencil" aria-hidden="true" />}
                                 />
                             );
-                        }else {
-                            return <i className="fa fa-pencil" aria-hidden="true" style={{color: '#aaa'}}/>
+                        } else {
+                            return <i className="fa fa-pencil" aria-hidden="true" style={{ color: '#aaa' }} />;
                         }
-
                     },
                 },
                 {
@@ -167,17 +178,17 @@ const Projects = () => {
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
-                        if(id !== 0){
+                        if (id !== 0) {
                             return (
                                 <div className="text-danger" onClick={deleteProject(id)}>
-                                    {/*<i className="fa fa-times-circle" aria-hidden="true" />*/}
-                                    <Switch size="small" />
+                                    <i className="fa fa-times-circle" aria-hidden="true" />
+                                    {/*<Switch size="small" />*/}
                                 </div>
                             );
-                        }else {
-                            return <Switch size="small" disabled/>
+                        } else {
+                            return <i className="fa fa-times-circle" aria-hidden="true" style={{ color: '#aaa' }} />;
+                            // return <Switch size="small" disabled />;
                         }
-
                     },
                 },
             ],

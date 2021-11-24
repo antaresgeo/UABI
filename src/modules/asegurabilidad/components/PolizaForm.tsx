@@ -133,6 +133,8 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
 
     };
 
+
+
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema} >
             {({ isSubmitting, setFieldValue, values, handleChange }) => {
@@ -212,9 +214,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                     className="form-control"
                                     disabled={disabled}
                                 />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="vigency_start" />
-                                </span>
+                                <ErrorMessage name="vigency_start" />
                             </div>
 
                             <div className="col-3">
@@ -229,9 +229,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                     className="form-control"
                                     disabled={disabled}
                                 />
-                                <span className="text-danger text-left d-block w-100 mt-1" style={{ height: '22px' }}>
-                                    <ErrorMessage name="vigency_end" />
-                                </span>
+                                <ErrorMessage name="vigency_end" />
                             </div>
                             <div className={`col-${type === 'view' ? 3 : 6}`}>
                                 <label htmlFor="insurance_broker" className="form-label">

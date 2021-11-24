@@ -130,6 +130,7 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
                                             <AdquisitionView
+                                                formik={formik}
                                                 acquisitions={formik.values.acquisitions}
                                             />
                                             <Card

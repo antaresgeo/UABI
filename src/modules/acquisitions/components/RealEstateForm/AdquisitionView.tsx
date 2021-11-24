@@ -9,11 +9,10 @@ interface AcquisitionsFromProps {
     type?: 'view' | 'edit' | 'create';
     disabled?: boolean;
     acquisitions?: AdquisitionsItf[];
+    formik: any;
 }
 
-const active_type = ['Lote', 'Mejora', 'Construccion', 'Construccion para demoler', 'Mejora para demoler'];
-
-const AcquisitionsView: FC<AcquisitionsFromProps> = ({ type, disabled, acquisitions }) => {
+const AcquisitionsView: FC<AcquisitionsFromProps> = ({ type, disabled, acquisitions, formik }) => {
     return (
         <Card
             title="Información de Adquisición"
@@ -21,9 +20,10 @@ const AcquisitionsView: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                 <AcquisitionModal
                     type="create"
                     btn_label="Agregar Adquisición"
-                    onChange={(values, f) => {
-                        console.log('acquisitions list', values);
-                        return Promise.resolve()
+                    active_type={formik.values.active_type}
+                    onChange={async (values, f) => {
+                        const new_acquisitions = [...formik.values.acquisitions, values];
+                        formik.setFieldValue('acquisitions', new_acquisitions, false);
                     }}
                 />
             }
