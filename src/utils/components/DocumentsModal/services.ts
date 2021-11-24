@@ -52,6 +52,7 @@ export const create_document = async ({
     }
 };
 
+
 export const get_documents_by_ids = async (ids) => {
     try {
         let URI_documents = '/docs/';

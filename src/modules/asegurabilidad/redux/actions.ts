@@ -16,10 +16,10 @@ const getPolicies = (data) =>
 const updatePolicy = (data: any, id) =>
     request_dispatch(types.policy, service.updatePolicy(data, id));
 
-const policiesRealEstate = (id: number) =>
-    request_dispatch(types.policiesRealEstate, service.policiesRealEstate(id))
+const realEstatesPolicy = (id: number) =>
+    request_dispatch(types.policiesRealEstate, service.realEstatesPolicy(id))
 
-    
+
 /*----------------Companies---------------------*/
 const get_list_companies = () =>
     request_dispatch(types.get_list_companies, service.get_list_companies());
@@ -62,7 +62,7 @@ const actions = {
     getPolicy,
     getPolicies,
     updatePolicy,
-    policiesRealEstate,
+    realEstatesPolicy,
     get_list_companies,
     get_all_companies,
     create_company,

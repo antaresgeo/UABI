@@ -17,8 +17,11 @@ const DetailInsurability = () => {
 
     const { id } = useParams<IParams>();
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
+    const realEstatesPolicy: any = useSelector((store: any) => store.insurability.policiesRealEstate.value)
+    //console.log('bienes inmuebles de la poliza', realEstatesPolicy)
     useEffect(() => {
         dispatch(actions.getPolicy(id));
+        dispatch(actions.realEstatesPolicy(Number(id)))
     }, [dispatch, id]);
 
     const getPolicy = async (dataPolicy) => {
@@ -97,6 +100,7 @@ const DetailInsurability = () => {
                                     type="view"
                                     disabled
                                     policy={policy}
+                                    realEstatesPolicy={realEstatesPolicy}
                                     onSubmit={(values) => {
                                         return getPolicy(values);
                                     }}
@@ -105,7 +109,7 @@ const DetailInsurability = () => {
                             <Card
                                 title="Bienes Inmuebles de la póliza"
                             >
-                                <RealEstateList  />
+                                <RealEstateList  realEstateFilter={realEstatesPolicy} />
                             </Card>
                         </div>
 
