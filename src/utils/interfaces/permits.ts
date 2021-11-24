@@ -4,7 +4,7 @@
 
 export interface IPermitAttributes {
     id: number,
-    name: string
+    permit_name: string
 }
 
 export interface IPermitsResponse {

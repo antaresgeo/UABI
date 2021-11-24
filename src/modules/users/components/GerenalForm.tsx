@@ -24,6 +24,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
         user: {
             id_number: '',
             password: '',
+            ...(user ? { id_number: user.id_number } : {}),
         },
         detailsUser: {
             id: '',
@@ -34,6 +35,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
             surnames: { firstSurname: '', lastSurname: '' },
             email: '',
             location: '',
+            str_location: '',
             cellphone_number: '',
             phone_number: '',
             gender: '',
@@ -67,10 +69,9 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
     });
 
     const submit = (values, actions) => {
-        console.log(values);
-        // onSubmit(values, actions).then(() => {
-        //     actions.setSubmitting(false);
-        // });
+        onSubmit(values, actions).then(() => {
+            actions.setSubmitting(false);
+        });
 
         //type === 'create' && history.push(`/users/permits/${initial_values.id}/`);
     };
@@ -139,7 +140,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 </Field>
                                 <ErrorMessage name="detailsUser.entity_type" />
                             </div>
-                            {values.entity_type === 'P' && (
+                            {values.detailsUser.entity_type === 'P' && (
                                 <>
                                     <div className="col-3">
                                         <label htmlFor="dependency_id" className="form-label">
@@ -157,9 +158,8 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                                 if (value) {
                                                     const dependency = dependencias.find((d) => d.name === value);
                                                     const _subs = format_list(dependency.subs);
-                                                    setFieldValue('subdependency', dependency.name);
-                                                    setFieldValue('cost_center', dependency.cost_center);
-                                                    setFieldValue('management_center', dependency.management_center);
+                                                    setFieldValue('detailsUser.subdependency', dependency.name);
+                                                    console.log(_subs)
                                                     set_subs(_subs);
                                                 }
                                             }}
@@ -179,20 +179,11 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                             component={Select}
                                             name="detailsUser.subdependency"
                                             id="subdependency_id"
-                                            disabled={disabled || !values.dependency || subs.length === 0}
+                                            disabled={disabled || !values.detailsUser.dependency || subs.length === 0}
                                             placeholder="Selecciona una Sub. Dependencia"
                                             options={subs}
                                             showSearch
                                             allowClear
-                                            extra_on_change={(value) => {
-                                                if (value) {
-                                                    const dependency = dependencias.find(
-                                                        (d) => d.name === values.dependency
-                                                    );
-                                                    const subdependency = dependency.subs.find((d) => d.name === value);
-                                                    setFieldValue('cost_center', subdependency.cost_center);
-                                                }
-                                            }}
                                             filterOption={(input, option) => {
                                                 return (
                                                     option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -384,8 +375,8 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     Dirección
                                 </label>
                                 <div className="input-group">
-                                    <input
-                                        name="detailsUser.location"
+                                    <Field
+                                        name="detailsUser.str_location"
                                         id="location"
                                         type="text"
                                         className="form-control"
@@ -395,8 +386,9 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                         <LocationModal
                                             view="user"
                                             disabled={disabled}
-                                            onSave={(values) => {
-                                                return values;
+                                            onSave={async (values) => {
+                                                setFieldValue('detailsUser.str_location', values.addressAsString)
+                                                setFieldValue('detailsUser.location', `${values.id}`)
                                             }}
                                         />
                                     </div>
@@ -442,7 +434,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                         disabled={isSubmitting || disabled}
                                         type="submit"
                                     >
-                                        Guardar 1
+                                        Guardar
                                     </button>
                                 )}
                             </div>

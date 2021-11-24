@@ -147,7 +147,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         setFieldValue('commune', '');
                                         setFieldValue('neighborhood', '');
                                         const country_r =
-                                            countries.find((c) => c.country_code === parseInt(e.target.value))?.country || '';
+                                            countries.find((c) => c.country_code === parseInt(e.target.value))
+                                                ?.country || '';
                                         setFieldValue('country_name', country_r, false);
                                     }}
                                 >
@@ -204,7 +205,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                         setCommune(list);
                                         setFieldValue('commune', '');
                                         setFieldValue('neighborhood', '');
-                                        const city_r = cities.find((c) => c.city_code === parseInt(e.target.value))?.city || '';
+                                        const city_r =
+                                            cities.find((c) => c.city_code === parseInt(e.target.value))?.city || '';
                                         setFieldValue('city_name', city_r, false);
                                     }}
                                 >
@@ -237,7 +239,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             setNeighborhood(list);
                                             setFieldValue('neighborhood', '');
                                             const commune_r =
-                                                commune.find((c) => c.commune_code === parseInt(e.target.value))?.commune || '';
+                                                commune.find((c) => c.commune_code === parseInt(e.target.value))
+                                                    ?.commune || '';
                                             setFieldValue('commune_name', commune_r, false);
                                         }}
                                     >
@@ -275,29 +278,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
 
                                     <ErrorMessage name="neighborhood" />
                                 </div>
-                                <div className="form-group col-4">
-                                    <label htmlFor="" className="form-label">
-                                        Estrato
-                                        <span className="text-danger">*</span>
-                                    </label>
-                                    <Field
-                                        className="w-100 form-select"
-                                        name="stratum"
-                                        as="select"
-                                        onChange={''}
-                                    >
-                                        <option value="" disabled>--estrato---</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
 
-                                    </Field>
-
-                                    <ErrorMessage name="stratum" />
-                                </div>
                                 {view !== 'user' && (
                                     <>
                                         <div className="form-group col-2">
@@ -389,11 +370,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 handleChange(e);
                                                 if (e.target.value === 'CL') {
                                                     setFieldValue('first_orientation', 'Sur', false);
-                                                    setFieldValue('second_orientation', 'Sur', false);
-                                                }
-                                                if (e.target.value === 'CR') {
-                                                    setFieldValue('first_orientation', 'Este', false);
                                                     setFieldValue('second_orientation', 'Este', false);
+                                                }else if (e.target.value === 'CR') {
+                                                    setFieldValue('first_orientation', 'Este', false);
+                                                    setFieldValue('second_orientation', 'Sur', false);
+                                                } else {
+                                                    setFieldValue('first_orientation', '', false);
+                                                    setFieldValue('second_orientation', '', false);
                                                 }
                                             }}
                                         >
@@ -467,7 +450,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             name="first_orientation"
                                             type="text"
                                             className="w-100 form-control"
-                                            disabled
+                                            disabled={values.type === 'CL' || values.type === 'CR'}
                                         />
 
                                         <ErrorMessage name="first_orientation" />
@@ -532,7 +515,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             name="second_orientation"
                                             type="text"
                                             className="w-100 form-control"
-                                            disabled
+                                            disabled={values.type === 'CL' || values.type === 'CR'}
                                         />
 
                                         <ErrorMessage name="first_orientation" />
@@ -548,7 +531,26 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                     </div>
                                 </div>
                                 <div className="from-row row">
-                                    <div className="form-group col-9">
+                                    <div className="form-group col-4">
+                                        <label htmlFor="" className="form-label">
+                                            Estrato
+                                            <span className="text-danger">*</span>
+                                        </label>
+                                        <Field className="w-100 form-select" name="stratum" as="select">
+                                            <option value="" disabled>
+                                                --estrato---
+                                            </option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </Field>
+
+                                        <ErrorMessage name="stratum" />
+                                    </div>
+                                    <div className="form-group col-8">
                                         <label htmlFor="" className="form-label">
                                             Indicaciones
                                             <Tooltip title="Lorem impsu texto descriptivo">
@@ -581,15 +583,9 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                         )}
                         <hr style={{ margin: 0 }} />
                         <div className="d-flex justify-content-end mt-2">
-                            {view === 'general' ? (
-                                <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isValid}>
-                                    Consultar
-                                </button>
-                            ) : (
-                                <button type="submit" className="btn btn-primary">
-                                    Consultar
-                                </button>
-                            )}
+                            <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isValid}>
+                                Consultar
+                            </button>
                         </div>
                     </Form>
                 );

@@ -1,6 +1,8 @@
 import { FC, useRef, useState } from 'react';
 import Modal from 'antd/lib/modal/Modal';
 import Location from './index';
+import { service } from '../../../modules/acquisitions/redux';
+import { on } from 'cluster';
 
 interface LocationModalProps {
     onSave?: (values) => Promise<any>;
@@ -13,9 +15,25 @@ const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone })
     const ref = useRef(null);
     const open = () => {
         ref.current?.resetForm();
-        !disabled && set_is_visible(true)
+        !disabled && set_is_visible(true);
     };
     const close = () => set_is_visible(false);
+    const request = (values) => {
+        if (view === 'general' || 'user') {
+            delete values.country_name;
+            delete values.state_name;
+            delete values.state_name;
+            delete values.state_name;
+            delete values.city_name;
+            delete values.commune_name;
+            delete values.neighborhood_name;
+            return service.getAddress(values).then((res) => {
+                return onSave && onSave(res);
+            });
+        } else {
+            return onSave && onSave(values);
+        }
+    };
     // const toggle = () => set_is_visible((visible) => !visible);
     return (
         <>
@@ -28,18 +46,17 @@ const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone })
                     innerRef={ref}
                     zone={zone}
                     modalClose={(values, callback) => {
-                        onSave &&
-                            onSave(values)
-                                .then(() => {
-                                    callback && callback();
-                                    ref.current?.resetForm();
-                                    close();
-                                })
-                                .catch(() => {
-                                    callback && callback();
-                                    ref.current?.resetForm();
-                                    close();
-                                });
+                        request(values)
+                            .then(() => {
+                                callback && callback();
+                                ref.current?.resetForm();
+                                close();
+                            })
+                            .catch(() => {
+                                callback && callback();
+                                ref.current?.resetForm();
+                                close();
+                            });
                     }}
                 />
             </Modal>

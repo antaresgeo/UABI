@@ -26,9 +26,12 @@ const EditUser = ({ view }: IProps) => {
 
     const _updateUser = async (userForm) => {
         let res: any;
-        res = await dispatch(actions.update_user(id, null /*{ userForm }*/ ));
-        await swal('Usuario actualizado', res.data.message, 'success');
-        history.push(`/users/${user.id}`);
+        if (userForm) {
+            console.log(userForm)
+            res = await dispatch(actions.update_user(id, userForm ));
+            await swal('Usuario actualizado', res.data.message, 'success');
+            history.push(`/users/${user.id}`);
+        }
     };
 
     useEffect(() => {
@@ -54,6 +57,7 @@ const EditUser = ({ view }: IProps) => {
                                 <RoleForm
                                     type="edit"
                                     onSubmit={(values) => {
+
                                         return _updateUser(values);
                                     }}
                                 />
