@@ -18,9 +18,6 @@ import { swal } from '../../../utils';
 import moment from 'moment';
 import { clearRealEstate } from '../../acquisitions/redux/actions/realEstates';
 
-
-
-
 interface InsurabilityFormPros {
     policy?: any;
     realEstatesPolicy?: any;
@@ -43,7 +40,6 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
     const matriculas = [];
     const ids_real = [];
     const initialValues = {
-
         registry_numbers: realEstatesPolicy ? realEstatesPolicy.map( r =>  r.registry_number ) : [],
         policy_type: '',
         vigency_start: '',
@@ -65,7 +61,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
         },
         real_estates_id: realEstatesPolicy ? realEstatesPolicy.map( r =>  r.id ) : [],
         ...policy,
-        ...(policy ? {insurance_broker_id: 1 }:  {}) //TODO: cambiar nit por id
+        ...(policy ? {insurance_broker_id: `${policy.insurance_broker.nit} - ${policy.insurance_broker.name}`   }:  {}) //TODO: cambiar nit por id
 
     };
 
@@ -80,7 +76,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
 
     }
     const schema = Yup.object().shape({
-        real_estates_id: Yup.array().required('obligatorio'),
+        real_estates_id: Yup.array().min(1,'obligatorio'),
         policy_type: Yup.string().required('obligatorio'),
         vigency_start: Yup.string().required('obligatorio'),
         vigency_end: Yup.string().required('obligatorio'),
@@ -114,6 +110,9 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
             vigency_start: new Date(newDate).getTime(),
             vigency_end: new Date(newDate2).getTime(),
         }
+        if(finalValues.vigency_start < finalValues.vigency_end ) {
+            console.log('si es menor');
+        }
         let total = 0;
         Array.isArray(values.insurance_companies) && finalValues.insurance_companies.map(valor => total = total + valor.percentage_insured)
         if (total > 100) {
@@ -139,13 +138,13 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
                         <div className="row">
                             {(type !== 'view') &&
                                 <div className="form-group col-6">
-                                    <label htmlFor="real_estates_id" className="form-label">
+                                    <label htmlFor="real_estates_id_id" className="form-label">
                                         Matrícula
                                     </label>
                                     <Field
                                         component={Select}
                                         name="real_estates_id"
-                                        id="real_estates_id"
+                                        id="real_estates_id_id"
                                         className="w-100"
                                         options={realEstates.map(realestate => ({ id: realestate.id, name: realestate.registry_number }))}
                                         mode="multiple"

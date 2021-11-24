@@ -195,7 +195,7 @@ export const TableAreas= () => {
                         let completeRealEstates = DataRealEstate.every(b => b.name !== "")
 
                         //console.log(DataRealEstate);
-                        //console.log(real_estates_edit);
+                        console.log(real_estates_edit);
                         if(Number(totalArea) > Number(valueArea) || Number(totalArea) < Number(valueArea) ){
                             swal_warning.fire(
                                 {
