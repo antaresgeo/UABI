@@ -22,8 +22,8 @@ import { clearRealEstate } from '../../acquisitions/redux/actions/realEstates';
 
 
 interface InsurabilityFormPros {
-    policy?: IPolicyAttributes;
-    realEstate?: IRealEstateAttributes;
+    policy?: any;
+    realEstatesPolicy?: any;
     companies?: any;
     brokers?: any;
     disabled?: boolean;
@@ -32,28 +32,19 @@ interface InsurabilityFormPros {
     onSubmit: (values, actions?) => Promise<any>;
 }
 
-const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, brokers, disabled, type, onSubmit }) => {
-
+const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, companies, brokers, disabled, type, onSubmit }) => {
+    //console.log(realEstatesPolicy);
     const dispatch = useDispatch();
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
-
-    let valor;
     useEffect(() => {
-        if (realEstate) {
-            valor = true;
-        } else {
-            valor = false;
-        }
         dispatch(actions.getRealEstates({}))
     }, []);
-
-
-
-
+    const matriculas = [];
+    const ids_real = [];
     const initialValues = {
 
-        registry_numbers: [],
+        registry_numbers: realEstatesPolicy ? realEstatesPolicy.map( r =>  r.registry_number ) : [],
         policy_type: '',
         vigency_start: '',
         vigency_end: '',
@@ -63,7 +54,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
         insurance_companies: [
             {
                 id: '',
-                total_percentage: 0,
+                percentage_insured: 0,
             },
         ],
         insurance_document_id: "",
@@ -72,9 +63,13 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
             type: 5,
             pdf: null
         },
-        real_estates_id: [],
-        ...policy
+        real_estates_id: realEstatesPolicy ? realEstatesPolicy.map( r =>  r.id ) : [],
+        ...policy,
+        ...(policy ? {insurance_broker_id: 1 }:  {}) //TODO: cambiar nit por id
+
     };
+
+    //console.log('valores iniciales',initialValues)
     if (initialValues.vigency_start) {
         const tmpDate = new Date(Number(initialValues.vigency_start));
         const tmpDate2 = new Date(Number(initialValues.vigency_end));
@@ -85,7 +80,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
 
     }
     const schema = Yup.object().shape({
-        //registry_number: Yup.array().required('obligatorio'),
+        real_estates_id: Yup.array().required('obligatorio'),
         policy_type: Yup.string().required('obligatorio'),
         vigency_start: Yup.string().required('obligatorio'),
         vigency_end: Yup.string().required('obligatorio'),
@@ -93,7 +88,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
         insurance_value: Yup.string().required('obligatorio'),
         insurance_companies: Yup.array().of(Yup.object().shape({
             id: Yup.string().required('obligatorio'),
-            total_percentage: Yup.number().required('obligatorio'),
+            percentage_insured: Yup.number().required('obligatorio'),
         }))
         // .test({
         //     message: 'Revise los porcentajes',
@@ -111,7 +106,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
     });
 
     const submit = (values, actions) => {
-        console.log(values);
+        //console.log(values);
         const newDate = moment(values.vigency_start).format('YYYY/MM/DD');
         const newDate2 = moment(values.vigency_end).format('YYYY/MM/DD');
         const finalValues = {
@@ -120,7 +115,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
             vigency_end: new Date(newDate2).getTime(),
         }
         let total = 0;
-        Array.isArray(values.insurance_companies) && finalValues.insurance_companies.map(valor => total = total + valor.total_percentage)
+        Array.isArray(values.insurance_companies) && finalValues.insurance_companies.map(valor => total = total + valor.percentage_insured)
         if (total > 100) {
             swal.fire('Revise los porcentajes', '', 'error')
         } else {
@@ -144,7 +139,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                         <div className="row">
                             {(type !== 'view') &&
                                 <div className="form-group col-6">
-                                    <label htmlFor="registry_number" className="form-label">
+                                    <label htmlFor="real_estates_id" className="form-label">
                                         Matrícula
                                     </label>
                                     <Field
@@ -170,14 +165,14 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                     // }}
 
                                     >
-                                        <option key="matricula" value="" disabled>
+                                        {/* <option key="matricula" value="" disabled>
                                             --Seleccione el tipo de póliza--
                                         </option>
                                         {realEstates.map(real_estate =>
                                             <option key={realEstate?.id} value={real_estate?.registry_number}>{real_estate?.registry_number}</option>
-                                        )}
+                                        )} */}
                                     </Field>
-                                    {/* <ErrorMessage name="registry_number" /> */}
+                                    <ErrorMessage name="real_estates_id" />
                                 </div>
                             }
                             <div className={`col-${type === 'view' ? 3 : 6}`}>
@@ -242,8 +237,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                     placeholder="Selecciona una corredor de seguros"
                                     disabled={disabled}
                                     options={brokers?.map(broker => ({ id: broker.id, name:`${broker.nit} - ${broker.name}`  }))}
-                                    showSearch // habilitar para buscar
-                                    value={values?.insurance_broker?.name}
+                                    showSearch // habilitar para buscarx
                                     filterOption={(input, option) => {
                                         return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                     }}
@@ -263,9 +257,13 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                         name="insurance_document"
                                         component={DocumentModal}
                                         btn_label="Adjuntar"
+                                        disables={disabled}
+                                        onDelete={(values) => {
+                                            setFieldValue('insurance_document_id', '', false)
+                                        }}
 
                                     />
-                                    <ErrorMessage name="supports_documents" />
+                                    <ErrorMessage name="insurance_document" />
                                 </div>
                             </div>
                         }
@@ -320,7 +318,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                                     ] || [
                                                             {
                                                                 id: '',
-                                                                total_percentage: '',
+                                                                percentage_insured: '',
                                                             },
                                                         ];
                                                     setFieldValue(
@@ -354,7 +352,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                                         ...values.insurance_companies,
                                                         {
                                                             id: '',
-                                                            total_percentage: '',
+                                                            percentage_insured: '',
                                                         },
                                                     ];
                                                     setFieldValue(
@@ -425,14 +423,14 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                             </div>
 
                                             <div className="col-5 form-inline">
-                                                <label htmlFor={`total_percentage_${i}`} className="form-label">
+                                                <label htmlFor={`percentage_insured_${i}`} className="form-label">
                                                     Porcentaje de Aseguramiento
                                                 </label>
                                                 <div className="input-group">
                                                     <Field
                                                         disabled={disabled}
-                                                        name={`insurance_companies[${i}].total_percentage`}
-                                                        id={`total_percentage_${i}`}
+                                                        name={`insurance_companies[${i}].percentage_insured`}
+                                                        id={`percentage_insured_${i}`}
                                                         className="form-control border-end-0"
                                                         min={0}
                                                         max={100}
@@ -443,7 +441,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstate, companies, b
                                                     </div>
                                                 </div>
 
-                                                <ErrorMessage name={`insurance_companies[${i}].total_percentage`} />
+                                                <ErrorMessage name={`insurance_companies[${i}].percentage_insured`} />
                                             </div>
 
                                             <div className="col-1 " style={{ display: 'flex', alignItems: 'center' }}>

@@ -19,7 +19,7 @@ import { log } from 'util';
 // REAL ESTATES
 // Services: GET
 const getRealEstates = async ({
-    pagination = '',
+    pagination = 'pagination',
     page = 1,
     pageSize = 10,
     q = null,

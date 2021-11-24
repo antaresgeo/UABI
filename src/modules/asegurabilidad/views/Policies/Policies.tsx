@@ -100,7 +100,6 @@ const Policies = () => {
     const policies: IPolicyAttributes[] = useSelector((store: any) => store.insurability.policies.value);
     const loading: boolean = useSelector((store: any) => store.insurability.policies.loading);
     const { total_results } = useSelector((store: any) => store.insurability.policies.pagination);
-    console.log(policies);
     const change_page = (page, pageSize) => {
         dispatch(actions.getPolicies({ page, pageSize, pagination: 'pagination' }));
     };

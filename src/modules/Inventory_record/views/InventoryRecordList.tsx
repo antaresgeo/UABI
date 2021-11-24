@@ -35,7 +35,6 @@ const InventoryRecordList = () => {
     };
 
     const filter = async () => {
-        console.log(enrollment);
         const resultado: any = await dispatch(getRealEstates({ page: 1, q: enrollment }));
         setRealEstateFilter(resultado.results)
         setTable(true);

@@ -19,10 +19,13 @@ const EditPolicy = () => {
     const dispatch = useDispatch();
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
     const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
-
+    const insurance_brokers: any = useSelector((store: any) => store.insurability.brokers.value);
+    const realEstatesPolicy: any = useSelector((store: any) => store.insurability.policiesRealEstate.value)
     useEffect(() => {
         dispatch(actions.get_list_companies());
+        dispatch(actions.get_all_brokers());
         dispatch(actions.getPolicy(id));
+        dispatch(actions.realEstatesPolicy(Number(id)))
 
     }, []);
 
@@ -45,6 +48,8 @@ const EditPolicy = () => {
                             type='edit'
                             policy={policy}
                             companies={insurance_companies}
+                            brokers={insurance_brokers}
+                            realEstatesPolicy={realEstatesPolicy}
                             onSubmit={(values) => {
                                 return _updatePolicy(values);
                             }}

@@ -1,4 +1,4 @@
-import { createPolicy, getPolicies, getPolicy, updatePolicy, policiesRealEstate } from './policy';
+import { createPolicy, getPolicies, getPolicy, updatePolicy, realEstatesPolicy } from './policy';
 import {
     get_list_companies,
     get_all_companies,
@@ -20,7 +20,7 @@ const services = {
     getPolicies,
     getPolicy,
     updatePolicy,
-    policiesRealEstate,
+    realEstatesPolicy,
     get_list_companies,
     get_all_companies,
     create_company,

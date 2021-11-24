@@ -19,7 +19,6 @@ interface RealEstateListProps {
 const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project_id, init, register, realEstateFilter }) => {
     const dispatch = useDispatch();
 
-
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
     const loading: boolean = useSelector((store: any) => store.acquisitions.realEstates.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.realEstates.pagination);

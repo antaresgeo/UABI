@@ -51,7 +51,6 @@ const CreateInsurability = () => {
                                 <PolizaForm
                                     type_assurance="Normal"
                                     type='create'
-                                    realEstate={realEstate}
                                     companies={insurance_companies}
                                     brokers={insurance_brokers}
                                     onSubmit={(values) => {
