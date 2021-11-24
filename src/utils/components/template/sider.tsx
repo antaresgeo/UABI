@@ -76,7 +76,7 @@ const Sider: FC<{ width: number }> = ({ width }) => {
         },
         {
             name: 'Disposición',
-            children: [],
+            path: "/disposition/list/",
         },
         {
             name: 'Supervisión',

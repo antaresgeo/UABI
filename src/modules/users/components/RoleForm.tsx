@@ -85,7 +85,6 @@ const RoleForm: FC<IUserFormPros> = ({ disabled, user, type,role,onSubmit }) => 
             ...values,
             permits: permitUser
         }
-        console.log(values);
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
             actions.resetForm();

@@ -117,7 +117,7 @@ export const RealEstateFormModal: FC<RealEstateModalProps> = ({ disabled, realEs
                 label: 'Documento de Matricula',
                 type: 3,
             },
-        active_type: 'Lote',
+        active_type: ['Lote'],
         project_id: 0,
         status: 0,
         audit_trail: null,
