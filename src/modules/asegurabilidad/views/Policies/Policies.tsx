@@ -17,8 +17,8 @@ const table_columns = [
     {
         title: 'Compañias Aseguradoras',
         dataIndex: 'insurance_companies',
-        align: 'center' as 'center',
-        render: (date) => date.map(d =>  `${d.nit} - `)
+        align: 'left' as 'left',
+        render: (date) => date.map(d => d.nit).join(" - ")
 
     },
     {

@@ -194,9 +194,7 @@ export const TableAreas= () => {
                     onClick={() => {
                         let completeRealEstates = DataRealEstate.every(b => b.name !== "")
 
-                        //console.log(DataRealEstate);
-                        console.log(real_estates_edit);
-                        if(Number(totalArea) > Number(valueArea) || Number(totalArea) < Number(valueArea) ){
+                        if(Number(totalArea.toFixed(0)) > Number(valueArea) || Number(totalArea.toFixed(0)) < Number(valueArea) ){
                             swal_warning.fire(
                                 {
                                     title: "Área a utilizar no válida", text: `revisa las áreas de los Bienes Inmuebles`
@@ -211,7 +209,7 @@ export const TableAreas= () => {
                         }else{
                             //console.log(DataRealEstate)
                             dispatch(actions.createRealEstates(DataRealEstate))
-                            //TODO: enviar datos para crear realEstates
+                            console.log('bienes inmuebles a editar',real_estates_edit);
                         }
                     }}
                 >

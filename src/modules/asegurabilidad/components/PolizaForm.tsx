@@ -61,7 +61,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
         },
         real_estates_id: realEstatesPolicy ? realEstatesPolicy.map( r =>  r.id ) : [],
         ...policy,
-        ...(policy ? {insurance_broker_id: `${policy.insurance_broker.nit} - ${policy.insurance_broker.name}`   }:  {}) //TODO: cambiar nit por id
+        ...(policy ? {insurance_broker_id: `${policy?.insurance_broker?.nit} - ${policy?.insurance_broker?.name}`   }:  {}) //TODO: cambiar nit por id
 
     };
 

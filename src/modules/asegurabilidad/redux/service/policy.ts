@@ -93,27 +93,43 @@ const getDocument = async (ids) => {
 // Services: PUT
 export const updatePolicy = async (data: any, id: number) => {
     try {
-        console.log('servicio', data)
+        console.log('servicio',data)
+        // Crea un documento nuevo si se cambio el documento
         let new_doc: any = {id: ''};
         if(!data.insurance_document.hasOwnProperty('id') && data.insurance_document.hasOwnProperty('pdf') ){
             new_doc = await create_document(data.insurance_document);
-        }
-        const finalData = {
-            ...data,
-            insurance_document_id: new_doc.id
+            data.insurance_document_id = new_doc.id
         }
 
-        delete finalData.insurance_companies;
+        // guarda las compañias con id y porcentaje
+        const companias = [];
+        data.insurance_companies.map(company =>
+            companias.push({
+                id: company.id,
+                percentage_insured: company.percentage_insured
+            })
+        );
+
+        // poliza editada para enviar
+        const finalData = {
+            ...data,
+            id: id,
+            insurance_broker_id: data.insurance_broker.id,
+            insurance_document_id: data.insurance_document_id,
+            insurance_companies: companias
+        }
         delete finalData.insurance_document;
         delete finalData.insurance_broker;
         delete finalData.registry_numbers;
+        delete finalData.audit_trail;
+        delete finalData.status;
         console.log('servicio final', finalData)
-        // let URI = `/insurabilities`;
-        // let res: AxiosResponse<IPolicyResponse> = await http.put(URI, finalData , {
-        //     params: { id },
-        // });
-        // await swal.fire('poliza actualizada', res.data.message, 'success');
 
+        let URI = `/insurabilities`;
+        let res: AxiosResponse<IPolicyResponse> = await http.put(URI, finalData , {
+            params: { id },
+        });
+        await swal.fire('poliza actualizada', res.data.message, 'success');
 
     } catch (error) {
         console.error(error);
