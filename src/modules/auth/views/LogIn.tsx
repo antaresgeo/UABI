@@ -35,7 +35,14 @@ export default function SignIn() {
                                 <h5 className="sub-header-login text-center">
                                     Sistema para la Administración de Bienes Inmuebles
                                 </h5>
-                                <p style={{ fontWeight: 'bold', marginTop: '15px', fontSize: '14px' }}>
+                                <p
+                                    style={{
+                                        fontWeight: 'bold',
+                                        paddingTop: '15px',
+                                        fontSize: '14px',
+                                        borderTop: '0.5px solid #D1D0D0',
+                                    }}
+                                >
                                     Ingrese sus datos para Iniciar sesión
                                 </p>
                             </div>

@@ -2,73 +2,69 @@ import { FC, useEffect } from 'react';
 import { Field, Formik, Form } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
-import {  IUserAttributes } from '../../../utils/interfaces/users';
-import  { useState } from 'react';
+import { IUserAttributes } from '../../../utils/interfaces/users';
+import { useState } from 'react';
 import { Transfer } from 'antd';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { actions } from '../redux';
 import { IPermitAttributes } from '../../../utils/interfaces/permits';
 import { IRolAttributes } from '../../../utils/interfaces/roles';
+import Select from '../../../utils/ui/select';
+import dependencias from '../../acquisitions/dependencias';
 interface IUserFormPros {
-    role?: IRolAttributes;
-    user?: IUserAttributes;
+    user_roles?: any[];
+    user_permits?: any[];
     disabled?: boolean;
-    type?: 'view' | 'create' | 'edit';
+    type?: 'view' | 'create' | 'edit' | 'assign';
     onSubmit?: (values, actions?) => Promise<any>;
 }
 
-const RoleForm: FC<IUserFormPros> = ({ disabled, user, type,role,onSubmit }) => {
+const RoleForm: FC<IUserFormPros> = ({ disabled, type, user_roles, user_permits, onSubmit }) => {
     const permitsAll: IPermitAttributes[] = useSelector((store: any) => store.users.permits.value);
+    const roles: any[] = useSelector((store: any) => store.users.roles.value);
     const dispatch = useDispatch();
     const [targetKeys, setTargetKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
-    const [mockData, setMockData] = useState([])
-    const [userTarget, setUserTarget] = useState([])
+    // const [userTarget, setUserTarget] = useState([]);
+    const [mockData, setMockData] = useState([]);
 
     useEffect(() => {
-        dispatch(actions.getPermits())
-    }, [])
-
-    useEffect(() => {
-        setTargetKeys(userTarget)
-    }, [userTarget])
-
-
-    useEffect(() => {
-        console.log(permitsAll)
-        const allPermits = permitsAll?.map(per => per.permit_name)
-        const permitUser = role?.permits?.map(p => p.name) || [];
-
-        const mockData = [];
-        for (let i = 0; i < allPermits.length; i++) {
-            mockData.push({
-                key: i.toString(),
-                title: `${allPermits[i]}`,
-            });
+        dispatch(actions.getPermits());
+        if (type === 'assign') {
+            dispatch(actions.getRolesList({}));
         }
+    }, []);
 
-        setMockData(mockData)
+    // useEffect(() => {
+    //     setTargetKeys(userTarget);
+    // }, [userTarget]);
 
-        const mockuser = [];
-        for (let i = 0; i < permitUser.length; i++) {
-            mockuser.push({
-                key: i.toString(),
-                title: `${permitUser[i]}`,
-            });
-        }
-        const initialTargetKeys = mockuser.map(item => item.key);
-        setUserTarget(initialTargetKeys)
+    useEffect(() => {
+        console.log('useEffect', user_permits);
+        const allPermits =
+            permitsAll?.map((per: any) => ({
+                key: per.id,
+                title: per.permit_name,
+                disabled: true,
+            })) || [];
+        const permitUser =
+            user_permits?.map((per: any) => ({
+                key: per.id,
+                title: per.permit_name,
+            })) || [];
+        const initialTargetKeys = permitUser.map((item) => item.key);
+        setMockData(allPermits);
+        setTargetKeys(initialTargetKeys);
+    }, [permitsAll, user_permits]);
 
-    }, [permitsAll, role?.permits])
+    //console.log(initialValues)
 
     const initialValues = {
         name: '',
         permits: [],
-        ...role,
+        roles_to_assign: user_roles.map((rol) => rol.id),
     };
-
-    //console.log(initialValues)
     const onChange = (nextTargetKeys, direction, moveKeys) => {
         setTargetKeys(nextTargetKeys);
         console.log(targetKeys);
@@ -79,13 +75,13 @@ const RoleForm: FC<IUserFormPros> = ({ disabled, user, type,role,onSubmit }) => 
     };
 
     const submit = (values, actions) => {
-        console.log(targetKeys)
+        console.log(targetKeys);
         const permitUser = [];
-        targetKeys.map(key => permitUser.push(Number(key)))
+        targetKeys.map((key) => permitUser.push(Number(key)));
         values = {
             ...values,
-            permits: permitUser
-        }
+            permits: permitUser,
+        };
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
             actions.resetForm();
@@ -97,49 +93,50 @@ const RoleForm: FC<IUserFormPros> = ({ disabled, user, type,role,onSubmit }) => 
     });
 
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} >
+        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues}>
             {({ values, isValid, isSubmitting }) => {
+                console.log(values);
                 return (
                     <Form>
                         <div className="row">
-                            <div className="col-5">
-                                <label htmlFor="name" className="form-label">
-                                    Rol
-                                </label>
-                                <Field
-                                    type="text"
-                                    className="form-control"
-                                    id="name"
-                                    placeholder="Nuevo Rol"
-                                    name="name"
-                                    autoComplete="off"
-                                    disabled={disabled}
-                                >
-                                </Field>
-                                {/* <Field
-                                    as="select"
-                                    className="form-select"
-                                    id="id_rol"
-                                    name="id_rol"
-                                    autoComplete="off"
-                                    disabled={disabled}
-                                >
-                                    <option value="" hidden>
-                                        Selecciona un rol
-                                    </option>
-                                    <option value="2">Supervisor</option>
-                                    <option value="3">Adquisiciónes</option>
-                                    <option value="4">SABI</option>
-                                    <option value="5">Asegurabilidad</option>
-                                    <option value="6">Inspección</option>
-                                    <option value="7">Disposición</option>
-                                    <option value="8">Supervición</option>
-                                    <option value="9">Mantenimiento</option>
-                                    <option value="10">Facturación</option>
-                                </Field> */}
-
-                                <ErrorMessage name="name" />
-                            </div>
+                            {type !== 'assign' && (
+                                <div className="col-6">
+                                    <label htmlFor="name" className="form-label">
+                                        Rol
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        className="form-control"
+                                        id="name"
+                                        placeholder="Nuevo Rol"
+                                        name="name"
+                                        autoComplete="off"
+                                        disabled={disabled}
+                                    />
+                                    <ErrorMessage name="name" />
+                                </div>
+                            )}
+                            {type === 'assign' && (
+                                <div className="col-6">
+                                    <label htmlFor="assign_id" className="form-label">
+                                        Rol
+                                    </label>
+                                    <Field
+                                        component={Select}
+                                        name="roles_to_assign"
+                                        id="assign_id"
+                                        disabled={disabled}
+                                        placeholder="Selecciona una Dependencia"
+                                        options={roles.map((rol) => ({ id: rol.id, name: rol.role_name }))}
+                                        showSearch
+                                        mode="multiple"
+                                        filterOption={(input, option) => {
+                                            return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                        }}
+                                    />
+                                    <ErrorMessage name="name" />
+                                </div>
+                            )}
                             <div className="col-12">
                                 <label htmlFor="permits" className="form-label">
                                     Permisos
@@ -152,7 +149,7 @@ const RoleForm: FC<IUserFormPros> = ({ disabled, user, type,role,onSubmit }) => 
                                     selectedKeys={selectedKeys}
                                     onChange={onChange}
                                     onSelectChange={onSelectChange}
-                                    render={item => item.title}
+                                    render={(item) => item.title}
                                     listStyle={{
                                         width: 250,
                                         height: 300,

@@ -16,8 +16,13 @@
 }
 
 .sub-header-login {
-    padding-top: 4% !important;
-    color: $azulClaro;
+    color: #005CC6;
+    font-size: 18px;
+    font-weight: bold;
+    width: 295px;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .container-inputs-login {
@@ -107,5 +112,6 @@
 
 .image-logo-container-login {
     display: flex !important;
-    width: 183px;
+    width: 179.18px;
+    height: 96.58px;
 }

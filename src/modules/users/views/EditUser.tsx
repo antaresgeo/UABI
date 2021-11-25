@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 import { Card } from '../../../utils/ui';
 import GeneralForm from './../components/GerenalForm';
 import RoleForm from './../components/RoleForm';
+import { swal_success } from '../../../utils';
 
 interface IParams {
     id: string;
@@ -22,17 +23,17 @@ const EditUser = ({ view }: IProps) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const user: IUserAttributes = useSelector((store: any) => store.users.user.value?.detailsUser);
-
+    const user: any = useSelector((store: any) => store.users.user.value);
     const _updateUser = async (userForm) => {
         let res: any;
         if (userForm) {
-            console.log(userForm)
-            res = await dispatch(actions.update_user(id, userForm ));
-            await swal('Usuario actualizado', res.data.message, 'success');
+            res = await dispatch(actions.update_user(id, userForm));
+            await swal_success.fire({ title: 'Usuario actualizado', text: res.message, icon: 'success' });
             history.push(`/users/${user.id}`);
         }
     };
+
+    console.log(user)
 
     useEffect(() => {
         dispatch(actions.get_user_by_id(parseInt(id)));
@@ -47,7 +48,7 @@ const EditUser = ({ view }: IProps) => {
                             <Card title="Edición de Usuario">
                                 <GeneralForm
                                     type="edit"
-                                    user={user}
+                                    user={user?.detailsUser}
                                     onSubmit={(values) => {
                                         return _updateUser(values);
                                     }}
@@ -55,14 +56,14 @@ const EditUser = ({ view }: IProps) => {
                             </Card>
                             <Card title="Asignar permisos al Usuario">
                                 <RoleForm
-                                    type="edit"
+                                    type="assign"
+                                    user_roles={user?.roles || []}
+                                    user_permits={user?.permits|| []}
                                     onSubmit={(values) => {
-
                                         return _updateUser(values);
                                     }}
                                 />
                             </Card>
-
                         </div>
                     </div>
                 </div>

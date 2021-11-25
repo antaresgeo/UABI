@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { auth_http } from '../../../../config/axios_instances';
 import { Audit_trail } from '../../../../utils/components/DocumentsModal/services';
+import {swal_warning} from "../../../../utils";
 
 export interface AllUsersResponse {
     message: string;
@@ -92,13 +93,16 @@ export const create_user = async (data) => {
     delete data.detailsUser.status;
     delete data.detailsUser.audit_trail;
     delete data.detailsUser.str_location;
-    if(data.detailsUser.entity_type !== 'P'){
+    if (data.detailsUser.entity_type !== 'P') {
         delete data.detailsUser.dependency;
         delete data.detailsUser.subdependency;
     }
     try {
         const URI = '/users/';
-        const res: AxiosResponse<UserResponse> = await auth_http.post(URI, data);
+        const res: AxiosResponse<UserResponse> = await auth_http.post(
+            URI,
+            data
+        );
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -125,7 +129,7 @@ export const update_user = async (id, data) => {
     delete data.detailsUser.status;
     delete data.detailsUser.audit_trail;
     delete data.detailsUser.str_location;
-    if(data.detailsUser.entity_type !== 'P'){
+    if (data.detailsUser.entity_type !== 'P') {
         delete data.detailsUser.dependency;
         delete data.detailsUser.subdependency;
     }
@@ -149,10 +153,16 @@ export const update_user = async (id, data) => {
 
 export const delete_user = async (id) => {
     try {
-        const URI = `/users/${id}/`;
-        const res: AxiosResponse<UserResponse> = await auth_http.delete(URI);
+        const URI = `/users/`;
+        const res: AxiosResponse<UserResponse> = await auth_http.delete(URI, {
+            params: { id },
+        });
         return res.data;
     } catch (e) {
+        if(e?.response?.status === 400 ) {
+            swal_warning.fire({ text: e.response.data.message, icon: 'error' });
+            console.log(e.response.data)
+        }
         return Promise.reject('Error');
     }
 };
