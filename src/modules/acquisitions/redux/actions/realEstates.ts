@@ -32,6 +32,9 @@ export const createRealEstate = (data) =>
 export const createRealEstates = (data) =>
     request_dispatch(types.realEstates, service.createRealEstates(data));
 
+export const updateRealEstates = (data) =>
+    request_dispatch(types.realEstates, service.updateRealEstates(data));
+
 export const updateRealEstate = (data, id) =>
     request_dispatch(types.realEstate, service.updateRealEstate(data, id));
 
@@ -48,3 +51,6 @@ export const createAcquisitionForRealEstate = (
 
 export const clearRealEstate = () =>
         request_dispatch(types.clearRealEstate, Promise.resolve(null) )
+
+export const getTipologies = () =>
+        request_dispatch(types.tipologies,  service.getTipologies())

@@ -50,3 +50,19 @@ export interface IItemRealEstate {
     creationDate: string;
     createdBy?: string;
 }
+
+export interface ITipologyAttributes {
+    id: string;
+    tipology: string;
+    accounting_account: string;
+}
+
+export interface ITipologiesResponse {
+    results: ITipologyAttributes[];
+    message: string;
+}
+
+export interface ITipologyResponse {
+    results: ITipologyAttributes;
+    message: string;
+}

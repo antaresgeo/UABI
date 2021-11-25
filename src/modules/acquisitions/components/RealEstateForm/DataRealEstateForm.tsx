@@ -1,15 +1,17 @@
 import { Field } from 'formik';
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import Select from '../../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
-import { service } from '../../redux';
+import { actions, service } from '../../redux';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 import { extractMonth, formatDate } from '../../../../utils';
 import CheckboxGroup from 'react-checkbox-group';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import dependencias from '../../dependencias';
+import { ITipologyAttributes } from './../../../../utils/interfaces/realEstates';
+import { useSelector, useDispatch } from 'react-redux'
 
 interface DataRealEstateFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -32,6 +34,12 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     englobe,
     onProjectSelectedChange,
 }) => {
+    const tipologies: ITipologyAttributes[] = useSelector((states: any) => states.acquisitions.tipologies.value);
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(actions.getTipologies())
+    }, [])
     const [subs, set_subs] = useState<any[]>([]);
     const onChangeActiveType = (active_types, setFieldValue) => (e) => {
         const data_now = [...active_types];
@@ -90,29 +98,22 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <label htmlFor="tipology_id" className="form-label">
                         Tipología
                     </label>
-                    <Field disabled={disabled} name="tipology" id="tipology_id" as="select" className="form-select">
-                        <option value="" disabled hidden>
-                            -- Seleccione Tipología --
-                        </option>
-                        <option value="Agrícola">Agrícola</option>
-                        <option value="Agroindustrial">Agroindustrial</option>
-                        <option value="Comercial">Comercial</option>
-                        <option value="Cultural">Cultural</option>
-                        <option value="Agropecuario">Agropecuario</option>
-                        <option value="Educativo">Educativo</option>
-                        <option value="Forestal">Forestal</option>
-                        <option value="Habitacional">Habitacional</option>
-                        <option value="Institucional">Institucional</option>
-                        <option value="Minero">Minero</option>
-                        <option value="Pecuario">Pecuario</option>
-                        <option value="Recreación">Recreación</option>
-                        <option value="Religioso">Religioso</option>
-                        <option value="Industrial">Industrial</option>
-                        <option value="Salubridad">Salubridad</option>
-                        <option value="Servicios">Servicios</option>
-                        <option value="Especiales">Especiales</option>
-                        <option value="Uso Publico">Uso Publico</option>
-                    </Field>
+                    <Field
+                        component={Select}
+                        id="tipology_id"
+                        name="tipology"
+                        placeholder="Seleccione Tipología "
+                        disabled={disabled}
+                        options={tipologies?.map(tipology => ({ id: tipology.id, name: tipology.tipology}))}
+                        showSearch // habilitar para buscarx
+                        filterOption={(input, option) => {
+                            return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                        }}
+                        extra_on_change={(id) => {
+                            const bill = tipologies.filter(tipology => tipology.id === id)
+                            formik.setFieldValue("accounting_account", bill[0].accounting_account, false)
+                        }}
+                    />
                     <ErrorMessage name="tipology" />
                 </div>
                 <div className="form-group col-3">
@@ -296,6 +297,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             type="number"
                             className="form-control text-end"
                             style={{ borderLeft: 'none' }}
+                            //value={""} //TODO: sumas el valor de adquisicion con valor de reconocimiento
                             min={0}
                             max={99999999999999999999}
                         />
@@ -573,6 +575,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 id="importe_contabilidad_id"
                                 name="importe_contabilidad"
                                 disabled
+
                             />
                             <ErrorMessage />
                         </div>
@@ -588,7 +591,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 value={extractMonth(formik.values.audit_trail?.created_on)}
                                 disabled
 
-                                // EL MES
+                            // EL MES
                             />
                             <ErrorMessage />
                         </div>
@@ -625,12 +628,21 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 Tipo de uso disponibilidad
                             </label>
                             <Field
-                                type="number"
+                                as="select"
                                 className="form-control"
                                 id="availability_type"
                                 name="availability_type"
                                 disabled={inventory}
-                            />
+                            >
+                                <option key="availability_type" value="" hidden>--Seleccione Tipo de uso--</option>
+                                <option key="Misional" value="Misional">Misional</option>
+                                <option key="Misional social" value="Misional social">Misional social</option>
+                                <option key="Inversión" value="Inversión">Inversión</option>
+                                <option key="Inversión Social" value="Inversión Social">Inversión Social</option>
+                                <option key="administracion" value="administracion">Administración</option>
+                                <option key="mantenimiento" value="mantenimiento">Mantenimiento</option>
+                                <option key="aprovechamiento" value="aprovechamiento">Aprovechamiento</option>
+                            </Field>
                             <ErrorMessage />
                         </div>
                         <div className="col-4">

@@ -42,6 +42,11 @@ const emptyInitialState: any = {
         loading: false,
         loaded: false,
     },
+    tipologies: {
+        value: [],
+        loading: false,
+        loaded: false,
+    },
 };
 
 const initialState = emptyInitialState;
@@ -205,6 +210,38 @@ const reducer = (state: any = initialState, action: any): any => {
                     value: action.payload
                 }
             }
+        }
+
+
+        case types.tipologies.default: {
+            return {
+                ...state,
+                tipologies: { ...state.tipologies, loading: true },
+            };
+        }
+
+        case types.tipologies.success: {
+            return {
+                ...state,
+                tipologies: {
+                    ...state.tipologies,
+                    loading: false,
+                    loaded: true,
+                    value: action.payload,
+                },
+            };
+        }
+
+        case types.tipologies.fail: {
+            return {
+                ...state,
+                tipologies: {
+                    ...state.tipologies,
+                    loading: false,
+                    loaded: false,
+                    value: emptyInitialState.tipologies.value,
+                },
+            };
         }
 
         default: {

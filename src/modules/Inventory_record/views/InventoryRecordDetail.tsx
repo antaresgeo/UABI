@@ -57,13 +57,13 @@ export const InventoryRecordDetail = () => {
             inventory={false}
             onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
+                console.log(values);
                 const confirmation = {
                     availability_type: values.availability_type,
                     utilization_value: values.utilization_value,
                     authorization_value: values.authorization_value,
                     canon_value: values.canon_value
                 }
-                console.log(values);
                 //createconfirmation(confirmation);
                 //return Promise.reject();
             }}

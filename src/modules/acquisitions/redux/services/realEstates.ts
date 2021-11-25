@@ -8,6 +8,7 @@ import {
     IPaginable,
     IRealEstateAttributes,
     IRealEstateResponse,
+    ITipologiesResponse,
 } from '../../../../utils/interfaces';
 import {
     compute_docs,
@@ -103,7 +104,24 @@ const get_docucments_whit_service = async (docs) => {
         return Promise.reject('Error');
     }
 };
+const finalData = (aux_data) => {
+    delete aux_data.id;
+    delete aux_data.status;
+    delete aux_data.acquisitions;
+    delete aux_data.audit_trail;
+    delete aux_data.registry_number_document_id;
+    delete aux_data.project_id;
+    delete aux_data.sap_id;
+    delete aux_data.active_code;
+    delete aux_data.fixed_assets;
 
+    if (aux_data.project?.id !== 0) {
+        delete aux_data.dependency;
+        delete aux_data.subdependency;
+        delete aux_data.cost_center;
+        delete aux_data.management_center;
+    }
+}
 // Services: POST
 export const createRealEstate = async (
     data: any
@@ -115,24 +133,10 @@ export const createRealEstate = async (
 
         const aux_data = {
             ...data,
+            active_type: data.active_type.join(", "),
             supports_documents: '',
         };
-        delete aux_data.id;
-        delete aux_data.status;
-        delete aux_data.acquisitions;
-        delete aux_data.audit_trail;
-        delete aux_data.registry_number_document_id;
-        delete aux_data.project_id;
-        delete aux_data.sap_id;
-        delete aux_data.active_code;
-        delete aux_data.fixed_assets;
-
-        if (aux_data.project?.id !== 0) {
-            delete aux_data.dependency;
-            delete aux_data.subdependency;
-            delete aux_data.cost_center;
-            delete aux_data.management_center;
-        }
+        finalData(aux_data)
 
         let res: AxiosResponse<IRealEstateResponse> = await http.post(
             URI,
@@ -147,26 +151,23 @@ export const createRealEstate = async (
 };
 
 //TODO: Crear realEstates englobe - desenglobe
-export const createRealEstates = async (
-    data: any
-): Promise<any | []> => {
+export const createRealEstates = async (data: any): Promise<any | []> => {
     try {
+        console.log('bienes inmuebles a crear',data)
         let URI = `/real-estates`;
-        data.map(realEstate => {
-            delete realEstate.id;
-            delete realEstate.project_id;
-            delete realEstate.active_code;
-            delete realEstate.status;
-            delete realEstate.acquisitions;
-            delete realEstate.audit_trail;
-            delete realEstate.registry_number_document_id;
-            delete realEstate._type;
-            delete realEstate.key;
-            delete realEstate.document;
-            delete realEstate.document;
-            delete realEstate.supports_documents;
-        })
-        console.log(data)
+        //servicio
+
+    } catch (error) {
+        console.error(error);
+        return Promise.reject('Error');
+    }
+};
+
+export const updateRealEstates = async (data: any) => {
+    try {
+        console.log('bienes inmuebles a actualizar',data)
+        let URI = `/real-estates`;
+        //servicio
 
     } catch (error) {
         console.error(error);
@@ -182,23 +183,7 @@ export const updateRealEstate = async (data: any, id: number) => {
         const docs_ids = await upload_documents(docs);
 
         const aux_data = { ...data, supports_documents: docs_ids };
-        delete aux_data.id;
-        delete aux_data.status;
-        delete aux_data.acquisitions;
-        delete aux_data.audit_trail;
-        delete aux_data.registry_number_document_id;
-        delete aux_data.reconstruction_value;
-        delete aux_data.project_id;
-        delete aux_data.sap_id;
-        delete aux_data.active_code;
-        delete aux_data.fixed_assets;
-
-        if (aux_data.project?.id !== 0) {
-            delete aux_data.dependency;
-            delete aux_data.subdependency;
-            delete aux_data.cost_center;
-            delete aux_data.management_center;
-        }
+        finalData(aux_data);
 
         let res: AxiosResponse<IRealEstateResponse> = await http.put(
             URI,
@@ -333,6 +318,17 @@ const getAcquisitionForRealEstate = async (real_estate_id) => {
     }
 };
 
+const getTipologies = async () => {
+    try {
+        let URI = '/tipologies';
+        let res: AxiosResponse<ITipologiesResponse> = await http.get(URI);
+        return res.data.results
+
+    } catch (error) {
+        return Promise.reject('Error in get tipologies');
+    }
+}
+
 const services = {
     getRealEstates,
     getRealEstatesByProject,
@@ -340,10 +336,12 @@ const services = {
     createRealEstate,
     createRealEstates,
     updateRealEstate,
+    updateRealEstates,
     getAddress,
     deleteRealEstate,
     createAcquisitionForRealEstate,
     getAcquisitionForRealEstate,
+    getTipologies,
 };
 
 export default services;

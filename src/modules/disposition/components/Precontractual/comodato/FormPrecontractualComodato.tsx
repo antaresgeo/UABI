@@ -186,20 +186,20 @@ export const FormPrecontractualComodato = () => {
                     <ErrorMessage name="peacesafe" withCount max={200} />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="social_event_id" className="form-label">
                         Eventos sociales
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="description_id"
+                        id="social_event_id"
+                        name="social_event"
                         aria-describedby="emailHelp"
                         placeholder="Descripción de eventos"
-                        name="description"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="description" withCount max={200} />
+                    <ErrorMessage name="social_event" withCount max={200} />
                 </div>
                 <div className="col-4">
                     <label htmlFor="consecutive_number_id" className="form-label">
