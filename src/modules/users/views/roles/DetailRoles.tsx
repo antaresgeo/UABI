@@ -33,7 +33,7 @@ const DetailRoles = () => {
                         <div className="col-md-12">
                             <Card title="ver Rol">
                                 <RoleForm
-                                    role={finalRole}
+                                    // us={finalRole}
                                     type="view"
                                     disabled={true}
                                 />

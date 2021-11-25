@@ -109,7 +109,7 @@ export const ListRoles = () => {
         },
         {
             title: 'Rol',
-            dataIndex: 'name',
+            dataIndex: 'role_name',
             align: 'center' as 'center',
         },
         {
