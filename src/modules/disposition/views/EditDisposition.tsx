@@ -4,6 +4,7 @@ import { FormDisposition } from "../components/FormDisposition";
 import { FormTypeDisposition } from "../components/FormTypeDisposition";
 import { ListContracts } from './Contracts/ListContracts';
 import { useHistory } from 'react-router-dom';
+import { ModalNotificar } from './../components/ModalNotificar';
 
 
 export const EditDisposition = () => {
@@ -19,20 +20,22 @@ export const EditDisposition = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
+                            <FormDisposition dispositionType={dispositionType} />
                             <Card
                                 title="Tipo Disposición"
+                                extra={<ModalNotificar />}
                             >
                                 <FormTypeDisposition
                                     onTypeDispositionChange={typeDisposition}
                                 />
                             </Card>
-                            <Card
+                            {/* <Card
                                 title=""
                             >
                                 <FormDisposition
                                     dispositionType={dispositionType}
                                 />
-                            </Card>
+                            </Card> */}
 
                             <ListContracts />
                         </div>

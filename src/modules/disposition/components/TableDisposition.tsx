@@ -9,12 +9,17 @@ interface DispositionListProps {
 export const TableDisposition: FC<DispositionListProps> = ({  filters, init })  => {
     const table_columns = [
         {
-            title: 'ID Proyecto',
+            title: 'ID', //TODO: ID del proyecto
             dataIndex: '',
             align: 'left' as 'left',
         },
         {
-            title: 'Matrículas BI',
+            title: 'Proyecto',
+            dataIndex: '',
+            align: 'left' as 'left',
+        },
+        {
+            title: 'Matrícula BI',
             dataIndex: '',
             align: 'left' as 'left',
         },

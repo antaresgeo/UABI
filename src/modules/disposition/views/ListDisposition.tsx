@@ -30,8 +30,8 @@ export const ListDisposition = () => {
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card>
-                        <div className="row justify-content-center">
-                            <div className="col">
+                        <div className="row">
+                            <div className="col-3">
                                 <input
                                     type="number"
                                     className="form-control form-control-lg"
@@ -42,7 +42,7 @@ export const ListDisposition = () => {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div className="col">
+                            <div className="col-4">
                                 <input
                                     type="text"
                                     className="form-control form-control-lg"

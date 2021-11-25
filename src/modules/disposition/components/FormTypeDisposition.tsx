@@ -66,7 +66,7 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
 
                         />
                     </div>
-                    <div className="col-4">
+                    <div className="col-6">
                         <label htmlFor="disposition_type_id" className="form-label">
                             Tipo disposición
                         </label>
@@ -78,9 +78,6 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
                             options={dispositions.map(realestate => ({ id: realestate, name: realestate }))}
                             extra_on_change={onTypeDispositionChange}
                         />
-                    </div>
-                    <div className="col-2">
-                        <ModalNotificar />
                     </div>
                 </div>
             </Form>
