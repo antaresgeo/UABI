@@ -38,7 +38,6 @@ export const getRolesList = async ({
                 ...(q ? { q } : {}),
             },
         });
-        console.log(res);
         return res.data.results;
     } catch (error) {
         console.error(error);

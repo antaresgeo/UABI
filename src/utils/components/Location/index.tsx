@@ -98,6 +98,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
             initialValues={initialValues}
             validationSchema={view === 'general' && schema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
+                console.log(1);
                 modalClose &&
                     modalClose(values, () => {
                         setSubmitting(false);

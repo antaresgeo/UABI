@@ -36,7 +36,7 @@ export const EditRoles = () => {
                         <div className="col-md-12">
                             <Card title="Editar Rol">
                                 <RoleForm
-                                    role={finalRole}
+                                    // role={finalRole}
                                     type="edit"
                                     onSubmit={(values) => {
                                         return editRol(values);

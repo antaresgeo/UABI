@@ -55,11 +55,9 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
             id_type: Yup.string().required('Campo obligatorio'),
             names: Yup.object().shape({
                 firstName: Yup.string().required('Campo obligatorio'),
-                lastName: Yup.string().required('Campo obligatorio'),
             }),
             surnames: Yup.object().shape({
                 firstSurname: Yup.string().required('Campo obligatorio'),
-                lastSurname: Yup.string().required('Campo obligatorio'),
             }),
             email: Yup.string().required('Campo obligatorio'),
             cellphone_number: Yup.number().required('Campo obligatorio'),
@@ -142,7 +140,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                             </div>
                             {values.detailsUser.entity_type === 'P' && (
                                 <>
-                                    <div className="col-3">
+                                    <div className="col-6">
                                         <label htmlFor="dependency_id" className="form-label">
                                             Dependecia
                                         </label>
@@ -159,7 +157,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                                     const dependency = dependencias.find((d) => d.name === value);
                                                     const _subs = format_list(dependency.subs);
                                                     setFieldValue('detailsUser.subdependency', dependency.name);
-                                                    console.log(_subs)
+                                                    console.log(_subs);
                                                     set_subs(_subs);
                                                 }
                                             }}
@@ -171,7 +169,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                         />
                                         <ErrorMessage name="detailsUser.dependency" />
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-6">
                                         <label htmlFor="subdependency_id" className="form-label">
                                             Sub. Dependecia
                                         </label>
@@ -299,7 +297,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 />
                                 <ErrorMessage name="detailsUser.id_number" />
                             </div>
-                            <div className="col-6">
+                            <div className={`col-${type === 'create' ? 3 : 6}`}>
                                 <label htmlFor="username" className="form-label">
                                     Correo Electronico
                                 </label>
@@ -315,6 +313,22 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 />
                                 <ErrorMessage name="detailsUser.email" />
                             </div>
+                            {type === 'create' && (
+                                <div className="col-3">
+                                    <label htmlFor="username" className="form-label">
+                                        Contraseña
+                                    </label>
+                                    <Field
+                                        type="password"
+                                        className="form-control"
+                                        id="password_id"
+                                        name="user.password"
+                                        autoComplete="off"
+                                        disabled={disabled}
+                                    />
+                                    <ErrorMessage name="user.password" />
+                                </div>
+                            )}
                         </div>
                         <div className="row">
                             <div className="col-3">
@@ -387,8 +401,8 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                             view="user"
                                             disabled={disabled}
                                             onSave={async (values) => {
-                                                setFieldValue('detailsUser.str_location', values.addressAsString)
-                                                setFieldValue('detailsUser.location', `${values.id}`)
+                                                setFieldValue('detailsUser.str_location', values.addressAsString);
+                                                setFieldValue('detailsUser.location', `${values.id}`);
                                             }}
                                         />
                                     </div>
@@ -418,7 +432,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                         <option value="5">Asegurabilidad</option>
                                         <option value="6">Inspección</option>
                                         <option value="7">Disposición</option>
-                                        <option value="8">Supervición</option>
+                                        <option value="8">Supervisión</option>
                                         <option value="9">Mantenimiento</option>
                                         <option value="10">Facturación</option>
                                     </Field>
@@ -431,7 +445,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 {type !== 'view' && (
                                     <button
                                         className="btn btn-primary my-3"
-                                        disabled={isSubmitting || disabled}
+                                        disabled={isSubmitting || !isValid || disabled}
                                         type="submit"
                                     >
                                         Guardar

@@ -1,7 +1,7 @@
 import types from './types';
-import {Loadable, Pageable} from "../../../custom_types";
-import {Broker, Company} from "../../asegurabilidad/redux/service";
-import {User} from "./service";
+import { Loadable, Pageable } from '../../../custom_types';
+import { Broker, Company } from '../../asegurabilidad/redux/service';
+import { User } from './service';
 
 interface State {
     rol: Loadable<any>;
@@ -10,8 +10,21 @@ interface State {
     users: Pageable<User>;
     rolesSelect: Loadable<any>;
     permits: Loadable<any>;
-
 }
+
+const fake_role = {
+    id: -1,
+    id_rol: '',
+    permits: [],
+    audit_trail: {
+        created_by: '',
+        created_on: '',
+        updated_by: null,
+        updated_on: null,
+        updated_values: null,
+    },
+    status: -1,
+};
 
 const emptyInitialState: State = {
     users: {
@@ -32,40 +45,12 @@ const emptyInitialState: State = {
         loaded: false,
     },
     rol: {
-        value: [
-            {
-                id: -1,
-                permits: [],
-                rol: '',
-                audit_trail: {
-                    created_by: '',
-                    created_on: '',
-                    updated_by: null,
-                    updated_on: null,
-                    updated_values: null,
-                },
-                status: -1,
-            },
-        ],
+        value: [fake_role],
         loading: false,
         loaded: false,
     },
     roles: {
-        value: [
-            {
-                id: -1,
-                id_rol: '',
-                permits: [],
-                audit_trail: {
-                    created_by: '',
-                    created_on: '',
-                    updated_by: null,
-                    updated_on: null,
-                    updated_values: null,
-                },
-                status: -1,
-            },
-        ],
+        value: [fake_role],
         pagination: {
             page: 1,
             count: 0,
@@ -77,29 +62,16 @@ const emptyInitialState: State = {
         loaded: false,
     },
     rolesSelect: {
-        value: [
-            {
-                id: 0,
-                name: "",
-                status: -1,
-                audit_trail: {
-                    created_by: '',
-                    created_on: '',
-                    updated_by: null,
-                    updated_on: null,
-                    updated_values: null,
-                },
-            },
-        ],
+        value: [fake_role],
         loading: false,
-        loaded: false
+        loaded: false,
     },
     permits: {
         value: [
             {
                 id: 0,
-                name: ""
-            }
+                name: '',
+            },
         ],
         loading: false,
         loaded: false,
@@ -108,7 +80,7 @@ const emptyInitialState: State = {
 const initialState = emptyInitialState;
 
 const reducer = (state: State = initialState, action: any): State => {
-    const dataUsers = userReducer(state, action)
+    const dataUsers = userReducer(state, action);
     return {
         ...state,
         ...dataUsers,
@@ -222,7 +194,7 @@ const userReducer = (aux_state: any, action: any) => {
             return state;
         }
     }
-}
+};
 
 const reducerRol = (aux_state: State = initialState, action: any): any => {
     const { rol, roles, rolesSelect, permits } = aux_state;
@@ -237,17 +209,19 @@ const reducerRol = (aux_state: State = initialState, action: any): any => {
         case types.roles.success: {
             return {
                 ...state,
-                value: action.payload,
-
-                pagination: {
-                    page: action.payload?.page || 1,
-                    count: action.payload?.count || 0,
-                    next_page: action.payload?.next_page,
-                    previous_page: action.payload?.previous_page,
-                    total_results: action.payload?.total_results || 0,
+                roles: {
+                    ...state.roles,
+                    value: action.payload,
+                    pagination: {
+                        page: action.payload?.page || 1,
+                        count: action.payload?.count || 0,
+                        next_page: action.payload?.next_page,
+                        previous_page: action.payload?.previous_page,
+                        total_results: action.payload?.total_results || 0,
+                    },
+                    loading: false,
+                    loaded: true,
                 },
-                loading: false,
-                loaded: true,
             };
         }
         case types.roles.fail: {
@@ -305,7 +279,7 @@ const reducerRol = (aux_state: State = initialState, action: any): any => {
                     value: action.payload,
                     loading: false,
                     loaded: true,
-                }
+                },
             };
         }
         case types.permits.fail: {
@@ -332,7 +306,7 @@ const reducerRol = (aux_state: State = initialState, action: any): any => {
                     value: action.payload,
                     loading: false,
                     loaded: true,
-                }
+                },
             };
         }
         case types.rolesSelect.fail: {

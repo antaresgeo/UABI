@@ -18,8 +18,10 @@ const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone })
         !disabled && set_is_visible(true);
     };
     const close = () => set_is_visible(false);
-    const request = (values) => {
+    const request = (_values) => {
+        console.log(3)
         if (view === 'general' || 'user') {
+            const values = {..._values};
             delete values.country_name;
             delete values.state_name;
             delete values.state_name;
@@ -31,7 +33,7 @@ const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone })
                 return onSave && onSave(res);
             });
         } else {
-            return onSave && onSave(values);
+            return onSave && onSave(_values);
         }
     };
     // const toggle = () => set_is_visible((visible) => !visible);
@@ -46,6 +48,7 @@ const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone })
                     innerRef={ref}
                     zone={zone}
                     modalClose={(values, callback) => {
+                        console.log(2)
                         request(values)
                             .then(() => {
                                 callback && callback();
