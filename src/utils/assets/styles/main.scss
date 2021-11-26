@@ -240,7 +240,7 @@ main {
         padding-bottom: 10px;
     }
     .table_content {
-        height: 100px;
+        min-height: 100px;
         display: flex;
         .box-table {
             border-top: 1px solid #b8b8b8;

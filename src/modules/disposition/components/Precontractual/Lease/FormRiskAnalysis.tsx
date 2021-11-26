@@ -11,10 +11,9 @@ interface FormProps {
 export const FormRiskAnalysis: FC<FormProps> = ({ formik }) => {
     return (
         <>
-            <h5 className="div">Riesgo regulatorio</h5>
-            <hr />
             <div className="row">
-                <div className="col-4">
+                <div className="col-2 text-center" style={{marginTop: 30, fontSize: '14px', fontWeight: 'bold'}}>Riesgo regulatorio</div>
+                <div className="col-3">
                     <label htmlFor="public_service_id" className="form-label">
                         Grado de Ocurrencia
                     </label>
@@ -38,7 +37,7 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik }) => {
                     </Field>
                     <ErrorMessage name="public_service" />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="public_service_id" className="form-label">
                         Grado de Impacto
                     </label>

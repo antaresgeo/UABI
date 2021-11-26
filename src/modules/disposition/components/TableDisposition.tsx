@@ -1,31 +1,47 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Link, Table } from "../../../utils/ui";
+import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from "../../acquisitions/redux";
 
 interface DispositionListProps {
     filters?: any;
     init?: boolean;
 }
 
-export const TableDisposition: FC<DispositionListProps> = ({  filters, init })  => {
+export const TableDiszposition: FC<DispositionListProps> = ({  filters, init })  => {
+        const dispatch = useDispatch();
+
+    const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
+    const loading: boolean = useSelector((store: any) => store.acquisitions.realEstates.loading);
+    const { total_results } = useSelector((store: any) => store.acquisitions.realEstates.pagination);
+    console.log(realEstates);
     const table_columns = [
         {
-            title: 'ID Proyecto',
-            dataIndex: '',
+            title: 'ID', //TODO: ID del proyecto
+            dataIndex: 'project',
             align: 'left' as 'left',
+            render: (data) => data.id,
         },
         {
-            title: 'Matrículas BI',
-            dataIndex: '',
+            title: 'Proyecto',
+            dataIndex: 'project',
+            align: 'left' as 'left',
+            render: (data) => data.name,
+        },
+        {
+            title: 'Matrícula BI',
+            dataIndex: 'registry_number',
             align: 'left' as 'left',
         },
         {
             title: 'Nombre',
-            dataIndex: '',
+            dataIndex: 'name',
             align: 'left' as 'left',
         },
         {
             title: 'Dirección',
-            dataIndex: '',
+            dataIndex: 'address',
             align: 'left' as 'left',
 
         },
@@ -55,7 +71,7 @@ export const TableDisposition: FC<DispositionListProps> = ({  filters, init })  
                     render: (id) => {
                         return (
                             <Link
-                                to={""}
+                                to={`/disposition/edit/${id}/`}
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-pencil" aria-hidden="true" />}
@@ -66,14 +82,24 @@ export const TableDisposition: FC<DispositionListProps> = ({  filters, init })  
             ],
         },
     ];
+
+    const change_page = (page, pageSize) => {
+        dispatch(actions.getRealEstates({ page, pageSize, pagination: 'pagination', ...filters }));
+    };
+
+    useEffect(() => {
+        dispatch(actions.getRealEstates({pagination: 'pagination'})); //TODO: mirar filtro de poliza
+
+    }, []);
+
     return (
         <Table
             columns={table_columns}
-            items={[]}
+            items={realEstates}
             with_pagination
-            //count={total_results}
-            //change_page={change_page}
-            //loading={loading}
+            count={total_results}
+            change_page={change_page}
+            loading={loading}
         />
     )
 }

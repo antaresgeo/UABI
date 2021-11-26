@@ -6,15 +6,17 @@ import { FC } from 'react';
 import { ModalNotificar } from './ModalNotificar';
 
 interface DispositionFormPros {
-    realEstate?: IRealEstateAttributes;
+    realEstate: any;
     onTypeDispositionChange?: (value) => void;
 }
 
 export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTypeDispositionChange }) => {
+    console.log(realEstate?.destination_type)
     const initialValues = {
-        type_use: "",
+        type_use: realEstate ? realEstate?.destination_type : "",
         active_type: "",
-        disposition_type: ""
+        disposition_type: "",
+        ...realEstate
     };
 
     const submit = (values, actions) => {
@@ -42,7 +44,7 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
                 <div className="row">
                     <div className="col-3">
                         <label htmlFor="type_use_id" className="form-label">
-                            Tipo de uso
+                            Tipo de Uso
                         </label>
                         <Field
                             type="text"
@@ -55,7 +57,7 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
                     </div>
                     <div className="col-3">
                         <label htmlFor="active_type_id" className="form-label">
-                            Tipo Activo
+                            Tipo de Activo
                         </label>
                         <Field
                             type="text"
@@ -66,7 +68,7 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
 
                         />
                     </div>
-                    <div className="col-4">
+                    <div className="col-6">
                         <label htmlFor="disposition_type_id" className="form-label">
                             Tipo disposición
                         </label>
@@ -78,9 +80,6 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
                             options={dispositions.map(realestate => ({ id: realestate, name: realestate }))}
                             extra_on_change={onTypeDispositionChange}
                         />
-                    </div>
-                    <div className="col-2">
-                        <ModalNotificar />
                     </div>
                 </div>
             </Form>

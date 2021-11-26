@@ -41,7 +41,7 @@ export const GeneralFormPrecontractual: FC<FormPros> = ({dispositionType}) => {
                             <FormPrecontractual formik={formik} />
                         }
                         {dispositionType === "Comodato" &&
-                            <FormPrecontractualComodato />
+                            <FormPrecontractualComodato formik={formik} />
                         }
                         {dispositionType === "ventas" &&
                             <FormPrecontractualPublicUse />
@@ -53,9 +53,11 @@ export const GeneralFormPrecontractual: FC<FormPros> = ({dispositionType}) => {
                     <Card title="Análisis de riesgos">
                         <FormRiskAnalysis formik={formik} />
                     </Card>
-                    <Card title="Requerimientos">
-
-                    </Card>
+                    {dispositionType === "arrendamiento" &&
+                        <Card title="Requerimientos">
+                            {/* TODO: faltan datos de requerimientos */}
+                        </Card>
+                    }
                     <Card >
                         <FormLider />
                     </Card>

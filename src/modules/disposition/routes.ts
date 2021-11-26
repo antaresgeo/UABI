@@ -5,6 +5,8 @@ import { EditDisposition } from './views/EditDisposition';
 import { ListDisposition } from './views/ListDisposition';
 import CreateContract from './views/Contracts/CreateContract';
 import CreatePrecontractual from './views/Pre-contractual/CreatePrecontractual';
+import Prueba from './../inspection/views/inspection/Prueba';
+import CreateDisposition from './views/CreateDisposition';
 
 const get_routes = (): IRoute[] => {
     return [
@@ -48,30 +50,45 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/disposition/precontractual/create/',
+            path: '/disposition/create/',
             template_props: {
                 breadcrumbs: [
                     { name: 'Disposición', to: '/disposition/list/' },
-                    { name: 'Tipo disposición', to: '/disposition/edit/:id/' },
-                    { name: 'Etapa Precontractual' },
+                    { name: 'Crear' },
                 ],
             },
-            component: CreatePrecontractual,
+            component: CreateDisposition
         },
-        {
-            exact: true,
-            is_private: true,
-            can_access: true,
-            path: '/disposition/contract/create/',
-            template_props: {
-                breadcrumbs: [
-                    { name: 'Disposición', to: '/disposition/list/' },
-                    { name: 'Tipo disposición', to: '/disposition/edit/:id/' },
-                    { name: 'Crear Contrato' },
-                ],
-            },
-            component: CreateContract,
-        },
+        // {
+        //     exact: true,
+        //     is_private: true,
+        //     can_access: true,
+        //     path: '/disposition/precontractual/create/',
+        //     template_props: {
+        //         breadcrumbs: [
+        //             { name: 'Disposición', to: '/disposition/list/' },
+        //             { name: 'Tipo disposición', to: '/disposition/edit/:id/' },
+        //             { name: 'Etapa Precontractual' },
+        //         ],
+        //     },
+        //     component: CreatePrecontractual,
+        // },
+        // {
+        //     exact: true,
+        //     is_private: true,
+        //     can_access: true,
+        //     path: '/disposition/contract/create/',
+        //     template_props: {
+        //         breadcrumbs: [
+        //             { name: 'Disposición', to: '/disposition/list/' },
+        //             { name: 'Tipo disposición', to: '/disposition/edit/:id/' },
+        //             { name: 'Crear Contrato' },
+        //         ],
+        //     },
+        //     component: CreateContract,
+        // },
+
+
     ];
 };
 

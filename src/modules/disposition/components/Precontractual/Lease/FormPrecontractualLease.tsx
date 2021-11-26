@@ -15,7 +15,7 @@ const FormPrecontractual: FC<FormProps> = ({ formik }) => {
             <div className="row">
                 <div className="col-4">
                     <label htmlFor="consecutive_number_id" className="form-label">
-                        número consecutivo
+                        Número Consecutivo
                     </label>
                     <Field
                         type="text"
@@ -59,7 +59,7 @@ const FormPrecontractual: FC<FormProps> = ({ formik }) => {
             <div className="row">
                 <div className="col-4">
                     <label htmlFor="public_service_id" className="form-label">
-                        valor de servicio publico
+                        Valor de servicio público
                     </label>
                     <Field
                         as="select"
@@ -198,8 +198,8 @@ const FormPrecontractual: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="vigilance_value" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="vigilance_value_id" className="form-label">
-                        Valor Sub Total
+                    <label htmlFor="subtotal_id" className="form-label">
+                        Valor Subtotal
                     </label>
                     <div className="input-group">
                         <div className="input-group-prepend">
@@ -207,19 +207,19 @@ const FormPrecontractual: FC<FormProps> = ({ formik }) => {
                         </div>
                         <Field
                             disabled
-                            name="vigilance_value"
+                            id="subtotal_id"
+                            name="subtotal"
                             type="number"
                             value={Number(formik.values.IVA) + Number(formik.values.Canon_value)}
-                            id="vigilance_value_id"
                             className="form-control border-start-0 text-end"
                             min={0}
                             max={9999999999}
                         />
                     </div>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="subtotal" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="vigilance_value_id" className="form-label">
+                    <label htmlFor="total_id" className="form-label">
                         Valor Total
                     </label>
                     <div className="input-group">
@@ -228,17 +228,17 @@ const FormPrecontractual: FC<FormProps> = ({ formik }) => {
                         </div>
                         <Field
                             disabled
-                            name="vigilance_value"
+                            id="total_id"
+                            name="total"
                             type="number"
                             value={Number(formik.values.IVA) + Number(formik.values.Canon_value)} //TODO: traer todos los valores para calcular el valor total
-                            id="vigilance_value_id"
                             className="form-control border-start-0 text-end"
                             min={0}
                             max={9999999999}
                         />
 
                     </div>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="total" />
                 </div>
                 <div className="col-4">
                     <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
@@ -255,51 +255,51 @@ const FormPrecontractual: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="registration_date" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="consecutive_number_id" className="form-label">
+                    <label htmlFor="Prediation_number_id" className="form-label">
                         Número Prediación
                     </label>
                     <Field
                         type="text"
-                        id="consecutive_number_id"
-                        name="consecutive_number"
+                        id="Prediation_number_id"
+                        name="Prediation_number"
                         className="form-control"
                         disabled={false}
 
                     />
-                    <ErrorMessage name="consecutive_number" />
+                    <ErrorMessage name="Prediation_number" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
+                    <label htmlFor="prediation_date_id" className="form-label mt-3 mt-lg-0">
                         Fecha de Prediación
                     </label>
                     <Field
                         type="date"
-                        id="registration_date_id"
-                        name="registration_date"
+                        id="prediation_date_id"
+                        name="prediation_date"
                         placeholder="Fecha Final"
                         className="form-control"
                     // disabled={true}
                     />
-                    <ErrorMessage name="registration_date" />
+                    <ErrorMessage name="prediation_date" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="business_type_id" className="form-label">
                         Tipo de negocio
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="description_id"
+                        id="business_type_id"
+                        name="business_type"
                         aria-describedby="emailHelp"
                         placeholder="Tipo de negocio"
-                        name="description"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="description" withCount max={200} />
+                    <ErrorMessage name="business_type" withCount max={200} />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="consecutive_number_id" className="form-label">
+                    <label htmlFor="contract_period_id" className="form-label">
                         Duración del contrato
                         <Tooltip title="Número de meses">
                             <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
@@ -307,25 +307,25 @@ const FormPrecontractual: FC<FormProps> = ({ formik }) => {
                     </label>
                     <Field
                         type="number"
-                        id="consecutive_number_id"
-                        name="consecutive_number"
+                        id="contract_period_id"
+                        name="contract_period"
                         className="form-control"
                         disabled={false}
                         min={1}
                         max={12}
 
                     />
-                    <ErrorMessage name="consecutive_number" />
+                    <ErrorMessage name="contract_period" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="public_service_id" className="form-label">
+                    <label htmlFor="coverage_id" className="form-label">
                         Mecanismo de cobertura
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="public_service_id"
-                        name="public_service"
+                        id="coverage_id"
+                        name="coverage"
                         disabled={false}
 
                     >
@@ -336,39 +336,39 @@ const FormPrecontractual: FC<FormProps> = ({ formik }) => {
                         <option key="seguro arrendamiento" value="seguro arrendamiento">seguro arrendamiento</option>
 
                     </Field>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="coverage" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="environmental_risk_id" className="form-label">
                         Riesgos Ambientales
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="description_id"
+                        id="environmental_risk_id"
+                        name="environmental_risk"
                         aria-describedby="emailHelp"
                         placeholder="Riesgos ambientales"
-                        name="description"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="description" withCount max={200} />
+                    <ErrorMessage name="environmental_risk" withCount max={200} />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="fines_id" className="form-label">
                         Multas
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="description_id"
+                        id="fines_id"
+                        name="fines"
                         aria-describedby="emailHelp"
                         placeholder="Multas"
-                        name="description"
                         autoComplete="off"
                         maxLength={250}
                     />
-                    <ErrorMessage name="description" withCount max={250} />
+                    <ErrorMessage name="fines" withCount max={250} />
                 </div>
             </div>
 

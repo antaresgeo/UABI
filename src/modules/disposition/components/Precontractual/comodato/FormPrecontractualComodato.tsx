@@ -1,8 +1,14 @@
-import { Field } from 'formik';
+import { Field, Formik } from 'formik';
 import ErrorMessage from '../../../../../utils/ui/error_messge'
 import Tooltip from 'antd/lib/tooltip';
+import { FC } from 'react';
 
-export const FormPrecontractualComodato = () => {
+
+interface FormProps {
+    formik: any;
+
+}
+export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
     return (
         <>
             <div className="row">
@@ -70,7 +76,7 @@ export const FormPrecontractualComodato = () => {
             <div className="row">
                 <div className="col-4">
                     <label htmlFor="competitive_process_id" className="form-label">
-                        Proceso competitivo
+                        Aplica Proceso competitivo
                     </label>
                     <Field
                         as="select"
@@ -88,22 +94,24 @@ export const FormPrecontractualComodato = () => {
                     </Field>
                     <ErrorMessage name="public_service" />
                 </div>
-                <div className="col-4">
-                    <label htmlFor="competitive_process_value_id" className="form-label">
-                        proceso competitivo
-                    </label>
-                    <Field
-                        type="text"
-                        className="form-control"
-                        id="competitive_process_value_id"
-                        name="competitive_process_value"
-                        aria-describedby="emailHelp"
-                        placeholder="proceso competitivo"
-                        autoComplete="off"
-                        maxLength={500}
-                    />
-                    <ErrorMessage name="competitive_process_value" withCount max={500} />
-                </div>
+                {formik.values.competitive_process === "Aplica" &&
+                    <div className="col-4">
+                        <label htmlFor="competitive_process_value_id" className="form-label">
+                            Proceso competitivo
+                        </label>
+                        <Field
+                            type="text"
+                            className="form-control"
+                            id="competitive_process_value_id"
+                            name="competitive_process_value"
+                            aria-describedby="emailHelp"
+                            placeholder="proceso competitivo"
+                            autoComplete="off"
+                            maxLength={500}
+                        />
+                        <ErrorMessage name="competitive_process_value" withCount max={500} />
+                    </div>
+                }
                 <div className="col-4">
                     <label htmlFor="activities_id" className="form-label">
                         Actividades
@@ -202,7 +210,7 @@ export const FormPrecontractualComodato = () => {
                     <ErrorMessage name="social_event" withCount max={200} />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="consecutive_number_id" className="form-label">
+                    <label htmlFor="contract_period_id" className="form-label">
                         Duración del contrato
                         <Tooltip title="Número de meses">
                             <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
@@ -210,15 +218,15 @@ export const FormPrecontractualComodato = () => {
                     </label>
                     <Field
                         type="number"
-                        id="consecutive_number_id"
-                        name="consecutive_number"
+                        id="contract_period_id"
+                        name="contract_period"
                         className="form-control"
                         disabled={false}
                         min={1}
                         max={12}
 
                     />
-                    <ErrorMessage name="consecutive_number" />
+                    <ErrorMessage name="contract_period" />
                 </div>
                 <div className="col-4">
                     <label htmlFor="public_service_id" className="form-label">
@@ -240,80 +248,83 @@ export const FormPrecontractualComodato = () => {
                     </Field>
                     <ErrorMessage name="public_service" />
                 </div>
-                <div className="col-4">
-                    <label htmlFor="consecutive_number_id" className="form-label">
-                        Ingresar valor de servicios publicos por aforo
+                {formik.values.public_service === "si" &&
+                    <div className="col-4">
+                    <label htmlFor="value_public_service_id" className="form-label">
+                        Ingresar valor de servicios públicos por aforo
                     </label>
                     <Field
                         type="number"
-                        id="consecutive_number_id"
-                        name="consecutive_number"
+                        id="value_public_service_id"
+                        name="value_public_service_id"
                         className="form-control"
                         disabled={false}
                         min={1}
                         max={12}
 
                     />
-                    <ErrorMessage name="consecutive_number" />
+                    <ErrorMessage name="value_public_service_id" />
                 </div>
+                }
+
                 <div className="col-4">
-                    <label htmlFor="public_service_id" className="form-label">
+                    <label htmlFor="economic_exploitation_id" className="form-label">
                         ¿Autoriza explotación económica?
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="public_service_id"
-                        name="public_service"
+                        id="economic_exploitation_id"
+                        name="economic_exploitation"
                         disabled={false}
 
                     >
-                        <option key="public_service" value="" hidden>
+                        <option key="economic_exploitation" value="" hidden>
                             -- Autoriza explotación económica --
                         </option>
                         <option key="si explotación" value="si">Si</option>
                         <option key="no explotación" value="no">No</option>
                     </Field>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="economic_exploitation" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="Action_field_id" className="form-label">
                         Campo de acción
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="description_id"
+                        id="Action_field_id"
+                        name="Action_field"
                         aria-describedby="emailHelp"
                         placeholder="Descripción campo de acción"
-                        name="description"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="description" withCount max={200} />
+                    <ErrorMessage name="Action_field" withCount max={200} />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="public_service_id" className="form-label">
+                    <label htmlFor="resolution_id" className="form-label">
                         ¿Aplica resolución SSS202050083439?
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="public_service_id"
-                        name="public_service"
+                        id="resolution_id"
+                        name="resolution"
                         disabled={false}
 
                     >
-                        <option key="public_service" value="" hidden>
+                        <option key="resolution" value="" hidden>
                             -- Aplica resolución --
                         </option>
                         <option key="si resolución" value="si">Si</option>
                         <option key="no resolución" value="no">No</option>
                     </Field>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="resolution" />
                 </div>
                 <div className="col-4 form-inline">
-                    <label htmlFor="" className="form-label">
+                    <label htmlFor="lockable_base_id" className="form-label">
                         Base asegurable
                         <Tooltip title="no inferior del 10%">
                             <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
@@ -322,8 +333,8 @@ export const FormPrecontractualComodato = () => {
                     <div className="input-group">
                         <Field
 
-                            name="valor"
-                            id="valo"
+                            id="lockable_base_id"
+                            name="lockable_base"
                             className="form-control border-end-0"
                             min={10}
                             max={100}
@@ -334,39 +345,39 @@ export const FormPrecontractualComodato = () => {
                         </div>
                     </div>
 
-                    <ErrorMessage name="" />
+                    <ErrorMessage name="lockable_base" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="Environmental_risk_id" className="form-label">
                         Riesgos Ambientales
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="description_id"
+                        id="Environmental_risk_id"
+                        name="Environmental_risk"
                         aria-describedby="emailHelp"
                         placeholder="Riesgos ambientales"
-                        name="description"
                         autoComplete="off"
                         maxLength={500}
                     />
-                    <ErrorMessage name="description" withCount max={500} />
+                    <ErrorMessage name="Environmental_risk" withCount max={500} />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="dependence_id" className="form-label">
                         Dependencia
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="description_id"
+                        id="dependence_id"
+                        name="dependence"
                         aria-describedby="emailHelp"
                         placeholder="Descripcion de como contribuye la dependencia"
-                        name="description"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="description" withCount max={200} />
+                    <ErrorMessage name="dependence" withCount max={200} />
                 </div>
             </div>
 

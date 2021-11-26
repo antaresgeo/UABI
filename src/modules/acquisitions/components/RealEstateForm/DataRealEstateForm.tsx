@@ -261,7 +261,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="destination_type_id" className="form-label">
-                        Tipo Destinación
+                        Tipo de Uso
                     </label>
                     <Field
                         disabled={disabled}
@@ -273,9 +273,9 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         <option value="" disabled hidden>
                             -- Seleccione Destinación --
                         </option>
-                        <option value="PÚBLICO">Uso Público</option>
-                        <option value="FISCAL">Fiscal</option>
-                        <option value="MIXTO">Mixto</option>
+                        <option key="PÚBLICO" value="PÚBLICO">Uso Público</option>
+                        <option key="FISCAL" value="FISCAL">Fiscal</option>
+                        <option key="MIXTO" value="MIXTO">Mixto</option>
                     </Field>
 
                     <ErrorMessage name="destination_type" />
@@ -625,7 +625,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         </div>
                         <div className="col-4">
                             <label htmlFor="availability_type" className="form-label">
-                                Tipo de uso disponibilidad
+                                Tipo Disposición
                             </label>
                             <Field
                                 as="select"
@@ -635,13 +635,31 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 disabled={inventory}
                             >
                                 <option key="availability_type" value="" hidden>--Seleccione Tipo de uso--</option>
-                                <option key="Misional" value="Misional">Misional</option>
-                                <option key="Misional social" value="Misional social">Misional social</option>
-                                <option key="Inversión" value="Inversión">Inversión</option>
-                                <option key="Inversión Social" value="Inversión Social">Inversión Social</option>
-                                <option key="administracion" value="administracion">Administración</option>
-                                <option key="mantenimiento" value="mantenimiento">Mantenimiento</option>
-                                <option key="aprovechamiento" value="aprovechamiento">Aprovechamiento</option>
+                                {formik.values.destination_type !== "PÚBLICO" &&
+                                    <>
+                                        <option key="availability_type1" value="Misional">Misional</option>
+                                        <option key="availability_type2" value="Misional social">Misional social</option>
+                                        <option key="availability_type3" value="Inversión">Inversión</option>
+                                        <option key="availability_type4" value="Inversión Social">Inversión Social</option>
+
+                                    </>
+                                }
+                                {formik.values.destination_type !== "FISCAL" &&
+                                    <>
+                                        <option key="availability_type5" value="administracion">Administración</option>
+                                        <option key="availability_type6" value="mantenimiento">Mantenimiento</option>
+                                        <option key="availability_type7" value="aprovechamiento">Aprovechamiento</option>
+                                        <option key="availability_type8" value="aprovechamiento">Calles</option>
+                                        <option key="availability_type9" value="Via">Via</option>
+                                        <option key="availability_type10" value="Plaza">Plaza</option>
+                                        <option key="availability_type11" value="Parque">Parque</option>
+                                        <option key="availability_type12" value="Zona Verde">Zona Verde</option>
+                                        <option key="availability_type13" value="Zona dura">Zona dura</option>
+                                        <option key="availability_type14" value="Playa">Plaza</option>
+                                    </>
+                                }
+                                <option key="availability_type15" value="sin Asignar">sin Asignar</option>
+
                             </Field>
                             <ErrorMessage />
                         </div>
