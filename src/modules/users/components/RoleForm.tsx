@@ -32,8 +32,6 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
     const [mockData, setMockData] = useState([]);
     const [permits_rol_ids, set_permits_rol_ids] = useState([]);
 
-    // console.log({user_permits, permitsAll});
-
     useEffect(() => {
         dispatch(actions.getPermits());
         if (type === 'assign') {
@@ -47,6 +45,12 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
             update_permits_rol(role_ids);
         }
     }, [user_roles]);
+
+    useEffect(() => {
+        if (rol?.permits?.length > 0) {
+            setTargetKeys(rol?.permits);
+        }
+    }, [rol]);
 
     useEffect(() => {
         let allPermits = [];
@@ -64,7 +68,6 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
             }));
         }
         const initialTargetKeys = permitUser.map((item) => item.key);
-        console.log({allPermits, initialTargetKeys})
         setMockData(allPermits);
         setTargetKeys(initialTargetKeys);
     }, [permitsAll, user_permits]);
@@ -78,12 +81,14 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
 
     const update_permits_rol = (rol_ids) => {
         return get_permits_rol_ids_list(rol_ids).then((ids: number[]) => {
-            const data = mockData.map((permit) => {
-                permit.disabled = ids.includes(permit.key);
-                return permit;
-            });
-            set_permits_rol_ids(ids);
-            setMockData(data);
+            if(mockData.length > 0) {
+                const data = mockData.map((permit) => {
+                    permit.disabled = ids.includes(permit.key);
+                    return permit;
+                });
+                set_permits_rol_ids(ids);
+                setMockData(data);
+            }
             return ids;
         });
     };
@@ -105,12 +110,10 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
         permits: [],
         ...rol,
         ...(user_roles ? { roles_to_assign: user_roles.map((rol) => rol.id) } : {}),
-
     };
 
     const onChange = (nextTargetKeys, direction, moveKeys) => {
         setTargetKeys(nextTargetKeys);
-        console.log(targetKeys);
     };
 
     const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
@@ -137,6 +140,8 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
     const schema = Yup.object().shape({
         name: Yup.string().required('Campo obligatorio'),
     });
+
+    console.log({targetKeys})
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues}>

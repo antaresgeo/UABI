@@ -13,21 +13,18 @@ export const EditRoles = () => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
-    const role: IRolAttributes = useSelector((store: any) => store.users.rol.value);
-    console.log(role);
+    const role: any = useSelector((store: any) => store.users.rol.value);
+
     useEffect(() => {
         dispatch(actions.getRole(Number(id)))
     }, []);
 
     const finalRole = {
-        name: role?.role?.name,
-        permits: role?.permits,
+        name: role?.name,
+        permits: role?.permits?.map(a => a.id),
     }
 
-    console.log(finalRole)
-
     const editRol = async (values) =>{
-        console.log(values)
         await dispatch(actions.updateRole(values, id))
     }
     return (
