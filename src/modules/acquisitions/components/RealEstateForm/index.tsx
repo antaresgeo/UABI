@@ -23,6 +23,7 @@ interface RealEstateFormProps {
     projectId?: number;
     acquisitions?: any[];
     inventory?: boolean;
+    inventoryEdit?: boolean;
 }
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
@@ -36,6 +37,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     projectId,
     acquisitions,
     inventory,
+    inventoryEdit,
 }) => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -214,6 +216,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 projects={projects}
                                                 project={project}
                                                 inventory={inventory}
+                                                inventoryEdit={inventoryEdit}
                                                 onProjectSelectedChange={onProjectSelectedChange}
                                             />
                                             <AdquisitionView

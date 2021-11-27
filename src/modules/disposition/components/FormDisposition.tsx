@@ -39,7 +39,7 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                             </div>
                             <div className="col-3" >
                                 <label htmlFor="">Comuna/Barrio</label>
-                                <div className="my-3">{realEstate?.address.location.commune}</div>
+                                <div className="my-3">{realEstate?.address?.location?.commune}</div>
 
                             </div>
                             <div className="col-3">

@@ -4,8 +4,9 @@ import { actions } from '../redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { IUserAttributes } from './../../../utils/interfaces/users';
 import { useHistory } from 'react-router-dom';
-import { Card } from '../../../utils/ui';
+import { Card, Link } from '../../../utils/ui';
 import GeneralForm from './../components/GerenalForm';
+import UserViewForm from './../components/UserViewForm';
 
 interface IParams {
     id: string;
@@ -24,23 +25,61 @@ const DetailUser = () => {
         const action = actions.get_user_by_id(1);
         await dispatch(action);
     };
-
+    console.log(user)
     return (
+        // <div className="h-100 d-flex flex-column">
+        //     <div className="flex-fill overflow-auto">
+        //         <div className="container-fluid">
+        //             <div className="row justify-content-center">
+        //                 <div className="col-md-12">
+        //                     <Card title="información Usuario">
+        //                         <GeneralForm
+        //                             type="view"
+        //                             user={user}
+        //                             disabled
+        //                             onSubmit={(values) => {
+        //                                 return getUser(values);
+        //                             }}
+        //                         />
+        //                     </Card>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     </div>
+        //     <div
+        //         className="bg-white d-flex flex-row justify-content-between"
+        //         style={{ padding: 16, borderTop: '1px solid #ccc' }}
+        //     >
+        //         <button
+        //             type="button"
+        //             className="btn btn-outline-primary"
+        //             onClick={() => {
+        //                 history.goBack();
+        //             }}
+        //         >
+        //             Atras
+        //         </button>
+        //         <div className="flex-fill" />
+        //     </div>
+        // </div>
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
-                <div className="container-fluid">
-                    <div className="row justify-content-center">
-                        <div className="col-md-12">
-                            <Card title="información Usuario">
-                                <GeneralForm
-                                    type="view"
-                                    user={user}
-                                    disabled
-                                    onSubmit={(values) => {
-                                        return getUser(values);
-                                    }}
-                                />
-                            </Card>
+                <div className="bg-white d-flex flex-column h-100">
+                    <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
+                        <h5 className='col-11 '>Detalle Usuario</h5>
+                        <Link
+                            to={`/users/edit/${id}/`}
+                            name=""
+                            avatar={false}
+                            icon={<i style={{ marginLeft: '30px', fontSize: 16, color: '#000' }} className="fa fa-pencil" aria-hidden="true" />}
+                        />
+                    </div>
+                    <div className="container-fluid">
+                        <div className="row justify-content-center">
+                            <div className="col-md-12">
+                                <UserViewForm user={user} />
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -58,10 +97,11 @@ const DetailUser = () => {
                 >
                     Atras
                 </button>
-                <div className="flex-fill" />
             </div>
         </div>
     );
 };
 
 export default DetailUser;
+
+

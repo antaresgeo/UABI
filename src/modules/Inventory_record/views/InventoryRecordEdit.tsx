@@ -1,17 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
-import {actions, service} from '../../redux';
-import RealEstateForm from '../../components/RealEstateForm';
-import { useDispatch, useSelector } from 'react-redux';
+import  { useEffect, useState } from 'react'
 import moment from "moment";
-import {clearObjectNulls} from "../../../../utils";
+import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
+import { IProjectAttributes } from './../../../utils/interfaces/projects';
+import { actions, service } from '../../acquisitions/redux';
+import RealEstateForm from '../../acquisitions/components/RealEstateForm';
+import { clearObjectNulls } from '../../../utils';
+
 
 interface IProps {
     id: string;
 }
-
-const DetailProjects = () => {
+const InventoryRecordEdit = () => {
     const { id } = useParams<IProps>();
     const history: any = useHistory();
     const dispatch = useDispatch();
@@ -47,12 +48,11 @@ const DetailProjects = () => {
             if (Number.isInteger(value)) dispatch(actions.getRealEstatesByProject(value));
         }
     };
-
     return (
         <RealEstateForm
             type="edit"
-            inventoryEdit={true}
-            inventory={false}
+            inventory={true}
+            inventoryEdit={false}
             projects={projects}
             realEstates={realEstates}
             realEstate={realEstate}
@@ -60,6 +60,7 @@ const DetailProjects = () => {
             projectId={project_id}
             onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
+                console.log('valores',values)
                 const { acquisitions } = values;
                 try {
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));
@@ -85,7 +86,7 @@ const DetailProjects = () => {
                 }
             }}
         />
-    );
-};
+    )
+}
 
-export default DetailProjects;
+export default InventoryRecordEdit

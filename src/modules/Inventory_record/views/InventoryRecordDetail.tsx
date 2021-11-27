@@ -54,7 +54,8 @@ export const InventoryRecordDetail = () => {
             realEstates={project_id ? realEstates : []}
             realEstate={realEstate}
             projectId={project_id}
-            inventory={false}
+            inventory={true}
+            inventoryEdit={true}
             onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
                 console.log(values);

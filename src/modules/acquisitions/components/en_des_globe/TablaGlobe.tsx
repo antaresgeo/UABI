@@ -36,18 +36,51 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
         dispatch(actions.getRealEstatesByProject(Number(id)));
     }, []);
 
+    let newrealEstates = [];
+    let codigos = realEstates.map(realEstate => realEstate.sap_id.split(","))
+
+    newrealEstates = realEstates.reduce((valor_anterior, valor_actual)=>{
+        const codigos = valor_actual.sap_id.split(",");
+        for(let i = 0; i < codigos.length; i++){
+            const obj = {
+                ...valor_actual
+            }
+            obj.sap_id = codigos[i];
+            valor_anterior.push(obj);
+        }
+        return valor_anterior;
+    },[])
+
+
+    // useEffect(() => {
+    //     const dataTable = [];
+    //     realEstates.map(realEstate =>
+    //         dataTable.push({
+    //             key: realEstate.id,
+    //             name: realEstate.name,
+    //             total_area: realEstate.total_area,
+    //             intact_area: 0,
+    //             use_area: 0,
+    //             sap_id: realEstate.sap_id
+    //         })
+    //     )
+    //     setData(dataTable)
+    // }, [realEstates])
+
     useEffect(() => {
         const dataTable = [];
-        realEstates.map(realEstate =>
+        newrealEstates.map(realEstate =>
             dataTable.push({
-                key: realEstate.id,
+                key: realEstate.sap_id,
                 name: realEstate.name,
                 total_area: realEstate.total_area,
+                intact_area: 0,
                 use_area: 0,
+                id: realEstate.id
             })
         )
         setData(dataTable)
-    }, [realEstates])
+    }, [])
 
     useEffect(() => {
         const areaCalculada = calculateTotalSArea();
@@ -119,7 +152,14 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     // filas seleccionadas de la tabla
     const rowSelection = {
         onChange: (selectedRowKeys: [], selectedRows: any[]) => {
-            setSelectRealEsates(selectedRows.length)
+
+            const idRealEstaesSelect = selectRowKeys.reduce((valor_anterior,valor_actual)=>{
+                if(!valor_anterior.includes(valor_actual.id)) {
+                    valor_anterior.push(valor_actual.id)
+                }
+                return valor_anterior;
+            },[])
+            setSelectRealEsates(idRealEstaesSelect.length)
             setSelectRowKeys(selectedRowKeys);
         }
     };
@@ -127,11 +167,16 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     const columns = [
         {
             title: 'ID',
+            dataIndex: 'id',
+        },
+        {
+            title: 'Código Activo',
             dataIndex: 'key',
         },
         {
             title: 'Bien Inmueble',
             dataIndex: 'name',
+            width: '20%'
         },
         {
             title: 'Area Total',
@@ -141,6 +186,11 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
             title: 'Area a Utilizar',
             dataIndex: 'use_area',
             editable: true,
+            width: '20%',
+        },
+        {
+            title: 'Area Intacta',
+            dataIndex: 'intact_area',
             width: '20%',
         },
         {
@@ -165,7 +215,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
             },
         },
     ];
-
+    console.log('data',data)
     const mergedColumns = columns.map(col => {
         if (!col.editable) {
             return col;

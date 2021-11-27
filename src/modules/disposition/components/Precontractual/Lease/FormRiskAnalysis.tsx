@@ -14,18 +14,18 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik }) => {
             <div className="row">
                 <div className="col-2 text-center" style={{marginTop: 30, fontSize: '14px', fontWeight: 'bold'}}>Riesgo regulatorio</div>
                 <div className="col-3">
-                    <label htmlFor="public_service_id" className="form-label">
+                    <label htmlFor="regulatory_degree_occurrence_id" className="form-label">
                         Grado de Ocurrencia
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="public_service_id"
-                        name="public_service"
+                        id="regulatory_degree_occurrence_id"
+                        name="regulatory_degree_occurrence"
                         disabled={false}
 
                     >
-                        <option key="public_service" value="" disabled>
+                        <option key="regulatory" value="" disabled>
                             --Seleccione grado de ocurrencia--
                         </option>
                         <option key="muy bajo" value="muy ">muy bajo</option>
@@ -35,21 +35,21 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik }) => {
                         <option key="muy alto" value="muy ">muy alto</option>
 
                     </Field>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="regulatory_degree_occurrence" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="public_service_id" className="form-label">
+                    <label htmlFor="regulatory_impact_degree_id" className="form-label">
                         Grado de Impacto
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="public_service_id"
-                        name="public_service"
+                        id="regulatory_impact_degree_id"
+                        name="regulatory_impact_degree"
                         disabled={false}
 
                     >
-                        <option key="public_service" value="" disabled>
+                        <option key="regulatory_impact" value="" disabled>
                             --Seleccione grado de Impacto--
                         </option>
                         <option key="muy bajo" value="muy ">muy bajo</option>
@@ -59,64 +59,64 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik }) => {
                         <option key="muy alto" value="muy ">muy alto</option>
 
                     </Field>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="regulatory_impact_degree" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="public_service_id" className="form-label">
+                    <label htmlFor="regulatory_responsable_id" className="form-label">
                         Responsable
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="public_service_id"
-                        name="public_service"
+                        id="regulatory_responsable_id"
+                        name="regulatory_responsable"
                         disabled={false}
 
                     >
-                        <option key="public_service" value="" disabled>
+                        <option key="regulatory_responsable_id" value="" disabled>
                             --Seleccione el resposable--
                         </option>
                         <option key="Contratista" value="Contratista">Contratista</option>
                         <option key="municipio" value="municipio">municipio</option>
 
                     </Field>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="regulatory_responsable" />
                 </div>
             </div>
             <div className="row">
                 <div className="col">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="regulatory_description_id" className="form-label">
                         Descripción
                     </label>
                     <Field
                         as="textarea"
                         className="form-control"
-                        id="description_id"
+                        id="regulatory_description_id"
+                        name="regulatory_description"
                         aria-describedby="emailHelp"
                         placeholder="Descripción riesgo regulatorio"
-                        name="description"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="description" withCount max={200} />
+                    <ErrorMessage name="regulatory_description" withCount max={200} />
                 </div>
             </div>
             <h5 className="div">Riesgos Operativos</h5>
             <hr />
             <div className="row">
                 <div className="col-4">
-                    <label htmlFor="public_service_id" className="form-label">
+                    <label htmlFor="operative_degree_occurrence_id" className="form-label">
                         Grado de Ocurrencia
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="public_service_id"
-                        name="public_service"
+                        id="operative_degree_occurrence_id"
+                        name="operative_degree_occurrence"
                         disabled={false}
 
                     >
-                        <option key="public_service" value="" disabled>
+                        <option key="operative_degree_occurrence" value="" disabled>
                             --Seleccione grado de ocurrencia--
                         </option>
                         <option key="muy bajo" value="muy ">muy bajo</option>
@@ -126,21 +126,21 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik }) => {
                         <option key="muy alto" value="muy ">muy alto</option>
 
                     </Field>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="operative_degree_occurrence" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="public_service_id" className="form-label">
+                    <label htmlFor="operative_impact_degree_id" className="form-label">
                         Grado de Impacto
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="public_service_id"
-                        name="public_service"
+                        id="operative_impact_degree_id"
+                        name="operative_impact_degree"
                         disabled={false}
 
                     >
-                        <option key="public_service" value="" disabled>
+                        <option key="operative_impact_degree" value="" disabled>
                             --Seleccione grado de Impacto--
                         </option>
                         <option key="muy bajo" value="muy ">muy bajo</option>
@@ -150,47 +150,47 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik }) => {
                         <option key="muy alto" value="muy ">muy alto</option>
 
                     </Field>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="operative_impact_degree" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="public_service_id" className="form-label">
+                    <label htmlFor="operative_responsable_id" className="form-label">
                         Responsable
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="public_service_id"
-                        name="public_service"
+                        id="operative_responsable_id"
+                        name="operative_responsable"
                         disabled={false}
 
                     >
-                        <option key="public_service" value="" disabled>
+                        <option key="operative_responsable" value="" disabled>
                             --Seleccione el resposable--
                         </option>
                         <option key="Contratista" value="Contratista">Contratista</option>
                         <option key="municipio" value="municipio">municipio</option>
 
                     </Field>
-                    <ErrorMessage name="public_service" />
+                    <ErrorMessage name="operative_responsable" />
                 </div>
             </div>
 
             <div className="row">
                 <div className="col">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="operative_description_id" className="form-label">
                         Descripción
                     </label>
                     <Field
                         as="textarea"
                         className="form-control"
-                        id="description_id"
+                        id="operative_description_id"
+                        name="operative_description"
                         aria-describedby="emailHelp"
                         placeholder="Descripción riesgos operativos"
-                        name="description"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="description" withCount max={200} />
+                    <ErrorMessage name="operative_description" withCount max={200} />
                 </div>
             </div>
         </>

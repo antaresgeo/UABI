@@ -116,6 +116,20 @@ const RealEstateList: FC<RealEstateListProps> = ({ withProject, filters, project
                                 />
                             );
                         },
+                    },{
+                        title: 'Editar',
+                        dataIndex: 'id',
+                        align: 'center' as 'center',
+                        render: (id) => {
+                            return (
+                                <Link
+                                    to={`/inventoryrecord/real-estates/edit/${id}/`}
+                                    name=""
+                                    avatar={false}
+                                    icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                                />
+                            );
+                        },
                     },
                 ]
             :

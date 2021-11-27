@@ -53,7 +53,8 @@ const DetailRealEstate = () => {
             realEstates={project_id ? realEstates : []}
             realEstate={realEstate}
             projectId={project_id}
-            inventory={true}
+            inventoryEdit={true}
+            inventory={false}
             onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
                 return Promise.reject();

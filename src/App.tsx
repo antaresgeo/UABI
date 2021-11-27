@@ -12,7 +12,7 @@ function App() {
     const token: string = localStorage.getItem('_tk_');
     const routes = useRoutes();
     const history = useHistory();
-    console.log(history);
+    // console.log(history);
     const aux_user = {
         ...user,
         permits: user?.permits.map((a) => a.name) || [],

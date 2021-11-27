@@ -32,7 +32,6 @@ export const EditDisposition = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <FormDisposition realEstate={realEstate} dispositionType={dispositionType} />
                             <Card
                                 title="Tipo Disposición"
                                 extra={<ModalNotificar />}
@@ -42,6 +41,7 @@ export const EditDisposition = () => {
                                     onTypeDispositionChange={typeDisposition}
                                 />
                             </Card>
+                            <FormDisposition realEstate={realEstate} dispositionType={dispositionType} />
                             {/* <Card
                                 title=""
                             >

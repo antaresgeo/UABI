@@ -12,6 +12,7 @@ interface GeneralDataFormProps {
     onProjectSelectedChange?: (value) => void;
     project?: any;
     inventory?: boolean;
+    inventoryEdit?: boolean;
 }
 
 const GeneralDataForm: FC<GeneralDataFormProps> = ({
@@ -21,6 +22,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
     project,
     projects,
     inventory,
+    inventoryEdit,
     onProjectSelectedChange,
 }) => {
 
@@ -47,6 +49,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                 formik={formik}
                 projects={projects}
                 project={project}
+                inventoryEdit={inventoryEdit}
                 inventory={inventory}
                 onProjectSelectedChange={onProjectSelectedChange}
             />

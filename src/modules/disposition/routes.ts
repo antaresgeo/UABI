@@ -24,6 +24,19 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
+            path: '/disposition/create/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Disposición', to: '/disposition/list/' },
+                    { name: 'Crear' },
+                ],
+            },
+            component: CreateDisposition
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
             path: '/disposition/:id/',
             template_props: {
                 breadcrumbs: [
@@ -46,19 +59,7 @@ const get_routes = (): IRoute[] => {
             },
             component: EditDisposition,
         },
-        {
-            exact: true,
-            is_private: true,
-            can_access: true,
-            path: '/disposition/create/',
-            template_props: {
-                breadcrumbs: [
-                    { name: 'Disposición', to: '/disposition/list/' },
-                    { name: 'Crear' },
-                ],
-            },
-            component: CreateDisposition
-        },
+
         // {
         //     exact: true,
         //     is_private: true,

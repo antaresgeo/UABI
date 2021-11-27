@@ -7,6 +7,7 @@ import { actions } from '../../redux';
 import PolizaForm from '../../components/PolizaForm';
 import { useHistory } from 'react-router-dom';
 import RealEstateList from '../../../acquisitions/components/RealEstateList';
+import { PolizaViewForm } from '../../components/PolizaViewForm';
 
 interface IParams {
     id: string;
@@ -32,87 +33,27 @@ const DetailInsurability = () => {
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
-                <div className="container-fluid">
-                    <div className="row justify-content-center">
-                        {/* <div className="col-12">
-                            <div className="content_box_table">
-                                <div className="title">Datos del bien inmueble</div>
-                                <div className="table_content">
-                                    <table className="box-table">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Nombre</th>
-                                                <th>Localización</th>
-                                                <th>Tipología</th>
-                                                <th>Tipo de activo</th>
-                                                <th>Proyectos a los que pertenece</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>{realEstate?.id}</td>
-                                            <td>{realEstate?.name}</td>
-                                            <td>-</td>
-                                            <td>{realEstate?.tipology}</td>
-                                            <td>{realEstate?.destination_type}</td>
-                                            <td>{realEstate?.project.name}</td>
-                                        </tr>
-                                            <tr>
-                                                <td>{realEstate?.id}</td>
-                                                <td>{realEstate?.name}</td>
-                                                <td>-</td>
-                                                <td>{realEstate?.tipology}</td>
-                                                <td>{realEstate?.destination_type}</td>
-                                                <td>{realEstate?.projects.name}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                <div className="bg-white d-flex flex-column h-100">
+                    <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
+                        <h5 className='col-11 '>Detalle Póliza</h5>
+                        <Link
+                            to={`policy/edit/${id}/`}
+                            name=""
+                            avatar={false}
+                            icon={<i style={{ marginLeft: '30px', fontSize: 16, color: '#000' }} className="fa fa-pencil" aria-hidden="true" />}
+                        />
+                    </div>
+                    <div className="container-fluid">
+                        <div className="row justify-content-center">
+                            <div className="col-md-12">
+                                <PolizaViewForm poliza={policy} realEstatesPolicy={realEstatesPolicy} />
+                                <Card
+                                    title="Bienes Inmuebles de la póliza"
+                                >
+                                    <RealEstateList realEstateFilter={realEstatesPolicy} />
+                                </Card>
                             </div>
-                        </div> */}
-
-
-                        <div className="col-md-12">
-                            <Card
-                                title={
-                                    <>
-                                        <div className="row">
-                                            <div className="col-1">Póliza</div>
-                                            <div
-                                                style={{ width: '5px', marginRight: '1px' }}
-                                                onClick={() => {
-                                                    history.push(`/insurabilities/policy/edit/${id}`);
-                                                }}
-                                            >
-                                                <i className="fa fa-pencil" aria-hidden="true"></i>
-                                            </div>
-                                            {policy?.vigency_end < new Date().getTime() && (
-                                                <div className="col" style={{ color: '#AD0808', marginLeft: 15 }}>
-                                                    Vencida
-                                                </div>
-                                            )}
-                                        </div>
-                                    </>
-                                }
-                            >
-                                <PolizaForm
-                                    type="view"
-                                    disabled
-                                    policy={policy}
-                                    realEstatesPolicy={realEstatesPolicy}
-                                    onSubmit={(values) => {
-                                        return getPolicy(values);
-                                    }}
-                                />
-                            </Card>
-                            <Card
-                                title="Bienes Inmuebles de la póliza"
-                            >
-                                <RealEstateList  realEstateFilter={realEstatesPolicy} />
-                            </Card>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -129,7 +70,6 @@ const DetailInsurability = () => {
                 >
                     Atras
                 </button>
-                <div className="flex-fill" />
             </div>
         </div>
     );

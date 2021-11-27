@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react'
 import Modal from 'antd/lib/modal/Modal';
+import reportWebVitals from './../../../reportWebVitals';
 
 interface ModalProps {
     onSave?: (values) => Promise<any>;
@@ -15,7 +16,7 @@ export const ModalNotificar: FC<ModalProps> = ({ onSave, disabled }) => {
 
     const handleInputChange = ({ target }) => {
         set_query(
-           target.value,
+            target.value,
         );
     };
 
@@ -23,7 +24,7 @@ export const ModalNotificar: FC<ModalProps> = ({ onSave, disabled }) => {
         <>
             <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-outline-primary"
                 onClick={open}
             >
                 Notificar
@@ -32,17 +33,33 @@ export const ModalNotificar: FC<ModalProps> = ({ onSave, disabled }) => {
             <Modal
                 footer={
                     [
-                        <button
-                            key="enviar notificacion"
-                            type="submit"
-                            className="btn btn-primary my-3"
-                            onClick={() => {
-                                console.log(query)
-                                close();
-                            }}
-                        >
-                            Guardar
-                        </button>
+                        <div className="row tex-center">
+                            <div className="col">
+                                <button
+                                    type="submit"
+                                    className="btn btn-outline-primary "
+                                    key="1"
+                                    onClick={() => { console.log(query); close() }}>
+                                    Guardar
+                                </button>
+
+                            </div>
+
+                            <div className="col">
+                                <button
+                                    type="submit"
+                                    className="btn btn-outline-primary"
+                                    key="2"
+                                    style={{marginRight: 225}}
+                                    onClick={() => { console.log(query); close() }}
+                                >
+                                    cancelar
+                                </button>,
+
+                            </div>
+
+                        </div>
+
                     ]
                 }
                 title="Mensaje Nuevo"
@@ -54,7 +71,7 @@ export const ModalNotificar: FC<ModalProps> = ({ onSave, disabled }) => {
 
                 <div className="col">
                     <label htmlFor="notification_id" className="form-label">
-                        Comentario
+                        Describe la información a modificar
                     </label>
                     <textarea
                         className="form-control"

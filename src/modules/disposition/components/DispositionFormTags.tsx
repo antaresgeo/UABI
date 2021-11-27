@@ -1,11 +1,18 @@
 import React, { FC, useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Tabs } from 'antd';
 import CreatePrecontractual from '../views/Pre-contractual/CreatePrecontractual';
 import CreateContract from './../views/Contracts/CreateContract';
 
-interface InspectionFormTagsProps {}
-export const DispositionFormTags: FC<InspectionFormTagsProps> = ({}) => {
+interface IParams {
+    dispositionType: any;
+}
+
+
+export const DispositionFormTags = () => {
+    const location = useLocation<IParams>();
+    const { dispositionType } = location.state;
+    console.log(dispositionType);
     const history = useHistory();
     const { TabPane } = Tabs;
 
@@ -32,7 +39,7 @@ export const DispositionFormTags: FC<InspectionFormTagsProps> = ({}) => {
 
                     <Tabs activeKey={activeKey} className="w-100 h-100" onChange={callback}>
                         <TabPane tab="Proceso Precontractual" key="1">
-                            <CreatePrecontractual />
+                            <CreatePrecontractual dispositionType={dispositionType} />
                         </TabPane>
                         <TabPane tab="Proceso Contractual" key="2">
                             <CreateContract />

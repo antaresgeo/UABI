@@ -129,17 +129,17 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="activities" withCount max={500} />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="preaching_date_id" className="form-label mt-3 mt-lg-0">
+                    <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
                         Fecha de Registro de Prediación
                     </label>
                     <Field
                         type="date"
-                        id="preaching_date_id"
-                        name="preaching_date"
+                        id="registration_date_id"
+                        name="registration_date"
                         placeholder="Fecha Final"
                         className="form-control"
                     />
-                    <ErrorMessage name="preaching_date" />
+                    <ErrorMessage name="registration_date" />
                 </div>
                 <div className="form-group col-4">
                     <label htmlFor="Horizontal_property_id" className="form-label">
@@ -256,14 +256,14 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     <Field
                         type="number"
                         id="value_public_service_id"
-                        name="value_public_service_id"
+                        name="value_public_service"
                         className="form-control"
                         disabled={false}
                         min={1}
                         max={12}
 
                     />
-                    <ErrorMessage name="value_public_service_id" />
+                    <ErrorMessage name="value_public_service" />
                 </div>
                 }
 

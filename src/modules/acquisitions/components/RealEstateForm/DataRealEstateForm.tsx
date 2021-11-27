@@ -22,6 +22,7 @@ interface DataRealEstateFormProps {
     project?: any;
     inventory?: boolean;
     englobe?: boolean;
+    inventoryEdit?: boolean;
 }
 
 export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
@@ -32,10 +33,10 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     project,
     inventory,
     englobe,
+    inventoryEdit,
     onProjectSelectedChange,
 }) => {
     const tipologies: ITipologyAttributes[] = useSelector((states: any) => states.acquisitions.tipologies.value);
-
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(actions.getTipologies())
@@ -104,7 +105,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         name="tipology"
                         placeholder="Seleccione Tipología "
                         disabled={disabled}
-                        options={tipologies?.map(tipology => ({ id: tipology.id, name: tipology.tipology}))}
+                        options={tipologies?.map(tipology => ({ id: tipology.id, name: tipology.tipology }))}
                         showSearch // habilitar para buscarx
                         filterOption={(input, option) => {
                             return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -282,7 +283,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
             </div>
             <div className="row">
-                <div className="form-group col-3">
+                <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
                     <label htmlFor="patrimonial_value_id" className="form-label">
                         Valor Patrimonial
                     </label>
@@ -300,32 +301,33 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             //value={""} //TODO: sumas el valor de adquisicion con valor de reconocimiento
                             min={0}
                             max={99999999999999999999}
+                        // onChange={(e, values) => {
+                        //     console.log(e.target.value)
+                        //     formik.handleChange(e)
+                        // }}
                         />
                     </div>
                     <ErrorMessage name="patrimonial_value" />
                 </div>
-                <div className="form-group col-3">
-                    <label htmlFor="reconstruction_value_id" className="form-label">
-                        Valor de reconstrucción
-                    </label>
-                    <div className="input-group">
-                        <div className="input-group-prepend">
-                            <span className="input-group-text bg-white border-end-0">$</span>
-                        </div>
+                {inventoryEdit === false &&
+                    <div className="col-6">
+                        <label htmlFor="form-select" className="form-label">
+                            Documento Avalúo
+                        </label>
                         <Field
-                            disabled={disabled}
-                            name="reconstruction_value"
-                            type="number"
-                            id="reconstruction_value_id"
-                            className="form-control border-start-0 text-end"
-                            min={0}
-                            max={9999999999}
-                        />
-                    </div>
+                            name="appraisal_document"
+                            component={DocumentModal}
+                            btn_label="Adjuntar"
+                            disables={disabled}
+                        // onDelete={(values) => {
+                        //     setFieldValue('insurance_document_id', '', false)
+                        // }}
 
-                    <ErrorMessage name="reconstruction_value" />
-                </div>
-                <div className="form-group col-3">
+                        />
+                        <ErrorMessage name="appraisal_document" />
+                    </div>
+                }
+                <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
                     <label htmlFor="total_area_id" className="form-label">
                         Área Total
                     </label>
@@ -347,7 +349,46 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="total_area" />
                 </div>
-                <div className="form-group col-3">
+                {inventoryEdit === false &&
+                    <div className="col-6">
+                        <label htmlFor="form-select" className="form-label">
+                            Documento de Prediación
+                        </label>
+                        <Field
+                            name="prediation_document"
+                            component={DocumentModal}
+                            btn_label="Adjuntar"
+                            disables={disabled}
+                        // onDelete={(values) => {
+                        //     setFieldValue('insurance_document_id', '', false)
+                        // }}
+
+                        />
+                        <ErrorMessage name="prediation_document" />
+                    </div>
+                }
+                <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
+                    <label htmlFor="reconstruction_value_id" className="form-label">
+                        Valor de reconstrucción
+                    </label>
+                    <div className="input-group">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text bg-white border-end-0">$</span>
+                        </div>
+                        <Field
+                            disabled={disabled}
+                            name="reconstruction_value"
+                            type="number"
+                            id="reconstruction_value_id"
+                            className="form-control border-start-0 text-end"
+                            min={0}
+                            max={9999999999}
+                        />
+                    </div>
+
+                    <ErrorMessage name="reconstruction_value" />
+                </div>
+                <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
                     <label htmlFor="total_percentage_id" className="form-label">
                         Porcentaje Total
                     </label>
@@ -449,7 +490,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     delete values.commune_name;
                                     delete values.neighborhood_name;
                                     return service.getAddress(values).then((res) => {
-                                        console.log(res);
+                                        //console.log(res);
                                         formik.setFieldValue('address.id', `${res.id}`, false);
                                         formik.setFieldValue('address.name', `${res.addressAsString}`, false);
                                         formik.setFieldValue('address.cbml', `${res.cbml}`, false);
@@ -519,10 +560,10 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <ErrorMessage name="description" withCount max={1000} />
                 </div>
             </div>
-            {type === 'view' && (
+            {(type !== 'create') && (
                 <>
                     <div className="row">
-                        <div className="col-4">
+                        <div className={`form-group col-${inventory ? 3: 6}`}>
                             <label htmlFor="audit_trail_created_by_id" className="form-label">
                                 Creado por
                             </label>
@@ -535,7 +576,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             />
                             <ErrorMessage />
                         </div>
-                        <div className="col-4">
+                        <div className="col-3">
                             <label htmlFor="audit_trail_created_on_id" className="form-label">
                                 Fecha creación
                             </label>
@@ -549,7 +590,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             />
                             <ErrorMessage />
                         </div>
-                        <div className="col-4">
+                        <div className="col-3">
                             <label htmlFor="sociedad_id" className="form-label">
                                 Sociedad
                             </label>
@@ -563,148 +604,162 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             />
                             <ErrorMessage />
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-4">
-                            <label htmlFor="importe_contabilidad_id" className="form-label">
-                                Importe Contabilidad
-                            </label>
-                            <Field
-                                type="number"
-                                className="form-control"
-                                id="importe_contabilidad_id"
-                                name="importe_contabilidad"
-                                disabled
 
-                            />
-                            <ErrorMessage />
-                        </div>
-                        <div className="col-4">
-                            <label htmlFor="periodo_contable_id" className="form-label">
-                                Periodo contable
-                            </label>
-                            <Field
-                                type="text"
-                                className="form-control"
-                                id="periodo_contable_id"
-                                name="periodo_contable"
-                                value={extractMonth(formik.values.audit_trail?.created_on)}
-                                disabled
+                        {inventory &&
+                            <>
+                                <div className="col-3">
+                                    <label htmlFor="importe_contabilidad_id" className="form-label">
+                                        Importe Contabilidad
+                                    </label>
+                                    <Field
+                                        type="number"
+                                        className="form-control"
+                                        id="importe_contabilidad_id"
+                                        name="importe_contabilidad"
+                                        disabled
 
-                            // EL MES
-                            />
-                            <ErrorMessage />
-                        </div>
-                        <div className="col-4">
-                            <label htmlFor="contrapartida_id" className="form-label">
-                                Contrapartida
-                            </label>
-                            <Field
-                                type="number"
-                                className="form-control"
-                                id="contrapartida_id"
-                                name="contrapartida"
-                                disabled
-                            />
-                            <ErrorMessage />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-4">
-                            <label htmlFor="assignments" className="form-label">
-                                Asignaciones
-                            </label>
-                            <Field
-                                type="number"
-                                className="form-control"
-                                id="assignments"
-                                name="assignments"
-                                disabled
-                            />
-                            <ErrorMessage />
-                        </div>
-                        <div className="col-4">
-                            <label htmlFor="availability_type" className="form-label">
-                                Tipo Disposición
-                            </label>
-                            <Field
-                                as="select"
-                                className="form-control"
-                                id="availability_type"
-                                name="availability_type"
-                                disabled={inventory}
-                            >
-                                <option key="availability_type" value="" hidden>--Seleccione Tipo de uso--</option>
-                                {formik.values.destination_type !== "PÚBLICO" &&
-                                    <>
-                                        <option key="availability_type1" value="Misional">Misional</option>
-                                        <option key="availability_type2" value="Misional social">Misional social</option>
-                                        <option key="availability_type3" value="Inversión">Inversión</option>
-                                        <option key="availability_type4" value="Inversión Social">Inversión Social</option>
+                                    />
+                                    <ErrorMessage />
+                                </div>
 
-                                    </>
-                                }
-                                {formik.values.destination_type !== "FISCAL" &&
-                                    <>
-                                        <option key="availability_type5" value="administracion">Administración</option>
-                                        <option key="availability_type6" value="mantenimiento">Mantenimiento</option>
-                                        <option key="availability_type7" value="aprovechamiento">Aprovechamiento</option>
-                                        <option key="availability_type8" value="aprovechamiento">Calles</option>
-                                        <option key="availability_type9" value="Via">Via</option>
-                                        <option key="availability_type10" value="Plaza">Plaza</option>
-                                        <option key="availability_type11" value="Parque">Parque</option>
-                                        <option key="availability_type12" value="Zona Verde">Zona Verde</option>
-                                        <option key="availability_type13" value="Zona dura">Zona dura</option>
-                                        <option key="availability_type14" value="Playa">Plaza</option>
-                                    </>
-                                }
-                                <option key="availability_type15" value="sin Asignar">sin Asignar</option>
+                            </>
 
-                            </Field>
-                            <ErrorMessage />
-                        </div>
-                        <div className="col-4">
-                            <label htmlFor="utilization_value_id" className="form-label">
-                                Valor Aprovechamiento
-                            </label>
-                            <Field
-                                type="number"
-                                className="form-control"
-                                id="utilization_value_id"
-                                name="utilization_value"
-                                disabled={inventory}
-                            />
-                            <ErrorMessage />
-                        </div>
+                        }
                     </div>
-                    <div className="row">
-                        <div className="col-4">
-                            <label htmlFor="authorization_value_id" className="form-label">
-                                Valor de Autorización
-                            </label>
-                            <Field
-                                type="number"
-                                className="form-control"
-                                id="authorization_value_id"
-                                name="authorization_value"
-                                disabled={inventory}
-                            />
-                            <ErrorMessage />
-                        </div>
-                        <div className="col-4">
-                            <label htmlFor="canon_value_id" className="form-label">
-                                Valor del Canon
-                            </label>
-                            <Field
-                                type="number"
-                                className="form-control"
-                                id="canon_value_id"
-                                name="canon_value"
-                                disabled={inventory}
-                            />
-                            <ErrorMessage />
-                        </div>
-                    </div>
+                    {inventory &&
+                        <>
+                            <div className="row">
+                                <div className="col-3">
+                                    <label htmlFor="periodo_contable_id" className="form-label">
+                                        Periodo contable
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        className="form-control"
+                                        id="periodo_contable_id"
+                                        name="periodo_contable"
+                                        value={extractMonth(formik.values.audit_trail?.created_on)}
+                                        disabled
+
+                                    // EL MES
+                                    />
+                                    <ErrorMessage />
+                                </div>
+
+                                <>
+                                    <div className="col-3">
+                                        <label htmlFor="contrapartida_id" className="form-label">
+                                            Contrapartida
+                                        </label>
+                                        <Field
+                                            type="number"
+                                            className="form-control"
+                                            id="contrapartida_id"
+                                            name="contrapartida"
+                                            disabled
+                                        />
+                                        <ErrorMessage />
+                                    </div>
+                                    <div className="col-3">
+                                        <label htmlFor="assignments" className="form-label">
+                                            Asignaciones
+                                        </label>
+                                        <Field
+                                            type="number"
+                                            className="form-control"
+                                            id="assignments"
+                                            name="assignments"
+                                            disabled={inventoryEdit}
+                                        />
+                                        <ErrorMessage />
+                                    </div>
+                                    <div className="col-3">
+                                        <label htmlFor="utilization_value_id" className="form-label">
+                                            Valor Aprovechamiento
+                                        </label>
+                                        <Field
+                                            type="number"
+                                            className="form-control"
+                                            id="utilization_value_id"
+                                            name="utilization_value"
+                                            disabled={inventoryEdit}
+                                        />
+                                        <ErrorMessage />
+                                    </div>
+                                </>
+
+                            </div>
+                            <div className="row">
+                                <div className="col-3">
+                                    <label htmlFor="authorization_value_id" className="form-label">
+                                        Valor de Autorización
+                                    </label>
+                                    <Field
+                                        type="number"
+                                        className="form-control"
+                                        id="authorization_value_id"
+                                        name="authorization_value"
+                                        disabled={inventoryEdit}
+                                    />
+                                    <ErrorMessage />
+                                </div>
+                                <div className="col-3">
+                                    <label htmlFor="canon_value_id" className="form-label">
+                                        Valor del Canon
+                                    </label>
+                                    <Field
+                                        type="number"
+                                        className="form-control"
+                                        id="canon_value_id"
+                                        name="canon_value"
+                                        disabled={inventoryEdit}
+                                    />
+                                    <ErrorMessage />
+                                </div>
+                                <div className="col-6">
+                                    <label htmlFor="availability_type" className="form-label">
+                                        Tipo Disposición
+                                    </label>
+                                    <Field
+                                        as="select"
+                                        className="form-control"
+                                        id="availability_type"
+                                        name="availability_type"
+                                        disabled={inventoryEdit}
+                                    >
+                                        <option key="availability_type" value="" hidden>--Seleccione Tipo de uso disponibilidad--</option>
+                                        {formik.values.destination_type !== "PÚBLICO" &&
+                                            <>
+                                                <option key="availability_type1" value="Misional">Misional</option>
+                                                <option key="availability_type2" value="Misional social">Misional social</option>
+                                                <option key="availability_type3" value="Inversión">Inversión</option>
+                                                <option key="availability_type4" value="Inversión Social">Inversión Social</option>
+
+                                            </>
+                                        }
+                                        {formik.values.destination_type !== "FISCAL" &&
+                                            <>
+                                                <option key="availability_type5" value="administracion">Administración</option>
+                                                <option key="availability_type6" value="mantenimiento">Mantenimiento</option>
+                                                <option key="availability_type7" value="aprovechamiento">Aprovechamiento</option>
+                                                <option key="availability_type8" value="aprovechamiento">Calles</option>
+                                                <option key="availability_type9" value="Via">Via</option>
+                                                <option key="availability_type10" value="Plaza">Plaza</option>
+                                                <option key="availability_type11" value="Parque">Parque</option>
+                                                <option key="availability_type12" value="Zona Verde">Zona Verde</option>
+                                                <option key="availability_type13" value="Zona dura">Zona dura</option>
+                                                <option key="availability_type14" value="Playa">Plaza</option>
+                                            </>
+                                        }
+                                        <option key="availability_type15" value="sin Asignar">sin Asignar</option>
+
+                                    </Field>
+                                    <ErrorMessage />
+                                </div>
+                            </div>
+                        </>
+                    }
+
 
                     <div className="row">
                         <div className="col-12">

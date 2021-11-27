@@ -59,7 +59,7 @@ export const insertAddress = async (data: any) => {
 
 export const getAddressById = async (id) => {
     try {
-        let URI = '/addresses/formated/';
+        let URI = '/addresses/';
         let res = await location_http.get(URI, { params: { id } });
 
         return res.data.results;

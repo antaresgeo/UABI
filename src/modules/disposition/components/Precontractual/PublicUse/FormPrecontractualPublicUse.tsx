@@ -8,23 +8,23 @@ export const FormPrecontractualPublicUse = () => {
         <>
             <div className="row">
                 <div className="col-4">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="destination_realEstate_id" className="form-label">
                         Destinación de bien Inmueble
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="description_id"
+                        id="destination_realEstate_id"
+                        name="destination_realEstate"
                         aria-describedby="emailHelp"
                         placeholder="Actividades"
-                        name="description"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="description" withCount max={200} />
+                    <ErrorMessage name="destination_realEstate" withCount max={200} />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="consecutive_number_id" className="form-label">
+                    <label htmlFor="contract_period_id" className="form-label">
                         Duración del contrato
                         <Tooltip title="Número de meses">
                             <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
@@ -32,18 +32,18 @@ export const FormPrecontractualPublicUse = () => {
                     </label>
                     <Field
                         type="number"
-                        id="consecutive_number_id"
-                        name="consecutive_number"
+                        id="contract_period_id"
+                        name="contract_period"
                         className="form-control"
                         disabled={false}
                         min={1}
                         max={12}
 
                     />
-                    <ErrorMessage name="consecutive_number" />
+                    <ErrorMessage name="contract_period" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="value_aforo_id" className="form-label">
+                    <label htmlFor="contract_value_id" className="form-label">
                         Valor del contrato
                     </label>
                     <div className="input-group">
@@ -52,31 +52,31 @@ export const FormPrecontractualPublicUse = () => {
                         </div>
                         <Field
                             disabled={false}
-                            name="value_aforo"
+                            id="contract_value_id"
+                            name="contract_value"
                             type="number"
-                            id="value_aforo_id"
                             className="form-control border-start-0 text-end"
                             min={0}
                             max={9999999999}
                         />
                     </div>
-                    <ErrorMessage name="value_aforo" />
+                    <ErrorMessage name="contract_value" />
                 </div>
                 <div className="col-4">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="environmental_risk_id" className="form-label">
                         Riesgos Ambientales
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="description_id"
+                        id="environmental_risk_id"
+                        name="environmental_risk"
                         aria-describedby="emailHelp"
                         placeholder="Riesgos ambientales"
-                        name="description"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="description" withCount max={200} />
+                    <ErrorMessage name="environmental_risk" withCount max={200} />
                 </div>
                 <div className="col-4">
                     <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">

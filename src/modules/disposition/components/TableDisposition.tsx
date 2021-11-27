@@ -56,7 +56,7 @@ export const TableDiszposition: FC<DispositionListProps> = ({  filters, init }) 
                     render: (id) => {
                         return (
                             <Link
-                                to={""}
+                                to={`/disposition/${id}/`}
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-eye" aria-hidden="true" />}

@@ -51,7 +51,7 @@ const Sider: FC<{ width: number }> = ({ width }) => {
         },
         {
             path: '/InventoryRecordList',
-            name: 'Registro de inventario',
+            name: 'Administración de inventario',
         },
         {
             name: 'Asegurabilidad',
