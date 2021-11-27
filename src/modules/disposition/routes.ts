@@ -57,7 +57,7 @@ const get_routes = (): IRoute[] => {
                     { name: 'Crear' },
                 ],
             },
-            component: CreateDisposition
+            component: CreateDisposition,
         },
         // {
         //     exact: true,

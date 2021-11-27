@@ -60,7 +60,6 @@ export const createRole = async (
     data: any
 ): Promise<IRolAttributes | string> => {
     try {
-        console.log(data);
         let URI = `/roles`;
         let res: AxiosResponse<IRolResponse> = await auth_http.post(URI, data);
         await swal.fire('Rol Creado', res.data.message, 'success');

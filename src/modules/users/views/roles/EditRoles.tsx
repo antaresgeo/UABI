@@ -24,6 +24,8 @@ export const EditRoles = () => {
         permits: role?.permits,
     }
 
+    console.log(finalRole)
+
     const editRol = async (values) =>{
         console.log(values)
         await dispatch(actions.updateRole(values, id))
@@ -36,7 +38,7 @@ export const EditRoles = () => {
                         <div className="col-md-12">
                             <Card title="Editar Rol">
                                 <RoleForm
-                                    // role={finalRole}
+                                    rol={finalRole}
                                     type="edit"
                                     onSubmit={(values) => {
                                         return editRol(values);

@@ -44,7 +44,6 @@ const getIdFromLocation = async ({
 };
 
 export const insertAddress = async (data: any) => {
-    console.log(6, data);
     try {
         let URI = '/addresses/';
         let res: AxiosResponse<IDocumentResponse<any>> =
@@ -69,7 +68,6 @@ export const getAddressById = async (id) => {
 };
 
 const getAddress = async (values) => {
-    console.log(4, values);
     let idLocation: any;
     try {
         idLocation = await getIdFromLocation({
@@ -84,8 +82,7 @@ const getAddress = async (values) => {
             first_number: values.first_number,
             second_number: values.second_number,
             identifier: values.identifier,
-            user_id: 'Administrador',
-            location_id: idLocation,
+            localization_id: idLocation,
         };
 
         if (values.first_appendix)

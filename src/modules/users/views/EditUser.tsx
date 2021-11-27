@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IUserAttributes } from './../../../utils/interfaces/users';
-import { actions } from '../redux';
+import { actions, service } from '../redux';
 import swal from 'sweetalert';
 import { Card } from '../../../utils/ui';
 import GeneralForm from './../components/GerenalForm';
@@ -29,11 +29,10 @@ const EditUser = ({ view }: IProps) => {
         if (userForm) {
             res = await dispatch(actions.update_user(id, userForm));
             await swal_success.fire({ title: 'Usuario actualizado', text: res.message, icon: 'success' });
-            history.push(`/users/${user.id}`);
+            console.log('noc', res);
+            history.push(`/users/${user.results.id}`);
         }
     };
-
-    console.log(user)
 
     useEffect(() => {
         dispatch(actions.get_user_by_id(parseInt(id)));
@@ -60,7 +59,7 @@ const EditUser = ({ view }: IProps) => {
                                     user_roles={user?.roles || []}
                                     user_permits={user?.permits|| []}
                                     onSubmit={(values) => {
-                                        return _updateUser(values);
+                                        return service.assignRolesAndPermits(id, values);
                                     }}
                                 />
                             </Card>
