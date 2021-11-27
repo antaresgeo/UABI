@@ -3,7 +3,7 @@ import { BrowserRouter, Switch } from 'react-router-dom';
 import Route from './RouteWithSubRoutes';
 import { IAppRouter } from './custom_types';
 
-const AppRouter: React.FC<IAppRouter> = ({ routes, defaultRedirect, privateRedirect, lazy, template, user }) => {
+const AppRouter: React.FC<IAppRouter> = ({ test,  routes, defaultRedirect, privateRedirect, lazy, template, user }) => {
     return (
         <BrowserRouter>
             <Switch>
@@ -14,10 +14,11 @@ const AppRouter: React.FC<IAppRouter> = ({ routes, defaultRedirect, privateRedir
                             key={`route_global_${i}`}
                             defaultRedirect={defaultRedirect}
                             privateRedirect={privateRedirect}
-                            {...route}
                             lazy={lazy}
                             template={template}
                             user={user}
+                            test={test}
+                            {...route}
                         />
                     );
                 })}
@@ -30,6 +31,7 @@ AppRouter.defaultProps = {
     defaultRedirect: '/',
     privateRedirect: '/login/',
     lazy: false,
+    test: false
 };
 
 export default AppRouter;

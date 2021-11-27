@@ -2,32 +2,35 @@ import { FC, useEffect } from 'react';
 import { Field, Formik, Form } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
-import { IUserAttributes } from '../../../utils/interfaces/users';
 import { useState } from 'react';
 import { Transfer } from 'antd';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { actions } from '../redux';
 import { IPermitAttributes } from '../../../utils/interfaces/permits';
-import { IRolAttributes } from '../../../utils/interfaces/roles';
 import Select from '../../../utils/ui/select';
-import dependencias from '../../acquisitions/dependencias';
+import union from 'lodash/union';
+import difference from 'lodash/difference';
+import { prefix } from 'react-bootstrap/lib/utils/bootstrapUtils';
+import { log } from 'util';
+
 interface IUserFormPros {
     user_roles?: any[];
     user_permits?: any[];
+    rol?: any
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit' | 'assign';
     onSubmit?: (values, actions?) => Promise<any>;
 }
 
-const RoleForm: FC<IUserFormPros> = ({ disabled, type, user_roles, user_permits, onSubmit }) => {
+const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_permits, onSubmit }) => {
     const permitsAll: IPermitAttributes[] = useSelector((store: any) => store.users.permits.value);
     const roles: any[] = useSelector((store: any) => store.users.roles.value);
     const dispatch = useDispatch();
     const [targetKeys, setTargetKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
-    // const [userTarget, setUserTarget] = useState([]);
     const [mockData, setMockData] = useState([]);
+    const [permits_rol_ids, set_permits_rol_ids] = useState([]);
 
     useEffect(() => {
         dispatch(actions.getPermits());
@@ -36,52 +39,98 @@ const RoleForm: FC<IUserFormPros> = ({ disabled, type, user_roles, user_permits,
         }
     }, []);
 
-    // useEffect(() => {
-    //     setTargetKeys(userTarget);
-    // }, [userTarget]);
+    useEffect(() => {
+        if (user_roles?.length > 0) {
+            const role_ids = user_roles.map((rol) => rol.id);
+            update_permits_rol(role_ids);
+        }
+    }, [user_roles]);
 
     useEffect(() => {
-        console.log('useEffect', user_permits);
-        const allPermits =
-            permitsAll?.map((per: any) => ({
+        if (rol?.permits?.length > 0) {
+            setTargetKeys(rol?.permits);
+        }
+    }, [rol]);
+
+    useEffect(() => {
+        let allPermits = [];
+        let permitUser = [];
+        if (permitsAll?.length > 0) {
+            allPermits = permitsAll?.map((per: any) => ({
                 key: per.id,
                 title: per.permit_name,
-                disabled: true,
-            })) || [];
-        const permitUser =
-            user_permits?.map((per: any) => ({
+            }));
+        }
+        if (user_permits?.length > 0) {
+            permitUser = user_permits?.map((per: any) => ({
                 key: per.id,
                 title: per.permit_name,
-            })) || [];
+            }));
+        }
         const initialTargetKeys = permitUser.map((item) => item.key);
         setMockData(allPermits);
         setTargetKeys(initialTargetKeys);
     }, [permitsAll, user_permits]);
 
-    //console.log(initialValues)
+    const get_permits_rol_ids_list = (rol_ids) => {
+        return Promise.all(rol_ids.map((id) => dispatch(actions.getRole(id)))).then((res) => {
+            let ids = res.map((subres: any) => subres.permits.map((a) => a.id));
+            return union(...ids);
+        });
+    };
+
+    const update_permits_rol = (rol_ids) => {
+        return get_permits_rol_ids_list(rol_ids).then((ids: number[]) => {
+            if(mockData.length > 0) {
+                const data = mockData.map((permit) => {
+                    permit.disabled = ids.includes(permit.key);
+                    return permit;
+                });
+                set_permits_rol_ids(ids);
+                setMockData(data);
+            }
+            return ids;
+        });
+    };
+
+    const remove_permits_rol = (rol_ids) => {
+        return get_permits_rol_ids_list(rol_ids).then((ids) => {
+            setTargetKeys(difference(targetKeys, ids));
+        });
+    };
+
+    const add_permits_rol = (rol_ids) => {
+        return get_permits_rol_ids_list(rol_ids).then((ids) => {
+            setTargetKeys(union(targetKeys, ids));
+        });
+    };
 
     const initialValues = {
         name: '',
         permits: [],
-        roles_to_assign: user_roles.map((rol) => rol.id),
+        ...rol,
+        ...(user_roles ? { roles_to_assign: user_roles.map((rol) => rol.id) } : {}),
     };
+
     const onChange = (nextTargetKeys, direction, moveKeys) => {
         setTargetKeys(nextTargetKeys);
-        console.log(targetKeys);
     };
 
     const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
         setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
     };
 
-    const submit = (values, actions) => {
-        console.log(targetKeys);
+    const submit = (_values, actions) => {
         const permitUser = [];
         targetKeys.map((key) => permitUser.push(Number(key)));
-        values = {
-            ...values,
+        const values = {
+            ..._values,
             permits: permitUser,
         };
+        if (type === 'assign') {
+            delete values.name;
+            values.permits = difference(values.permits, permits_rol_ids);
+        }
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
             actions.resetForm();
@@ -92,10 +141,11 @@ const RoleForm: FC<IUserFormPros> = ({ disabled, type, user_roles, user_permits,
         name: Yup.string().required('Campo obligatorio'),
     });
 
+    console.log({targetKeys})
+
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues}>
             {({ values, isValid, isSubmitting }) => {
-                console.log(values);
                 return (
                     <Form>
                         <div className="row">
@@ -130,6 +180,16 @@ const RoleForm: FC<IUserFormPros> = ({ disabled, type, user_roles, user_permits,
                                         options={roles.map((rol) => ({ id: rol.id, name: rol.role_name }))}
                                         showSearch
                                         mode="multiple"
+                                        extra_on_change={(values, prev) => {
+                                            update_permits_rol(values).then((ids) => {
+                                                if (prev.length > values.length) {
+                                                    const remove_ids = difference(prev, values);
+                                                    remove_permits_rol(remove_ids);
+                                                } else {
+                                                    add_permits_rol(values);
+                                                }
+                                            });
+                                        }}
                                         filterOption={(input, option) => {
                                             return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                         }}

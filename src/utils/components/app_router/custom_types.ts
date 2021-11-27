@@ -32,4 +32,5 @@ export interface IAppRouter {
     lazy?: boolean;
     template?: any;
     user: any
+    test?: boolean;
 }

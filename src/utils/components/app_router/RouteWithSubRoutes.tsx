@@ -8,6 +8,7 @@ interface RouteWithSubRoutesProps extends IRoute {
     defaultRedirect: string;
     privateRedirect: string;
     user: any;
+    test: boolean;
 }
 
 const Route: FC<RouteWithSubRoutesProps> = ({
@@ -23,9 +24,26 @@ const Route: FC<RouteWithSubRoutesProps> = ({
     lazy,
     template,
     template_props,
+    test,
     ..._props
 }) => {
-
+    if (test) {
+        console.log({
+            routes,
+            redirect,
+            is_private,
+            can_access,
+            render,
+            component,
+            defaultRedirect,
+            privateRedirect,
+            location,
+            lazy,
+            template,
+            template_props,
+            ..._props,
+        });
+    }
     const has_access = get_can_access(can_access, _props);
     const custom_render = (props: any) => {
         const dr = compute_redirect(defaultRedirect, location);

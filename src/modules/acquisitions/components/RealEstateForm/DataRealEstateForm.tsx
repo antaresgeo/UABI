@@ -11,7 +11,7 @@ import CheckboxGroup from 'react-checkbox-group';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import dependencias from '../../dependencias';
 import { ITipologyAttributes } from './../../../../utils/interfaces/realEstates';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
 interface DataRealEstateFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -39,8 +39,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     const tipologies: ITipologyAttributes[] = useSelector((states: any) => states.acquisitions.tipologies.value);
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(actions.getTipologies())
-    }, [])
+        dispatch(actions.getTipologies());
+    }, []);
     const [subs, set_subs] = useState<any[]>([]);
     const onChangeActiveType = (active_types, setFieldValue) => (e) => {
         const data_now = [...active_types];
@@ -111,8 +111,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                         }}
                         extra_on_change={(id) => {
-                            const bill = tipologies.filter(tipology => tipology.id === id)
-                            formik.setFieldValue("accounting_account", bill[0].accounting_account, false)
+                            const bill = tipologies.filter((tipology) => tipology.id === id);
+                            formik.setFieldValue('accounting_account', bill[0].accounting_account, false);
                         }}
                     />
                     <ErrorMessage name="tipology" />
@@ -274,9 +274,15 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         <option value="" disabled hidden>
                             -- Seleccione Destinación --
                         </option>
-                        <option key="PÚBLICO" value="PÚBLICO">Uso Público</option>
-                        <option key="FISCAL" value="FISCAL">Fiscal</option>
-                        <option key="MIXTO" value="MIXTO">Mixto</option>
+                        <option key="PÚBLICO" value="PÚBLICO">
+                            Uso Público
+                        </option>
+                        <option key="FISCAL" value="FISCAL">
+                            Fiscal
+                        </option>
+                        <option key="MIXTO" value="MIXTO">
+                            Mixto
+                        </option>
                     </Field>
 
                     <ErrorMessage name="destination_type" />
@@ -483,18 +489,11 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 disabled={disabled}
                                 view="general"
                                 zone={formik.values.zone}
-                                onSave={(values) => {
-                                    delete values.country_name;
-                                    delete values.state_name;
-                                    delete values.city_name;
-                                    delete values.commune_name;
-                                    delete values.neighborhood_name;
-                                    return service.getAddress(values).then((res) => {
-                                        //console.log(res);
-                                        formik.setFieldValue('address.id', `${res.id}`, false);
-                                        formik.setFieldValue('address.name', `${res.addressAsString}`, false);
-                                        formik.setFieldValue('address.cbml', `${res.cbml}`, false);
-                                    });
+                                onSave={async (values: any) => {
+                                    formik.setFieldValue('address.id', `${values.id}`, false);
+                                    formik.setFieldValue('address.name', `${values.address}`, false);
+                                    formik.setFieldValue('address.cbml', `${values.cbmls.uabi}`, false);
+                                    return Promise.resolve();
                                 }}
                             />
                         </div>
@@ -531,12 +530,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         <label htmlFor="form-select" className="form-label">
                             Adjuntar Matrícula
                         </label>
-                        <Field
-                            name="document"
-                            component={DocumentModal}
-                            btn_label="Adjuntar"
-
-                        />
+                        <Field name="document" component={DocumentModal} btn_label="Adjuntar" />
                         <ErrorMessage name="document" />
                     </div>
                 </div>
