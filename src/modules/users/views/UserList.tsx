@@ -94,11 +94,11 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
                 }`;
             },
         },
-        {
-            title: 'rol',
-            dataIndex: 'id_rol',
-            align: 'center' as 'center',
-        },
+        // {
+        //     title: 'rol',
+        //     dataIndex: 'id_rol',
+        //     align: 'center' as 'center',
+        // },
         {
             title: 'Fecha Creación',
             dataIndex: 'audit_trail',
@@ -119,13 +119,13 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
     ];
 
     if (guards.detail({ user })) {
-        table_columns[5].children[0] = ver;
+        table_columns[4].children[0] = ver;
     }
     if (guards.edit({ user })) {
-        table_columns[5].children[1] = editar;
+        table_columns[4].children[1] = editar;
     }
     if (guards.delete({ user })) {
-        table_columns[5].children[2] = eliminar;
+        table_columns[4].children[2] = eliminar;
     }
 
     return <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} />;

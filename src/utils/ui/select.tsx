@@ -1,12 +1,13 @@
 import AntdSelect from 'antd/lib/select';
 import { FC } from 'react';
 import { FieldProps } from 'formik';
+
 interface SelectProps extends FieldProps {
     options?: any[];
     className?: string;
-    extra_on_change?: (value) => void;
+    extra_on_change?: (value, prev_value?) => void;
 }
-const Select: FC<SelectProps> = ({ field, form, options, className, extra_on_change, ...props }) => {
+const Select: FC<SelectProps> = ({ children, field, form, options, className, extra_on_change, ...props }) => {
     const { Option } = AntdSelect;
     options = options;
     if (options && Array.isArray(options)) {
@@ -15,8 +16,8 @@ const Select: FC<SelectProps> = ({ field, form, options, className, extra_on_cha
         options = [];
     }
     const on_change = (value) => {
+        extra_on_change && extra_on_change(value, field.value);
         form.setFieldValue(field.name, value);
-        extra_on_change && extra_on_change(value);
     };
     const render_options = (items) =>
         items.map((item, i) => {

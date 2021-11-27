@@ -5,6 +5,7 @@ import {
     delete_user,
     get_user_by_id,
     update_user,
+    assignRolesAndPermits
 } from './user';
 
 import {
@@ -31,6 +32,7 @@ const services = {
     updateRole,
     deleteRole,
     getPermits,
+    assignRolesAndPermits,
 };
 
 export default services;

@@ -11,7 +11,7 @@ import CheckboxGroup from 'react-checkbox-group';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import dependencias from '../../dependencias';
 import { ITipologyAttributes } from './../../../../utils/interfaces/realEstates';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
 interface DataRealEstateFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -36,10 +36,10 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 }) => {
     const tipologies: ITipologyAttributes[] = useSelector((states: any) => states.acquisitions.tipologies.value);
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(actions.getTipologies())
-    }, [])
+        dispatch(actions.getTipologies());
+    }, []);
     const [subs, set_subs] = useState<any[]>([]);
     const onChangeActiveType = (active_types, setFieldValue) => (e) => {
         const data_now = [...active_types];
@@ -104,14 +104,14 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         name="tipology"
                         placeholder="Seleccione Tipología "
                         disabled={disabled}
-                        options={tipologies?.map(tipology => ({ id: tipology.id, name: tipology.tipology}))}
+                        options={tipologies?.map((tipology) => ({ id: tipology.id, name: tipology.tipology }))}
                         showSearch // habilitar para buscarx
                         filterOption={(input, option) => {
                             return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                         }}
                         extra_on_change={(id) => {
-                            const bill = tipologies.filter(tipology => tipology.id === id)
-                            formik.setFieldValue("accounting_account", bill[0].accounting_account, false)
+                            const bill = tipologies.filter((tipology) => tipology.id === id);
+                            formik.setFieldValue('accounting_account', bill[0].accounting_account, false);
                         }}
                     />
                     <ErrorMessage name="tipology" />
@@ -273,9 +273,15 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         <option value="" disabled hidden>
                             -- Seleccione Destinación --
                         </option>
-                        <option key="PÚBLICO" value="PÚBLICO">Uso Público</option>
-                        <option key="FISCAL" value="FISCAL">Fiscal</option>
-                        <option key="MIXTO" value="MIXTO">Mixto</option>
+                        <option key="PÚBLICO" value="PÚBLICO">
+                            Uso Público
+                        </option>
+                        <option key="FISCAL" value="FISCAL">
+                            Fiscal
+                        </option>
+                        <option key="MIXTO" value="MIXTO">
+                            Mixto
+                        </option>
                     </Field>
 
                     <ErrorMessage name="destination_type" />
@@ -442,18 +448,11 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 disabled={disabled}
                                 view="general"
                                 zone={formik.values.zone}
-                                onSave={(values) => {
-                                    delete values.country_name;
-                                    delete values.state_name;
-                                    delete values.city_name;
-                                    delete values.commune_name;
-                                    delete values.neighborhood_name;
-                                    return service.getAddress(values).then((res) => {
-                                        console.log(res);
-                                        formik.setFieldValue('address.id', `${res.id}`, false);
-                                        formik.setFieldValue('address.name', `${res.addressAsString}`, false);
-                                        formik.setFieldValue('address.cbml', `${res.cbml}`, false);
-                                    });
+                                onSave={async (values: any) => {
+                                    formik.setFieldValue('address.id', `${values.id}`, false);
+                                    formik.setFieldValue('address.name', `${values.address}`, false);
+                                    formik.setFieldValue('address.cbml', `${values.cbmls.uabi}`, false);
+                                    return Promise.resolve();
                                 }}
                             />
                         </div>
@@ -490,12 +489,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         <label htmlFor="form-select" className="form-label">
                             Adjuntar Matrícula
                         </label>
-                        <Field
-                            name="document"
-                            component={DocumentModal}
-                            btn_label="Adjuntar"
-
-                        />
+                        <Field name="document" component={DocumentModal} btn_label="Adjuntar" />
                         <ErrorMessage name="document" />
                     </div>
                 </div>
@@ -575,7 +569,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 id="importe_contabilidad_id"
                                 name="importe_contabilidad"
                                 disabled
-
                             />
                             <ErrorMessage />
                         </div>
@@ -591,7 +584,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 value={extractMonth(formik.values.audit_trail?.created_on)}
                                 disabled
 
-                            // EL MES
+                                // EL MES
                             />
                             <ErrorMessage />
                         </div>
@@ -634,32 +627,62 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 name="availability_type"
                                 disabled={inventory}
                             >
-                                <option key="availability_type" value="" hidden>--Seleccione Tipo de uso--</option>
-                                {formik.values.destination_type !== "PÚBLICO" &&
+                                <option key="availability_type" value="" hidden>
+                                    --Seleccione Tipo de uso--
+                                </option>
+                                {formik.values.destination_type !== 'PÚBLICO' && (
                                     <>
-                                        <option key="availability_type1" value="Misional">Misional</option>
-                                        <option key="availability_type2" value="Misional social">Misional social</option>
-                                        <option key="availability_type3" value="Inversión">Inversión</option>
-                                        <option key="availability_type4" value="Inversión Social">Inversión Social</option>
-
+                                        <option key="availability_type1" value="Misional">
+                                            Misional
+                                        </option>
+                                        <option key="availability_type2" value="Misional social">
+                                            Misional social
+                                        </option>
+                                        <option key="availability_type3" value="Inversión">
+                                            Inversión
+                                        </option>
+                                        <option key="availability_type4" value="Inversión Social">
+                                            Inversión Social
+                                        </option>
                                     </>
-                                }
-                                {formik.values.destination_type !== "FISCAL" &&
+                                )}
+                                {formik.values.destination_type !== 'FISCAL' && (
                                     <>
-                                        <option key="availability_type5" value="administracion">Administración</option>
-                                        <option key="availability_type6" value="mantenimiento">Mantenimiento</option>
-                                        <option key="availability_type7" value="aprovechamiento">Aprovechamiento</option>
-                                        <option key="availability_type8" value="aprovechamiento">Calles</option>
-                                        <option key="availability_type9" value="Via">Via</option>
-                                        <option key="availability_type10" value="Plaza">Plaza</option>
-                                        <option key="availability_type11" value="Parque">Parque</option>
-                                        <option key="availability_type12" value="Zona Verde">Zona Verde</option>
-                                        <option key="availability_type13" value="Zona dura">Zona dura</option>
-                                        <option key="availability_type14" value="Playa">Plaza</option>
+                                        <option key="availability_type5" value="administracion">
+                                            Administración
+                                        </option>
+                                        <option key="availability_type6" value="mantenimiento">
+                                            Mantenimiento
+                                        </option>
+                                        <option key="availability_type7" value="aprovechamiento">
+                                            Aprovechamiento
+                                        </option>
+                                        <option key="availability_type8" value="aprovechamiento">
+                                            Calles
+                                        </option>
+                                        <option key="availability_type9" value="Via">
+                                            Via
+                                        </option>
+                                        <option key="availability_type10" value="Plaza">
+                                            Plaza
+                                        </option>
+                                        <option key="availability_type11" value="Parque">
+                                            Parque
+                                        </option>
+                                        <option key="availability_type12" value="Zona Verde">
+                                            Zona Verde
+                                        </option>
+                                        <option key="availability_type13" value="Zona dura">
+                                            Zona dura
+                                        </option>
+                                        <option key="availability_type14" value="Playa">
+                                            Plaza
+                                        </option>
                                     </>
-                                }
-                                <option key="availability_type15" value="sin Asignar">sin Asignar</option>
-
+                                )}
+                                <option key="availability_type15" value="sin Asignar">
+                                    sin Asignar
+                                </option>
                             </Field>
                             <ErrorMessage />
                         </div>

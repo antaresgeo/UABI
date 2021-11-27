@@ -37,6 +37,7 @@ export const getList = async (
             URI,
             {
                 params: {
+                    name: nameList,
                     ...filters,
                 },
             }

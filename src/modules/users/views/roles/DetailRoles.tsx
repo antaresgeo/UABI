@@ -15,14 +15,14 @@ const DetailRoles = () => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
-    const role: IRolAttributes = useSelector((store: any) => store.users.rol.value);
+    const role: any = useSelector((store: any) => store.users.rol.value);
     useEffect(() => {
         dispatch(actions.getRole(Number(id)))
     }, []);
 
     const finalRole = {
-        name: role?.role?.name,
-        permits: role?.permits,
+        name: role?.name,
+        permits: role?.permits?.map(a => a.id) || [],
     }
 
     return (
@@ -33,7 +33,7 @@ const DetailRoles = () => {
                         <div className="col-md-12">
                             <Card title="ver Rol">
                                 <RoleForm
-                                    // us={finalRole}
+                                    rol={finalRole}
                                     type="view"
                                     disabled={true}
                                 />

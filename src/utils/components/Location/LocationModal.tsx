@@ -19,7 +19,6 @@ const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone })
     };
     const close = () => set_is_visible(false);
     const request = (_values) => {
-        console.log(3)
         if (view === 'general' || 'user') {
             const values = {..._values};
             delete values.country_name;
@@ -48,7 +47,6 @@ const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone })
                     innerRef={ref}
                     zone={zone}
                     modalClose={(values, callback) => {
-                        console.log(2)
                         request(values)
                             .then(() => {
                                 callback && callback();
