@@ -27,10 +27,11 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
     const initial_values = {
         acquisition_type: '',
         construction_area: '',
+        plot_area: '',
+        area: '',
         title_type: '',
         act_number: '',
         act_value: '',
-        plot_area: '',
         acquired_percentage: '',
         origin: '',
         entity_type: '',
@@ -126,16 +127,15 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                         </div>
                         <div className="row">
                             <div className="col-3">
-                                <label htmlFor="plot_area_id" className="form-label">
-                                    Área Total del Lote
+                                <label htmlFor="area_id" className="form-label">
+                                    Área
                                 </label>
                                 <div className="input-group">
                                     <Field
                                         type="number"
                                         className="form-control border-end-0"
-                                        id="plot_area_id"
-                                        name="plot_area"
-                                        disabled={!active_type?.includes('Lote')}
+                                        id="area_id"
+                                        name="area"
                                         min={0}
                                     />
                                     <div className="input-group-prepend">
@@ -145,33 +145,6 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                                     </div>
                                 </div>
                                 <ErrorMessage name="plot_area" />
-                            </div>
-                            <div className="col-3">
-                                <label htmlFor="area_construccion_id" className="form-label">
-                                    Área Construcción
-                                </label>
-                                <div className="input-group">
-                                    <Field
-                                        type="number"
-                                        className="form-control border-end-0"
-                                        id="area_construccion_id"
-                                        name="construction_area"
-                                        min={0}
-                                        disabled={
-                                            !(
-                                                active_type?.includes('Construccion') ||
-                                                active_type?.includes('Construccion para Mejora') ||
-                                                active_type?.includes('Construcción para demoler')
-                                            )
-                                        }
-                                    />
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text bg-white border-start-0">
-                                            m<sup>2</sup>
-                                        </span>
-                                    </div>
-                                </div>
-                                <ErrorMessage name="construction_area" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="acquisition_value_id" className="form-label">
@@ -202,6 +175,30 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                                 </div>
                                 <ErrorMessage name="acquired_percentage" />
                             </div>
+                            <div className="col-3">
+                                <label htmlFor="address_id" className="form-label">
+                                    Ciudad
+                                </label>
+                                <div className="input-group">
+                                    <Field
+                                        name="city"
+                                        id="address_id"
+                                        type="text"
+                                        className="form-control"
+                                        disabled
+                                    />
+                                    <div className="input-group-prepend">
+                                        <LocationModal
+                                            disabled={disabled}
+                                            onSave={async (_values) => {
+                                                setFieldValue('city', _values.city_name, false);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <ErrorMessage name="city_name" />
+                            </div>
                         </div>
                         <div className="row">
                             <div className="col-3">
@@ -227,31 +224,8 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                                 />
                                 <ErrorMessage name="entity_number" />
                             </div>
-                            <div className="col-3">
-                                <label htmlFor="address_id" className="form-label">
-                                    Ciudad
-                                </label>
-                                <div className="input-group">
-                                    <Field
-                                        name="city"
-                                        id="address_id"
-                                        type="text"
-                                        className="form-control"
-                                        disabled
-                                    />
-                                    <div className="input-group-prepend">
-                                        <LocationModal
-                                            disabled={disabled}
-                                            onSave={async (_values) => {
-                                                setFieldValue('city', _values.city_name, false);
-                                            }}
-                                        />
-                                    </div>
-                                </div>
 
-                                <ErrorMessage name="city_name" />
-                            </div>
-                            <div className="col-3">
+                            <div className="col-6">
                                 <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">
                                     Fecha de Adquisición
                                 </label>
