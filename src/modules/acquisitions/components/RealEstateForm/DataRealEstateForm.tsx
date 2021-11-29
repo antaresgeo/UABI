@@ -1,5 +1,5 @@
 import { Field } from 'formik';
-import { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
 import Select from '../../../../utils/ui/select';
@@ -42,6 +42,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         dispatch(actions.getTipologies());
     }, []);
     const [subs, set_subs] = useState<any[]>([]);
+    const active_type = ['Lote', 'Mejora', 'Construccion', 'Construccion para demoler', 'Mejora para demoler'];
     const onChangeActiveType = (active_types, setFieldValue) => (e) => {
         const data_now = [...active_types];
         const new_value = e.target.value;
@@ -60,6 +61,16 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         } else {
             aux_data = [...data_now].filter((x) => x !== new_value);
         }
+        if (!aux_data.includes(active_type[2]) && !aux_data.includes(active_type[3])) {
+            formik.setFieldValue('construction_area', '', false);
+            const value1 = parseFloat(formik.values.plot_area || 0);
+            formik.setFieldValue('total_area', value1 + 0, false);
+        }
+        if (!aux_data.includes(active_type[0])) {
+            formik.setFieldValue('plot_area', '', false);
+            const value1 = parseFloat(formik.values.construction_area || 0);
+            formik.setFieldValue('total_area', 0 + value1, false);
+        }
         setFieldValue('active_type', aux_data, false);
     };
 
@@ -77,7 +88,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         return [];
     };
     const dependency_ops = format_list(dependencias);
-    const active_type = ['Lote', 'Mejora', 'Construccion', 'Construccion para demoler', 'Mejora para demoler'];
+
     return (
         <>
             <div className="row">
@@ -339,11 +350,11 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     </label>
                     <div className="input-group">
                         <Field
-                            disabled={disabled}
                             name="total_area"
                             type="number"
                             id="total_area_id"
                             className="form-control border-end-0"
+                            disabled
                             min={0}
                         />
                         <div className="input-group-prepend">
@@ -470,6 +481,87 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="zone"></ErrorMessage>
                 </div>
+                <div className="col-6">
+                    <label className="form-label">Tipo de activo</label>
+                    <div style={{ height: '33.5px', lineHeight: '33.5px' }}>
+                        {active_type.map((item, i) => {
+                            return (
+                                <label key={i} className="d-inline-block ms-1 me-1">
+                                    <Field
+                                        type="checkbox"
+                                        name="active_type"
+                                        value={item}
+                                        className="me-2"
+                                        onChange={onChangeActiveType(formik.values.active_type, formik.setFieldValue)}
+                                    />
+                                    {item}
+                                </label>
+                            );
+                        })}
+                    </div>
+                    <ErrorMessage name="active_type" />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-3">
+                    <label htmlFor="plot_area_id" className="form-label">
+                        Área Lote
+                    </label>
+                    <div className="input-group">
+                        <Field
+                            type="number"
+                            className="form-control border-end-0"
+                            id="plot_area_id"
+                            name="plot_area"
+                            disabled={!formik.values.active_type?.includes('Lote')}
+                            onChange={(e) => {
+                                formik.handleChange(e);
+                                const value1 = parseFloat(e.target.value || 0);
+                                const value2 = parseFloat(formik.values.construction_area || 0);
+                                formik.setFieldValue('total_area', value1 + value2, false);
+                            }}
+                            min={0}
+                        />
+                        <div className="input-group-prepend">
+                            <span className="input-group-text bg-white border-start-0">
+                                m<sup>2</sup>
+                            </span>
+                        </div>
+                    </div>
+                    <ErrorMessage name="plot_area" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="area_construccion_id" className="form-label">
+                        Área Construcción
+                    </label>
+                    <div className="input-group">
+                        <Field
+                            type="number"
+                            className="form-control border-end-0"
+                            id="area_construccion_id"
+                            name="construction_area"
+                            min={0}
+                            disabled={
+                                !(
+                                    formik.values.active_type?.includes(active_type[2]) ||
+                                    formik.values.active_type?.includes(active_type[3])
+                                )
+                            }
+                            onChange={(e) => {
+                                formik.handleChange(e);
+                                const value2 = parseFloat(e.target.value || 0);
+                                const value1 = parseFloat(formik.values.plot_area || 0);
+                                formik.setFieldValue('total_area', value1 + value2, false);
+                            }}
+                        />
+                        <div className="input-group-prepend">
+                            <span className="input-group-text bg-white border-start-0">
+                                m<sup>2</sup>
+                            </span>
+                        </div>
+                    </div>
+                    <ErrorMessage name="construction_area" />
+                </div>
                 <div className="form-group col-3">
                     <label htmlFor="address" className="form-label">
                         CBML
@@ -500,28 +592,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     </div>
 
                     <ErrorMessage name="location" />
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-12">
-                    <label className="form-label">Tipo de activo</label>
-                    <div style={{ height: '33.5px', lineHeight: '33.5px' }}>
-                        {active_type.map((item, i) => {
-                            return (
-                                <label key={i} className="d-inline-block ms-1 me-1">
-                                    <Field
-                                        type="checkbox"
-                                        name="active_type"
-                                        value={item}
-                                        className="me-2"
-                                        onChange={onChangeActiveType(formik.values.active_type, formik.setFieldValue)}
-                                    />
-                                    {item}
-                                </label>
-                            );
-                        })}
-                    </div>
-                    <ErrorMessage name="active_type" />
                 </div>
             </div>
             {englobe && (

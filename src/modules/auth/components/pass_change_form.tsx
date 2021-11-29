@@ -1,7 +1,7 @@
-import React, { FC, Fragment, useState } from "react";
-import { Field, Form, Formik, ErrorMessage } from "formik";
-import { object, string, ref } from "yup";
-import { PasswordResetBody } from "../custom_types";
+import React, { FC, Fragment, useState } from 'react';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
+import { object, string, ref } from 'yup';
+import { PasswordResetBody } from '../custom_types';
 interface OwnProps {
     change_password: (pass: PasswordResetBody) => Promise<any>;
     onOk?: (data?) => void;
@@ -15,15 +15,17 @@ interface OwnProps {
  * @param {React.ReactChildren} children
  */
 export const PassChangeForm: FC<OwnProps> = ({ change_password, onOk, children, SuccessButtons, code }) => {
+    const conditions = [
+        'debe contener almenos 1 numero',
+        'debe contener almenos 1 caracter especial',
+        'minimo 8 caracteres',
+    ];
     const schema = object({
-        // password: string()
-        //     .matches(/(?=.*[a-z])/, conditions[0])
-        //     .matches(/(?=.*[A-Z])/, conditions[1])
-        //     .matches(/(?=.*[0-9])/, conditions[2])
-        //     .matches(/(?=.*[@$!%*?&,.#])/, conditions[3])
-        //     .min(8, conditions[4])
-        //     .required("Password is required"),
-        re_password: string().oneOf([ref("password"), null], "Passwords must match"),
+        password: string()
+            .matches(/(?=.*[0-9])/, conditions[0])
+            .matches(/(?=.*[@$!%*?&,.#])/, conditions[1])
+            .min(8, conditions[2]),
+        re_password: string().oneOf([ref('password'), null], 'Passwords must match'),
     });
     const [sent_success, set_send_success] = useState<boolean>(false);
     const onSend = (values, formik) => {
@@ -39,12 +41,12 @@ export const PassChangeForm: FC<OwnProps> = ({ change_password, onOk, children, 
             });
     };
     return (
-        <div className="text-center" style={{ width: "400px" }}>
-            <h3 className="mt-4">title</h3>
+        <div style={{ width: '400px' }}>
+            <h3 className="mt-4">Cambiar Contraseña</h3>
             <Formik
                 enableReinitialize
                 onSubmit={onSend}
-                initialValues={{ password: "", re_password: "" }}
+                initialValues={{ password: '', re_password: '' }}
                 validationSchema={schema}
             >
                 {(formik) => (
@@ -53,24 +55,24 @@ export const PassChangeForm: FC<OwnProps> = ({ change_password, onOk, children, 
                             <Fragment>
                                 <div className="text-left">
                                     <div className="form-group mt-4 text-left">
-                                        <label>password</label>
+                                        <label>Contraseña</label>
                                         <Field type="password" className="form-control" name="password" />
                                         <ErrorMessage
                                             name="password"
                                             component="span"
                                             className="text-danger text-left d-block w-100 mt-1"
                                         />
-                                        <span style={{ fontSize: ".89em", opacity: "0.6" }}>
-                                            format_text
-                                            <ul style={{ opacity: "0.6" }}>
-                                                {/*{translation.format.conditions.map((c, i) => (*/}
-                                                {/*    <li key={`conditions_${i}`}>{c}</li>*/}
-                                                {/*))}*/}
+                                        <span style={{ fontSize: '.89em', opacity: '0.6' }}>
+                                            El formato para la contraseña es el siguiente:
+                                            <ul style={{ opacity: '0.6' }}>
+                                                {conditions.map((c, i) => (
+                                                    <li key={`conditions_${i}`}>{c}</li>
+                                                ))}
                                             </ul>
                                         </span>
                                     </div>
                                     <div className="form-group  mt-4 text-left">
-                                        <label>re_password</label>
+                                        <label>Contraseña (repetir)</label>
                                         <Field type="password" className="form-control" name="re_password" />
                                         <ErrorMessage
                                             name="re_password"
@@ -85,9 +87,7 @@ export const PassChangeForm: FC<OwnProps> = ({ change_password, onOk, children, 
                                         className="btn btn-primary"
                                         disabled={formik.isSubmitting || !formik.isValid}
                                     >
-                                        {!formik.isSubmitting && <i className="fas fa-paper-plane" />}
-                                        {formik.isSubmitting && <i className="fas fa-spinner fa-spin" />}{" "}
-                                        button
+                                        Guardar
                                     </button>
                                 </div>
                             </Fragment>
@@ -95,7 +95,7 @@ export const PassChangeForm: FC<OwnProps> = ({ change_password, onOk, children, 
                         {sent_success && (
                             <Fragment>
                                 <p>
-                                    success_text <i className="fas fa-check-circle text-success" />
+                                    Se cambio con exito la contraseña <i className="fa fa-check-circle text-success" />
                                 </p>
                                 <div className="controls mt-4">
                                     {SuccessButtons && (

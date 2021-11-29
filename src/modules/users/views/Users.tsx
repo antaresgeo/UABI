@@ -5,6 +5,7 @@ import { actions } from '../redux';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import UserList from './UserList';
 import { guards } from './../routes';
+import FilterForm from '../../../utils/ui/filter_form';
 
 const Users = () => {
     const dispatch = useDispatch();
@@ -12,14 +13,15 @@ const Users = () => {
     const user: any = useSelector((store: any) => store.auth.user);
     //const { total_results } = useSelector((store: any) => store.users.pagination);
 
-    const [query, set_query] = useState<string>('');
+    const [filters, set_filters] = useState<object>(null);
 
-    const filter = () => {
-        dispatch(actions.get_all_users({ page: 1, q: query }));
+    const filter = async (_filters, _) => {
+        set_filters(_filters)
+        await dispatch(actions.get_all_users({ page: 1, ..._filters }));
     };
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.get_all_users({ page, pageSize, q: query }));
+        dispatch(actions.get_all_users({ page, pageSize, ...filters }));
     };
 
     useEffect(() => {
@@ -30,7 +32,7 @@ const Users = () => {
         ...user,
         permits: user?.permits.map((a) => a.name) || [],
         roles: user?.roles.map((a) => a.name) || [],
-    }
+    };
 
     return (
         <div className="container-fluid">
@@ -38,30 +40,24 @@ const Users = () => {
                 <div className="col-md-12">
                     <Card
                         title="Usuarios"
-                        extra={<>{guards.create({ user: aux_user}) && <Link to="/users/create" name="Crear" iconText="+" />}</>}
+                        extra={
+                            <>
+                                {guards.create({ user: aux_user }) && (
+                                    <Link to="/users/create" name="Crear" iconText="+" />
+                                )}
+                            </>
+                        }
                     >
                         <form>
                             <div className="row justify-content-between">
                                 <div className="col-5 d-flex">
                                     <div className="col-6 ">
-                                        <div className="input-group">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="Usuario"
-                                                aria-label="Usuario"
-                                                aria-describedby="button-addon2"
-                                                value={query}
-                                                onChange={(e) => {
-                                                    set_query(e.target.value);
-                                                }}
-                                            />
-                                            <span className="input-group-text" onClick={filter}>
-                                                <span>
-                                                    <i className="fa fa-search" aria-hidden="true" />
-                                                </span>
-                                            </span>
-                                        </div>
+                                        <FilterForm
+                                            filters={[
+                                                { key: 'name', name: 'Nombre' }
+                                            ]}
+                                            onSubmit={filter}
+                                        />
                                     </div>
                                 </div>
                             </div>

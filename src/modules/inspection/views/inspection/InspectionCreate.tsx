@@ -2,10 +2,10 @@ import { FC } from 'react';
 import InspectionFormTags from "../../components/inspectionFormTags";
 
 interface PruebaProps {}
-const Prueba: FC<PruebaProps> = ({}) => {
+const InspectionCreate: FC<PruebaProps> = ({}) => {
     return (
         <InspectionFormTags/>
     );
 };
 
-export default Prueba;
+export default InspectionCreate;

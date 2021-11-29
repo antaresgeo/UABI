@@ -2,7 +2,8 @@ import { FC } from 'react';
 import { Formik, Form, Field } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
-import {Company} from "../redux/service";
+import { Company } from '../redux/service';
+import LocationModal from '../../../utils/components/Location/LocationModal';
 
 export interface IInsuranceCompanyAttributes {
     id?: number | string;
@@ -31,7 +32,10 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
         name: '',
         nit: '',
         phone: '',
-        location_id: '1',
+        location_id: '',
+        state: '',
+        city: '',
+        address: '',
         ...insurance_company,
     };
 
@@ -42,13 +46,15 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
     });
 
     const submit = (values, form) => {
-        onSubmit(values, form).then(() => {
-            form.setSubmitting(false);
-        }).catch(() => form.setSubmitting(false));
+        onSubmit(values, form)
+            .then(() => {
+                form.setSubmitting(false);
+            })
+            .catch(() => form.setSubmitting(false));
     };
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
-            {({ values, isValid, isSubmitting }) => {
+            {({ values, isValid, isSubmitting, setFieldValue }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -114,6 +120,42 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
                                     maxLength={20}
                                 />
                                 <ErrorMessage name="phone" withCount max={20} />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-3">
+                                <label htmlFor="state_id" className="form-label">
+                                    Departamento
+                                </label>
+                                <Field type="text" className="form-control" id="state_id" name="state" disabled />
+                                <ErrorMessage name="state" />
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="city_id" className="form-label">
+                                    Ciudad
+                                </label>
+                                <Field type="text" className="form-control" id="city_id" name="city" disabled />
+                                <ErrorMessage name="city" />
+                            </div>
+                            <div className="form-group col-6">
+                                <label htmlFor="location" className="form-label">
+                                    Dirección
+                                </label>
+                                <div className="input-group">
+                                    <Field name="address" id="location" type="text" className="form-control" disabled />
+                                    <div className="input-group-prepend">
+                                        <LocationModal
+                                            view="user"
+                                            disabled={disabled}
+                                            onSave={async (values) => {
+                                                setFieldValue('state', values.location.state, false);
+                                                setFieldValue('city', values.location.city, false);
+                                                setFieldValue('address', values.address, false);
+                                                setFieldValue('location_id', values.id + '', false);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="row justify-content-end">

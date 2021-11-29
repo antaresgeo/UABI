@@ -7,7 +7,10 @@ import CreateUpgrade from './CreateUpgrade';
 import { Card } from '../../../utils/ui';
 import { Field, Form, Formik } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
-import DocumentModal from "../../../utils/components/DocumentsModal";
+import DocumentModal from '../../../utils/components/DocumentsModal';
+import PhotographicRecordForm from './PhotographicRecordForm';
+import Report from './Report';
+import BasicInformation from "./BasicInformation";
 
 interface InspectionFormTagsProps {}
 const InspectionFormTags: FC<InspectionFormTagsProps> = ({}) => {
@@ -19,7 +22,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({}) => {
     const next_tab = () => {
         const key = parseInt(activeKey);
         const next = key + 1;
-        if (next <= 5) {
+        if (next <= 6) {
             set_activeKey(`${next}`);
         }
     };
@@ -37,116 +40,23 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({}) => {
                     </div>
 
                     <Tabs activeKey={activeKey} className="w-100 h-100" onChange={callback}>
-                        <TabPane tab="Ocupación del Inmueble" key="1">
+                        <TabPane tab="Información básica BI" key="1">
+                            <BasicInformation inspection={null}/>
+                        </TabPane>
+                        <TabPane tab="Ocupación" key="2">
                             <CreateOccupation />
                         </TabPane>
-                        <TabPane tab="Inspección física" key="2">
+                        <TabPane tab="Inspección física" key="3">
                             <CreateInspectionPhysical />
                         </TabPane>
-                        <TabPane tab="Actualización" key="3">
+                        <TabPane tab="Actualización" key="4">
                             <CreateUpgrade />
                         </TabPane>
-                        <TabPane tab="Registro fotográfico" key="4">
-                            <div className="container-fluid">
-                                <Formik
-                                    enableReinitialize
-                                    onSubmit={() => {}}
-                                    initialValues={{
-                                        documento1: '',
-                                        documento2: '',
-                                        documento3: '',
-                                        documento4: '',
-                                        documento5: '',
-                                    }}
-                                >
-                                    {({ isSubmitting, setFieldValue, values, handleChange }) => {
-                                        return (
-                                            <Form>
-                                                <Card title="Fotografias Generales">
-                                                    <div className="row">
-                                                        <div className="col-6">
-                                                            <label htmlFor="form-select" className="form-label">
-                                                                Fachada
-                                                            </label>
-                                                            <Field
-                                                                name="documento1"
-                                                                component={DocumentModal}
-                                                                btn_label="Adjuntar"
-                                                            />
-                                                            <ErrorMessage name="documento1" />
-                                                        </div>
-                                                        <div className="col-6">
-                                                            <label htmlFor="form-select" className="form-label">
-                                                                Generales
-                                                            </label>
-                                                            <Field
-                                                                name="documento2"
-                                                                component={DocumentModal}
-                                                                btn_label="Adjuntar"
-
-                                                            />
-                                                            <ErrorMessage name="documento2" />
-                                                        </div>
-                                                    </div>
-                                                </Card>
-                                                <Card title="Evidencia de inspección física">
-                                                    <div className="row">
-                                                        <div className="col-6">
-                                                            <label htmlFor="form-select" className="form-label">
-                                                                Pintura exterior
-                                                            </label>
-                                                            <Field
-                                                                name="documento3"
-                                                                component={DocumentModal}
-                                                                btn_label="Adjuntar"
-                                                            />
-                                                            <ErrorMessage name="documento2" />
-                                                        </div>
-                                                        <div className="col-6">
-                                                            <label htmlFor="form-select" className="form-label">
-                                                                Cubierta o techo
-                                                            </label>
-                                                            <Field
-                                                                name="documento3"
-                                                                component={DocumentModal}
-                                                                btn_label="Adjuntar"
-                                                            />
-                                                            <ErrorMessage name="documento2" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="row">
-                                                        <div className="col-12">
-                                                            <label htmlFor="form-select" className="form-label">
-                                                                Lavamanoss
-                                                            </label>
-                                                            <Field
-                                                                name="documento3"
-                                                                component={DocumentModal}
-                                                                btn_label="Adjuntar"
-                                                            />
-                                                            <ErrorMessage name="documento2" />
-                                                        </div>
-                                                    </div>
-                                                </Card>
-                                            </Form>
-                                        );
-                                    }}
-                                </Formik>
-                            </div>
+                        <TabPane tab="Registro fotográfico" key="5">
+                            <PhotographicRecordForm />
                         </TabPane>
-                        <TabPane tab="Generar informe" key="5">
-                            <div className="container-fluid">
-                                <embed
-                                    type="application/pdf"
-                                    src="/InformedeinspecciondebieninmuebleV4.pdf"
-                                    style={{
-                                        height: '100%',
-                                        width: '100%',
-                                        border: '1px solid #525659',
-                                        backgroundColor: '#525659',
-                                    }}
-                                />
-                            </div>
+                        <TabPane tab="Generar informe" key="6">
+                            <Report />
                         </TabPane>
                     </Tabs>
                 </div>

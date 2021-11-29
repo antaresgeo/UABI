@@ -1,6 +1,6 @@
 // import store from '../../config/store';
 import { IRoute } from '../../utils/components/app_router/custom_types';
-import Prueba from './views/inspection/Prueba';
+import InspectionCreate from './views/inspection/InspectionCreate';
 
 import ListInspection from './views/inspection';
 
@@ -36,7 +36,7 @@ const get_routes = (): IRoute[] => {
                     },
                 ],
             },
-            component: Prueba,
+            component: InspectionCreate,
         },
     ];
 };
