@@ -16,6 +16,7 @@ import {
 } from './views';
 import { Permit } from '../..';
 import { TableAreas } from './components/en_des_globe/TableAreas';
+import { RealEstateGlobe } from './components/en_des_globe/RealEstateGlobe';
 
 export const guards = {
     createProject: (props?) => {
@@ -210,10 +211,23 @@ const get_routes = (): IRoute[] => {
             path: '/englobar/realEstates/',
             template_props: {
                 breadcrumbs: [
-                    { name: 'Desenglobar proyecto' },
+                    { name: 'Finalizar proyecto' },
                 ],
             },
             component: TableAreas,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/englobar/real-estates/edit',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Finalizar proyecto', to: '' },
+                    { name: 'Bien inmueble' },
+                ],
+            },
+            component: RealEstateGlobe,
         },
     ];
 };

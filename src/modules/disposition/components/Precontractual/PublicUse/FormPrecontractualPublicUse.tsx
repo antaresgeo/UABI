@@ -7,23 +7,21 @@ export const FormPrecontractualPublicUse = () => {
     return (
         <>
             <div className="row">
-                <div className="col-4">
-                    <label htmlFor="destination_realEstate_id" className="form-label">
-                        Destinación de bien Inmueble
+                <div className="col-3">
+                    <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
+                        Fecha de Registro
                     </label>
                     <Field
-                        type="text"
+                        type="date"
+                        id="registration_date_id"
+                        name="registration_date"
+                        placeholder="Fecha Final"
                         className="form-control"
-                        id="destination_realEstate_id"
-                        name="destination_realEstate"
-                        aria-describedby="emailHelp"
-                        placeholder="Actividades"
-                        autoComplete="off"
-                        maxLength={200}
+                        disabled
                     />
-                    <ErrorMessage name="destination_realEstate" withCount max={200} />
+                    <ErrorMessage name="registration_date" />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="contract_period_id" className="form-label">
                         Duración del contrato
                         <Tooltip title="Número de meses">
@@ -42,7 +40,7 @@ export const FormPrecontractualPublicUse = () => {
                     />
                     <ErrorMessage name="contract_period" />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <label htmlFor="contract_value_id" className="form-label">
                         Valor del contrato
                     </label>
@@ -62,7 +60,7 @@ export const FormPrecontractualPublicUse = () => {
                     </div>
                     <ErrorMessage name="contract_value" />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <label htmlFor="environmental_risk_id" className="form-label">
                         Riesgos Ambientales
                     </label>
@@ -78,20 +76,23 @@ export const FormPrecontractualPublicUse = () => {
                     />
                     <ErrorMessage name="environmental_risk" withCount max={200} />
                 </div>
-                <div className="col-4">
-                    <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
-                        Fecha de Registro
+                <div className="col-6">
+                    <label htmlFor="destination_realEstate_id" className="form-label">
+                        Destinación de bien Inmueble
                     </label>
                     <Field
-                        type="date"
-                        id="registration_date_id"
-                        name="registration_date"
-                        placeholder="Fecha Final"
+                        type="text"
                         className="form-control"
-                        disabled
+                        id="destination_realEstate_id"
+                        name="destination_realEstate"
+                        aria-describedby="emailHelp"
+                        placeholder="Actividades"
+                        autoComplete="off"
+                        maxLength={200}
                     />
-                    <ErrorMessage name="registration_date" />
+                    <ErrorMessage name="destination_realEstate" withCount max={200} />
                 </div>
+
             </div>
         </>
     )

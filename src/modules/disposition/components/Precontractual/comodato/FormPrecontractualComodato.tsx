@@ -12,7 +12,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
     return (
         <>
             <div className="row">
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="loan_value_id" className="form-label">
                         Valor comodato
                     </label>
@@ -32,7 +32,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     </div>
                     <ErrorMessage name="loan_value" />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="patrimonial_value_id" className="form-label">
                         Valor Patrimonial
                     </label>
@@ -52,7 +52,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     </div>
                     <ErrorMessage name="patrimonial_value" />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="loan_typology_id" className="form-label">
                         Tipología del comodato
                     </label>
@@ -72,9 +72,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     </Field>
                     <ErrorMessage name="loan_typology" />
                 </div>
-            </div>
-            <div className="row">
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="competitive_process_id" className="form-label">
                         Aplica Proceso competitivo
                     </label>
@@ -94,8 +92,10 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     </Field>
                     <ErrorMessage name="public_service" />
                 </div>
+            </div>
+            <div className="row">
                 {formik.values.competitive_process === "Aplica" &&
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="competitive_process_value_id" className="form-label">
                             Proceso competitivo
                         </label>
@@ -112,23 +112,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         <ErrorMessage name="competitive_process_value" withCount max={500} />
                     </div>
                 }
-                <div className="col-4">
-                    <label htmlFor="activities_id" className="form-label">
-                        Actividades
-                    </label>
-                    <Field
-                        type="text"
-                        className="form-control"
-                        id="activities_id"
-                        name="activities"
-                        aria-describedby="emailHelp"
-                        placeholder="Actividades"
-                        autoComplete="off"
-                        maxLength={500}
-                    />
-                    <ErrorMessage name="activities" withCount max={500} />
-                </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
                         Fecha de Registro de Prediación
                     </label>
@@ -141,7 +125,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="registration_date" />
                 </div>
-                <div className="form-group col-4">
+                <div className="form-group col-3">
                     <label htmlFor="Horizontal_property_id" className="form-label">
                         Propiedad Horizontal
                     </label>
@@ -161,55 +145,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     </Field>
                     <ErrorMessage name="Horizontal_property"></ErrorMessage>
                 </div>
-                <div className="col-4">
-                    <label htmlFor="destination_realEstate_id" className="form-label">
-                        Destinación de bien Inmueble
-                    </label>
-                    <Field
-                        type="text"
-                        className="form-control"
-                        id="destination_realEstate_id"
-                        name="destination_realEstate"
-                        aria-describedby="emailHelp"
-                        placeholder="Actividades"
-                        autoComplete="off"
-                        maxLength={200}
-                    />
-                    <ErrorMessage name="destination_realEstate" withCount max={200} />
-                </div>
-                <div className="col-4">
-                    <label htmlFor="peacesafe_id" className="form-label">
-                        Paz y Salvo de Rubros
-                    </label>
-                    <Field
-                        type="text"
-                        className="form-control"
-                        id="peacesafe_id"
-                        name="peacesafe"
-                        aria-describedby="emailHelp"
-                        placeholder="Actividades"
-                        autoComplete="off"
-                        maxLength={200}
-                    />
-                    <ErrorMessage name="peacesafe" withCount max={200} />
-                </div>
-                <div className="col-4">
-                    <label htmlFor="social_event_id" className="form-label">
-                        Eventos sociales
-                    </label>
-                    <Field
-                        type="text"
-                        className="form-control"
-                        id="social_event_id"
-                        name="social_event"
-                        aria-describedby="emailHelp"
-                        placeholder="Descripción de eventos"
-                        autoComplete="off"
-                        maxLength={200}
-                    />
-                    <ErrorMessage name="social_event" withCount max={200} />
-                </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="contract_period_id" className="form-label">
                         Duración del contrato
                         <Tooltip title="Número de meses">
@@ -228,82 +164,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="contract_period" />
                 </div>
-                <div className="col-4">
-                    <label htmlFor="public_service_id" className="form-label">
-                        Servicios publicos por Aforo
-                    </label>
-                    <Field
-                        as="select"
-                        className="w-100 form-select form-control"
-                        id="public_service_id"
-                        name="public_service"
-                        disabled={false}
-
-                    >
-                        <option key="public_service" value="" hidden>
-                            -- Servicios públicos por aforo --
-                        </option>
-                        <option key="si" value="si">Si</option>
-                        <option key="no" value="no">No</option>
-                    </Field>
-                    <ErrorMessage name="public_service" />
-                </div>
-                {formik.values.public_service === "si" &&
-                    <div className="col-4">
-                    <label htmlFor="value_public_service_id" className="form-label">
-                        Ingresar valor de servicios públicos por aforo
-                    </label>
-                    <Field
-                        type="number"
-                        id="value_public_service_id"
-                        name="value_public_service"
-                        className="form-control"
-                        disabled={false}
-                        min={1}
-                        max={12}
-
-                    />
-                    <ErrorMessage name="value_public_service" />
-                </div>
-                }
-
-                <div className="col-4">
-                    <label htmlFor="economic_exploitation_id" className="form-label">
-                        ¿Autoriza explotación económica?
-                    </label>
-                    <Field
-                        as="select"
-                        className="w-100 form-select form-control"
-                        id="economic_exploitation_id"
-                        name="economic_exploitation"
-                        disabled={false}
-
-                    >
-                        <option key="economic_exploitation" value="" hidden>
-                            -- Autoriza explotación económica --
-                        </option>
-                        <option key="si explotación" value="si">Si</option>
-                        <option key="no explotación" value="no">No</option>
-                    </Field>
-                    <ErrorMessage name="economic_exploitation" />
-                </div>
-                <div className="col-4">
-                    <label htmlFor="Action_field_id" className="form-label">
-                        Campo de acción
-                    </label>
-                    <Field
-                        type="text"
-                        className="form-control"
-                        id="Action_field_id"
-                        name="Action_field"
-                        aria-describedby="emailHelp"
-                        placeholder="Descripción campo de acción"
-                        autoComplete="off"
-                        maxLength={200}
-                    />
-                    <ErrorMessage name="Action_field" withCount max={200} />
-                </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="resolution_id" className="form-label">
                         ¿Aplica resolución SSS202050083439?
                     </label>
@@ -323,7 +184,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     </Field>
                     <ErrorMessage name="resolution" />
                 </div>
-                <div className="col-4 form-inline">
+                <div className="col-3 form-inline">
                     <label htmlFor="lockable_base_id" className="form-label">
                         Base asegurable
                         <Tooltip title="no inferior del 10%">
@@ -347,7 +208,132 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
 
                     <ErrorMessage name="lockable_base" />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
+                    <label htmlFor="economic_exploitation_id" className="form-label">
+                        ¿Autoriza explotación económica?
+                    </label>
+                    <Field
+                        as="select"
+                        className="w-100 form-select form-control"
+                        id="economic_exploitation_id"
+                        name="economic_exploitation"
+                        disabled={false}
+
+                    >
+                        <option key="economic_exploitation" value="" hidden>
+                            -- Autoriza explotación económica --
+                        </option>
+                        <option key="si explotación" value="si">Si</option>
+                        <option key="no explotación" value="no">No</option>
+                    </Field>
+                    <ErrorMessage name="economic_exploitation" />
+                </div>
+                {console.log('valor',formik.values.public_service)}
+                <div className={`col-${(formik.values.public_service !== 'si' && formik.values.competitive_process !== 'Aplica' ) ? 6 : 3}`}>
+                    <label htmlFor="public_service_id" className="form-label">
+                        Servicios publicos por Aforo
+                    </label>
+                    <Field
+                        as="select"
+                        className="w-100 form-select form-control"
+                        id="public_service_id"
+                        name="public_service"
+                        disabled={false}
+
+                    >
+                        <option key="public_service" value="" hidden>
+                            -- Servicios públicos por aforo --
+                        </option>
+                        <option key="si" value="si">Si</option>
+                        <option key="no" value="no">No</option>
+                    </Field>
+                    <ErrorMessage name="public_service" />
+                </div>
+                {formik.values.public_service === "si" &&
+                    <div className={`col-${(formik.values.competitive_process === 'Aplica' ) ? 6 : 3}`}>
+                    <label htmlFor="value_public_service_id" className="form-label">
+                        valor de servicios públicos por aforo
+                    </label>
+                    <Field
+                        type="number"
+                        id="value_public_service_id"
+                        name="value_public_service"
+                        className="form-control"
+                        disabled={false}
+                        min={1}
+                        max={12}
+
+                    />
+                    <ErrorMessage name="value_public_service" />
+                </div>
+                }
+                <div className="col-6">
+                    <label htmlFor="destination_realEstate_id" className="form-label">
+                        Destinación de bien Inmueble
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="destination_realEstate_id"
+                        name="destination_realEstate"
+                        aria-describedby="emailHelp"
+                        placeholder="Actividades"
+                        autoComplete="off"
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="destination_realEstate" withCount max={200} />
+                </div>
+                <div className="col-6">
+                    <label htmlFor="peacesafe_id" className="form-label">
+                        Paz y Salvo de Rubros
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="peacesafe_id"
+                        name="peacesafe"
+                        aria-describedby="emailHelp"
+                        placeholder="Actividades"
+                        autoComplete="off"
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="peacesafe" withCount max={200} />
+                </div>
+                <div className="col-6">
+                    <label htmlFor="social_event_id" className="form-label">
+                        Eventos sociales
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="social_event_id"
+                        name="social_event"
+                        aria-describedby="emailHelp"
+                        placeholder="Descripción de eventos"
+                        autoComplete="off"
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="social_event" withCount max={200} />
+                </div>
+                <div className="col-6">
+                    <label htmlFor="Action_field_id" className="form-label">
+                        Campo de acción
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="Action_field_id"
+                        name="Action_field"
+                        aria-describedby="emailHelp"
+                        placeholder="Descripción campo de acción"
+                        autoComplete="off"
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="Action_field" withCount max={200} />
+                </div>
+
+
+                <div className="col-6">
                     <label htmlFor="Environmental_risk_id" className="form-label">
                         Riesgos Ambientales
                     </label>
@@ -363,7 +349,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="Environmental_risk" withCount max={500} />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <label htmlFor="dependence_id" className="form-label">
                         Dependencia
                     </label>
@@ -378,6 +364,22 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         maxLength={200}
                     />
                     <ErrorMessage name="dependence" withCount max={200} />
+                </div>
+                <div className="col-12">
+                    <label htmlFor="activities_id" className="form-label">
+                        Actividades
+                    </label>
+                    <Field
+                        as="textarea"
+                        className="form-control"
+                        id="activities_id"
+                        name="activities"
+                        aria-describedby="emailHelp"
+                        placeholder="Actividades"
+                        autoComplete="off"
+                        maxLength={500}
+                    />
+                    <ErrorMessage name="activities" withCount max={500} />
                 </div>
             </div>
 

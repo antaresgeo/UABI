@@ -32,7 +32,7 @@ export const FormContract = () => {
     return (
         <>
             <div className="row">
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="type_use_id" className="form-label">
                         Numero de contrato
                     </label>
@@ -46,7 +46,7 @@ export const FormContract = () => {
                     />
                     <ErrorMessage name="vigency_start" />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="disposition_type_id" className="form-label">
                         Tipo de contrato
                     </label>
@@ -58,7 +58,7 @@ export const FormContract = () => {
                         options={dispositions.map(realestate => ({ id: realestate, name: realestate }))}
                     />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="disposition_type_id" className="form-label">
                         Canon Mensual
                     </label>
@@ -72,9 +72,7 @@ export const FormContract = () => {
                     />
                     <ErrorMessage name="vigency_start" />
                 </div>
-            </div>
-            <div className="row">
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="active_type_id" className="form-label">
                         Fecha de suscripción
                     </label>
@@ -88,7 +86,9 @@ export const FormContract = () => {
                     />
                     <ErrorMessage name="vigency_start" />
                 </div>
-                <div className="col-4">
+            </div>
+            <div className="row">
+                <div className="col-3">
                     <label htmlFor="disposition_type_id" className="form-label">
                         Fecha de Inicio
                     </label>
@@ -102,7 +102,7 @@ export const FormContract = () => {
                     />
                     <ErrorMessage name="vigency_start" />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="disposition_type_id" className="form-label">
                         Fecha de Terminación
                     </label>
@@ -116,9 +116,7 @@ export const FormContract = () => {
                     />
                     <ErrorMessage name="vigency_start" />
                 </div>
-            </div>
-            <div className="row">
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="disposition_type_id" className="form-label">
                         Valor de administración
                     </label>
@@ -137,7 +135,7 @@ export const FormContract = () => {
                     </div>
                     <ErrorMessage name="vigency_start" />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="disposition_type_id" className="form-label">
                         Valor vigilancia
                     </label>
@@ -155,7 +153,9 @@ export const FormContract = () => {
                         />
                     </div>
                 </div>
-                <div className="col-4">
+            </div>
+            <div className="row">
+                <div className="col-3">
                     <label htmlFor="disposition_type_id" className="form-label">
                         Valor servicio público
                     </label>
@@ -174,9 +174,7 @@ export const FormContract = () => {
                     </div>
                     <ErrorMessage name="vigency_start" />
                 </div>
-            </div>
-            <div className="row">
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="disposition_type_id" className="form-label">
                         área a disponer
                     </label>
@@ -190,7 +188,7 @@ export const FormContract = () => {
                     />
                     <ErrorMessage name="vigency_start" />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="form-select" className="form-label">
                         Contrato digital
                     </label>
@@ -202,7 +200,7 @@ export const FormContract = () => {
                     />
                     <ErrorMessage name="supports_documents" />
                 </div>
-                <div className="form-group col-4">
+                <div className="form-group col-3">
                     <label htmlFor="zone_id" className="form-label">
                         ¿UABI es la encargada del contrato?
                     </label>
@@ -233,7 +231,6 @@ export const FormContract = () => {
                     </div>
                     <ErrorMessage name="type_assurance"></ErrorMessage>
                 </div>
-
             </div>
             <div className="row">
                 <div className="form-group col-12">

@@ -8,7 +8,7 @@ const FormLider = () => {
             <h5>Lider encargado</h5>
             <hr />
             <div className="row">
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="username" className="form-label">
                         Nombre
                     </label>
@@ -23,7 +23,7 @@ const FormLider = () => {
                     />
                     <ErrorMessage name="names" />
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <label htmlFor="username" className="form-label">
                         Apellido
                     </label>
@@ -38,7 +38,7 @@ const FormLider = () => {
                     />
                     <ErrorMessage name="surnames" />
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <label htmlFor="username" className="form-label">
                         cargo
                     </label>

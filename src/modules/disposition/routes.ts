@@ -7,7 +7,8 @@ import CreateContract from './views/Contracts/CreateContract';
 import CreatePrecontractual from './views/Pre-contractual/CreatePrecontractual';
 import Prueba from './../inspection/views/inspection/Prueba';
 import CreateDisposition from './views/CreateDisposition';
-
+import DetailContract from './views/Contracts/DetailContract';
+import EditContract from './views/Contracts/EditContract';
 const get_routes = (): IRoute[] => {
     return [
         {
@@ -58,6 +59,32 @@ const get_routes = (): IRoute[] => {
                 ],
             },
             component: EditDisposition,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/disposition/contract/:id/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Disposición', to: '/disposition/list/' },
+                    { name: 'Contrato' },
+                ],
+            },
+            component: DetailContract,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/disposition/contract/edit/:id/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Disposición', to: '/disposition/list/' },
+                    { name: 'Contrato' },
+                ],
+            },
+            component: EditContract,
         },
 
         // {

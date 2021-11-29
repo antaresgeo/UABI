@@ -1,14 +1,10 @@
-import { Card, Table as UiTable } from "../../../../utils/ui";
+import { Card, Link, Table as UiTable } from "../../../../utils/ui";
 import { useLocation } from 'react-router-dom';
-import { RealEstateFormModal } from './RealEstateFormModal';
 import { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
 import { swal_warning } from "../../../../utils";
-import { useDispatch, useSelector } from "react-redux";
-import { IRealEstateAttributes } from "../../../../utils/interfaces";
+import { useDispatch } from "react-redux";
 import { actions } from "../../redux";
-
-
 
 interface IParams {
     valueArea: string;
@@ -16,40 +12,46 @@ interface IParams {
     data: any;
     action?: any;
     realEstates: any;
+    arrayRealEstates: any;
 }
 
-
-
-export const TableAreas= () => {
+export const TableAreas = () => {
     const location = useLocation<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { valueArea, numberRealEstates, data, action, realEstates } = location.state;
+    const { valueArea, numberRealEstates, data, action, realEstates, arrayRealEstates } = location.state;
     const arrayEditRealEsates = [];
-    data.map( bienInmueble => {
-        if(bienInmueble.use_area > 0){
-            arrayEditRealEsates.push({
-                newArea: bienInmueble.total_area - bienInmueble.use_area,
-                idRealEstate: bienInmueble.key
+    console.log(data,numberRealEstates,realEstates )
+    useEffect(() => {
+        if (data && realEstates) {
+            data.map(bienInmueble => {
+                if (bienInmueble.use_area > 0) {
+                    arrayEditRealEsates.push({
+                        newArea: bienInmueble.intact_area,
+                        idRealEstate: bienInmueble.id
+                    })
+                }
             })
-        }
-    })
+            // data.map(bienInmueble => {
+            //     if (bienInmueble.use_area > 0) {
+            //         arrayEditRealEsates.push({
+            //             newArea: bienInmueble.total_area - bienInmueble.use_area,
+            //             idRealEstate: bienInmueble.key
+            //         })
+            //     }
+            // })
 
-    const real_estates_edit = realEstates.map(realEstate => {
-        const editRealEstate = arrayEditRealEsates.find(r => r.idRealEstate === realEstate.id)
-        if(editRealEstate !== undefined){
-            return {...realEstate, total_area: editRealEstate.newArea};
-        }else {
-            return realEstate;
+            const real_estates_edit = realEstates.map(realEstate => {
+                const editRealEstate = arrayEditRealEsates.find(r => r.idRealEstate === realEstate.id)
+                if (editRealEstate !== undefined) {
+                    return { ...realEstate, total_area: editRealEstate.newArea };
+                } else {
+                    return realEstate;
+                }
+            })
+            console.log(real_estates_edit)
         }
-    })
-    //console.log(real_estates_edit)
-    // console.log('bienes inmuebles del proyecto',realEstates);
-    // console.log('bienes inmuebles a editar',arrayEditRealEsates);
-
-    // realEstates.map((bien, i) => {
-    //     console.log(bien, i)
-    // })
+    }, [])
 
     const initial_values = [];
     for (let i = 0; i < Number(numberRealEstates); i++) {
@@ -101,6 +103,12 @@ export const TableAreas= () => {
     }
 
     const [DataRealEstate, setDataRealEstate] = useState(initial_values);
+    useEffect(() => {
+        if(arrayRealEstates) {
+            setDataRealEstate(arrayRealEstates);
+        }
+    }, [])
+
 
     const table_columns = [
         {
@@ -124,19 +132,21 @@ export const TableAreas= () => {
             align: 'center' as 'center',
             render: (value, realEstate, index) => {
                 return (
-                    <RealEstateFormModal realEstateData={realEstate} position={index} onSubmit={async (values, i) => {
-                        const arrayRealEstates = [...DataRealEstate]
-                        arrayRealEstates[i] = values;
-                        setDataRealEstate(arrayRealEstates);
-                    }} />
+                    <Link
+                        to={{ pathname: `/englobar/real-estates/edit`, state: { realEstateData: realEstate, index, DataRealEstate, valueArea } }}
+                        name=""
+                        avatar={false}
+                        icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                    />
+                    // <RealEstateFormModal realEstateData={realEstate} position={index}  onSubmit={on_Submit}/>
                 );
             },
         },
     ];
     let totalArea = 0;
-    DataRealEstate.map(data => {
-        totalArea = totalArea + Number(data.total_area);
-    })
+    if (Array.isArray(DataRealEstate)) {
+        DataRealEstate.map(data => totalArea = totalArea + Number(data.total_area))
+    }
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -148,15 +158,16 @@ export const TableAreas= () => {
                                 extra={
                                     <>
                                         <div className="row text-center">
-                                            <b className="col">Area a Utilizar</b>
+                                            <b className="col-6 text-center">Total</b>
+                                            <b className="col-6 text-center">Utilizada</b>
                                         </div>
                                         <div className="row my-1">
                                             <div className="col">{valueArea}m<sup>2</sup></div>
-                                            <div className="col">{`/`}</div>
-                                            {Number(totalArea.toFixed(0)) > Number(valueArea)  ?
+                                            <div className="col text-center">{`/`}</div>
+                                            {Number(totalArea.toFixed(0)) > Number(valueArea) ?
                                                 <div className="col" style={{ color: 'red' }}>{totalArea.toFixed(0)}m<sup>2</sup></div>
                                                 :
-                                                <div className="col">{totalArea.toFixed(0)}m<sup>2</sup></div>
+                                                <div className="col" >{totalArea.toFixed(0)}m<sup>2</sup></div>
                                             }
                                         </div>
 
@@ -194,22 +205,22 @@ export const TableAreas= () => {
                     onClick={() => {
                         let completeRealEstates = DataRealEstate.every(b => b.name !== "")
 
-                        if(Number(totalArea.toFixed(0)) > Number(valueArea) || Number(totalArea.toFixed(0)) < Number(valueArea) ){
+                        if (Number(totalArea.toFixed(0)) > Number(valueArea) || Number(totalArea.toFixed(0)) < Number(valueArea)) {
                             swal_warning.fire(
                                 {
                                     title: "Área a utilizar no válida", text: `revisa las áreas de los Bienes Inmuebles`
                                 }
                             )
-                        }else if(!completeRealEstates) {
+                        } else if (!completeRealEstates) {
                             swal_warning.fire(
                                 {
                                     title: "No se puede finalizar", text: "se deben completar los datos de todos los bienes Inmuebles"
                                 }
                             )
-                        }else{
+                        } else {
                             //console.log(DataRealEstate)
                             dispatch(actions.createRealEstates(DataRealEstate))
-                            console.log('bienes inmuebles a editar',real_estates_edit);
+                            //console.log('bienes inmuebles a editar', real_estates_edit);
                         }
                     }}
                 >

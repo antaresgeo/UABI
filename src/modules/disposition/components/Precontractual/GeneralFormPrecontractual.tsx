@@ -9,6 +9,7 @@ import { FC, useEffect, useState } from 'react';
 import { FormPrecontractualComodato } from './comodato/FormPrecontractualComodato';
 import FormLider from './FormLider';
 import { FormPrecontractualPublicUse } from './PublicUse/FormPrecontractualPublicUse';
+import { Formobligation } from './Formobligation';
 
 interface FormPros {
     dispositionType?: string;
@@ -140,7 +141,8 @@ export const GeneralFormPrecontractual: FC<FormPros> = ({ dispositionType }) => 
                         <FormRiskAnalysis formik={formik} />
                     </Card>
                     {dispositionType === "arrendamiento" &&
-                        <Card title="Requerimientos">
+                        <Card title="Oblogaciones">
+                            <Formobligation />
                             {/* TODO: faltan datos de requerimientos */}
                         </Card>
                     }
