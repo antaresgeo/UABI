@@ -5,7 +5,7 @@ import { EditDisposition } from './views/EditDisposition';
 import { ListDisposition } from './views/ListDisposition';
 import CreateContract from './views/Contracts/CreateContract';
 import CreatePrecontractual from './views/Pre-contractual/CreatePrecontractual';
-import Prueba from './../inspection/views/inspection/Prueba';
+import InspectionCreate from '../inspection/views/inspection/InspectionCreate';
 import CreateDisposition from './views/CreateDisposition';
 
 const get_routes = (): IRoute[] => {

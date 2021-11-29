@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Card, Link } from '../../../../utils/ui';
 import InsuranceCompanyForm from '../../components/InsuranceCompanyForm';
+import InsuranceCompanyDetail from "../../components/InsuranceCompanyDetail";
 
 interface IParams {
     id: string;
@@ -29,9 +30,7 @@ const DetailInsuranceCompany = () => {
                             <h5>Compañía aseguradora</h5>
                         </div>
                         <div className="col-md-12">
-                            <Card title="Información de la empresa">
-                                <InsuranceCompanyForm disabled type="view" insurance_company={insurance_company} />
-                            </Card>
+                            <InsuranceCompanyDetail company={insurance_company}/>
                         </div>
                     </div>
                 </div>

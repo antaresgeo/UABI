@@ -49,21 +49,6 @@ const ListInspection = ({ inspections, change_page, total_results, loading }) =>
                     },
                 },
                 {
-                    title: 'Editar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
                     title: 'Crear',
                     dataIndex: 'id',
                     align: 'center' as 'center',

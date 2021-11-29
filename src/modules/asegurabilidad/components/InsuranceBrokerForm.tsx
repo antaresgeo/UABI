@@ -34,9 +34,11 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
     });
 
     const submit = (values, form) => {
-        onSubmit(values, form).then(() => {
-            form.setSubmitting(false);
-        }).catch(() => form.setSubmitting(false));
+        onSubmit(values, form)
+            .then(() => {
+                form.setSubmitting(false);
+            })
+            .catch(() => form.setSubmitting(false));
     };
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
@@ -125,25 +127,16 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                     Dirección
                                 </label>
                                 <div className="input-group">
-                                    <Field
-                                        name="address"
-                                        id="location"
-                                        type="text"
-                                        className="form-control"
-                                        disabled
-                                    />
+                                    <Field name="address" id="location" type="text" className="form-control" disabled />
                                     <div className="input-group-prepend">
                                         <LocationModal
                                             view="user"
                                             disabled={disabled}
-                                            onSave={(values) => {
-                                                return service.getAddress(values).then((res) => {
-                                                    console.log(res);
-                                                    setFieldValue('state', values.state_name, false);
-                                                    setFieldValue('city', values.city_name, false);
-                                                    setFieldValue('address', res.addressAsString, false);
-                                                    setFieldValue('location_id', res.id+'', false);
-                                                });
+                                            onSave={async (values) => {
+                                                setFieldValue('state', values.location.state, false);
+                                                setFieldValue('city',values.location.city, false);
+                                                setFieldValue('address', values.address, false);
+                                                setFieldValue('location_id', values.id + '', false);
                                             }}
                                         />
                                     </div>
