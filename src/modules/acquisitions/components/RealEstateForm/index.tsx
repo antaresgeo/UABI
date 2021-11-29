@@ -82,6 +82,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         subdependency: '',
         management_center: '',
         cost_center: '',
+        construction_area: '',
+        plot_area: '',
         ...realEstate,
         acquisitions: acquisitions || [],
         project_id: Number.isInteger(projectId) ? projectId : 0,
