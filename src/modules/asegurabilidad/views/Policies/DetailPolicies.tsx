@@ -37,7 +37,7 @@ const DetailInsurability = () => {
                     <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
                         <h5 className='col-11 '>Detalle Póliza</h5>
                         <Link
-                            to={`policy/edit/${id}/`}
+                            to={`/insurabilities/policy/edit/${id}`}
                             name=""
                             avatar={false}
                             icon={<i style={{ marginLeft: '30px', fontSize: 16, color: '#000' }} className="fa fa-pencil" aria-hidden="true" />}

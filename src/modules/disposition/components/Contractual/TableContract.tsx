@@ -41,7 +41,7 @@ export const TableContract = () => {
                     render: (id) => {
                         return (
                             <Link
-                                to={""}
+                                to={`/disposition/contract/:id/`}
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-eye" aria-hidden="true" />}
@@ -56,7 +56,7 @@ export const TableContract = () => {
                     render: (id) => {
                         return (
                             <Link
-                                to={""}
+                                to={`/disposition/contract/edit/:id/`}
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-pencil" aria-hidden="true" />}

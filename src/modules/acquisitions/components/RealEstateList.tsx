@@ -14,6 +14,7 @@ interface RealEstateListProps {
     init?: boolean;
     register?: boolean;
     realEstateFilter?: any;
+    change_page?: (page: number, pageSize?: number) => void;
 }
 
 const RealEstateList: FC<RealEstateListProps> = ({
@@ -23,7 +24,9 @@ const RealEstateList: FC<RealEstateListProps> = ({
     init,
     register,
     realEstateFilter,
+    change_page
 }) => {
+
     const dispatch = useDispatch();
 
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
@@ -199,9 +202,11 @@ const RealEstateList: FC<RealEstateListProps> = ({
               ]),
     ];
 
-    const change_page = (page, pageSize) => {
-        dispatch(actions.getRealEstates({ page, pageSize, pagination: 'pagination', ...filters }));
-    };
+    // const change_page = (page, pageSize) => {
+    //     dispatch(actions.getRealEstates({ page, pageSize, pagination: 'pagination', ...filters }));
+    // };
+
+
 
     useEffect(() => {
         if (project_id) {

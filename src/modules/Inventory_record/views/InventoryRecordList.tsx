@@ -8,101 +8,58 @@ import { Card, Link } from '../../../utils/ui';
 import { IRealEstateAttributes } from '../../../utils/interfaces';
 import { getRealEstates } from '../../acquisitions/redux/actions/realEstates';
 import RealEstateList from '../../acquisitions/components/RealEstateList';
+import FilterForm from './../../../utils/ui/filter_form';
 
 
 const InventoryRecordList = () => {
     const dispatch = useDispatch();
-    const [table, setTable] = useState(false);
-    const [realEstateFilter, setRealEstateFilter] = useState([])
+    const [filters, set_filters] = useState<object>(null);
 
-    const [query, set_query] = useState({
-        enrollment: ''
-        // dependence: '',
-        // project: '',
-    });
+    const change_page = (page, pageSize) => {
+        dispatch(getRealEstates({ page, pageSize,...filters }));
+    };
 
-    const { enrollment } = query;
+    const filter = async (_filters, _) => {
+        set_filters(_filters)
+        await dispatch(getRealEstates({ page: 1, ..._filters }));
+    };
 
     useEffect(() => {
         dispatch(getRealEstates({}));
     }, []);
 
-    const handleInputChange = ({ target }) => {
-        set_query({
-            ...query,
-            [target.name]: target.value,
-        });
-    };
-
-    const filter = async () => {
-        const resultado: any = await dispatch(getRealEstates({ page: 1, q: enrollment }));
-        setRealEstateFilter(resultado.results)
-        setTable(true);
-    };
-
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-md-12">
-                    <Card>
-                        <div className="row justify-content-center">
-                            <div className="col" style={{ marginLeft: '300px'}}>
-                                <div className="input-group" >
-                                    <input
-                                        type="number"
-                                        className="form-control form-control-lg"
-                                        placeholder="Matricula"
-                                        aria-label="Matricula"
-                                        name="enrollment"
-                                        value={enrollment}
-                                        onChange={handleInputChange}
-                                    />
+                    <Card
+                        title="Administrar Bienes Inmuebles"
+                        extra={<Link to="/acquisitions/real-estates/create" name="Crear" iconText="+" />}
+                    >
+                        <form>
+                            <div className="row justify-content-between">
+                                <div className="col-5 d-flex">
+                                    <div className="col-6 ">
+                                        <FilterForm
+                                            filters={[
+                                                { key: 'CBML', name: 'CBML' },
+                                                { key: 'registry_number', name: 'Matrícula' },
+                                                { key: 'project.name', name: 'Proyecto' },
+                                                { key: 'address', name: 'Dirección' },
+                                                { key: 'sap_id', name: 'Activo fijo' }
+                                            ]}
+                                            onSubmit={filter}
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                            <div className="col" style={{ marginRight: '100px'}}>
-                                <button
-                                    type="button"
-                                    className="btn btn-primary btn-sm"
-                                    onClick={filter}
-
-                                >
-                                    Buscar
-                                </button>
-                            </div>
-
-                            {/* <div className="col-4">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Dependencia a Cargo"
-                                    name="dependence"
-                                    value={dependence}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="col-4">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Proyecto Asignado / sin proyecto"
-                                    name="project"
-                                    value={project}
-                                    onChange={handleInputChange}
-                                />
-                            </div> */}
-                        </div>
-
+                        </form>
+                        <RealEstateList
+                            withProject
+                            register
+                            change_page={change_page}
+                        />
                     </Card>
-                    {table &&
-                        <Card
-                            title="Administrar Bienes Inmuebles"
-                            extra={<Link to="/acquisitions/real-estates/create" name="Crear" iconText="+" />}
-                        >
-                            <form></form>
-                            <RealEstateList withProject filters={enrollment} register realEstateFilter={realEstateFilter} />
-                        </Card>
-
-                    }
                 </div>
             </div>
         </div>

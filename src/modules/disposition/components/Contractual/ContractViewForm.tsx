@@ -1,65 +1,66 @@
-import React, { FC } from 'react'
+import React from 'react'
 
-interface DispositionFormPros {
-    //dispositionType: string;
-    //realEstate: any;
-}
-
-const Detail_disposition: FC<DispositionFormPros> = ({ }) => {
+const ContractViewForm = () => {
     return (
         <div className="col-3-12">
             <div className="content_box_table" >
-                <div className="title" style={{ borderBottom: '1px solid #e2e4e4' }}>Bien inmueble: </div>
+                <div className="title" style={{ borderBottom: '1px solid #e2e4e4', color: '#2F2D2D', fontSize: '14px' }}>Información del Contrato</div>
                 <div className="table_content" style={{ margin: 7 }}>
                     <div className="detailForm" style={{ width: '100%' }}>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3" >
-                                <label style={{ color: '#8d8c8c' }} htmlFor="">ID</label>
-                                <div className="my-3"></div>
+                                <label htmlFor="">Número de Contrato</label>
+                                <div className="my-3">-</div>
                             </div>
                             <div className="col-3" >
-                                <label htmlFor="">Nombre del Inmuebles</label>
-                                <div className="my-3"></div>
+                                <label htmlFor="">Tipo de Contrato</label>
+                                <div className="my-3">-</div>
                             </div>
                             <div className="col-3" >
-                                <label htmlFor="">Matrícula</label>
-                                <div className="my-3"></div>
+                                <label htmlFor="">Canon Mensual</label>
+                                <div className="my-3">-</div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor="">Disposición</label>
+                                <label htmlFor="">Fecha de suscripción</label>
                                 <div className="my-3">-</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
-                                <label htmlFor="">Fecha de la ultima inspección</label>
-                                <div className="my-3"></div>
+                                <label htmlFor="">Fecha de Inicio</label>
+                                <div className="my-3">-</div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor="">Estado de contratación</label>
-                                <div className="my-3"></div>
+                                <label htmlFor="">Fecha de terminación</label>
+                                <div className="my-3">-</div>
                             </div>
 
                             <div className="col-3">
-                                <label htmlFor="">Historial de contratos</label>
+                                <label htmlFor="">Valor de administración</label>
                                 <div className="my-3">-</div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor="">Informe de supervisión</label>
+                                <label htmlFor="">Valor Vigilancia</label>
                                 <div className="my-3">-</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
-                                <label htmlFor="">CBML</label>
+                                <label htmlFor="">Valor Servicio Público</label>
                                 <div className="my-3">-</div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor="">Dirección</label>
+                                <label htmlFor="">Área a disponer</label>
                                 <div className="my-3">-</div>
                             </div>
-                            <div className="col-6 movimiento" >
-                                <label htmlFor="">Descripción del inmueble</label>
+                            <div className="col-3">
+                                <label htmlFor="">UABI es la encargada del contrato</label>
+                                <div className="my-3">-</div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-12 movimiento" >
+                                <label htmlFor="">Objeto del contrato</label>
                                 <div className="my-3" style={{ height: '60px', overflowX: 'auto', }}>
                                     <div style={{ width: '1000px' }}>
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus neque a ex porta aliquet. Nunc malesuada auctor risus, ut condimentum mauris scelerisque non.
@@ -67,7 +68,6 @@ const Detail_disposition: FC<DispositionFormPros> = ({ }) => {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -76,4 +76,4 @@ const Detail_disposition: FC<DispositionFormPros> = ({ }) => {
     )
 }
 
-export default Detail_disposition
+export default ContractViewForm

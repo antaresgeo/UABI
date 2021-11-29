@@ -10,7 +10,6 @@ interface IParams {
     id: string;
 }
 
-
 interface TableGlobeProps {
     action: any;
 }
@@ -37,35 +36,19 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     }, []);
 
     let newrealEstates = [];
-    let codigos = realEstates.map(realEstate => realEstate.sap_id.split(","))
-
+    // const codes = realEstates.map(realEstate => realEstate.sap_id.split(",")).map(codigo => codigo?.filter(cod => cod.charAt(cod.length - 1) !== 'J'))
     newrealEstates = realEstates.reduce((valor_anterior, valor_actual)=>{
         const codigos = valor_actual.sap_id.split(",");
-        for(let i = 0; i < codigos.length; i++){
+        const codes = codigos.filter(cod =>  cod.charAt(cod.length -1) !== 'J');
+        for(let i = 0; i < codes.length; i++){
             const obj = {
                 ...valor_actual
             }
-            obj.sap_id = codigos[i];
+            obj.sap_id = codes[i];
             valor_anterior.push(obj);
         }
         return valor_anterior;
     },[])
-
-
-    // useEffect(() => {
-    //     const dataTable = [];
-    //     realEstates.map(realEstate =>
-    //         dataTable.push({
-    //             key: realEstate.id,
-    //             name: realEstate.name,
-    //             total_area: realEstate.total_area,
-    //             intact_area: 0,
-    //             use_area: 0,
-    //             sap_id: realEstate.sap_id
-    //         })
-    //     )
-    //     setData(dataTable)
-    // }, [realEstates])
 
     useEffect(() => {
         const dataTable = [];
@@ -74,7 +57,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                 key: realEstate.sap_id,
                 name: realEstate.name,
                 total_area: realEstate.total_area,
-                intact_area: 0,
+                intact_area: realEstate.total_area,
                 use_area: 0,
                 id: realEstate.id
             })
@@ -91,7 +74,6 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
             setDisabled(true);
         }
     }, [data])
-
 
     // Input numero bienes Inmuebles a dividir
     const handleInputChange = (e) => {
@@ -122,6 +104,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
             const row = (await form.validateFields()) as any;
 
             const newData = [...data];
+
             const index = newData.findIndex(item => key === item.key);
             if (index > -1) {
                 const item = newData[index];
@@ -129,6 +112,9 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                     ...item,
                     ...row,
                 });
+                if(newData[index].use_area !== 0) {
+                    newData[index].intact_area =  newData[index].total_area - newData[index].use_area
+                }
                 if (newData[index].use_area > newData[index].total_area) {
                     console.log('el area a utilizar no valida')
                     setEditingKey('');
@@ -165,10 +151,10 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     };
 
     const columns = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-        },
+        // {
+        //     title: 'ID',
+        //     dataIndex: 'id',
+        // },
         {
             title: 'Código Activo',
             dataIndex: 'key',
@@ -215,7 +201,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
             },
         },
     ];
-    console.log('data',data)
+    //console.log('data',data)
     const mergedColumns = columns.map(col => {
         if (!col.editable) {
             return col;
@@ -254,7 +240,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
             />
             <div className="col-6 my-3">
                 <label htmlFor="number_real_estates" className="form-label">
-                    Número a dividir Bien Inmueble
+                    Número de Bien Inmuebles
                 </label>
                 <input
                     type="number"
@@ -269,6 +255,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                 ></input>
             </div>
             <button className="btn btn-primary" onClick={(e) => {
+                console.log(data)
                 const dataSelect = data.filter(a => selectRowKeys.includes(a.key));
                 let areaSelect = dataSelect.every(b => b.use_area > 0)
                 switch (action) {
@@ -283,17 +270,6 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                                     }
                                 )
                             }
-                            // if (valueArea === 0) {
-                            //     e.preventDefault();
-                            //     console.log("debe elegir valores ")
-                            //     swal_warning.fire(
-                            //         {
-                            //             title: "Valor de Área a utilizar Obligatorio", text: `El valor del área a ${action} no puede ser cero`
-                            //         }
-                            //     )
-                            // } else {
-                            //     history.push({ pathname: `/englobar/realEstates/`, state: { numberRealEstates, valueArea, data, action, realEstates } })
-                            // }
                         } else {
                             swal_warning.fire(
                                 {
@@ -332,154 +308,3 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     );
 };
 
-
-// import { useDispatch, useSelector } from 'react-redux';
-// import { actions } from '../../redux';
-// import { useEffect, useState } from 'react';
-// import { Table} from 'antd';
-// //import EditableRow from '../../../../utils/ui/editableContext';
-// import EditableCell from '../../../../utils/ui/editableCell';
-// import EditableRow from '../../../../utils/ui/editableContext';
-
-// export const TableAreas = () => {
-//     const dispatch = useDispatch();
-//     const realEstates: any = useSelector((states: any) => states.acquisitions.realEstates.value);
-//     const [data, setData] = useState(null)
-//     const [editar, setEditar] = useState(true);
-
-//     useEffect(() => {
-//         dispatch(actions.getProjects());
-//         dispatch(actions.getRealEstatesByProject(1));
-//     }, []);
-
-//     useEffect(() => {
-//         const dataTable = [];
-//         realEstates.map(realEstate =>
-//             dataTable.push({
-//                 key: realEstate.id,
-//                 name: realEstate.name,
-//                 total_area: realEstate.total_area,
-//                 use_area: 0,
-//                 real_estate_numbers: 0,
-
-//             })
-//         )
-//         setData(dataTable)
-//     }, [realEstates])
-
-//     const columnas = [
-//         {
-//             title: 'ID',
-//             dataIndex: 'key',
-//         },
-//         {
-//             title: 'Bien Inmueble',
-//             dataIndex: 'name',
-//         },
-//         {
-//             title: 'Area Total',
-//             dataIndex: 'total_area',
-//         },
-//         {
-//             title: 'Area a Utilizar',
-//             dataIndex: 'use_area',
-//             editable: true,
-//             width: '20%',
-//         },
-//         {
-//             title: 'dividir Bien Inmueble',
-//             dataIndex: 'real_estate_numbers',
-//             editable: true,
-//             disabled: editar,
-//             width: '20%',
-//         },
-
-//     ];
-
-//     const handleSave = (row: any) => {
-//         const newData = [...data];
-//         const index = newData.findIndex(item => row.key === item.key);
-//         const item = newData[index];
-//         newData.splice(index, 1, {
-//             ...item,
-//             ...row,
-//         });
-//         if (Number(newData[index].use_area) > newData[index].total_area) {
-//             return;
-//         } else if(Number(newData[index].use_area) > 0) {
-//             setEditar(false);
-//             setData(newData);
-//         }
-
-//     };
-
-
-
-
-
-//     // rowSelection object indicates the need for row selection
-//     const rowSelection = {
-//         onChange: (selectedRowKeys: [], selectedRows: []) => {
-//             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-//             if (selectedRows.length > 0) {
-//                 selectedRows.map(fila => {
-//                     console.log(fila, 'cambiar para ser editable esa fila')
-//                     //habilitarCampo(fila);
-//                 })
-
-//             } else {
-//                 //console.log('arreglo vacio')
-//                 //setEditar(false)
-//             }
-//         },
-
-//     };
-
-
-
-//     const components = {
-//         body: {
-//             row: EditableRow,
-//             cell: EditableCell,
-//         },
-//     };
-
-//     const columns = columnas.map(col => {
-//         if (!col.editable) {
-//             return col;
-//         }
-//         return {
-//             ...col,
-//             onCell: (record: any) => {
-//                 //console.log(col)
-//                 return ({
-//                     record,
-//                     editable: col.editable,
-//                     disabled: col.disabled,
-//                     dataIndex: col.dataIndex,
-//                     title: col.title,
-//                     handleSave,
-//                 })
-//             },
-//         };
-//     });
-
-//     return (
-
-//         <div>
-//             <Table
-//                 rowSelection={{
-//                     ...rowSelection,
-//                 }}
-//                 columns={columns}
-//                 dataSource={data}
-//                 rowClassName={() => 'editable-row'}
-//                 components={components}
-//                 pagination={false}
-//             />
-//             <button className="btn btn-primary my-3" onClick={() => console.log(data)}>
-//                 enviar
-//             </button>
-//         </div>
-//     );
-// }
