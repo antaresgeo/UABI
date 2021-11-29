@@ -19,21 +19,14 @@ import { log } from 'util';
 
 // REAL ESTATES
 // Services: GET
-const getRealEstates = async ({
-    pagination = 'pagination',
-    page = 1,
-    pageSize = 10,
-    q = null,
-}): Promise<IPaginable<IRealEstateAttributes> | string> => {
+const getRealEstates = async (filters?) => {
     try {
+        console.log('filtros',filters);
         let URI = `/real-estates/list/`;
         let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
             await http.get(URI, {
                 params: {
-                    page,
-                    pageSize,
-                    with: pagination,
-                    ...(q ? { q } : {}),
+                    ...filters
                 },
             });
         //console.log(res);

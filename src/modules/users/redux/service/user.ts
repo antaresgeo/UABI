@@ -64,6 +64,7 @@ export interface DetailsUser {
 
 export const get_all_users = async (filters?) => {
     try {
+        console.log('filtros',filters);
         const URI = '/users/';
         const res: AxiosResponse<AllUsersResponse> = await auth_http.get(URI, {
             params: {

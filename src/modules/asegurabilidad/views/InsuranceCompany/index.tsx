@@ -168,32 +168,6 @@ const InsuranceCompanies = () => {
                         title="Compañias Aseguradoras"
                         extra={<Link to="/insurabilities/company/create/" name="Crear" iconText="+" />}
                     >
-                        <form>
-                            <div className="row justify-content-between">
-                                <div className="col-5 d-flex">
-                                    <div className="col-6">
-                                        <div className="input-group">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="Dependencia / Código"
-                                                aria-label="Dependencia / Código"
-                                                aria-describedby="button-addon2"
-                                                value={query}
-                                                onChange={(e) => {
-                                                    set_query(e.target.value);
-                                                }}
-                                            />
-                                            <span className="input-group-text" onClick={filter}>
-                                                <span>
-                                                    <i className="fa fa-search" aria-hidden="true"></i>
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
                         <UiTable
                             columns={table_columns}
                             items={insurance_companies}
