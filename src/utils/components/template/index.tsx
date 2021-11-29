@@ -6,6 +6,7 @@ import AppSider from './sider';
 import AppHeader from './header';
 import { Link, useHistory } from 'react-router-dom';
 import { Breadcrumb } from '../app_router/custom_types';
+import Menu from 'antd/lib/menu';
 
 interface ITemplate {
     breadcrumbs?: Breadcrumb[];
@@ -88,7 +89,30 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                         )}
                     </div>
                 </div>
-                <div className="drawer-content"></div>
+                <div className="drawer-content">
+                    <Menu mode="inline" selectedKeys={[]}>
+                        <Menu.Item
+                            style={{ borderBottom: '0.5px solid #00000029' }}
+                            key="1"
+                            onClick={() => {
+                                context.toggle_pass_modal();
+                                context.drawer_close();
+                            }}
+                        >
+                            Cambiar contraseña
+                        </Menu.Item>
+                        <Menu.Item
+                            style={{ borderBottom: '0.5px solid #00000029' }}
+                            key="2"
+                            onClick={() => {
+                                history.push(`/users/edit/${user.id}/`);
+                                context.drawer_close();
+                            }}
+                        >
+                            Editar usuario
+                        </Menu.Item>
+                    </Menu>
+                </div>
                 <div
                     className="text-danger p-4"
                     style={{ outline: ' 1px solid #ccc', textAlign: 'center' }}

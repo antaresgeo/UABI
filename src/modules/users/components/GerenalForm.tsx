@@ -48,6 +48,10 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
     const schema = Yup.object().shape({
         user: Yup.object().shape({
             id_number: Yup.number().required('Campo obligatorio').max(20, 'maximo 20 caracteres'),
+            password: Yup.string()
+                .matches(/(?=.*[0-9])/, 'debe contener almenos 1 numero')
+                .matches(/(?=.*[@$!%*?&,.#])/, 'debe contener almenos 1 caracter special')
+                .min(8, 'minimo 8 caracteres'),
         }),
         detailsUser: Yup.object().shape({
             society_type: Yup.string().required('Campo obligatorio'),
@@ -294,9 +298,8 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     name="user.id_number"
                                     autoComplete="off"
                                     disabled={disabled}
-
                                 />
-                                <ErrorMessage name="detailsUser.id_number" max={20}/>
+                                <ErrorMessage name="detailsUser.id_number" max={20} />
                             </div>
                             <div className={`col-${type === 'create' ? 3 : 6}`}>
                                 <label htmlFor="username" className="form-label">

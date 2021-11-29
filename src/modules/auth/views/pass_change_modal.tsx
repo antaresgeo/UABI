@@ -27,20 +27,18 @@ const PasswordChangeModal: FC<PasswordChangeModalProps> = ({
                 <div className="d-flex justify-content-center">
                     <PassChangeForm
                         change_password={(values) => update_password(values.password, is_new_user)}
-                        onOk={toggle}
+                        // onOk={toggle}
                         SuccessButtons={({ onClose }) => (
-                            <Fragment>
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    onClick={() => {
-                                        onClose();
-                                        toggle();
-                                    }}
-                                >
-                                    Close
-                                </button>
-                            </Fragment>
+                            <button
+                                type="button"
+                                className="btn btn-outline-primary"
+                                onClick={() => {
+                                    onClose();
+                                    toggle();
+                                }}
+                            >
+                                Cerrar
+                            </button>
                         )}
                     />
                 </div>
