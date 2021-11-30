@@ -8,6 +8,7 @@ import { ModalNotificar } from './../components/ModalNotificar';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from "../../acquisitions/redux";
 import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
+import { TableContract } from "../components/Contractual/TableContract";
 
 interface IProps {
     id: string;
@@ -18,7 +19,7 @@ export const EditDisposition = () => {
     const history = useHistory();
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const [dispositionType, setDispositionType] = useState("");
-    console.log('realEstate',realEstate)
+    console.log('realEstate', realEstate)
     useEffect(() => {
         dispatch(actions.getRealEstate(id));
     }, [id])
@@ -50,7 +51,11 @@ export const EditDisposition = () => {
                                 />
                             </Card> */}
 
-                            <ListContracts />
+                            <Card
+                                title="Contratos del Bien Inmueble"
+                            >
+                                <TableContract/>
+                            </Card>
                         </div>
                     </div>
                 </div>

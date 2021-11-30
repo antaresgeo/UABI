@@ -33,7 +33,18 @@ const Detail_disposition: FC<DispositionFormPros> = ({ }) => {
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Fecha de la ultima inspección</label>
-                                <div className="my-3"></div>
+                                <div className="row">
+                                    <div className="col-4 my-3" style={{ width: 'auto', padding: '1em' }}>fecha</div>
+                                    <div className="col my-3">
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary  btn-sm"
+
+                                        >
+                                            ver Inspección
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Estado de contratación</label>
@@ -42,11 +53,27 @@ const Detail_disposition: FC<DispositionFormPros> = ({ }) => {
 
                             <div className="col-3">
                                 <label htmlFor="">Historial de contratos</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-primary  btn-sm"
+
+                                    >
+                                        ver Historial
+                                    </button>
+                                </div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Informe de supervisión</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-primary  btn-sm"
+
+                                    >
+                                        ver informe de supervición
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>

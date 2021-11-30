@@ -8,7 +8,7 @@ interface FormProps {
 
 }
 
-const FormPrecontractual: FC<FormProps> = ({ formik }) => {
+const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
 
     return (
         <>
@@ -378,4 +378,4 @@ const FormPrecontractual: FC<FormProps> = ({ formik }) => {
     )
 }
 
-export default FormPrecontractual
+export default FormPrecontractualLease

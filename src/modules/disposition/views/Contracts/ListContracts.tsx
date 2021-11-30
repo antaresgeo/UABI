@@ -4,11 +4,17 @@ import { Card, Link } from '../../../../utils/ui';
 
 export const ListContracts = () => {
     return (
-        <Card
-            title="Contratos del Bien Inmuebles"
-        >
+        <div className="container-fluid">
+            <div className="row justify-content-center">
+                <div className="col-md-12">
+                    <Card
+                        title="Contratos"
+                    >
+                        <TableContract />
+                    </Card>
+                </div>
+            </div>
+        </div>
 
-            <TableContract />
-        </Card>
     )
 }

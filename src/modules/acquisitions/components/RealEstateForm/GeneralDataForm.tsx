@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { Card } from '../../../../utils/ui';
-import { IProjectAttributes } from '../../../../utils/interfaces';
+import { AdquisitionsItf, IProjectAttributes } from '../../../../utils/interfaces';
 import dependencias from '../../dependencias';
 import { DataRealEstateForm } from './DataRealEstateForm';
 
@@ -13,6 +13,7 @@ interface GeneralDataFormProps {
     project?: any;
     inventory?: boolean;
     inventoryEdit?: boolean;
+    acquisitions?: AdquisitionsItf[];
 }
 
 const GeneralDataForm: FC<GeneralDataFormProps> = ({
@@ -24,8 +25,9 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
     inventory,
     inventoryEdit,
     onProjectSelectedChange,
+    acquisitions,
 }) => {
-
+    //console.log(acquisitions)
 
 
 
@@ -52,6 +54,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                 inventoryEdit={inventoryEdit}
                 inventory={inventory}
                 onProjectSelectedChange={onProjectSelectedChange}
+                acquisitions={acquisitions}
             />
         </Card>
     );
