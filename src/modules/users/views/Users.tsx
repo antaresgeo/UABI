@@ -16,7 +16,7 @@ const Users = () => {
     const [filters, set_filters] = useState<object>(null);
 
     const filter = async (_filters, _) => {
-        set_filters(_filters)
+        set_filters(_filters);
         await dispatch(actions.get_all_users({ page: 1, ..._filters }));
     };
 
@@ -48,20 +48,13 @@ const Users = () => {
                             </>
                         }
                     >
-                        <form>
-                            <div className="row justify-content-between">
-                                <div className="col-5 d-flex">
-                                    <div className="col-6 ">
-                                        <FilterForm
-                                            filters={[
-                                                { key: 'name', name: 'Nombre' }
-                                            ]}
-                                            onSubmit={filter}
-                                        />
-                                    </div>
+                        <div className="row justify-content-between">
+                            <div className="col-5 d-flex">
+                                <div className="col-6 ">
+                                    <FilterForm filters={[{ key: 'name', name: 'Nombre' }]} onSubmit={filter} />
                                 </div>
                             </div>
-                        </form>
+                        </div>
                         <UserList
                             users={users}
                             user={aux_user}

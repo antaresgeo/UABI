@@ -99,12 +99,12 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <Field
                         disabled={disabled}
                         options={projects}
-                        name="project_id"
+                        name="projects_id"
                         component={Select}
                         id="project_id_id"
                         extra_on_change={onProjectSelectedChange}
                     />
-                    <ErrorMessage name="project_id" />
+                    <ErrorMessage name="projects_id" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="tipology_id" className="form-label">
@@ -113,7 +113,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <Field
                         component={Select}
                         id="tipology_id"
-                        name="tipology"
+                        name="tipology_id"
                         placeholder="Seleccione Tipología "
                         disabled={disabled}
                         options={tipologies?.map(tipology => ({ id: tipology.id, name: tipology.tipology }))}
@@ -126,7 +126,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             formik.setFieldValue('accounting_account', bill[0].accounting_account, false);
                         }}
                     />
-                    <ErrorMessage name="tipology" />
+                    <ErrorMessage name="tipology_id" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="accounting_account_id" className="form-label">
@@ -566,32 +566,30 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <label htmlFor="address" className="form-label">
                         CBML
                     </label>
-                    <Field name="address.cbml" id="address" type="text" className="form-control" disabled />
-
-                    <ErrorMessage name="cbml" />
+                    <Field name="_address.cbml" id="address" type="text" className="form-control" disabled />
+                    <ErrorMessage name="_address.cbml" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="address" className="form-label">
                         Dirección
                     </label>
                     <div className="input-group">
-                        <Field name="address.name" id="address" type="text" className="form-control" disabled />
+                        <Field name="_address.name" id="address" type="text" className="form-control" disabled />
                         <div className="input-group-prepend">
                             <LocationModal
                                 disabled={disabled}
                                 view="general"
                                 zone={formik.values.zone}
                                 onSave={async (values: any) => {
-                                    formik.setFieldValue('address.id', `${values.id}`, false);
-                                    formik.setFieldValue('address.name', `${values.address}`, false);
-                                    formik.setFieldValue('address.cbml', `${values.cbmls.uabi}`, false);
+                                    formik.setFieldValue('address', values.id, false);
+                                    formik.setFieldValue('_address.name', `${values.address}`, false);
+                                    formik.setFieldValue('_address.cbml', `${values.cbmls.uabi}`, false);
                                     return Promise.resolve();
                                 }}
                             />
                         </div>
                     </div>
-
-                    <ErrorMessage name="location" />
+                    <ErrorMessage name="_address.name" />
                 </div>
             </div>
             {englobe && (

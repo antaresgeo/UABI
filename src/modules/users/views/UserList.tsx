@@ -72,7 +72,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
         render: (id) => {
             return (
                 <div className="text-danger" onClick={deleteUser(id)}>
-                    <i className="fa fa-trash" aria-hidden="true" />
+                    <i className="fa fa-times-circle" aria-hidden="true" />
                 </div>
             );
         },

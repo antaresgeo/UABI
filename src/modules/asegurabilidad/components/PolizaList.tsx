@@ -95,7 +95,7 @@ const PolizaList: FC<InsurabilityListProps> = ({ policies }) => {
                                 name=""
                                 avatar={false}
                                 className="text-danger"
-                                icon={<i className="fa fa-trash" aria-hidden="true" />}
+                                icon={<i className="fa fa-times-circle" aria-hidden="true" />}
                             />
                         );
                     },

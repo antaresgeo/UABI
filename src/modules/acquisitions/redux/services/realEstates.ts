@@ -100,13 +100,19 @@ const get_docucments_whit_service = async (docs) => {
 const finalData = (aux_data) => {
     delete aux_data.id;
     delete aux_data.status;
+    delete aux_data.status_name;
+    delete aux_data.last_consecutive;
+
     delete aux_data.acquisitions;
     delete aux_data.audit_trail;
     delete aux_data.registry_number_document_id;
-    delete aux_data.project_id;
+    delete aux_data.accounting_account;
+    delete aux_data.tipology;
     delete aux_data.sap_id;
     delete aux_data.active_code;
     delete aux_data.fixed_assets;
+    delete aux_data._address;
+
 
     if (aux_data.project?.id !== 0) {
         delete aux_data.dependency;
@@ -172,12 +178,10 @@ export const updateRealEstates = async (data: any) => {
 export const updateRealEstate = async (data: any, id: number) => {
     try {
         let URI = `/real-estates`;
-        const docs: any = await compute_docs(data.supports_documents);
-        const docs_ids = await upload_documents(docs);
-
-        const aux_data = { ...data, supports_documents: docs_ids };
+        // const docs: any = await compute_docs(data.supports_documents);
+        // const docs_ids = await upload_documents(docs);
+        const aux_data = { ...data };
         finalData(aux_data);
-
         let res: AxiosResponse<IRealEstateResponse> = await http.put(
             URI,
             aux_data,

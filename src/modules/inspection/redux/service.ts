@@ -33,10 +33,12 @@ export interface Inspection {
 
 export const get_all_inspections = async (filters?) => {
     try {
-        const URI = '/inspections/';
+        const URI = '/real-estates/list';
         const res: AxiosResponse<AllInspectionsResponse> = await http.get(URI, {
             params: {
                 ...filters,
+                to: 'inspection',
+                with: 'pagination',
             },
         });
         return res.data;
@@ -47,8 +49,15 @@ export const get_all_inspections = async (filters?) => {
 
 export const get_list_inspections = async () => {
     try {
-        const URI = '/inspections/list/';
-        const res: AxiosResponse<ListInspectionsResponse> = await http.get(URI);
+        const URI = '/real-estates/list';
+        const res: AxiosResponse<ListInspectionsResponse> = await http.get(
+            URI,
+            {
+                params: {
+                    to: 'inspection',
+                },
+            }
+        );
         return res.data;
     } catch (e) {
         return Promise.reject('Error');

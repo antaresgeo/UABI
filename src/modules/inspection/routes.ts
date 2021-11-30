@@ -24,7 +24,7 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/inspection/create/',
+            path: '/inspection/:real_estate_id/create/',
             template_props: {
                 breadcrumbs: [
                     {

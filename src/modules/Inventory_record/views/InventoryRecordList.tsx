@@ -1,26 +1,21 @@
 import React, { useEffect } from 'react';
-
-import { useSelector, useDispatch } from 'react-redux';
-
-import { actions } from '../redux';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { Card, Link } from '../../../utils/ui';
-import { IRealEstateAttributes } from '../../../utils/interfaces';
 import { getRealEstates } from '../../acquisitions/redux/actions/realEstates';
 import RealEstateList from '../../acquisitions/components/RealEstateList';
 import FilterForm from './../../../utils/ui/filter_form';
-
 
 const InventoryRecordList = () => {
     const dispatch = useDispatch();
     const [filters, set_filters] = useState<object>(null);
 
     const change_page = (page, pageSize) => {
-        dispatch(getRealEstates({ page, pageSize,...filters }));
+        dispatch(getRealEstates({ page, pageSize, ...filters }));
     };
 
     const filter = async (_filters, _) => {
-        set_filters(_filters)
+        set_filters(_filters);
         await dispatch(getRealEstates({ page: 1, ..._filters }));
     };
 
@@ -36,29 +31,24 @@ const InventoryRecordList = () => {
                         title="Administrar Bienes Inmuebles"
                         extra={<Link to="/acquisitions/real-estates/create" name="Crear" iconText="+" />}
                     >
-                        <form>
-                            <div className="row justify-content-between">
-                                <div className="col-5 d-flex">
-                                    <div className="col-6 ">
-                                        <FilterForm
-                                            filters={[
-                                                { key: 'CBML', name: 'CBML' },
-                                                { key: 'registry_number', name: 'Matrícula' },
-                                                { key: 'project.name', name: 'Proyecto' },
-                                                { key: 'address', name: 'Dirección' },
-                                                { key: 'sap_id', name: 'Activo fijo' }
-                                            ]}
-                                            onSubmit={filter}
-                                        />
-                                    </div>
+                        <div className="row justify-content-between">
+                            <div className="col-5 d-flex">
+                                <div className="col-6 ">
+                                    <FilterForm
+                                        filters={[
+                                            { key: 'CBML', name: 'CBML' },
+                                            { key: 'registry_number', name: 'Matrícula' },
+                                            { key: 'project.name', name: 'Proyecto' },
+                                            { key: 'address', name: 'Dirección' },
+                                            { key: 'sap_id', name: 'Activo fijo' },
+                                        ]}
+                                        onSubmit={filter}
+                                    />
                                 </div>
                             </div>
-                        </form>
-                        <RealEstateList
-                            withProject
-                            register
-                            change_page={change_page}
-                        />
+                        </div>
+
+                        <RealEstateList withProject register change_page={change_page} />
                     </Card>
                 </div>
             </div>

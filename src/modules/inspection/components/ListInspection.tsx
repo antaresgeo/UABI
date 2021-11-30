@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Link, Table as UiTable } from '../../../utils/ui';
+import { formatDate } from '../../../utils';
 
 const ListInspection = ({ inspections, change_page, total_results, loading }) => {
     const table_columns = [
@@ -10,24 +11,26 @@ const ListInspection = ({ inspections, change_page, total_results, loading }) =>
         },
         {
             title: 'Bien Inmueble',
-            dataIndex: '',
+            dataIndex: 'name',
             align: 'left' as 'left',
         },
         {
             title: 'Matrícula',
-            dataIndex: '',
+            dataIndex: 'registry_number',
             align: 'left' as 'left',
         },
         {
             title: 'Dirección',
-            dataIndex: 'status',
+            dataIndex: 'address',
             align: 'left' as 'left',
+            render: (r) => r.address
         },
 
         {
             title: 'Fecha de Inspección',
-            dataIndex: '',
+            dataIndex: 'date',
             align: 'left' as 'left',
+            render: (date) => formatDate(date) || '-',
         },
         {
             title: 'Acciones',
@@ -55,7 +58,7 @@ const ListInspection = ({ inspections, change_page, total_results, loading }) =>
                     render: (id) => {
                         return (
                             <Link
-                                to={`/inspection/create/`}
+                                to={`/inspection/${id}/create/`}
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-plus" aria-hidden="true" />}
