@@ -116,7 +116,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <Field
                         component={Select}
                         id="tipology_id"
-                        name="tipology"
+                        name="tipology_id"
                         placeholder="Seleccione Tipología "
                         disabled={disabled}
                         options={tipologies?.map(tipology => ({ id: tipology.id, name: tipology.tipology }))}
@@ -129,7 +129,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             formik.setFieldValue('accounting_account', bill[0].accounting_account, false);
                         }}
                     />
-                    <ErrorMessage name="tipology" />
+                    <ErrorMessage name="tipology_id" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="accounting_account_id" className="form-label">

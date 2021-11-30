@@ -27,7 +27,6 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     const [editingKey, setEditingKey] = useState('');
     const [selectRealEsates, setSelectRealEsates] = useState(0)
     const [selectRowKeys, setSelectRowKeys] = useState([])
-    const [areaUse, setareaUse] = useState(0);
     const [form] = Form.useForm();
 
     useEffect(() => {
@@ -35,12 +34,14 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
         dispatch(actions.getRealEstatesByProject(Number(id)));
     }, []);
 
+
     let newrealEstates = [];
     // const codes = realEstates.map(realEstate => realEstate.sap_id.split(",")).map(codigo => codigo?.filter(cod => cod.charAt(cod.length - 1) !== 'J'))
-    newrealEstates = realEstates.reduce((valor_anterior, valor_actual)=>{
+    //console.log('bienes',realEstates)
+    newrealEstates = realEstates.reduce((valor_anterior, valor_actual) => {
         const codigos = valor_actual.sap_id.split(",");
-        const codes = codigos.filter(cod =>  cod.charAt(cod.length -1) !== 'J');
-        for(let i = 0; i < codes.length; i++){
+        const codes = codigos.filter(cod => cod.charAt(cod.length - 1) !== 'J');
+        for (let i = 0; i < codes.length; i++) {
             const obj = {
                 ...valor_actual
             }
@@ -48,20 +49,35 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
             valor_anterior.push(obj);
         }
         return valor_anterior;
-    },[])
+    }, [])
+
+
 
     useEffect(() => {
         const dataTable = [];
-        newrealEstates.map(realEstate =>
-            dataTable.push({
-                key: realEstate.sap_id,
-                name: realEstate.name,
-                total_area: realEstate.total_area,
-                intact_area: realEstate.total_area,
-                use_area: 0,
-                id: realEstate.id
-            })
-        )
+        newrealEstates.map(realEstate =>{
+            if(realEstate.sap_id.charAt(realEstate.sap_id.length-1) === 'L'){
+                dataTable.push({
+                    key: realEstate.sap_id,
+                    name: realEstate.name,
+                    total_area: realEstate.plot_area,
+                    intact_area: realEstate.plot_area,
+                    use_area: 0,
+                    type: 'lote',
+                    id: realEstate.id
+                })
+            }else {
+                dataTable.push({
+                    key: realEstate.sap_id,
+                    name: realEstate.name,
+                    total_area: realEstate.construction_area,
+                    intact_area: realEstate.construction_area,
+                    use_area: 0,
+                    type: 'constrution',
+                    id: realEstate.id
+                })
+            }
+        })
         setData(dataTable)
     }, [])
 
@@ -112,8 +128,8 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                     ...item,
                     ...row,
                 });
-                if(newData[index].use_area !== 0) {
-                    newData[index].intact_area =  newData[index].total_area - newData[index].use_area
+                if (newData[index].use_area !== 0) {
+                    newData[index].intact_area = newData[index].total_area - newData[index].use_area
                 }
                 if (newData[index].use_area > newData[index].total_area) {
                     console.log('el area a utilizar no valida')
@@ -138,13 +154,12 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     // filas seleccionadas de la tabla
     const rowSelection = {
         onChange: (selectedRowKeys: [], selectedRows: any[]) => {
-
-            const idRealEstaesSelect = selectRowKeys.reduce((valor_anterior,valor_actual)=>{
-                if(!valor_anterior.includes(valor_actual.id)) {
+            const idRealEstaesSelect = selectedRows.reduce((valor_anterior, valor_actual) => {
+                if (!valor_anterior.includes(valor_actual.id)) {
                     valor_anterior.push(valor_actual.id)
                 }
                 return valor_anterior;
-            },[])
+            }, [])
             setSelectRealEsates(idRealEstaesSelect.length)
             setSelectRowKeys(selectedRowKeys);
         }
@@ -255,15 +270,16 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                 ></input>
             </div>
             <button className="btn btn-primary" onClick={(e) => {
-                console.log(data)
+                //console.log(data)
                 const dataSelect = data.filter(a => selectRowKeys.includes(a.key));
                 let areaSelect = dataSelect.every(b => b.use_area > 0)
+                //console.log(selectRealEsates)
                 switch (action) {
                     case 'englobar':
                         if (numberRealEstates < selectRealEsates) {
-                            if(areaSelect) {
+                            if (areaSelect) {
                                 history.push({ pathname: `/englobar/realEstates/`, state: { numberRealEstates, valueArea, data, action, realEstates } })
-                            }else {
+                            } else {
                                 swal_warning.fire(
                                     {
                                         title: "Valor de Área a utilizar Obligatorio", text: `El valor del área a ${action} no puede ser cero`
@@ -284,7 +300,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                         if (numberRealEstates > selectRealEsates) {
                             if (valueArea === 0) {
                                 e.preventDefault();
-                                console.log("debe elegir valores ")
+                                //console.log("debe elegir valores ")
                                 swal_warning.fire(
                                     {
                                         title: "Valor de Área a utilizar Obligatorio", text: `El valor del área a ${action} no puede ser cero`
