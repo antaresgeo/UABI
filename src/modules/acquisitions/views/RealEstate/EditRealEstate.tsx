@@ -62,6 +62,7 @@ const DetailProjects = () => {
             onSubmit={async (values, form, isFinish) => {
                 const { acquisitions } = values;
                 try {
+                    console.log(values);
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));
                     console.log('ok3', isFinish);
                     if (acquisitions.length > 0) {

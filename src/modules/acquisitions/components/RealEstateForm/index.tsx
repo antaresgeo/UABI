@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { service } from '../../redux';
 
 interface RealEstateFormProps {
-    realEstate?: IRealEstateAttributes;
+    realEstate?: any;
     onSubmit?: (values, form?, isFinish?: boolean) => Promise<any>;
     disabled?: boolean;
     projects: IProjectAttributes[];
@@ -53,8 +53,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         description: '',
         patrimonial_value: '',
         reconstruction_value: '',
-        address: {
-            id: '',
+        address: 5,
+        _address: {
             name: '',
             cbml: '',
         },
@@ -85,8 +85,17 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         construction_area: '',
         plot_area: '',
         ...realEstate,
+        ...(realEstate
+            ? {
+                  address: realEstate.address.id,
+                  _address: {
+                      name: realEstate.address.address,
+                      cbml: realEstate.address.cbmls.uabi,
+                  },
+              }
+            : {}),
         acquisitions: acquisitions || [],
-        project_id: Number.isInteger(projectId) ? projectId : 0,
+        projects_id: Number.isInteger(projectId) ? projectId : 0,
     };
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
@@ -106,13 +115,13 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         ];
     }
 
-    if (!initial_values.address.cbml) {
-        initial_values.address.cbml = '';
+    if (!initial_values._address.cbml) {
+        initial_values._address.cbml = '';
     }
 
-    if (!initial_values.project && project) {
-        initial_values.project = { id: project.id, name: project.name };
-    }
+    // if (!initial_values.project && project) {
+    //     initial_values.project = { id: project.id, name: project.name };
+    // }
 
     const schema = Yup.object().shape({
         destination_type: Yup.string().required('Campo obligatorio'),
@@ -134,8 +143,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             .min(0, 'El minimo es 0')
             .max(100, 'El maximo es 100'),
         zone: Yup.string().required('Campo obligatorio'),
-        tipology: Yup.string().required('Campo obligatorio'),
-        project_id: Yup.number().required('Campo obligatorio'),
+        tipology_id: Yup.string().required('Campo obligatorio'),
         acquisitions: Yup.array(),
     });
 
@@ -143,7 +151,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         const isFinish = aux_values._type === 'finish';
         const values: any = { ...aux_values };
         delete values._type;
-        values.project_id = [values.project_id];
+        values.projects_id = [values.projects_id];
         values.materials = values.materials.join(', ');
         onSubmit(values, form, isFinish)
             .then(() => {
@@ -165,15 +173,15 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         }
     }, [projectId]);
 
-    if (project && project.id !== 0) {
-        initial_values = {
-            ...initial_values,
-            dependency: project.dependency,
-            subdependency: project.subdependency,
-            management_center: project.management_center,
-            cost_center: project.cost_center,
-        };
-    }
+    // if (project && project.id !== 0) {
+    //     initial_values = {
+    //         ...initial_values,
+    //         dependency: project.dependency,
+    //         subdependency: project.subdependency,
+    //         management_center: project.management_center,
+    //         cost_center: project.cost_center,
+    //     };
+    // }
 
     // console.log(initial_values);
 

@@ -166,12 +166,12 @@ export const ListRoles = () => {
                         if (id !== 0) {
                             return (
                                 <div className="text-danger" onClick={deleteRol(id)}>
-                                    {/*<i className="fa fa-times-circle" aria-hidden="true" />*/}
-                                    <Switch size="small" />
+                                    <i className="fa fa-times-circle" aria-hidden="true" />
+                                    {/*<Switch size="small" />*/}
                                 </div>
                             );
                         } else {
-                            return <Switch size="small" disabled />
+                            return  <i className="fa fa-times-circle" aria-hidden="true" />
                         }
                     },
                 },

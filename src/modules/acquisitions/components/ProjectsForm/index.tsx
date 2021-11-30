@@ -80,7 +80,7 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
             .max(100, 'El procentaje maximo es 100'),
         zone: Yup.string().required('Campo obligatorio'),
         tipology: Yup.string().required('Campo obligatorio'),
-        project_id: Yup.number().required('Campo obligatorio'),
+        projects_id: Yup.number().required('Campo obligatorio'),
         acquisitions: Yup.array(),
     });
 

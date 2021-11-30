@@ -147,7 +147,7 @@ const InsuranceCompanies = () => {
                     render: (id) => {
                         return (
                             <div className="text-danger" onClick={deleteInsuranceCompany(id)}>
-                                <i className="fa fa-trash" aria-hidden="true" />
+                                <i className="fa fa-times-circle" aria-hidden="true" />
                             </div>
                         );
                     },
