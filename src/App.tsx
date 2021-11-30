@@ -14,8 +14,8 @@ function App() {
     const routes = useRoutes();
     const aux_user = {
         ...user,
-        permits: user?.permits.map((a) => a.name) || [],
-        roles: user?.roles.map((a) => a.name) || [],
+        permits: user?.permits?.map((a) => a.name) || [],
+        roles: user?.roles?.map((a) => a.name) || [],
     };
     const show = token ? !!(token && user) : true;
 
