@@ -70,7 +70,7 @@ const UserViewForm: FC<IUserFormPros> = ({ user }) => {
         default:
             break;
     }
-
+    console.log(user)
     return (
         <div className="col-3-12">
             <div className="content_box_table" >
@@ -104,7 +104,6 @@ const UserViewForm: FC<IUserFormPros> = ({ user }) => {
                                 <label htmlFor="">Tipo Entidad</label>
                                 <div className="my-3">{type_entity}</div>
                             </div>
-
                             <div className="col-3">
                                 <label htmlFor="">Tipo de Documento</label>
                                 <div className="my-3">{type_doc}</div>
@@ -133,11 +132,24 @@ const UserViewForm: FC<IUserFormPros> = ({ user }) => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-12">
+                            <div className="col-3">
                                 <label htmlFor="">Dirección</label>
                                 <div className="my-3">{user?.location}</div>
-                                {/* TODO: verificar dirección */}
+
                             </div>
+                            {user?.entity_type === "P" &&
+                                <>
+                                    <div className="col-3">
+                                        <label htmlFor="">Dependencia</label>
+                                        <div className="my-3">{user.dependency}</div>
+                                    </div>
+                                    <div className="col-3">
+                                        <label htmlFor="">Subdependencia</label>
+                                        <div className="my-3">{user.subdependency}</div>
+                                    </div>
+                                </>
+
+                            }
                         </div>
                     </div>
                 </div>

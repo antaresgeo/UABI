@@ -9,6 +9,7 @@ import InspectionCreate from '../inspection/views/inspection/InspectionCreate';
 import CreateDisposition from './views/CreateDisposition';
 import DetailContract from './views/Contracts/DetailContract';
 import EditContract from './views/Contracts/EditContract';
+import { ListContracts } from './views/Contracts/ListContracts';
 const get_routes = (): IRoute[] => {
     return [
         {
@@ -86,6 +87,19 @@ const get_routes = (): IRoute[] => {
             },
             component: EditContract,
         },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/dispositions/contract/list',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Contratos' },
+                ],
+            },
+            component: ListContracts,
+        },
+
 
         // {
         //     exact: true,

@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
-import { Card } from '../../../../utils/ui'
-import FormPrecontractual from '../../components/Precontractual/Lease/FormPrecontractualLease'
-import { useHistory, useLocation } from 'react-router-dom';
-import { GeneralFormPrecontractual } from '../../components/Precontractual/GeneralFormPrecontractual';
+import  { FC } from 'react'
+import { useHistory } from 'react-router-dom';
+import GeneralFormPublicUse from '../../components/Precontractual/PublicUse/GeneralFormPublicUse';
+import { GeneralFormComodato } from './../../components/Precontractual/comodato/GeneralFormComodato';
+import { GeneralFormLease } from './../../components/Precontractual/Lease/GeneralFormLease';
 
 
 interface FormPros {
@@ -18,9 +18,16 @@ const CreatePrecontractual: FC<FormPros> = ({dispositionType})=> {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <GeneralFormPrecontractual
-                                dispositionType={dispositionType}
-                            />
+                            {dispositionType === "Comodato" &&
+                                <GeneralFormComodato />
+                            }
+                            {dispositionType === "arrendamiento" &&
+                                <GeneralFormLease />
+                            }
+                            {(dispositionType !== "arrendamiento" && dispositionType !== "Comodato") &&
+                                <GeneralFormPublicUse />
+                            }
+
                         </div>
                     </div>
                 </div>

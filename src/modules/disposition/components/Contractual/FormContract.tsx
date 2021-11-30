@@ -1,15 +1,17 @@
 import { Field, Form, Formik } from 'formik';
+import { FC } from 'react';
 import * as Yup from 'yup';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import Select from './../../../../utils/ui/select';
 
-export const FormContract = () => {
-    const initialValues = {
-        type_use: "",
-        active_type: "",
-        disposition_type: ""
-    };
+interface FormProps {
+    formik: any;
+
+}
+
+export const FormContract: FC<FormProps> = ({ formik }) => {
+    console.log(formik)
 
     const dispositions = [
         "Dependencias",
@@ -23,101 +25,96 @@ export const FormContract = () => {
         "autorizaciones"
     ]
 
-    const submit = (values, actions) => {
-        console.log(values);
-    };
-
-    const schema = Yup.object().shape({
-    });
     return (
         <>
             <div className="row">
                 <div className="col-3">
-                    <label htmlFor="type_use_id" className="form-label">
-                        Numero de contrato
+                    <label htmlFor="contract_number_id" className="form-label">
+                        Número de contrato
                     </label>
                     <Field
                         type="text"
-                        id="type_use_id"
-                        name="type_use"
+                        id="contract_number_id"
+                        name="contract_number"
                         className="form-control"
                         disabled={false}
 
                     />
-                    <ErrorMessage name="vigency_start" />
+                    <ErrorMessage name="contract_number" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="disposition_type_id" className="form-label">
+                    <label htmlFor="type_contract_id" className="form-label">
                         Tipo de contrato
                     </label>
                     <Field
                         component={Select}
-                        name="disposition_type"
-                        id="disposition_type_id"
+                        name="type_contract"
+                        id="type_contract_id"
                         className="w-100"
                         options={dispositions.map(realestate => ({ id: realestate, name: realestate }))}
                     />
+                    <ErrorMessage name="type_contract" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="disposition_type_id" className="form-label">
+                    <label htmlFor="monthly_canon_id" className="form-label">
                         Canon Mensual
                     </label>
                     <Field
                         type="text"
-                        id="active_type_id"
-                        name="active_type"
+                        id="monthly_canon_id"
+                        name="monthly_canon"
                         className="form-control"
                         disabled={false}
 
                     />
-                    <ErrorMessage name="vigency_start" />
+                    <ErrorMessage name="monthly_canon" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="active_type_id" className="form-label">
+                    <label htmlFor="subscription_date_id" className="form-label">
                         Fecha de suscripción
                     </label>
                     <Field
                         type="date"
-                        id="active_type_id"
-                        name="active_type"
+                        id="subscription_date_id"
+                        name="subscription_date"
                         className="form-control"
                         disabled={false}
 
                     />
-                    <ErrorMessage name="vigency_start" />
+                    <ErrorMessage name="subscription_date" />
                 </div>
             </div>
             <div className="row">
                 <div className="col-3">
-                    <label htmlFor="disposition_type_id" className="form-label">
+                    <label htmlFor="start_date_id" className="form-label">
                         Fecha de Inicio
                     </label>
                     <Field
                         type="date"
-                        id="active_type_id"
-                        name="active_type"
+                        id="start_date_id"
+                        name="start_date"
                         className="form-control"
                         disabled={false}
 
                     />
-                    <ErrorMessage name="vigency_start" />
+                    <ErrorMessage name="start_date" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="disposition_type_id" className="form-label">
+                    <label htmlFor="finish_date_id" className="form-label">
                         Fecha de Terminación
                     </label>
                     <Field
                         type="date"
-                        id="active_type_id"
-                        name="active_type"
+                        id="finish_date_id"
+                        name="finish_date"
                         className="form-control"
                         disabled={false}
 
                     />
-                    <ErrorMessage name="vigency_start" />
+                    <ErrorMessage name="finish_date" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="disposition_type_id" className="form-label">
+                    <label htmlFor="management_value" className="form-label">
                         Valor de administración
                     </label>
                     <div className="input-group">
@@ -125,18 +122,18 @@ export const FormContract = () => {
                             <span className="input-group-text bg-white border-end-0">$</span>
                         </div>
                         <Field
-                            name="reconstruction_value"
                             type="number"
-                            id="reconstruction_value_id"
+                            id="management_value_id"
+                            name="management_value"
                             className="form-control border-start-0 text-end"
                             min={0}
                             max={9999999999}
                         />
                     </div>
-                    <ErrorMessage name="vigency_start" />
+                    <ErrorMessage name="management_value" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="disposition_type_id" className="form-label">
+                    <label htmlFor="surveillance_value_id" className="form-label">
                         Valor vigilancia
                     </label>
                     <div className="input-group">
@@ -144,19 +141,20 @@ export const FormContract = () => {
                             <span className="input-group-text bg-white border-end-0">$</span>
                         </div>
                         <Field
-                            name="reconstruction_value"
                             type="number"
-                            id="reconstruction_value_id"
+                            id="surveillance_value_id"
+                            name="surveillance_value"
                             className="form-control border-start-0 text-end"
                             min={0}
                             max={9999999999}
                         />
+                        <ErrorMessage name="surveillance_value" />
                     </div>
                 </div>
             </div>
             <div className="row">
                 <div className="col-3">
-                    <label htmlFor="disposition_type_id" className="form-label">
+                    <label htmlFor="public_service_value_id" className="form-label">
                         Valor servicio público
                     </label>
                     <div className="input-group">
@@ -164,55 +162,56 @@ export const FormContract = () => {
                             <span className="input-group-text bg-white border-end-0">$</span>
                         </div>
                         <Field
-                            name="reconstruction_value"
                             type="number"
-                            id="reconstruction_value_id"
+                            id="public_service_value_id"
+                            name="public_service_value"
                             className="form-control border-start-0 text-end"
                             min={0}
                             max={9999999999}
                         />
                     </div>
-                    <ErrorMessage name="vigency_start" />
+                    <ErrorMessage name="public_service_value" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="disposition_type_id" className="form-label">
+                    <label htmlFor="dispose_area_id" className="form-label">
                         área a disponer
                     </label>
                     <Field
                         type="number"
-                        id="active_type_id"
-                        name="active_type"
+                        id="dispose_area_id"
+                        name="dispose_area"
                         className="form-control"
                         disabled={false}
 
                     />
-                    <ErrorMessage name="vigency_start" />
+                    <ErrorMessage name="dispose_area" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="form-select" className="form-label">
+                    <label htmlFor="digital_contract_id" className="form-label">
                         Contrato digital
                     </label>
                     <Field
-                        name=""
+                        id="digital_contract_id"
+                        name="digital_contract"
                         component={DocumentModal}
                         btn_label="Adjuntar"
 
                     />
-                    <ErrorMessage name="supports_documents" />
+                    <ErrorMessage name="digital_contract" />
                 </div>
                 <div className="form-group col-3">
-                    <label htmlFor="zone_id" className="form-label">
+                    <label htmlFor="manager_uabi_id" className="form-label">
                         ¿UABI es la encargada del contrato?
                     </label>
                     <div className="form-check-inline ">
                         <label style={{ fontWeight: 400 }}>
                             <Field
 
-                                name="type_assurance"
-                                id="type_assurance_id"
+                                name="manager_uabi"
+                                id="manager_uabi_id"
                                 type="radio"
                                 className="form-check-input"
-                                value="Normal"
+                                value="si"
                             />{' '}
                             si
                         </label>
@@ -220,32 +219,32 @@ export const FormContract = () => {
                     <div className="form-check-inline ">
                         <label style={{ fontWeight: 400 }}>
                             <Field
-                                name="type_assurance"
-                                id="type_assurance_id"
+                                name="manager_uabi"
+                                id="manager_uabi_id"
                                 type="radio"
                                 className="form-check-input"
-                                value="Coaseguramiento"
+                                value="no"
                             />{' '}
                             no
                         </label>
                     </div>
-                    <ErrorMessage name="type_assurance"></ErrorMessage>
+                    <ErrorMessage name="manager_uabi"></ErrorMessage>
                 </div>
             </div>
             <div className="row">
                 <div className="form-group col-12">
-                    <label htmlFor="description_id" className="form-label">
+                    <label htmlFor="object_contract_id" className="form-label">
                         Objeto del contrato
                     </label>
                     <Field
                         disabled={false}
-                        name="description"
-                        id="description_id"
+                        name="object_contract"
+                        id="object_contract_id"
                         as="textarea"
                         className="form-control"
                         maxLength={1000}
                     />
-                    <ErrorMessage name="description" withCount max={1000} />
+                    <ErrorMessage name="object_contract" withCount max={1000} />
                 </div>
             </div>
         </>

@@ -1,14 +1,13 @@
-import { Field } from 'formik';
-import ErrorMessage from '../../../../../utils/ui/error_messge'
-import Tooltip from 'antd/lib/tooltip';
-import { FC } from 'react';
+import { Field } from 'formik'
+import React, { FC } from 'react'
+import ErrorMessage from './../../../../utils/ui/error_messge';
 
 interface FormProps {
     formik: any;
 
 }
 
-export const FormRiskAnalysis: FC<FormProps> = ({ formik }) => {
+export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
     return (
         <>
             <h5 className="div">Riesgo regulatorio</h5>
@@ -199,3 +198,7 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik }) => {
         </>
     )
 }
+
+
+
+

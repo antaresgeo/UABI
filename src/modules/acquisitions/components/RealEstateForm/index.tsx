@@ -228,6 +228,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 inventory={inventory}
                                                 inventoryEdit={inventoryEdit}
                                                 onProjectSelectedChange={onProjectSelectedChange}
+                                                acquisitions={formik.values.acquisitions}
                                             />
                                             <AdquisitionView
                                                 type={type}

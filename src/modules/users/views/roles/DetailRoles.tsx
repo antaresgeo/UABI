@@ -1,10 +1,11 @@
-import { Card } from '../../../../utils/ui';
+import { Card, Link } from '../../../../utils/ui';
 import { useHistory, useParams } from 'react-router-dom';
 import RoleForm from './../../components/RoleForm';
 import { useDispatch, useSelector } from 'react-redux';
 import {useEffect} from 'react';
 import { actions } from '../../redux';
 import { IRolAttributes } from '../../../../utils/interfaces/roles';
+import RoleViewForm from './../../components/RoleViewForm';
 
 
 
@@ -28,16 +29,22 @@ const DetailRoles = () => {
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
-                <div className="container-fluid">
-                    <div className="row justify-content-center">
-                        <div className="col-md-12">
-                            <Card title="ver Rol">
-                                <RoleForm
-                                    rol={finalRole}
-                                    type="view"
-                                    disabled={true}
-                                />
-                            </Card>
+                <div className="bg-white d-flex flex-column h-100">
+                    <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
+                        <h5 className='col-11 '>Detalle Rol</h5>
+                        <Link
+                            to={`/roles/edit/${id}/`}
+                            name=""
+                            avatar={false}
+                            icon={<i style={{ marginLeft: '30px', fontSize: 16, color: '#000' }} className="fa fa-pencil" aria-hidden="true" />}
+                        />
+                    </div>
+                    <div className="container-fluid">
+                        <div className="row justify-content-center">
+                            <div className="col-md-12">
+                                <RoleViewForm role={role}/>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,9 +62,9 @@ const DetailRoles = () => {
                 >
                     Atras
                 </button>
-                <div className="flex-fill" />
             </div>
         </div>
+
     )
 }
 

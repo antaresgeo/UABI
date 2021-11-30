@@ -23,6 +23,7 @@ interface DataRealEstateFormProps {
     inventory?: boolean;
     englobe?: boolean;
     inventoryEdit?: boolean;
+    acquisitions?: any[];
 }
 
 export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
@@ -35,8 +36,10 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     englobe,
     inventoryEdit,
     onProjectSelectedChange,
+    acquisitions,
 }) => {
     const tipologies: ITipologyAttributes[] = useSelector((states: any) => states.acquisitions.tipologies.value);
+    const valorPatrimonial = formik.values.patrimonial_value;
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(actions.getTipologies());
@@ -318,14 +321,15 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             //value={""} //TODO: sumas el valor de adquisicion con valor de reconocimiento
                             min={0}
                             max={99999999999999999999}
-                        // onChange={(e, values) => {
-                        //     console.log(e.target.value)
-                        //     formik.handleChange(e)
-                        // }}
+                            // onChange={(e, values) => {
+                            //     console.log(e.target.value)
+                            //     formik.handleChange(e)
+                            // }}
                         />
                     </div>
                     <ErrorMessage name="patrimonial_value" />
                 </div>
+                {/* {console.log(formik.values.patrimonial_value,'valor anterior', valorPatrimonial)} */}
                 {inventoryEdit === false &&
                     <div className="col-6">
                         <label htmlFor="form-select" className="form-label">
@@ -625,7 +629,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
             {(type !== 'create') && (
                 <>
                     <div className="row">
-                        <div className={`form-group col-${inventory ? 3: 6}`}>
+                        <div className={`form-group col-${inventory ? 3 : 6}`}>
                             <label htmlFor="audit_trail_created_by_id" className="form-label">
                                 Creado por
                             </label>

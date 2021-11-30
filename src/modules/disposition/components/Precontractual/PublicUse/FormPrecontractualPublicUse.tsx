@@ -3,7 +3,12 @@ import ErrorMessage from '../../../../../utils/ui/error_messge'
 import Tooltip from 'antd/lib/tooltip';
 import { FC } from 'react';
 
-export const FormPrecontractualPublicUse = () => {
+interface FormProps {
+    formik: any;
+
+}
+
+export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
     return (
         <>
             <div className="row">
