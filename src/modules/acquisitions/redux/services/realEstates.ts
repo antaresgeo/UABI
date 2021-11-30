@@ -26,7 +26,7 @@ const getRealEstates = async (filters?) => {
         let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
             await http.get(URI, {
                 params: {
-                    ...filters
+                    ...filters,
                 },
             });
         //console.log(res);
@@ -88,8 +88,8 @@ const get_docucments_whit_service = async (docs) => {
                     doc.type === 3
                         ? 'Documento de Matricula'
                         : doc.type === 4
-                        ? 'Documento de Titulo'
-                        : 'Anexo',
+                            ? 'Documento de Titulo'
+                            : 'Anexo',
             }));
         }
         return [];
@@ -146,7 +146,7 @@ export const createRealEstate = async (
 //TODO: Crear realEstates englobe - desenglobe
 export const createRealEstates = async (data: any): Promise<any | []> => {
     try {
-        console.log('bienes inmuebles a crear',data)
+        console.log('bienes inmuebles a crear', data)
         let URI = `/real-estates`;
         //servicio
 
@@ -158,7 +158,7 @@ export const createRealEstates = async (data: any): Promise<any | []> => {
 
 export const updateRealEstates = async (data: any) => {
     try {
-        console.log('bienes inmuebles a actualizar',data)
+        console.log('bienes inmuebles a actualizar', data)
         let URI = `/real-estates`;
         //servicio
 

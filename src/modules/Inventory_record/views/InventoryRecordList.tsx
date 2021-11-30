@@ -16,12 +16,12 @@ const InventoryRecordList = () => {
     const [filters, set_filters] = useState<object>(null);
 
     const change_page = (page, pageSize) => {
-        dispatch(getRealEstates({ page, pageSize,...filters }));
+        dispatch(getRealEstates({ page, pageSize, pagination: 'pagination',...filters }));
     };
 
     const filter = async (_filters, _) => {
         set_filters(_filters)
-        await dispatch(getRealEstates({ page: 1, ..._filters }));
+        await dispatch(getRealEstates({ page: 1,pagination: 'pagination', ..._filters }));
     };
 
     useEffect(() => {

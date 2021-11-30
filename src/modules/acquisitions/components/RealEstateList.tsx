@@ -24,7 +24,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
     init,
     register,
     realEstateFilter,
-    change_page
+    // change_page
 }) => {
 
     const dispatch = useDispatch();
@@ -202,9 +202,9 @@ const RealEstateList: FC<RealEstateListProps> = ({
               ]),
     ];
 
-    // const change_page = (page, pageSize) => {
-    //     dispatch(actions.getRealEstates({ page, pageSize, pagination: 'pagination', ...filters }));
-    // };
+    const change_page = (page, pageSize) => {
+        dispatch(actions.getRealEstates({ page, pageSize, pagination: 'pagination', ...filters }));
+    };
 
 
 

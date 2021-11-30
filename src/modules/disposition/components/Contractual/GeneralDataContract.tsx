@@ -1,14 +1,24 @@
 import { Formik, Form } from 'formik'
-
 import * as Yup from 'yup';
 import { Card } from '../../../../utils/ui';
 import { FormContract } from './FormContract';
 import { FormUser } from './../Precontractual/FormUser';
-import FormLider from '../Precontractual/FormLider';
 
 export const GeneralDataContract = () => {
     const initialValues = {
-
+        contract_number: "",
+        type_contract: "",
+        monthly_canon: "",
+        subscription_date: "",
+        start_date: "",
+        finish_date: "",
+        management_value: "",
+        surveillance_value: "",
+        public_service_value: "",
+        dispose_area: "",
+        digital_contract: "",
+        manager_uabi: "",
+        object_contract: ""
     };
 
     const submit = (values, actions) => {
@@ -22,7 +32,7 @@ export const GeneralDataContract = () => {
             {(formik) => {
                 return <Form>
                     <Card title="Contrato">
-                        <FormContract/>
+                        <FormContract formik={formik}/>
                     </Card>
                     <Card title="Datos del solicitante">
                         <FormUser formik={formik}/>
