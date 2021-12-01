@@ -4,16 +4,15 @@ import { Tabs } from 'antd';
 import CreateOccupation from './CreateOccupation';
 import CreateInspectionPhysical from './CreateInspectionPhysical';
 import CreateUpgrade from './CreateUpgrade';
-import { Card } from '../../../utils/ui';
-import { Field, Form, Formik } from 'formik';
-import ErrorMessage from '../../../utils/ui/error_messge';
-import DocumentModal from '../../../utils/components/DocumentsModal';
 import PhotographicRecordForm from './PhotographicRecordForm';
 import Report from './Report';
 import BasicInformation from "./BasicInformation";
+import {Inspection} from "../custom_types";
 
-interface InspectionFormTagsProps {}
-const InspectionFormTags: FC<InspectionFormTagsProps> = ({}) => {
+interface InspectionFormTagsProps {
+    inspection: Inspection;
+}
+const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
     const history = useHistory();
     const { TabPane } = Tabs;
 
@@ -44,13 +43,13 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({}) => {
                             <BasicInformation inspection={null}/>
                         </TabPane>
                         <TabPane tab="Ocupación" key="2">
-                            <CreateOccupation />
+                            <CreateOccupation ocupation={inspection.ocupation} />
                         </TabPane>
                         <TabPane tab="Inspección física" key="3">
-                            <CreateInspectionPhysical />
+                            <CreateInspectionPhysical physical_inspection={inspection.physical_inspection}/>
                         </TabPane>
                         <TabPane tab="Actualización" key="4">
-                            <CreateUpgrade />
+                            <CreateUpgrade owner={inspection.owner}/>
                         </TabPane>
                         <TabPane tab="Registro fotográfico" key="5">
                             <PhotographicRecordForm />

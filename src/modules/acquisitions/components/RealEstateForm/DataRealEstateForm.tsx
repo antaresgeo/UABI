@@ -1,17 +1,18 @@
 import { Field } from 'formik';
 import React, { FC, useState, useEffect } from 'react';
 import ErrorMessage from '../../../../utils/ui/error_messge';
-import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
+import { IProjectAttributes } from '../../../../utils/interfaces';
 import Select from '../../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
 import { actions, service } from '../../redux';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 import { extractMonth, formatDate } from '../../../../utils';
-import CheckboxGroup from 'react-checkbox-group';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import dependencias from '../../dependencias';
 import { ITipologyAttributes } from './../../../../utils/interfaces/realEstates';
 import { useSelector, useDispatch } from 'react-redux';
+import Popover from 'antd/lib/popover';
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 interface DataRealEstateFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -40,7 +41,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 }) => {
     const tipologies: ITipologyAttributes[] = useSelector((states: any) => states.acquisitions.tipologies.value);
     const valorPatrimonial = formik.values.patrimonial_value;
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     useEffect(() => {
         dispatch(actions.getTipologies());
     }, []);
@@ -119,7 +120,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         name="tipology_id"
                         placeholder="Seleccione Tipología "
                         disabled={disabled}
-                        options={tipologies?.map(tipology => ({ id: tipology.id, name: tipology.tipology }))}
+                        options={tipologies?.map((tipology) => ({ id: tipology.id, name: tipology.tipology }))}
                         showSearch // habilitar para buscarx
                         filterOption={(input, option) => {
                             return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -225,20 +226,20 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 <div className="form-group col-3">
                     <label htmlFor="name_id" className="form-label">
                         Nombre Inmueble
-                        <Tooltip title="Lorem impsu texto descriptivo">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
                     </label>
                     <Field
                         disabled={disabled}
                         name="name"
                         id="name_id"
                         type="text"
-                        className="form-control"
+                        className="form-control w-75"
+
                         autoComplete="off"
                         maxLength={200}
                     />
-
+                    <Popover content={<div>Lorem impsu texto descriptivo</div>} trigger="hover">
+                        <InfoCircleOutlined />
+                    </Popover>
                     <ErrorMessage name="name" withCount max={200} />
                 </div>
                 <div className="form-group col-3">
@@ -330,7 +331,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <ErrorMessage name="patrimonial_value" />
                 </div>
                 {/* {console.log(formik.values.patrimonial_value,'valor anterior', valorPatrimonial)} */}
-                {inventoryEdit === false &&
+                {inventoryEdit === false && (
                     <div className="col-6">
                         <label htmlFor="form-select" className="form-label">
                             Documento Avalúo
@@ -340,14 +341,13 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             component={DocumentModal}
                             btn_label="Adjuntar"
                             disables={disabled}
-                        // onDelete={(values) => {
-                        //     setFieldValue('insurance_document_id', '', false)
-                        // }}
-
+                            // onDelete={(values) => {
+                            //     setFieldValue('insurance_document_id', '', false)
+                            // }}
                         />
                         <ErrorMessage name="appraisal_document" />
                     </div>
-                }
+                )}
                 <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
                     <label htmlFor="total_area_id" className="form-label">
                         Área Total
@@ -370,7 +370,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="total_area" />
                 </div>
-                {inventoryEdit === false &&
+                {inventoryEdit === false && (
                     <div className="col-6">
                         <label htmlFor="form-select" className="form-label">
                             Documento de Prediación
@@ -380,14 +380,13 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             component={DocumentModal}
                             btn_label="Adjuntar"
                             disables={disabled}
-                        // onDelete={(values) => {
-                        //     setFieldValue('insurance_document_id', '', false)
-                        // }}
-
+                            // onDelete={(values) => {
+                            //     setFieldValue('insurance_document_id', '', false)
+                            // }}
                         />
                         <ErrorMessage name="prediation_document" />
                     </div>
-                }
+                )}
                 <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
                     <label htmlFor="reconstruction_value_id" className="form-label">
                         Valor de reconstrucción
@@ -626,7 +625,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <ErrorMessage name="description" withCount max={1000} />
                 </div>
             </div>
-            {(type !== 'create') && (
+            {type !== 'create' && (
                 <>
                     <div className="row">
                         <div className={`form-group col-${inventory ? 3 : 6}`}>
@@ -671,7 +670,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             <ErrorMessage />
                         </div>
 
-                        {inventory &&
+                        {inventory && (
                             <>
                                 <div className="col-3">
                                     <label htmlFor="importe_contabilidad_id" className="form-label">
@@ -683,16 +682,13 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         id="importe_contabilidad_id"
                                         name="importe_contabilidad"
                                         disabled
-
                                     />
                                     <ErrorMessage />
                                 </div>
-
                             </>
-
-                        }
+                        )}
                     </div>
-                    {inventory &&
+                    {inventory && (
                         <>
                             <div className="row">
                                 <div className="col-3">
@@ -707,7 +703,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         value={extractMonth(formik.values.audit_trail?.created_on)}
                                         disabled
 
-                                    // EL MES
+                                        // EL MES
                                     />
                                     <ErrorMessage />
                                 </div>
@@ -753,7 +749,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         <ErrorMessage />
                                     </div>
                                 </>
-
                             </div>
                             <div className="row">
                                 <div className="col-3">
@@ -793,39 +788,68 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         name="availability_type"
                                         disabled={inventoryEdit}
                                     >
-                                        <option key="availability_type" value="" hidden>--Seleccione Tipo de uso disponibilidad--</option>
-                                        {formik.values.destination_type !== "PÚBLICO" &&
+                                        <option key="availability_type" value="" hidden>
+                                            --Seleccione Tipo de uso disponibilidad--
+                                        </option>
+                                        {formik.values.destination_type !== 'PÚBLICO' && (
                                             <>
-                                                <option key="availability_type1" value="Misional">Misional</option>
-                                                <option key="availability_type2" value="Misional social">Misional social</option>
-                                                <option key="availability_type3" value="Inversión">Inversión</option>
-                                                <option key="availability_type4" value="Inversión Social">Inversión Social</option>
-
+                                                <option key="availability_type1" value="Misional">
+                                                    Misional
+                                                </option>
+                                                <option key="availability_type2" value="Misional social">
+                                                    Misional social
+                                                </option>
+                                                <option key="availability_type3" value="Inversión">
+                                                    Inversión
+                                                </option>
+                                                <option key="availability_type4" value="Inversión Social">
+                                                    Inversión Social
+                                                </option>
                                             </>
-                                        }
-                                        {formik.values.destination_type !== "FISCAL" &&
+                                        )}
+                                        {formik.values.destination_type !== 'FISCAL' && (
                                             <>
-                                                <option key="availability_type5" value="administracion">Administración</option>
-                                                <option key="availability_type6" value="mantenimiento">Mantenimiento</option>
-                                                <option key="availability_type7" value="aprovechamiento">Aprovechamiento</option>
-                                                <option key="availability_type8" value="aprovechamiento">Calles</option>
-                                                <option key="availability_type9" value="Via">Via</option>
-                                                <option key="availability_type10" value="Plaza">Plaza</option>
-                                                <option key="availability_type11" value="Parque">Parque</option>
-                                                <option key="availability_type12" value="Zona Verde">Zona Verde</option>
-                                                <option key="availability_type13" value="Zona dura">Zona dura</option>
-                                                <option key="availability_type14" value="Playa">Plaza</option>
+                                                <option key="availability_type5" value="administracion">
+                                                    Administración
+                                                </option>
+                                                <option key="availability_type6" value="mantenimiento">
+                                                    Mantenimiento
+                                                </option>
+                                                <option key="availability_type7" value="aprovechamiento">
+                                                    Aprovechamiento
+                                                </option>
+                                                <option key="availability_type8" value="aprovechamiento">
+                                                    Calles
+                                                </option>
+                                                <option key="availability_type9" value="Via">
+                                                    Via
+                                                </option>
+                                                <option key="availability_type10" value="Plaza">
+                                                    Plaza
+                                                </option>
+                                                <option key="availability_type11" value="Parque">
+                                                    Parque
+                                                </option>
+                                                <option key="availability_type12" value="Zona Verde">
+                                                    Zona Verde
+                                                </option>
+                                                <option key="availability_type13" value="Zona dura">
+                                                    Zona dura
+                                                </option>
+                                                <option key="availability_type14" value="Playa">
+                                                    Plaza
+                                                </option>
                                             </>
-                                        }
-                                        <option key="availability_type15" value="sin Asignar">sin Asignar</option>
-
+                                        )}
+                                        <option key="availability_type15" value="sin Asignar">
+                                            sin Asignar
+                                        </option>
                                     </Field>
                                     <ErrorMessage />
                                 </div>
                             </div>
                         </>
-                    }
-
+                    )}
 
                     <div className="row">
                         <div className="col-12">

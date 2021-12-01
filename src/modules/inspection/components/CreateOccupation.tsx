@@ -1,10 +1,16 @@
 import { Card } from '../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 import OccupationForm from './OccupationForm';
-import React from 'react';
+import React, { FC } from 'react';
+import { Ocupation } from '../custom_types';
 
-const CreateOccupation = () => {
+interface CreateOccupationProps {
+    ocupation: Ocupation;
+}
+
+const CreateOccupation: FC<CreateOccupationProps> = ({ ocupation }) => {
     const history = useHistory();
+    console.log({ ocupation });
     return (
         <div className="container-fluid">
             <div className="row">
@@ -22,7 +28,7 @@ const CreateOccupation = () => {
                             </div>
                         }
                     >
-                        <OccupationForm />
+                        <OccupationForm old={ocupation} />
                     </Card>
                 </div>
             </div>
