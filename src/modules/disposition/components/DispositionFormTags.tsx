@@ -6,13 +6,13 @@ import CreateContract from './../views/Contracts/CreateContract';
 
 interface IParams {
     dispositionType: any;
+    realEstate: any;
 }
 
 
 export const DispositionFormTags = () => {
     const location = useLocation<IParams>();
-    const { dispositionType } = location.state;
-    console.log(dispositionType);
+    const { dispositionType, realEstate } = location.state;
     const history = useHistory();
     const { TabPane } = Tabs;
 
@@ -39,37 +39,13 @@ export const DispositionFormTags = () => {
 
                     <Tabs activeKey={activeKey} className="w-100 h-100" onChange={callback}>
                         <TabPane tab="Proceso Precontractual" key="1">
-                            <CreatePrecontractual dispositionType={dispositionType} />
+                            <CreatePrecontractual dispositionType={dispositionType} realEstate={realEstate}/>
                         </TabPane>
                         <TabPane tab="Proceso Contractual" key="2">
                             <CreateContract />
                         </TabPane>
                     </Tabs>
                 </div>
-            </div>
-            <div
-                className="bg-white d-flex flex-row justify-content-between"
-                style={{ padding: 16, borderTop: '1px solid #ccc' }}
-            >
-                <button
-                    type="button"
-                    className="btn btn-outline-primary"
-                    onClick={() => {
-                        history.goBack();
-                    }}
-                >
-                    Atras
-                </button>
-                <div className="flex-fill" />
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={() => {
-                        next_tab();
-                    }}
-                >
-                    Siguiente
-                </button>
             </div>
         </div>
     )

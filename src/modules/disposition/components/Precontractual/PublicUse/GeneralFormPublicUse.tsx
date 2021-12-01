@@ -7,6 +7,7 @@ import { FormUser } from './../FormUser';
 import { Formobligation } from '../Formobligation';
 import FormLider from '../FormLider';
 import * as Yup from 'yup';
+import { FormRiskAnalysis } from '../FormRiskAnalysis';
 const GeneralFormPublicUse = () => {
     let initialValues = {
         environmental_risk: "",
@@ -53,12 +54,12 @@ const GeneralFormPublicUse = () => {
                     >
                         <FormPrecontractualPublicUse formik={formik} />
                     </Card>
-                    <Card title="Datos del solicitante">
+                    <Card title="Información del solicitante">
                         <FormUser formik={formik} />
                     </Card>
-                    {/* <Card title="Análisis de riesgos">
+                    <Card >
                         <FormRiskAnalysis formik={formik} />
-                    </Card> */}
+                    </Card>
 
                     <Card >
                         <FormLider />

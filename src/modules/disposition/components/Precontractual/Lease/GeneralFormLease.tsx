@@ -7,17 +7,27 @@ import { FormUser } from './../FormUser';
 import { FormRiskAnalysis } from '../FormRiskAnalysis';
 import FormPrecontractualLease from './FormPrecontractualLease';
 import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
+import { FC } from 'react';
 
-export const GeneralFormLease = () => {
+
+interface FormPros {
+    innerRef?: any;
+    realEstate?: any;
+    onSubmit?: (values, form?, isFinish?: boolean) => Promise<any>;
+}
+
+export const GeneralFormLease: FC<FormPros> = ({onSubmit, innerRef, realEstate}) => {
+    const history = useHistory();
     let initialValues = {
         environmental_risk: "",
         registration_date: "",
-        contract_period: "",
+        contract_period: 0,
         //solicitante
         names_applicant: "",
         surnames_applicant: "",
         id_type_document: 0,
-        number_doc_applicant_id: "",
+        number_doc_applicant_id: 0,
         type_society_applicant: "",
         location_applicant: "",
         email_applicant: "",
@@ -40,10 +50,10 @@ export const GeneralFormLease = () => {
         value_aforo: "",
         recovery_value: "",
         counter_value: "",
-        administration_value: "",
+        administration_value: 0,
         vigilance_value: "",
-        subtotal: "",
-        total: "",
+        subtotal: 0,
+        total: 0,
         Prediation_number: "",
         prediation_date: "",
         business_type: "",
@@ -52,30 +62,33 @@ export const GeneralFormLease = () => {
     }
 
     const submit = (values, actions) => {
-        console.log(values);
+        onSubmit(values, actions).then(() => {
+            actions.setSubmitting(false);
+            actions.resetForm();
+        });
     };
 
     const schema = Yup.object().shape({
     });
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema} >
+        <Formik enableReinitialize onSubmit={submit} innerRef={innerRef} initialValues={initialValues} validationSchema={schema} >
             {(formik) => {
                 return <Form>
                     <Card
-                        title="Arrendamiento"
+                        title="Estudio previo para Arrendamiento"
                         extra={
-                            <ModalNotificar/>
+                            <ModalNotificar />
                         }
                     >
                         <FormPrecontractualLease formik={formik} />
                     </Card>
-                    <Card title="Datos del solicitante">
+                    <Card title="Información del solicitante">
                         <FormUser formik={formik} />
                     </Card>
-                    <Card title="Análisis de riesgos">
+                    <Card>
                         <FormRiskAnalysis formik={formik} />
                     </Card>
-                    <Card title="Oblogaciones">
+                    <Card title="Obligaciones">
                         <Formobligation />
                     </Card>
                     <Card >

@@ -22,7 +22,7 @@ export const TableAreas = () => {
     const dispatch = useDispatch();
     const { valueArea, numberRealEstates, data, action, realEstates, arrayRealEstates } = location.state;
     const arrayEditRealEsates = [];
-    console.log(data,numberRealEstates,realEstates )
+    //console.log(data,numberRealEstates,realEstates )
     useEffect(() => {
         if (data && realEstates) {
             // data.map(bienInmueble => {

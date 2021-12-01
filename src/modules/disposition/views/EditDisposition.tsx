@@ -79,7 +79,7 @@ export const EditDisposition = () => {
                         type="button"
                         className="btn btn-primary"
                         onClick={() => {
-                            history.push({ pathname: "/disposition/create/", state: { dispositionType } })
+                            history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate } })
                         }}
                     >
                         iniciar proceso Jurídico
