@@ -47,7 +47,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
 
     const schema = Yup.object().shape({
         user: Yup.object().shape({
-            id_number: Yup.number().required('Campo obligatorio').max(20, 'maximo 20 caracteres'),
+            id_number: Yup.number().required('Campo obligatorio'),
             password: Yup.string()
                 .matches(/(?=.*[0-9])/, 'debe contener almenos 1 numero')
                 .matches(/(?=.*[@$!%*?&,.#])/, 'debe contener almenos 1 caracter special')
@@ -63,7 +63,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
             surnames: Yup.object().shape({
                 firstSurname: Yup.string().required('Campo obligatorio'),
             }),
-            email: Yup.string().required('Campo obligatorio'),
+            email: Yup.string().email('email invalido').required('Campo obligatorio'),
             cellphone_number: Yup.number().required('Campo obligatorio'),
             phone_number: Yup.number().required('Campo obligatorio'),
             gender: Yup.string().required('Campo obligatorio'),
@@ -96,7 +96,8 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
     const dependency_ops = format_list(dependencias);
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
-            {({ values, isValid, isSubmitting, setFieldValue }) => {
+            {({ values, isValid, isSubmitting, setFieldValue, errors }) => {
+                console.log('error', errors)
                 return (
                     <Form>
                         <div className="row">
