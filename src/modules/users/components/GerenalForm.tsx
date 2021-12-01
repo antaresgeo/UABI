@@ -71,9 +71,11 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
     });
 
     const submit = (values, actions) => {
-        onSubmit(values, actions).then(() => {
-            actions.setSubmitting(false);
-        });
+        onSubmit(values, actions)
+            .then(() => {
+                actions.setSubmitting(false);
+            })
+            .catch(() => actions.setSubmitting(false));
 
         //type === 'create' && history.push(`/users/permits/${initial_values.id}/`);
     };
@@ -96,8 +98,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
     const dependency_ops = format_list(dependencias);
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
-            {({ values, isValid, isSubmitting, setFieldValue, errors }) => {
-                console.log('error', errors)
+            {({ values, isValid, isSubmitting, setFieldValue, handleChange }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -299,8 +300,16 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     name="user.id_number"
                                     autoComplete="off"
                                     disabled={disabled}
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        const { value } = e.target;
+                                        const regex = /^[+]?\d{0,20}$/;
+                                        if (regex.test(value.toString())) {
+                                            handleChange(e);
+                                        }
+                                    }}
                                 />
-                                <ErrorMessage name="detailsUser.id_number" max={20} />
+                                <ErrorMessage name="user.id_number" withCount max={20} />
                             </div>
                             <div className={`col-${type === 'create' ? 3 : 6}`}>
                                 <label htmlFor="username" className="form-label">
