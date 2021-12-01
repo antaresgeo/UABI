@@ -10,7 +10,7 @@ interface FormProps {
 export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
     return (
         <>
-            <h5 className="div">Riesgo regulatorio</h5>
+            <div className="div"style={{fontWeight: 'bold', fontSize: '14px'}}>Análisis riesgos regulatorio</div>
             <hr />
             <div className="row">
                 {/* <div className="col-2 text-center" style={{marginTop: 30, fontSize: '14px', fontWeight: 'bold'}}>Riesgo regulatorio</div> */}
@@ -27,7 +27,7 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
 
                     >
                         <option key="regulatory" value="" disabled>
-                            --Seleccione grado de ocurrencia--
+                            -- Seleccionar --
                         </option>
                         <option key="muy bajo" value="muy ">muy bajo</option>
                         <option key="bajo" value="bajo">bajo</option>
@@ -51,7 +51,7 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
 
                     >
                         <option key="regulatory_impact" value="" disabled>
-                            --Seleccione grado de Impacto--
+                            -- Seleccionar --
                         </option>
                         <option key="muy bajo" value="muy ">muy bajo</option>
                         <option key="bajo" value="bajo">bajo</option>
@@ -75,7 +75,7 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
 
                     >
                         <option key="regulatory_responsable_id" value="" disabled>
-                            --Seleccione el resposable--
+                            -- Seleccionar --
                         </option>
                         <option key="Contratista" value="Contratista">Contratista</option>
                         <option key="municipio" value="municipio">municipio</option>
@@ -85,25 +85,38 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
                 </div>
             </div>
             <div className="row">
-
-                <div className="col">
+                <div className="col-6">
                     <label htmlFor="regulatory_description_id" className="form-label">
                         Descripción
                     </label>
                     <Field
-                        as="textarea"
+                        type="text"
                         className="form-control"
                         id="regulatory_description_id"
                         name="regulatory_description"
-                        aria-describedby="emailHelp"
-                        placeholder="Descripción riesgo regulatorio"
+                        placeholder=""
+                        autoComplete="off"
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="regulatory_description" withCount max={200} />
+                </div>
+                <div className="col-6">
+                    <label htmlFor="regulatory_description_id" className="form-label">
+                        Mecanismo de mitigación
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="regulatory_description_id"
+                        name="regulatory_description"
+                        placeholder=""
                         autoComplete="off"
                         maxLength={200}
                     />
                     <ErrorMessage name="regulatory_description" withCount max={200} />
                 </div>
             </div>
-            <h5 className="div">Riesgos Operativos</h5>
+            <div className="div" style={{fontWeight: 'bold', marginTop: '10px', fontSize: '14px'}}>Análisis riesgos operativos</div>
             <hr />
             <div className="row">
                 <div className="col-3">
@@ -119,7 +132,7 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
 
                     >
                         <option key="operative_degree_occurrence" value="" disabled>
-                            --Seleccione grado de ocurrencia--
+                            --Seleccionar--
                         </option>
                         <option key="muy bajo" value="muy ">muy bajo</option>
                         <option key="bajo" value="bajo">bajo</option>
@@ -143,7 +156,7 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
 
                     >
                         <option key="operative_impact_degree" value="" disabled>
-                            --Seleccione grado de Impacto--
+                            --Seleccionar--
                         </option>
                         <option key="muy bajo" value="muy ">muy bajo</option>
                         <option key="bajo" value="bajo">bajo</option>
@@ -167,7 +180,7 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
 
                     >
                         <option key="operative_responsable" value="" disabled>
-                            --Seleccione el resposable--
+                            --Seleccionar--
                         </option>
                         <option key="Contratista" value="Contratista">Contratista</option>
                         <option key="municipio" value="municipio">municipio</option>
@@ -178,21 +191,36 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
             </div>
 
             <div className="row">
-                <div className="col">
+                <div className="col-6">
                     <label htmlFor="operative_description_id" className="form-label">
                         Descripción
                     </label>
                     <Field
-                        as="textarea"
+                        type="text"
                         className="form-control"
                         id="operative_description_id"
                         name="operative_description"
                         aria-describedby="emailHelp"
-                        placeholder="Descripción riesgos operativos"
+                        placeholder=""
                         autoComplete="off"
                         maxLength={200}
                     />
                     <ErrorMessage name="operative_description" withCount max={200} />
+                </div>
+                <div className="col-6">
+                    <label htmlFor="regulatory_description_id" className="form-label">
+                        Mecanismo de mitigación
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="regulatory_description_id"
+                        name="regulatory_description"
+                        placeholder=""
+                        autoComplete="off"
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="regulatory_description" withCount max={200} />
                 </div>
             </div>
         </>

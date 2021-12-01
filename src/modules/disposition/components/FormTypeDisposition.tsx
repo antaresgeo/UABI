@@ -11,7 +11,6 @@ interface DispositionFormPros {
 }
 
 export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTypeDispositionChange }) => {
-    console.log(realEstate?.destination_type)
     const initialValues = {
         type_use: realEstate ? realEstate?.destination_type : "",
         active_type: "",

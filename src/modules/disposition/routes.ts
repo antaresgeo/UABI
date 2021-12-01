@@ -10,6 +10,7 @@ import CreateDisposition from './views/CreateDisposition';
 import DetailContract from './views/Contracts/DetailContract';
 import EditContract from './views/Contracts/EditContract';
 import { ListContracts } from './views/Contracts/ListContracts';
+import LeaseDoc from './components/Precontractual/Lease/LeaseDoc';
 const get_routes = (): IRoute[] => {
     return [
         {
@@ -98,6 +99,18 @@ const get_routes = (): IRoute[] => {
                 ],
             },
             component: ListContracts,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/document/lease/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Estudio Previo para Arrendamiento' },
+                ],
+            },
+            component: LeaseDoc,
         },
 
 
