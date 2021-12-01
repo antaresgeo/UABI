@@ -109,7 +109,7 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({ physical_
                             </>
                         }
                     >
-                        <InspectionPhysicalForm properties={physical_inspection?.properties} obs={physical_inspection?.observations.observation} />
+                        <InspectionPhysicalForm properties={physical_inspection?.properties} obs={physical_inspection?.observations?.observation} />
                     </Card>
                 </div>
             </div>
