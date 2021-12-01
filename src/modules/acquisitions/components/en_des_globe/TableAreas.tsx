@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { swal_warning } from "../../../../utils";
 import { useDispatch } from "react-redux";
 import { actions } from "../../redux";
+import { startCase } from "lodash";
 
 interface IParams {
     valueArea: string;
@@ -24,14 +25,43 @@ export const TableAreas = () => {
     console.log(data,numberRealEstates,realEstates )
     useEffect(() => {
         if (data && realEstates) {
-            data.map(bienInmueble => {
-                if (bienInmueble.use_area > 0) {
-                    arrayEditRealEsates.push({
-                        newArea: bienInmueble.intact_area,
-                        idRealEstate: bienInmueble.id
+            // data.map(bienInmueble => {
+            //     if (bienInmueble.use_area > 0) {
+            //         arrayEditRealEsates.push({
+            //             new: bienInmueble.intact_area,
+            //             idRealEstate: bienInmueble.id,
+            //             type: bienInmueble.type
+            //         })
+            //     }
+            // })
+            //console.log(arrayEditRealEsates)
+
+            const real_estates_edit = realEstates.map(realEstate => {
+                const editRealEstate = data.filter(r => r.id === realEstate.id)
+                let areaTotal = 0;
+                let areaCons = 0;
+                let arealote = 0;
+                if (editRealEstate !== undefined) {
+                    editRealEstate.map(r => {
+                        areaTotal = areaTotal + r.intact_area
+                        if(r.type === 'constrution'){
+                            areaCons = r.intact_area
+                        }else if(r.type === "lote") {
+                            arealote = r.intact_area
+                        }
                     })
+                    return {
+                         ...realEstate,
+                        total_area: areaTotal,
+                        construction_area: areaCons,
+                        plot_area: arealote
+                    };
+                } else {
+                    return realEstate;
                 }
             })
+            console.log(real_estates_edit)
+
             // data.map(bienInmueble => {
             //     if (bienInmueble.use_area > 0) {
             //         arrayEditRealEsates.push({
@@ -41,15 +71,15 @@ export const TableAreas = () => {
             //     }
             // })
 
-            const real_estates_edit = realEstates.map(realEstate => {
-                const editRealEstate = arrayEditRealEsates.find(r => r.idRealEstate === realEstate.id)
-                if (editRealEstate !== undefined) {
-                    return { ...realEstate, total_area: editRealEstate.newArea };
-                } else {
-                    return realEstate;
-                }
-            })
-            console.log(real_estates_edit)
+            // const real_estates_edit = realEstates.map(realEstate => {
+            //     const editRealEstate = arrayEditRealEsates.find(r => r.idRealEstate === realEstate.id)
+            //     if (editRealEstate !== undefined) {
+            //         return { ...realEstate, total_area: editRealEstate.newArea };
+            //     } else {
+            //         return realEstate;
+            //     }
+            // })
+            //console.log(real_estates_edit)
         }
     }, [])
 

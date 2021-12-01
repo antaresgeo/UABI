@@ -61,7 +61,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         total_area: '',
         total_percentage: '',
         zone: 'Urbano',
-        tipology: '',
+        tipology_id: 0,
         materials: [],
         supports_documents: [
             {
