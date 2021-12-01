@@ -85,7 +85,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         construction_area: '',
         plot_area: '',
         ...realEstate,
-        ...(realEstate
+        ...(realEstate && realEstate?.address?.id
             ? {
                   address: realEstate.address.id,
                   _address: {
@@ -119,9 +119,9 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         initial_values._address.cbml = '';
     }
 
-    // if (!initial_values.project && project) {
-    //     initial_values.project = { id: project.id, name: project.name };
-    // }
+    if (!initial_values.project && project) {
+        initial_values.project = { id: project.id, name: project.name };
+    }
 
     const schema = Yup.object().shape({
         destination_type: Yup.string().required('Campo obligatorio'),
@@ -173,15 +173,15 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         }
     }, [projectId]);
 
-    // if (project && project.id !== 0) {
-    //     initial_values = {
-    //         ...initial_values,
-    //         dependency: project.dependency,
-    //         subdependency: project.subdependency,
-    //         management_center: project.management_center,
-    //         cost_center: project.cost_center,
-    //     };
-    // }
+    if (project && project.id !== 0) {
+        initial_values = {
+            ...initial_values,
+            dependency: project.dependency,
+            subdependency: project.subdependency,
+            management_center: project.management_center,
+            cost_center: project.cost_center,
+        };
+    }
 
     // console.log(initial_values);
 

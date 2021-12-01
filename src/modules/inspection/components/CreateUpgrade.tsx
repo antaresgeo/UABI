@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { FC } from 'react';
 import { Card } from '../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 import UpgradeForm from './UpgradeForm';
-
-const CreateUpgrade = () => {
+import { Owner } from '../custom_types';
+interface CreateUpgradeProps {
+    owner: Owner;
+}
+const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner }) => {
     const history = useHistory();
+    console.log({ owner });
     return (
         <div className="container-fluid">
             <div className="row ">
@@ -14,20 +18,20 @@ const CreateUpgrade = () => {
                         <div className="table_content">
                             <table className="box-table">
                                 <thead>
-                                <tr >
-                                    <th>Nombres y apellido</th>
-                                    <th>Documento de identidad</th>
-                                    <th>Teléfono de contacto</th>
-                                    <th>Correo electrónico</th>
-                                </tr>
+                                    <tr>
+                                        <th>Nombres y apellido</th>
+                                        <th>Documento de identidad</th>
+                                        <th>Teléfono de contacto</th>
+                                        <th>Correo electrónico</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>prueba</td>
-                                    <td>prueba</td>
-                                    <td>prueba</td>
-                                    <td>prueba</td>
-                                </tr>
+                                    <tr>
+                                        <td>prueba</td>
+                                        <td>prueba</td>
+                                        <td>prueba</td>
+                                        <td>prueba</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -40,7 +44,7 @@ const CreateUpgrade = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CreateUpgrade
+export default CreateUpgrade;

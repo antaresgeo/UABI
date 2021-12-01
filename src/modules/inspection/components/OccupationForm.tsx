@@ -10,15 +10,15 @@ interface OccupationFormPros {
 const OccupationForm: FC<OccupationFormPros> = ({ disabled, old }) => {
     const initialValues = {
         old: {
-            current_tenure: '',
-            current_use: '',
+            tenure: '',
+            use: '',
             ownership: '',
             contractual: '',
             ...old,
         },
         now: {
-            current_tenure: '',
-            current_use: '',
+            tenure: '',
+            use: '',
             ownership: '',
             contractual: '',
         },
@@ -36,72 +36,72 @@ const OccupationForm: FC<OccupationFormPros> = ({ disabled, old }) => {
                     <Form>
                         <div className="row">
                             <div className="col-6">
-                                <label htmlFor="current_tenure_id" className="form-label">
+                                <label htmlFor="tenure_id" className="form-label">
                                     Estado de la tenencia
                                 </label>
                                 <Field
                                     as="textarea"
                                     className="form-control"
-                                    id="current_tenure_id"
+                                    id="tenure_id"
                                     placeholder="Estado actual de la tenencia del bien Inmueble"
-                                    name="old.current_tenure"
+                                    name="old.tenure"
                                     disabled
                                     autoComplete="off"
                                     maxLength={250}
                                 />
-                                <ErrorMessage name="old.current_tenure" />
+                                <ErrorMessage name="old.tenure" />
                             </div>
                             <div className="col-6">
-                                <label htmlFor="current_tenure_id" className="form-label">
+                                <label htmlFor="tenure_id" className="form-label">
                                     Estado actual de la tenencia
                                 </label>
                                 <Field
                                     as="textarea"
                                     className="form-control"
-                                    id="current_tenure_id"
+                                    id="tenure_id"
                                     placeholder="Estado actual de la tenencia del bien Inmueble"
-                                    name="now.current_tenure"
+                                    name="now.tenure"
                                     disabled={disabled}
                                     autoComplete="off"
                                     maxLength={250}
                                 />
-                                <ErrorMessage name="now.current_tenure" withCount max={250} />
+                                <ErrorMessage name="now.tenure" withCount max={250} />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-6">
-                                <label htmlFor="current_use_id" className="form-label">
+                                <label htmlFor="use_id" className="form-label">
                                     Estado del uso
                                 </label>
                                 <Field
                                     as="textarea"
                                     className="form-control"
-                                    id="current_use_id"
+                                    id="use_id"
                                     aria-describedby="emailHelp"
                                     placeholder="Estado actual del uso del bien inmueble"
-                                    name="old.current_use"
+                                    name="old.use"
                                     disabled
                                     autoComplete="off"
                                     maxLength={250}
                                 />
-                                <ErrorMessage name="old.current_use" />
+                                <ErrorMessage name="old.use" />
                             </div>
                             <div className="col-6">
-                                <label htmlFor="current_use_id" className="form-label">
+                                <label htmlFor="use_id" className="form-label">
                                     Estado actual del uso
                                 </label>
                                 <Field
                                     as="textarea"
                                     className="form-control"
-                                    id="current_use_id"
+                                    id="use_id"
                                     aria-describedby="emailHelp"
                                     placeholder="Estado actual del uso del bien inmueble"
-                                    name="now.current_use"
+                                    name="now.use"
                                     disabled={disabled}
                                     autoComplete="off"
                                     maxLength={250}
                                 />
-                                <ErrorMessage name="now.current_use" withCount max={250} />
+                                <ErrorMessage name="now.use" withCount max={250} />
                             </div>
                         </div>
                         <div className="row">

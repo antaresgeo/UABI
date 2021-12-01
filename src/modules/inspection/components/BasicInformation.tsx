@@ -40,7 +40,7 @@ const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled }) =
                                     <div className="my-3">{inspection?.phone || '-'}</div>
                                 </div>
                                 <div className="col-2">
-                                    <label htmlFor="">DepartaNo entidad que emite el títulomento</label>
+                                    <label htmlFor="">No entidad que emite el títulomento</label>
                                     <div className="my-3">{inspection?.state || '-'}</div>
                                 </div>
                             </div>

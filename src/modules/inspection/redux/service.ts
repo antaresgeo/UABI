@@ -76,10 +76,12 @@ export const create_inspection = async (data: Inspection) => {
     }
 };
 
-export const get_inspection_by_id = async (id) => {
+export const get_inspection_by_real_estate_id = async (id) => {
     try {
-        const URI = `/inspections/${id}/`;
-        const res: AxiosResponse<InspectionResponse> = await http.get(URI);
+        const URI = `/inspections/`;
+        const res: AxiosResponse<InspectionResponse> = await http.get(URI, {
+            params: { id },
+        });
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -120,7 +122,7 @@ const services = {
     get_all_inspections,
     get_list_inspections,
     create_inspection,
-    get_inspection_by_id,
+    get_inspection_by_real_estate_id,
     update_inspection,
     delete_inspection,
 };
