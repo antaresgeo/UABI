@@ -673,14 +673,14 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         {inventory && (
                             <>
                                 <div className="col-3">
-                                    <label htmlFor="importe_contabilidad_id" className="form-label">
+                                    <label htmlFor="accounting_amount_id" className="form-label">
                                         Importe Contabilidad
                                     </label>
                                     <Field
                                         type="number"
                                         className="form-control"
-                                        id="importe_contabilidad_id"
-                                        name="importe_contabilidad"
+                                        id="accounting_amount_id"
+                                        name="accounting_amount"
                                         disabled
                                     />
                                     <ErrorMessage />
@@ -710,40 +710,40 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                                 <>
                                     <div className="col-3">
-                                        <label htmlFor="contrapartida_id" className="form-label">
+                                        <label htmlFor="counterpart_id" className="form-label">
                                             Contrapartida
                                         </label>
                                         <Field
                                             type="number"
                                             className="form-control"
-                                            id="contrapartida_id"
-                                            name="contrapartida"
+                                            id="counterpart_id"
+                                            name="counterpart"
                                             disabled
                                         />
                                         <ErrorMessage />
                                     </div>
                                     <div className="col-3">
-                                        <label htmlFor="assignments" className="form-label">
+                                        <label htmlFor="assignments_id" className="form-label">
                                             Asignaciones
                                         </label>
                                         <Field
-                                            type="number"
+                                            type="text"
                                             className="form-control"
-                                            id="assignments"
+                                            id="assignments_id"
                                             name="assignments"
                                             disabled={inventoryEdit}
                                         />
                                         <ErrorMessage />
                                     </div>
                                     <div className="col-3">
-                                        <label htmlFor="utilization_value_id" className="form-label">
+                                        <label htmlFor="exploitation_value_id" className="form-label">
                                             Valor Aprovechamiento
                                         </label>
                                         <Field
                                             type="number"
                                             className="form-control"
-                                            id="utilization_value_id"
-                                            name="utilization_value"
+                                            id="exploitation_value_id"
+                                            name="exploitation_value"
                                             disabled={inventoryEdit}
                                         />
                                         <ErrorMessage />
@@ -765,27 +765,27 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     <ErrorMessage />
                                 </div>
                                 <div className="col-3">
-                                    <label htmlFor="canon_value_id" className="form-label">
+                                    <label htmlFor="canyon_value_id" className="form-label">
                                         Valor del Canon
                                     </label>
                                     <Field
                                         type="number"
                                         className="form-control"
-                                        id="canon_value_id"
-                                        name="canon_value"
+                                        id="canyon_value_id"
+                                        name="canyon_value"
                                         disabled={inventoryEdit}
                                     />
                                     <ErrorMessage />
                                 </div>
                                 <div className="col-6">
-                                    <label htmlFor="availability_type" className="form-label">
+                                    <label htmlFor="disposition_type_id" className="form-label">
                                         Tipo Disposición
                                     </label>
                                     <Field
                                         as="select"
                                         className="form-control"
-                                        id="availability_type"
-                                        name="availability_type"
+                                        id="disposition_type_id"
+                                        name="disposition_type"
                                         disabled={inventoryEdit}
                                     >
                                         <option key="availability_type" value="" hidden>
