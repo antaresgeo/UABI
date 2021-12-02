@@ -256,18 +256,18 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="registration_date" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="Prediation_number_id" className="form-label">
+                    <label htmlFor="prediation_number_id" className="form-label">
                         Número Prediación
                     </label>
                     <Field
                         type="text"
-                        id="Prediation_number_id"
-                        name="Prediation_number"
+                        id="prediation_number_id"
+                        name="prediation_number"
                         className="form-control"
                         disabled={false}
 
                     />
-                    <ErrorMessage name="Prediation_number" />
+                    <ErrorMessage name="prediation_number" />
                 </div>
                 <div className="col-3">
                     <label htmlFor="prediation_date_id" className="form-label mt-3 mt-lg-0">

@@ -3,14 +3,12 @@ import { IRoute } from '../../utils/components/app_router/custom_types';
 import { DetailDisposition } from './views/DetailDisposition';
 import { EditDisposition } from './views/EditDisposition';
 import { ListDisposition } from './views/ListDisposition';
-import CreateContract from './views/Contracts/CreateContract';
-import CreatePrecontractual from './views/Pre-contractual/CreatePrecontractual';
-import InspectionCreate from '../inspection/views/inspection/InspectionCreate';
 import CreateDisposition from './views/CreateDisposition';
 import DetailContract from './views/Contracts/DetailContract';
 import EditContract from './views/Contracts/EditContract';
 import { ListContracts } from './views/Contracts/ListContracts';
 import LeaseDoc from './components/Precontractual/Lease/LeaseDoc';
+import PublicUseDoc from './components/Precontractual/PublicUse/PublicUseDoc';
 const get_routes = (): IRoute[] => {
     return [
         {
@@ -111,6 +109,18 @@ const get_routes = (): IRoute[] => {
                 ],
             },
             component: LeaseDoc,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/document/use-public/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Estudio Previo para Uso Público' },
+                ],
+            },
+            component: PublicUseDoc,
         },
 
 
