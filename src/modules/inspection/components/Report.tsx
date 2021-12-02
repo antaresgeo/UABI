@@ -5,8 +5,9 @@ import ErrorMessage from "../../../utils/ui/error_messge";
 
 interface ReportProps {
     disabled?: boolean
+    obs?: string
 }
-const Report: FC<ReportProps> = ({disabled }) => {
+const Report: FC<ReportProps> = ({disabled, obs }) => {
     return (
         <div className="container-fluid">
             <Card
@@ -22,10 +23,10 @@ const Report: FC<ReportProps> = ({disabled }) => {
                             onSubmit={() => {}}
                             initialValues={{
                                 is_special_case: false,
-                                observations: ''
+                                observations: obs || ''
                             }}
                         >
-                            {({ isSubmitting, setFieldValue, values, handleChange }) => {
+                            {() => {
                                 return <Form>
                                     <div className="row">
                                         <div className="col">

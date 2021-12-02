@@ -30,6 +30,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
         set_activeKey(key);
     }
 
+    const obs = inspection?.physical_inspection?.observations?.observation;
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -40,7 +41,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
 
                     <Tabs activeKey={activeKey} className="w-100 h-100" onChange={callback}>
                         <TabPane tab="Información básica BI" key="1">
-                            <BasicInformation inspection={null}/>
+                            <BasicInformation inspection={null} obs={obs}/>
                         </TabPane>
                         <TabPane tab="Ocupación" key="2">
                             <CreateOccupation ocupation={inspection.ocupation} />
@@ -55,7 +56,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
                             <PhotographicRecordForm />
                         </TabPane>
                         <TabPane tab="Generar informe" key="6">
-                            <Report />
+                            <Report obs={obs}/>
                         </TabPane>
                     </Tabs>
                 </div>

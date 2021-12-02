@@ -5,8 +5,6 @@ import { actions, service } from '../../acquisitions/redux/';
 import RealEstateForm from '../../acquisitions/components/RealEstateForm';
 import { IProjectAttributes, IRealEstateAttributes } from '../../../utils/interfaces';
 
-
-
 interface IParams {
     id: string;
 }
@@ -49,25 +47,19 @@ export const InventoryRecordDetail = () => {
     return (
         <RealEstateForm
             type="view"
-            projects={projects}
-            acquisitions={acquisitions}
-            realEstates={project_id ? realEstates : []}
-            realEstate={realEstate}
-            projectId={project_id}
             inventory={true}
             inventoryEdit={true}
-            onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
                 console.log(values);
                 const confirmation = {
                     availability_type: values.availability_type,
                     utilization_value: values.utilization_value,
                     authorization_value: values.authorization_value,
-                    canon_value: values.canon_value
-                }
+                    canon_value: values.canon_value,
+                };
                 //createconfirmation(confirmation);
                 //return Promise.reject();
             }}
         />
-    )
-}
+    );
+};

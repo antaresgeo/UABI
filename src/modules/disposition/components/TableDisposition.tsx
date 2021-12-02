@@ -84,11 +84,11 @@ export const TableDiszposition: FC<DispositionListProps> = ({  filters, init }) 
     ];
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.getRealEstates({ page, pageSize, pagination: 'pagination', ...filters }));
+        dispatch(actions.getRealEstates({ page, pageSize, with: 'pagination', ...filters }));
     };
 
     useEffect(() => {
-        dispatch(actions.getRealEstates({pagination: 'pagination'})); //TODO: mirar filtro de poliza
+        dispatch(actions.getRealEstates({with: 'pagination'})); //TODO: mirar filtro de poliza
 
     }, []);
 
