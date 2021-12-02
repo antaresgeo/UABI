@@ -342,6 +342,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             component={Select}
                                             placeholder={`Tipo`}
                                             options={[
+                                                { id: '', name: ' ---' },
                                                 { id: 'CL', name: 'Calle' },
                                                 { id: 'CR', name: 'Carrera' },
                                                 { id: 'CQ', name: 'Circular' },
@@ -411,6 +412,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             component={Select}
                                             placeholder="Orientación"
                                             options={[
+                                                { id: '', name: ' ---' },
                                                 { id: 'Sur', name: 'Sur' },
                                                 { id: 'Norte', name: 'Norte' },
                                                 { id: 'Este', name: 'Este' },
@@ -480,6 +482,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                             component={Select}
                                             placeholder="Orientación"
                                             options={[
+                                                { id: '', name: ' ---' },
                                                 { id: 'Sur', name: 'Sur' },
                                                 { id: 'Norte', name: 'Norte' },
                                                 { id: 'Este', name: 'Este' },
