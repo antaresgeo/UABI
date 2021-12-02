@@ -21,7 +21,8 @@ const AcquisitionsView: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                     type="create"
                     btn_label="Agregar Adquisición"
                     active_type={formik.values.active_type}
-                    onChange={async (values, f) => {
+                    onChange={async (aux_values, f) => {
+                        const values = {...aux_values, origin: aux_values.origin? parseInt(aux_values.origin): ''}
                         const new_acquisitions = [...formik.values.acquisitions, values];
                         formik.setFieldValue('acquisitions', new_acquisitions, false);
                     }}

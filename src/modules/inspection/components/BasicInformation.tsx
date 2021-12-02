@@ -7,9 +7,10 @@ import {ModalNotificar} from "../../disposition/components/ModalNotificar";
 
 interface BasicInformationProps {
     inspection: any;
+    obs?: string
     disabled?: boolean
 }
-const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled }) => {
+const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs }) => {
     return (
         <div className="container-fluid">
             <div className="col-12">
@@ -75,7 +76,7 @@ const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled }) =
                     enableReinitialize
                     onSubmit={() => {}}
                     initialValues={{
-                        observations: ''
+                        observations: obs || ''
                     }}
                 >
                     {({ isSubmitting, setFieldValue, values, handleChange }) => {

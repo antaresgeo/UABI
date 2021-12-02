@@ -25,19 +25,12 @@ const EnglobeProject = () => {
             dispatch(actions.getRealEstatesByProject(Number(project_id)));
         }
     }, [id]);
-    const registration_number = realEstates.map(realEstate => realEstate.registry_number);
+    const registration_number = realEstates.map((realEstate) => realEstate.registry_number);
     const createRealEstate = async (values, form, isFinish) => {
         try {
             const res: any = await dispatch(actions.createRealEstate(values));
             if (values.acquisitions.length > 0) {
-                await dispatch(
-                    actions.createAcquisitionForRealEstate(
-                        values.acquisitions.map((a) => {
-                            a.real_estate_id = res.id;
-                            return a;
-                        })
-                    )
-                );
+                await dispatch(actions.createAcquisitionForRealEstate(res.id, values.acquisitions));
             }
             if (isFinish) {
                 history.push(`/acquisitions/real-estates/`);

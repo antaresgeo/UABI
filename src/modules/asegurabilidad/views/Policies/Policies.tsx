@@ -101,11 +101,11 @@ const Policies = () => {
     const loading: boolean = useSelector((store: any) => store.insurability.policies.loading);
     const { total_results } = useSelector((store: any) => store.insurability.policies.pagination);
     const change_page = (page, pageSize) => {
-        dispatch(actions.getPolicies({ page, pageSize, pagination: 'pagination' }));
+        dispatch(actions.getPolicies({ page, pageSize, with: 'pagination' }));
     };
 
     useEffect(() => {
-        dispatch(actions.getPolicies({pagination: 'pagination'}));
+        dispatch(actions.getPolicies({with: 'pagination'}));
     }, []);
 
     return (

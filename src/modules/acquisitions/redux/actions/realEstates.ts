@@ -5,7 +5,7 @@ import { AdquisitionsItf } from '../../../../utils/interfaces';
 
 // REAL ESTATES
 export const getRealEstates = (filters: {
-    pagination?: string;
+    with?: string;
     page?: number;
     pageSize?: 10 | 20 | 30;
     q?: {};
@@ -41,12 +41,12 @@ export const updateRealEstate = (data, id) =>
 export const deleteRealEstate = (id) =>
     request_dispatch(types.deleteRealEstate, service.deleteRealEstate(id));
 
-export const createAcquisitionForRealEstate = (
+export const createAcquisitionForRealEstate = (id,
     acquisitions: AdquisitionsItf[]
 ) =>
     request_dispatch(
         types.acquisition_create,
-        service.createAcquisitionForRealEstate(acquisitions)
+        service.createAcquisitionForRealEstate(id, acquisitions)
     );
 
 export const clearRealEstate = () =>

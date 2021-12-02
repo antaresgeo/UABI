@@ -62,7 +62,7 @@ const data = Object.freeze([
     },
 
     {
-        name: 'SECRETARÍA DE GOBIERNO Y GESTION DEL GABINETE',
+        name: 'SECRETARIA DE GOBIERNO Y GESTION DEL GABINETE',
         management_center: '73100000',
         cost_center: '73101000',
         subs: [],

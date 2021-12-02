@@ -1,4 +1,4 @@
-import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
+import {IProjectAttributes, IRealEstateAttributes, ITipologyAttributes} from '../../../../utils/interfaces';
 import { Formik, Form } from 'formik';
 import React, { FC, useEffect, useState } from 'react';
 import GeneralDataForm from './GeneralDataForm';
@@ -7,40 +7,32 @@ import RealEstateList from '../RealEstateList';
 import { Card } from '../../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-import DocumentsModal from '../../../../utils/components/DocumentsModal/Modal';
 import SupportDocumentsForm from './SupportDocumentsForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { service } from '../../redux';
+import { actions, service } from '../../redux';
 
 interface RealEstateFormProps {
-    realEstate?: any;
     onSubmit?: (values, form?, isFinish?: boolean) => Promise<any>;
     disabled?: boolean;
-    projects: IProjectAttributes[];
     type: 'view' | 'edit' | 'create';
-    onProjectSelectedChange?: (value) => void;
-    realEstates?: IRealEstateAttributes[];
-    projectId?: number;
-    acquisitions?: any[];
     inventory?: boolean;
     inventoryEdit?: boolean;
 }
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
-    realEstates,
-    realEstate,
     onSubmit,
     disabled,
-    projects,
     type,
-    onProjectSelectedChange,
-    projectId,
-    acquisitions,
     inventory,
     inventoryEdit,
 }) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const tipologies: ITipologyAttributes[] = useSelector((states: any) => states.acquisitions.tipologies.value);
+    const realEstate: any = useSelector((states: any) => states.acquisitions.realEstate.value);
+    // const realEstates: any[] = useSelector((states: any) => states.acquisitions.realEstates.value);
+    const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
+
     const [project, set_project] = useState(null);
     let initial_values: any = {
         id: '',
@@ -84,7 +76,14 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         cost_center: '',
         construction_area: '',
         plot_area: '',
+        project: {
+            id: 0,
+            name: 'Sin Projecto',
+        },
         ...realEstate,
+        ...(realEstate?.tipology_id? {
+            accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id).accounting_account,
+        }: {}),
         ...(realEstate && realEstate?.address?.id
             ? {
                   address: realEstate.address.id,
@@ -94,8 +93,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                   },
               }
             : {}),
-        acquisitions: acquisitions || [],
-        projects_id: Number.isInteger(projectId) ? projectId : 0,
+        projects_id: realEstate?.project?.id || 0,
     };
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
@@ -117,10 +115,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
 
     if (!initial_values._address.cbml) {
         initial_values._address.cbml = '';
-    }
-
-    if (!initial_values.project && project) {
-        initial_values.project = { id: project.id, name: project.name };
     }
 
     const schema = Yup.object().shape({
@@ -150,13 +144,14 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     const submit = (aux_values, form) => {
         const isFinish = aux_values._type === 'finish';
         const values: any = { ...aux_values };
+        const project_id = values.projects_id
         delete values._type;
-        values.projects_id = [values.projects_id];
+        values.projects_id = [project_id];
         values.materials = values.materials.join(', ');
         onSubmit(values, form, isFinish)
             .then(() => {
                 form.setSubmitting(false);
-                form.setFieldValue('project_id', projectId || '');
+                form.setFieldValue('projects_id', project_id || '');
             })
             .catch(() => {
                 form.setSubmitting(false);
@@ -164,33 +159,16 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     };
 
     useEffect(() => {
-        if (Number.isInteger(projectId)) {
-            service.getProject(projectId + '').then((_project) => {
-                set_project(_project);
-            });
-        } else {
-            set_project(null);
-        }
-    }, [projectId]);
+        dispatch(actions.getProjects());
 
-    if (project && project.id !== 0) {
-        initial_values = {
-            ...initial_values,
-            dependency: project.dependency,
-            subdependency: project.subdependency,
-            management_center: project.management_center,
-            cost_center: project.cost_center,
-        };
-    }
-
-    // console.log(initial_values);
+    }, []);
 
     const _disabled = disabled || type === 'view';
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
             {(formik) => {
-                const { name, registry_number, project_id } = formik.values;
+                const { name, registry_number, projects_id } = formik.values;
                 const TitleSpan = ({ name, registry_number }) => {
                     return (
                         <>
@@ -199,6 +177,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                         </>
                     );
                 };
+
                 return (
                     <Form className="h-100" autoComplete="off">
                         <div className="h-100 d-flex flex-column">
@@ -221,13 +200,43 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             )}
                                             <GeneralDataForm
                                                 type={type}
+                                                tipologies={tipologies}
                                                 disabled={_disabled}
                                                 formik={formik}
                                                 projects={projects}
                                                 project={project}
                                                 inventory={inventory}
                                                 inventoryEdit={inventoryEdit}
-                                                onProjectSelectedChange={onProjectSelectedChange}
+                                                onProjectSelectedChange={(id) => {
+                                                    service.getProject(id + '').then((_project: any) => {
+                                                        formik.setFieldValue('projects_id', _project.id, false);
+                                                        formik.setFieldValue('dependency', _project.dependency, false);
+                                                        formik.setFieldValue(
+                                                            'subdependency',
+                                                            _project.subdependency,
+                                                            false
+                                                        );
+                                                        formik.setFieldValue(
+                                                            'management_center',
+                                                            _project.management_center,
+                                                            false
+                                                        );
+                                                        formik.setFieldValue(
+                                                            'cost_center',
+                                                            _project.cost_center,
+                                                            false
+                                                        );
+                                                        formik.setFieldValue(
+                                                            'project',
+                                                            {
+                                                                id: _project.id,
+                                                                name: _project.name,
+                                                            },
+                                                            false
+                                                        );
+                                                        set_project(_project);
+                                                    });
+                                                }}
                                                 acquisitions={formik.values.acquisitions}
                                             />
                                             <AdquisitionView
@@ -245,12 +254,12 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                         </>
                                                     }
                                                 >
-                                                    <RealEstateList project_id={project_id} init={false} />
+                                                    <RealEstateList project_id={projects_id} init={false} />
                                                 </Card>
                                             )}
                                             {type === 'create' && (
                                                 <Card title="Inmuebles del Proyecto">
-                                                    <RealEstateList project_id={project_id} init={false} />
+                                                    <RealEstateList project_id={projects_id} init={false} />
                                                 </Card>
                                             )}
                                         </div>

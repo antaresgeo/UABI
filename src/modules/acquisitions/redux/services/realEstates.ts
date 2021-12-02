@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { getAddressById, insertAddress } from '.';
 import { http, documents_http } from '../../../../config/axios_instances';
-import { formatDate, swal } from '../../../../utils';
+import { clearObjectNulls, formatDate, swal } from '../../../../utils';
 
 import {
     AdquisitionsItf,
@@ -16,12 +16,14 @@ import {
 } from '../../views/RealEstate/realEstate.utils';
 import { get_documents_by_ids } from '../../../../utils/components/DocumentsModal/services';
 import { log } from 'util';
+import { doc } from 'prettier';
+import moment from 'moment';
 
 // REAL ESTATES
 // Services: GET
 const getRealEstates = async (filters?) => {
     try {
-        console.log('filtros',filters);
+        console.log('filtros', filters);
         let URI = `/real-estates/list/`;
         let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
             await http.get(URI, {
@@ -60,14 +62,14 @@ export const getRealEstate = async (
 ): Promise<IRealEstateAttributes | string> => {
     try {
         let URI = `/real-estates`;
-        let res: AxiosResponse<IRealEstateResponse> = await http.get(URI, {
+        let res: AxiosResponse<any> = await http.get(URI, {
             params: { id },
         });
-
-        res.data.results.supports_documents = await get_docucments_whit_service(
-            res.data.results.supports_documents
-        );
-
+        res.data.results.active_type = res.data.results.active_type.split(', ');
+        res.data.results.acquisitions = await getAcquisitionForRealEstate(id);
+        // res.data.results.supports_documents = await get_docucments_whit_service(
+        //     res.data.results.supports_documents
+        // );
         return res.data.results;
     } catch (error) {
         console.error(error);
@@ -88,8 +90,8 @@ const get_docucments_whit_service = async (docs) => {
                     doc.type === 3
                         ? 'Documento de Matricula'
                         : doc.type === 4
-                            ? 'Documento de Titulo'
-                            : 'Anexo',
+                        ? 'Documento de Titulo'
+                        : 'Anexo',
             }));
         }
         return [];
@@ -97,12 +99,18 @@ const get_docucments_whit_service = async (docs) => {
         return Promise.reject('Error');
     }
 };
-const finalData = (aux_data) => {
+const finalData = (data, docs_ids?) => {
+    const aux_data = {
+        ...data,
+        ...(Array.isArray(data.active_type)
+            ? { active_type: data.active_type.join(', ') }
+            : {}),
+        supports_documents: docs_ids || '',
+    };
     delete aux_data.id;
     delete aux_data.status;
     delete aux_data.status_name;
     delete aux_data.last_consecutive;
-
     delete aux_data.acquisitions;
     delete aux_data.audit_trail;
     delete aux_data.registry_number_document_id;
@@ -112,15 +120,16 @@ const finalData = (aux_data) => {
     delete aux_data.active_code;
     delete aux_data.fixed_assets;
     delete aux_data._address;
-
-
+    delete aux_data.dependency_id;
+    delete aux_data.project;
     if (aux_data.project?.id !== 0) {
         delete aux_data.dependency;
         delete aux_data.subdependency;
         delete aux_data.cost_center;
         delete aux_data.management_center;
     }
-}
+    return aux_data;
+};
 // Services: POST
 export const createRealEstate = async (
     data: any
@@ -128,20 +137,12 @@ export const createRealEstate = async (
     try {
         let URI = `/real-estates`;
         // const docs: any = await compute_docs(data.supports_documents);
-        // const docs_ids = await upload_documents(docs);
-
-        const aux_data = {
-            ...data,
-            active_type: data.active_type.join(", "),
-            supports_documents: '',
-        };
-        finalData(aux_data)
-
+        const docs_ids = null; // await upload_documents(docs);
+        const aux_data = finalData(data, docs_ids);
         let res: AxiosResponse<IRealEstateResponse> = await http.post(
             URI,
             aux_data
         );
-
         return res.data.results;
     } catch (error) {
         console.error(error);
@@ -152,10 +153,9 @@ export const createRealEstate = async (
 //TODO: Crear realEstates englobe - desenglobe
 export const createRealEstates = async (data: any): Promise<any | []> => {
     try {
-        console.log('bienes inmuebles a crear', data)
+        console.log('bienes inmuebles a crear', data);
         let URI = `/real-estates`;
         //servicio
-
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');
@@ -164,10 +164,9 @@ export const createRealEstates = async (data: any): Promise<any | []> => {
 
 export const updateRealEstates = async (data: any) => {
     try {
-        console.log('bienes inmuebles a actualizar', data)
+        console.log('bienes inmuebles a actualizar', data);
         let URI = `/real-estates`;
         //servicio
-
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');
@@ -179,12 +178,12 @@ export const updateRealEstate = async (data: any, id: number) => {
     try {
         let URI = `/real-estates`;
         // const docs: any = await compute_docs(data.supports_documents);
-        // const docs_ids = await upload_documents(docs);
-        const aux_data = { ...data };
-        finalData(aux_data);
+        const docs_ids = null; // await upload_documents(docs);
+        const body = finalData(data, docs_ids);
+
         let res: AxiosResponse<IRealEstateResponse> = await http.put(
             URI,
-            aux_data,
+            body,
             {
                 params: { id: id },
             }
@@ -203,7 +202,7 @@ export const updateRealEstate = async (data: any, id: number) => {
         );
         return res.data.results;
     } catch (error) {
-        console.log('error', { ...error });
+        console.error('error', { ...error });
         return Promise.reject('Error');
     }
 };
@@ -280,21 +279,30 @@ const deleteRealEstate = async (id) => {
 };
 
 const createAcquisitionForRealEstate = async (
+    id,
     acquisitions: AdquisitionsItf[]
 ) => {
     try {
+        const body = {
+            data: acquisitions
+                .map((a: any) => {
+                    a.real_estate_id = parseInt(id);
+                    a.acquisition_date = new Date(
+                        moment(a.acquisition_date).format('YYYY/MM/DD')
+                    ).getTime();
+                    delete a.audit_trail;
+                    delete a.status;
+                    delete a.title_type_document_id;
+                    return clearObjectNulls(a);
+                })
+                .filter((a: any) => !a.hasOwnProperty('id')),
+        };
         let URI = '/real-estates/adquisitions/';
-        let res: AxiosResponse = await http.post(
-            URI,
-            {
-                data: acquisitions.filter((a: any) => !a.hasOwnProperty('id')),
+        let res: AxiosResponse = await http.post(URI, body, {
+            params: {
+                action: 'many',
             },
-            {
-                params: {
-                    action: 'many',
-                },
-            }
-        );
+        });
         return res.data.results;
     } catch (e) {
         return Promise.reject('Error in  create acquisition for real estate');
@@ -309,7 +317,13 @@ const getAcquisitionForRealEstate = async (real_estate_id) => {
                 real_estate_id,
             },
         });
-        return res.data.results;
+        return res.data.results.map((r) => {
+            r.acquisition_date = moment(parseInt(r.acquisition_date)).format(
+                'YYYY-MM-DD'
+            );
+            console.log(r);
+            return r;
+        });
     } catch (e) {
         return Promise.reject('Error in get acquisition for real estate');
     }
@@ -319,12 +333,11 @@ const getTipologies = async () => {
     try {
         let URI = '/tipologies';
         let res: AxiosResponse<ITipologiesResponse> = await http.get(URI);
-        return res.data.results
-
+        return res.data.results;
     } catch (error) {
         return Promise.reject('Error in get tipologies');
     }
-}
+};
 
 const services = {
     getRealEstates,

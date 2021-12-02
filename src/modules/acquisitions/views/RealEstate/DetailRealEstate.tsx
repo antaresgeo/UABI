@@ -20,15 +20,8 @@ const DetailRealEstate = () => {
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
 
     useEffect(() => {
-        dispatch(actions.getProjects());
         if (id) {
             const promise: any = dispatch(actions.getRealEstate(id));
-            promise.then((res) => {
-                select_project(res.project.id);
-                service.getAcquisitionForRealEstate(id).then((res2) => {
-                    set_acquisitions(res2);
-                });
-            });
         }
     }, []);
 
@@ -48,14 +41,8 @@ const DetailRealEstate = () => {
     return (
         <RealEstateForm
             type="view"
-            projects={projects}
-            acquisitions={acquisitions}
-            realEstates={project_id ? realEstates : []}
-            realEstate={realEstate}
-            projectId={project_id}
             inventoryEdit={true}
             inventory={false}
-            onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
                 return Promise.reject();
             }}

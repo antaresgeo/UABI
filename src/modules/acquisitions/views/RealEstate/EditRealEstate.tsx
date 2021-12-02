@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
-import {actions, service} from '../../redux';
+import { actions, service } from '../../redux';
 import RealEstateForm from '../../components/RealEstateForm';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from "moment";
-import {clearObjectNulls} from "../../../../utils";
+import moment from 'moment';
+import { clearObjectNulls } from '../../../../utils';
 
 interface IProps {
     id: string;
@@ -16,70 +16,29 @@ const DetailProjects = () => {
     const history: any = useHistory();
     const dispatch = useDispatch();
 
-    const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
-    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
-    const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
-    const [acquisitions, set_acquisitions] = useState([]);
-    const [project_id, set_project_id] = useState(realEstate?.project?.id || 0);
-
     useEffect(() => {
-        dispatch(actions.getProjects());
         if (id) {
-            const promise: any = dispatch(actions.getRealEstate(id));
-            promise.then((res) => {
-                select_project(res.project.id);
-                service.getAcquisitionForRealEstate(id).then((res2) => {
-                    set_acquisitions(res2);
-                });
-            });
+            dispatch(actions.getRealEstate(id));
         }
-    }, []);
-
-    useEffect(() => {
-        if (project_id) {
-            dispatch(actions.getRealEstatesByProject(project_id));
-        }
-    }, [project_id]);
-
-    const select_project = (value) => {
-        if (project_id !== value) {
-            set_project_id(value);
-            if (Number.isInteger(value)) dispatch(actions.getRealEstatesByProject(value));
-        }
-    };
+    }, [id]);
 
     return (
         <RealEstateForm
             type="edit"
             inventoryEdit={true}
             inventory={false}
-            projects={projects}
-            realEstates={realEstates}
-            realEstate={realEstate}
-            acquisitions={acquisitions}
-            projectId={project_id}
-            onProjectSelectedChange={select_project}
             onSubmit={async (values, form, isFinish) => {
                 const { acquisitions } = values;
                 try {
-                    console.log(values);
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));
-                    console.log('ok3', isFinish);
                     if (acquisitions.length > 0) {
-                        await dispatch(
-                            actions.createAcquisitionForRealEstate(
-                                acquisitions.map((a) => {
-                                    a.real_estate_id = res.id;
-                                    a.acquisition_date = new Date(moment(a.acquisition_date).format('YYYY/MM/DD')).getTime();
-                                    return clearObjectNulls(a);
-                                })
-                            )
-                        );
+
+                        await dispatch(actions.createAcquisitionForRealEstate(res.id, acquisitions));
                     }
                     if (isFinish) {
                         history.push('/acquisitions/real-estates/');
                     } else {
-                        if (res.project_id) return dispatch(actions.getRealEstatesByProject(res.project_id));
+                        if (res.project.id) return dispatch(actions.getRealEstatesByProject(res.project.id));
                     }
                 } catch (e) {
                     return Promise.reject();
