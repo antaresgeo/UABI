@@ -284,7 +284,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 onChange={(e) => {
                                                     e.preventDefault();
                                                     const { value } = e.target;
-                                                    const regex = /^[+]?\d{0,3}$/;
+                                                    const regex = /^[+]?\d{0,4}$/;
                                                     if (regex.test(value.toString())) {
                                                         handleChange(e);
                                                     }
