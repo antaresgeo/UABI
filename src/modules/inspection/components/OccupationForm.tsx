@@ -6,8 +6,10 @@ interface OccupationFormPros {
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
     old?: any;
+    innerRef: any;
+    onSubmit: (values) => void;
 }
-const OccupationForm: FC<OccupationFormPros> = ({ disabled, old }) => {
+const OccupationForm: FC<OccupationFormPros> = ({ disabled, old, innerRef, onSubmit }) => {
     const initialValues = {
         old: {
             tenure: '',
@@ -24,13 +26,11 @@ const OccupationForm: FC<OccupationFormPros> = ({ disabled, old }) => {
         },
     };
     const submit = (values, actions) => {
-        // onSubmit(values, actions).then(() => {
-        //     actions.setSubmitting(false);
-        //     actions.resetForm();
-        // });
+        onSubmit(values.now)
+        actions.setSubmitting(false);
     };
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues}>
+        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} innerRef={innerRef}>
             {({ isSubmitting, setFieldValue, values, handleChange }) => {
                 return (
                     <Form>

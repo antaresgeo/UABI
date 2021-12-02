@@ -36,21 +36,21 @@ const ListInspection = ({ inspections, change_page, total_results, loading }) =>
             title: 'Acciones',
             fixed: true,
             children: [
-                {
-                    title: 'Ver',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
+                // {
+                //     title: 'Ver',
+                //     dataIndex: 'id',
+                //     align: 'center' as 'center',
+                //     render: (id) => {
+                //         return (
+                //             <Link
+                //                 to={`/`}
+                //                 name=""
+                //                 avatar={false}
+                //                 icon={<i className="fa fa-eye" aria-hidden="true" />}
+                //             />
+                //         );
+                //     },
+                // },
                 {
                     title: 'Crear',
                     dataIndex: 'id',
