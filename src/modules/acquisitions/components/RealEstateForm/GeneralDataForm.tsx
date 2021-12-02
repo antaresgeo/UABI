@@ -14,11 +14,13 @@ interface GeneralDataFormProps {
     inventory?: boolean;
     inventoryEdit?: boolean;
     acquisitions?: AdquisitionsItf[];
+    tipologies?: any[];
 }
 
 const GeneralDataForm: FC<GeneralDataFormProps> = ({
     type,
     disabled,
+    tipologies,
     formik,
     project,
     projects,
@@ -28,9 +30,6 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
     acquisitions,
 }) => {
     //console.log(acquisitions)
-
-
-
 
     return (
         <Card
@@ -47,6 +46,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
         >
             <DataRealEstateForm
                 type={type}
+                tipologies={tipologies}
                 disabled={disabled}
                 formik={formik}
                 projects={projects}

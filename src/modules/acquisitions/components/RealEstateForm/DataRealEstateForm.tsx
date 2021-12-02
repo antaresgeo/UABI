@@ -25,11 +25,13 @@ interface DataRealEstateFormProps {
     englobe?: boolean;
     inventoryEdit?: boolean;
     acquisitions?: any[];
+    tipologies?: any[];
 }
 
 export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     type,
     disabled,
+    tipologies,
     formik,
     projects,
     project,
@@ -37,9 +39,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     englobe,
     inventoryEdit,
     onProjectSelectedChange,
-    acquisitions,
 }) => {
-    const tipologies: ITipologyAttributes[] = useSelector((states: any) => states.acquisitions.tipologies.value);
     const valorPatrimonial = formik.values.patrimonial_value;
     const dispatch = useDispatch();
     useEffect(() => {
@@ -126,8 +126,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                         }}
                         extra_on_change={(id) => {
-                            const bill = tipologies.filter((tipology) => tipology.id === id);
-                            formik.setFieldValue('accounting_account', bill[0].accounting_account, false);
+                            const bill = tipologies.find((tipology) => tipology.id === id);
+                            formik.setFieldValue('accounting_account', bill.accounting_account, false);
                         }}
                     />
                     <ErrorMessage name="tipology_id" />
@@ -232,14 +232,13 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         name="name"
                         id="name_id"
                         type="text"
-                        className="form-control w-75"
-
+                        className="form-control"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <Popover content={<div>Lorem impsu texto descriptivo</div>} trigger="hover">
-                        <InfoCircleOutlined />
-                    </Popover>
+                    {/*<Popover content={<div>Lorem impsu texto descriptivo</div>} trigger="hover">*/}
+                    {/*    <InfoCircleOutlined />*/}
+                    {/*</Popover>*/}
                     <ErrorMessage name="name" withCount max={200} />
                 </div>
                 <div className="form-group col-3">

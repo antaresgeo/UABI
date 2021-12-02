@@ -47,7 +47,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
 
     const schema = Yup.object().shape({
         user: Yup.object().shape({
-            id_number: Yup.number().required('Campo obligatorio').max(20, 'maximo 20 caracteres'),
+            id_number: Yup.number().required('Campo obligatorio'),
             password: Yup.string()
                 .matches(/(?=.*[0-9])/, 'debe contener almenos 1 numero')
                 .matches(/(?=.*[@$!%*?&,.#])/, 'debe contener almenos 1 caracter special')
@@ -63,7 +63,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
             surnames: Yup.object().shape({
                 firstSurname: Yup.string().required('Campo obligatorio'),
             }),
-            email: Yup.string().required('Campo obligatorio'),
+            email: Yup.string().email('email invalido').required('Campo obligatorio'),
             cellphone_number: Yup.number().required('Campo obligatorio'),
             phone_number: Yup.number().required('Campo obligatorio'),
             gender: Yup.string().required('Campo obligatorio'),
@@ -71,9 +71,11 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
     });
 
     const submit = (values, actions) => {
-        onSubmit(values, actions).then(() => {
-            actions.setSubmitting(false);
-        });
+        onSubmit(values, actions)
+            .then(() => {
+                actions.setSubmitting(false);
+            })
+            .catch(() => actions.setSubmitting(false));
 
         //type === 'create' && history.push(`/users/permits/${initial_values.id}/`);
     };
@@ -96,7 +98,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
     const dependency_ops = format_list(dependencias);
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
-            {({ values, isValid, isSubmitting, setFieldValue }) => {
+            {({ values, isValid, isSubmitting, setFieldValue, handleChange }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -298,8 +300,16 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     name="user.id_number"
                                     autoComplete="off"
                                     disabled={disabled}
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        const { value } = e.target;
+                                        const regex = /^[+]?\d{0,20}$/;
+                                        if (regex.test(value.toString())) {
+                                            handleChange(e);
+                                        }
+                                    }}
                                 />
-                                <ErrorMessage name="detailsUser.id_number" max={20} />
+                                <ErrorMessage name="user.id_number" withCount max={20} />
                             </div>
                             <div className={`col-${type === 'create' ? 3 : 6}`}>
                                 <label htmlFor="username" className="form-label">

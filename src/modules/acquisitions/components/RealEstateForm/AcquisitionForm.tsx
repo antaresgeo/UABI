@@ -26,8 +26,6 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
 }) => {
     const initial_values = {
         acquisition_type: '',
-        construction_area: '',
-        plot_area: '',
         area: '',
         title_type: '',
         act_number: '',
@@ -118,9 +116,9 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                                 </label>
                                 <Field as="select" className="form-select" aria-label="origin" id="origin_id" name="origin">
                                     <option value="">-- Seleccione Procedencia --</option>
-                                    <option value="Alexander">Alexander</option>
-                                    <option value="Sergio">Sergio</option>
-                                    <option value="Ximena">Ximena</option>
+                                    <option value={1}>Alexander</option>
+                                    <option value={2}>Sergio</option>
+                                    <option value={3}>Ximena</option>
                                 </Field>
                                 <ErrorMessage name="origin" />
                             </div>

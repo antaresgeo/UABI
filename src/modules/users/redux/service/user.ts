@@ -64,10 +64,11 @@ export interface DetailsUser {
 
 export const get_all_users = async (filters?) => {
     try {
-        console.log('filtros',filters);
-        const URI = '/users/';
+        console.log('filtros', filters);
+        const URI = '/users/list/';
         const res: AxiosResponse<AllUsersResponse> = await auth_http.get(URI, {
             params: {
+                with: 'pagination',
                 ...filters,
             },
         });
@@ -112,11 +113,14 @@ export const create_user = async (data) => {
     }
 };
 
-export const get_user_by_id = async (id) => {
+export const get_user_by_id = async (id?, token?) => {
     try {
         const URI = `/users/`;
         const res: AxiosResponse<UserResponse> = await auth_http.get(URI, {
-            params: { id },
+            params: { ...(id ? { id } : {}) },
+            headers: {
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
         });
         return res.data.results;
     } catch (e) {
@@ -159,7 +163,6 @@ export const update_user = async (id, data) => {
 };
 
 export const assignRolesAndPermits = async (id, data) => {
-
     try {
         if (data.permits && data.roles_to_assign) {
             const r1 = await auth_http.post(

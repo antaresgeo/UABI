@@ -13,7 +13,7 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({ physical_
     const history = useHistory();
 
     const inicial_values = {
-        public_services: physical_inspection.public_services || [
+        public_services: physical_inspection?.public_services || [
             { name: 'Energia', subscriber: '', accountant: '', status: '' },
             { name: 'Gas', subscriber: '', accountant: '', status: '' },
             { name: 'Agua', subscriber: '', accountant: '', status: '' },
@@ -109,7 +109,7 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({ physical_
                             </>
                         }
                     >
-                        <InspectionPhysicalForm properties={physical_inspection.properties} obs={physical_inspection.observations.observation} />
+                        <InspectionPhysicalForm properties={physical_inspection?.properties} obs={physical_inspection?.observations?.observation} />
                     </Card>
                 </div>
             </div>
