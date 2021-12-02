@@ -3,7 +3,9 @@ import imgbs64 from '../../../../../utils/assets/img/header.png';
 import '../../../../../utils/assets/styles/lease.css';
 import { Card } from '../../../../../utils/ui';
 import { useHistory, useLocation } from 'react-router-dom';
-
+import { inWords, NumeroALetras } from './../../convertNumber';
+import writtenNumber from 'written-number'
+import moment from 'moment';
 interface IParams {
     values: any;
     realEstate: any;
@@ -18,113 +20,102 @@ const LeaseDoc = () => {
         <div className="h-100 d-flex flex-column">
             <div className="container-fluid">
                 <Card className="" style={{ width: '850px', margin: '0 auto' }}>
-                    <div id="page_1">
+                    <div id="page_1_lease">
                         <div id="p1dimg1">
 
                             <img src={imgbs64} alt="" id="p1img1" />
                         </div>
 
-                        <div className="dclr"></div>
+                        <div className="dclr_lease"></div>
                         <div id="id1_1">
                             <div id="id1_1_1">
-                                <p className="p0 ft0">Cód. <span>FO-ADMI-137</span></p>
-                                <p className="p1 ft0">Versión. 1</p>
+                                <p className="p0_lease ft0_lease">Cód. <span>FO-ADMI-137</span></p>
+                                <p className="p1_lease ft0_lease">Versión. 1</p>
                             </div>
                             <div id="id1_1_2">
-                                <p className="p2 ft1">Formato</p>
-                                <p className="p0 ft2">
+                                <p className="p2_lease ft1_lease">Formato</p>
+                                <p className="p0_lease ft2_lease">
                                     <span>FO-ADMI</span> Estudio Previo para arrendamiento de Bien
                                 </p>
-                                <p className="p3 ft2">Inmueble</p>
+                                <p className="p3_lease ft2_lease">Inmueble</p>
                             </div>
                         </div>
                         <div id="id1_2">
-                            <p className="p4 ft0">
-                                <span className="ft3">1.</span
-                                ><span className="ft4">Identificación del Ingreso: </span>el valor del
+                            <p className="p4_lease ft0_lease">
+                                <span className="ft3_lease">1.</span
+                                ><span className="ft4_lease">Identificación del Ingreso: </span>el valor del
                                 presente contrato ingresará a la posición presupuestal correspondiente
                                 a arrendamientos dentro del presupuesto de rentas no tributarias de
                                 la(s) vigencia(s) fiscal(es) que abarque la duración del contrato.
                             </p>
-                            <p className="p5 ft3">
-                                <span className="ft3">2.</span
-                                ><span className="ft5">Estimación del valor del contrato:</span>
+                            <p className="p5_lease ft3_lease">
+                                <span className="ft3_lease">2.</span
+                                ><span className="ft5_lease">Estimación del valor del contrato:</span>
                             </p>
-                            <table cellPadding="0" cellSpacing="0" className="t0">
+                            <table cellPadding="0" cellSpacing="0" className="t0_lease">
                                 <tr>
-                                    <td className="tr0 td0"><p className="p6 ft6">Vr.</p></td>
-                                    <td className="tr0 td1"><p className="p7 ft6">Canon</p></td>
-                                    <td rowSpan={2} className="tr1 td2"><p className="p8 ft6">IVA (19%)</p></td>
-                                    <td className="tr0 td3"><p className="p6 ft6">Vr.</p></td>
-                                    <td className="tr0 td4"><p className="p7 ft6">Aforo</p></td>
-                                    <td rowSpan={2} className="tr1 td5"><p className="p8 ft6">Vr. Admón</p></td>
-                                    <td className="tr0 td6"><p className="p8 ft6">Total</p></td>
-                                    <td className="tr0 td7"><p className="p7 ft6">Vr.</p></td>
-                                    <td className="tr0 td8"><p className="p6 ft6">Tiempo</p></td>
-                                    <td className="tr0 td9"><p className="p7 ft6">en</p></td>
-                                    <td className="tr0 td10"><p className="p8 ft6">Vr.</p></td>
-                                    <td className="tr0 td11"><p className="p7 ft6">total</p></td>
-                                    <td className="tr0 td12"><p className="p7 ft6">del</p></td>
+                                    <td className="tr0_lease td0_lease"><p className="p6_lease ft6_lease">Vr.</p></td>
+                                    <td className="tr0_lease td1_lease"><p className="p7_lease ft6_lease">Canon</p></td>
+                                    <td rowSpan={2} className="tr1_lease td2_lease"><p className="p8_lease ft6_lease">IVA (19%)</p></td>
+                                    <td className="tr0_lease td3_lease"><p className="p6_lease ft6_lease">Vr.</p></td>
+                                    <td className="tr0_lease td4_lease"><p className="p7_lease ft6_lease">{values.public_service}</p></td>
+                                    <td rowSpan={2} className="tr1_lease td5_lease"><p className="p8_lease ft6_lease">Vr. Admón</p></td>
+                                    <td className="tr0_lease td6_lease"><p className="p8_lease ft6_lease">Total</p></td>
+                                    <td className="tr0_lease td7_lease"><p className="p7_lease ft6_lease">Vr.</p></td>
+                                    <td className="tr0_lease td8_lease"><p className="p6_lease ft6_lease">Tiempo</p></td>
+                                    <td className="tr0_lease td9_lease"><p className="p7_lease ft6_lease">en</p></td>
+                                    <td className="tr0_lease td10_lease"><p className="p8_lease ft6_lease">Vr.</p></td>
+                                    <td className="tr0_lease td11_lease"><p className="p7_lease ft6_lease">total</p></td>
+                                    <td className="tr0_lease td12_lease"><p className="p7_lease ft6_lease">del</p></td>
                                 </tr>
                                 <tr>
-                                    <td rowSpan={2} className="tr2 td13"><p className="p6 ft7">mensual</p></td>
-                                    <td className="tr3 td14"><p className="p7 ft8">&nbsp;</p></td>
-                                    <td colSpan={2} rowSpan={2} className="tr2 td15">
-                                        <p className="p6 ft6">Serv. Pub.</p>
+                                    <td rowSpan={2} className="tr2_lease td13_lease"><p className="p6_lease ft7_lease">mensual</p></td>
+                                    <td className="tr3_lease td14_lease"><p className="p7_lease ft8_lease">&nbsp;</p></td>
+                                    <td colSpan={2} rowSpan={2} className="tr2_lease td15_lease">
+                                        <p className="p6_lease ft6_lease">Serv. Pub.</p>
                                     </td>
-                                    <td rowSpan={2} className="tr2 td16"><p className="p8 ft6">Mensual</p></td>
-                                    <td className="tr3 td17"><p className="p7 ft8">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr2 td18"><p className="p6 ft6">meses</p></td>
-                                    <td className="tr3 td19"><p className="p7 ft8">&nbsp;</p></td>
-                                    <td colSpan={2} rowSpan={2} className="tr2 td20">
-                                        <p className="p8 ft6">contrato</p>
+                                    <td rowSpan={2} className="tr2_lease td16_lease"><p className="p8_lease ft6_lease">Mensual</p></td>
+                                    <td className="tr3_lease td17_lease"><p className="p7_lease ft8_lease">&nbsp;</p></td>
+                                    <td rowSpan={2} className="tr2_lease td18_lease"><p className="p6_lease ft6_lease">meses</p></td>
+                                    <td className="tr3_lease td19_lease"><p className="p7_lease ft8_lease">&nbsp;</p></td>
+                                    <td colSpan={2} rowSpan={2} className="tr2_lease td20_lease">
+                                        <p className="p8_lease ft6_lease">contrato</p>
                                     </td>
-                                    <td className="tr3 td21"><p className="p7 ft8">&nbsp;</p></td>
+                                    <td className="tr3_lease td21_lease"><p className="p7_lease ft8_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr4 td22"><p className="p7 ft9">&nbsp;</p></td>
-                                    <td className="tr4 td23"><p className="p7 ft9">&nbsp;</p></td>
-                                    <td className="tr4 td24"><p className="p7 ft9">&nbsp;</p></td>
-                                    <td className="tr4 td25"><p className="p7 ft9">&nbsp;</p></td>
-                                    <td className="tr4 td26"><p className="p7 ft9">&nbsp;</p></td>
-                                    <td className="tr4 td27"><p className="p7 ft9">&nbsp;</p></td>
+                                    <td className="tr4_lease td22_lease"><p className="p7_lease ft9_lease">&nbsp;</p></td>
+                                    <td className="tr4_lease td23_lease"><p className="p7_lease ft9_lease">&nbsp;</p></td>
+                                    <td className="tr4_lease td24_lease"><p className="p7_lease ft9_lease">&nbsp;</p></td>
+                                    <td className="tr4_lease td25_lease"><p className="p7_lease ft9_lease">&nbsp;</p></td>
+                                    <td className="tr4_lease td26_lease"><p className="p7_lease ft9_lease">&nbsp;</p></td>
+                                    <td className="tr4_lease td27_lease"><p className="p7_lease ft9_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr5 td13"><p className="p6 ft10">$ {realEstate.canyon_value}</p></td>
-                                    <td className="tr5 td22"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr5 td23"><p className="p8 ft10">$ {values.IVA}</p></td>
-                                    <td colSpan={2} className="tr5 td15"><p className="p6 ft10">$xxxxx</p></td>
-                                    <td className="tr5 td24"><p className="p8 ft10">$ {values.administration_value}</p></td>
-                                    <td className="tr5 td16"><p className="p8 ft10">$ {values.subtotal}</p></td>
-                                    <td className="tr5 td25"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr5 td18"><p className="p6 ft10">{ values.contract_period}</p></td>
-                                    <td className="tr5 td26"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr5 td20">
-                                        <p className="p8 ft10">$ {values.total}</p>
+                                    <td className="tr5_lease td13_lease"><p className="p6_lease ft10_lease">$ {realEstate?.canyon_value}</p></td>
+                                    <td className="tr5_lease td22_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr5_lease td23_lease"><p className="p8_lease ft10_lease">$ {values.IVA}</p></td>
+                                    <td colSpan={2} className="tr5_lease td15_lease"><p className="p6_lease ft10_lease">$xxxxx</p></td>
+                                    <td className="tr5_lease td24_lease"><p className="p8_lease ft10_lease">$ {values.administration_value}</p></td>
+                                    <td className="tr5_lease td16_lease"><p className="p8_lease ft10_lease">$ {values.subtotal}</p></td>
+                                    <td className="tr5_lease td25_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr5_lease td18_lease"><p className="p6_lease ft10_lease">{values.contract_period}</p></td>
+                                    <td className="tr5_lease td26_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr5_lease td20_lease">
+                                        <p className="p8_lease ft10_lease">$ {values.total}</p>
                                     </td>
-                                    <td className="tr5 td27"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td className="tr5_lease td27_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                             </table>
-                            <p className="p9 ft0">
+                            <p className="my-3 p11_lease ft0_lease">
                                 El canon de arrendamiento como valor de este contrato, corresponderá a
-                                la suma de <span className="ft3">(Digite el valor</span>
-                            </p>
-                            <p className="p10 ft3">
-                                en letras del canon mensual) Pesos M/L ($ digite el valor en números
-                                del canon mensual)
-                            </p>
-                            <p className="p10 ft0">
+                                la suma de <span className="ft3_lease">{writtenNumber(125000000000000, { lang: 'es' })} Pesos M/L {realEstate?.canyon_value}</span>
                                 pesos mensuales, más el IVA del 19%, más los costos de aforo y
                                 administración cuando apliquen,
-                            </p>
-                            <p className="p11 ft13">
-                                <span className="ft12">para un total mensual de </span>(digite en letras
+                                para un total mensual de <span className="ft3_lease">(digite en letras
                                 el valor del canon más el IVA, más Vr. Aforo, más Vr. Administración)
                                 PESOS M/L ($ Digite en números el valor en letras que acabó de
-                                digitar). <span className="ft12">Este</span>
-                            </p>
-                            <p className="p4 ft0">
-                                canon de arrendamiento deberá ser cancelado por el arrendatario hasta
+                                digitar)</span>. Este canon de arrendamiento deberá ser cancelado por el arrendatario hasta
                                 completar un año de ejecución del contrato, en los sitios y por los
                                 canales indicados en la factura de cobro que le enviará EL ARRENDADOR,
                                 física o electrónicamente; en caso de no recibirse la factura en las
@@ -132,14 +123,14 @@ const LeaseDoc = () => {
                                 la factura de cobro en las oficina de la Unidad Administración de
                                 Bienes Inmuebles, de la Secretaría de Suministros y Servicios.
                             </p>
-                            <p className="p12 ft0">
-                                <span className="ft3">Solicitante: </span>{`${values.names_applicant} ${values.surnames_applicant}`} NIT o C.C.:{values.number_doc_applicant_id}
+                            <p className="p12_lease ft0_lease">
+                                <span className="ft3_lease">Solicitante: </span>{`${values.names_applicant} ${values.surnames_applicant}`} NIT o C.C.:{values.number_doc_applicant_id}
                             </p>
-                            <p className="p13 ft0">
+                            <p className="p13_lease ft0_lease">
 
                             </p>
-                            <p className="p14 ft3">1. Justificación de la contratación.</p>
-                            <p className="p15 ft0">
+                            <p className="p14_lease ft3_lease">1. Justificación de la contratación.</p>
+                            <p className="p15_lease ft0_lease">
                                 El Municipio de Medellín, tiene dentro de sus bienes, inmuebles que no
                                 requiere para el desarrollo de su objeto misional, que no se
                                 encuentran incluidos en un plan de ventas, que no serán enajenados; ni
@@ -148,93 +139,92 @@ const LeaseDoc = () => {
                                 través de la modalidad de arrendamiento en la forma y términos
                                 establecidos conforme a la normativa vigente.
                             </p>
-                            <p className="p16 ft0">
-                                El inmueble con matrícula {realEstate.registry_number},
+                            <p className="p16_lease ft0_lease">
+                                El inmueble con matrícula {realEstate?.registry_number},
                                 CBML (Digite el número de CBML), activo fijo (Digite el código),
-                                ubicado en la dirección {realEstate.address.address}, cuyo tipo es {realEstate.active_type}. Según la
+                                ubicado en la dirección {realEstate?.address.address}, cuyo tipo es {realEstate?.active_type}. Según la
                                 factibilidad del bien, en cuanto lo técnico, físico, estado de
                                 habitabilidad y disponibilidad, se puede determinar que cumple
                                 requisitos mínimos para ser destinado al servicio de la comunidad,
                                 bajo la modalidad del contrato de arrendamiento, atendiendo a los
                                 lineamientos contractuales de la norma citada anteriormente.
                             </p>
-                            <p className="p16 ft0">
+                            <p className="p16_lease ft0_lease">
                                 De acuerdo con lo antes previsto, se formulan los estudios previos
                                 para proceder a la elaboración del contrato de arrendamiento, previa
                                 consideración del: (i) análisis de riesgos, (ii) análisis de
                                 requerimiento o no de establecer garantías para cumplir obligaciones
                                 derivadas del contrato y (iii)
                             </p>
-                            <p className="p17 ft14">Página 1 de 6</p>
-                            <p className="p18 ft15">
+                            <p className="p17_lease ft14_lease">Página 1 de 6</p>
+                            <p className="p18_lease ft15_lease">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p19 ft16">
+                            <p className="p21_lease ft16_lease">
                                 Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p20 ft17">
+                            <p className="p21_lease ft17_lease">
                                 Línea Única de Atención a la Ciudadanía 44 44 144
                             </p>
-                            <p className="p21 ft18">
+                            <p className="p21_lease ft18_lease">
                                 <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
                             </p>
-                            <p className="p22 ft16">Medellín - Colombia</p>
+                            <p className="p21_lease ft16_lease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
                 <Card className="my-3" style={{ width: '850px', margin: '0 auto' }}>
-                    <div id="page_2">
+                    <div id="page_2_lease">
                         <div id="p2dimg1">
                             <img src={imgbs64} alt="" id="p2img1" />
                         </div>
 
-                        <div className="dclr"></div>
+                        <div className="dclr_lease"></div>
                         <div id="id2_1">
                             <div id="id2_1_1">
-                                <p className="p0 ft0">Cód. <span>FO-ADMI-137</span></p>
-                                <p className="p1 ft0">Versión. 1</p>
+                                <p className="p0_lease ft0_lease">Cód. <span>FO-ADMI-137</span></p>
+                                <p className="p1_lease ft0_lease">Versión. 1</p>
                             </div>
                             <div id="id2_1_2">
-                                <p className="p2 ft1">Formato</p>
-                                <p className="p0 ft2">
+                                <p className="p2_lease ft1_lease">Formato</p>
+                                <p className="p0_lease ft2_lease">
                                     <span>FO-ADMI</span> Estudio Previo para arrendamiento de Bien
                                 </p>
-                                <p className="p3 ft2">Inmueble</p>
+                                <p className="p3_lease ft2_lease">Inmueble</p>
                             </div>
                         </div>
                         <div id="id2_2">
-                            <p className="p10 ft0">
+                            <p className="p10_lease ft0_lease">
                                 obligación de publicarse en la plataforma correspondiente.
                             </p>
-                            <p className="p23 ft3">2. Descripción del objeto a contratar.</p>
-                            <p className="p24 ft0">
+                            <p className="p23_lease ft3_lease">2. Descripción del objeto a contratar.</p>
+                            <p className="p24_lease ft0_lease">
                                 Suscribir contrato de arrendamiento del bien inmueble de propiedad del
-                                Municipio de Medellín identificado con matrícula {realEstate.registry_number}, CBML (Digite el número de CBML), activo fijo
-                                (Digite el código), ubicado en la dirección {realEstate.address.address}, cuyo
-                                tipo es {realEstate.active_type}, escritura N° (digite el número de la escritura) del (Digite el
+                                Municipio de Medellín identificado con matrícula {realEstate?.registry_number}, CBML (Digite el número de CBML), activo fijo
+                                (Digite el código), ubicado en la dirección {realEstate?.address.address}, cuyo
+                                tipo es {realEstate?.active_type}, escritura N° (digite el número de la escritura) del (Digite el
                                 día, mes y año en el formato dd/mm/aaaa), Notaría (Digite el número de
                                 la notaría) de (Digite la ciudad de ubicación de la notaría), el
                                 espacio a entregar en arrendamiento consta de (digite la dimensión del
-                                área a entregar en metros cuadrados) m<span className="ft19">2</span>,
+                                área a entregar en metros cuadrados) m<span className="ft19_lease">2</span>,
                                 cuyas áreas y linderos se describen de la siguiente manera según
-                                informe de Prediación con radicado: (digite el número del radicado del
-                                informe), de (Digite la fecha del informe en el formato dd/mm/aaaa).
+                                informe de Prediación con radicado: {values.prediation_number}, de {moment(values.prediation_date).format('DD/MM/YYYY')}.
                             </p>
-                            <p className="p4 ft21">
-                                <span className="ft20">(</span>Insertar descripción áreas y linderos citar
+                            <p className="p4_lease ft21_lease">
+                                <span className="ft20_lease">(</span>Insertar descripción áreas y linderos citar
                                 informe de prediación por radicado y fecha de elaboración).
                             </p>
-                            <p className="p25 ft21">
-                                <span className="ft3">3.</span><span className="ft22">Destinación</span>: debe
+                            <p className="p25_lease ft21_lease">
+                                <span className="ft3_lease">3.</span><span className="ft22_lease">Destinación</span>: debe
                                 destinarse el inmueble para: (Describir la tipología y el uso
                                 exclusivo que se le debe dar al bien por parte del arrendatario)
                             </p>
-                            <p className="p26 ft3">
-                                <span className="ft3">4.</span><span className="ft5">Especificaciones</span
-                                ><span className="ft0">:</span>
+                            <p className="p26_lease ft3_lease">
+                                <span className="ft3_lease">4.</span><span className="ft5_lease">Especificaciones</span
+                                ><span className="ft0_lease">:</span>
                             </p>
-                            <p className="p16 ft0">
-                                <span className="ft3">Aforo: </span>Es el valor de Servicios públicos
+                            <p className="p16_lease ft0_lease">
+                                <span className="ft3_lease">Aforo: </span>Es el valor de Servicios públicos
                                 determinado por la Unidad de Mantenimiento, de la Subsecretaría de
                                 Gestión de Bienes, cuando se requiera, con base en la declaración
                                 previa del arrendatario de todos los elementos y artefactos eléctricos
@@ -242,209 +232,208 @@ const LeaseDoc = () => {
                                 los promedios de consumo de agua y uso del alcantarillado que
                                 correspondan.
                             </p>
-                            <p className="p24 ft0">
-                                <span className="ft3">Administración: </span>Corresponde al valor por
+                            <p className="p24_lease ft0_lease">
+                                <span className="ft3_lease">Administración: </span>Corresponde al valor por
                                 concepto de administración si diere lugar, de acuerdo al reglamento de
                                 propiedad horizontal, cuando aplique.
                             </p>
-                            <p className="p24 ft21">
-                                <span className="ft3">5.</span
-                                ><span className="ft23">Plazo del contrato: </span>El plazo del contrato
-                                de arrendamiento a celebrar será de (digite en letras y números la
-                                duración del contrato), contado a partir de la entrega del inmueble,
-                                mediante acta suscrita por las partes, previa aprobación de la póliza
+                            <p className="p24_lease ft21_lease">
+                                <span className="ft3_lease">5.</span
+                                ><span className="ft23_lease">Plazo del contrato: </span>El plazo del contrato
+                                de arrendamiento a celebrar será de ({values.contract_period}) {writtenNumber(values.contract_period, { lang: 'es' })} meses,
+                                contado a partir de la entrega del inmueble, mediante acta suscrita por las partes, previa aprobación de la póliza
                                 de cumplimiento, si aplica.
                             </p>
-                            <p className="p27 ft0">
+                            <p className="p27_lease ft0_lease">
                                 No obstante el plazo establecido y en caso de requerir la
                                 Administración Municipal el inmueble, para desarrollar las funciones
                                 que le son propias, podrá dar por terminado el contrato de
                                 arrendamiento de forma unilateral.
                             </p>
-                            <p className="p14 ft3">
+                            <p className="p14_lease ft3_lease">
                                 6. Fundamentos jurídicos que soportan la modalidad de contratación.
                             </p>
-                            <p className="p28 ft0">
+                            <p className="p28_lease ft0_lease">
                                 Corresponde a lo dispuesto en el Código Civil para los contratos de
                                 arrendamiento y en lo pertinente por la Ley 80 de 1993, 1150 de 2007 y
                                 sus decretos reglamentarios en especial el Decreto 1082 de 2015 y
                                 normas complementarias, que manifiestan que este tipo de contratos no
                                 se consideran, ni se
                             </p>
-                            <p className="p29 ft14">Página 2 de 6</p>
-                            <p className="p18 ft15">
+                            <p className="p29_lease ft14_lease">Página 2 de 6</p>
+                            <p className="p18_lease ft15_lease">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p19 ft16">
+                            <p className="p21_lease ft16_lease">
                                 Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p20 ft17">
+                            <p className="p21_lease ft16_lease">
                                 Línea Única de Atención a la Ciudadanía 44 44 144
                             </p>
-                            <p className="p21 ft18">
+                            <p className="p21_lease ft16_lease">
                                 <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
                             </p>
-                            <p className="p22 ft16">Medellín - Colombia</p>
+                            <p className="p21_lease ft16_lease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
                 <Card className="my-3" style={{ width: '850px', margin: '0 auto' }}>
-                    <div id="page_3">
+                    <div id="page_3_lease">
                         <div id="p3dimg1">
                             <img
                                 src={imgbs64} alt="" id="p3img1"
                             />
                         </div>
 
-                        <div className="dclr"></div>
+                        <div className="dclr_lease"></div>
                         <div id="id3_1">
                             <div id="id3_1_1">
-                                <p className="p0 ft0">Cód. <span>FO-ADMI-137</span></p>
-                                <p className="p1 ft0">Versión. 1</p>
+                                <p className="p0_lease ft0_lease">Cód. <span>FO-ADMI-137</span></p>
+                                <p className="p1_lease ft0_lease">Versión. 1</p>
                             </div>
                             <div id="id3_1_2">
-                                <p className="p2 ft1">Formato</p>
-                                <p className="p0 ft2">
+                                <p className="p2_lease ft1_lease">Formato</p>
+                                <p className="p0_lease ft2_lease">
                                     <span>FO-ADMI</span> Estudio Previo para arrendamiento de Bien
                                 </p>
-                                <p className="p3 ft2">Inmueble</p>
+                                <p className="p3_lease ft2_lease">Inmueble</p>
                             </div>
                         </div>
                         <div id="id3_2">
-                            <p className="p4 ft0">
+                            <p className="p4_lease ft0_lease">
                                 pueden considerar actos mercantiles o de comercio, razón por la cual
                                 no será aplicable el régimen jurídico contenido en el Código de
                                 Comercio en parte alguna.
                             </p>
-                            <p className="p16 ft21">
+                            <p className="p16_lease ft21_lease">
                                 También son fundamentos jurídicos del presente proceso contractual las
                                 disposiciones contenidas en la Ley 9ª de 1989, Ley 388 de 1997, Código
                                 Civil, Acuerdo Municipal 048 de 2014 (POT).
                             </p>
-                            <p className="p23 ft3">
+                            <p className="p23_lease ft3_lease">
                                 7. El análisis técnico y económico que soporta el valor estimado del
                                 contrato.
                             </p>
-                            <p className="p24 ft0">
+                            <p className="p24_lease ft0_lease">
                                 Las condiciones del mercado fueron analizadas y tomadas en cuenta por
                                 la Unidad Administración de Bienes de la Subsecretaría de Gestión de
                                 Bienes, en el avalúo comercial, al momento de fijar el canon de
                                 arrendamiento correspondiente al inmueble, como lo establece la
                                 normativa vigente.
                             </p>
-                            <p className="p13 ft0">
+                            <p className="p13_lease ft0_lease">
                                 Está soportado con el informe técnico de avalúo y fijación de canon de
                                 arrendamiento N° (digite el número de avalúo), de (Digite la fecha del
                                 avalúo en el formato dd/mm/aaaa) de la Unidad Administración de Bienes
                                 Inmuebles, de la Subsecretaría de Gestión de Bienes del Municipio de
                                 Medellín.
                             </p>
-                            <p className="p5 ft3">
+                            <p className="p5_lease ft3_lease">
                                 8. La justificación de los factores de selección que permitan
                                 identificar la oferta más favorable
                             </p>
-                            <p className="p16 ft21">
+                            <p className="p16_lease ft21_lease">
                                 Los factores de selección del arrendatario cuando exista más de un
                                 solicitante se regirá por los definidos en la normativa vigente, para
                                 lo cual se dejará un documento anexo de la evaluación de los
                                 requisitos.
                             </p>
-                            <p className="p25 ft24">
-                                <span className="ft3">9.</span
-                                ><span className="ft23"
+                            <p className="p25_lease ft24_lease">
+                                <span className="ft3_lease">9.</span
+                                ><span className="ft23_lease"
                                 >El soporte que permita la estimación, tipificación y asignación de
                                     los riesgos previsibles que puedan afectar el equilibrio económico
                                     del contrato:</span
                                 >
                             </p>
-                            <p className="p27 ft0">
+                            <p className="p27_lease ft0_lease">
                                 De acuerdo al artículo 4 de la Ley 1150 de 2007 y el Decreto Nacional
                                 1082 de 2015, dispone que las entidades públicas deben incluir en los
                                 estudios previos la estimación, tipificación y asignación de riesgos.
                             </p>
-                            <p className="p16 ft21">
+                            <p className="p16_lease ft21_lease">
                                 De conformidad con lo anterior se procede a hacer el análisis del
                                 riesgo que corresponde en los siguientes términos<span className="ft25"
                                 >:</span
                                 >
                             </p>
-                            <p className="p14 ft0">9.1 Riesgo regulatorio:</p>
-                            <p className="p4 ft0">
+                            <p className="p14_lease ft0_lease">9.1 Riesgo regulatorio:</p>
+                            <p className="p4_lease ft0_lease">
                                 Comprende variaciones de las tarifas de mercado regulado, cambios de
                                 la carga impositiva tributaria de las reformas legales futuras y la
                                 adopción de decisiones administrativas:
                             </p>
-                            <p className="p30 ft0">
-                                <span className="ft26"></span
-                                ><span className="ft27">Financieras del arrendatario.</span>
+                            <p className="p30_lease ft0_lease">
+                                <span className="ft26_lease"></span
+                                ><span className="ft27_lease">Financieras del arrendatario.</span>
                             </p>
-                            <p className="p30 ft0">
-                                <span className="ft26"></span
-                                ><span className="ft27">Perdida de liquidez del arrendatario.</span>
+                            <p className="p30_lease ft0_lease">
+                                <span className="ft26_lease"></span
+                                ><span className="ft27_lease">Perdida de liquidez del arrendatario.</span>
                             </p>
-                            <p className="p14 ft0">
-                                <span className="ft0">9.2</span
-                                ><span className="ft28">Riesgos operativos:</span>
+                            <p className="p14_lease ft0_lease">
+                                <span className="ft0_lease">9.2</span
+                                ><span className="ft28_lease">Riesgos operativos:</span>
                             </p>
-                            <p className="p31 ft0">
+                            <p className="p31_lease ft0_lease">
                                 Son intrínsecos al contrato y comprende todas las formas de
                                 incumplimiento de las obligaciones que pueden generarse producto del
                                 acuerdo de voluntades:
                             </p>
-                            <p className="p30 ft0">
-                                <span className="ft26"></span
-                                ><span className="ft27"
+                            <p className="p30_lease ft0_lease">
+                                <span className="ft26_lease"></span
+                                ><span className="ft27_lease"
                                 >Incumplimiento de las obligaciones surgidas del contrato.</span
                                 >
                             </p>
-                            <p className="p30 ft0">
-                                <span className="ft26"></span
-                                ><span className="ft27"
+                            <p className="p30_lease ft0_lease">
+                                <span className="ft26_lease"></span
+                                ><span className="ft27_lease"
                                 >Pago de salarios, prestaciones sociales e indemnizaciones.</span
                                 >
                             </p>
-                            <p className="p32 ft14">Página 3 de 6</p>
-                            <p className="p18 ft15">
+                            <p className="p32_lease ft14_lease">Página 3 de 6</p>
+                            <p className="p18_lease ft15_lease">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p19 ft16">
+                            <p className="p21_lease ft17_lease">
                                 Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p20 ft17">
+                            <p className="p21_lease ft17_lease">
                                 Línea Única de Atención a la Ciudadanía 44 44 144
                             </p>
-                            <p className="p21 ft18">
+                            <p className="p21_lease ft17_lease">
                                 <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
                             </p>
-                            <p className="p22 ft16">Medellín - Colombia</p>
+                            <p className="p21_lease ft17_lease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
                 <Card className="my-3" style={{ width: '850px', margin: '0 auto' }}>
-                    <div id="page_4">
+                    <div id="page_4_lease">
                         <div id="p4dimg1">
                             <img
                                 src={imgbs64} alt="" id="p4img1"
                             />
                         </div>
 
-                        <div className="dclr"></div>
+                        <div className="dclr_lease"></div>
                         <div id="id4_1">
                             <div id="id4_1_1">
-                                <p className="p0 ft0">Cód. <span>FO-ADMI-137</span></p>
-                                <p className="p1 ft0">Versión. 1</p>
+                                <p className="p0_lease ft0_lease">Cód. <span>FO-ADMI-137</span></p>
+                                <p className="p1_lease ft0_lease">Versión. 1</p>
                             </div>
                             <div id="id4_1_2">
-                                <p className="p2 ft1">Formato</p>
-                                <p className="p0 ft2">
+                                <p className="p2_lease ft1_lease">Formato</p>
+                                <p className="p0_lease ft2_lease">
                                     <span>FO-ADMI</span> Estudio Previo para arrendamiento de Bien
                                 </p>
-                                <p className="p3 ft2">Inmueble</p>
+                                <p className="p3_lease ft2_lease">Inmueble</p>
                             </div>
                         </div>
                         <div id="id4_2">
-                            <p className="p0 ft3">10. Estimación del riesgo:</p>
-                            <p className="p33 ft0">
+                            <p className="p0_lease ft3_lease">10. Estimación del riesgo:</p>
+                            <p className="p33_lease ft0_lease">
                                 La estimación del riesgo consiste en medir la probabilidad de
                                 ocurrencia de un evento y su impacto en el caso de que se materialice.
                                 La medición efectiva y cuantitativa del riesgo se asocia con la
@@ -452,575 +441,575 @@ const LeaseDoc = () => {
                                 no se establece una metodología para la cuantificación del riesgo, lo
                                 cual da a la entidad cierto grado de discrecionalidad.
                             </p>
-                            <p className="p34 ft0">
+                            <p className="p34_lease ft0_lease">
                                 Frente a la necesidad que se pretende satisfacer, se establecerá el
                                 grado de probabilidad de ocurrencia y de impacto en relación con el
                                 equilibrio económico del contrato, utilizando una escala ordinal en la
                                 que se hace referencia a criterios de medición como se presenta a
                                 continuación: MUY ALTO, ALTO, MEDIO, BAJO, MUY BAJO
                             </p>
-                            <table cellPadding="0" cellSpacing="0" className="t1">
+                            <table cellPadding="0" cellSpacing="0" className="t1_lease">
                                 <tr>
-                                    <td colSpan={2} rowSpan={2} className="tr6 td28">
-                                        <p className="p35 ft0">Riesgo Previsible</p>
+                                    <td colSpan={2} rowSpan={2} className="tr6_lease td28_lease">
+                                        <p className="p35_lease ft0_lease">Riesgo Previsible</p>
                                     </td>
-                                    <td rowSpan={2} className="tr6 td29"><p className="p8 ft0">Grado</p></td>
-                                    <td rowSpan={2} className="tr6 td30"><p className="p7 ft0">de</p></td>
-                                    <td className="tr7 td31"><p className="p8 ft0">Grado</p></td>
-                                    <td className="tr7 td32"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr6 td2"><p className="p8 ft0">Municipio</p></td>
-                                    <td className="tr7 td33"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td34"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td35"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td36"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td37"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td38"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td39"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td rowSpan={2} className="tr6_lease td29_lease"><p className="p8_lease ft0_lease">Grado</p></td>
+                                    <td rowSpan={2} className="tr6_lease td30_lease"><p className="p7_lease ft0_lease">de</p></td>
+                                    <td className="tr7_lease td31_lease"><p className="p8_lease ft0_lease">Grado</p></td>
+                                    <td className="tr7_lease td32_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td rowSpan={2} className="tr6_lease td2_lease"><p className="p8_lease ft0_lease">Municipio</p></td>
+                                    <td className="tr7_lease td33_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td34_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td35_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td36_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td37_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td38_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td39_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr8 td40"><p className="p8 ft29">de</p></td>
-                                    <td className="tr8 td41"><p className="p8 ft29">Contratista</p></td>
-                                    <td colSpan={7} className="tr8 td42">
-                                        <p className="p8 ft29">Mecanismo de Mitigación</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="tr9 td43"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr9 td45">
-                                        <p className="p8 ft0">Ocurrencia</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr10 td46"><p className="p8 ft0">Impacto</p></td>
-                                    <td className="tr9 td41"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td48"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td49"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td50"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td51"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td52"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td53"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr11 td54"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td55"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td56"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td57"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td58"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td23"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td59"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td60"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td61"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td62"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td63"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td64"><p className="p7 ft30">&nbsp;</p></td>
-                                    <td className="tr11 td55"><p className="p7 ft30">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr12 td43"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td65"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td40"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td41"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td48"><p className="p8 ft0">Ejercer</p></td>
-                                    <td className="tr12 td49"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td50"><p className="p36 ft0">un</p></td>
-                                    <td className="tr12 td51"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td67"><p className="p7 ft0">control</p></td>
-                                    <td className="tr12 td44"><p className="p37 ft0">y</p></td>
-                                </tr>
-                                <tr>
-                                    <td colSpan={2} className="tr12 td68">
-                                        <p className="p35 ft0">REGULATORIO</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr13 td65"><p className="p8 ft0">MEDIO</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr13 td40"><p className="p8 ft0">MEDIO</p></td>
-                                    <td rowSpan={2} className="tr13 td41"><p className="p8 ft0">X</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td69">
-                                        <p className="p8 ft0">vigilancia</p>
-                                    </td>
-                                    <td className="tr12 td50"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td70">
-                                        <p className="p7 ft0">estrictos</p>
-                                    </td>
-                                    <td className="tr12 td53"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td44"><p className="p37 ft0">al</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr3 td43"><p className="p7 ft8">&nbsp;</p></td>
-                                    <td className="tr3 td44"><p className="p7 ft8">&nbsp;</p></td>
-                                    <td className="tr3 td66"><p className="p7 ft8">&nbsp;</p></td>
-                                    <td className="tr3 td47"><p className="p7 ft8">&nbsp;</p></td>
-                                    <td colSpan={2} rowSpan={2} className="tr5 td69">
-                                        <p className="p8 ft10">contrato</p>
-                                    </td>
-                                    <td colSpan={2} rowSpan={2} className="tr5 td71">
-                                        <p className="p8 ft10">por</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr5 td52"><p className="p38 ft10">parte</p></td>
-                                    <td className="tr3 td53"><p className="p7 ft8">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr5 td44"><p className="p37 ft10">del</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr14 td43"><p className="p7 ft31">&nbsp;</p></td>
-                                    <td className="tr14 td44"><p className="p7 ft31">&nbsp;</p></td>
-                                    <td className="tr14 td65"><p className="p7 ft31">&nbsp;</p></td>
-                                    <td className="tr14 td66"><p className="p7 ft31">&nbsp;</p></td>
-                                    <td className="tr14 td40"><p className="p7 ft31">&nbsp;</p></td>
-                                    <td className="tr14 td41"><p className="p7 ft31">&nbsp;</p></td>
-                                    <td className="tr14 td47"><p className="p7 ft31">&nbsp;</p></td>
-                                    <td className="tr14 td53"><p className="p7 ft31">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr9 td54"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td55"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td56"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td57"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td46"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td58"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td23"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={3} className="tr9 td72">
-                                        <p className="p8 ft0">supervisor.</p>
-                                    </td>
-                                    <td className="tr9 td62"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td63"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td64"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td55"><p className="p7 ft11">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td colSpan={2} className="tr5 td68">
-                                        <p className="p35 ft10">OPERATIVOS:</p>
-                                    </td>
-                                    <td className="tr5 td65"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td className="tr5 td66"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td className="tr5 td40"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td className="tr5 td41"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td className="tr5 td47"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr5 td69">
-                                        <p className="p8 ft10">Realizar</p>
-                                    </td>
-                                    <td className="tr5 td50"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td className="tr5 td51"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td colSpan={3} className="tr5 td73">
-                                        <p className="p37 ft10">visitas</p>
+                                    <td className="tr8_lease td40_lease"><p className="p8_lease ft29_lease">de</p></td>
+                                    <td className="tr8_lease td41_lease"><p className="p8_lease ft29_lease">Contratista</p></td>
+                                    <td colSpan={7} className="tr8_lease td42_lease">
+                                        <p className="p8_lease ft29_lease">Mecanismo de Mitigación</p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td43"><p className="p35 ft0">Incumplimiento</p></td>
-                                    <td className="tr12 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td65"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td40"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td41"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={3} className="tr12 td74">
-                                        <p className="p8 ft0">trimestrales</p>
+                                    <td className="tr9_lease td43_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr9_lease td45_lease">
+                                        <p className="p8_lease ft0_lease">Ocurrencia</p>
                                     </td>
-                                    <td className="tr12 td51"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td52"><p className="p38 ft0">al</p></td>
-                                    <td colSpan={2} className="tr12 td75"><p className="p37 ft0">bien</p></td>
+                                    <td rowSpan={2} className="tr10_lease td46_lease"><p className="p8_lease ft0_lease">Impacto</p></td>
+                                    <td className="tr9_lease td41_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td48_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td49_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td50_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td51_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td52_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td53_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td43"><p className="p35 ft0">del contratista</p></td>
-                                    <td className="tr12 td44"><p className="p37 ft0">de</p></td>
-                                    <td className="tr12 td65"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td40"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td41"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td69">
-                                        <p className="p8 ft0">inmueble</p>
-                                    </td>
-                                    <td className="tr12 td50"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td70"><p className="p38 ft0">objeto</p></td>
-                                    <td className="tr12 td53"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td44"><p className="p37 ft0">del</p></td>
+                                    <td className="tr11_lease td54_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td55_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td56_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td57_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td58_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td23_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td59_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td60_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td61_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td62_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td63_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td64_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
+                                    <td className="tr11_lease td55_lease"><p className="p7_lease ft30_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2} className="tr12 td68">
-                                        <p className="p35 ft0">las obligaciones y</p>
-                                    </td>
-                                    <td className="tr12 td65"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td40"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td41"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td69">
-                                        <p className="p8 ft0">contrato</p>
-                                    </td>
-                                    <td className="tr12 td50"><p className="p6 ft0">y</p></td>
-                                    <td colSpan={4} className="tr12 td76">
-                                        <p className="p37 ft0">seguimiento</p>
-                                    </td>
+                                    <td className="tr12_lease td43_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td65_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td40_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td41_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td48_lease"><p className="p8_lease ft0_lease">Ejercer</p></td>
+                                    <td className="tr12_lease td49_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td50_lease"><p className="p36_lease ft0_lease">un</p></td>
+                                    <td className="tr12_lease td51_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td67_lease"><p className="p7_lease ft0_lease">control</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p37_lease ft0_lease">y</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td43"><p className="p35 ft0">prohibiciones</p></td>
-                                    <td className="tr12 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td65"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td40"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td41"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={7} className="tr12 td42">
-                                        <p className="p8 ft0">mensual a los pagos de</p>
+                                    <td colSpan={2} className="tr12_lease td68_lease">
+                                        <p className="p35_lease ft0_lease">REGULATORIO</p>
                                     </td>
+                                    <td rowSpan={2} className="tr13_lease td65_lease_lease"><p className="p8_lease ft0_lease">MEDIO</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td rowSpan={2} className="tr13_lease td40_lease"><p className="p8_lease ft0_lease">MEDIO</p></td>
+                                    <td rowSpan={2} className="tr13_lease td41_lease"><p className="p8_lease ft0_lease">X</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td69_lease">
+                                        <p className="p8_lease ft0_lease">vigilancia</p>
+                                    </td>
+                                    <td className="tr12_lease td50_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td70_lease">
+                                        <p className="p7_lease ft0_lease">estrictos</p>
+                                    </td>
+                                    <td className="tr12_lease td53_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p37_lease ft0_lease">al</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr5 td43"><p className="p35 ft10">contraídas</p></td>
-                                    <td className="tr5 td44"><p className="p37 ft10">en</p></td>
-                                    <td rowSpan={2} className="tr6 td65"><p className="p8 ft0">MEDIO</p></td>
-                                    <td className="tr5 td66"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr6 td40"><p className="p8 ft0">MEDIO</p></td>
-                                    <td rowSpan={2} className="tr6 td41"><p className="p8 ft0">X</p></td>
-                                    <td className="tr5 td47"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr5 td69">
-                                        <p className="p8 ft10">cánones,</p>
+                                    <td className="tr3_lease td43_lease"><p className="p7_lease ft8_lease">&nbsp;</p></td>
+                                    <td className="tr3_lease td44_lease"><p className="p7_lease ft8_lease">&nbsp;</p></td>
+                                    <td className="tr3_lease td66_lease"><p className="p7_lease ft8_lease">&nbsp;</p></td>
+                                    <td className="tr3_lease td47_lease"><p className="p7_lease ft8_lease">&nbsp;</p></td>
+                                    <td colSpan={2} rowSpan={2} className="tr5_lease td69_lease">
+                                        <p className="p8_lease ft10_lease">contrato</p>
                                     </td>
-                                    <td className="tr5 td50"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td className="tr5 td51"><p className="p7 ft32">&nbsp;</p></td>
-                                    <td colSpan={3} className="tr5 td73">
-                                        <p className="p37 ft10">servicios</p>
+                                    <td colSpan={2} rowSpan={2} className="tr5_lease td71_lease">
+                                        <p className="p8_lease ft10_lease">por</p>
                                     </td>
+                                    <td rowSpan={2} className="tr5_lease td52_lease"><p className="p38_lease ft10_lease">parte</p></td>
+                                    <td className="tr3_lease td53_lease"><p className="p7_lease ft8_lease">&nbsp;</p></td>
+                                    <td rowSpan={2} className="tr5_lease td44_lease"><p className="p37_lease ft10_lease">del</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td43"><p className="p35 ft0">virtud</p></td>
-                                    <td className="tr12 td44"><p className="p37 ft0">del</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td69">
-                                        <p className="p8 ft0">públicos</p>
-                                    </td>
-                                    <td colSpan={5} className="tr12 td77">
-                                        <p className="p37 ft0">y administración</p>
-                                    </td>
+                                    <td className="tr14_lease td43_lease"><p className="p7_lease ft31_lease">&nbsp;</p></td>
+                                    <td className="tr14_lease td44_lease"><p className="p7_lease ft31_lease">&nbsp;</p></td>
+                                    <td className="tr14_lease td65_lease"><p className="p7_lease ft31_lease">&nbsp;</p></td>
+                                    <td className="tr14_lease td66_lease"><p className="p7_lease ft31_lease">&nbsp;</p></td>
+                                    <td className="tr14_lease td40_lease"><p className="p7_lease ft31_lease">&nbsp;</p></td>
+                                    <td className="tr14_lease td41_lease"><p className="p7_lease ft31_lease">&nbsp;</p></td>
+                                    <td className="tr14_lease td47_lease"><p className="p7_lease ft31_lease">&nbsp;</p></td>
+                                    <td className="tr14_lease td53_lease"><p className="p7_lease ft31_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td43"><p className="p35 ft0">contrato.</p></td>
-                                    <td className="tr12 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td65"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td40"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td41"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={7} className="tr12 td42">
-                                        <p className="p8 ft0">cuando aplique, por parte</p>
+                                    <td className="tr9_lease td54_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td55_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td56_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td57_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td46_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td58_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td23_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={3} className="tr9_lease td72_lease">
+                                        <p className="p8_lease ft0_lease">supervisor.</p>
                                     </td>
+                                    <td className="tr9_lease td62_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td63_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td64_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td55_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td43"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td65"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td40"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td41"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td48"><p className="p8 ft0">del</p></td>
-                                    <td colSpan={4} className="tr12 td78">
-                                        <p className="p7 ft0">supervisor</p>
+                                    <td colSpan={2} className="tr5_lease td68_lease">
+                                        <p className="p35_lease ft10_lease">OPERATIVOS:</p>
                                     </td>
-                                    <td colSpan={2} className="tr12 td75"><p className="p37 ft0">para</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr12 td43"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td65"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td40"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td41"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td69">
-                                        <p className="p8 ft0">realizar</p>
+                                    <td className="tr5_lease td65_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td className="tr5_lease td66_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td className="tr5_lease td40_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td className="tr5_lease td41_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td className="tr5_lease td47_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr5_lease td69_lease">
+                                        <p className="p8_lease ft10_lease">Realizar</p>
                                     </td>
-                                    <td colSpan={4} className="tr12 td79">
-                                        <p className="p39 ft0">seguimiento</p>
-                                    </td>
-                                    <td className="tr12 td44"><p className="p37 ft0">y</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr12 td43"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td65"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td66"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td40"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td41"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td47"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={3} className="tr12 td74">
-                                        <p className="p8 ft0">evaluación</p>
-                                    </td>
-                                    <td className="tr12 td51"><p className="p7 ft0">al</p></td>
-                                    <td colSpan={3} className="tr12 td73">
-                                        <p className="p37 ft0">desarrollo</p>
+                                    <td className="tr5_lease td50_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td className="tr5_lease td51_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td colSpan={3} className="tr5_lease td73_lease">
+                                        <p className="p37_lease ft10_lease">visitas</p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td54"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td55"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td56"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td57"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td46"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td58"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td23"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={5} className="tr12 td80">
-                                        <p className="p8 ft0">del objeto contractual</p>
+                                    <td className="tr12_lease td43_lease"><p className="p35_lease ft0_lease">Incumplimiento</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td65_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td40_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td41_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={3} className="tr12_lease td74_lease">
+                                        <p className="p8_lease ft0_lease">trimestrales</p>
                                     </td>
-                                    <td className="tr12 td64"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td55"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td className="tr12_lease td51_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td52_lease"><p className="p38_lease ft0_lease">al</p></td>
+                                    <td colSpan={2} className="tr12_lease td75_lease"><p className="p37_lease ft0_lease">bien</p></td>
+                                </tr>
+                                <tr>
+                                    <td className="tr12_lease td43_lease"><p className="p35_lease ft0_lease">del contratista</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p37_lease ft0_lease">de</p></td>
+                                    <td className="tr12_lease td65_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td40_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td41_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td69_lease">
+                                        <p className="p8_lease ft0_lease">inmueble</p>
+                                    </td>
+                                    <td className="tr12_lease td50_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td70_lease"><p className="p38_lease ft0_lease">objeto</p></td>
+                                    <td className="tr12_lease td53_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p37_lease ft0_lease">del</p></td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={2} className="tr12_lease td68_lease">
+                                        <p className="p35_lease ft0_lease">las obligaciones y</p>
+                                    </td>
+                                    <td className="tr12_lease td65_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td40_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td41_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td69_lease">
+                                        <p className="p8_lease ft0_lease">contrato</p>
+                                    </td>
+                                    <td className="tr12_lease td50_lease"><p className="p6_lease ft0_lease">y</p></td>
+                                    <td colSpan={4} className="tr12_lease td76_lease">
+                                        <p className="p37_lease ft0_lease">seguimiento</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="tr12_lease td43_lease"><p className="p35_lease ft0_lease">prohibiciones</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td65_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td40_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td41_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={7} className="tr12_lease td42_lease">
+                                        <p className="p8_lease ft0_lease">mensual a los pagos de</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="tr5_lease td43_lease"><p className="p35_lease ft10_lease">contraídas</p></td>
+                                    <td className="tr5_lease td44_lease"><p className="p37_lease ft10_lease">en</p></td>
+                                    <td rowSpan={2} className="tr6_lease td65_lease"><p className="p8_lease ft0_lease">MEDIO</p></td>
+                                    <td className="tr5_lease td66_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td rowSpan={2} className="tr6_lease td40_lease"><p className="p8_lease ft0_lease">MEDIO</p></td>
+                                    <td rowSpan={2} className="tr6_lease td41_lease"><p className="p8_lease ft0_lease">X</p></td>
+                                    <td className="tr5_lease td47_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr5_lease td69_lease">
+                                        <p className="p8_lease ft10_lease">cánones,</p>
+                                    </td>
+                                    <td className="tr5_lease td50_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td className="tr5_lease td51_lease"><p className="p7_lease ft32_lease">&nbsp;</p></td>
+                                    <td colSpan={3} className="tr5_lease td73_lease">
+                                        <p className="p37_lease ft10_lease">servicios</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="tr12_lease td43_lease"><p className="p35_lease ft0_lease">virtud</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p37_lease ft0_lease">del</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td69_lease">
+                                        <p className="p8_lease ft0_lease">públicos</p>
+                                    </td>
+                                    <td colSpan={5} className="tr12_lease td77_lease">
+                                        <p className="p37_lease ft0_lease">y administración</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="tr12_lease td43_lease"><p className="p35_lease ft0_lease">contrato.</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td65_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td40_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td41_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={7} className="tr12_lease td42_lease">
+                                        <p className="p8_lease ft0_lease">cuando aplique, por parte</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="tr12_lease td43_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td65_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td40_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td41_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td48_lease"><p className="p8_lease ft0_lease">del</p></td>
+                                    <td colSpan={4} className="tr12_lease td78_lease">
+                                        <p className="p7_lease ft0_lease">supervisor</p>
+                                    </td>
+                                    <td colSpan={2} className="tr12_lease td75_lease"><p className="p37_lease ft0_lease">para</p></td>
+                                </tr>
+                                <tr>
+                                    <td className="tr12_lease td43_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td65_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td40_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td41_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td69_lease">
+                                        <p className="p8_lease ft0_lease">realizar</p>
+                                    </td>
+                                    <td colSpan={4} className="tr12_lease td79_lease">
+                                        <p className="p39_lease ft0_lease">seguimiento</p>
+                                    </td>
+                                    <td className="tr12_lease td44_lease"><p className="p37_lease ft0_lease">y</p></td>
+                                </tr>
+                                <tr>
+                                    <td className="tr12_lease td43_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td65_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td66_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td40_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td41_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td47_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={3} className="tr12_lease td74_lease">
+                                        <p className="p8_lease ft0_lease">evaluación</p>
+                                    </td>
+                                    <td className="tr12_lease td51_lease"><p className="p7_lease ft0_lease">al</p></td>
+                                    <td colSpan={3} className="tr12_lease td73_lease">
+                                        <p className="p37_lease ft0_lease">desarrollo</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="tr12_lease td54_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td55_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td56_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td57_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td46_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td58_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td23_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={5} className="tr12_lease td80_lease">
+                                        <p className="p8_lease ft0_lease">del objeto contractual</p>
+                                    </td>
+                                    <td className="tr12_lease td64_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td55_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                             </table>
-                            <p className="p40 ft3">
-                                <span className="ft3">11.</span
-                                ><span className="ft33"
+                            <p className="p40_lease ft3_lease">
+                                <span className="ft3_lease">11.</span
+                                ><span className="ft33_lease"
                                 >El análisis que sustenta la exigencia de los mecanismos de
                                     cobertura que garantizan las obligaciones surgidas con ocasión de la
                                     contratación directa y del contrato a celebrar.</span
                                 >
                             </p>
-                            <table cellPadding="0" cellSpacing="0" className="t2">
+                            <table cellPadding="0" cellSpacing="0" className="t2_lease">
                                 <tr>
-                                    <td className="tr1 td81"><p className="p6 ft0">Tipificación</p></td>
-                                    <td className="tr1 td82"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr1 td83">
-                                        <p className="p8 ft0">Estimación</p>
+                                    <td className="tr1_lease td81_lease"><p className="p6_lease ft0_lease">Tipificación</p></td>
+                                    <td className="tr1_lease td82_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr1_lease td83_lease">
+                                        <p className="p8_lease ft0_lease">Estimación</p>
                                     </td>
-                                    <td className="tr1 td84"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr1 td85"><p className="p7 ft0">Mecanismo</p></td>
-                                    <td className="tr1 td86"><p className="p36 ft0">de</p></td>
-                                    <td className="tr1 td87"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr1 td88"><p className="p8 ft0">Asignación</p></td>
-                                    <td className="tr1 td89"><p className="p8 ft0">Vigencia</p></td>
-                                    <td className="tr1 td90"><p className="p8 ft0">Aplica</p></td>
+                                    <td className="tr1_lease td84_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr1_lease td85_lease"><p className="p7_lease ft0_lease">Mecanismo</p></td>
+                                    <td className="tr1_lease td86_lease"><p className="p36_lease ft0_lease">de</p></td>
+                                    <td className="tr1_lease td87_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr1_lease td88_lease"><p className="p8_lease ft0_lease">Asignación</p></td>
+                                    <td className="tr1_lease td89_lease"><p className="p8_lease ft0_lease">Vigencia</p></td>
+                                    <td className="tr1_lease td90_lease"><p className="p8_lease ft0_lease">Aplica</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr15 td91"><p className="p7 ft34">&nbsp;</p></td>
-                                    <td className="tr15 td92"><p className="p7 ft34">&nbsp;</p></td>
-                                    <td className="tr15 td93"><p className="p7 ft34">&nbsp;</p></td>
-                                    <td className="tr15 td55"><p className="p7 ft34">&nbsp;</p></td>
-                                    <td className="tr15 td94"><p className="p7 ft34">&nbsp;</p></td>
-                                    <td className="tr15 td95"><p className="p7 ft35">Cobertura</p></td>
-                                    <td className="tr15 td96"><p className="p7 ft34">&nbsp;</p></td>
-                                    <td className="tr15 td97"><p className="p7 ft34">&nbsp;</p></td>
-                                    <td className="tr15 td98"><p className="p7 ft34">&nbsp;</p></td>
-                                    <td className="tr15 td99"><p className="p7 ft34">&nbsp;</p></td>
-                                    <td className="tr15 td100"><p className="p7 ft34">&nbsp;</p></td>
+                                    <td className="tr15_lease td91_lease"><p className="p7_lease ft34_lease">&nbsp;</p></td>
+                                    <td className="tr15_lease td92_lease"><p className="p7_lease ft34_lease">&nbsp;</p></td>
+                                    <td className="tr15_lease td93_lease"><p className="p7_lease ft34_lease">&nbsp;</p></td>
+                                    <td className="tr15_lease td55_lease"><p className="p7_lease ft34_lease">&nbsp;</p></td>
+                                    <td className="tr15_lease td94_lease"><p className="p7_lease ft34_lease">&nbsp;</p></td>
+                                    <td className="tr15_lease td95_lease"><p className="p7_lease ft35_lease">Cobertura</p></td>
+                                    <td className="tr15_lease td96_lease"><p className="p7_lease ft34_lease">&nbsp;</p></td>
+                                    <td className="tr15_lease td97_lease"><p className="p7_lease ft34_lease">&nbsp;</p></td>
+                                    <td className="tr15_lease td98_lease"><p className="p7_lease ft34_lease">&nbsp;</p></td>
+                                    <td className="tr15_lease td99_lease"><p className="p7_lease ft34_lease">&nbsp;</p></td>
+                                    <td className="tr15_lease td100_lease"><p className="p7_lease ft34_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2} className="tr9 td101">
-                                        <p className="p6 ft0">Incumplimiento</p>
+                                    <td colSpan={2} className="tr9_lease td101_lease">
+                                        <p className="p6_lease ft0_lease">Incumplimiento</p>
                                     </td>
-                                    <td className="tr9 td102"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td103"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td95"><p className="p7 ft0">Garantía</p></td>
-                                    <td className="tr12 td96"><p className="p41 ft0">de</p></td>
-                                    <td className="tr9 td104"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td105"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td106"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td107"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td className="tr9_lease td102_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td103_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td95_lease"><p className="p7_lease ft0_lease">Garantía</p></td>
+                                    <td className="tr12_lease td96_lease"><p className="p41_lease ft0_lease">de</p></td>
+                                    <td className="tr9_lease td104_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td105_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td106_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td107_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2} className="tr7 td101">
-                                        <p className="p6 ft0">del contratista</p>
+                                    <td colSpan={2} className="tr7_lease td101_lease">
+                                        <p className="p6_lease ft0_lease">del contratista</p>
                                     </td>
-                                    <td className="tr7 td102"><p className="p8 ft0">10%</p></td>
-                                    <td className="tr7 td44"><p className="p7 ft0">del</p></td>
-                                    <td className="tr7 td103"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td108">
-                                        <p className="p7 ft0"><span className="ft36">Cumplimiento</span>:</p>
+                                    <td className="tr7_lease td102_lease"><p className="p8_lease ft0_lease">10%</p></td>
+                                    <td className="tr7_lease td44_lease"><p className="p7_lease ft0_lease">del</p></td>
+                                    <td className="tr7_lease td103_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td108_lease">
+                                        <p className="p7_lease ft0_lease"><span className="ft36_lease">Cumplimiento</span>:</p>
                                     </td>
-                                    <td rowSpan={2} className="tr6 td109"><p className="p41 ft0">al</p></td>
-                                    <td className="tr7 td104"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td105"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td106"><p className="p8 ft0">Plazo del</p></td>
-                                    <td className="tr7 td107"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td rowSpan={2} className="tr6_lease td109_lease"><p className="p41_lease ft0_lease">al</p></td>
+                                    <td className="tr7_lease td104_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td105_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td106_lease"><p className="p8_lease ft0_lease">Plazo del</p></td>
+                                    <td className="tr7_lease td107_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr8 td110"><p className="p6 ft29">de</p></td>
-                                    <td className="tr8 td111"><p className="p37 ft37">las</p></td>
-                                    <td rowSpan={2} className="tr16 td102"><p className="p8 ft0">valor</p></td>
-                                    <td rowSpan={2} className="tr16 td44"><p className="p7 ft0">del</p></td>
-                                    <td className="tr8 td103"><p className="p7 ft38">&nbsp;</p></td>
-                                    <td className="tr8 td108"><p className="p7 ft29">Ampara</p></td>
-                                    <td className="tr8 td104"><p className="p7 ft38">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr16 td105">
-                                        <p className="p8 ft0">Contratista</p>
+                                    <td className="tr8_lease td110_lease"><p className="p6_lease ft29_lease">de</p></td>
+                                    <td className="tr8_lease td111_lease"><p className="p37_lease ft37_lease">las</p></td>
+                                    <td rowSpan={2} className="tr16_lease td102_lease"><p className="p8_lease ft0_lease">valor</p></td>
+                                    <td rowSpan={2} className="tr16_lease td44_lease"><p className="p7_lease ft0_lease">del</p></td>
+                                    <td className="tr8_lease td103_lease"><p className="p7_lease ft38_lease">&nbsp;</p></td>
+                                    <td className="tr8_lease td108_lease"><p className="p7_lease ft29_lease">Ampara</p></td>
+                                    <td className="tr8_lease td104_lease"><p className="p7_lease ft38_lease">&nbsp;</p></td>
+                                    <td rowSpan={2} className="tr16_lease td105_lease">
+                                        <p className="p8_lease ft0_lease">Contratista</p>
                                     </td>
-                                    <td rowSpan={2} className="tr16 td106">
-                                        <p className="p8 ft0">contrato y 4</p>
+                                    <td rowSpan={2} className="tr16_lease td106_lease">
+                                        <p className="p8_lease ft0_lease">contrato y 4</p>
                                     </td>
-                                    <td rowSpan={2} className="tr16 td107"><p className="p8 ft0">SI</p></td>
+                                    <td rowSpan={2} className="tr16_lease td107_lease"><p className="p8_lease ft0_lease">SI</p></td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2} className="tr17 td101">
-                                        <p className="p6 ft39">obligaciones y</p>
+                                    <td colSpan={2} className="tr17_lease td101_lease">
+                                        <p className="p6_lease ft39_lease">obligaciones y</p>
                                     </td>
-                                    <td className="tr17 td103"><p className="p7 ft40">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr17 td112">
-                                        <p className="p7 ft39">Beneficiario el total y</p>
+                                    <td className="tr17_lease td103_lease"><p className="p7_lease ft40_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr17_lease td112_lease">
+                                        <p className="p7_lease ft39_lease">Beneficiario el total y</p>
                                     </td>
-                                    <td className="tr17 td104"><p className="p7 ft40">&nbsp;</p></td>
+                                    <td className="tr17_lease td104_lease"><p className="p7_lease ft40_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2} rowSpan={2} className="tr7 td101">
-                                        <p className="p6 ft0">prohibiciones</p>
+                                    <td colSpan={2} rowSpan={2} className="tr7_lease td101_lease">
+                                        <p className="p6_lease ft0_lease">prohibiciones</p>
                                     </td>
-                                    <td className="tr9 td102"><p className="p8 ft0">contrato</p></td>
-                                    <td className="tr9 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td103"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr7 td108">
-                                        <p className="p7 ft0">perfecto</p>
+                                    <td className="tr9_lease td102_lease"><p className="p8_lease ft0_lease">contrato</p></td>
+                                    <td className="tr9_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td103_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td rowSpan={2} className="tr7_lease td108_lease">
+                                        <p className="p7_lease ft0_lease">perfecto</p>
                                     </td>
-                                    <td className="tr9 td109"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td104"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td105"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td106"><p className="p8 ft0">meses más</p></td>
-                                    <td className="tr9 td107"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td className="tr9_lease td109_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td104_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td105_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td106_lease"><p className="p8_lease ft0_lease">meses más</p></td>
+                                    <td className="tr9_lease td107_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr18 td102"><p className="p7 ft41">&nbsp;</p></td>
-                                    <td className="tr18 td44"><p className="p7 ft41">&nbsp;</p></td>
-                                    <td className="tr18 td103"><p className="p7 ft41">&nbsp;</p></td>
-                                    <td className="tr18 td109"><p className="p7 ft41">&nbsp;</p></td>
-                                    <td className="tr18 td104"><p className="p7 ft41">&nbsp;</p></td>
-                                    <td className="tr18 td105"><p className="p7 ft41">&nbsp;</p></td>
-                                    <td className="tr18 td106"><p className="p7 ft41">&nbsp;</p></td>
-                                    <td className="tr18 td107"><p className="p7 ft41">&nbsp;</p></td>
+                                    <td className="tr18_lease td102_lease"><p className="p7_lease ft41_lease">&nbsp;</p></td>
+                                    <td className="tr18_lease td44_lease"><p className="p7_lease ft41_lease">&nbsp;</p></td>
+                                    <td className="tr18_lease td103_lease"><p className="p7_lease ft41_lease">&nbsp;</p></td>
+                                    <td className="tr18_lease td109_lease"><p className="p7_lease ft41_lease">&nbsp;</p></td>
+                                    <td className="tr18_lease td104_lease"><p className="p7_lease ft41_lease">&nbsp;</p></td>
+                                    <td className="tr18_lease td105_lease"><p className="p7_lease ft41_lease">&nbsp;</p></td>
+                                    <td className="tr18_lease td106_lease"><p className="p7_lease ft41_lease">&nbsp;</p></td>
+                                    <td className="tr18_lease td107_lease"><p className="p7_lease ft41_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr9 td91"><p className="p6 ft0">contraídas</p></td>
-                                    <td className="tr9 td92"><p className="p37 ft0">en</p></td>
-                                    <td className="tr9 td93"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td55"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td94"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td95"><p className="p7 ft0">cumplimiento</p></td>
-                                    <td className="tr9 td96"><p className="p41 ft0">del</p></td>
-                                    <td className="tr9 td97"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td98"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td99"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td100"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td className="tr9_lease td91_lease"><p className="p6_lease ft0_lease">contraídas</p></td>
+                                    <td className="tr9_lease td92_lease"><p className="p37_lease ft0_lease">en</p></td>
+                                    <td className="tr9_lease td93_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td55_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td94_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td95_lease"><p className="p7_lease ft0_lease">cumplimiento</p></td>
+                                    <td className="tr9_lease td96_lease"><p className="p41_lease ft0_lease">del</p></td>
+                                    <td className="tr9_lease td97_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td98_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td99_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td100_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                             </table>
-                            <p className="p42 ft14">Página 4 de 6</p>
-                            <p className="p43 ft15">
+                            <p className="p42_lease ft14_lease">Página 4 de 6</p>
+                            <p className="p43_lease ft15_lease">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p44 ft16">
+                            <p className="p21_lease ft17_lease">
                                 Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p45 ft17">
+                            <p className="p21_lease ft17_lease">
                                 Línea Única de Atención a la Ciudadanía 44 44 144
                             </p>
-                            <p className="p46 ft18">
+                            <p className="p21_lease ft17_lease">
                                 <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
                             </p>
-                            <p className="p47 ft16">Medellín - Colombia</p>
+                            <p className="p21_lease ft17_lease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
                 <Card className="my-3" style={{ width: '850px', margin: '0 auto' }}>
-                    <div id="page_5">
+                    <div id="page_5_lease">
                         <div id="p5dimg1">
                             <img
                                 src={imgbs64} alt="" id="p5img1"
                             />
                         </div>
 
-                        <div className="dclr"></div>
+                        <div className="dclr_lease"></div>
                         <div id="id5_1">
                             <div id="id5_1_1">
-                                <p className="p0 ft0">Cód. <span>FO-ADMI-137</span></p>
-                                <p className="p1 ft0">Versión. 1</p>
+                                <p className="p0_lease ft0_lease">Cód. <span>FO-ADMI-137</span></p>
+                                <p className="p1_lease ft0_lease">Versión. 1</p>
                             </div>
                             <div id="id5_1_2">
-                                <p className="p2 ft1">Formato</p>
-                                <p className="p0 ft2">
+                                <p className="p2_lease ft1_lease">Formato</p>
+                                <p className="p0_lease ft2_lease">
                                     <span>FO-ADMI</span> Estudio Previo para arrendamiento de Bien
                                 </p>
-                                <p className="p3 ft2">Inmueble</p>
+                                <p className="p3_lease ft2_lease">Inmueble</p>
                             </div>
                         </div>
                         <div id="id5_2">
-                            <table cellPadding="0" cellSpacing="0" className="t3">
+                            <table cellPadding="0" cellSpacing="0" className="t3_lease">
                                 <tr>
-                                    <td className="tr7 td113"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td39"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td83"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td114"><p className="p8 ft0">contrato</p></td>
-                                    <td className="tr7 td115"><p className="p7 ft0">pactado</p></td>
-                                    <td className="tr7 td116"><p className="p6 ft0">de</p></td>
-                                    <td className="tr7 td88"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td89"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr7 td90"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td className="tr7_lease td113_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td39_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td83_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td114_lease"><p className="p8_lease ft0_lease">contrato</p></td>
+                                    <td className="tr7_lease td115_lease"><p className="p7_lease ft0_lease">pactado</p></td>
+                                    <td className="tr7_lease td116_lease"><p className="p6_lease ft0_lease">de</p></td>
+                                    <td className="tr7_lease td88_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td89_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr7_lease td90_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td rowSpan={2} className="tr19 td117"><p className="p6 ft0">virtud</p></td>
-                                    <td rowSpan={2} className="tr19 td44"><p className="p7 ft0">del</p></td>
-                                    <td className="tr9 td118"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td69"><p className="p8 ft0">acuerdo</p></td>
-                                    <td className="tr9 td119"><p className="p48 ft0">a</p></td>
-                                    <td className="tr9 td120"><p className="p49 ft42">sus</p></td>
-                                    <td className="tr9 td105"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td106"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr9 td107"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td rowSpan={2} className="tr19_lease td117_lease"><p className="p6_lease ft0_lease">virtud</p></td>
+                                    <td rowSpan={2} className="tr19_lease td44_lease"><p className="p7_lease ft0_lease">del</p></td>
+                                    <td className="tr9_lease td118_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td69_lease"><p className="p8_lease ft0_lease">acuerdo</p></td>
+                                    <td className="tr9_lease td119_lease"><p className="p48_lease ft0_lease">a</p></td>
+                                    <td className="tr9_lease td120_lease"><p className="p49_lease ft42_lease">sus</p></td>
+                                    <td className="tr9_lease td105_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td106_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr9_lease td107_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td118"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td69"><p className="p8 ft0">términos,</p></td>
-                                    <td className="tr12 td119"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td120"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td105"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td106"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td107"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td className="tr12_lease td118_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td69_lease"><p className="p8_lease ft0_lease">términos,</p></td>
+                                    <td className="tr12_lease td119_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td120_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td105_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td106_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td107_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td117"><p className="p6 ft0">contrato</p></td>
-                                    <td className="tr12 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td118"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td121">
-                                        <p className="p8 ft0">condiciones</p>
+                                    <td className="tr12_lease td117_lease"><p className="p6_lease ft0_lease">contrato</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td118_lease"><p className="p7_lease ft11v">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td121_lease">
+                                        <p className="p8_lease ft0_lease">condiciones</p>
                                     </td>
-                                    <td className="tr12 td120"><p className="p49 ft0">y</p></td>
-                                    <td className="tr12 td105"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td106"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td107"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td className="tr12_lease td120_lease"><p className="p49_lease ft0_lease">y</p></td>
+                                    <td className="tr12_lease td105_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td106_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td107_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td117"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td44"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td118"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td121">
-                                        <p className="p8 ft0">especificaciones</p>
+                                    <td className="tr12_lease td117_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td44_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td118_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td121_lease">
+                                        <p className="p8_lease ft0_lease">especificaciones</p>
                                     </td>
-                                    <td className="tr12 td120"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td105"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td106"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td107"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td className="tr12_lease td120_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td105_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td106_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td107_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr12 td122"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td55"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td123"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr12 td124">
-                                        <p className="p8 ft0">contractuales</p>
+                                    <td className="tr12_lease td122_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td55_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td123_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td colSpan={2} className="tr12_lease td124_lease">
+                                        <p className="p8_lease ft0_lease">contractuales</p>
                                     </td>
-                                    <td className="tr12 td125"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td98"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td99"><p className="p7 ft11">&nbsp;</p></td>
-                                    <td className="tr12 td100"><p className="p7 ft11">&nbsp;</p></td>
+                                    <td className="tr12_lease td125_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td98_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td99_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
+                                    <td className="tr12_lease td100_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                 </tr>
                             </table>
-                            <p className="p50 ft0">
+                            <p className="p50_lease ft0_lease">
                                 Así mismo, con el fin de minimizar el riesgo y garantizar el
                                 cumplimiento del contrato, el Municipio de Medellín establecerá en el
                                 texto del contrato cláusulas como la penal pecuniaria y de auditoría
                                 interna así:
                             </p>
-                            <p className="p51 ft0">
-                                <span className="ft3">12.</span
-                                ><span className="ft5">Cláusula Penal Pecuniaria</span>: Se estipula una
+                            <p className="p51_lease ft0_lease">
+                                <span className="ft3_lease">12.</span
+                                ><span className="ft5_lease">Cláusula Penal Pecuniaria</span>: Se estipula una
                                 clausula penal equivalente al diez por ciento (10%) del valor total
                                 del contrato, la cual se hará efectiva de manera unilateral sin
                                 necesidad de declaratoria judicial, cuando a juicio del ordenador del
@@ -1028,11 +1017,11 @@ const LeaseDoc = () => {
                                 incumplimiento grave y severo del contrato, conforme a la normativa
                                 vigente.
                             </p>
-                            <p className="p23 ft3">
-                                <span className="ft3">13.</span><span className="ft5">Auditoria Interna</span
-                                ><span className="ft0">:</span>
+                            <p className="p23_lease ft3_lease">
+                                <span className="ft3_lease">13.</span><span className="ft5_lease">Auditoria Interna</span
+                                ><span className="ft0_lease">:</span>
                             </p>
-                            <p className="p16 ft0">
+                            <p className="p16_lease ft0_lease">
                                 La Secretaría de Evaluación y Control, mediante comunicación suscrita
                                 por el Secretario de Despacho o los Subsecretarios, podrá requerir del
                                 CONTRATISTA toda la información relacionada con los aspectos técnicos,
@@ -1045,15 +1034,15 @@ const LeaseDoc = () => {
                                 Auditoría interna serán sujetos de Multa por mora en la entrega de
                                 información, con fundamento en la normativa vigente.
                             </p>
-                            <p className="p14 ft3">14. Componente ambiental</p>
-                            <p className="p15 ft0">
+                            <p className="p14_lease ft3_lease">14. Componente ambiental</p>
+                            <p className="p15_lease ft0_lease">
                                 Dentro del presente proceso contractual el contratista deberá cumplir
                                 con los riesgos ambientales que le apliquen a la destinación del bien
                                 inmueble entregado en arrendamiento (Digitar los riesgos ambientales
                                 que apliquen para el contrato).
                             </p>
-                            <p className="p5 ft3">15. Supervisión del contrato:</p>
-                            <p className="p16 ft0">
+                            <p className="p5_lease ft3_lease">15. Supervisión del contrato:</p>
+                            <p className="p16_lease ft0_lease">
                                 De conformidad con lo dispuesto por el artículo 83 de la Ley 1474 de
                                 2011 y la normativa aplicable, y toda vez que no se requiere de
                                 conocimientos especializados, la vigilancia técnica administrativa,
@@ -1067,128 +1056,128 @@ const LeaseDoc = () => {
                                 como propietario del inmueble. La designación hará parte integrante
                                 del contrato.
                             </p>
-                            <p className="p52 ft14">Página 5 de 6</p>
-                            <p className="p18 ft15">
+                            <p className="p52_lease ft14_lease">Página 5 de 6</p>
+                            <p className="p18_lease ft15_lease">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p19 ft16">
+                            <p className="p21_lease ft17_lease">
                                 Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p20 ft17">
+                            <p className="p21_lease ft17_lease">
                                 Línea Única de Atención a la Ciudadanía 44 44 144
                             </p>
-                            <p className="p21 ft18">
+                            <p className="p21_lease ft17_lease">
                                 <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
                             </p>
-                            <p className="p22 ft16">Medellín - Colombia</p>
+                            <p className="p21_lease ft17_lease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
                 <Card className="my-3" style={{ width: '850px', margin: '0 auto' }}>
-                    <div id="page_6">
+                    <div id="page_6_lease">
                         <div id="p6dimg1">
                             <img
                                 src={imgbs64} id="p6img1" alt=""
                             />
                         </div>
 
-                        <div className="dclr"></div>
+                        <div className="dclr_lease"></div>
                         <div id="id6_1">
                             <div id="id6_1_1">
-                                <p className="p0 ft0">Cód. <span>FO-ADMI-137</span></p>
-                                <p className="p1 ft0">Versión. 1</p>
+                                <p className="p0_lease ft0_lease">Cód. <span>FO-ADMI-137</span></p>
+                                <p className="p1_lease ft0_lease">Versión. 1</p>
                             </div>
                             <div id="id6_1_2">
-                                <p className="p2 ft1">Formato</p>
-                                <p className="p0 ft2">
+                                <p className="p2_lease ft1_lease">Formato</p>
+                                <p className="p0_lease ft2_lease">
                                     <span>FO-ADMI</span> Estudio Previo para arrendamiento de Bien
                                 </p>
-                                <p className="p3 ft2">Inmueble</p>
+                                <p className="p3_lease ft2_lease">Inmueble</p>
                             </div>
                         </div>
                         <div id="id6_2">
-                            <p className="p10 ft0">
-                                <span className="ft3">16.</span
-                                ><span className="ft5">Lugar de Ejecución: </span>Municipio de Medellín
+                            <p className="p10_lease ft0_lease">
+                                <span className="ft3_lease">16.</span
+                                ><span className="ft5_lease">Lugar de Ejecución: </span>Municipio de Medellín
                                 <span>–Antioquia</span>
                             </p>
-                            <p className="p16 ft0">
-                                <span className="ft3">17.</span><span className="ft43">Multas: </span>(En los
+                            <p className="p16_lease ft0_lease">
+                                <span className="ft3_lease">17.</span><span className="ft43_lease">Multas: </span>(En los
                                 contratos de arrendamientos de vivienda NO se pactan multas. De
                                 ocurrir incumplimientos, el ARRENDADOR tiene facultades expresas para
                                 darlo por terminado de manera unilateral, ante cualquiera de las
                                 causales de incumplimiento y procederá a cobrar la cláusula penal)
                             </p>
-                            <p className="p53 ft21">
+                            <p className="p53_lease ft21_lease">
                                 (Las multas serán fijadas de acuerdo a las condiciones especiales del
                                 bien inmueble dado en arrendamiento y se verificaran al momento de la
                                 elaboración de cada estudio previo, cuales aplican).
                             </p>
-                            <p className="p9 ft0">
-                                <span className="ft3">18.</span><span className="ft44">Publicación. </span>De
+                            <p className="p9_lease ft0_lease">
+                                <span className="ft3_lease">18.</span><span className="ft44_lease">Publicación. </span>De
                                 conformidad con el Decreto 1082 de 2015, y con el artículo 223 del
                                 <span>Decreto-Ley</span>
                             </p>
-                            <p className="p54 ft0">
-                                <span className="ft0">019</span
-                                ><span className="ft45"
+                            <p className="p54_lease ft0_lease">
+                                <span className="ft0_lease">019</span
+                                ><span className="ft45_lease"
                                 >de 2012, el presente contrato una vez perfeccionado, deberá ser
                                     publicado por parte del </span
-                                ><span className="ft3">MUNICIPIO DE MEDELLÍN </span>en el Sistema
+                                ><span className="ft3_lease">MUNICIPIO DE MEDELLÍN </span>en el Sistema
                                 Electrónico para la Contratación Público, SECOP y a través del Portal
                                 Único de Contratación
                                 <a href="http://www.colombiacompra.gov.co"
-                                ><span className="ft46">www.colombiacompra.gov.co</span></a
+                                ><span className="ft46_lease">www.colombiacompra.gov.co</span></a
                                 >.
                             </p>
-                            <p className="p12 ft0">
-                                <span className="ft3">19.</span
-                                ><span className="ft4">Línea del Plan de Desarrollo: </span>Dimensión: 1
+                            <p className="p12_lease ft0_lease">
+                                <span className="ft3_lease">19.</span
+                                ><span className="ft4_lease">Línea del Plan de Desarrollo: </span>Dimensión: 1
                                 Creemos en la confianza ciudadana; Reto: 1.3
                             </p>
-                            <p className="p55 ft21">
+                            <p className="p55_lease ft21_lease">
                                 Medellín bien administrado; Programa: 1.3.4 Gestión efectiva. Proyecto
                                 1.3.4.5 Gestión y conservación de activos.
                             </p>
-                            <p className="p56 ft0">
+                            <p className="p56_lease ft0_lease">
                                 Medellín, Antioquia, (Digite el día) de (Digite el mes) de (digite el
                                 año)
                             </p>
-                            <p className="p57 ft0">Nombres y apellidos</p>
-                            <p className="p58 ft0">Líder de Programa</p>
-                            <p className="p10 ft0">Unidad Administración de Bienes Inmuebles</p>
-                            <p className="p10 ft0">Subsecretaría de Gestión de Bienes</p>
-                            <table cellPadding="0" cellSpacing="0" className="t4">
+                            <p className="p57_lease ft0_lease">Nombres y apellidos</p>
+                            <p className="p58_lease ft0_lease">Líder de Programa</p>
+                            <p className="p10_lease ft0_lease">Unidad Administración de Bienes Inmuebles</p>
+                            <p className="p10_lease ft0_lease">Subsecretaría de Gestión de Bienes</p>
+                            <table cellPadding="0" cellSpacing="0" className="t4_lease">
                                 <tr>
-                                    <td className="tr2 td126"><p className="p35 ft16">Elaboró:</p></td>
-                                    <td className="tr2 td127"><p className="p8 ft16">Revisó:</p></td>
-                                    <td className="tr2 td128"><p className="p8 ft16">Aprobó:</p></td>
+                                    <td className="tr2_lease td126_lease"><p className="p35_lease ft16_lease">Elaboró:</p></td>
+                                    <td className="tr2_lease td127_lease"><p className="p8_lease ft16_lease">Revisó:</p></td>
+                                    <td className="tr2_lease td128_lease"><p className="p8_lease ft16_lease">Aprobó:</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr17 td129"><p className="p35 ft17">(Nombre)</p></td>
-                                    <td className="tr17 td130"><p className="p8 ft17">(Nombre)</p></td>
-                                    <td className="tr17 td131"><p className="p8 ft17">(Nombre)</p></td>
+                                    <td className="tr17_lease td129_lease"><p className="p35_lease ft17_lease">(Nombre)</p></td>
+                                    <td className="tr17_lease td130_lease"><p className="p8_lease ft17_lease">(Nombre)</p></td>
+                                    <td className="tr17_lease td131_lease"><p className="p8_lease ft17_lease">(Nombre)</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr17 td132"><p className="p35 ft17">(Cargo)</p></td>
-                                    <td className="tr17 td133"><p className="p8 ft17">(Cargo)</p></td>
-                                    <td className="tr17 td134"><p className="p8 ft17">(Cargo)</p></td>
+                                    <td className="tr17_lease td132_lease"><p className="p35_lease ft17_lease">(Cargo)</p></td>
+                                    <td className="tr17_lease td133_lease"><p className="p8_lease ft17_lease">(Cargo)</p></td>
+                                    <td className="tr17_lease td134_lease"><p className="p8_lease ft17_lease">(Cargo)</p></td>
                                 </tr>
                             </table>
-                            <p className="p59 ft14">Página 6 de 6</p>
-                            <p className="p18 ft15">
+                            <p className="p59_lease ft14_lease">Página 6 de 6</p>
+                            <p className="p18_lease ft15_lease">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p19 ft16">
+                            <p className="p21_lease ft17_lease">
                                 Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p20 ft17">
+                            <p className="p21_lease ft17_lease">
                                 Línea Única de Atención a la Ciudadanía 44 44 144
                             </p>
-                            <p className="p21 ft18">
+                            <p className="p21_lease ft17_lease">
                                 <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
                             </p>
-                            <p className="p22 ft16">Medellín - Colombia</p>
+                            <p className="p21_lease ft17_lease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>

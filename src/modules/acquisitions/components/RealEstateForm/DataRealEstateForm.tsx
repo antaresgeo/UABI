@@ -546,6 +546,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             min={0}
                             disabled={
                                 !(
+                                    formik.values.active_type?.includes(active_type[1]) ||
                                     formik.values.active_type?.includes(active_type[2]) ||
                                     formik.values.active_type?.includes(active_type[3])
                                 )

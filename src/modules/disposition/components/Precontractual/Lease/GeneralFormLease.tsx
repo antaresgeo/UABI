@@ -54,7 +54,7 @@ export const GeneralFormLease: FC<FormPros> = ({onSubmit, innerRef, realEstate})
         vigilance_value: "",
         subtotal: 0,
         total: 0,
-        Prediation_number: "",
+        prediation_number: "",
         prediation_date: "",
         business_type: "",
         coverage: "",
