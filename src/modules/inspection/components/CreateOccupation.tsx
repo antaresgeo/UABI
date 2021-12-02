@@ -6,11 +6,12 @@ import { Ocupation } from '../custom_types';
 
 interface CreateOccupationProps {
     ocupation: Ocupation;
+    innerRef: any;
+    onSubmit: (values) => void
 }
 
-const CreateOccupation: FC<CreateOccupationProps> = ({ ocupation }) => {
+const CreateOccupation: FC<CreateOccupationProps> = ({ ocupation, innerRef, onSubmit }) => {
     const history = useHistory();
-    console.log({ ocupation });
     return (
         <div className="container-fluid">
             <div className="row">
@@ -28,7 +29,7 @@ const CreateOccupation: FC<CreateOccupationProps> = ({ ocupation }) => {
                             </div>
                         }
                     >
-                        <OccupationForm old={ocupation} />
+                        <OccupationForm old={ocupation} innerRef={innerRef} onSubmit={onSubmit} />
                     </Card>
                 </div>
             </div>

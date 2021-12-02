@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, {FC, useRef} from 'react';
 import { formatDate } from '../../../utils';
 import { Card } from '../../../utils/ui';
-import {Field, Form, Formik} from 'formik';
+import {Field, Form, Formik, FormikValues} from 'formik';
 import ErrorMessage from "../../../utils/ui/error_messge";
 import {ModalNotificar} from "../../disposition/components/ModalNotificar";
 
@@ -9,8 +9,10 @@ interface BasicInformationProps {
     inspection: any;
     obs?: string
     disabled?: boolean
+    innerRef: any
+    onSubmit: (values) => void
 }
-const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs }) => {
+const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs, innerRef, onSubmit }) => {
     return (
         <div className="container-fluid">
             <div className="col-12">
@@ -73,8 +75,12 @@ const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs
             </div>
             <Card actions={[<div className="d-flex justify-content-end pe-4 ps-4"><ModalNotificar /></div>]}>
                 <Formik
+                    innerRef={innerRef}
                     enableReinitialize
-                    onSubmit={() => {}}
+                    onSubmit={(values, form) => {
+                        onSubmit(values)
+                        form.setSubmitting(false);
+                    }}
                     initialValues={{
                         observations: obs || ''
                     }}
