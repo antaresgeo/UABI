@@ -348,18 +348,18 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                                 { id: 'DG', name: 'Diagonal' },
                                                 { id: 'TV', name: 'Transversal' },
                                             ]}
-                                            extra_on_change={async (value) => {
-                                                if (value === 'CL') {
-                                                    setFieldValue('first_orientation', 'Sur', false);
-                                                    setFieldValue('second_orientation', 'Este', false);
-                                                } else if (value === 'CR') {
-                                                    setFieldValue('first_orientation', 'Este', false);
-                                                    setFieldValue('second_orientation', 'Sur', false);
-                                                } else {
-                                                    setFieldValue('first_orientation', '', false);
-                                                    setFieldValue('second_orientation', '', false);
-                                                }
-                                            }}
+                                            // extra_on_change={async (value) => {
+                                            //     if (value === 'CL') {
+                                            //         setFieldValue('first_orientation', 'Sur', false);
+                                            //         setFieldValue('second_orientation', 'Este', false);
+                                            //     } else if (value === 'CR') {
+                                            //         setFieldValue('first_orientation', 'Este', false);
+                                            //         setFieldValue('second_orientation', 'Sur', false);
+                                            //     } else {
+                                            //         setFieldValue('first_orientation', '', false);
+                                            //         setFieldValue('second_orientation', '', false);
+                                            //     }
+                                            // }}
                                         />
                                         <ErrorMessage name="type" />
                                     </div>
