@@ -13,7 +13,6 @@ const InspectionCreate: FC<PruebaProps> = ({}) => {
     const { real_estate_id } = useParams<IParams>();
     const dispatch = useDispatch();
     const inspection: any = useSelector((store: any) => store.inspection.inspection.value);
-    console.log(inspection);
     useEffect(() => {
         dispatch(actions.get_inspection_by_real_estate_id(real_estate_id));
     }, []);

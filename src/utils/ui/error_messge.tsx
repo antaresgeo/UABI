@@ -9,7 +9,7 @@ interface ErrorMessageProps {
 }
 
 const ErrorMessage: FC<ErrorMessageProps> = ({ name, withCount, max }) => {
-    let [field] = useField({ name });
+    let [field] = useField(name ? { name } : { name: '_' });
     let hasCount = false;
     const value = field.value;
     if (name) {

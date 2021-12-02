@@ -4,14 +4,21 @@ import { Card } from '../../../utils/ui';
 import DocumentModal from '../../../utils/components/DocumentsModal';
 import ErrorMessage from '../../../utils/ui/error_messge';
 
-interface PhotographicRecordFormProps {}
+interface PhotographicRecordFormProps {
+    innerRef: any;
+    onSubmit: (values) => void;
+}
 
-const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({}) => {
+const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ innerRef, onSubmit }) => {
     return (
         <div className="container-fluid">
             <Formik
+                innerRef={innerRef}
                 enableReinitialize
-                onSubmit={() => {}}
+                onSubmit={(values, form) => {
+                    onSubmit(values)
+                    form.setSubmitting(false)
+                }}
                 initialValues={{
                     documento1: '',
                     documento2: '',

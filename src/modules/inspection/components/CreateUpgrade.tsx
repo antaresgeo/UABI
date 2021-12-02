@@ -5,10 +5,11 @@ import UpgradeForm from './UpgradeForm';
 import { Owner } from '../custom_types';
 interface CreateUpgradeProps {
     owner: Owner;
+    innerRef: any;
+    onSubmit: (values) => void;
 }
-const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner }) => {
+const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner, innerRef, onSubmit }) => {
     const history = useHistory();
-    console.log({ owner });
     return (
         <div className="container-fluid">
             <div className="row ">
@@ -27,10 +28,10 @@ const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner }) => {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>prueba</td>
-                                        <td>prueba</td>
-                                        <td>prueba</td>
-                                        <td>prueba</td>
+                                        <td>{owner?.names_surnames || '-'}</td>
+                                        <td>{owner?.document_number || '-'}</td>
+                                        <td>{owner?.phone_number || '-'}</td>
+                                        <td>{owner?.email || '-'}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -39,7 +40,7 @@ const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner }) => {
                 </div>
                 <div className="col-md-12">
                     <Card title="Actualizar datos del poseedor del bien inmueble">
-                        <UpgradeForm />
+                        <UpgradeForm owner={owner} innerRef={innerRef} onSubmit={onSubmit} />
                     </Card>
                 </div>
             </div>
