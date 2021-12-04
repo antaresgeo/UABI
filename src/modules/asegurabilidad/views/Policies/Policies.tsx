@@ -1,6 +1,6 @@
 // export {default as Insurability} from './CreatePolicy';
 import { useDispatch } from 'react-redux';
-import { IPolicyAttributes } from '../../../../utils/interfaces/insurability';
+import { IPolicyAttributes } from '../../../../utils/interfaces';
 import { useSelector } from 'react-redux';
 import { actions } from '../../redux';
 import { useEffect } from 'react';
@@ -18,8 +18,7 @@ const table_columns = [
         title: 'Compañias Aseguradoras',
         dataIndex: 'insurance_companies',
         align: 'left' as 'left',
-        render: (date) => date.map(d => d.nit).join(" - ")
-
+        render: (date) => date.map((d) => d.nit).join(' - '),
     },
     {
         title: 'Bienes Inmuebles',
@@ -37,8 +36,8 @@ const table_columns = [
         align: 'center' as 'center',
         render: (dates) => {
             const tmpDate = new Date(parseInt(dates));
-            const newDate = moment(tmpDate).format('MM/DD/YYYY');
-            return newDate;
+            // noinspection UnnecessaryLocalVariableJS
+            return moment(tmpDate).format('MM/DD/YYYY');
         },
     },
     {
@@ -47,8 +46,7 @@ const table_columns = [
         align: 'center' as 'center',
         render: (dates) => {
             const tmpDate = new Date(parseInt(dates));
-            const newDate = moment(tmpDate).format('MM/DD/YYYY');
-            return newDate;
+            return moment(tmpDate).format('MM/DD/YYYY');
         },
     },
     {
@@ -105,7 +103,7 @@ const Policies = () => {
     };
 
     useEffect(() => {
-        dispatch(actions.getPolicies({with: 'pagination'}));
+        dispatch(actions.getPolicies({ with: 'pagination' }));
     }, []);
 
     return (

@@ -1,16 +1,16 @@
-import { FC, useEffect } from "react";
-import { Link, Table } from "../../../utils/ui";
-import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
+import { FC, useEffect } from 'react';
+import { Link, Table } from '../../../utils/ui';
+import { IRealEstateAttributes } from '../../../utils/interfaces';
 import { useSelector, useDispatch } from 'react-redux';
-import { actions } from "../../acquisitions/redux";
+import { actions } from '../../acquisitions/redux';
 
 interface DispositionListProps {
     filters?: any;
     init?: boolean;
 }
 
-export const TableDiszposition: FC<DispositionListProps> = ({  filters, init })  => {
-        const dispatch = useDispatch();
+export const TableDiszposition: FC<DispositionListProps> = ({ filters /*, init*/ }) => {
+    const dispatch = useDispatch();
 
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
     const loading: boolean = useSelector((store: any) => store.acquisitions.realEstates.loading);
@@ -43,7 +43,6 @@ export const TableDiszposition: FC<DispositionListProps> = ({  filters, init }) 
             title: 'Dirección',
             dataIndex: 'address',
             align: 'left' as 'left',
-
         },
         {
             title: 'Acciones',
@@ -88,8 +87,7 @@ export const TableDiszposition: FC<DispositionListProps> = ({  filters, init }) 
     };
 
     useEffect(() => {
-        dispatch(actions.getRealEstates({with: 'pagination'})); //TODO: mirar filtro de poliza
-
+        dispatch(actions.getRealEstates({ with: 'pagination' })); //TODO: mirar filtro de poliza
     }, []);
 
     return (
@@ -101,5 +99,5 @@ export const TableDiszposition: FC<DispositionListProps> = ({  filters, init }) 
             change_page={change_page}
             loading={loading}
         />
-    )
-}
+    );
+};

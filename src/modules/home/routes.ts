@@ -1,13 +1,11 @@
 // import store from "../../config/store";
 import { IRoute } from '../../utils/components/app_router/custom_types';
 import { Home } from './views';
-import { Permit } from '../../index';
 
 export const guards = {
     general: (props?) => {
-        const user = props.user
-        if (!user) return false;
-        return true;
+        return props.user;
+
     },
 };
 

@@ -5,7 +5,7 @@ import { Card } from '../../../../utils/ui';
 import InsuranceBrokerForm from '../../components/InsuranceBrokerForm';
 import { useEffect } from 'react';
 import { Broker } from '../../redux/service';
-import swal from "sweetalert";
+import swal from 'sweetalert';
 
 const CreateInsuranceBroker = () => {
     const history = useHistory();

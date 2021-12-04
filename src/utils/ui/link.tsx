@@ -2,20 +2,20 @@ import Avatar from 'antd/lib/avatar';
 import { Link } from 'react-router-dom';
 import { FC, MouseEventHandler } from 'react';
 
-interface UabiLinkProps extends LinkButtonProps {
+interface SabiLinkProps extends LinkButtonProps {
     to: any;
 }
-const UabiLink: FC<UabiLinkProps> = ({ to, ...button_props }) => (
+const SabiLink: FC<SabiLinkProps> = ({ to, ...button_props }) => (
     <Link to={to} className="text-decoration-none">
         <LinkButton {...button_props} />
     </Link>
 );
 
-UabiLink.defaultProps = {
+SabiLink.defaultProps = {
     avatar: true,
 };
 
-export default UabiLink;
+export default SabiLink;
 
 interface LinkButtonProps {
     name: string;
@@ -27,7 +27,7 @@ interface LinkButtonProps {
 }
 export const LinkButton: FC<LinkButtonProps> = ({ name, icon, iconText, avatar, onClick, className }) => {
     const has_icon = icon || iconText;
-    const axu_class = ['d-flex justify-content-center align-items-center uabi-link', className].join(' ');
+    const axu_class = ['d-flex justify-content-center align-items-center sabi-link', className].join(' ');
     return (
         <span className={axu_class} onClick={onClick}>
             <span>{name}</span>

@@ -1,11 +1,10 @@
-import { Card, Link, Table as UiTable } from "../../../../utils/ui";
+import { Card, Link, Table as UiTable } from '../../../../utils/ui';
 import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { swal_warning } from "../../../../utils";
-import { useDispatch } from "react-redux";
-import { actions } from "../../redux";
-import { startCase } from "lodash";
+import { swal_warning } from '../../../../utils';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../redux';
 
 interface IParams {
     valueArea: string;
@@ -20,8 +19,8 @@ export const TableAreas = () => {
     const location = useLocation<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { valueArea, numberRealEstates, data, action, realEstates, arrayRealEstates } = location.state;
-    const arrayEditRealEsates = [];
+    const { valueArea, numberRealEstates, data, realEstates, arrayRealEstates } = location.state;
+    // const arrayEditRealEsates = [];
     //console.log(data,numberRealEstates,realEstates )
     useEffect(() => {
         if (data && realEstates) {
@@ -36,31 +35,31 @@ export const TableAreas = () => {
             // })
             //console.log(arrayEditRealEsates)
 
-            const real_estates_edit = realEstates.map(realEstate => {
-                const editRealEstate = data.filter(r => r.id === realEstate.id)
+            const real_estates_edit = realEstates.map((realEstate) => {
+                const editRealEstate = data.filter((r) => r.id === realEstate.id);
                 let areaTotal = 0;
                 let areaCons = 0;
                 let arealote = 0;
                 if (editRealEstate !== undefined) {
-                    editRealEstate.map(r => {
-                        areaTotal = areaTotal + r.intact_area
-                        if(r.type === 'constrution'){
-                            areaCons = r.intact_area
-                        }else if(r.type === "lote") {
-                            arealote = r.intact_area
+                    editRealEstate.forEach((r) => {
+                        areaTotal = areaTotal + r.intact_area;
+                        if (r.type === 'constrution') {
+                            areaCons = r.intact_area;
+                        } else if (r.type === 'lote') {
+                            arealote = r.intact_area;
                         }
-                    })
+                    });
                     return {
-                         ...realEstate,
+                        ...realEstate,
                         total_area: areaTotal,
                         construction_area: areaCons,
-                        plot_area: arealote
+                        plot_area: arealote,
                     };
                 } else {
                     return realEstate;
                 }
-            })
-            console.log(real_estates_edit)
+            });
+            console.log(real_estates_edit);
 
             // data.map(bienInmueble => {
             //     if (bienInmueble.use_area > 0) {
@@ -81,13 +80,13 @@ export const TableAreas = () => {
             // })
             //console.log(real_estates_edit)
         }
-    }, [])
+    }, []);
 
     const initial_values = [];
     for (let i = 0; i < Number(numberRealEstates); i++) {
         initial_values.push({
             value: `${i + 1} de ${numberRealEstates}`,
-            name: "",
+            name: '',
             total_area: `${(Number(valueArea) / Number(numberRealEstates)).toFixed(2)}`,
             id: '',
             sap_id: '',
@@ -127,18 +126,17 @@ export const TableAreas = () => {
             dependency: '',
             subdependency: '',
             management_center: '',
-            cost_center: ''
+            cost_center: '',
             //...realEstate,
         });
     }
 
     const [DataRealEstate, setDataRealEstate] = useState(initial_values);
     useEffect(() => {
-        if(arrayRealEstates) {
+        if (arrayRealEstates) {
             setDataRealEstate(arrayRealEstates);
         }
-    }, [])
-
+    }, []);
 
     const table_columns = [
         {
@@ -163,7 +161,10 @@ export const TableAreas = () => {
             render: (value, realEstate, index) => {
                 return (
                     <Link
-                        to={{ pathname: `/englobar/real-estates/edit`, state: { realEstateData: realEstate, index, DataRealEstate, valueArea } }}
+                        to={{
+                            pathname: `/englobar/real-estates/edit`,
+                            state: { realEstateData: realEstate, index, DataRealEstate, valueArea },
+                        }}
                         name=""
                         avatar={false}
                         icon={<i className="fa fa-pencil" aria-hidden="true" />}
@@ -175,7 +176,7 @@ export const TableAreas = () => {
     ];
     let totalArea = 0;
     if (Array.isArray(DataRealEstate)) {
-        DataRealEstate.map(data => totalArea = totalArea + Number(data.total_area))
+        DataRealEstate.map((data) => (totalArea = totalArea + Number(data.total_area)));
     }
     return (
         <div className="h-100 d-flex flex-column">
@@ -192,24 +193,24 @@ export const TableAreas = () => {
                                             <b className="col-6 text-center">Utilizada</b>
                                         </div>
                                         <div className="row my-1">
-                                            <div className="col">{valueArea}m<sup>2</sup></div>
+                                            <div className="col">
+                                                {valueArea}m<sup>2</sup>
+                                            </div>
                                             <div className="col text-center">{`/`}</div>
-                                            {Number(totalArea.toFixed(0)) > Number(valueArea) ?
-                                                <div className="col" style={{ color: 'red' }}>{totalArea.toFixed(0)}m<sup>2</sup></div>
-                                                :
-                                                <div className="col" >{totalArea.toFixed(0)}m<sup>2</sup></div>
-                                            }
+                                            {Number(totalArea.toFixed(0)) > Number(valueArea) ? (
+                                                <div className="col" style={{ color: 'red' }}>
+                                                    {totalArea.toFixed(0)}m<sup>2</sup>
+                                                </div>
+                                            ) : (
+                                                <div className="col">
+                                                    {totalArea.toFixed(0)}m<sup>2</sup>
+                                                </div>
+                                            )}
                                         </div>
-
                                     </>
-
                                 }
                             >
-                                <UiTable
-                                    columns={table_columns}
-                                    items={DataRealEstate}
-                                    with_pagination
-                                />
+                                <UiTable columns={table_columns} items={DataRealEstate} with_pagination />
                             </Card>
                         </div>
                     </div>
@@ -233,23 +234,24 @@ export const TableAreas = () => {
                     type="button"
                     className="btn btn-outline-primary me-3"
                     onClick={() => {
-                        let completeRealEstates = DataRealEstate.every(b => b.name !== "")
+                        let completeRealEstates = DataRealEstate.every((b) => b.name !== '');
 
-                        if (Number(totalArea.toFixed(0)) > Number(valueArea) || Number(totalArea.toFixed(0)) < Number(valueArea)) {
-                            swal_warning.fire(
-                                {
-                                    title: "Área a utilizar no válida", text: `revisa las áreas de los Bienes Inmuebles`
-                                }
-                            )
+                        if (
+                            Number(totalArea.toFixed(0)) > Number(valueArea) ||
+                            Number(totalArea.toFixed(0)) < Number(valueArea)
+                        ) {
+                            swal_warning.fire({
+                                title: 'Área a utilizar no válida',
+                                text: `revisa las áreas de los Bienes Inmuebles`,
+                            });
                         } else if (!completeRealEstates) {
-                            swal_warning.fire(
-                                {
-                                    title: "No se puede finalizar", text: "se deben completar los datos de todos los bienes Inmuebles"
-                                }
-                            )
+                            swal_warning.fire({
+                                title: 'No se puede finalizar',
+                                text: 'se deben completar los datos de todos los bienes Inmuebles',
+                            });
                         } else {
                             //console.log(DataRealEstate)
-                            dispatch(actions.createRealEstates(DataRealEstate))
+                            dispatch(actions.createRealEstates(DataRealEstate));
                             //console.log('bienes inmuebles a editar', real_estates_edit);
                         }
                     }}
@@ -258,5 +260,5 @@ export const TableAreas = () => {
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};

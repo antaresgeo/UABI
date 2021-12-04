@@ -7,13 +7,11 @@ export const http = axios.create({
 });
 
 http.interceptors.request.use((config) => {
-    if(config.url !== '/auth/login/') {
+    if (config.url !== '/auth/login/') {
         const token = localStorage.getItem('_tk_');
-        console.log(token)
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
     }
-    console.log(config);
     return config;
 });

@@ -25,7 +25,6 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
     realEstates,
     realEstate,
     onSubmit,
-    disabled,
     projects,
     type,
     onProjectSelectedChange,
@@ -88,11 +87,13 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
         const isFinish = aux_values._type === 'finish';
         const values: any = { ...aux_values };
         delete values._type;
-        onSubmit(values, form, isFinish).then(() => {
-            form.setSubmitting(false);
-            form.resetForm();
-            form.setFieldValue('project_id', projectId || '');
-        }).catch(() => form.setSubmitting(false));;
+        onSubmit(values, form, isFinish)
+            .then(() => {
+                form.setSubmitting(false);
+                form.resetForm();
+                form.setFieldValue('project_id', projectId || '');
+            })
+            .catch(() => form.setSubmitting(false));
     };
 
     return (
@@ -164,7 +165,7 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                                         </div>
                                                     </div>
                                                     <div className="col-1">
-                                                        <label htmlFor=""></label>
+                                                        <label htmlFor=""/>
                                                         <button type="submit" className="btn btn-primary mr-3">
                                                             Subir
                                                         </button>

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Card, Link } from '../../../utils/ui';
+import React from 'react';
+import { Link } from '../../../utils/ui';
 import { useHistory, useParams } from 'react-router-dom';
 import Detail_disposition from './../components/Detail_disposition';
 
@@ -15,12 +15,18 @@ export const DetailDisposition = () => {
                 <div className="flex-fill overflow-auto">
                     <div className="bg-white d-flex flex-column h-100">
                         <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
-                            <h5 className='col-11'>Crear nueva Disposición</h5>
+                            <h5 className="col-11">Crear nueva Disposición</h5>
                             <Link
                                 to={`/disposition/edit/${id}/`}
                                 name=""
                                 avatar={false}
-                                icon={<i style={{ marginLeft: '30px', fontSize: 16, color: '#000' }} className="fa fa-pencil" aria-hidden="true" />}
+                                icon={
+                                    <i
+                                        style={{ marginLeft: '30px', fontSize: 16, color: '#000' }}
+                                        className="fa fa-pencil"
+                                        aria-hidden="true"
+                                    />
+                                }
                             />
                             {/* <i className="col fa fa-pencil" aria-hidden="true" style={{marginLeft: '30px', fontSize: 16}}></i> */}
                         </div>
@@ -49,5 +55,5 @@ export const DetailDisposition = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};

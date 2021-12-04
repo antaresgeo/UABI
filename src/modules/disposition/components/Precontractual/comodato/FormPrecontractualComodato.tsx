@@ -1,12 +1,10 @@
-import { Field, Formik } from 'formik';
-import ErrorMessage from '../../../../../utils/ui/error_messge'
+import { Field } from 'formik';
+import ErrorMessage from '../../../../../utils/ui/error_messge';
 import Tooltip from 'antd/lib/tooltip';
 import { FC } from 'react';
 
-
 interface FormProps {
     formik: any;
-
 }
 export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
     return (
@@ -62,13 +60,16 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         id="loan_typology_id"
                         name="loan_typology"
                         disabled={false}
-
                     >
                         <option key="loan_typology" value="" hidden>
                             --Seleccione tipología--
                         </option>
-                        <option key="Junta de acción comunal" value="Junta de acción comunal">Junta de acción comunal</option>
-                        <option key="Entidades animo de lucro" value="Entidades animo de lucro">Entidades animo de lucro</option>
+                        <option key="Junta de acción comunal" value="Junta de acción comunal">
+                            Junta de acción comunal
+                        </option>
+                        <option key="Entidades animo de lucro" value="Entidades animo de lucro">
+                            Entidades animo de lucro
+                        </option>
                     </Field>
                     <ErrorMessage name="loan_typology" />
                 </div>
@@ -82,19 +83,22 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         id="competitive_process_id"
                         name="competitive_process"
                         disabled={false}
-
                     >
                         <option key="competitive_process" value="" hidden>
                             --Seleccione si aplica o no aplica--
                         </option>
-                        <option key="Aplica" value="Aplica">Aplica</option>
-                        <option key="No aplica" value="No aplica">No aplica</option>
+                        <option key="Aplica" value="Aplica">
+                            Aplica
+                        </option>
+                        <option key="No aplica" value="No aplica">
+                            No aplica
+                        </option>
                     </Field>
                     <ErrorMessage name="public_service" />
                 </div>
             </div>
             <div className="row">
-                {formik.values.competitive_process === "Aplica" &&
+                {formik.values.competitive_process === 'Aplica' && (
                     <div className="col-3">
                         <label htmlFor="competitive_process_value_id" className="form-label">
                             Proceso competitivo
@@ -111,7 +115,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         />
                         <ErrorMessage name="competitive_process_value" withCount max={500} />
                     </div>
-                }
+                )}
                 <div className="col-3">
                     <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
                         Fecha de Registro de Prediación
@@ -135,15 +139,18 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         id="Horizontal_property_id"
                         name="Horizontal_property"
                         disabled={false}
-
                     >
                         <option key="Horizontal_property_id" value="" hidden>
                             -- Propiedad Horizontal --
                         </option>
-                        <option key="si" value="si">Si</option>
-                        <option key="no" value="no">No</option>
+                        <option key="si" value="si">
+                            Si
+                        </option>
+                        <option key="no" value="no">
+                            No
+                        </option>
                     </Field>
-                    <ErrorMessage name="Horizontal_property"></ErrorMessage>
+                    <ErrorMessage name="Horizontal_property"/>
                 </div>
                 <div className="col-3">
                     <label htmlFor="contract_period_id" className="form-label">
@@ -160,7 +167,6 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="contract_period" />
                 </div>
@@ -174,13 +180,16 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         id="resolution_id"
                         name="resolution"
                         disabled={false}
-
                     >
                         <option key="resolution" value="" hidden>
                             -- Aplica resolución --
                         </option>
-                        <option key="si resolución" value="si">Si</option>
-                        <option key="no resolución" value="no">No</option>
+                        <option key="si resolución" value="si">
+                            Si
+                        </option>
+                        <option key="no resolución" value="no">
+                            No
+                        </option>
                     </Field>
                     <ErrorMessage name="resolution" />
                 </div>
@@ -193,7 +202,6 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     </label>
                     <div className="input-group">
                         <Field
-
                             id="lockable_base_id"
                             name="lockable_base"
                             className="form-control border-end-0"
@@ -218,18 +226,24 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         id="economic_exploitation_id"
                         name="economic_exploitation"
                         disabled={false}
-
                     >
                         <option key="economic_exploitation" value="" hidden>
                             -- Autoriza explotación económica --
                         </option>
-                        <option key="si explotación" value="si">Si</option>
-                        <option key="no explotación" value="no">No</option>
+                        <option key="si explotación" value="si">
+                            Si
+                        </option>
+                        <option key="no explotación" value="no">
+                            No
+                        </option>
                     </Field>
                     <ErrorMessage name="economic_exploitation" />
                 </div>
-                {console.log('valor',formik.values.public_service)}
-                <div className={`col-${(formik.values.public_service !== 'si' && formik.values.competitive_process !== 'Aplica' ) ? 6 : 3}`}>
+                <div
+                    className={`col-${
+                        formik.values.public_service !== 'si' && formik.values.competitive_process !== 'Aplica' ? 6 : 3
+                    }`}
+                >
                     <label htmlFor="public_service_id" className="form-label">
                         Servicios publicos por Aforo
                     </label>
@@ -239,34 +253,36 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         id="public_service_id"
                         name="public_service"
                         disabled={false}
-
                     >
                         <option key="public_service" value="" hidden>
                             -- Servicios públicos por aforo --
                         </option>
-                        <option key="si" value="si">Si</option>
-                        <option key="no" value="no">No</option>
+                        <option key="si" value="si">
+                            Si
+                        </option>
+                        <option key="no" value="no">
+                            No
+                        </option>
                     </Field>
                     <ErrorMessage name="public_service" />
                 </div>
-                {formik.values.public_service === "si" &&
-                    <div className={`col-${(formik.values.competitive_process === 'Aplica' ) ? 6 : 3}`}>
-                    <label htmlFor="value_public_service_id" className="form-label">
-                        valor de servicios públicos por aforo
-                    </label>
-                    <Field
-                        type="number"
-                        id="value_public_service_id"
-                        name="value_public_service"
-                        className="form-control"
-                        disabled={false}
-                        min={1}
-                        max={12}
-
-                    />
-                    <ErrorMessage name="value_public_service" />
-                </div>
-                }
+                {formik.values.public_service === 'si' && (
+                    <div className={`col-${formik.values.competitive_process === 'Aplica' ? 6 : 3}`}>
+                        <label htmlFor="value_public_service_id" className="form-label">
+                            valor de servicios públicos por aforo
+                        </label>
+                        <Field
+                            type="number"
+                            id="value_public_service_id"
+                            name="value_public_service"
+                            className="form-control"
+                            disabled={false}
+                            min={1}
+                            max={12}
+                        />
+                        <ErrorMessage name="value_public_service" />
+                    </div>
+                )}
                 <div className="col-6">
                     <label htmlFor="destination_realEstate_id" className="form-label">
                         Destinación de bien Inmueble
@@ -332,7 +348,6 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="Action_field" withCount max={200} />
                 </div>
 
-
                 <div className="col-6">
                     <label htmlFor="Environmental_risk_id" className="form-label">
                         Riesgos Ambientales
@@ -382,7 +397,6 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="activities" withCount max={500} />
                 </div>
             </div>
-
         </>
-    )
-}
+    );
+};

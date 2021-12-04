@@ -14,7 +14,7 @@ body {
 #sidebar {
     width: 20%;
     background: #ffffff;
-    height: 100hv;
+    height: 100vh;
 }
 #texto-superior {
     background: white;
@@ -88,7 +88,6 @@ main {
     display: flex;
     flex-wrap: nowrap;
     height: 100vh;
-    height: -webkit-fill-available;
     max-height: 100vh;
     //overflow-x: auto;
     //overflow-y: hidden;
@@ -248,7 +247,8 @@ main {
             border-bottom: 1px solid #e2e4e4;
             border-left: 1px solid #e2e4e4;
             width: 100%;
-            th, td {
+            th,
+            td {
                 padding: 8px;
                 color: #8d8c8c;
                 border-left: 1px solid #e2e4e4;
@@ -261,15 +261,10 @@ main {
 }
 
 .detailForm {
-    label{
+    label {
         color: #8d8c8c;
     }
     div {
-        color: #6C6868;
+        color: #6c6868;
     }
 }
-
-
-
-
-

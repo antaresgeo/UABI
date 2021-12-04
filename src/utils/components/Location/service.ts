@@ -11,13 +11,13 @@ import {
 } from '../../interfaces';
 import { location_http } from './../../../config/axios_instances';
 
-interface IParams {
-    country?: string;
-    state?: string;
-    city?: string;
-    commune?: string;
-    neighborhood?: string;
-}
+// interface IParams {
+//     country?: string;
+//     state?: string;
+//     city?: string;
+//     commune?: string;
+//     neighborhood?: string;
+// }
 
 // PROJECTS
 // Services: GET

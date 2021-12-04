@@ -32,13 +32,12 @@ export const compute_docs = async (supports_documents) => {
         if (doc_required_message(supports_documents)) {
             return Promise.reject();
         } else {
-            const docs_to_create = supports_documents.map((d) => {
+            return supports_documents.map((d) => {
                 if (d.hasOwnProperty('pdf') && !!d.pdf) {
                     return { ...d, action: 'create' };
                 }
                 return { ...d, action: 'none' };
             });
-            return docs_to_create;
         }
     } else {
         if (doc_required_message(supports_documents)) {

@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Tabs } from 'antd';
 import CreatePrecontractual from '../views/Pre-contractual/CreatePrecontractual';
 import CreateContract from './../views/Contracts/CreateContract';
@@ -9,22 +9,21 @@ interface IParams {
     realEstate: any;
 }
 
-
 export const DispositionFormTags = () => {
     const location = useLocation<IParams>();
     const { dispositionType, realEstate } = location.state;
-    const history = useHistory();
+    // const history = useHistory();
     const { TabPane } = Tabs;
 
     const [activeKey, set_activeKey] = useState<string>('1');
 
-    const next_tab = () => {
-        const key = parseInt(activeKey);
-        const next = key + 1;
-        if (next <= 5) {
-            set_activeKey(`${next}`);
-        }
-    };
+    // const next_tab = () => {
+    //     const key = parseInt(activeKey);
+    //     const next = key + 1;
+    //     if (next <= 5) {
+    //         set_activeKey(`${next}`);
+    //     }
+    // };
 
     function callback(key) {
         set_activeKey(key);
@@ -39,7 +38,7 @@ export const DispositionFormTags = () => {
 
                     <Tabs activeKey={activeKey} className="w-100 h-100" onChange={callback}>
                         <TabPane tab="Proceso Precontractual" key="1">
-                            <CreatePrecontractual dispositionType={dispositionType} realEstate={realEstate}/>
+                            <CreatePrecontractual dispositionType={dispositionType} realEstate={realEstate} />
                         </TabPane>
                         <TabPane tab="Proceso Contractual" key="2">
                             <CreateContract />
@@ -48,5 +47,5 @@ export const DispositionFormTags = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

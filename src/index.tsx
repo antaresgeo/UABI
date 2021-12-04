@@ -6,10 +6,12 @@ import { Provider } from 'react-redux';
 import store from './config/store';
 import './utils/assets/styles/index.scss';
 import TemplateProvider from './utils/components/template/template_context';
+import ConfigProvider from 'antd/lib/config-provider';
+import esES from 'antd/lib/locale/es_ES';
 
 declare global {
     interface Window {
-        __uabi: {
+        __sabi: {
             cancel_mapper?: Object;
             number_formatter: Intl.NumberFormat;
             is_in_refresh: boolean;
@@ -74,8 +76,8 @@ export enum Permit {
     LIST_PERMIT = 'listar_Permisos',
 }
 
-if (!window.__uabi) {
-    window.__uabi = {
+if (!window.__sabi) {
+    window.__sabi = {
         cancel_mapper: {},
         is_in_refresh: false,
         retry_pending: [],
@@ -89,8 +91,8 @@ if (!window.__uabi) {
 
 // borrar esto cuando se termine la autenticacion
 
-if (!window.__uabi) {
-    window.__uabi = {
+if (!window.__sabi) {
+    window.__sabi = {
         cancel_mapper: {},
         is_in_refresh: false,
         retry_pending: [],
@@ -105,13 +107,13 @@ if (!window.__uabi) {
 // borrar esto cuando se termine la autenticacion
 
 ReactDOM.render(
-    // <React.StrictMode>
     <Provider store={store}>
-        <TemplateProvider>
-            <App />
-        </TemplateProvider>
+        <ConfigProvider locale={esES}>
+            <TemplateProvider>
+                <App />
+            </TemplateProvider>
+        </ConfigProvider>
     </Provider>,
-    // </React.StrictMode>,
     document.getElementById('root')
 );
 
@@ -119,5 +121,3 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-

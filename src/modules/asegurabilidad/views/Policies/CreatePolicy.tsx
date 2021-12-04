@@ -1,12 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-import { Card } from "../../../../utils/ui";
-import { actions } from "../../redux";
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import { Card } from '../../../../utils/ui';
+import { actions } from '../../redux';
 import { useEffect } from 'react';
-import { clearRealEstate, getRealEstate } from "../../../acquisitions/redux/actions/realEstates";
+import { clearRealEstate, getRealEstate } from '../../../acquisitions/redux/actions/realEstates';
 import PolizaForm from '../../components/PolizaForm';
-import { IRealEstateAttributes } from '../../../../utils/interfaces/realEstates';
-
+import { IRealEstateAttributes } from '../../../../utils/interfaces';
 
 interface IParams {
     id: string;
@@ -19,21 +18,20 @@ const CreateInsurability = () => {
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
     const insurance_brokers: any = useSelector((store: any) => store.insurability.brokers.value);
-    console.log(insurance_brokers)
+    console.log(insurance_brokers);
     useEffect(() => {
         dispatch(clearRealEstate());
         dispatch(actions.get_list_companies());
         dispatch(actions.get_all_brokers());
-        console.log(id, realEstate)
+        console.log(id, realEstate);
         if (id) {
             dispatch(getRealEstate(id));
         }
-    }, [id])
+    }, [id]);
 
     useEffect(() => {
         dispatch(clearRealEstate());
-    }, [])
-
+    }, []);
 
     const createPolicy = async (dataPolicy) => {
         //console.log(dataPolicy)
@@ -50,7 +48,7 @@ const CreateInsurability = () => {
                             <Card title="Crear Póliza">
                                 <PolizaForm
                                     type_assurance="Normal"
-                                    type='create'
+                                    type="create"
                                     companies={insurance_companies}
                                     brokers={insurance_brokers}
                                     onSubmit={(values) => {

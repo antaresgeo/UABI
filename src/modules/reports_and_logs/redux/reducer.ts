@@ -1,5 +1,3 @@
-import types from './types';
-
 interface State {}
 
 const emptyInitialState: State = {};

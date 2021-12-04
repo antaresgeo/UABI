@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { getAddressById, insertAddress } from '.';
-import { http, documents_http } from '../../../../config/axios_instances';
-import { clearObjectNulls, formatDate, swal } from '../../../../utils';
+import { http } from '../../../../config/axios_instances';
+import { clearObjectNulls, swal } from '../../../../utils';
 
 import {
     AdquisitionsItf,
@@ -10,13 +10,7 @@ import {
     IRealEstateResponse,
     ITipologiesResponse,
 } from '../../../../utils/interfaces';
-import {
-    compute_docs,
-    upload_documents,
-} from '../../views/RealEstate/realEstate.utils';
 import { get_documents_by_ids } from '../../../../utils/components/DocumentsModal/services';
-import { log } from 'util';
-import { doc } from 'prettier';
 import moment from 'moment';
 
 // REAL ESTATES
@@ -62,7 +56,7 @@ export const getRealEstate = async (
 ): Promise<IRealEstateAttributes | string> => {
     try {
         let URI = `/real-estates`;
-        let res: AxiosResponse<any> = await http.get(URI, {
+        let res: AxiosResponse = await http.get(URI, {
             params: { id },
         });
         res.data.results.active_type = res.data.results.active_type.split(', ');
@@ -122,6 +116,7 @@ const finalData = (data, docs_ids?) => {
     delete aux_data._address;
     delete aux_data.dependency_id;
     delete aux_data.project;
+    delete aux_data._project;
     if (aux_data.project?.id !== 0) {
         delete aux_data.dependency;
         delete aux_data.subdependency;
@@ -154,7 +149,7 @@ export const createRealEstate = async (
 export const createRealEstates = async (data: any): Promise<any | []> => {
     try {
         console.log('bienes inmuebles a crear', data);
-        let URI = `/real-estates`;
+        // let URI = `/real-estates`;
         //servicio
     } catch (error) {
         console.error(error);
@@ -165,7 +160,7 @@ export const createRealEstates = async (data: any): Promise<any | []> => {
 export const updateRealEstates = async (data: any) => {
     try {
         console.log('bienes inmuebles a actualizar', data);
-        let URI = `/real-estates`;
+        // let URI = `/real-estates`;
         //servicio
     } catch (error) {
         console.error(error);

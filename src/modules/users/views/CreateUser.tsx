@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Card } from '../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 import GeneralForm from './../components/GerenalForm';
-import {swal_success} from "../../../utils";
+import { swal_success } from '../../../utils';
 
 const CreateUser = () => {
     const dispatch = useDispatch();

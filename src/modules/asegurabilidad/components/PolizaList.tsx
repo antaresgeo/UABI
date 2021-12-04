@@ -2,7 +2,6 @@ import { IPolicyAttributes } from '../../../utils/interfaces/components.interfac
 import { FC } from 'react';
 import { formatDate } from '../../../utils';
 import { Table, Link } from '../../../utils/ui';
-
 interface InsurabilityListProps {
     policies: IPolicyAttributes[];
 }

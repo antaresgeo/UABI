@@ -54,7 +54,7 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
     };
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
-            {({ values, isValid, isSubmitting, setFieldValue }) => {
+            {({ /*values, isValid,*/ isSubmitting, setFieldValue }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -175,6 +175,6 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
 };
 
 InsuranceCompanyForm.defaultProps = {
-    onSubmit: (v) => Promise.resolve(),
+    onSubmit: (/*v*/) => Promise.resolve(),
 };
 export default InsuranceCompanyForm;

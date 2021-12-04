@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
-import CheckboxGroup from 'react-checkbox-group';
+import React, { FC } from 'react';
+
 import { AdquisitionsItf } from '../../../../utils/interfaces';
 import { Formik, Form, Field } from 'formik';
 import ErrorMessage from '../../../../utils/ui/error_messge';
@@ -16,14 +16,7 @@ interface AcquisitionsFromProps {
     onChange: (values, count) => Promise<any>;
 }
 
-const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
-    type,
-    disabled,
-    acquisition,
-    onChange,
-    innerRef,
-    active_type,
-}) => {
+const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, onChange, innerRef }) => {
     const initial_values = {
         acquisition_type: '',
         area: '',
@@ -58,7 +51,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
             validationSchema={schema}
             innerRef={innerRef}
         >
-            {({ values, setFieldValue }) => {
+            {({ setFieldValue }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -114,88 +107,19 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                                         <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
                                     </Tooltip>
                                 </label>
-                                <Field as="select" className="form-select" aria-label="origin" id="origin_id" name="origin">
+                                <Field
+                                    as="select"
+                                    className="form-select"
+                                    aria-label="origin"
+                                    id="origin_id"
+                                    name="origin"
+                                >
                                     <option value="">-- Seleccione Procedencia --</option>
                                     <option value={1}>Alexander</option>
                                     <option value={2}>Sergio</option>
                                     <option value={3}>Ximena</option>
                                 </Field>
                                 <ErrorMessage name="origin" />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3">
-                                <label htmlFor="area_id" className="form-label">
-                                    Área
-                                </label>
-                                <div className="input-group">
-                                    <Field
-                                        type="number"
-                                        className="form-control border-end-0"
-                                        id="area_id"
-                                        name="area"
-                                        min={0}
-                                    />
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text bg-white border-start-0">
-                                            m<sup>2</sup>
-                                        </span>
-                                    </div>
-                                </div>
-                                <ErrorMessage name="plot_area" />
-                            </div>
-                            <div className="col-3">
-                                <label htmlFor="acquisition_value_id" className="form-label">
-                                    Valor de adquisición
-                                </label>
-                                <Field
-                                    type="number"
-                                    className="form-control"
-                                    id="acquisition_value_id"
-                                    name="act_value"
-                                />
-                                <ErrorMessage name="act_value" />
-                            </div>
-                            <div className="col-3">
-                                <label htmlFor="acquired_percentage_id" className="form-label">
-                                    Porcentaje Adquirido
-                                </label>
-                                <div className="input-group">
-                                    <Field
-                                        type="number"
-                                        className="form-control border-end-0"
-                                        id="acquired_percentage_id"
-                                        name="acquired_percentage"
-                                    />
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text bg-white border-start-0">%</span>
-                                    </div>
-                                </div>
-                                <ErrorMessage name="acquired_percentage" />
-                            </div>
-                            <div className="col-3">
-                                <label htmlFor="address_id" className="form-label">
-                                    Ciudad
-                                </label>
-                                <div className="input-group">
-                                    <Field
-                                        name="city"
-                                        id="address_id"
-                                        type="text"
-                                        className="form-control"
-                                        disabled
-                                    />
-                                    <div className="input-group-prepend">
-                                        <LocationModal
-                                            disabled={disabled}
-                                            onSave={async (_values) => {
-                                                setFieldValue('city', _values.city_name, false);
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-
-                                <ErrorMessage name="city_name" />
                             </div>
                         </div>
                         <div className="row">
@@ -222,8 +146,70 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                                 />
                                 <ErrorMessage name="entity_number" />
                             </div>
-
-                            <div className="col-6">
+                            <div className="col-3">
+                                <label htmlFor="acquired_percentage_id" className="form-label">
+                                    Porcentaje Adquirido
+                                </label>
+                                <div className="input-group">
+                                    <Field
+                                        type="number"
+                                        className="form-control border-end-0"
+                                        id="acquired_percentage_id"
+                                        name="acquired_percentage"
+                                    />
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text bg-white border-start-0">%</span>
+                                    </div>
+                                </div>
+                                <ErrorMessage name="acquired_percentage" />
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="area_id" className="form-label">
+                                    Área
+                                </label>
+                                <div className="input-group">
+                                    <Field
+                                        type="number"
+                                        className="form-control border-end-0"
+                                        id="area_id"
+                                        name="area"
+                                        min={0}
+                                    />
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text bg-white border-start-0">
+                                            m<sup>2</sup>
+                                        </span>
+                                    </div>
+                                </div>
+                                <ErrorMessage name="plot_area" />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-3">
+                                <label htmlFor="acquisition_value_id" className="form-label">
+                                    Valor de adquisición
+                                </label>
+                                <Field
+                                    type="number"
+                                    className="form-control"
+                                    id="acquisition_value_id"
+                                    name="act_value"
+                                />
+                                <ErrorMessage name="act_value" />
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="acquisition_value_id" className="form-label">
+                                    Valor de Reconocimiento
+                                </label>
+                                <Field
+                                    type="number"
+                                    className="form-control"
+                                    id="acquisition_value_id"
+                                    name="act_value"
+                                />
+                                <ErrorMessage name="act_value" />
+                            </div>
+                            <div className="col-3">
                                 <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">
                                     Fecha de Adquisición
                                 </label>
@@ -235,6 +221,24 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                                     disabled={disabled}
                                 />
                                 <ErrorMessage name="acquisition_date" />
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="address_id" className="form-label">
+                                    Ciudad
+                                </label>
+                                <div className="input-group">
+                                    <Field name="city" id="address_id" type="text" className="form-control" disabled />
+                                    <div className="input-group-prepend">
+                                        <LocationModal
+                                            disabled={disabled}
+                                            onSave={async (_values) => {
+                                                setFieldValue('city', _values.city_name, false);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <ErrorMessage name="city_name" />
                             </div>
                         </div>
                     </Form>

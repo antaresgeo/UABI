@@ -1,7 +1,7 @@
 import Card from 'antd/lib/card';
 import { CSSProperties, FC } from 'react';
 
-interface UabiCardProps {
+interface SabiCardProps {
     title?: any;
     extra?: any;
     actions?: any;
@@ -9,11 +9,11 @@ interface UabiCardProps {
     bodyStyle?: CSSProperties;
     style?: CSSProperties;
 }
-const UabiCard: FC<UabiCardProps> = ({ title, extra, actions, children, className, bodyStyle, style }) => {
+const SabiCard: FC<SabiCardProps> = ({ title, extra, actions, children, className, bodyStyle, style }) => {
     const ops = {
         title,
         bordered: false,
-        className: [className, 'uabi-content'].join(' '),
+        className: [className, 'sabi-content'].join(' '),
         bodyStyle,
         style: style || { marginBottom: '1.5rem' },
         ...(extra ? { extra } : {}),
@@ -22,4 +22,4 @@ const UabiCard: FC<UabiCardProps> = ({ title, extra, actions, children, classNam
     return <Card {...ops}>{children}</Card>;
 };
 
-export default UabiCard;
+export default SabiCard;

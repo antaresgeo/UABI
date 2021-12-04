@@ -1,5 +1,5 @@
 import { location_http } from '../../../../config/axios_instances';
-import { IAuditTrail, IDocumentResponse } from '../../../../utils/interfaces';
+import { IDocumentResponse } from '../../../../utils/interfaces';
 
 // PROJECTS
 import projectsServices from './projects';
@@ -7,7 +7,6 @@ import projectsServices from './projects';
 // REAL ESTATES
 import realEstatesServices from './realEstates';
 import { AxiosResponse } from 'axios';
-import { IAddress } from '../../../../utils/interfaces';
 
 interface IProps {
     id: number;

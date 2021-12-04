@@ -50,6 +50,5 @@ const actions = {
     deleteRealEstate,
     createAcquisitionForRealEstate,
     getTipologies,
-
 };
 export default actions;

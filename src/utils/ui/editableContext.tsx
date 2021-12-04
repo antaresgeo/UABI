@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
+import React from 'react';
+import { Form } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 // import EditableCell from './editableCell';
 
-export const EditableContext = React.createContext<FormInstance<any> | null>(null);
+export const EditableContext = React.createContext<FormInstance | null>(null);
 
 export interface Item {
     key: string;

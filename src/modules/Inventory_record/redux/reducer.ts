@@ -1,10 +1,10 @@
 import types from './types';
-import {Loadable, Pageable} from "../../../custom_types";
+import { Loadable, Pageable } from '../../../custom_types';
 import { registration } from './service';
 
 interface State {
-    registration: Loadable<registration>
-    registrations: Pageable<registration>
+    registration: Loadable<registration>;
+    registrations: Pageable<registration>;
 }
 
 const emptyInitialState: State = {
@@ -13,7 +13,7 @@ const emptyInitialState: State = {
         loading: false,
         loaded: false,
     },
-    registrations:{
+    registrations: {
         value: [],
         pagination: {
             page: 1,
@@ -24,8 +24,7 @@ const emptyInitialState: State = {
         },
         loading: false,
         loaded: false,
-    }
-
+    },
 };
 const initialState = emptyInitialState;
 

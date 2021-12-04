@@ -1,5 +1,4 @@
 import authTypes from './types';
-import { User } from '../custom_types';
 import { TokenPayload } from './actions';
 
 const token: string = localStorage.getItem('_tk_');

@@ -1,7 +1,6 @@
-import { FC, useState, useEffect } from 'react';
+import { FC } from 'react';
 import { Card } from '../../../../utils/ui';
 import { AdquisitionsItf, IProjectAttributes } from '../../../../utils/interfaces';
-import dependencias from '../../dependencias';
 import { DataRealEstateForm } from './DataRealEstateForm';
 
 interface GeneralDataFormProps {

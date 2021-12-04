@@ -4,7 +4,6 @@ import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
 import LocationModal from '../../../utils/components/Location/LocationModal';
 import { Broker } from '../redux/service';
-import { service } from '../../acquisitions/redux';
 
 interface InsuranceBrokerFormPros {
     insurance_broker?: Broker;
@@ -42,7 +41,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
     };
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
-            {({ values, isValid, isSubmitting, setFieldValue }) => {
+            {({ /*values, isValid,*/ isSubmitting, setFieldValue }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -134,7 +133,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                             disabled={disabled}
                                             onSave={async (values) => {
                                                 setFieldValue('state', values.location.state, false);
-                                                setFieldValue('city',values.location.city, false);
+                                                setFieldValue('city', values.location.city, false);
                                                 setFieldValue('address', values.address, false);
                                                 setFieldValue('location_id', values.id + '', false);
                                             }}
@@ -205,6 +204,6 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
 };
 
 InsuranceBrokerForm.defaultProps = {
-    onSubmit: (v) => Promise.resolve(),
+    onSubmit: (/*v*/) => Promise.resolve(),
 };
 export default InsuranceBrokerForm;

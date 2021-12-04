@@ -1,10 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
+import {FC, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { IUserAttributes } from './../../../utils/interfaces/users';
 import { actions, service } from '../redux';
-import swal from 'sweetalert';
 import { Card } from '../../../utils/ui';
 import GeneralForm from './../components/GerenalForm';
 import RoleForm from './../components/RoleForm';
@@ -18,7 +16,7 @@ interface IProps {
     view?: string;
 }
 
-const EditUser = ({ view }: IProps) => {
+const EditUser: FC<IProps> = () => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -57,7 +55,7 @@ const EditUser = ({ view }: IProps) => {
                                 <RoleForm
                                     type="assign"
                                     user_roles={user?.roles || []}
-                                    user_permits={user?.permits|| []}
+                                    user_permits={user?.permits || []}
                                     onSubmit={(values) => {
                                         return service.assignRolesAndPermits(id, values);
                                     }}

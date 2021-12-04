@@ -207,11 +207,10 @@ const reducer = (state: any = initialState, action: any): any => {
                     ...state.realEstate,
                     loading: false,
                     loaded: true,
-                    value: action.payload
-                }
-            }
+                    value: action.payload,
+                },
+            };
         }
-
 
         case types.tipologies.default: {
             return {

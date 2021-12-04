@@ -1,10 +1,9 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react';
 import { Card } from '../../../../utils/ui';
 import { useHistory, useParams } from 'react-router-dom';
 import RoleForm from './../../components/RoleForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux';
-import { IRolAttributes } from '../../../../utils/interfaces/roles';
 
 interface IParams {
     id: string;
@@ -16,17 +15,17 @@ export const EditRoles = () => {
     const role: any = useSelector((store: any) => store.users.rol.value);
 
     useEffect(() => {
-        dispatch(actions.getRole(Number(id)))
+        dispatch(actions.getRole(Number(id)));
     }, []);
 
     const finalRole = {
         name: role?.name,
-        permits: role?.permits?.map(a => a.id),
-    }
+        permits: role?.permits?.map((a) => a.id),
+    };
 
-    const editRol = async (values) =>{
-        await dispatch(actions.updateRole(values, id))
-    }
+    const editRol = async (values) => {
+        await dispatch(actions.updateRole(values, id));
+    };
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -62,5 +61,5 @@ export const EditRoles = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-    )
-}
+    );
+};

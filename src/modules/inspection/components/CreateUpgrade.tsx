@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Card } from '../../../utils/ui';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import UpgradeForm from './UpgradeForm';
 import { Owner } from '../custom_types';
 interface CreateUpgradeProps {
@@ -9,7 +9,7 @@ interface CreateUpgradeProps {
     onSubmit: (values) => void;
 }
 const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner, innerRef, onSubmit }) => {
-    const history = useHistory();
+    // const history = useHistory();
     return (
         <div className="container-fluid">
             <div className="row ">

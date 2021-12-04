@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import { ErrorMessage as AntErrorMessage, useFormikContext, useField } from 'formik';
-import get from 'lodash/get';
+import { ErrorMessage as AntErrorMessage, useField } from 'formik';
 
 interface ErrorMessageProps {
     name?: string;

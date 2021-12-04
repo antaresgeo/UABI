@@ -1,6 +1,6 @@
 import { documents_http } from './../../../config/axios_instances';
 import { AxiosResponse } from 'axios';
-import {formatDate} from "../../index";
+import { formatDate } from '../../index';
 
 export interface CreateDocumentResponse {
     message: string;
@@ -52,7 +52,6 @@ export const create_document = async ({
     }
 };
 
-
 export const get_documents_by_ids = async (ids) => {
     try {
         let URI_documents = '/docs/';
@@ -69,13 +68,13 @@ export const get_documents_by_ids = async (ids) => {
 
 export const download_document = async (doc_id, name) => {
     try {
-        let URI = `/docs/download/${doc_id}`
+        let URI = `/docs/download/${doc_id}`;
         let res: any = await download(name, documents_http.get(URI));
         console.log(res);
-    }catch (e) {
+    } catch (e) {
         return Promise.reject('Error download_document');
     }
-}
+};
 
 const download = async (filename, service) => {
     return service.then((response) => {

@@ -1,11 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
-import { actions, service } from '../../redux';
+import { actions } from '../../redux';
 import RealEstateForm from '../../components/RealEstateForm';
-import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-import { clearObjectNulls } from '../../../../utils';
+import { useDispatch } from 'react-redux';
 
 interface IProps {
     id: string;
@@ -32,7 +29,6 @@ const DetailProjects = () => {
                 try {
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));
                     if (acquisitions.length > 0) {
-
                         await dispatch(actions.createAcquisitionForRealEstate(res.id, acquisitions));
                     }
                     if (isFinish) {

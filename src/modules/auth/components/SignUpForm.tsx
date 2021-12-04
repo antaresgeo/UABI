@@ -1,24 +1,22 @@
-import { Field, Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import ErrorMessage from '../../../utils/ui/error_messge';
 const SignUpForm = () => {
-    const initialValues = {}
-    const submit = (values, actions) => {
+    const initialValues = {};
+    const submit = (/*values, actions*/) => {
         // onSubmit(values, actions).then(() => {
         //     actions.setSubmitting(false);
         //     actions.resetForm();
         // });
-
     };
 
     const schema = Yup.object().shape({
         user: Yup.string().required('obligatorio'),
-        password: Yup.string().required('obligatorio')
-
+        password: Yup.string().required('obligatorio'),
     });
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema}>
-            <Form >
+            <Form>
                 <div className="row">
                     <div className="col-6">
                         <label htmlFor="user_id" className="form-label">
@@ -82,19 +80,42 @@ const SignUpForm = () => {
                         <label htmlFor="identification_type_id" className="form-label">
                             Tipo identificación
                         </label>
-                        <Field name="identification_type" id="identification_type_id" as="select" className="form-select">
+                        <Field
+                            name="identification_type"
+                            id="identification_type_id"
+                            as="select"
+                            className="form-select"
+                        >
                             <option value="" hidden>
                                 -- Seleccione Tipo documento --
                             </option>
-                            <option key='TI' value='TI' >TARJETA IDENTIDAD</option>
-                            <option key='CE' value='CE' >CEDULA EXTRANJERIA</option>
-                            <option key='TE' value='TE' >TARJETA EXTRANGERIA</option>
-                            <option key='CC' value='CC' >CEDULA DE CIUDADANIA</option>
-                            <option key='NI' value='NI' >NIT</option>
-                            <option key='PA' value='PA' >PASAPORTE</option>
-                            <option key='TDE' value='TDE'>TIPO DE DOCUMENTO EXTRANJERO</option>
-                            <option key='RG' value='RG' >REGISTRO CIVIL</option>
-                            <option key='SIN' value='SIN'>SIN IDENTIFICACION</option>
+                            <option key="TI" value="TI">
+                                TARJETA IDENTIDAD
+                            </option>
+                            <option key="CE" value="CE">
+                                CEDULA EXTRANJERIA
+                            </option>
+                            <option key="TE" value="TE">
+                                TARJETA EXTRANGERIA
+                            </option>
+                            <option key="CC" value="CC">
+                                CEDULA DE CIUDADANIA
+                            </option>
+                            <option key="NI" value="NI">
+                                NIT
+                            </option>
+                            <option key="PA" value="PA">
+                                PASAPORTE
+                            </option>
+                            <option key="TDE" value="TDE">
+                                TIPO DE DOCUMENTO EXTRANJERO
+                            </option>
+                            <option key="RG" value="RG">
+                                REGISTRO CIVIL
+                            </option>
+                            <option key="SIN" value="SIN">
+                                SIN IDENTIFICACION
+                            </option>
                         </Field>
                         <ErrorMessage name="identification_type" />
                     </div>
@@ -156,34 +177,24 @@ const SignUpForm = () => {
                     </div>
                 </div>
                 <div className="row ">
-
                     <div className="col ">
                         <button
                             type="button"
-                            className='btn btn-dark '
-                            onClick={() =>
-                                (window.location.href = 'http=//localhost=3000/auth/signup')
-                            }
+                            className="btn btn-dark "
+                            onClick={() => (window.location.href = 'http=//localhost=3000/auth/signup')}
                         >
                             Regresar
                         </button>
                     </div>
                     <div className="col  text-end">
-                        <button
-                            type="submit"
-                            className="btn btn-primary "
-
-                        >
+                        <button type="submit" className="btn btn-primary ">
                             Registrarse
                         </button>
                     </div>
-
                 </div>
-
-
             </Form>
         </Formik>
-    )
-}
+    );
+};
 
-export default SignUpForm
+export default SignUpForm;

@@ -4,15 +4,12 @@ import ErrorMessage from '../../../../utils/ui/error_messge';
 import { IProjectAttributes } from '../../../../utils/interfaces';
 import Select from '../../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
-import { actions, service } from '../../redux';
+import { actions } from '../../redux';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 import { extractMonth, formatDate } from '../../../../utils';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import dependencias from '../../dependencias';
-import { ITipologyAttributes } from './../../../../utils/interfaces/realEstates';
-import { useSelector, useDispatch } from 'react-redux';
-import Popover from 'antd/lib/popover';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
 
 interface DataRealEstateFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -40,7 +37,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     inventoryEdit,
     onProjectSelectedChange,
 }) => {
-    const valorPatrimonial = formik.values.patrimonial_value;
+    // const valorPatrimonial = formik.values.patrimonial_value;
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(actions.getTipologies());
@@ -51,7 +48,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         const data_now = [...active_types];
         const new_value = e.target.value;
         const key = 'Lote';
-        let aux_data = [];
+        let aux_data: any[];
         if (!data_now.includes(new_value)) {
             if (data_now.includes(key)) {
                 aux_data = [key, new_value];
@@ -68,12 +65,12 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         if (!aux_data.includes(active_type[2]) && !aux_data.includes(active_type[3])) {
             formik.setFieldValue('construction_area', '', false);
             const value1 = parseFloat(formik.values.plot_area || 0);
-            formik.setFieldValue('total_area', value1 + 0, false);
+            formik.setFieldValue('total_area', value1, false);
         }
         if (!aux_data.includes(active_type[0])) {
             formik.setFieldValue('plot_area', '', false);
             const value1 = parseFloat(formik.values.construction_area || 0);
-            formik.setFieldValue('total_area', 0 + value1, false);
+            formik.setFieldValue('total_area', value1, false);
         }
         setFieldValue('active_type', aux_data, false);
     };
@@ -92,7 +89,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         return [];
     };
     const dependency_ops = format_list(dependencias);
-
     return (
         <>
             <div className="row">
@@ -132,6 +128,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     />
                     <ErrorMessage name="tipology_id" />
                 </div>
+
                 <div className="form-group col-3">
                     <label htmlFor="accounting_account_id" className="form-label">
                         Cuenta Contable
@@ -426,7 +423,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         </div>
                     </div>
 
-                    <ErrorMessage name="total_percentage"></ErrorMessage>
+                    <ErrorMessage name="total_percentage"/>
                 </div>
             </div>
             <div className="row">
@@ -447,7 +444,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         mode="multiple"
                     />
 
-                    <ErrorMessage name="materials"></ErrorMessage>
+                    <ErrorMessage name="materials"/>
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="zone_id" className="form-label">
@@ -481,7 +478,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         </label>
                     </div>
 
-                    <ErrorMessage name="zone"></ErrorMessage>
+                    <ErrorMessage name="zone"/>
                 </div>
                 <div className="col-6">
                     <label className="form-label">Tipo de activo</label>
@@ -586,7 +583,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 onSave={async (values: any) => {
                                     formik.setFieldValue('address', values.id, false);
                                     formik.setFieldValue('_address.name', `${values.address}`, false);
-                                    formik.setFieldValue('_address.cbml', `${values.cbmls.uabi}`, false);
+                                    formik.setFieldValue('_address.cbml', `${values.cbmls.sabi}`, false);
                                     return Promise.resolve();
                                 }}
                             />
@@ -625,6 +622,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <ErrorMessage name="description" withCount max={1000} />
                 </div>
             </div>
+
             {type !== 'create' && (
                 <>
                     <div className="row">
@@ -850,7 +848,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             </div>
                         </>
                     )}
-
                     <div className="row">
                         <div className="col-12">
                             <label htmlFor="comentarios_id" className="form-label">

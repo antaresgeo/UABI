@@ -1,13 +1,11 @@
 import { FC, useState } from 'react';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import LocationModal from '../../../utils/components/Location/LocationModal';
-import { Formik, Form, Field, FormikProps, FormikValues, FormikState } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import dependencias from '../../acquisitions/dependencias';
 import Select from '../../../utils/ui/select';
-import { DetailsUser, User } from '../redux/service';
 
 interface IUserFormPros {
     user?: IUserAttributes;
@@ -17,7 +15,7 @@ interface IUserFormPros {
 }
 
 const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
-    const history = useHistory();
+    // const history = useHistory();
     const [subs, set_subs] = useState<any[]>([]);
 
     const initial_values = {

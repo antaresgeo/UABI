@@ -5,11 +5,9 @@ import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/int
 import { actions } from '../../redux';
 import { Card, Link } from '../../../../utils/ui';
 import RealEstateList from '../../components/RealEstateList';
-import ProjectForm from '../../components/ProjectForm';
 import ProjectModal from './../../components/ProjectModal';
-import { AreasModal } from './../../components/en_des_globe/AreasModal';
-import ProjectDetail from "../../components/ProjectDetail";
-
+import { AreasModal } from '../../components/en_des_globe/AreasModal';
+import ProjectDetail from '../../components/ProjectDetail';
 
 interface IParams {
     id: string;
@@ -29,18 +27,16 @@ const DetailProject = () => {
         dispatch(actions.getRealEstatesByProject(id));
     }, []);
 
-
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
                     <div className="row justify-content-center">
-
                         <div className="col-md-12">
-                            <h5 style={{ fontWeight: 600,  marginBottom: 20 }}>
+                            <h5 style={{ fontWeight: 600, marginBottom: 20 }}>
                                 <>Proyecto: {project?.name}</>
                             </h5>
-                            <ProjectDetail project={project}/>
+                            <ProjectDetail project={project} />
                             <Card
                                 title="Bienes Inmuebles del Proyecto"
                                 extra={
@@ -74,10 +70,13 @@ const DetailProject = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
-                <ProjectModal openArea={(a)=> {
-                    setAction(a)
-                    set_is_visible_area(true)
-                }} realEstates={realEstates}/>
+                <ProjectModal
+                    openArea={(a) => {
+                        setAction(a);
+                        set_is_visible_area(true);
+                    }}
+                    realEstates={realEstates}
+                />
                 <AreasModal open={is_visibleArea} setOpen={set_is_visible_area} project={project} action={action} />
             </div>
         </div>

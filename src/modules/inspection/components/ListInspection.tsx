@@ -23,7 +23,7 @@ const ListInspection = ({ inspections, change_page, total_results, loading }) =>
             title: 'Dirección',
             dataIndex: 'address',
             align: 'left' as 'left',
-            render: (r) => r?.address
+            render: (r) => r?.address,
         },
 
         {

@@ -2,7 +2,7 @@ import authTypes from './types';
 import service from './service';
 import { service as user_service } from '../../users/redux';
 // import { PasswordResetBody, RequestAccessBody } from '../custom_types';
-import { decodeJWT, swal_warning } from '../../../utils';
+import { swal_warning } from '../../../utils';
 
 export type TokenPayload = {
     access: string;

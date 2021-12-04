@@ -1,4 +1,4 @@
-import Menu  from 'antd/lib/menu';
+import Menu from 'antd/lib/menu';
 import { MailOutlined } from '@ant-design/icons';
 import { Link } from '../../../utils/ui';
 import { useHistory } from 'react-router-dom';

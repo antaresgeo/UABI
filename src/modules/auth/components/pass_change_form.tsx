@@ -12,7 +12,16 @@ interface OwnProps {
 /**
  * Form component for change password
  * @param {(pass: PasswordResetBody) => Promise<any>;} change_password function service for change password
+ * @param onOk
+ * @param onOk
+ * @param SuccessButtons
+ * @param code
+ * @param onOk
+ * @param SuccessButtons
+ * @param code
  * @param {React.ReactChildren} children
+ * @param SuccessButtons
+ * @param code
  */
 export const PassChangeForm: FC<OwnProps> = ({ change_password, onOk, children, SuccessButtons, code }) => {
     const conditions = [
@@ -36,7 +45,7 @@ export const PassChangeForm: FC<OwnProps> = ({ change_password, onOk, children, 
                 formik.setSubmitting(false);
                 onOk && onOk(data);
             })
-            .catch((error) => {
+            .catch(() => {
                 formik.setSubmitting(false);
             });
     };

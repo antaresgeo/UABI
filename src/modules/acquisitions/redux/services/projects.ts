@@ -37,7 +37,7 @@ const getProjects = async ({
             params: {
                 page,
                 pageSize,
-                with: "pagination",
+                with: 'pagination',
                 ...(q ? { q } : {}),
             },
         });
@@ -53,8 +53,8 @@ export const createProject = async (
     values
 ): Promise<IProjectAttributes | string> => {
     try {
-        const aux_values = {...values}
-        delete aux_values.id
+        const aux_values = { ...values };
+        delete aux_values.id;
         let URI = `/projects`;
         let res: AxiosResponse<IProjectResponse> = await http.post(URI, {
             ...aux_values,

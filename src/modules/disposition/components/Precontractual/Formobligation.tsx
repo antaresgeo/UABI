@@ -21,7 +21,6 @@ export const Formobligation = () => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="recovery_value" />
                 </div>
@@ -40,11 +39,9 @@ export const Formobligation = () => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="recovery_value" />
                 </div>
-
             </div>
             <div className="row">
                 <div className="col-6">
@@ -62,7 +59,6 @@ export const Formobligation = () => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="recovery_value" />
                 </div>
@@ -78,7 +74,6 @@ export const Formobligation = () => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="recovery_value" />
                 </div>
@@ -94,7 +89,6 @@ export const Formobligation = () => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="recovery_value" />
                 </div>
@@ -115,7 +109,6 @@ export const Formobligation = () => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="recovery_value" />
                 </div>
@@ -134,7 +127,6 @@ export const Formobligation = () => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="recovery_value" />
                 </div>
@@ -155,7 +147,6 @@ export const Formobligation = () => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="recovery_value" />
                 </div>
@@ -174,11 +165,10 @@ export const Formobligation = () => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="recovery_value" />
                 </div>
             </div>
         </>
-    )
-}
+    );
+};

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react';
 import { DataRealEstateForm } from '../RealEstateForm/DataRealEstateForm';
 import { IProjectAttributes } from '../../../../utils/interfaces/components.interfaces';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,6 @@ import { actions, service } from '../../redux';
 import { Formik, Form } from 'formik';
 import { useHistory, useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
-import { swal_warning } from '../../../../utils';
 import { Card } from '../../../../utils/ui';
 
 interface IParams {
@@ -25,13 +24,12 @@ interface RealEstateModalProps {
     onSubmit: (values, actions?) => Promise<any>;
 }
 
-export const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealEstates, onSubmit }) => {
-
+export const RealEstateGlobe: FC<RealEstateModalProps> = () => {
     //console.log('valores', is_visible,realEstateData)
     //console.log(arrayRealEstates)
     const location = useLocation<IParams>();
     const { index, realEstateData, DataRealEstate, valueArea } = location.state;
-    console.log(index, realEstateData,'data', DataRealEstate)
+    console.log(index, realEstateData, 'data', DataRealEstate);
     const history: any = useHistory();
     const dispatch = useDispatch();
     const ref = useRef<any>();
@@ -47,8 +45,6 @@ export const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealE
             set_project(null);
         }
     }, [project_id]);
-
-
 
     useEffect(() => {
         dispatch(actions.getProjects());
@@ -66,29 +62,29 @@ export const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealE
         }
     };
 
-    const submit = (values, actions) => {
+    const submit = (values /*, actions*/) => {
         console.log('valores', values);
-        const doc: any = compute_doc_enrollment(values.document);
-        const arrayRealEstates = [...DataRealEstate]
+        // const doc: any = compute_doc_enrollment(values.document);
+        const arrayRealEstates = [...DataRealEstate];
         arrayRealEstates[index] = values;
-        console.log(arrayRealEstates)
-        history.push( { pathname: `/englobar/realEstates/`, state: { arrayRealEstates,valueArea } })
-    }
-
-    const compute_doc_enrollment = async (document) => {
-        console.log(document)
-        if (document.hasOwnProperty('pdf') && document.pdf) {
-            return document;
-        } else {
-            console.log("documento requerdido")
-            await swal_warning.fire(
-                {
-                    title: "el documento es obligatorio", text: "El documento de Matrícula es obligatorio"
-                }
-            )
-            return Promise.reject();
-        }
+        console.log(arrayRealEstates);
+        history.push({ pathname: `/englobar/realEstates/`, state: { arrayRealEstates, valueArea } });
     };
+
+    // const compute_doc_enrollment = async (document) => {
+    //     console.log(document)
+    //     if (document.hasOwnProperty('pdf') && document.pdf) {
+    //         return document;
+    //     } else {
+    //         console.log("documento requerdido")
+    //         await swal_warning.fire(
+    //             {
+    //                 title: "el documento es obligatorio", text: "El documento de Matrícula es obligatorio"
+    //             }
+    //         )
+    //         return Promise.reject();
+    //     }
+    // };
     let initial_values: any = {
         id: '',
         sap_id: '',
@@ -110,8 +106,7 @@ export const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealE
         zone: 'Urbano',
         tipology: '',
         materials: [],
-        document:
-        {
+        document: {
             label: 'Documento de Matricula',
             type: 3,
         },
@@ -163,9 +158,14 @@ export const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealE
         //acquisitions: Yup.array(),
     });
 
-
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} innerRef={ref} validationSchema={schema} >
+        <Formik
+            enableReinitialize
+            onSubmit={submit}
+            initialValues={initial_values}
+            innerRef={ref}
+            validationSchema={schema}
+        >
             {(formik) => {
                 return (
                     <Form className="h-100" autoComplete="off">
@@ -174,9 +174,7 @@ export const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealE
                                 <div className="container-fluid">
                                     <div className="row justify-content-center">
                                         <div className="col-md-12">
-                                            <Card
-                                                title="Información del Inmueble"
-                                            >
+                                            <Card title="Información del Inmueble">
                                                 <DataRealEstateForm
                                                     type="create"
                                                     formik={formik}
@@ -204,10 +202,7 @@ export const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealE
                                     Atras
                                 </button>
                                 <div className="flex-fill" />
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                >
+                                <button type="submit" className="btn btn-primary">
                                     Guardar
                                 </button>
                             </div>
@@ -217,4 +212,4 @@ export const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealE
             }}
         </Formik>
     );
-}
+};

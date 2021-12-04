@@ -1,13 +1,9 @@
-import { Card, Link } from '../../../../utils/ui';
+import { Link } from '../../../../utils/ui';
 import { useHistory, useParams } from 'react-router-dom';
-import RoleForm from './../../components/RoleForm';
 import { useDispatch, useSelector } from 'react-redux';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { actions } from '../../redux';
-import { IRolAttributes } from '../../../../utils/interfaces/roles';
 import RoleViewForm from './../../components/RoleViewForm';
-
-
 
 interface IParams {
     id: string;
@@ -18,32 +14,37 @@ const DetailRoles = () => {
     const dispatch = useDispatch();
     const role: any = useSelector((store: any) => store.users.rol.value);
     useEffect(() => {
-        dispatch(actions.getRole(Number(id)))
+        dispatch(actions.getRole(Number(id)));
     }, []);
 
-    const finalRole = {
-        name: role?.name,
-        permits: role?.permits?.map(a => a.id) || [],
-    }
+    // const finalRole = {
+    //     name: role?.name,
+    //     permits: role?.permits?.map(a => a.id) || [],
+    // }
 
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="bg-white d-flex flex-column h-100">
                     <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
-                        <h5 className='col-11 '>Detalle Rol</h5>
+                        <h5 className="col-11 ">Detalle Rol</h5>
                         <Link
                             to={`/roles/edit/${id}/`}
                             name=""
                             avatar={false}
-                            icon={<i style={{ marginLeft: '30px', fontSize: 16, color: '#000' }} className="fa fa-pencil" aria-hidden="true" />}
+                            icon={
+                                <i
+                                    style={{ marginLeft: '30px', fontSize: 16, color: '#000' }}
+                                    className="fa fa-pencil"
+                                    aria-hidden="true"
+                                />
+                            }
                         />
                     </div>
                     <div className="container-fluid">
                         <div className="row justify-content-center">
                             <div className="col-md-12">
-                                <RoleViewForm role={role}/>
-
+                                <RoleViewForm role={role} />
                             </div>
                         </div>
                     </div>
@@ -64,8 +65,7 @@ const DetailRoles = () => {
                 </button>
             </div>
         </div>
+    );
+};
 
-    )
-}
-
-export default DetailRoles
+export default DetailRoles;

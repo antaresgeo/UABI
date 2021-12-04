@@ -1,13 +1,12 @@
 import { Field } from 'formik';
-import ErrorMessage from '../../../../utils/ui/error_messge'
+import ErrorMessage from '../../../../utils/ui/error_messge';
 import { FC } from 'react';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 
 interface FormProps {
     formik: any;
-
 }
-export const FormUser: FC<FormProps> = ({ formik }) => {
+export const FormUser: FC<FormProps> = () => {
     return (
         <>
             <div className="row">
@@ -46,10 +45,18 @@ export const FormUser: FC<FormProps> = ({ formik }) => {
                                 <option value="id_type_document" hidden>
                                     -
                                 </option>
-                                <option key="CedulaC" value="Cedula de Ciudadania">C.C</option>
-                                <option key="TarjetaI" value="Tarjeta de identidad">T.I</option>
-                                <option key="CedulaE" value="Cedula de Extranjeria">C.E</option>
-                                <option key="NIT" value="NIT">NIT</option>
+                                <option key="CedulaC" value="Cedula de Ciudadania">
+                                    C.C
+                                </option>
+                                <option key="TarjetaI" value="Tarjeta de identidad">
+                                    T.I
+                                </option>
+                                <option key="CedulaE" value="Cedula de Extranjeria">
+                                    C.E
+                                </option>
+                                <option key="NIT" value="NIT">
+                                    NIT
+                                </option>
                             </Field>
                             <ErrorMessage name="id_type_document" />
                         </div>
@@ -185,5 +192,5 @@ export const FormUser: FC<FormProps> = ({ formik }) => {
                 </div>
             </div> */}
         </>
-    )
-}
+    );
+};

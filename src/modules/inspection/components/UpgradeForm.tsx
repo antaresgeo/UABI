@@ -49,7 +49,7 @@ const UpgradeForm: FC<UpgradeFormProps> = ({ owner, innerRef, onSubmit }) => {
                             </label>
                             <div className="col-2">
                                 <Field name="document_type" id="document_type_id" as="select" className="form-select">
-                                    <option value="" hidden></option>
+                                    <option value="" hidden/>
                                     <option value="CC">C.C</option>
                                     <option value="TI">T.I</option>
                                     <option value="CE">C.E</option>

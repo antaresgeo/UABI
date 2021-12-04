@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import {FC, useEffect} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 
@@ -19,7 +19,7 @@ interface IProps {
     view?: string;
 }
 
-const DetailProject = ({ view }: IProps) => {
+const DetailProject: FC<IProps> = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 

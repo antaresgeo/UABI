@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Card } from '../../../utils/ui';
 import RoleForm from './../components/RoleForm';
@@ -9,17 +9,17 @@ const PermitsUser = () => {
     //console.log(user);
     const user = {
         cellphone_number: 369544125,
-        email: "Kan@gmail.com",
-        entity_type: "sin Animo de lucro",
-        gender: "f",
+        email: 'Kan@gmail.com',
+        entity_type: 'sin Animo de lucro',
+        gender: 'f',
         id: 0,
         id_number: 1008569713,
-        id_type: "2",
-        location: "",
-        names: "karen",
+        id_type: '2',
+        location: '',
+        names: 'karen',
         phone_number: 589614,
-        society_type: "Persona Natural",
-        surnames: "Nova",
+        society_type: 'Persona Natural',
+        surnames: 'Nova',
         permits: [
             // {
             //     name_permit: 'nuevo',
@@ -29,14 +29,14 @@ const PermitsUser = () => {
             //     name_permit: 'detail_policy',
             //     id_permit: '1'
             // }
-        ]
-    }
+        ],
+    };
     const _updateUser = async (userForm) => {
         const userFinal = {
             ...user,
             id_rol: userForm.id_rol,
-            permits: userForm.permits
-        }
+            permits: userForm.permits,
+        };
         console.log(userFinal);
         //let res: any;
         //res = await dispatch(actions.updateUser({ userForm }, id));
@@ -81,7 +81,7 @@ const PermitsUser = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default PermitsUser
+export default PermitsUser;

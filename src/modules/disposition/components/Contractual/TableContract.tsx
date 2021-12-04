@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Link, Table } from '../../../../utils/ui';
 
 export const TableContract = () => {
@@ -22,13 +22,11 @@ export const TableContract = () => {
             title: 'Fecha Inicio',
             dataIndex: '',
             align: 'left' as 'left',
-
         },
         {
             title: 'Fecha Terminación',
             dataIndex: '',
             align: 'left' as 'left',
-
         },
         {
             title: 'Acciones',
@@ -38,7 +36,7 @@ export const TableContract = () => {
                     title: 'Ver',
                     dataIndex: 'id',
                     align: 'center' as 'center',
-                    render: (id) => {
+                    render: (/*id*/) => {
                         return (
                             <Link
                                 to={`/disposition/contract/:id/`}
@@ -53,7 +51,7 @@ export const TableContract = () => {
                     title: 'Editar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
-                    render: (id) => {
+                    render: (/*id*/) => {
                         return (
                             <Link
                                 to={`/disposition/contract/edit/:id/`}
@@ -76,5 +74,5 @@ export const TableContract = () => {
             //change_page={change_page}
             //loading={loading}
         />
-    )
-}
+    );
+};

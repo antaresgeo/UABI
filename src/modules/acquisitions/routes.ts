@@ -20,49 +20,49 @@ import { RealEstateGlobe } from './components/en_des_globe/RealEstateGlobe';
 
 export const guards = {
     createProject: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.CREATE_PROJECT);
     },
     detailProject: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.DETAIL_PROJECT);
     },
     editProject: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.UPDATE_PROJECT);
     },
     listProject: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.LIST_PROJECT);
     },
     createRealEstate: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.CREATE_REALESTATE);
     },
     detailRealEstate: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.DETAIL_REALESTATE);
     },
     editRealEstate: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.UPDATE_REALESTATE);
     },
     listRealEstate: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.LIST_REALESTATE);
@@ -210,9 +210,7 @@ const get_routes = (): IRoute[] => {
             can_access: true,
             path: '/englobar/realEstates/',
             template_props: {
-                breadcrumbs: [
-                    { name: 'Finalizar proyecto' },
-                ],
+                breadcrumbs: [{ name: 'Finalizar proyecto' }],
             },
             component: TableAreas,
         },

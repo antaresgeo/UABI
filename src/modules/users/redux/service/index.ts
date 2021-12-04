@@ -5,7 +5,7 @@ import {
     delete_user,
     get_user_by_id,
     update_user,
-    assignRolesAndPermits
+    assignRolesAndPermits,
 } from './user';
 
 import {

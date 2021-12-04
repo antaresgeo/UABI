@@ -2,9 +2,7 @@ import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
-import { Card, Link } from '../../../../utils/ui';
-import InsuranceBrokerForm from '../../components/InsuranceBrokerForm';
-import InsuranceBrokerDetail from "../../components/InsuranceBrokerDetail";
+import InsuranceBrokerDetail from '../../components/InsuranceBrokerDetail';
 
 interface IParams {
     id: string;
@@ -25,13 +23,12 @@ const DetailInsuranceBroker = () => {
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="container-fluid">
-
                     <div className="row justify-content-center">
                         <div className="d-flex flex-row mb-3">
                             <h5>Corredora de seguros</h5>
                         </div>
                         <div className="col-md-12">
-                            <InsuranceBrokerDetail broker={insurance_broker}/>
+                            <InsuranceBrokerDetail broker={insurance_broker} />
                         </div>
                     </div>
                 </div>

@@ -191,7 +191,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
                               render: (id) => {
                                   return (
                                       <div className="text-danger" onClick={deleteRealEstate(id)}>
-                                          <i className="fa fa-times-circle" aria-hidden="true"></i>
+                                          <i className="fa fa-times-circle" aria-hidden="true"/>
                                       </div>
                                   );
                               },
@@ -206,7 +206,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
     };
 
     useEffect(() => {
-        console.log(project_id)
+        console.log(project_id);
         if (project_id) {
             dispatch(actions.getRealEstatesByProject(project_id));
         } else if (init) {
