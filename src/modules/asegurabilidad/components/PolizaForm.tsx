@@ -37,10 +37,35 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
     useEffect(() => {
         dispatch(actions.getRealEstates({}))
     }, []);
+
+    let newrealEstates = [];
+    newrealEstates = realEstates.reduce((valor_anterior, valor_actual) => {
+        const codigos = valor_actual.sap_id.split(",");
+        const codes = codigos.filter(cod => cod.charAt(cod.length - 1) === 'n');
+        let obj_type = {};
+        let obj_code = {};
+        if (valor_actual.destination_type === "PÚBLICO") {
+            obj_type = {
+                ...valor_actual
+            }
+            valor_anterior.push(obj_type);
+        }
+        for (let i = 0; i < codes.length; i++) {
+            if (valor_actual.destination_type !== "PÚBLICO") {
+                obj_code = {
+                    ...valor_actual
+                }
+                valor_anterior.push(obj_code);
+            }
+        }
+        return valor_anterior;
+    }, [])
+    console.log(newrealEstates)
+
     const matriculas = [];
     const ids_real = [];
     const initialValues = {
-        registry_numbers: realEstatesPolicy ? realEstatesPolicy.map( r =>  r.registry_number ) : [],
+        registry_numbers: realEstatesPolicy ? realEstatesPolicy.map(r => r.registry_number) : [],
         policy_type: '',
         vigency_start: '',
         vigency_end: '',
@@ -59,9 +84,9 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
             type: 5,
             pdf: null
         },
-        real_estates_id: realEstatesPolicy ? realEstatesPolicy.map( r =>  r.id ) : [],
+        real_estates_id: realEstatesPolicy ? realEstatesPolicy.map(r => r.id) : [],
         ...policy,
-        ...(policy ? {insurance_broker_id: `${policy?.insurance_broker?.nit} - ${policy?.insurance_broker?.name}`   }:  {}) //TODO: cambiar nit por id
+        ...(policy ? { insurance_broker_id: `${policy?.insurance_broker?.nit} - ${policy?.insurance_broker?.name}` } : {}) //TODO: cambiar nit por id
 
     };
 
@@ -76,7 +101,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
 
     }
     const schema = Yup.object().shape({
-        real_estates_id: Yup.array().min(1,'obligatorio'),
+        real_estates_id: Yup.array().min(1, 'obligatorio'),
         policy_type: Yup.string().required('obligatorio'),
         vigency_start: Yup.string().required('obligatorio'),
         vigency_end: Yup.string().required('obligatorio'),
@@ -110,7 +135,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
             vigency_start: new Date(newDate).getTime(),
             vigency_end: new Date(newDate2).getTime(),
         }
-        if(finalValues.vigency_start < finalValues.vigency_end ) {
+        if (finalValues.vigency_start < finalValues.vigency_end) {
             console.log('si es menor');
         }
         let total = 0;
@@ -146,7 +171,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
                                         name="real_estates_id"
                                         id="real_estates_id_id"
                                         className="w-100"
-                                        options={realEstates.map(realestate => ({ id: realestate.id, name: realestate.registry_number }))}
+                                        options={newrealEstates.map(realestate => ({ id: realestate.id, name: realestate.registry_number }))}
                                         mode="multiple"
                                         extra_on_change={(ids) => {
                                             const registryNumberRealEstates = ids.map((id) => {
@@ -235,7 +260,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
                                     name="insurance_broker_id"
                                     placeholder="Selecciona una corredor de seguros"
                                     disabled={disabled}
-                                    options={brokers?.map(broker => ({ id: broker.id, name:`${broker.nit} - ${broker.name}`  }))}
+                                    options={brokers?.map(broker => ({ id: broker.id, name: `${broker.nit} - ${broker.name}` }))}
                                     showSearch // habilitar para buscarx
                                     filterOption={(input, option) => {
                                         return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -406,7 +431,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({ policy, realEstatesPolicy, compa
                                                     placeholder="Selecciona una Compañía aseguradora"
                                                     disabled={disabled}
                                                     showSearch // habilitar para buscar
-                                                    options={companies?.results?.map(company => ({ id: company.id, name:`${company.nit} - ${company.name}`}))}
+                                                    options={companies?.results?.map(company => ({ id: company.id, name: `${company.nit} - ${company.name}` }))}
                                                     filterOption={(input, option) => {
                                                         return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                                     }}

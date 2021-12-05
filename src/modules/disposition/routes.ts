@@ -9,6 +9,7 @@ import EditContract from './views/Contracts/EditContract';
 import { ListContracts } from './views/Contracts/ListContracts';
 import LeaseDoc from './components/Precontractual/Lease/LeaseDoc';
 import PublicUseDoc from './components/Precontractual/PublicUse/PublicUseDoc';
+import ComodatoDoc from './components/Precontractual/comodato/ComodatoDoc';
 const get_routes = (): IRoute[] => {
     return [
         {
@@ -121,6 +122,18 @@ const get_routes = (): IRoute[] => {
                 ],
             },
             component: PublicUseDoc,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/document/comodato/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Estudio Previo para Comodato' },
+                ],
+            },
+            component: ComodatoDoc,
         },
 
 

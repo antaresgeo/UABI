@@ -1,4 +1,4 @@
-import {IProjectAttributes, IRealEstateAttributes, ITipologyAttributes} from '../../../../utils/interfaces';
+import { IProjectAttributes, IRealEstateAttributes, ITipologyAttributes } from '../../../../utils/interfaces';
 import { Formik, Form } from 'formik';
 import React, { FC, useEffect, useState } from 'react';
 import GeneralDataForm from './GeneralDataForm';
@@ -17,6 +17,8 @@ interface RealEstateFormProps {
     type: 'view' | 'edit' | 'create';
     inventory?: boolean;
     inventoryEdit?: boolean;
+    globe?: boolean;
+    realEstateData?: any;
 }
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
@@ -25,6 +27,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     type,
     inventory,
     inventoryEdit,
+    globe,
+    realEstateData,
 }) => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -32,7 +36,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     const realEstate: any = useSelector((states: any) => states.acquisitions.realEstate.value);
     // const realEstates: any[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
-
+    const [initialValues, setInitialValues] = useState({});
     const [project, set_project] = useState(null);
     let initial_values: any = {
         id: '',
@@ -80,20 +84,43 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             id: 0,
             name: 'Sin Projecto',
         },
-        ...realEstate,
-        ...(realEstate?.tipology_id? {
-            accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id).accounting_account,
-        }: {}),
-        ...(realEstate && realEstate?.address?.id
-            ? {
-                  address: realEstate.address.id,
-                  _address: {
-                      name: realEstate.address.address,
-                      cbml: realEstate.address.cbmls.uabi,
-                  },
-              }
-            : {}),
-        projects_id: realEstate?.project?.id || 0,
+        ...(realEstateData
+            ?
+            {
+                ...realEstateData,
+                ...(realEstateData?.tipology_id ? {
+                    accounting_account: tipologies.find((tipology) => tipology.id === realEstateData?.tipology_id).accounting_account,
+                } : {}),
+                ...(realEstateData && realEstateData?.address?.id
+                    ? {
+                        address: realEstateData.address.id,
+                        _address: {
+                            name: realEstateData.address.address,
+                            cbml: realEstateData.address.cbmls.uabi,
+                        },
+                    }
+                    : {}),
+                projects_id: realEstateData?.project?.id || 0,
+            }
+            :
+            {
+                ...realEstate,
+                ...(realEstate?.tipology_id ? {
+                    accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id).accounting_account,
+                } : {}),
+                ...(realEstate && realEstate?.address?.id
+                    ? {
+                        address: realEstate.address.id,
+                        _address: {
+                            name: realEstate.address.address,
+                            cbml: realEstate.address.cbmls.uabi,
+                        },
+                    }
+                    : {}),
+                projects_id: realEstate?.project?.id || 0,
+            }
+        )
+
     };
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
@@ -239,25 +266,28 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 }}
                                                 acquisitions={formik.values.acquisitions}
                                             />
-                                            <AdquisitionView
-                                                type={type}
-                                                formik={formik}
-                                                disabled={_disabled}
-                                                acquisitions={formik.values.acquisitions}
-                                            />
+                                            {globe !== true &&
+                                                <AdquisitionView
+                                                    type={type}
+                                                    formik={formik}
+                                                    disabled={_disabled}
+                                                    acquisitions={formik.values.acquisitions}
+                                                />
+                                            }
+
                                             <SupportDocumentsForm type={type} formik={formik} />
                                             {type === 'view' && (
                                                 <Card
                                                     title={
                                                         <>
-                                                            <b>Inmuebles del Proyecto: {}</b>
+                                                            <b>Inmuebles del Proyecto: { }</b>
                                                         </>
                                                     }
                                                 >
                                                     <RealEstateList project_id={projects_id} init={false} />
                                                 </Card>
                                             )}
-                                            {type === 'create' && (
+                                            {(type === 'create' && globe !== true) && (
                                                 <Card title="Inmuebles del Proyecto">
                                                     <RealEstateList project_id={projects_id} init={false} />
                                                 </Card>
@@ -280,7 +310,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                     Atras
                                 </button>
                                 <div className="flex-fill" />
-                                {type !== 'view' && (
+                                {(type !== 'view' && globe !== true) && (
                                     <>
                                         <button
                                             type="button"
@@ -318,6 +348,21 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                         Confirmar y finalizar
                                     </button>
                                 )}
+                                {globe === true &&
+                                    <>
+                                        <div className="flex-fill" />
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary"
+                                            onClick={() => {
+                                                formik.setFieldValue('_type', 'normal');
+                                                formik.submitForm();
+                                            }}
+                                        >
+                                            Guardar
+                                        </button>
+                                    </>
+                                }
                             </div>
                         </div>
                     </Form>
