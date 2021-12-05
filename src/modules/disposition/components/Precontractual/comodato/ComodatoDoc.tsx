@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from '../../../../../utils/ui'
-import  '../../../../../utils/assets/styles/comodato.css'
+import '../../../../../utils/assets/styles/comodato.css'
 import imgbs64 from '../../../../../utils/assets/img/header.png';
 
 const ComodatoDoc = () => {
@@ -43,7 +43,7 @@ const ComodatoDoc = () => {
                             opción que aplique continuando con el párrafo)
                         </p>
                         <p className="p7_comodato ft0_comodato">
-                            <span>-la</span> sumatoria de todas las obligaciones cuantificadas a
+                            -la sumatoria de todas las obligaciones cuantificadas a
                             cargo del comodatario. <span className="ft6_comodato">(Inserte valor en</span>
                         </p>
                         <p className="p4_comodato ft7_comodato">
@@ -55,12 +55,12 @@ const ComodatoDoc = () => {
                             RESOLUCIÓN SSS 202050083439 DE 2020, EJEMPLO: JAC)
                         </p>
                         <p className="p9_comodato ft10_comodato">
-                            <span>-el</span> avalúo comercial vigente del inmueble
-                            <span className="ft9_comodato">(PUEDE SER EL DE SAP SI SE CUENTA CON ESTE</span>)
+                            -el avalúo comercial vigente del inmueble
+                            <span className="ft8_comodato"> (PUEDE SER EL DE SAP SI SE CUENTA CON ESTE</span>)
                             (Inserte valor en letras), (Inserte valor en números).
-                            <span className="ft9_comodato">(CUANDO EL CONTRATO A</span>
+                            <span className="ft8_comodato">(CUANDO EL CONTRATO A</span>
                         </p>
-                        <p className="p8_comodato ft9_comodato">
+                        <p className="p8_comodato ft8_comodato">
                             REALIZAR SEA CON ENTIDADES A LAS CUALES NO SE LES APLIQUE EL ARTÍCULO
                             SEGUNDO, PARÁGRAFO SEGUNDO DE LA RESOLUCIÓN SSS 202050083439 DE 2020 y
                             que tengan un único solicitante).
@@ -84,43 +84,24 @@ const ComodatoDoc = () => {
                             características pueden ser destinados al servicio de la comunidad a
                             través de la modalidad de contratación especial reglamentada en el
                             decreto 092 de 2017, en la tipología de contrato de comodato con
-                            <span className="ft12_comodato">(indicar según</span>
-                        </p>
-                        <p className="p4_comodato ft0_comodato">
-                            <span className="ft3">el caso</span>: las
-                            <span className="ft14_comodato">Juntas de Acción Comunal</span> u
-                            <span className="ft14_comodato">entidades sin ánimo de lucro</span>) como entidades
-                            de
-                        </p>
-                        <p className="p8_comodato ft0_comodato">
-                            reconocida idoneidad y necesarias para el impulso y ejecución de
+                            <span className="ft12_comodato"> (indicar según el caso</span>: las
+                            <span className="ft14_comodato"> Juntas de Acción Comunal</span> u
+                            <span className="ft14_comodato"> entidades sin ánimo de lucro</span>) como entidades
+                            de reconocida idoneidad y necesarias para el impulso y ejecución de
                             programas sociales requeridos a través del plan de desarrollo. Al
                             presente contrato no le asiste la realización de proceso competitivo
                             atendiendo a la no existencia de pluralidad de solicitantes, de
-                            acuerdo con la particularidad, función,
-                        </p>
-                        <p className="p8_comodato ft0_comodato">
-                            reconocimiento y operación territorial (<span className="ft14_comodato"
+                            acuerdo con la particularidad, función, reconocimiento y operación territorial (<span className="ft14_comodato"
                             >de la Junta de Acción Comunal de conformidad con el radio de acción
                                 establecido en los respectivos estatutos de la organización y el
                                 reconocimiento de la personería jurídica otorgada por la Secretaría
-                                de Participación Ciudadana- </span
-                            ><span className="ft15_comodato">SI APLICA CONTINUA</span>
-                        </p>
-                        <p className="p8_comodato ft19_comodato">
-                            <span className="ft16_comodato">CON ÉSTE PÁRRAFO</span><span className="ft17_comodato">,</span
-                            ><span className="ft16_comodato">DE LO CONTRARIO SUPRIMIR</span
-                            ><span className="ft17_comodato">)</span
-                            ><span className="ft18_comodato">
-                                con fundamento en lo establecido en el artículo 355 de la
-                                Constitución Política de Colombia, el decreto 092 de 2017, </span
-                            ><span className="ft17_comodato">(la Ley 743 de 2002</span>
-                        </p>
-                        <p className="p8_comodato ft22_comodato">
-                            <span className="ft20_comodato">modificada por la ley 1989 de 2019</span> -
-                            <span className="ft21_comodato">SI EL CONTRATO A CELEBRAR ES CON UNA JAC</span
-                            >,<span className="ft21_comodato">DE LO CONTRARIO SUPRIMIR</span>) y la Ley 9 de
-                            1989.
+                                de Participación Ciudadana -</span>
+                            <span className="ft15_comodato">SI APLICA CONTINUA CON ÉSTE PÁRRAFO DE LO CONTRARIO SUPRIMIR </span>
+                            con fundamento en lo establecido en el artículo 355 de la
+                            Constitución Política de Colombia, el decreto 092 de 2017,
+                            (<span className="ft14_comodato">la Ley 743 de 2002 modificada por la ley 1989 de 2019</span>
+                            <span className="ft21_comodato"> -SI EL CONTRATO A CELEBRAR ES CON UNA JAC</span
+                            >,<span className="ft21_comodato">DE LO CONTRARIO SUPRIMIR</span>) y la Ley 9 de 1989.
                         </p>
                         <p className="p10_comodato ft0_comodato">
                             En este orden, las Entidades Estatales del Gobierno nacional,
@@ -144,7 +125,7 @@ const ComodatoDoc = () => {
                     </div>
                 </div>
             </Card>
-            <Card style={{ width: '850px', margin: '0 auto' }}>
+            <Card style={{ width: '850px', margin: '0 auto', marginTop: '10px' }}>
                 <div id="page_2">
                     <div id="p2dimg1">
                         <img
@@ -172,13 +153,9 @@ const ComodatoDoc = () => {
                             planeación se verifique que no existe más de una entidad sin ánimo de
                             lucro para el desarrollo del programa o actividad de interés público,
                             no se requiere adelantar proceso competitivo. Así las cosas, como se
-                            indicó antes y para el
-                        </p>
-                        <p className="p4_comodato ft3">
-                            <span className="ft0_comodato">caso concreto, se identificó que </span>(DIGITE LA
-                            RAZÓN SOCIAL DE LA ENTIDAD COMODATARIA)<span className="ft0_comodato">,</span>
-                        </p>
-                        <p className="p8_comodato ft0_comodato">
+                            indicó antes y para el caso concreto, se identificó que
+                            <span className="ft3_comodato">(DIGITE LA
+                                RAZÓN SOCIAL DE LA ENTIDAD COMODATARIA)</span>,
                             de acuerdo con la circunscripción territorial, los proyectos y
                             actividades a ejecutar con la comunidad inscrita en la organización y
                             la demás población beneficiaria de su radio de acción, se pudo
@@ -263,7 +240,7 @@ const ComodatoDoc = () => {
                     </div>
                 </div>
             </Card>
-            <Card style={{ width: '850px', margin: '0 auto' }}>
+            <Card style={{ width: '850px', margin: '0 auto', marginTop: '10px' }}>
                 <div id="page_3">
                     <div id="p3dimg1">
                         <img
@@ -314,7 +291,7 @@ const ComodatoDoc = () => {
                             <span className="ft3">8.</span><span className="ft4">Especificaciones</span
                             ><span className="ft0_comodato">:</span>
                         </p>
-                        <p className="p11_comodato ft3">8.1 Obligaciones del comodatario.</p>
+                        <p className="p11_comodato ft3_comodato">8.1 Obligaciones del comodatario.</p>
                         <p className="p25_comodato ft30_comodato">
                             <span className="ft0_comodato">El </span><span className="ft3">COMODATARIO</span
                             ><span className="ft0_comodato">, se obliga: </span>1) A emplear el mayor cuidado
@@ -344,26 +321,20 @@ const ComodatoDoc = () => {
                             públicos contratados y trabajos realizados por cuenta del
                             <span className="ft29_comodato">COMODATARIO</span>, y ante los requerimientos de
                             quién tenga a su cargo la supervisión. 10) Deberá proveer la
-                            respectiva vigilancia del inmueble.
-                        </p>
-                        <p className="p25_comodato ft0_comodato">
-                            <span className="ft0_comodato">11)</span
-                            ><span className="ft31_comodato"
-                            >Aportar cada año los respectivos certificados de mantenimiento,
-                                registro y vigencia de extintores a quien ejerza la supervisión del
-                                contrato. 12) Estar registrado previamente en el SECOP II, con el
-                                fin de publicar los documentos contractuales. 13) Presentar un
-                                informe trimestral al supervisor del contrato sobre el uso, estado,
-                                destino, conservación del bien y las cuentas de servicios
-                                canceladas, así como las facturas de pago de las cuotas de
-                                administración, impuesto predial, u otro, cuando a ello hubiere
-                                lugar. De igual forma deberá presentar el plan de mejoramiento y
-                                conservación y su ejecución, como también el balance de ingresos y
-                                egresos de la entidad sin ánimo de lucro en los casos en los cuales
-                                se haya autorizado explotación económica 14) Realizar adaptaciones y
-                                mejoras con la aprobación por escrito de la Secretaria de
-                                Suministros y Servicios, las cuales serán por su</span
-                            >
+                            respectiva vigilancia del inmueble. 11) Aportar cada año los respectivos
+                            certificados de mantenimiento, registro y vigencia de extintores a quien
+                            ejerza la supervisión del contrato. 12) Estar registrado previamente en el
+                            SECOP II, con el fin de publicar los documentos contractuales. 13) Presentar un
+                            informe trimestral al supervisor del contrato sobre el uso, estado,
+                            destino, conservación del bien y las cuentas de servicios
+                            canceladas, así como las facturas de pago de las cuotas de
+                            administración, impuesto predial, u otro, cuando a ello hubiere
+                            lugar. De igual forma deberá presentar el plan de mejoramiento y
+                            conservación y su ejecución, como también el balance de ingresos y
+                            egresos de la entidad sin ánimo de lucro en los casos en los cuales
+                            se haya autorizado explotación económica 14) Realizar adaptaciones y
+                            mejoras con la aprobación por escrito de la Secretaria de
+                            Suministros y Servicios, las cuales serán por su
                         </p>
                         <p className="p26_comodato ft23_comodato">Página 3 de 12</p>
                         <p className="p14_comodato ft24_comodato">
@@ -380,7 +351,7 @@ const ComodatoDoc = () => {
                     </div>
                 </div>
             </Card>
-            <Card style={{ width: '850px', margin: '0 auto' }}>
+            <Card style={{ width: '850px', margin: '0 auto', marginTop: '10px' }}>
                 <div id="page_4">
                     <div id="p4dimg1">
                         <img
@@ -456,21 +427,14 @@ const ComodatoDoc = () => {
                                 vecindad, en acuerdo a lo preceptuado en el Código Nacional de
                                 Policía vigente, sin perjuicio de los manuales o normas de
                                 convivencia que regulen el tema a nivel Municipal o
-                                Departamental.</span
-                            >
-                        </p>
-                        <p className="p28_comodato ft10_comodato">
-                            <span className="ft6_comodato">12)</span
-                            ><span className="ft33_comodato"
-                            >Realizar cualquier actividad económica que no esté previa y
+                                Departamental.12) Realizar cualquier actividad económica que no esté previa y
                                 debidamente autorizada por la Secretaría que institucionalmente
                                 tiene adscrito el inmueble entregado en comodato. (13) Si requiere
                                 más prohibiciones de las anteriores digítelas en este espacio
                                 siguiendo la numeración, de lo contrario suprima todo este texto y
                                 numeral). Todas aquellas que en ejecución del contrato resulten
                                 contrarias a los fines del comodato, la convivencia ciudadana y los
-                                intereses del Municipio de Medellín.</span
-                            >
+                                intereses del Municipio de Medellín.</span>
                         </p>
                         <p className="p29_comodato ft23_comodato">Página 4 de 12</p>
                         <p className="p14_comodato ft24_comodato">
@@ -487,7 +451,7 @@ const ComodatoDoc = () => {
                     </div>
                 </div>
             </Card>
-            <Card style={{ width: '850px', margin: '0 auto' }}>
+            <Card style={{ width: '850px', margin: '0 auto', marginTop: '10px' }}>
                 <div id="page_5">
                     <div id="p5dimg1">
                         <img
@@ -587,7 +551,7 @@ const ComodatoDoc = () => {
                                 generados a través de la explotación económica concedida sin
                                 excepción alguna. En caso de que no se autorice ninguna explotación
                                 económica al inmueble digite: No tendrá ninguna autorización para
-                                explotación</span
+                                explotación económica en este inmueble entregado en comodato)</span
                             >
                         </p>
                         <p className="p32_comodato ft23_comodato">Página 5 de 12</p>
@@ -628,7 +592,6 @@ const ComodatoDoc = () => {
                         </div>
                     </div>
                     <div id="id6_2">
-                        <p className="p4_comodato ft0_comodato">económica en este inmueble entregado en comodato)</p>
                         <p className="p11_comodato ft3_comodato">
                             9. Fundamentos jurídicos que soportan la modalidad de contratación.
                         </p>
@@ -663,36 +626,24 @@ const ComodatoDoc = () => {
                             En aplicación de la normatividad vigente, en cuanto a los aspectos que
                             regulan la selección del contratista con el cual se llevará a cabo
                             contrato de comodato, se indica por parte de la Secretaría
+                            <span className="ft3_comodato"> (DIGITE EL NOMBRE DE LA SECRETARÍA QUE TIENE A CARGO EL INMUEBLE) </span>
+                            lo siguiente:
                         </p>
-                        <p className="p4_comodato ft3_comodato">
-                            (DIGITE EL NOMBRE DE LA SECRETARÍA QUE TIENE A CARGO EL INMUEBLE<span
-                                className="ft0_comodato"
-                            >) lo siguiente:</span
-                            >
-                        </p>
-                        <p className="p33_comodato ft0_comodato">
-                            <span className="ft3">Verificación de un solo solicitante: </span>Una vez
-                            realizado el análisis de la solicitud de contrato de
-                        </p>
-                        <p className="p4_comodato ft3_comodato">
-                            <span className="ft0_comodato">comodato instaurada por </span>(DIGITAR EL NOMBRE DE
-                            LA ENTIDAD SOLICITANTE<span className="ft0_comodato">) se identificó que</span>
-                        </p>
-                        <p className="p34_comodato ft26_comodato">
-                            el programa o actividad de interés público, la satisfacción de la
+                        <p className="p23_comodato ft0_comodato">
+                            <span className="ft3_comodato">Verificación de un solo solicitante: </span>
+                            Una vez realizado el análisis de la solicitud de contrato de comodato instaurada por
+                            <span className="ft3_comodato"> (DIGITAR EL NOMBRE DE LA ENTIDAD SOLICITANTE)</span>
+                            se identificó que el programa o actividad de interés público, la satisfacción de la
                             necesidad o aspiración de la comunidad desarrollada por la entidad no
-                            es ofrecida por otro contratista. (<span className="ft38_comodato"
-                            >La Secretaría que tiene a</span
-                            >
-                        </p>
-                        <p className="p8_comodato ft3_comodato">
-                            cargo el inmueble debe motivar el por qué las actividades
-                            desarrolladas por el contratista solo pueden ser ejecutadas por el
-                            mismo, en razón de su campo de acción. ejemplo: Atención de
-                            necesidades territoriales, beneficios que presta para la Secretaría en
-                            razón de sus objetivos misionales y que no sean prestados por otros
-                            contratistas, entre otros que marquen factor decisivo y directo de su
-                            escogencia)
+                            es ofrecida por otro contratista.(<span className="ft38_comodato">
+                                La Secretaría que tiene a cargo el inmueble debe motivar el por qué las actividades
+                                desarrolladas por el contratista solo pueden ser ejecutadas por el
+                                mismo, en razón de su campo de acción. ejemplo: Atención de
+                                necesidades territoriales, beneficios que presta para la Secretaría en
+                                razón de sus objetivos misionales y que no sean prestados por otros
+                                contratistas, entre otros que marquen factor decisivo y directo de su
+                                escogencia
+                            </span>)
                         </p>
                         <p className="p9_comodato ft0_comodato">
                             Por lo que para la presente suscripción del contrato de comodato no se
@@ -713,7 +664,7 @@ const ComodatoDoc = () => {
                         <p className="p36_comodato ft0_comodato">
                             De acuerdo al artículo 4 de la Ley 1150 de 2007 y el Decreto Nacional
                             1082 de 2015, dispone que las entidades públicas deben incluir en los
-                            estudios previos la estimación, tipificación y asignación de
+                            estudios previos la estimación, tipificación y asignación de riesgos.
                         </p>
                         <p className="p37_comodato ft23_comodato">Página 6 de 12</p>
                         <p className="p14_comodato ft24_comodato">
@@ -753,7 +704,6 @@ const ComodatoDoc = () => {
                         </div>
                     </div>
                     <div id="id7_2">
-                        <p className="p0_comodato ft0_comodato">riesgos.</p>
                         <p className="p38_comodato ft0_comodato">
                             De conformidad con lo anterior se procede a hacer el análisis del
                             riesgo que corresponde en los siguientes términos<span className="ft40_comodato"
@@ -766,7 +716,10 @@ const ComodatoDoc = () => {
                             legales futuras y la adopción de decisiones administrativas:
                         </p>
                         <p className="p41_comodato ft0_comodato">
-                            Financieras del COMODATARIO Perdida de liquidez del COMODATARIO
+                            Financieras del COMODATARIO
+                        </p>
+                        <p className="p40_comodato ft0_comodato">
+                            Perdida de liquidez del COMODATARIO
                         </p>
                         <p className="p39_comodato ft3_comodato">11.2 Riesgos operativos:</p>
                         <p className="p42_comodato ft22_comodato">
@@ -775,8 +728,10 @@ const ComodatoDoc = () => {
                             acuerdo de voluntades:
                         </p>
                         <p className="p43_comodato ft22_comodato">
-                            Incumplimiento de las obligaciones surgidas del contrato. Pago de
-                            salarios, prestaciones sociales e indemnizaciones.
+                            Incumplimiento de las obligaciones surgidas del contrato.
+                        </p>
+                        <p className="p40_comodato ft22_comodato">
+                            Pago de salarios, prestaciones sociales e indemnizaciones.
                         </p>
                         <p className="p39_comodato ft3_comodato">12. Estimación del riesgo:</p>
                         <p className="p44_comodato ft0_comodato">
@@ -796,7 +751,7 @@ const ComodatoDoc = () => {
                         </p>
                         <table cellPadding="0" cellSpacing="0" className="t0">
                             <tr>
-                                <td colSpan={2} className="tr0 td0_comodato">
+                                <td colSpan={2} className="tr0_comodato td0_comodato">
                                     <p className="p45_comodato ft0_comodato">Riesgo Previsible</p>
                                 </td>
                                 <td className="tr0 td1_comodato"><p className="p46_comodato ft0_comodato">Grado de</p></td>
@@ -1077,7 +1032,7 @@ const ComodatoDoc = () => {
                             del contrato o base para el aseguramiento de las obligaciones son las
                             siguientes:
                         </p>
-                        <table cellPadding="0" cellSpacing="0" className="t1">
+                        <table cellPadding="0" cellSpacing="0" className="t1_comodato">
                             <tr>
                                 <td className="tr8_comodato td38_comodato"><p className="p64_comodato ft3">Obligaciones</p></td>
                                 <td className="tr8_comodato td39_comodato"><p className="p65_comodato ft3">Cuantía</p></td>
@@ -1330,26 +1285,111 @@ const ComodatoDoc = () => {
                         </div>
                     </div>
                     <div id="id9_2">
-                        <p className="p66_comodato ft22_comodato">
-                            Valor cuotas de administración o expensas comunes ( si aplica)
-                        </p>
-                        <p className="p67_comodato ft0_comodato">
-                            Valor mantenimiento de redes contra incendios y/o reposición de
-                            extintores.
-                        </p>
-                        <p className="p68_comodato ft0_comodato">
-                            Valor de todos aquellos gastos y obligaciones económicas o no que se
-                            requiera cuantificar, de manera tal que se garantice su cumplimiento o
-                            para que, ante una eventual afectación de la póliza de cumplimiento,
-                            el porcentaje del valor exigido tenga la suficiencia necesaria para
-                            que su incumplimiento quede cubierto
-                        </p>
-                        <p className="p69_comodato ft3">Valor total</p>
-                        <p className="p33_comodato ft3">
+                        <table cellPadding="0" cellSpacing="0" className="t1_comodato">
+                            <tr>
+                                <td className="tr2_comodato td41_comodato">
+                                    <p className="p55_comodato ft0_comodato">Valor cuotas de administración </p>
+                                </td>
+                                <td className="tr2_comodato td42_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                                <td className="tr2_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr2_comodato td43_comodato">
+                                    <p className="p55_comodato ft0_comodato"> o expensas comunes ( si aplica)</p>
+                                </td>
+                                <td className="tr2_comodato td44_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                                <td className="tr9_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr5_comodato td41_comodato">
+                                    <p className="p55_comodato ft18_comodato">Valor mantenimiento de redes contra</p>
+                                </td>
+                                <td className="tr5_comodato td42_comodato"><p className="p47_comodato ft46_comodato">&nbsp;</p></td>
+                                <td className="tr5_comodato td40_comodato"><p className="p47_comodato ft46_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr2_comodato td43_comodato"><p className="p55_comodato ft0_comodato">incendios y/o reposición de extintores.</p></td>
+                                <td className="tr2_comodato td44_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                                <td className="tr9_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr5_comodato td41_comodato">
+                                    <p className="p55_comodato ft18_comodato">Valor de todos aquellos gastos </p>
+                                </td>
+                                <td className="tr5_comodato td42_comodato"><p className="p47_comodato ft46_comodato">&nbsp;</p></td>
+                                <td className="tr5_comodato td40_comodato"><p className="p47_comodato ft46_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr2_comodato td41_comodato">
+                                    <p className="p55_comodato ft0_comodato">y obligaciones económicas o no que se
+                                    </p>
+                                </td>
+                                <td className="tr2_comodato td42_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                                <td className="tr2_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr2_comodato td41_comodato">
+                                    <p className="p55_comodato ft0_comodato">requiera cuantificar, de manera tal que se</p>
+                                </td>
+                                <td className="tr2_comodato td42_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                                <td className="tr2_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr2_comodato td41_comodato">
+                                    <p className="p55_comodato ft0_comodato">garantice su cumplimiento o
+                                        para que, </p>
+                                </td>
+                                <td className="tr2_comodato td42_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                                <td className="tr2_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr2_comodato td41_comodato">
+                                    <p className="p55_comodato ft0_comodato">ante una eventual afectación de la póliza </p>
+                                </td>
+                                <td className="tr2_comodato td42_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                                <td className="tr2_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr2_comodato td41_comodato">
+                                    <p className="p55_comodato ft0_comodato">de cumplimiento,
+                                        el porcentaje del valor </p>
+                                </td>
+                                <td className="tr2_comodato td42_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                                <td className="tr2_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr2_comodato td41_comodato">
+                                    <p className="p55_comodato ft0_comodato">exigido tenga la suficiencia necesaria</p>
+                                </td>
+                                <td className="tr2_comodato td42_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                                <td className="tr2_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr5_comodato td41_comodato">
+                                    <p className="p55_comodato ft18_comodato"> para que su incumplimiento quede</p>
+                                </td>
+                                <td className="tr5_comodato td42_comodato"><p className="p47_comodato ft46_comodato">&nbsp;</p></td>
+                                <td className="tr5_comodato td40_comodato"><p className="p47_comodato ft46_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr2_comodato td43_comodato"><p className="p55_comodato ft0_comodato">cubierto</p></td>
+                                <td className="tr2_comodato td44_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                                <td className="tr9_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                            <tr>
+                                <td className="tr2_comodato td43_comodato">&nbsp;</td>
+                                <td className="tr2_comodato td44_comodato">
+                                    <p className="p55_comodato ft3_comodato">Valor total</p>
+
+                                </td>
+                                <td className="tr9_comodato td40_comodato"><p className="p47_comodato ft43_comodato">&nbsp;</p></td>
+                            </tr>
+                        </table>
+                        <p className="p33_comodato ft3_comodato">
                             Si el contrato a realizar es con una entidad a la cual no le es
                             aplicable la Resolución <span className="ft7_comodato">SSS</span>
                         </p>
-                        <p className="p70_comodato ft9_comodato">
+                        <p className="p70_comodato ft3_comodato">
                             202050083439 DE 2020 indique para el numeral 13 el siguiente título y
                             suprima lo anterior
                         </p>
@@ -1372,7 +1412,7 @@ const ComodatoDoc = () => {
                                 contratación directa y del contrato a celebrar.</span
                             >
                         </p>
-                        <table cellPadding="0" cellSpacing="0" className="t2">
+                        <table cellPadding="0" cellSpacing="0" className="t2_comodato">
                             <tr>
                                 <td className="tr11_comodato td47_comodato"></td>
                                 <td rowSpan={2} className="tr13_comodato td48_comodato">
@@ -1671,24 +1711,24 @@ const ComodatoDoc = () => {
             </Card>
             <Card style={{ width: '850px', margin: '0 auto' }}>
                 <div id="page_10">
-                    <div id="p10_comodatodimg1">
+                    <div id="p10dimg1">
                         <img
-                            src={imgbs64}  alt="" id="p10_comodatoimg1"
+                            src={imgbs64} alt="" id="p10img1"
                         />
                     </div>
 
                     <div className="dclr_comodato"></div>
                     <div id="id10_1">
                         <div id="id10_1_1">
-                            <p className="p0 ft0_comodato">Cód. <span>FO-ADMI-138</span></p>
-                            <p className="p1 ft0_comodato">Versión. 4</p>
+                            <p className="p0_comodato ft0_comodato">Cód. <span>FO-ADMI-138</span></p>
+                            <p className="p1_comodato ft0_comodato">Versión. 4</p>
                         </div>
                         <div id="id10_1_2">
-                            <p className="p2 ft1">Formato</p>
-                            <p className="p0 ft2">
+                            <p className="p2_comodato ft1_comodato">Formato</p>
+                            <p className="p0_comodato ft2_comodato">
                                 <span>FO-ADMI</span> Estudio Previo para comodato de Bien
                             </p>
-                            <p className="p3 ft2">Inmueble</p>
+                            <p className="p3_comodato ft2_comodato">Inmueble</p>
                         </div>
                     </div>
                     <div id="id10_2">
@@ -1762,9 +1802,9 @@ const ComodatoDoc = () => {
             </Card>
             <Card style={{ width: '850px', margin: '0 auto' }}>
                 <div id="page_11">
-                    <div id="p11_comodatodimg1">
+                    <div id="p11dimg1">
                         <img
-                            src={imgbs64} alt="" id="p11_comodatoimg1"
+                            src={imgbs64} alt="" id="p11img1"
                         />
                     </div>
 
@@ -1871,7 +1911,7 @@ const ComodatoDoc = () => {
                 <div id="page_12">
                     <div id="p12dimg1">
                         <img
-                            src={imgbs64} alt="" id="p12_comodatoimg1"
+                            src={imgbs64} alt="" id="p12img1"
                         />
                     </div>
 
