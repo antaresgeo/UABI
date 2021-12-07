@@ -5,7 +5,6 @@ import { Home } from './views';
 export const guards = {
     general: (props?) => {
         return props.user;
-
     },
 };
 

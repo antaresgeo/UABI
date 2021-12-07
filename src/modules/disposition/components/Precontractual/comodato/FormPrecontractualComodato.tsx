@@ -1,12 +1,15 @@
 import { Field } from 'formik';
 import ErrorMessage from '../../../../../utils/ui/error_messge';
 import Tooltip from 'antd/lib/tooltip';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { LinkButton } from '../../../../../utils/ui/link';
 
 interface FormProps {
     formik: any;
 }
 export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
+    const [idDisposition, setIdDisposition] = useState(17);
+    const [idProhibition, setIdProhibition] = useState(13);
     return (
         <>
             <div className="row">
@@ -64,11 +67,11 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         <option key="loan_typology" value="" hidden>
                             --Seleccione tipología--
                         </option>
-                        <option key="Junta de acción comunal" value="Junta de acción comunal">
-                            Junta de acción comunal
+                        <option key="Junta de acción comunal" value="las juntas de acción comunal">
+                            Juntas de acción comunal
                         </option>
-                        <option key="Entidades animo de lucro" value="Entidades animo de lucro">
-                            Entidades animo de lucro
+                        <option key="Entidades animo de lucro" value="entidades sin animo de lucro">
+                            Entidades sin animo de lucro
                         </option>
                     </Field>
                     <ErrorMessage name="loan_typology" />
@@ -150,7 +153,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                             No
                         </option>
                     </Field>
-                    <ErrorMessage name="Horizontal_property"/>
+                    <ErrorMessage name="Horizontal_property" />
                 </div>
                 <div className="col-3">
                     <label htmlFor="contract_period_id" className="form-label">
@@ -217,6 +220,8 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="lockable_base" />
                 </div>
                 <div className="col-3">
+                    {' '}
+                    {/*{`col-${(formik.values.economic_exploitation === 'si' ) ? 3 : 6}`}*/}
                     <label htmlFor="economic_exploitation_id" className="form-label">
                         ¿Autoriza explotación económica?
                     </label>
@@ -239,9 +244,41 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     </Field>
                     <ErrorMessage name="economic_exploitation" />
                 </div>
+                {formik.values.economic_exploitation === 'si' && (
+                    <div className="col-3">
+                        <label htmlFor="type_economic_exploitation_id" className="form-label">
+                            tipo de explotación económica
+                        </label>
+                        <Field
+                            as="select"
+                            className="w-100 form-select form-control"
+                            id="type_economic_exploitation_id"
+                            name="type_economic_exploitation"
+                            disabled={false}
+                        >
+                            <option key="type_economic_exploitation" value="" hidden>
+                                -- tipo de explotación económica --
+                            </option>
+                            <option key="type_explotación_1" value="teatro">
+                                teatro
+                            </option>
+                            <option key="type_explotación_2" value="museo">
+                                museo
+                            </option>
+                            <option key="type_explotación_3" value="entidad cultural">
+                                entidad cultural
+                            </option>
+                        </Field>
+                        <ErrorMessage name="economic_exploitation" />
+                    </div>
+                )}
+
+                {/* {console.log('valor', formik.values.public_service)} */}
                 <div
                     className={`col-${
-                        formik.values.public_service !== 'si' && formik.values.competitive_process !== 'Aplica' ? 6 : 3
+                        formik.values.competitive_process === 'Aplica' || formik.values.economic_exploitation === 'no'
+                            ? 6
+                            : 3
                     }`}
                 >
                     <label htmlFor="public_service_id" className="form-label">
@@ -267,7 +304,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="public_service" />
                 </div>
                 {formik.values.public_service === 'si' && (
-                    <div className={`col-${formik.values.competitive_process === 'Aplica' ? 6 : 3}`}>
+                    <div className="col-6">
                         <label htmlFor="value_public_service_id" className="form-label">
                             valor de servicios públicos por aforo
                         </label>
@@ -288,13 +325,14 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         Destinación de bien Inmueble
                     </label>
                     <Field
-                        type="text"
+                        as="textarea"
                         className="form-control"
                         id="destination_realEstate_id"
                         name="destination_realEstate"
                         aria-describedby="emailHelp"
-                        placeholder="Actividades"
+                        placeholder="Destinación"
                         autoComplete="off"
+                        style={{ height: '33px' }}
                         maxLength={200}
                     />
                     <ErrorMessage name="destination_realEstate" withCount max={200} />
@@ -304,7 +342,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         Paz y Salvo de Rubros
                     </label>
                     <Field
-                        type="text"
+                        as="textarea"
                         className="form-control"
                         id="peacesafe_id"
                         name="peacesafe"
@@ -320,7 +358,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         Eventos sociales
                     </label>
                     <Field
-                        type="text"
+                        as="textarea"
                         className="form-control"
                         id="social_event_id"
                         name="social_event"
@@ -336,7 +374,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         Campo de acción
                     </label>
                     <Field
-                        type="text"
+                        as="textarea"
                         className="form-control"
                         id="Action_field_id"
                         name="Action_field"
@@ -349,27 +387,27 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
 
                 <div className="col-6">
-                    <label htmlFor="Environmental_risk_id" className="form-label">
+                    <label htmlFor="environmental_risk_id" className="form-label">
                         Riesgos Ambientales
                     </label>
                     <Field
-                        type="text"
+                        as="textarea"
                         className="form-control"
-                        id="Environmental_risk_id"
-                        name="Environmental_risk"
+                        id="environmental_risk_id"
+                        name="environmental_risk"
                         aria-describedby="emailHelp"
                         placeholder="Riesgos ambientales"
                         autoComplete="off"
                         maxLength={500}
                     />
-                    <ErrorMessage name="Environmental_risk" withCount max={500} />
+                    <ErrorMessage name="environmental_risk" withCount max={500} />
                 </div>
                 <div className="col-6">
                     <label htmlFor="dependence_id" className="form-label">
-                        Dependencia
+                        Como contribuye la dependencia
                     </label>
                     <Field
-                        type="text"
+                        as="textarea"
                         className="form-control"
                         id="dependence_id"
                         name="dependence"
@@ -396,6 +434,118 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="activities" withCount max={500} />
                 </div>
+                <div className="bg-white d-flex flex-row justify-content-between">
+                    <div className="flex-fill" />
+
+                    <LinkButton
+                        onClick={() => {
+                            setIdDisposition(idDisposition + 1);
+                            const obligations_list = [
+                                ...formik.values.obligations,
+                                {
+                                    id: idDisposition,
+                                    obligation: '',
+                                },
+                            ];
+                            formik.setFieldValue('obligations', obligations_list, false);
+                            //console.log(obligations_list)
+                        }}
+                        name="Agregar Obligación"
+                        icon={<i className="fa fa-plus-circle" aria-hidden="true" />}
+                    />
+                </div>
+                {Array.isArray(formik.values.obligations) &&
+                    formik.values.obligations?.map((item, i) => {
+                        return (
+                            <div className="row" key={i}>
+                                <div className="col-11">
+                                    <label htmlFor={`percentage_insured_${i}`} className="form-label">
+                                        Obligación
+                                    </label>
+                                    <Field
+                                        // disabled={disabled}
+                                        type="text"
+                                        className="form-control"
+                                        id={`obligation_${i}`}
+                                        name={`obligations[${i}].obligation`}
+                                        maxLength={100}
+                                    />
+                                    <ErrorMessage name={`obligations[${i}].obligation`} withCount max={100} />
+                                </div>
+
+                                <div className="col-1 " style={{ display: 'flex', alignItems: 'center' }}>
+                                    <LinkButton
+                                        name=""
+                                        icon={<i className="fa fa-times" aria-hidden="true" />}
+                                        onClick={() => {
+                                            setIdDisposition(idDisposition - 1);
+                                            const obligations_list = formik.values.obligations.filter(
+                                                (v, j) => j !== i
+                                            );
+                                            formik.setFieldValue('obligations', obligations_list, false);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        );
+                    })}
+
+                {/* prohibiciones */}
+                <div className="bg-white d-flex flex-row justify-content-between">
+                    <div className="flex-fill" />
+
+                    <LinkButton
+                        onClick={() => {
+                            setIdProhibition(idProhibition + 1);
+                            const prohibitions_list = [
+                                ...formik.values.prohibitions,
+                                {
+                                    id: idProhibition,
+                                    prohibition: '',
+                                },
+                            ];
+                            formik.setFieldValue('prohibitions', prohibitions_list, false);
+                            //console.log(obligations_list)
+                        }}
+                        name="Agregar Prohibición"
+                        icon={<i className="fa fa-plus-circle" aria-hidden="true" />}
+                    />
+                </div>
+                {Array.isArray(formik.values.prohibitions) &&
+                    formik.values.prohibitions?.map((item, i) => {
+                        return (
+                            <div className="row" key={i}>
+                                <div className="col-11">
+                                    <label htmlFor={`prohibition_${i}`} className="form-label">
+                                        Prohibición
+                                    </label>
+                                    <Field
+                                        // disabled={disabled}
+                                        type="text"
+                                        className="form-control"
+                                        id={`prohibition_${i}`}
+                                        name={`prohibitions[${i}].prohibition`}
+                                        maxLength={100}
+                                    />
+                                    <ErrorMessage name={`prohibitions[${i}].prohibition`} withCount max={100} />
+                                </div>
+
+                                <div className="col-1 " style={{ display: 'flex', alignItems: 'center' }}>
+                                    <LinkButton
+                                        name=""
+                                        icon={<i className="fa fa-times" aria-hidden="true" />}
+                                        onClick={() => {
+                                            setIdProhibition(idProhibition - 1);
+                                            const prohibitions_list = formik.values.prohibitions.filter(
+                                                (v, j) => j !== i
+                                            );
+                                            formik.setFieldValue('prohibitions', prohibitions_list, false);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        );
+                    })}
             </div>
         </>
     );

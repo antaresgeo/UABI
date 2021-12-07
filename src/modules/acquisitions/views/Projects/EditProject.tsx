@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import { FC, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 

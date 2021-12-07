@@ -69,7 +69,7 @@ const ListNotification = () => {
                                             />
                                             <span className="input-group-text">
                                                 <span>
-                                                    <i className="fa fa-search" aria-hidden="true"/>
+                                                    <i className="fa fa-search" aria-hidden="true" />
                                                 </span>
                                             </span>
                                         </div>

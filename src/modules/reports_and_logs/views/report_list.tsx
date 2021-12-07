@@ -80,7 +80,7 @@ const ReportList: FC<ReportListProps> = () => {
     //         ],
     //     },
     // ];
-    return <div/>;
+    return <div />;
 };
 
 export default ReportList;

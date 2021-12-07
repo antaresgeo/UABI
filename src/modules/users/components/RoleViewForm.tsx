@@ -42,7 +42,7 @@ const RoleViewForm: FC<IUserFormPros> = ({ role }) => {
                                 </div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor=""/>
+                                <label htmlFor="" />
                                 <div className="my-3">
                                     <ul>
                                         {valores2.map((v) => (
@@ -52,7 +52,7 @@ const RoleViewForm: FC<IUserFormPros> = ({ role }) => {
                                 </div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor=""/>
+                                <label htmlFor="" />
                                 <div className="my-3">
                                     <ul>
                                         {valores3.map((v) => (
@@ -62,7 +62,7 @@ const RoleViewForm: FC<IUserFormPros> = ({ role }) => {
                                 </div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor=""/>
+                                <label htmlFor="" />
                                 <div className="my-3">
                                     <ul>
                                         {valores4.map((v) => (

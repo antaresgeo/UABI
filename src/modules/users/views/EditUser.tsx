@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import {FC, useEffect} from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions, service } from '../redux';
 import { Card } from '../../../utils/ui';

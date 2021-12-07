@@ -1,5 +1,5 @@
 const TooltipField = () => {
-    return <div/>;
+    return <div />;
 };
 
 export default TooltipField;

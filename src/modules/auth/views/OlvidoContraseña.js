@@ -64,6 +64,6 @@ const OlvidoPassword = () => {
             {/*</Grid>*/}
         </div>
     );
-}
+};
 
 export default OlvidoPassword;

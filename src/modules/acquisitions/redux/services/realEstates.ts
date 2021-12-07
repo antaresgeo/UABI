@@ -334,6 +334,20 @@ const getTipologies = async () => {
     }
 };
 
+const getTipology = async (id) => {
+    try {
+        let URI = '/tipologies';
+        let res: AxiosResponse<ITipologiesResponse> = await http.get(URI, {
+            params: {
+                id,
+            },
+        });
+        return res.data.results;
+    } catch (error) {
+        return Promise.reject('Error in get tipology');
+    }
+};
+
 const services = {
     getRealEstates,
     getRealEstatesByProject,
@@ -347,6 +361,7 @@ const services = {
     createAcquisitionForRealEstate,
     getAcquisitionForRealEstate,
     getTipologies,
+    getTipology,
 };
 
 export default services;

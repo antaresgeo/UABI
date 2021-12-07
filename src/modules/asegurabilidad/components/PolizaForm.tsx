@@ -43,8 +43,33 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
     useEffect(() => {
         dispatch(actions.getRealEstates({}));
     }, []);
-    // const matriculas = [];
-    // const ids_real = [];
+
+    let newrealEstates = [];
+    newrealEstates = realEstates.reduce((valor_anterior, valor_actual) => {
+        const codigos = valor_actual.sap_id.split(',');
+        const codes = codigos.filter((cod) => cod.charAt(cod.length - 1) === 'n');
+        let obj_type = {};
+        let obj_code = {};
+        if (valor_actual.destination_type === 'PÚBLICO') {
+            obj_type = {
+                ...valor_actual,
+            };
+            valor_anterior.push(obj_type);
+        }
+        for (let i = 0; i < codes.length; i++) {
+            if (valor_actual.destination_type !== 'PÚBLICO') {
+                obj_code = {
+                    ...valor_actual,
+                };
+                valor_anterior.push(obj_code);
+            }
+        }
+        return valor_anterior;
+    }, []);
+    console.log(newrealEstates);
+
+    const matriculas = [];
+    const ids_real = [];
     const initialValues = {
         registry_numbers: realEstatesPolicy ? realEstatesPolicy.map((r) => r.registry_number) : [],
         policy_type: '',
@@ -151,7 +176,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                         name="real_estates_id"
                                         id="real_estates_id_id"
                                         className="w-100"
-                                        options={realEstates.map((realestate) => ({
+                                        options={newrealEstates.map((realestate) => ({
                                             id: realestate.id,
                                             name: realestate.registry_number,
                                         }))}
@@ -387,7 +412,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                             />
                                         </div>
                                     )}
-                                    <ErrorMessage name="type_assurance"/>
+                                    <ErrorMessage name="type_assurance" />
                                 </div>
                             )}
                             {/* {Array.isArray(values.insurance_companies)  && console.log(values.insurance_companies?.map( company => company.join(", ")))} */}

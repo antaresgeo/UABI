@@ -23,7 +23,7 @@ const LeaseDoc = () => {
                             <img src={imgbs64} alt="" id="p1img1" />
                         </div>
 
-                        <div className="dclr_lease"/>
+                        <div className="dclr_lease" />
                         <div id="id1_1">
                             <div id="id1_1_1">
                                 <p className="p0_lease ft0_lease">
@@ -203,7 +203,7 @@ const LeaseDoc = () => {
                                 {`${values.names_applicant} ${values.surnames_applicant}`} NIT o C.C.:
                                 {values.number_doc_applicant_id}
                             </p>
-                            <p className="p13_lease ft0_lease"/>
+                            <p className="p13_lease ft0_lease" />
                             <p className="p14_lease ft3_lease">1. Justificación de la contratación.</p>
                             <p className="p15_lease ft0_lease">
                                 El Municipio de Medellín, tiene dentro de sus bienes, inmuebles que no requiere para el
@@ -249,7 +249,7 @@ const LeaseDoc = () => {
                             <img src={imgbs64} alt="" id="p2img1" />
                         </div>
 
-                        <div className="dclr_lease"/>
+                        <div className="dclr_lease" />
                         <div id="id2_1">
                             <div id="id2_1_1">
                                 <p className="p0_lease ft0_lease">
@@ -353,7 +353,7 @@ const LeaseDoc = () => {
                             <img src={imgbs64} alt="" id="p3img1" />
                         </div>
 
-                        <div className="dclr_lease"/>
+                        <div className="dclr_lease" />
                         <div id="id3_1">
                             <div id="id3_1_1">
                                 <p className="p0_lease ft0_lease">
@@ -473,7 +473,7 @@ const LeaseDoc = () => {
                             <img src={imgbs64} alt="" id="p4img1" />
                         </div>
 
-                        <div className="dclr_lease"/>
+                        <div className="dclr_lease" />
                         <div id="id4_1">
                             <div id="id4_1_1">
                                 <p className="p0_lease ft0_lease">
@@ -1481,7 +1481,7 @@ const LeaseDoc = () => {
                             <img src={imgbs64} alt="" id="p5img1" />
                         </div>
 
-                        <div className="dclr_lease"/>
+                        <div className="dclr_lease" />
                         <div id="id5_1">
                             <div id="id5_1_1">
                                 <p className="p0_lease ft0_lease">
@@ -1727,7 +1727,7 @@ const LeaseDoc = () => {
                             <img src={imgbs64} id="p6img1" alt="" />
                         </div>
 
-                        <div className="dclr_lease"/>
+                        <div className="dclr_lease" />
                         <div id="id6_1">
                             <div id="id6_1_1">
                                 <p className="p0_lease ft0_lease">

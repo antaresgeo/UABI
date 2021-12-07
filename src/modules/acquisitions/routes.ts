@@ -16,7 +16,7 @@ import {
 } from './views';
 import { Permit } from '../..';
 import { TableAreas } from './components/en_des_globe/TableAreas';
-import { RealEstateGlobe } from './components/en_des_globe/RealEstateGlobe';
+import RealEstateGlobe from './components/en_des_globe/RealEstateGlobe';
 
 export const guards = {
     createProject: (props?) => {

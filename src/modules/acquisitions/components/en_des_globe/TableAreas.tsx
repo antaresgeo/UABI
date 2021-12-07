@@ -19,66 +19,52 @@ export const TableAreas = () => {
     const location = useLocation<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { valueArea, numberRealEstates, data, realEstates, arrayRealEstates } = location.state;
-    // const arrayEditRealEsates = [];
-    //console.log(data,numberRealEstates,realEstates )
+    const [realEstatesEdit, setRealEstatesEdit] = useState([]);
+    const { valueArea, numberRealEstates, data, action, realEstates, arrayRealEstates } = location.state;
+    const arrayEditRealEsates = [];
     useEffect(() => {
         if (data && realEstates) {
-            // data.map(bienInmueble => {
-            //     if (bienInmueble.use_area > 0) {
-            //         arrayEditRealEsates.push({
-            //             new: bienInmueble.intact_area,
-            //             idRealEstate: bienInmueble.id,
-            //             type: bienInmueble.type
-            //         })
-            //     }
-            // })
-            //console.log(arrayEditRealEsates)
-
-            const real_estates_edit = realEstates.map((realEstate) => {
-                const editRealEstate = data.filter((r) => r.id === realEstate.id);
-                let areaTotal = 0;
+            data.map((bienInmueble) => {
+                if (bienInmueble.use_area > 0) {
+                    arrayEditRealEsates.push({
+                        intact_area: bienInmueble.intact_area,
+                        id: bienInmueble.id,
+                        type: bienInmueble.type,
+                    });
+                }
+            });
+            const editables = arrayEditRealEsates.map((r) => {
+                return realEstates.find((realEsate) => realEsate.id === r.id);
+            });
+            let result = editables.filter((item, index) => {
+                return editables.indexOf(item) === index;
+            });
+            const real_estates_edit = result.map((realEstate) => {
+                const editRealEstate = arrayEditRealEsates.filter((r) => r.id === realEstate.id);
                 let areaCons = 0;
                 let arealote = 0;
                 if (editRealEstate !== undefined) {
-                    editRealEstate.forEach((r) => {
-                        areaTotal = areaTotal + r.intact_area;
+                    editRealEstate.map((r) => {
                         if (r.type === 'constrution') {
                             areaCons = r.intact_area;
                         } else if (r.type === 'lote') {
                             arealote = r.intact_area;
                         }
                     });
-                    return {
+                    const real = {
                         ...realEstate,
-                        total_area: areaTotal,
-                        construction_area: areaCons,
-                        plot_area: arealote,
+                        construction_area: areaCons === 0 ? realEstate.construction_area : areaCons,
+                        plot_area: arealote === 0 ? realEstate.plot_area : arealote,
+                    };
+                    return {
+                        ...real,
+                        total_area: real.construction_area + real.plot_area,
                     };
                 } else {
                     return realEstate;
                 }
             });
-            console.log(real_estates_edit);
-
-            // data.map(bienInmueble => {
-            //     if (bienInmueble.use_area > 0) {
-            //         arrayEditRealEsates.push({
-            //             newArea: bienInmueble.total_area - bienInmueble.use_area,
-            //             idRealEstate: bienInmueble.key
-            //         })
-            //     }
-            // })
-
-            // const real_estates_edit = realEstates.map(realEstate => {
-            //     const editRealEstate = arrayEditRealEsates.find(r => r.idRealEstate === realEstate.id)
-            //     if (editRealEstate !== undefined) {
-            //         return { ...realEstate, total_area: editRealEstate.newArea };
-            //     } else {
-            //         return realEstate;
-            //     }
-            // })
-            //console.log(real_estates_edit)
+            setRealEstatesEdit(real_estates_edit);
         }
     }, []);
 
@@ -163,7 +149,7 @@ export const TableAreas = () => {
                     <Link
                         to={{
                             pathname: `/englobar/real-estates/edit`,
-                            state: { realEstateData: realEstate, index, DataRealEstate, valueArea },
+                            state: { realEstateData: realEstate, index, DataRealEstate, valueArea, data, realEstates },
                         }}
                         name=""
                         avatar={false}
@@ -234,6 +220,9 @@ export const TableAreas = () => {
                     type="button"
                     className="btn btn-outline-primary me-3"
                     onClick={() => {
+                        console.log('data', data);
+                        console.log('antes', realEstates);
+                        console.log('editar', realEstatesEdit);
                         let completeRealEstates = DataRealEstate.every((b) => b.name !== '');
 
                         if (
@@ -250,7 +239,6 @@ export const TableAreas = () => {
                                 text: 'se deben completar los datos de todos los bienes Inmuebles',
                             });
                         } else {
-                            //console.log(DataRealEstate)
                             dispatch(actions.createRealEstates(DataRealEstate));
                             //console.log('bienes inmuebles a editar', real_estates_edit);
                         }

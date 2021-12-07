@@ -55,7 +55,7 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, onSubmit }) => 
                                         Seleccionar PDF
                                     </button>
                                 </Upload>
-                                <span className="d-block" style={{height: 20}}/>
+                                <span className="d-block" style={{ height: 20 }} />
                             </div>
                             <div className="form-group col-12">
                                 <label htmlFor="" className="form-label">

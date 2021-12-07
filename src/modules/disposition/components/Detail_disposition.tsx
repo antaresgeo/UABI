@@ -19,15 +19,15 @@ const Detail_disposition: FC<DispositionFormPros> = () => {
                                 <label style={{ color: '#8d8c8c' }} htmlFor="">
                                     ID
                                 </label>
-                                <div className="my-3"/>
+                                <div className="my-3" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Nombre del Inmuebles</label>
-                                <div className="my-3"/>
+                                <div className="my-3" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Matrícula</label>
-                                <div className="my-3"/>
+                                <div className="my-3" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Disposición</label>
@@ -50,7 +50,7 @@ const Detail_disposition: FC<DispositionFormPros> = () => {
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Estado de contratación</label>
-                                <div className="my-3"/>
+                                <div className="my-3" />
                             </div>
 
                             <div className="col-3">

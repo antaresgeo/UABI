@@ -200,7 +200,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                             Guardar
                         </a>
                         <Popconfirm title="Seguro que desea cancelar?" onConfirm={cancel}>
-                           Cancelar
+                            Cancelar
                         </Popconfirm>
                     </span>
                 ) : (
@@ -251,16 +251,16 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                     Número de Bien Inmuebles
                 </label>
                 <input
-    type="number"
-    name="numberRealEstates"
-    className="form-control"
-    placeholder="numero a dividir bien inmueble"
-    autoComplete="off"
-    value={numberRealEstates}
-    onChange={handleInputChange}
-    min={0}
-    disabled={disabled}
-    />
+                    type="number"
+                    name="numberRealEstates"
+                    className="form-control"
+                    placeholder="numero a dividir bien inmueble"
+                    autoComplete="off"
+                    value={numberRealEstates}
+                    onChange={handleInputChange}
+                    min={0}
+                    disabled={disabled}
+                />
             </div>
             <button
                 className="btn btn-primary"

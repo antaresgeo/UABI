@@ -212,7 +212,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                             no
                         </label>
                     </div>
-                    <ErrorMessage name="manager_sabi"/>
+                    <ErrorMessage name="manager_sabi" />
                 </div>
             </div>
             <div className="row">

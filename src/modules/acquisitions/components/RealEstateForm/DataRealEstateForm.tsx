@@ -423,7 +423,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         </div>
                     </div>
 
-                    <ErrorMessage name="total_percentage"/>
+                    <ErrorMessage name="total_percentage" />
                 </div>
             </div>
             <div className="row">
@@ -444,7 +444,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         mode="multiple"
                     />
 
-                    <ErrorMessage name="materials"/>
+                    <ErrorMessage name="materials" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="zone_id" className="form-label">
@@ -478,7 +478,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         </label>
                     </div>
 
-                    <ErrorMessage name="zone"/>
+                    <ErrorMessage name="zone" />
                 </div>
                 <div className="col-6">
                     <label className="form-label">Tipo de activo</label>

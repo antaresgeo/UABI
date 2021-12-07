@@ -255,7 +255,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({
                         </label>
                     </div>
                     <span className="form-error">
-                        <ErrorMessage name="zone"/>
+                        <ErrorMessage name="zone" />
                     </span>
                 </div>
                 <div className="form-group col-3">
@@ -300,7 +300,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({
                         />
                     </div>
                     <span className="form-error">
-                        <ErrorMessage name="patrimonial_value"/>
+                        <ErrorMessage name="patrimonial_value" />
                     </span>
                 </div>
                 <div className="form-group col-3">
@@ -364,7 +364,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({
                         </div>
                     </div>
                     <span className="form-error">
-                        <ErrorMessage name="total_percentage"/>
+                        <ErrorMessage name="total_percentage" />
                     </span>
                 </div>
             </div>
@@ -386,7 +386,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({
                         mode="multiple"
                     />
                     <span className="form-error">
-                        <ErrorMessage name="materials"/>
+                        <ErrorMessage name="materials" />
                     </span>
                 </div>
                 <div className="form-group col-3">

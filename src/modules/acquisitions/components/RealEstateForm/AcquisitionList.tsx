@@ -110,12 +110,7 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disable
             align: 'center' as 'center',
             render: () => {
                 return (
-                    <Link
-                        to=""
-                        name=""
-                        avatar={false}
-                        icon={<i className="fa fa-times-circle" aria-hidden="true"/>}
-                    />
+                    <Link to="" name="" avatar={false} icon={<i className="fa fa-times-circle" aria-hidden="true" />} />
                 );
             },
         },

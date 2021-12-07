@@ -1,5 +1,4 @@
-import { Field } from 'formik';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import ErrorMessage from './../../../../utils/ui/error_messge';
 
 interface FormProps {
@@ -29,19 +28,19 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                         <option key="regulatory" value="" disabled>
                             -- Seleccionar --
                         </option>
-                        <option key="muy bajo" value="muy ">
+                        <option key="muy bajo" value="MUY BAJO">
                             muy bajo
                         </option>
-                        <option key="bajo" value="bajo">
+                        <option key="bajo" value="BAJO">
                             bajo
                         </option>
-                        <option key="medio" value="medio">
+                        <option key="medio" value="MEDIO">
                             medio
                         </option>
-                        <option key="alto" value="alto">
+                        <option key="alto" value="ALTO">
                             alto
                         </option>
-                        <option key="muy alto" value="muy ">
+                        <option key="muy alto" value="MUY ALTO">
                             muy alto
                         </option>
                     </Field>
@@ -61,19 +60,19 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                         <option key="regulatory_impact" value="" disabled>
                             -- Seleccionar --
                         </option>
-                        <option key="muy bajo" value="muy ">
+                        <option key="muy bajo" value="MUY BAJO">
                             muy bajo
                         </option>
-                        <option key="bajo" value="bajo">
+                        <option key="bajo" value="BAJO">
                             bajo
                         </option>
-                        <option key="medio" value="medio">
+                        <option key="medio" value="MEDIO">
                             medio
                         </option>
-                        <option key="alto" value="alto">
+                        <option key="alto" value="ALTO">
                             alto
                         </option>
-                        <option key="muy alto" value="muy ">
+                        <option key="muy alto" value="MUY ALTO">
                             muy alto
                         </option>
                     </Field>
@@ -109,7 +108,7 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                         Descripción
                     </label>
                     <Field
-                        type="text"
+                        as="textarea"
                         className="form-control"
                         id="regulatory_description_id"
                         name="regulatory_description"
@@ -120,19 +119,19 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                     <ErrorMessage name="regulatory_description" withCount max={200} />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="regulatory_description_id" className="form-label">
+                    <label htmlFor="regulatory_mitigation_mechanism_id" className="form-label">
                         Mecanismo de mitigación
                     </label>
                     <Field
-                        type="text"
+                        as="textarea"
                         className="form-control"
-                        id="regulatory_description_id"
-                        name="regulatory_description"
+                        id="regulatory_mitigation_mechanism_id"
+                        name="regulatory_mitigation_mechanism"
                         placeholder=""
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="regulatory_description" withCount max={200} />
+                    <ErrorMessage name="regulatory_mitigation_mechanism" withCount max={200} />
                 </div>
             </div>
             <div className="div" style={{ fontWeight: 'bold', marginTop: '10px', fontSize: '14px' }}>
@@ -154,19 +153,19 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                         <option key="operative_degree_occurrence" value="" disabled>
                             --Seleccionar--
                         </option>
-                        <option key="muy bajo" value="muy ">
+                        <option key="muy bajo" value="MUY BAJO">
                             muy bajo
                         </option>
-                        <option key="bajo" value="bajo">
+                        <option key="bajo" value="BAJO">
                             bajo
                         </option>
-                        <option key="medio" value="medio">
+                        <option key="medio" value="MEDIO">
                             medio
                         </option>
-                        <option key="alto" value="alto">
+                        <option key="alto" value="ALTO">
                             alto
                         </option>
-                        <option key="muy alto" value="muy ">
+                        <option key="muy alto" value="MUY ALTO">
                             muy alto
                         </option>
                     </Field>
@@ -186,19 +185,19 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                         <option key="operative_impact_degree" value="" disabled>
                             --Seleccionar--
                         </option>
-                        <option key="muy bajo" value="muy ">
+                        <option key="muy bajo" value="MUY BAJO">
                             muy bajo
                         </option>
-                        <option key="bajo" value="bajo">
+                        <option key="bajo" value="BAJO">
                             bajo
                         </option>
-                        <option key="medio" value="medio">
+                        <option key="medio" value="MEDIO">
                             medio
                         </option>
-                        <option key="alto" value="alto">
+                        <option key="alto" value="ALTO">
                             alto
                         </option>
-                        <option key="muy alto" value="muy ">
+                        <option key="muy alto" value="MUY ALTO">
                             muy alto
                         </option>
                     </Field>
@@ -235,7 +234,7 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                         Descripción
                     </label>
                     <Field
-                        type="text"
+                        as="textarea"
                         className="form-control"
                         id="operative_description_id"
                         name="operative_description"
@@ -247,19 +246,19 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                     <ErrorMessage name="operative_description" withCount max={200} />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="regulatory_description_id" className="form-label">
+                    <label htmlFor="operative_mitigation_mechanism_id" className="form-label">
                         Mecanismo de mitigación
                     </label>
                     <Field
-                        type="text"
+                        as="textarea"
                         className="form-control"
-                        id="regulatory_description_id"
-                        name="regulatory_description"
+                        id="operative_mitigation_mechanism_id"
+                        name="operative_mitigation_mechanism"
                         placeholder=""
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="regulatory_description" withCount max={200} />
+                    <ErrorMessage name="operative_mitigation_mechanism" withCount max={200} />
                 </div>
             </div>
         </>

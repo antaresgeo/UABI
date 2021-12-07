@@ -18,7 +18,7 @@ const CreateInsurability = () => {
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
     const insurance_brokers: any = useSelector((store: any) => store.insurability.brokers.value);
-    console.log(insurance_brokers);
+    //console.log(insurance_brokers)
     useEffect(() => {
         dispatch(clearRealEstate());
         dispatch(actions.get_list_companies());

@@ -191,7 +191,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
                               render: (id) => {
                                   return (
                                       <div className="text-danger" onClick={deleteRealEstate(id)}>
-                                          <i className="fa fa-times-circle" aria-hidden="true"/>
+                                          <i className="fa fa-times-circle" aria-hidden="true" />
                                       </div>
                                   );
                               },

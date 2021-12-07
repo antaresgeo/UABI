@@ -224,7 +224,7 @@ const Projects = () => {
                                             />
                                             <span className="input-group-text" onClick={filter}>
                                                 <span>
-                                                    <i className="fa fa-search" aria-hidden="true"/>
+                                                    <i className="fa fa-search" aria-hidden="true" />
                                                 </span>
                                             </span>
                                         </div>
