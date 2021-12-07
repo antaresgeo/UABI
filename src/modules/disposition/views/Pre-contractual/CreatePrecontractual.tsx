@@ -12,11 +12,18 @@ interface FormPros {
 
 const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate }) => {
     const form_ref = useRef<any>();
+    const history = useHistory();
     const on_submit_lease = async (values) => {
         history.push({ pathname: "/document/lease/", state: { values, realEstate } })
     }
 
-    const history = useHistory();
+    const on_submit_comodato = async (values) => {
+        console.log(values)
+        history.push({ pathname: "/document/comodato/", state: { values, realEstate } })
+    }
+
+
+
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -24,7 +31,11 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate }) => 
                     <div className="row justify-content-center">
                         <div className="col-md-12">
                             {dispositionType === "Comodato" &&
-                                <GeneralFormComodato />
+                                <GeneralFormComodato
+                                    realEstate={realEstate}
+                                    innerRef={form_ref}
+                                    onSubmit={on_submit_comodato}
+                                />
                             }
                             {dispositionType === "arrendamiento" &&
                                 <GeneralFormLease

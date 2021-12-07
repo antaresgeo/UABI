@@ -196,7 +196,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                 <ErrorMessage name="city" />
                             </div>
                         </div>
-                        {(view === 'general' || view === 'user') && (
+                        {(view === 'general' || view === 'user' || view === 'comodato' ) && (
                             <div className="form-row row">
                                 <div className="form-group col-4">
                                     <label htmlFor="" className="form-label">
@@ -254,7 +254,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                     <ErrorMessage name="neighborhood" />
                                 </div>
 
-                                {view !== 'user' && (
+                                {(view !== 'user' && view !== 'comodato') && (
                                     <>
                                         <div className="form-group col-4">
                                             <label htmlFor="" className="form-label">

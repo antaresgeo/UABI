@@ -5,9 +5,10 @@ import LocationModal from '../../../../utils/components/Location/LocationModal';
 
 interface FormProps {
     formik: any;
+    comodato?: boolean;
 
 }
-export const FormUser: FC<FormProps> = ({ formik }) => {
+export const FormUser: FC<FormProps> = ({ formik, comodato }) => {
     return (
         <>
             <div className="row">
@@ -21,6 +22,8 @@ export const FormUser: FC<FormProps> = ({ formik }) => {
                         id="type_society_applicant_id"
                         name="type_society_applicant"
                         autoComplete="off"
+                        disabled={comodato}
+
                     >
                         <option value="type_society_applicant" hidden>
                             --Tipo de Sociedad--
@@ -35,13 +38,14 @@ export const FormUser: FC<FormProps> = ({ formik }) => {
                         <label htmlFor="id_type_document_id" className="form-label">
                             Tipo de Documento
                         </label>
-                        <div className="col-4">
+                        <div className="col-5">
                             <Field
                                 as="select"
                                 className="form-select"
                                 id="id_type_document_id"
                                 name="id_type_document"
                                 autoComplete="off"
+                                disabled={comodato}
                             >
                                 <option value="id_type_document" hidden>
                                     -
@@ -53,7 +57,7 @@ export const FormUser: FC<FormProps> = ({ formik }) => {
                             </Field>
                             <ErrorMessage name="id_type_document" />
                         </div>
-                        <div className="col-8">
+                        <div className="col-7">
                             <Field
                                 type="number"
                                 className="form-control"
@@ -66,36 +70,58 @@ export const FormUser: FC<FormProps> = ({ formik }) => {
                         </div>
                     </div>
                 </div>
-                <div className="col-3">
-                    <label htmlFor="names_applicant_id" className="form-label">
-                        Nombres
-                    </label>
-                    <Field
-                        type="text"
-                        className="form-control"
-                        id="names_applicant_id"
-                        name="names_applicant"
-                        placeholder="Nombre del Solicitante"
-                        autoComplete="off"
-                        maxLength={201}
-                    />
-                    <ErrorMessage name="names_applicant" />
-                </div>
-                <div className="col-3">
-                    <label htmlFor="surnames_applicant_id" className="form-label">
-                        Apellidos
-                    </label>
-                    <Field
-                        type="text"
-                        className="form-control"
-                        id="surnames_applicant_id"
-                        name="surnames_applicant"
-                        placeholder="Apellidos del Solicitante"
-                        autoComplete="off"
-                        maxLength={201}
-                    />
-                    <ErrorMessage name="surnames_applicant" />
-                </div>
+                {comodato === true
+                    ?
+                    <div className="col-6">
+                        <label htmlFor="names_applicant_id" className="form-label">
+                            Nombre Razón Social
+                        </label>
+                        <Field
+                            type="text"
+                            className="form-control"
+                            id="names_applicant_id"
+                            name="names_applicant"
+                            placeholder="Razón social"
+                            autoComplete="off"
+                            maxLength={201}
+                        />
+                        <ErrorMessage name="names_applicant" />
+                    </div>
+                    :
+                    <>
+                        <div className="col-3">
+                            <label htmlFor="names_applicant_id" className="form-label">
+                                Nombres
+                            </label>
+                            <Field
+                                type="text"
+                                className="form-control"
+                                id="names_applicant_id"
+                                name="names_applicant"
+                                placeholder="Nombre del Solicitante"
+                                autoComplete="off"
+                                maxLength={201}
+                            />
+                            <ErrorMessage name="names_applicant" />
+                        </div>
+                        <div className="col-3">
+                            <label htmlFor="surnames_applicant_id" className="form-label">
+                                Apellidos
+                            </label>
+                            <Field
+                                type="text"
+                                className="form-control"
+                                id="surnames_applicant_id"
+                                name="surnames_applicant"
+                                placeholder="Apellidos del Solicitante"
+                                autoComplete="off"
+                                maxLength={201}
+                            />
+                            <ErrorMessage name="surnames_applicant" />
+                        </div>
+                    </>
+                }
+
             </div>
             <div className="row">
                 <div className="form-group col-3">
