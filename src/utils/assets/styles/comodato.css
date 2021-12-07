@@ -779,11 +779,11 @@ font: 16px "Arial";
 line-height: 18px;
 }
 .ft7_comodato {
-font: bold 16px "Arial";
+font: bold 15px "Arial";
 line-height: 19px;
 }
 .ft8_comodato {
-font: bold 16px "Arial";
+font: bold 15px "Arial";
 line-height: 21px;
 }
 .ft19_comodato {
@@ -880,7 +880,7 @@ font: bold 15px "Arial";
 line-height: 16px;
 }
 .ft30_comodato {
-font: 14px "Arial";
+font: 15px "Arial";
 line-height: 16px;
 }
 .ft31_comodato {
@@ -1128,8 +1128,9 @@ margin-bottom: 0px;
 text-align: justify;
 padding-left: 95px;
 padding-right: 72px;
-margin-top: 16px;
+margin-top: 19px;
 margin-bottom: 0px;
+
 }
 .p24_comodato {
 text-align: right;
@@ -1266,17 +1267,17 @@ margin-bottom: 0px;
 }
 .p45_comodato {
 text-align: left;
-padding-left: 8px;
-margin-top: 0px;
-margin-bottom: 0px;
-white-space: nowrap;
+padding-left: 7px;
+/* margin-top: 0px;
+margin-bottom: 0px; */
+/* white-space: nowrap; */
 }
 .p46_comodato {
-text-align: left;
-padding-left: 6px;
-margin-top: 0px;
-margin-bottom: 0px;
-white-space: nowrap;
+    text-align: justify;
+    padding-left: 7px;
+    padding-right: 7px;
+    /* margin-top: 0px;
+    margin-bottom: 0px; */
 }
 .p47_comodato {
 text-align: left;
@@ -1338,7 +1339,7 @@ text-align: left;
 padding-left: 7px;
 margin-top: 0px;
 margin-bottom: 0px;
-white-space: nowrap;
+/* white-space: nowrap; */
 }
 .p56_comodato {
 text-align: left;
@@ -1501,8 +1502,8 @@ margin-bottom: 0px;
 }
 .p81_comodato {
 text-align: left;
-padding-right: 537px;
-margin-top: 49px;
+/* padding-right: 537px; */
+/* margin-top: 49px; */
 margin-bottom: 0px;
 }
 .p82_comodato {
@@ -1545,7 +1546,7 @@ border-top: #000000 1px solid;
 padding: 0px;
 margin: 0px;
 width: 85px;
-vertical-align: bottom;
+vertical-align: baseline
 }
 .td2_comodato {
 border-right: #000000 1px solid;
@@ -2164,3 +2165,9 @@ margin-left: 103px;
 margin-top: 10px;
 font: 15px "Arial";
 }
+.t3_comodato {
+    width: 650px;
+    /* margin-left: 0px; */
+    margin-top: 11px;
+    font: 15px "Arial";
+    }

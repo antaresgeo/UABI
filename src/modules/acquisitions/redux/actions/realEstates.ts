@@ -54,3 +54,6 @@ export const clearRealEstate = () =>
 
 export const getTipologies = () =>
         request_dispatch(types.tipologies,  service.getTipologies())
+
+export const getTipology = (id) =>
+        request_dispatch(types.tipology,  service.getTipology(id))
