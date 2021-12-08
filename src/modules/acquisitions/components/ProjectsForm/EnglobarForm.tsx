@@ -17,10 +17,15 @@ interface GeneralDataFormProps {
     onProjectSelectedChange?: (value) => void;
 }
 
-const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEstates, onProjectSelectedChange }) => {
-    function handleChange(value) {
-        console.log(`selected ${value}`);
-    }
+const EnglobarForm: FC<GeneralDataFormProps> = ({
+    type,
+    disabled,
+    formik,
+    realEstates /*, onProjectSelectedChange*/,
+}) => {
+    // function handleChange(value) {
+    //     console.log(`selected ${value}`);
+    // }
     return (
         <Card
             title="Información del bien Inmueble"
@@ -55,7 +60,10 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                         id="bi"
                         optionLabelProp="label"
                         component={Select}
-                        options={realEstates.map(realestate => ({id: realestate.id, name: realestate.registry_number}))}
+                        options={realEstates.map((realestate) => ({
+                            id: realestate.id,
+                            name: realestate.registry_number,
+                        }))}
                         mode="multiple"
                         defaultValue={realEstates.length === 1 ? [realEstates[0]] : []}
                     />
@@ -247,7 +255,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                         </label>
                     </div>
                     <span className="form-error">
-                        <ErrorMessage name="zone"></ErrorMessage>
+                        <ErrorMessage name="zone" />
                     </span>
                 </div>
                 <div className="form-group col-3">
@@ -292,7 +300,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                         />
                     </div>
                     <span className="form-error">
-                        <ErrorMessage name="patrimonial_value"></ErrorMessage>
+                        <ErrorMessage name="patrimonial_value" />
                     </span>
                 </div>
                 <div className="form-group col-3">
@@ -356,7 +364,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                         </div>
                     </div>
                     <span className="form-error">
-                        <ErrorMessage name="total_percentage"></ErrorMessage>
+                        <ErrorMessage name="total_percentage" />
                     </span>
                 </div>
             </div>
@@ -378,7 +386,7 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({ type, disabled, formik, realEs
                         mode="multiple"
                     />
                     <span className="form-error">
-                        <ErrorMessage name="materials"></ErrorMessage>
+                        <ErrorMessage name="materials" />
                     </span>
                 </div>
                 <div className="form-group col-3">

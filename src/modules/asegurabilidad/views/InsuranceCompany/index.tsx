@@ -3,14 +3,14 @@ import { useEffect, useState /*, useState*/ } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
-import {  swal } from '../../../../utils';
+import { swal } from '../../../../utils';
 
 const InsuranceCompanies = () => {
     const dispatch = useDispatch();
     const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
     const loading: boolean = useSelector((store: any) => store.insurability.companies.loading);
     const { total_results } = useSelector((store: any) => store.insurability.companies.pagination);
-    const [query, set_query] = useState<string>('');
+    const [query /*, set_query*/] = useState<string>('');
 
     const filter = () => {
         const filters = { page: 1, ...(query ? { q: query } : {}) };
@@ -47,7 +47,6 @@ const InsuranceCompanies = () => {
                     showCancelButton: false,
                     confirmButtonText: 'Continuar',
                     denyButtonText: `Cancelar`,
-
                 }).then(async (result) => {
                     if (result.isConfirmed) {
                         await dispatch(actions.delete_company(id));

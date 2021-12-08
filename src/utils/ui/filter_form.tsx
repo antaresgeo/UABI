@@ -4,13 +4,13 @@ import Dropdown from 'antd/lib/dropdown';
 import Menu from 'antd/lib/menu';
 import { LinkButton } from './link';
 
-interface FilterForm {
+interface FilterFormProps {
     filters: { key: string; name: string }[];
     onSubmit: (values, form) => Promise<any>;
     disabled?: boolean;
 }
 
-const FilterForm: FC<FilterForm> = ({ filters, onSubmit, disabled }) => {
+const FilterForm: FC<FilterFormProps> = ({ filters, onSubmit /*, disabled*/ }) => {
     return (
         <Formik
             enableReinitialize

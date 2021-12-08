@@ -1,12 +1,8 @@
-import { useEffect, useState } from 'react';
-import moment from 'moment';
+import { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRealEstateAttributes } from './../../../utils/interfaces/realEstates';
-import { IProjectAttributes } from './../../../utils/interfaces/projects';
-import { actions, service } from '../../acquisitions/redux';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../acquisitions/redux';
 import RealEstateForm from '../../acquisitions/components/RealEstateForm';
-import { clearObjectNulls } from '../../../utils';
 
 interface IProps {
     id: string;
@@ -18,7 +14,7 @@ const InventoryRecordEdit = () => {
 
     useEffect(() => {
         if (id) {
-            const promise: any = dispatch(actions.getRealEstate(id));
+            dispatch(actions.getRealEstate(id));
         }
     }, []);
 

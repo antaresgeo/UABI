@@ -16,7 +16,6 @@ const getPaginator = (
     total: number,
     change_page?: (page: number, pageSize?: number) => void
 ): TablePaginationConfig => {
-
     return {
         position: ['bottomRight', 'topRight'],
         total: total || 0,
@@ -28,7 +27,7 @@ const getPaginator = (
                   showQuickJumper: true,
               }
             : {}),
-        showTotal: (total, current) => {
+        showTotal: (total /*, current*/) => {
             return (
                 <>
                     <span>Total de resultados</span>:<span style={{ color: '#F28C02' }}>: {total}</span>
@@ -56,7 +55,7 @@ const CompressTable: FC<CompressTableProps> = ({
         dataSource: data,
         ...(with_pagination
             ? { pagination: getPaginator(count ? count : data?.length, change_page) }
-            : { pagination: false }),
+            : { }),
         loading: loading,
         bordered: true,
         className: 'w-100',

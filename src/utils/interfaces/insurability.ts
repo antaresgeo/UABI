@@ -1,14 +1,15 @@
 import { IAuditTrail } from '.';
 
-
 export interface IPolicyAttributes {
     id?: number | string;
     registry_number: string;
     policy_type: string;
-    vigency_start:  number | string;
-    vigency_end:  number | string;
+    vigency_start: number | string;
+    vigency_end: number | string;
     insurance_broker: string;
-    insurance_companies: [{ insurance_company: string, total_percentage: number }];
+    insurance_companies: [
+        { insurance_company: string; total_percentage: number }
+    ];
     type_assurance: string;
     insurance_value: string;
     insurance_document_id: number;
@@ -28,4 +29,3 @@ export interface IPolicyResponse {
     results: IPolicyAttributes;
     message: string;
 }
-

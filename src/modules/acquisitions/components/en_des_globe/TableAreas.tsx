@@ -1,10 +1,10 @@
-import { Card, Link, Table as UiTable } from "../../../../utils/ui";
+import { Card, Link, Table as UiTable } from '../../../../utils/ui';
 import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { swal_warning } from "../../../../utils";
-import { useDispatch } from "react-redux";
-import { actions } from "../../redux";
+import { swal_warning } from '../../../../utils';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../redux';
 
 interface IParams {
     valueArea: string;
@@ -24,56 +24,55 @@ export const TableAreas = () => {
     const arrayEditRealEsates = [];
     useEffect(() => {
         if (data && realEstates) {
-            data.map(bienInmueble => {
+            data.map((bienInmueble) => {
                 if (bienInmueble.use_area > 0) {
                     arrayEditRealEsates.push({
                         intact_area: bienInmueble.intact_area,
                         id: bienInmueble.id,
-                        type: bienInmueble.type
-                    })
+                        type: bienInmueble.type,
+                    });
                 }
-            })
-            const editables = arrayEditRealEsates.map(r => {
-                return realEstates.find(realEsate => realEsate.id === r.id)
-            })
+            });
+            const editables = arrayEditRealEsates.map((r) => {
+                return realEstates.find((realEsate) => realEsate.id === r.id);
+            });
             let result = editables.filter((item, index) => {
                 return editables.indexOf(item) === index;
-            })
-            const real_estates_edit = result.map(realEstate => {
-                const editRealEstate = arrayEditRealEsates.filter(r => r.id === realEstate.id)
+            });
+            const real_estates_edit = result.map((realEstate) => {
+                const editRealEstate = arrayEditRealEsates.filter((r) => r.id === realEstate.id);
                 let areaCons = 0;
                 let arealote = 0;
                 if (editRealEstate !== undefined) {
-                    editRealEstate.map(r => {
-                        if(r.type === 'constrution'){
-                            areaCons = r.intact_area
-                        }else if(r.type === "lote") {
-                            arealote = r.intact_area
+                    editRealEstate.map((r) => {
+                        if (r.type === 'constrution') {
+                            areaCons = r.intact_area;
+                        } else if (r.type === 'lote') {
+                            arealote = r.intact_area;
                         }
-                    })
+                    });
                     const real = {
                         ...realEstate,
                         construction_area: areaCons === 0 ? realEstate.construction_area : areaCons,
-                        plot_area: arealote === 0 ? realEstate.plot_area : arealote
-
-                    }
+                        plot_area: arealote === 0 ? realEstate.plot_area : arealote,
+                    };
                     return {
-                         ...real,
-                        total_area: real.construction_area + real.plot_area
+                        ...real,
+                        total_area: real.construction_area + real.plot_area,
                     };
                 } else {
                     return realEstate;
                 }
-            })
+            });
             setRealEstatesEdit(real_estates_edit);
         }
-    }, [])
+    }, []);
 
     const initial_values = [];
     for (let i = 0; i < Number(numberRealEstates); i++) {
         initial_values.push({
             value: `${i + 1} de ${numberRealEstates}`,
-            name: "",
+            name: '',
             total_area: `${(Number(valueArea) / Number(numberRealEstates)).toFixed(2)}`,
             id: '',
             sap_id: '',
@@ -113,7 +112,7 @@ export const TableAreas = () => {
             dependency: '',
             subdependency: '',
             management_center: '',
-            cost_center: ''
+            cost_center: '',
             //...realEstate,
         });
     }
@@ -123,8 +122,7 @@ export const TableAreas = () => {
         if (arrayRealEstates) {
             setDataRealEstate(arrayRealEstates);
         }
-    }, [])
-
+    }, []);
 
     const table_columns = [
         {
@@ -149,7 +147,10 @@ export const TableAreas = () => {
             render: (value, realEstate, index) => {
                 return (
                     <Link
-                        to={{ pathname: `/englobar/real-estates/edit`, state: { realEstateData: realEstate, index, DataRealEstate, valueArea, data, realEstates} }}
+                        to={{
+                            pathname: `/englobar/real-estates/edit`,
+                            state: { realEstateData: realEstate, index, DataRealEstate, valueArea, data, realEstates },
+                        }}
                         name=""
                         avatar={false}
                         icon={<i className="fa fa-pencil" aria-hidden="true" />}
@@ -161,7 +162,7 @@ export const TableAreas = () => {
     ];
     let totalArea = 0;
     if (Array.isArray(DataRealEstate)) {
-        DataRealEstate.map(data => totalArea = totalArea + Number(data.total_area))
+        DataRealEstate.map((data) => (totalArea = totalArea + Number(data.total_area)));
     }
     return (
         <div className="h-100 d-flex flex-column">
@@ -178,24 +179,24 @@ export const TableAreas = () => {
                                             <b className="col-6 text-center">Utilizada</b>
                                         </div>
                                         <div className="row my-1">
-                                            <div className="col">{valueArea}m<sup>2</sup></div>
+                                            <div className="col">
+                                                {valueArea}m<sup>2</sup>
+                                            </div>
                                             <div className="col text-center">{`/`}</div>
-                                            {Number(totalArea.toFixed(0)) > Number(valueArea) ?
-                                                <div className="col" style={{ color: 'red' }}>{totalArea.toFixed(0)}m<sup>2</sup></div>
-                                                :
-                                                <div className="col" >{totalArea.toFixed(0)}m<sup>2</sup></div>
-                                            }
+                                            {Number(totalArea.toFixed(0)) > Number(valueArea) ? (
+                                                <div className="col" style={{ color: 'red' }}>
+                                                    {totalArea.toFixed(0)}m<sup>2</sup>
+                                                </div>
+                                            ) : (
+                                                <div className="col">
+                                                    {totalArea.toFixed(0)}m<sup>2</sup>
+                                                </div>
+                                            )}
                                         </div>
-
                                     </>
-
                                 }
                             >
-                                <UiTable
-                                    columns={table_columns}
-                                    items={DataRealEstate}
-                                    with_pagination
-                                />
+                                <UiTable columns={table_columns} items={DataRealEstate} with_pagination />
                             </Card>
                         </div>
                     </div>
@@ -219,26 +220,26 @@ export const TableAreas = () => {
                     type="button"
                     className="btn btn-outline-primary me-3"
                     onClick={() => {
-                        console.log('data', data)
-                        console.log('antes',realEstates)
-                        console.log('editar',realEstatesEdit)
-                        let completeRealEstates = DataRealEstate.every(b => b.name !== "")
+                        console.log('data', data);
+                        console.log('antes', realEstates);
+                        console.log('editar', realEstatesEdit);
+                        let completeRealEstates = DataRealEstate.every((b) => b.name !== '');
 
-                        if (Number(totalArea.toFixed(0)) > Number(valueArea) || Number(totalArea.toFixed(0)) < Number(valueArea)) {
-                            swal_warning.fire(
-                                {
-                                    title: "Área a utilizar no válida", text: `revisa las áreas de los Bienes Inmuebles`
-                                }
-                            )
+                        if (
+                            Number(totalArea.toFixed(0)) > Number(valueArea) ||
+                            Number(totalArea.toFixed(0)) < Number(valueArea)
+                        ) {
+                            swal_warning.fire({
+                                title: 'Área a utilizar no válida',
+                                text: `revisa las áreas de los Bienes Inmuebles`,
+                            });
                         } else if (!completeRealEstates) {
-                            swal_warning.fire(
-                                {
-                                    title: "No se puede finalizar", text: "se deben completar los datos de todos los bienes Inmuebles"
-                                }
-                            )
+                            swal_warning.fire({
+                                title: 'No se puede finalizar',
+                                text: 'se deben completar los datos de todos los bienes Inmuebles',
+                            });
                         } else {
-
-                            dispatch(actions.createRealEstates(DataRealEstate))
+                            dispatch(actions.createRealEstates(DataRealEstate));
                             //console.log('bienes inmuebles a editar', real_estates_edit);
                         }
                     }}
@@ -247,5 +248,5 @@ export const TableAreas = () => {
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};

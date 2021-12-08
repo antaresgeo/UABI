@@ -1,6 +1,5 @@
 import types from './types';
 import { Loadable, Pageable } from '../../../custom_types';
-import { Broker, Company } from '../../asegurabilidad/redux/service';
 import { User } from './service';
 
 interface State {

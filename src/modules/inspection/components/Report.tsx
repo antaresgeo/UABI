@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { Field, Form, Formik } from 'formik';
 import { Card } from '../../../utils/ui';
 import ErrorMessage from '../../../utils/ui/error_messge';
-import { values } from 'lodash';
 
 interface ReportProps {
     disabled?: boolean;

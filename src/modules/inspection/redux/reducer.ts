@@ -9,7 +9,7 @@ interface State {
 
 const fake_inspection: Inspection = {
     id: -1,
-}
+};
 
 const emptyInitialState: State = {
     inspection: {
@@ -18,7 +18,7 @@ const emptyInitialState: State = {
         loaded: false,
     },
     inspections: {
-        value: [ fake_inspection ],
+        value: [fake_inspection],
         pagination: {
             page: 1,
             count: 0,

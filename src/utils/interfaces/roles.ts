@@ -1,8 +1,8 @@
 import { IAuditTrail } from '.';
 export interface IRolAttributes {
     id?: string | number;
-    role?: {id: number, name: string}
-    permits?: [{ id: string, name: number }];
+    role?: { id: number; name: string };
+    permits?: [{ id: string; name: number }];
     audit_trail?: IAuditTrail;
     status?: number;
 }
@@ -17,8 +17,8 @@ export interface IRolResponse {
     message: string;
 }
 
-export interface IRoleSelectAttributes{
-    id: number,
+export interface IRoleSelectAttributes {
+    id: number;
     name: string;
     status?: number;
     audit_trail?: IAuditTrail;

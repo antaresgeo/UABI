@@ -85,15 +85,6 @@ export interface IRealEstateResponse {
     message: string;
 }
 
-export interface IItemRealEstate {
-    id: string;
-    matricula: string | number;
-    name: string;
-    project?: number | string;
-    creationDate: string;
-    createdBy?: string;
-}
-
 export interface IPolicyAttributes {
     id?: number;
     matricula: number;

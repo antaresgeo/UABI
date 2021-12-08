@@ -18,73 +18,73 @@ import CreateInsuranceBroker from './views/InsuranceBroker/CreateInsuranceBroker
 
 export const guards = {
     createPolicy: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.CREATE_POLICY);
     },
     detailPolicy: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.DETAIL_POLICY);
     },
     editPolicy: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.UPDATE_POLICY);
     },
     listPolicy: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.LIST_POLICY);
     },
     createInsuranceCompany: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.CREATE_INSURANCE_COMPANY);
     },
     detailInsuranceCompany: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.DETAIL_INSURANCE_COMPANY);
     },
     editInsuranceCompany: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.UPDATE_INSURANCE_COMPANY);
     },
     listInsuranceCompany: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.LIST_INSURANCE_COMPANY);
     },
     createInsuranceBroker: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.CREATE_INSURANCE_BROKER);
     },
     detailInsuranceBroker: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.DETAIL_INSURANCE_BROKER);
     },
     editInsuranceBroker: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.UPDATE_INSURANCE_BROKER);
     },
     listInsuranceBroker: (props?) => {
-        const user = props.user
+        const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.LIST_INSURANCE_BROKER);
@@ -109,7 +109,10 @@ const get_routes = (): IRoute[] => {
             path: '/insurabilities/policy/create/:id/',
             template_props: {
                 breadcrumbs: [
-                    { name: 'Registro de Pólizas', to: '/insurabilities/policy' },
+                    {
+                        name: 'Registro de Pólizas',
+                        to: '/insurabilities/policy',
+                    },
                     { name: 'Crear Nueva Póliza' },
                 ],
             },

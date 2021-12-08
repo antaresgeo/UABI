@@ -16,8 +16,8 @@ const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ innerRef, onS
                 innerRef={innerRef}
                 enableReinitialize
                 onSubmit={(values, form) => {
-                    onSubmit(values)
-                    form.setSubmitting(false)
+                    onSubmit(values);
+                    form.setSubmitting(false);
                 }}
                 initialValues={{
                     documento1: '',
@@ -27,7 +27,7 @@ const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ innerRef, onS
                     documento5: '',
                 }}
             >
-                {({ isSubmitting, setFieldValue, values, handleChange }) => {
+                {() => {
                     return (
                         <Form>
                             <Card title="Fotografias Generales">

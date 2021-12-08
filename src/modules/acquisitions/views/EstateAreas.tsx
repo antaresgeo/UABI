@@ -58,7 +58,7 @@ const EstateAreas = () => {
                                                 id="exampleInputEmail1"
                                                 aria-describedby="emailHelp"
                                             />
-                                            <div id="emailHelp" className="form-text"></div>
+                                            <div id="emailHelp" className="form-text" />
                                         </div>
                                         <div className="col-6">
                                             <label htmlFor="exampleInputEmail1" className="form-label">
@@ -70,7 +70,7 @@ const EstateAreas = () => {
                                                 id="exampleInputEmail1"
                                                 aria-describedby="emailHelp"
                                             />
-                                            <div id="emailHelp" className="form-text"></div>
+                                            <div id="emailHelp" className="form-text" />
                                         </div>
 
                                         <div className="col-3">
@@ -83,7 +83,7 @@ const EstateAreas = () => {
                                                 id="exampleInputEmail1"
                                                 aria-describedby="emailHelp"
                                             />
-                                            <div id="emailHelp" className="form-text"></div>
+                                            <div id="emailHelp" className="form-text" />
                                         </div>
                                         <div className="col-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label">
@@ -95,7 +95,7 @@ const EstateAreas = () => {
                                                 id="exampleInputEmail1"
                                                 aria-describedby="emailHelp"
                                             />
-                                            <div id="emailHelp" className="form-text"></div>
+                                            <div id="emailHelp" className="form-text" />
                                         </div>
                                         <div className="col-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label">
@@ -107,7 +107,7 @@ const EstateAreas = () => {
                                                 id="exampleInputEmail1"
                                                 aria-describedby="emailHelp"
                                             />
-                                            <div id="emailHelp" className="form-text"></div>
+                                            <div id="emailHelp" className="form-text" />
                                         </div>
                                         <div className="col-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label">
@@ -119,7 +119,7 @@ const EstateAreas = () => {
                                                 id="exampleInputEmail1"
                                                 aria-describedby="emailHelp"
                                             />
-                                            <div id="emailHelp" className="form-text"></div>
+                                            <div id="emailHelp" className="form-text" />
                                         </div>
                                         <div className="col-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label">
@@ -131,7 +131,7 @@ const EstateAreas = () => {
                                                 id="exampleInputEmail1"
                                                 aria-describedby="emailHelp"
                                             />
-                                            <div id="emailHelp" className="form-text"></div>
+                                            <div id="emailHelp" className="form-text" />
                                         </div>
                                         <div className="col-3">
                                             <label htmlFor="form-select" className="form-label">
@@ -179,7 +179,7 @@ const EstateAreas = () => {
                                                 id="exampleInputEmail1"
                                                 aria-describedby="emailHelp"
                                             />
-                                            <div id="emailHelp" className="form-text"></div>
+                                            <div id="emailHelp" className="form-text" />
                                         </div>
                                         <div className="col-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label">
@@ -191,7 +191,7 @@ const EstateAreas = () => {
                                                 id="exampleInputEmail1"
                                                 aria-describedby="emailHelp"
                                             />
-                                            <div id="emailHelp" className="form-text"></div>
+                                            <div id="emailHelp" className="form-text" />
                                         </div>
                                     </div>
                                     <div
@@ -226,7 +226,7 @@ const EstateAreas = () => {
                                             </div>
                                         </div>
                                         <div className="col-1">
-                                            <label htmlFor=""></label>
+                                            <label htmlFor="" />
                                             <button type="submit" className="btn btn-primary mr-3">
                                                 Subir
                                             </button>
@@ -285,13 +285,13 @@ const EstateAreas = () => {
                                                 aria-label="Basic mixed styles example"
                                             >
                                                 <span>
-                                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                                    <i className="fa fa-eye" aria-hidden="true" />
                                                 </span>
                                                 <span>
-                                                    <i className="fa fa-pencil" aria-hidden="true"></i>
+                                                    <i className="fa fa-pencil" aria-hidden="true" />
                                                 </span>
                                                 <span>
-                                                    <i className="fa fa-trash" aria-hidden="true"></i>
+                                                    <i className="fa fa-trash" aria-hidden="true" />
                                                 </span>
                                             </div>
                                         </td>
@@ -310,13 +310,13 @@ const EstateAreas = () => {
                                                 aria-label="Basic mixed styles example"
                                             >
                                                 <span>
-                                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                                    <i className="fa fa-eye" aria-hidden="true" />
                                                 </span>
                                                 <span>
-                                                    <i className="fa fa-pencil" aria-hidden="true"></i>
+                                                    <i className="fa fa-pencil" aria-hidden="true" />
                                                 </span>
                                                 <span>
-                                                    <i className="fa fa-trash" aria-hidden="true"></i>
+                                                    <i className="fa fa-trash" aria-hidden="true" />
                                                 </span>
                                             </div>
                                         </td>
@@ -335,13 +335,13 @@ const EstateAreas = () => {
                                                 aria-label="Basic mixed styles example"
                                             >
                                                 <span>
-                                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                                    <i className="fa fa-eye" aria-hidden="true" />
                                                 </span>
                                                 <span>
-                                                    <i className="fa fa-pencil" aria-hidden="true"></i>
+                                                    <i className="fa fa-pencil" aria-hidden="true" />
                                                 </span>
                                                 <span>
-                                                    <i className="fa fa-trash" aria-hidden="true"></i>
+                                                    <i className="fa fa-trash" aria-hidden="true" />
                                                 </span>
                                             </div>
                                         </td>

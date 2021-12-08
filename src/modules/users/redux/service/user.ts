@@ -1,8 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { auth_http } from '../../../../config/axios_instances';
-import { Audit_trail } from '../../../../utils/components/DocumentsModal/services';
-import { swal_success, swal_warning } from '../../../../utils';
-import { assignIn } from 'lodash';
+import {base64Encode, swal_success, swal_warning} from '../../../../utils';
 
 export interface AllUsersResponse {
     message: string;
@@ -50,9 +48,12 @@ export interface DetailsUser {
         lastName: string;
     };
     surnames: {
+
         firstSurname: string;
         lastSurname: string;
     };
+    dependency?: string,
+    subdependency?: string,
     email: string;
     location: string;
     cellphone_number: number;
@@ -88,7 +89,8 @@ export const get_list_users = async () => {
     }
 };
 
-export const create_user = async (data) => {
+export const create_user = async (_data) => {
+    const data = {..._data}
     if (data.detailsUser) {
         delete data.detailsUser.id;
         delete data.detailsUser.politics;
@@ -100,6 +102,9 @@ export const create_user = async (data) => {
             delete data.detailsUser.dependency;
             delete data.detailsUser.subdependency;
         }
+    }
+    if(data?.user?.password){
+        data.user.password = base64Encode(data.user.password)
     }
     try {
         const URI = '/users/';
@@ -165,22 +170,22 @@ export const update_user = async (id, data) => {
 export const assignRolesAndPermits = async (id, data) => {
     try {
         if (data.permits && data.roles_to_assign) {
-            const r1 = await auth_http.post(
-                '/roles/assign',
-                { roles: data.roles_to_assign },
-                {
-                    params: {
-                        to: id,
-                    },
-                }
-            );
-            const r2 = await auth_http.post(
-                '/permits/assign',
-                { permits: data.permits },
-                {
-                    params: { to: id },
-                }
-            );
+            // const r1 = await auth_http.post(
+            //     '/roles/assign',
+            //     { roles: data.roles_to_assign },
+            //     {
+            //         params: {
+            //             to: id,
+            //         },
+            //     }
+            // );
+            // const r2 = await auth_http.post(
+            //     '/permits/assign',
+            //     { permits: data.permits },
+            //     {
+            //         params: { to: id },
+            //     }
+            // );
             await swal_success.fire({
                 title: 'Usuario actualizado',
                 text: 'Roles y Permisos asignados',

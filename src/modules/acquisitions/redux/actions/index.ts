@@ -14,6 +14,7 @@ import {
     createAcquisitionForRealEstate,
     getTipologies,
     getTipology,
+    updateAcquisition
 } from './realEstates';
 
 // const example = (filters = {}) =>
@@ -52,6 +53,6 @@ const actions = {
     createAcquisitionForRealEstate,
     getTipologies,
     getTipology,
-
+    updateAcquisition
 };
 export default actions;

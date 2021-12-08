@@ -1,12 +1,9 @@
-import React from 'react'
-import { Card } from '../../../../utils/ui';
-import { FormContract } from '../../components/Contractual/FormContract';
-import { useHistory } from 'react-router-dom';
-import { FormUser } from './../../components/Precontractual/FormUser';
-import { GeneralDataContract } from './../../components/Contractual/GeneralDataContract';
+import React from 'react';
+// import { useHistory } from 'react-router-dom';
+import { GeneralDataContract } from '../../components/Contractual/GeneralDataContract';
 
 const CreateContract = () => {
-    const history = useHistory();
+    // const history = useHistory();
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -19,7 +16,7 @@ const CreateContract = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CreateContract
+export default CreateContract;

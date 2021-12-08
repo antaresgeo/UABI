@@ -1,10 +1,10 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { actions } from '../redux';
 import { formatDate, swal } from '../../../utils';
 import { Link, Table } from '../../../utils/ui';
 import { IUserAttributes } from '../../../utils/interfaces/users';
-import { guards } from './../routes';
+import { guards } from '../routes';
 
 interface UserListProps {
     users: IUserAttributes[];
@@ -109,7 +109,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
             title: 'Creado por',
             dataIndex: 'audit_trail',
             align: 'center' as 'center',
-            render: (_) => _?.created_by
+            render: (_) => _?.created_by,
         },
         {
             title: 'Acciones',

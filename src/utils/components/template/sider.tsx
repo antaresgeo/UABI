@@ -72,7 +72,7 @@ const Sider: FC<{ width: number }> = ({ width }) => {
         },
         {
             name: 'Inspección',
-            path: "/inspection/",
+            path: '/inspection/',
         },
         {
             name: 'Disposición',

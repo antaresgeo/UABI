@@ -45,7 +45,7 @@ export const swal_success = withReactContent(
  * @param { default: string; success: string; fail: string } type  type of generic action
  * @param {Promise<any>} request  service to get data of the generic action
  * @param {[success: function, fail: function]} creators  array successful and fails for the callback of the generic action, these functions should return the action to dispatch according to the case
- * @param {function} effect  In the event that the generic action is successful and you want to trigger more actions depending on the generic action, you must pass this function
+ * @param {function} effect  In the event that the generic action is successful, and you want to trigger more actions depending on the generic action, you must pass this function
  */
 type EffectFn = (payload: any) => void;
 export const request_dispatch = (
@@ -213,9 +213,9 @@ export const is_empty = (obj) =>
     Object.getPrototypeOf(obj) === Object.prototype;
 
 export const decodeJWT = (token: string) => {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
         atob(base64)
             .split('')
             .map(function (c) {
@@ -231,9 +231,9 @@ export const base64Encode = async (string: string) => {
     let tmp: any;
     try {
         const buff = await Buffer.from(string, 'utf-8');
-        tmp = await buff.toString('base64');
+        tmp = buff.toString('base64');
     } catch (error) {
-        console.log({...error})
+        console.log({ ...error });
         tmp = Promise.reject('Error');
     }
     return tmp;

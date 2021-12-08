@@ -37,32 +37,32 @@ const ProjectDetail: FC<IUserFormPros> = ({ project }) => {
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Centro Gestor</label>
-                                <div className="my-3">{project?.management_center || "-"}</div>
+                                <div className="my-3">{project?.management_center || '-'}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Centro de Costos</label>
-                                <div className="my-3">{project?.cost_center || "-"}</div>
+                                <div className="my-3">{project?.cost_center || '-'}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Valor Presupuestal</label>
-                                <div className="my-3">{project?.budget_value || "-"}</div>
+                                <div className="my-3">{project?.budget_value || '-'}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor=""> Fecha de creación</label>
-                                <div className="my-3">{formatDate(project?.audit_trail?.created_on) || "-"}</div>
+                                <div className="my-3">{formatDate(project?.audit_trail?.created_on) || '-'}</div>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-6">
                                 <label htmlFor="">Creado por</label>
-                                <div className="my-3">{project?.audit_trail?.created_by || "-"}</div>
+                                <div className="my-3">{project?.audit_trail?.created_by || '-'}</div>
                             </div>
                             <div className="col-6 movimiento">
                                 <label htmlFor="">Descripción</label>
                                 <div className="my-3" style={{ height: '60px', overflowX: 'auto' }}>
                                     <div
                                         style={{
-                                            width: project?.description ? (project?.description.length * 13) : '1000px',
+                                            width: project?.description ? project?.description.length * 13 : '1000px',
                                         }}
                                     >
                                         {project?.description}

@@ -26,12 +26,12 @@ const OccupationForm: FC<OccupationFormPros> = ({ disabled, old, innerRef, onSub
         },
     };
     const submit = (values, actions) => {
-        onSubmit(values.now)
+        onSubmit(values.now);
         actions.setSubmitting(false);
     };
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} innerRef={innerRef}>
-            {({ isSubmitting, setFieldValue, values, handleChange }) => {
+            {() => {
                 return (
                     <Form>
                         <div className="row">

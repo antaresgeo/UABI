@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react';
 import { Field, Formik, Form } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
-import * as Yup from 'yup';
 import { useState } from 'react';
 import { Transfer } from 'antd';
 import { useSelector } from 'react-redux';
@@ -11,13 +10,11 @@ import { IPermitAttributes } from '../../../utils/interfaces/permits';
 import Select from '../../../utils/ui/select';
 import union from 'lodash/union';
 import difference from 'lodash/difference';
-import { prefix } from 'react-bootstrap/lib/utils/bootstrapUtils';
-import { log } from 'util';
 
 interface IUserFormPros {
     user_roles?: any[];
     user_permits?: any[];
-    rol?: any
+    rol?: any;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit' | 'assign';
     onSubmit?: (values, actions?) => Promise<any>;
@@ -81,7 +78,7 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
 
     const update_permits_rol = (rol_ids) => {
         return get_permits_rol_ids_list(rol_ids).then((ids: number[]) => {
-            if(mockData.length > 0) {
+            if (mockData.length > 0) {
                 const data = mockData.map((permit) => {
                     permit.disabled = ids.includes(permit.key);
                     return permit;
@@ -112,7 +109,7 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
         ...(user_roles ? { roles_to_assign: user_roles.map((rol) => rol.id) } : {}),
     };
 
-    const onChange = (nextTargetKeys, direction, moveKeys) => {
+    const onChange = (nextTargetKeys /*, direction, moveKeys*/) => {
         setTargetKeys(nextTargetKeys);
     };
 
@@ -137,15 +134,15 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
         });
     };
 
-    const schema = Yup.object().shape({
-        name: Yup.string().required('Campo obligatorio'),
-    });
+    // const schema = Yup.object().shape({
+    //     name: Yup.string().required('Campo obligatorio'),
+    // });
 
-    console.log({targetKeys})
+    console.log({ targetKeys });
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues}>
-            {({ values, isValid, isSubmitting }) => {
+            {({ /* values, isValid,*/ isSubmitting }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -181,7 +178,7 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
                                         showSearch
                                         mode="multiple"
                                         extra_on_change={(values, prev) => {
-                                            update_permits_rol(values).then((ids) => {
+                                            update_permits_rol(values).then((/*ids*/) => {
                                                 if (prev.length > values.length) {
                                                     const remove_ids = difference(prev, values);
                                                     remove_permits_rol(remove_ids);
@@ -205,6 +202,7 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
                                     disabled={disabled}
                                     dataSource={mockData}
                                     titles={['no permitidos', 'permitidos']}
+                                    locale={{ itemUnit: 'permisos', itemsUnit: 'permisos' }}
                                     targetKeys={targetKeys}
                                     selectedKeys={selectedKeys}
                                     onChange={onChange}

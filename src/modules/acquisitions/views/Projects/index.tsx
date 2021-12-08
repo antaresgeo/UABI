@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 import { formatDate, swal } from '../../../../utils';
-import { Switch } from 'antd';
 import Tag from 'antd/lib/tag';
 
 const Projects = () => {
@@ -225,7 +224,7 @@ const Projects = () => {
                                             />
                                             <span className="input-group-text" onClick={filter}>
                                                 <span>
-                                                    <i className="fa fa-search" aria-hidden="true"></i>
+                                                    <i className="fa fa-search" aria-hidden="true" />
                                                 </span>
                                             </span>
                                         </div>

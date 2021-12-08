@@ -1,6 +1,5 @@
 import { AxiosResponse } from 'axios';
 import { http } from '../../../../config/axios_instances';
-import { Audit_trail } from '../../../../utils/components/DocumentsModal/services';
 
 export interface AllBrokersResponse {
     message: string;

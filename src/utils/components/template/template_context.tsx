@@ -1,6 +1,4 @@
 import React, { FC, useState } from 'react';
-import ConfigProvider from 'antd/lib/config-provider';
-import esES from 'antd/lib/locale/es_ES';
 import 'moment/locale/es';
 
 type KeyPath = [string, string?];
@@ -26,25 +24,23 @@ const TemplateProvider: FC = ({ children }) => {
     const [drawer_menu_collapsed, set_drawer_menu_collapsed] = useState(false);
     const [pass_modal, set_pass_modal] = useState(false);
     return (
-        <ConfigProvider locale={esES}>
-            <TemplateContext.Provider
-                value={{
-                    menu_key_path,
-                    set_menu_key_path,
-                    drawer_menu_collapsed,
-                    set_drawer_menu_collapsed,
-                    menu_collapsed,
-                    drawer_collapsed,
-                    pass_modal,
-                    menu_toggle: () => set_menu_collapsed((collapsed) => !collapsed),
-                    drawer_open: () => set_drawer_collapsed(true),
-                    drawer_close: () => set_drawer_collapsed(false),
-                    toggle_pass_modal: () => set_pass_modal((collapsed) => !collapsed),
-                }}
-            >
-                {children}
-            </TemplateContext.Provider>
-        </ConfigProvider>
+        <TemplateContext.Provider
+            value={{
+                menu_key_path,
+                set_menu_key_path,
+                drawer_menu_collapsed,
+                set_drawer_menu_collapsed,
+                menu_collapsed,
+                drawer_collapsed,
+                pass_modal,
+                menu_toggle: () => set_menu_collapsed((collapsed) => !collapsed),
+                drawer_open: () => set_drawer_collapsed(true),
+                drawer_close: () => set_drawer_collapsed(false),
+                toggle_pass_modal: () => set_pass_modal((collapsed) => !collapsed),
+            }}
+        >
+            {children}
+        </TemplateContext.Provider>
     );
 };
 

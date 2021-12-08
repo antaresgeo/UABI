@@ -1,6 +1,5 @@
 import { Field } from 'formik';
-import ErrorMessage from '../../../../utils/ui/error_messge'
-
+import ErrorMessage from '../../../../utils/ui/error_messge';
 
 const FormLider = () => {
     return (
@@ -189,7 +188,7 @@ const FormLider = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default FormLider
+export default FormLider;

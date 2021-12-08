@@ -65,10 +65,6 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
             },
             onSave: (values) => {
                 set_data((data) => {
-                    const mock = {
-                        photographic_record: '',
-                        inspection_date: 1638366517333,
-                    };
                     return {
                         ...data,
                         physical_inspection: {

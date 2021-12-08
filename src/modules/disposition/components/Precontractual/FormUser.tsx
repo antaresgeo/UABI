@@ -1,12 +1,11 @@
 import { Field } from 'formik';
-import ErrorMessage from '../../../../utils/ui/error_messge'
+import ErrorMessage from '../../../../utils/ui/error_messge';
 import { FC } from 'react';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 
 interface FormProps {
     formik: any;
     comodato?: boolean;
-
 }
 export const FormUser: FC<FormProps> = ({ formik, comodato }) => {
     return (
@@ -23,7 +22,6 @@ export const FormUser: FC<FormProps> = ({ formik, comodato }) => {
                         name="type_society_applicant"
                         autoComplete="off"
                         disabled={comodato}
-
                     >
                         <option value="type_society_applicant" hidden>
                             --Tipo de Sociedad--
@@ -50,10 +48,18 @@ export const FormUser: FC<FormProps> = ({ formik, comodato }) => {
                                 <option value="id_type_document" hidden>
                                     -
                                 </option>
-                                <option key="CedulaC" value="Cedula de Ciudadania">C.C</option>
-                                <option key="TarjetaI" value="Tarjeta de identidad">T.I</option>
-                                <option key="CedulaE" value="Cedula de Extranjeria">C.E</option>
-                                <option key="NIT" value="NIT">NIT</option>
+                                <option key="CedulaC" value="Cedula de Ciudadania">
+                                    C.C
+                                </option>
+                                <option key="TarjetaI" value="Tarjeta de identidad">
+                                    T.I
+                                </option>
+                                <option key="CedulaE" value="Cedula de Extranjeria">
+                                    C.E
+                                </option>
+                                <option key="NIT" value="NIT">
+                                    NIT
+                                </option>
                             </Field>
                             <ErrorMessage name="id_type_document" />
                         </div>
@@ -70,8 +76,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato }) => {
                         </div>
                     </div>
                 </div>
-                {comodato === true
-                    ?
+                {comodato === true ? (
                     <div className="col-6">
                         <label htmlFor="names_applicant_id" className="form-label">
                             Nombre Razón Social
@@ -87,7 +92,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato }) => {
                         />
                         <ErrorMessage name="names_applicant" />
                     </div>
-                    :
+                ) : (
                     <>
                         <div className="col-3">
                             <label htmlFor="names_applicant_id" className="form-label">
@@ -120,8 +125,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato }) => {
                             <ErrorMessage name="surnames_applicant" />
                         </div>
                     </>
-                }
-
+                )}
             </div>
             <div className="row">
                 <div className="form-group col-3">
@@ -211,5 +215,5 @@ export const FormUser: FC<FormProps> = ({ formik, comodato }) => {
                 </div>
             </div> */}
         </>
-    )
-}
+    );
+};

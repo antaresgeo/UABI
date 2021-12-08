@@ -1,14 +1,13 @@
-import { Field, Form, Formik } from 'formik';
+import { Field } from 'formik';
 import React, { FC } from 'react';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import { Properties } from '../custom_types';
-import { log } from 'util';
 interface InspectionPhysicalFormProps {
     properties: Properties[];
     obs: string;
     formik: any;
 }
-const InspectionPhysicalForm: FC<InspectionPhysicalFormProps> = ({ properties, obs, formik }) => {
+const InspectionPhysicalForm: FC<InspectionPhysicalFormProps> = ({ /*properties, obs,*/ formik }) => {
     return (
         <>
             {formik.values.properties.map((property, i) => (

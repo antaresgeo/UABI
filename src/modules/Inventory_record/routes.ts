@@ -14,7 +14,7 @@ const get_routes = (): IRoute[] => {
             template_props: {
                 breadcrumbs: [{ name: 'Administración de inventario' }],
             },
-            component: InventoryRecordList
+            component: InventoryRecordList,
         },
         {
             exact: true,

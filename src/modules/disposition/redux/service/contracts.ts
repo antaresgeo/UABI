@@ -33,7 +33,7 @@ export interface Company {
 
 export const get_all_contracts = async (filters?) => {
     try {
-        console.log(filters)
+        console.log(filters);
         // const URI = '';
         // const res: AxiosResponse<AllCompaniesResponse> = await http.get(URI, {
         //     params: {
@@ -103,5 +103,3 @@ export const update_contract = async (id, data: Company) => {
         return Promise.reject('Error');
     }
 };
-
-

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import UabiCard from '../../../utils/ui/card';
+import SabiCard from '../../../utils/ui/card';
 import { FC } from 'react';
 
 interface CardProps {
@@ -10,7 +10,7 @@ const Card: FC<CardProps> = ({ name, links }) => {
     links = links || [];
     return (
         <div className="col-4">
-            <UabiCard
+            <SabiCard
                 className="h-100 dash-card"
                 title={
                     <span style={{ fontWeight: 400 }}>
@@ -41,7 +41,7 @@ const Card: FC<CardProps> = ({ name, links }) => {
                         );
                     })}
                 </ul>
-            </UabiCard>
+            </SabiCard>
         </div>
     );
 };

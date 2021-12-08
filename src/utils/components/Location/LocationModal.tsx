@@ -2,7 +2,6 @@ import { FC, useRef, useState } from 'react';
 import Modal from 'antd/lib/modal/Modal';
 import Location from './index';
 import { service } from '../../../modules/acquisitions/redux';
-import { on } from 'cluster';
 
 interface LocationModalProps {
     onSave?: (values) => Promise<any>;
@@ -20,7 +19,7 @@ const LocationModal: FC<LocationModalProps> = ({ onSave, disabled, view, zone })
     const close = () => set_is_visible(false);
     const request = (_values) => {
         if (view === 'general' || view === 'user') {
-            const values = {..._values};
+            const values = { ..._values };
             delete values.country_name;
             delete values.state_name;
             delete values.state_name;

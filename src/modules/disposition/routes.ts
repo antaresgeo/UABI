@@ -33,7 +33,7 @@ const get_routes = (): IRoute[] => {
                     { name: 'Crear' },
                 ],
             },
-            component: CreateDisposition
+            component: CreateDisposition,
         },
         {
             exact: true,
@@ -93,9 +93,7 @@ const get_routes = (): IRoute[] => {
             can_access: true,
             path: '/dispositions/contract/list',
             template_props: {
-                breadcrumbs: [
-                    { name: 'Contratos' },
-                ],
+                breadcrumbs: [{ name: 'Contratos' }],
             },
             component: ListContracts,
         },
@@ -105,9 +103,7 @@ const get_routes = (): IRoute[] => {
             can_access: true,
             path: '/document/lease/',
             template_props: {
-                breadcrumbs: [
-                    { name: 'Estudio Previo para Arrendamiento' },
-                ],
+                breadcrumbs: [{ name: 'Estudio Previo para Arrendamiento' }],
             },
             component: LeaseDoc,
         },
@@ -117,9 +113,7 @@ const get_routes = (): IRoute[] => {
             can_access: true,
             path: '/document/use-public/',
             template_props: {
-                breadcrumbs: [
-                    { name: 'Estudio Previo para Uso Público' },
-                ],
+                breadcrumbs: [{ name: 'Estudio Previo para Uso Público' }],
             },
             component: PublicUseDoc,
         },
@@ -129,13 +123,10 @@ const get_routes = (): IRoute[] => {
             can_access: true,
             path: '/document/comodato/',
             template_props: {
-                breadcrumbs: [
-                    { name: 'Estudio Previo para Comodato' },
-                ],
+                breadcrumbs: [{ name: 'Estudio Previo para Comodato' }],
             },
             component: ComodatoDoc,
         },
-
 
         // {
         //     exact: true,
@@ -165,8 +156,6 @@ const get_routes = (): IRoute[] => {
         //     },
         //     component: CreateContract,
         // },
-
-
     ];
 };
 

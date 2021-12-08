@@ -22,7 +22,6 @@ export interface IRoute extends RouteProps {
         breadcrumbs?: Breadcrumb[];
         show_breadcrumbs?: boolean;
     };
-
 }
 
 export interface IAppRouter {
@@ -31,6 +30,6 @@ export interface IAppRouter {
     privateRedirect?: string;
     lazy?: boolean;
     template?: any;
-    user: any
+    user: any;
     test?: boolean;
 }

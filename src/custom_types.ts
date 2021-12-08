@@ -6,13 +6,13 @@ export interface Pagination {
     total_results: number;
 }
 
-export interface Pageable<P> extends Loadable<P[]>{
-    pagination: Pagination,
+export interface Pageable<P> extends Loadable<P[]> {
+    pagination: Pagination;
 }
 
 export interface Loadable<L> {
     value: L;
     loading: boolean;
     loaded: boolean;
-    message?: any
+    message?: any;
 }

@@ -1,16 +1,15 @@
-import React, {FC, useRef} from 'react';
-import { formatDate } from '../../../utils';
+import React, { FC } from 'react';
 import { Card } from '../../../utils/ui';
-import {Field, Form, Formik, FormikValues} from 'formik';
-import ErrorMessage from "../../../utils/ui/error_messge";
-import {ModalNotificar} from "../../disposition/components/ModalNotificar";
+import { Field, Form, Formik } from 'formik';
+import ErrorMessage from '../../../utils/ui/error_messge';
+import { ModalNotificar } from '../../disposition/components/ModalNotificar';
 
 interface BasicInformationProps {
     inspection: any;
-    obs?: string
-    disabled?: boolean
-    innerRef: any
-    onSubmit: (values) => void
+    obs?: string;
+    disabled?: boolean;
+    innerRef: any;
+    onSubmit: (values) => void;
 }
 const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs, innerRef, onSubmit }) => {
     return (
@@ -73,40 +72,48 @@ const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs
                     </div>
                 </div>
             </div>
-            <Card actions={[<div className="d-flex justify-content-end pe-4 ps-4"><ModalNotificar /></div>]}>
+            <Card
+                actions={[
+                    <div className="d-flex justify-content-end pe-4 ps-4">
+                        <ModalNotificar />
+                    </div>,
+                ]}
+            >
                 <Formik
                     innerRef={innerRef}
                     enableReinitialize
                     onSubmit={(values, form) => {
-                        onSubmit(values)
+                        onSubmit(values);
                         form.setSubmitting(false);
                     }}
                     initialValues={{
-                        observations: obs || ''
+                        observations: obs || '',
                     }}
                 >
-                    {({ isSubmitting, setFieldValue, values, handleChange }) => {
-                        return <Form>
-                            <div className="row">
-                                <div className="col">
-                                    <label htmlFor="contractual_id" className="form-label">
-                                        Observaciones
-                                    </label>
-                                    <Field
-                                        as="textarea"
-                                        className="form-control"
-                                        id="contractual_id"
-                                        aria-describedby="emailHelp"
-                                        placeholder="Observaciones"
-                                        name="observations"
-                                        disabled={disabled}
-                                        autoComplete="off"
-                                        maxLength={250}
-                                    />
-                                    <ErrorMessage name="observations" withCount max={250} />
+                    {() => {
+                        return (
+                            <Form>
+                                <div className="row">
+                                    <div className="col">
+                                        <label htmlFor="contractual_id" className="form-label">
+                                            Observaciones
+                                        </label>
+                                        <Field
+                                            as="textarea"
+                                            className="form-control"
+                                            id="contractual_id"
+                                            aria-describedby="emailHelp"
+                                            placeholder="Observaciones"
+                                            name="observations"
+                                            disabled={disabled}
+                                            autoComplete="off"
+                                            maxLength={250}
+                                        />
+                                        <ErrorMessage name="observations" withCount max={250} />
+                                    </div>
                                 </div>
-                            </div>
-                        </Form>;
+                            </Form>
+                        );
                     }}
                 </Formik>
             </Card>

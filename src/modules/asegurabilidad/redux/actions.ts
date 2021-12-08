@@ -17,8 +17,7 @@ const updatePolicy = (data: any, id) =>
     request_dispatch(types.policy, service.updatePolicy(data, id));
 
 const realEstatesPolicy = (id: number) =>
-    request_dispatch(types.policiesRealEstate, service.realEstatesPolicy(id))
-
+    request_dispatch(types.policiesRealEstate, service.realEstatesPolicy(id));
 
 /*----------------Companies---------------------*/
 const get_list_companies = () =>
@@ -76,7 +75,7 @@ const actions = {
     delete_broker,
     get_broker_by_id,
     update_broker,
-    clear_broker
+    clear_broker,
 };
 
 export default actions;

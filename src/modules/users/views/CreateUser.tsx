@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Card } from '../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 import GeneralForm from './../components/GerenalForm';
-import {swal_success} from "../../../utils";
+import { swal_success } from '../../../utils';
 
 const CreateUser = () => {
     const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const CreateUser = () => {
     const createUser = async (values) => {
         const res: any = await dispatch(actions.create_user(values));
         await swal_success.fire({ title: 'Usuario Creado', text: res.message, icon: 'success' });
-        history.push(`/users/${res.id}`);
+        history.push(`/users/${res.results.detailsUser.id}`);
     };
     return (
         <div className="h-100 d-flex flex-column">

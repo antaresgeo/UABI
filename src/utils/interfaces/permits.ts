@@ -3,8 +3,8 @@
 // }
 
 export interface IPermitAttributes {
-    id: number,
-    permit_name: string
+    id: number;
+    permit_name: string;
 }
 
 export interface IPermitsResponse {

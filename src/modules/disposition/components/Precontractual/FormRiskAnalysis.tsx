@@ -1,16 +1,17 @@
-import { Field } from 'formik'
-import React, { FC } from 'react'
+import { FC } from 'react';
 import ErrorMessage from './../../../../utils/ui/error_messge';
+import {Field} from "formik";
 
 interface FormProps {
     formik: any;
-
 }
 
-export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
+export const FormRiskAnalysis: FC<FormProps> = () => {
     return (
         <>
-            <div className="div"style={{fontWeight: 'bold', fontSize: '14px'}}>Análisis riesgos regulatorio</div>
+            <div className="div" style={{ fontWeight: 'bold', fontSize: '14px' }}>
+                Análisis riesgos regulatorio
+            </div>
             <hr />
             <div className="row">
                 {/* <div className="col-2 text-center" style={{marginTop: 30, fontSize: '14px', fontWeight: 'bold'}}>Riesgo regulatorio</div> */}
@@ -24,17 +25,25 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
                         id="regulatory_degree_occurrence_id"
                         name="regulatory_degree_occurrence"
                         disabled={false}
-
                     >
                         <option key="regulatory" value="" disabled>
                             -- Seleccionar --
                         </option>
-                        <option key="muy bajo" value="MUY BAJO">muy bajo</option>
-                        <option key="bajo" value="BAJO">bajo</option>
-                        <option key="medio" value="MEDIO">medio</option>
-                        <option key="alto" value="ALTO">alto</option>
-                        <option key="muy alto" value="MUY ALTO">muy alto</option>
-
+                        <option key="muy bajo" value="MUY BAJO">
+                            muy bajo
+                        </option>
+                        <option key="bajo" value="BAJO">
+                            bajo
+                        </option>
+                        <option key="medio" value="MEDIO">
+                            medio
+                        </option>
+                        <option key="alto" value="ALTO">
+                            alto
+                        </option>
+                        <option key="muy alto" value="MUY ALTO">
+                            muy alto
+                        </option>
                     </Field>
                     <ErrorMessage name="regulatory_degree_occurrence" />
                 </div>
@@ -48,17 +57,25 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
                         id="regulatory_impact_degree_id"
                         name="regulatory_impact_degree"
                         disabled={false}
-
                     >
                         <option key="regulatory_impact" value="" disabled>
                             -- Seleccionar --
                         </option>
-                        <option key="muy bajo" value="MUY BAJO">muy bajo</option>
-                        <option key="bajo" value="BAJO">bajo</option>
-                        <option key="medio" value="MEDIO">medio</option>
-                        <option key="alto" value="ALTO">alto</option>
-                        <option key="muy alto" value="MUY ALTO">muy alto</option>
-
+                        <option key="muy bajo" value="MUY BAJO">
+                            muy bajo
+                        </option>
+                        <option key="bajo" value="BAJO">
+                            bajo
+                        </option>
+                        <option key="medio" value="MEDIO">
+                            medio
+                        </option>
+                        <option key="alto" value="ALTO">
+                            alto
+                        </option>
+                        <option key="muy alto" value="MUY ALTO">
+                            muy alto
+                        </option>
                     </Field>
                     <ErrorMessage name="regulatory_impact_degree" />
                 </div>
@@ -72,14 +89,16 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
                         id="regulatory_responsable_id"
                         name="regulatory_responsable"
                         disabled={false}
-
                     >
                         <option key="regulatory_responsable_id" value="" disabled>
                             -- Seleccionar --
                         </option>
-                        <option key="Contratista" value="Contratista">Contratista</option>
-                        <option key="municipio" value="municipio">municipio</option>
-
+                        <option key="Contratista" value="Contratista">
+                            Contratista
+                        </option>
+                        <option key="municipio" value="municipio">
+                            municipio
+                        </option>
                     </Field>
                     <ErrorMessage name="regulatory_responsable" />
                 </div>
@@ -116,7 +135,9 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
                     <ErrorMessage name="regulatory_mitigation_mechanism" withCount max={200} />
                 </div>
             </div>
-            <div className="div" style={{fontWeight: 'bold', marginTop: '10px', fontSize: '14px'}}>Análisis riesgos operativos</div>
+            <div className="div" style={{ fontWeight: 'bold', marginTop: '10px', fontSize: '14px' }}>
+                Análisis riesgos operativos
+            </div>
             <hr />
             <div className="row">
                 <div className="col-3">
@@ -129,17 +150,25 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
                         id="operative_degree_occurrence_id"
                         name="operative_degree_occurrence"
                         disabled={false}
-
                     >
                         <option key="operative_degree_occurrence" value="" disabled>
                             --Seleccionar--
                         </option>
-                        <option key="muy bajo" value="MUY BAJO">muy bajo</option>
-                        <option key="bajo" value="BAJO">bajo</option>
-                        <option key="medio" value="MEDIO">medio</option>
-                        <option key="alto" value="ALTO">alto</option>
-                        <option key="muy alto" value="MUY ALTO">muy alto</option>
-
+                        <option key="muy bajo" value="MUY BAJO">
+                            muy bajo
+                        </option>
+                        <option key="bajo" value="BAJO">
+                            bajo
+                        </option>
+                        <option key="medio" value="MEDIO">
+                            medio
+                        </option>
+                        <option key="alto" value="ALTO">
+                            alto
+                        </option>
+                        <option key="muy alto" value="MUY ALTO">
+                            muy alto
+                        </option>
                     </Field>
                     <ErrorMessage name="operative_degree_occurrence" />
                 </div>
@@ -153,17 +182,25 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
                         id="operative_impact_degree_id"
                         name="operative_impact_degree"
                         disabled={false}
-
                     >
                         <option key="operative_impact_degree" value="" disabled>
                             --Seleccionar--
                         </option>
-                        <option key="muy bajo" value="MUY BAJO">muy bajo</option>
-                        <option key="bajo" value="BAJO">bajo</option>
-                        <option key="medio" value="MEDIO">medio</option>
-                        <option key="alto" value="ALTO">alto</option>
-                        <option key="muy alto" value="MUY ALTO">muy alto</option>
-
+                        <option key="muy bajo" value="MUY BAJO">
+                            muy bajo
+                        </option>
+                        <option key="bajo" value="BAJO">
+                            bajo
+                        </option>
+                        <option key="medio" value="MEDIO">
+                            medio
+                        </option>
+                        <option key="alto" value="ALTO">
+                            alto
+                        </option>
+                        <option key="muy alto" value="MUY ALTO">
+                            muy alto
+                        </option>
                     </Field>
                     <ErrorMessage name="operative_impact_degree" />
                 </div>
@@ -177,14 +214,16 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
                         id="operative_responsable_id"
                         name="operative_responsable"
                         disabled={false}
-
                     >
                         <option key="operative_responsable" value="" disabled>
                             --Seleccionar--
                         </option>
-                        <option key="Contratista" value="Contratista">Contratista</option>
-                        <option key="municipio" value="municipio">municipio</option>
-
+                        <option key="Contratista" value="Contratista">
+                            Contratista
+                        </option>
+                        <option key="municipio" value="municipio">
+                            municipio
+                        </option>
                     </Field>
                     <ErrorMessage name="operative_responsable" />
                 </div>
@@ -224,9 +263,5 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
                 </div>
             </div>
         </>
-    )
-}
-
-
-
-
+    );
+};

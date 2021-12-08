@@ -1,9 +1,8 @@
-import { FC, useRef } from 'react'
+import { FC, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import GeneralFormPublicUse from '../../components/Precontractual/PublicUse/GeneralFormPublicUse';
-import { GeneralFormComodato } from './../../components/Precontractual/comodato/GeneralFormComodato';
-import { GeneralFormLease } from './../../components/Precontractual/Lease/GeneralFormLease';
-
+import { GeneralFormComodato } from '../../components/Precontractual/comodato/GeneralFormComodato';
+import { GeneralFormLease } from '../../components/Precontractual/Lease/GeneralFormLease';
 
 interface FormPros {
     dispositionType?: string;
@@ -14,8 +13,8 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate }) => 
     const form_ref = useRef<any>();
     const history = useHistory();
     const on_submit_lease = async (values) => {
-        history.push({ pathname: "/document/lease/", state: { values, realEstate } })
-    }
+        history.push({ pathname: '/document/lease/', state: { values, realEstate } });
+    };
 
     const on_submit_comodato = async (values) => {
         console.log(values)
@@ -44,10 +43,9 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate }) => 
                                     onSubmit={on_submit_lease}
                                 />
                             }
-                            {(dispositionType !== "arrendamiento" && dispositionType !== "Comodato") &&
+                            {dispositionType !== 'arrendamiento' && dispositionType !== 'Comodato' && (
                                 <GeneralFormPublicUse />
-                            }
-
+                            )}
                         </div>
                     </div>
                 </div>
@@ -77,8 +75,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate }) => 
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CreatePrecontractual
-
+export default CreatePrecontractual;
