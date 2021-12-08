@@ -11,7 +11,7 @@ const CreateUser = () => {
     const createUser = async (values) => {
         const res: any = await dispatch(actions.create_user(values));
         await swal_success.fire({ title: 'Usuario Creado', text: res.message, icon: 'success' });
-        history.push(`/users/${res.id}`);
+        history.push(`/users/${res.results.detailsUser.id}`);
     };
     return (
         <div className="h-100 d-flex flex-column">

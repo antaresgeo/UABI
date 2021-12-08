@@ -1,10 +1,8 @@
 import React, { FC } from 'react';
-
 interface IUserFormPros {
     user: any;
 }
 const UserViewForm: FC<IUserFormPros> = ({ user }) => {
-    console.log(user?.id_type);
     let genero = '';
     let type_doc = '';
     let type_society = '';
@@ -115,7 +113,7 @@ const UserViewForm: FC<IUserFormPros> = ({ user }) => {
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Numero de documento</label>
-                                <div className="my-3">{user?.cellphone_number}</div>
+                                <div className="my-3">{user?.id_number}</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
@@ -145,11 +143,11 @@ const UserViewForm: FC<IUserFormPros> = ({ user }) => {
                                 <>
                                     <div className="col-3">
                                         <label htmlFor="">Dependencia</label>
-                                        <div className="my-3">{user.dependency}</div>
+                                        <div className="my-3">{user?.dependency}</div>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="">Subdependencia</label>
-                                        <div className="my-3">{user.subdependency}</div>
+                                        <div className="my-3">{user?.subdependency}</div>
                                     </div>
                                 </>
                             )}

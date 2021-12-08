@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { auth_http } from '../../../../config/axios_instances';
-import { swal_success, swal_warning } from '../../../../utils';
+import {base64Encode, swal_success, swal_warning} from '../../../../utils';
 
 export interface AllUsersResponse {
     message: string;
@@ -48,9 +48,12 @@ export interface DetailsUser {
         lastName: string;
     };
     surnames: {
+
         firstSurname: string;
         lastSurname: string;
     };
+    dependency?: string,
+    subdependency?: string,
     email: string;
     location: string;
     cellphone_number: number;
@@ -86,7 +89,8 @@ export const get_list_users = async () => {
     }
 };
 
-export const create_user = async (data) => {
+export const create_user = async (_data) => {
+    const data = {..._data}
     if (data.detailsUser) {
         delete data.detailsUser.id;
         delete data.detailsUser.politics;
@@ -98,6 +102,9 @@ export const create_user = async (data) => {
             delete data.detailsUser.dependency;
             delete data.detailsUser.subdependency;
         }
+    }
+    if(data?.user?.password){
+        data.user.password = base64Encode(data.user.password)
     }
     try {
         const URI = '/users/';

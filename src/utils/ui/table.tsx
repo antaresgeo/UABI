@@ -55,7 +55,7 @@ const CompressTable: FC<CompressTableProps> = ({
         dataSource: data,
         ...(with_pagination
             ? { pagination: getPaginator(count ? count : data?.length, change_page) }
-            : { pagination: false }),
+            : { }),
         loading: loading,
         bordered: true,
         className: 'w-100',

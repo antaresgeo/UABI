@@ -1,14 +1,14 @@
 import Avatar from 'antd/lib/avatar';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FC, MouseEventHandler } from 'react';
 
 interface SabiLinkProps extends LinkButtonProps {
     to: any;
 }
 const SabiLink: FC<SabiLinkProps> = ({ to, ...button_props }) => (
-    <Link to={to} className="text-decoration-none">
+    <NavLink to={to} className="text-decoration-none" style={{ display: 'inline-block' }}>
         <LinkButton {...button_props} />
-    </Link>
+    </NavLink>
 );
 
 SabiLink.defaultProps = {

@@ -29,7 +29,7 @@ const DetailProjects = () => {
                 try {
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));
                     if (acquisitions.length > 0) {
-                        await dispatch(actions.createAcquisitionForRealEstate(res.id, acquisitions));
+                        await dispatch(actions.updateAcquisition(res.id, acquisitions));
                     }
                     if (isFinish) {
                         history.push('/acquisitions/real-estates/');

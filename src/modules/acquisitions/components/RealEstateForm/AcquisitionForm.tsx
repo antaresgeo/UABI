@@ -23,16 +23,31 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
         title_type: '',
         act_number: '',
         act_value: '',
+        recognition_value: '',
         acquired_percentage: '',
         origin: '',
         entity_type: '',
         entity_number: '',
         city: '',
+        acquisition_date: '',
         real_estate_id: '',
         ...acquisition,
     };
 
-    const schema = Yup.object().shape({});
+    const schema = Yup.object().shape({
+        acquisition_type: Yup.string().required('Campo obligatorio'),
+        area: Yup.number().required('Campo obligatorio'),
+        title_type: Yup.string().required('Campo obligatorio'),
+        act_number: Yup.string().required('Campo obligatorio'),
+        act_value: Yup.number().required('Campo obligatorio'),
+        recognition_value: Yup.number().required('Campo obligatorio'),
+        acquired_percentage: Yup.number().required('Campo obligatorio'),
+        origin: Yup.number().required('Campo obligatorio'),
+        entity_type: Yup.string().required('Campo obligatorio'),
+        entity_number: Yup.string().required('Campo obligatorio'),
+        acquisition_date: Yup.date().required('Campo obligatorio'),
+        city: Yup.string().required('Campo obligatorio'),
+    });
 
     const submit = (values, form) => {
         form.setSubmitting(true);
@@ -138,7 +153,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     N° de entidad
                                 </label>
                                 <Field
-                                    type="test"
+                                    type="text"
                                     className="form-control"
                                     id="entity_number_id"
                                     aria-describedby="entity_number"
@@ -181,7 +196,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                         </span>
                                     </div>
                                 </div>
-                                <ErrorMessage name="plot_area" />
+                                <ErrorMessage name="area" />
                             </div>
                         </div>
                         <div className="row">
@@ -205,9 +220,9 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     type="number"
                                     className="form-control"
                                     id="acquisition_value_id"
-                                    name="act_value"
+                                    name="recognition_value"
                                 />
-                                <ErrorMessage name="act_value" />
+                                <ErrorMessage name="recognition_value" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">
@@ -237,8 +252,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                         />
                                     </div>
                                 </div>
-
-                                <ErrorMessage name="city_name" />
+                                <ErrorMessage name="city" />
                             </div>
                         </div>
                     </Form>

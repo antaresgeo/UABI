@@ -26,13 +26,7 @@ const bad_login = (dispatch) => (error) => {
             return Promise.reject({ block: true });
         } else {
             localStorage.setItem('attemp', attemp);
-            const text_2 = `${message}<br/><br/> ${
-                intententos >= 3 ? `Intentos restantes ${intententos}` : ''
-            }`;
-            swal_warning.fire({
-                title: 'Inico de sesión fallido',
-                html: text_2,
-            });
+            return [message, intententos];
         }
     }
     return Promise.reject();
