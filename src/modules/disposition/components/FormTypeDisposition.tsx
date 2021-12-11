@@ -13,8 +13,8 @@ interface DispositionFormPros {
 export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTypeDispositionChange }) => {
     const initialValues = {
         type_use: realEstate ? realEstate?.destination_type : "",
-        active_type: "",
         disposition_type: "",
+        availability: "",
         ...realEstate
     };
 
@@ -24,18 +24,32 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
 
     const schema = Yup.object().shape({
     });
+    let dispositions = [];
+    if(initialValues.type_use === "FISCAL" && initialValues.disposition_type === "Misional social" ){
+        dispositions = [
+            "Dependencias",
+            "Comodato",
+            "arrendamiento", //TODO: arreglar cuando este listo
+    //     "ventas",
+    //     "AEP",
+    //     "MTEP",
+    //     "APRED",
+    //     "servidumbre",
+    //     "autorizaciones"
+        ]
+    }
 
-    const dispositions = [
-        "Dependencias",
-        "Comodato",
-        "arrendamiento",
-        "ventas",
-        "AEP",
-        "MTEP",
-        "APRED",
-        "servidumbre",
-        "autorizaciones"
-    ]
+    // dispositions = [
+    //     "Dependencias",
+    //     "Comodato",
+    //     "arrendamiento",
+    //     "ventas",
+    //     "AEP",
+    //     "MTEP",
+    //     "APRED",
+    //     "servidumbre",
+    //     "autorizaciones"
+    // ]
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema} >
@@ -55,28 +69,28 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
                         />
                     </div>
                     <div className="col-3">
-                        <label htmlFor="active_type_id" className="form-label">
+                        <label htmlFor="disposition_type_id" className="form-label">
                             Tipo de Activo
                         </label>
                         <Field
                             type="text"
-                            id="active_type_id"
-                            name="active_type"
+                            id="disposition_type_id"
+                            name="disposition_type"
                             className="form-control"
                             disabled
 
                         />
                     </div>
                     <div className="col-6">
-                        <label htmlFor="disposition_type_id" className="form-label">
+                        <label htmlFor="availability_id" className="form-label">
                             Tipo disposición
                         </label>
                         <Field
                             component={Select}
-                            name="disposition_type"
-                            id="disposition_type_id"
+                            name="availability"
+                            id="availability_id"
                             className="w-100"
-                            options={dispositions.map(realestate => ({ id: realestate, name: realestate }))}
+                            options={dispositions.map(real => ({ id: real, name: real }))}
                             extra_on_change={onTypeDispositionChange}
                         />
                     </div>

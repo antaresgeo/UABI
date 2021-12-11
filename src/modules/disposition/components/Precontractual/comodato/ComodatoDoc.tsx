@@ -3,10 +3,12 @@ import '../../../../../utils/assets/styles/comodato.css'
 import imgbs64 from '../../../../../utils/assets/img/header.png';
 import { useLocation, useHistory } from 'react-router-dom';
 import writtenNumber from 'written-number'
-import months from './../../../../../utils/ui/months';;
+import months from './../../../../../utils/ui/months';
+
 interface IParams {
     values: any;
     realEstate: any;
+    dispositionType: any;
 
 }
 
@@ -14,8 +16,8 @@ const ComodatoDoc = () => {
     const location = useLocation<IParams>();
     const history = useHistory();
     let date = [];
-    const { values, realEstate } = location.state;
-    console.log(values, realEstate);
+    const { values, realEstate, dispositionType } = location.state;
+    console.log(values, realEstate, dispositionType );
     date = values?.registration_date.split("-");
 
     return (
@@ -57,33 +59,11 @@ const ComodatoDoc = () => {
                                 Para efectos del contrato de comodato se tendrá como valor (Digite la
                                 opción que aplique continuando con el párrafo)
                             </p>
-                            <p className="p7_comodato ft0_comodato">
-                                -la sumatoria de todas las obligaciones cuantificadas a
-                                cargo del comodatario. <span className="ft6_comodato">(Inserte valor en</span>
-                            </p>
-                            <p className="p4_comodato ft7_comodato">
-                                <span className="ft6_comodato">letras), (Inserte valor en números). </span>(CUANDO
-                                EL CONTRATO A CELEBRAR SEA CON
-                            </p>
-                            <p className="p8_comodato ft8_comodato">
-                                LAS ENTIDADES QUE ENMARCA EL ARTÍCULO SEGUNDO, PARÁGRAFO SEGUNDO DE LA
-                                RESOLUCIÓN SSS 202050083439 DE 2020, EJEMPLO: JAC)
-                            </p>
-                            <p className="p9_comodato ft10_comodato">
-                                -el avalúo comercial vigente del inmueble
-                                <span className="ft8_comodato"> (PUEDE SER EL DE SAP SI SE CUENTA CON ESTE</span>)
-                                (Inserte valor en letras), (Inserte valor en números).
-                                <span className="ft8_comodato">(CUANDO EL CONTRATO A</span>
-                            </p>
-                            <p className="p8_comodato ft8_comodato">
-                                REALIZAR SEA CON ENTIDADES A LAS CUALES NO SE LES APLIQUE EL ARTÍCULO
-                                SEGUNDO, PARÁGRAFO SEGUNDO DE LA RESOLUCIÓN SSS 202050083439 DE 2020 y
-                                que tengan un único solicitante).
-                            </p>
+
                             <p className="p10_comodato ft0_comodato">
                                 <span className="ft3">3.</span
                                 ><span className="ft11_comodato">Solicitante:</span>
-                                <span className="ft3_comodato">{` ${values?.names_applicant} ${values?.surnames_applicant} ${values?.id_type_document}: ${values?.number_doc_applicant_id}`}</span>
+                                <span className="ft3_comodato">{` ${values?.companyname_applicant} ${values?.type_document_applicant}: ${values?.number_doc_applicant}`}</span>
                                 {/* (Digite el nombre de la
                                 entidad pública que solicita el inmueble en comodato) NIT: (Digite el
                                 número de identificación tributaria de la entidad pública que solicita
@@ -206,7 +186,7 @@ const ComodatoDoc = () => {
                                 {/* (Digite el número del código del activo fijo correspondiente al bien a entregar en comodato)  */}
                                 ubicado en la dirección <span className="ft3_comodato">{realEstate?.address?.address}</span>, {/*(digite la dirección
                                 del bien teniendo en cuenta el manual de nomenclatura)*/} cuyo tipo es
-                                <span className="ft3_comodato">{` ${values?.tipology?.tipology}`}</span>
+                                <span className="ft3_comodato">{` ${values?.business_type}`}</span>
                                 {/* (Digite el tipo de bien, si es casa, local, bodega, etc.). */}
                             </p>
                             <p className="p20_comodato ft0_comodato">
@@ -297,7 +277,7 @@ const ComodatoDoc = () => {
                             <p className="p8_comodato ft0_comodato">
                                 ubicado en la dirección <span className="ft3_comodato">{realEstate?.address?.address}</span>,
                                 {/*(digite la dirección del bien teniendo en cuenta el manual de nomenclatura)*/} cuyo tipo es
-                                <span className="ft3_comodato">{` ${values?.tipology?.tipology}`}</span>, escritura N°
+                                <span className="ft3_comodato">{` ${values?.business_type}`}</span>, escritura N°
                                 {/* (Digite el tipo de bien, si es casa, local, bodega, etc.)  */}
                                 <span className="ft3_comodato">
                                     {realEstate?.acquisitions?.map(ad => {
@@ -310,7 +290,7 @@ const ComodatoDoc = () => {
                                 escritura).*/}
                                 El espacio a entregar en comodato consta de
                                 <span className="ft3_comodato">
-                                {values?.Horizontal_property === "si"
+                                {values?.horizontal_property === "si"
                                     ?
                                     ` ${realEstate?.construction_area}`
                                     :
@@ -727,7 +707,7 @@ const ComodatoDoc = () => {
                                 se identificó que el programa o actividad de interés público, la satisfacción de la
                                 necesidad o aspiración de la comunidad desarrollada por la entidad no
                                 es ofrecida por otro contratista.
-                                <span className="ft3_comodato">{values?.Action_field}</span>
+                                <span className="ft3_comodato">{values?.action_field}</span>
                                 {/* (<span className="ft38_comodato">
                                     La Secretaría que tiene a cargo el inmueble debe motivar el por qué las actividades
                                     desarrolladas por el contratista solo pueden ser ejecutadas por el
@@ -1631,6 +1611,7 @@ const ComodatoDoc = () => {
                         </div>
                     </div>
                 </Card>
+
             </div>
             <div
                 className="bg-white d-flex flex-row justify-content-between"
@@ -1640,7 +1621,8 @@ const ComodatoDoc = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => {
-                        history.goBack();
+                        //console.log('@values',values)
+                        history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
                     }}
                 >
                     Atras

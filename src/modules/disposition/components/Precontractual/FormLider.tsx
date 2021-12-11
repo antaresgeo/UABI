@@ -1,14 +1,18 @@
 import { Field } from 'formik';
+import { FC } from 'react';
 import ErrorMessage from '../../../../utils/ui/error_messge'
 
+interface FormProps {
+    lease?: boolean;
+}
 
-const FormLider = () => {
+const FormLider: FC<FormProps> = ({ lease }) => {
     return (
         <>
             <h5>Lider encargado</h5>
             <hr />
             <div className="row">
-                <div className="col-6">
+                <div className="col-3">
                     <label htmlFor="name_Leader_id" className="form-label">
                         Nombres
                     </label>
@@ -23,7 +27,7 @@ const FormLider = () => {
                     />
                     <ErrorMessage name="name_Leader" />
                 </div>
-                <div className="col-6">
+                <div className="col-3">
                     <label htmlFor="lastname_Leader_id" className="form-label">
                         Apellidos
                     </label>
@@ -38,8 +42,6 @@ const FormLider = () => {
                     />
                     <ErrorMessage name="lastname_Leader" />
                 </div>
-            </div>
-            <div className="row">
                 <div className="col-6">
                     <label htmlFor="post_leader_id" className="form-label">
                         cargo
@@ -52,10 +54,13 @@ const FormLider = () => {
                         placeholder=""
                         autoComplete="off"
                         maxLength={201}
+                        disabled={lease}
                     />
                     <ErrorMessage name="post_leader" />
                 </div>
-                <div className="col-3">
+            </div>
+            <div className="row">
+                <div className="col-6">
                     <label htmlFor="dependence_leader_id" className="form-label">
                         dependencia
                     </label>
@@ -67,23 +72,25 @@ const FormLider = () => {
                         placeholder=""
                         autoComplete="off"
                         maxLength={201}
+                        disabled={lease}
                     />
                     <ErrorMessage name="dependence_leader" />
                 </div>
-                <div className="col-3">
-                    <label htmlFor="Secretary_leader_id" className="form-label">
+                <div className="col-6">
+                    <label htmlFor="secretary_leader_id" className="form-label">
                         Secretaria
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="Secretary_leader_id"
-                        name="Secretary_leader"
+                        id="secretary_leader_id"
+                        name="secretary_leader"
                         placeholder=""
                         autoComplete="off"
                         maxLength={201}
+                        disabled={lease}
                     />
-                    <ErrorMessage name="Secretary_leader" />
+                    <ErrorMessage name="secretary_leader" />
                 </div>
             </div>
             <h5>Elaboró</h5>

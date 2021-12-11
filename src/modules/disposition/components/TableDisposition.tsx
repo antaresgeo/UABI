@@ -15,7 +15,7 @@ export const TableDiszposition: FC<DispositionListProps> = ({  filters, init }) 
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
     const loading: boolean = useSelector((store: any) => store.acquisitions.realEstates.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.realEstates.pagination);
-    console.log(realEstates);
+    //console.log(realEstates);
     const table_columns = [
         {
             title: 'ID', //TODO: ID del proyecto

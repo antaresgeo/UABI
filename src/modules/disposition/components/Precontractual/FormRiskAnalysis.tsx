@@ -85,22 +85,7 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
                 </div>
             </div>
             <div className="row">
-                <div className="col-6">
-                    <label htmlFor="regulatory_description_id" className="form-label">
-                        Descripción
-                    </label>
-                    <Field
-                        as="textarea"
-                        className="form-control"
-                        id="regulatory_description_id"
-                        name="regulatory_description"
-                        placeholder=""
-                        autoComplete="off"
-                        maxLength={200}
-                    />
-                    <ErrorMessage name="regulatory_description" withCount max={200} />
-                </div>
-                <div className="col-6">
+                <div className="col">
                     <label htmlFor="regulatory_mitigation_mechanism_id" className="form-label">
                         Mecanismo de mitigación
                     </label>
@@ -191,23 +176,7 @@ export const FormRiskAnalysis: FC<FormProps> = ({ formik })=> {
             </div>
 
             <div className="row">
-                <div className="col-6">
-                    <label htmlFor="operative_description_id" className="form-label">
-                        Descripción
-                    </label>
-                    <Field
-                        as="textarea"
-                        className="form-control"
-                        id="operative_description_id"
-                        name="operative_description"
-                        aria-describedby="emailHelp"
-                        placeholder=""
-                        autoComplete="off"
-                        maxLength={200}
-                    />
-                    <ErrorMessage name="operative_description" withCount max={200} />
-                </div>
-                <div className="col-6">
+                <div className="col">
                     <label htmlFor="operative_mitigation_mechanism_id" className="form-label">
                         Mecanismo de mitigación
                     </label>

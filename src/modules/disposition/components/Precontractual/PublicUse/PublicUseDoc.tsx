@@ -1,12 +1,28 @@
 import '../../../../../utils/assets/styles/public_use.css';
 import { Card } from '../../../../../utils/ui';
 import imgbs64 from '../../../../../utils/assets/img/header.png';
+import { useLocation } from 'react-router';
+import { useHistory } from 'react-router-dom';
+import months from './../../../../../utils/ui/months';
+import writtenNumber from 'written-number'
+interface IParams {
+    values: any;
+    realEstate: any;
+    dispositionType: any;
+}
 
 const PublicUseDoc = () => {
+    const location = useLocation<IParams>();
+    const history = useHistory();
+    const { values, realEstate, dispositionType } = location.state;
+    console.log(values, realEstate, dispositionType);
+    let date = [];
+    let today_date = new Date().getMonth() + 1;
+    date = values?.prediation_date.split("-");
     return (
         <div className="h-100 d-flex flex-column">
             <div className="container-fluid">
-            <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto' }}>
                     <div id="page_1">
                         <div id="p1dimg1">
                             <img src={imgbs64} alt="" id="p1img1" />
@@ -36,15 +52,19 @@ const PublicUseDoc = () => {
                             </p>
                             <p className="p9 ft6 my-3">
                                 Para efectos del contrato de Administración del Espacio Público se
-                                tendrá como valor el avalúo catastral (Inserte valor en letras),
-                                (Inserte valor en números).
+                                tendrá como valor el avalúo catastral <span className="ft3">{`${writtenNumber(values?.cadastral_value, { lang: 'es' })} ($${values?.cadastral_value}).`}</span>
+                                {/* (Inserte valor en letras),
+                                (Inserte valor en números). */}
                             </p>
                             <p className="p9 ft6">
-                                <span className="ft3">3.</span><span className="ft4">Solicitante: </span>(Digite el nombre de la persona
+                                <span className="ft3">3.</span><span className="ft4">Solicitante: {values?.names_applicant} </span>
+                                {/* (Digite el nombre de la persona
                                 jurídica que solicita el inmueble en Administración del Espacio
-                                Público) NIT: (Digite el número de identificación tributaria de la
+                                Público)  */}
+                                NIT: <span className="ft3">{values?.number_doc_applicant_id}</span>
+                                {/* (Digite el número de identificación tributaria de la
                                 persona jurídica que solicita el inmueble en Administración del
-                                Espacio Público.)
+                                Espacio Público.) */}
                             </p>
                             <p className="p9 ft6" style={{ marginTop: '15px' }}>
                                 <span className="ft3">4.</span><span className="ft4">La descripción de la necesidad que el MUNICIPIO DE MEDELLÍN
@@ -185,10 +205,12 @@ const PublicUseDoc = () => {
                                 Previsto lo anterior y para satisfacer la necesidad planteada, se
                                 solicita celebrar un contrato de Administración de Bien Inmueble de
                                 Uso Público, el cual permita entregar en calidad de administración un
-                                bien inmueble propiedad del Municipio de Medellín a la (digite nombre
-                                de la persona jurídica), persona Jurídica, de naturaleza civil, sin
+                                bien inmueble propiedad del Municipio de Medellín a la <span className="ft3">{values?.names_applicant}</span>,
+                                {/* (digite nombre de la persona jurídica)*/}
+                                persona Jurídica, de naturaleza civil, sin
                                 ánimo de lucro, identificado con número de identificación tributaria
-                                No. (Digite el NIT)
+                                No. <span className="ft3">{values?.number_doc_applicant_id}</span>
+                                {/* (Digite el NIT) */}
                             </p>
                             <p className="p24 ft5">
                                 El Departamento Administrativo de Planeación, mediante oficio No. 3286
@@ -238,27 +260,40 @@ const PublicUseDoc = () => {
                             <p className="p9 ft0">
                                 Suscribir contrato de administración de espacio público del bien
                                 inmueble de propiedad del Municipio de Medellín identificado con
-                                matrícula (digite el número de la matrícula inmobiliaria del bien a
-                                entregar en Administración del Espacio Público), CBML (Digite el
-                                número del CMBL del bien inmueble), activo fijo (Digite el número del
-                                código del activo fijo correspondiente al bien a entregar en
-                                Administración del Espacio Público), ubicado en la dirección (digite
-                                la dirección del bien teniendo en cuenta el manual de nomenclatura),
-                                cuyo tipo es (Digite el tipo de bien, si es casa, local, bodega,
-                                etc.), escritura N° (digite el número de la escritura) del (digite el
+                                matrícula <span className="ft3">{realEstate?.registry_number}</span>, CBML
+                                {/* (digite el número de la matrícula inmobiliaria del bien a entregar en Administración del Espacio Público)  */}
+                                <span className="ft3">{` ${realEstate?.address?.cbmls?.sap?.cb}${realEstate?.address?.cbmls?.sap?.ml}`}</span>, activo fijo
+                                {/* (Digite el número del CMBL del bien inmueble) */}
+                                <span className="ft3">{` ${realEstate?.sap_id}`}</span>, ubicado en la dirección
+                                {/* (Digite el número del código del activo fijo correspondiente al bien a entregar en Administración del Espacio Público), */}
+                                <span className="ft3">{` ${realEstate?.address?.address}`}</span>, cuyo tipo es
+                                {/* (digite la dirección del bien teniendo en cuenta el manual de nomenclatura), */}
+                                <span className="ft3">{` ${values?.tipology?.tipology}`}</span>, escritura N°
+                                {/* (Digite el tipo de bien, si es casa, local, bodega,etc.) */}
+                                <span className="ft3">
+                                    {realEstate?.acquisitions?.length > 0 &&
+                                        realEstate?.acquisitions?.map(ad => {
+                                            let i = ad.acquisition_date.split("-")
+                                            return ` ${ad.act_value} del ${i[2]} de ${months(i[1])} de ${i[0]}, `
+                                        })}
+                                </span>
+                                {/* (digite el número de la escritura) del (digite el
                                 día de la escritura) de (Digite el mes de la escritura) de (Digite el
-                                número del año de la escritura), el espacio a entregar en
-                                Administración del Espacio Público consta de (Digite el número de
-                                metros cuadrados que comprende el bien a entregar) m<span className="ft16"
-                                >2</span
-                                >, cuyas áreas y linderos se describen de la siguiente manera, según
-                                informe de prediación con radicado: (Digite el número del radicado del
-                                informe de prediación) del (digite el día del informe) de (Digite el
-                                mes del informe) de (Digite el número del año del informe).
+                                número del año de la escritura),  */}
+                                el espacio a entregar en Administración del Espacio Público consta de
+                                <span className="ft3">{` ${realEstate?.total_area} `}</span>m<span className="ft16">2</span>,
+                                {/* (Digite el número de metros cuadrados que comprende el bien a entregar)  */}
+
+                                cuyas áreas y linderos se describen de la siguiente manera, según
+                                informe de prediación con radicado: <span className="ft3">{values?.prediation_number}</span> del
+                                {/* (Digite el número del radicado delinforme de prediación)  */}
+                                <span className="ft3_comodato">{` ${date[2]} de ${months(date[1])} de ${date[0]}.`}</span>
+                                {/* (digite el día del informe) de (Digite el mes del informe) de (Digite el número del año del informe). */}
                             </p>
                             <p className="p26 ft0">
                                 <span className="ft3">3.</span><span className="ft4">Destinación</span>: debe
-                                destinarse el inmueble para: (Describir la destinación del inmueble)
+                                destinarse el inmueble para: <span className="ft3">{` ${values?.destination_realEstate}`}</span>
+                                {/* (Describir la destinación del inmueble) */}
                             </p>
                             <p className="p5 ft3">
                                 <span className="ft3">4.</span><span className="ft4">Especificaciones</span
@@ -348,10 +383,20 @@ const PublicUseDoc = () => {
                                 cuando hubiera lugar. 16) Restituir el inmueble dado den
                                 Administración del Espacio Público dentro de los treinta (30) días
                                 hábiles siguientes a la solicitud del mismo. 17) Participar en la
-                                liquidación del contrato y suscribir las actas correspondientes. (18)
-                                Si requiere más obligaciones de las anteriores digítelas en este
+                                liquidación del contrato y suscribir las actas correspondientes.
+                                {values?.obligations?.length > 0 &&
+                                    <span className="ft3">
+                                        {values?.obligations.map(o =>
+                                            ` ${o.id}) ${o.obligation}. `
+                                        )}
+
+                                    </span>
+
+                                }
+                                {/* (18)Si requiere más obligaciones de las anteriores digítelas en este
                                 espacio siguiendo la numeración, de lo contrario suprima todo este
-                                texto y numeral) Las demás obligaciones propias de los contratos de
+                                texto y numeral) */}
+                                Las demás obligaciones propias de los contratos de
                                 Administración del Espacio Públicos, de acuerdo con las disposiciones
                                 legales, en especial, de las contenidas en la normatividad vigente.
                             </p>
@@ -394,10 +439,18 @@ const PublicUseDoc = () => {
                                     generen conflictos de convivencia con la vecindad, en acuerdo a lo
                                     preceptuado en el Código Nacional de Policía vigente, sin perjuicio
                                     de los manuales o normas de convivencia que regulen el tema nivel
-                                    Municipal o Departamental. 12) Si requiere más prohibiciones de las
+                                    Municipal o Departamental.
+                                    <span className="ft3">
+                                        {values?.prohibitions?.length > 0 &&
+                                            values?.prohibitions.map(p =>
+                                                ` ${p.id}) ${p.prohibition}.`
+                                            )
+                                        }
+                                    </span>
+                                    {/* 12) Si requiere más prohibiciones de las
                                     anteriores digítelas en este espacio siguiendo la numeración, de lo
-                                    contrario suprima todo este texto y numeral).</span
-                                >
+                                    contrario suprima todo este texto y numeral). */}
+                                </span>
                             </p>
                             <p className="p31 ft0">
                                 Todas aquellas que en ejecución del contrato resulten contrarias a los
@@ -406,9 +459,9 @@ const PublicUseDoc = () => {
                             </p>
                             <p className="p24 ft0">
                                 <span className="ft3">Plazo del contrato: </span>El plazo del contrato de
-                                Administración del Espacio Público a celebrar será de (Digite en
-                                letras y números la duración del contrato), contados a partir de la
-                                entrega del inmueble, mediante acta suscrita por las partes y previa
+                                Administración del Espacio Público a celebrar será de <span className="ft3">({values?.contract_period}) {writtenNumber(values?.contract_period, { lang: 'es' })}</span> meses,
+                                {/* (Digite en letras y números la duración del contrato),  */}
+                                contados a partir de la entrega del inmueble, mediante acta suscrita por las partes y previa
                                 aprobación de la póliza de cumplimiento.
                             </p>
                             <p className="p24 ft0">
@@ -474,9 +527,10 @@ const PublicUseDoc = () => {
                             <p className="p24 ft0">
                                 Si bien el contrato de Administración del Espacio Público no afecta el
                                 presupuesto Municipal, para efectos fiscales y de constitución de las
-                                garantías a que haya lugar, se le asigna al mismo (digite el valor del
-                                contrato en letras) (digite el valor del contrato en números), que
-                                corresponde a la debida administración y mantenimiento del inmueble
+                                garantías a que haya lugar, se le asigna al mismo
+                                <span className="ft3"> {writtenNumber(values?.contract_value, { lang: 'es' })} {`($${values?.contract_value})`}</span> pesos,
+                                {/* (digite el valor del contrato en letras) (digite el valor del contrato en números)  */}
+                                que corresponde a la debida administración y mantenimiento del inmueble
                                 entregado a título de Administración de Bien Inmueble de Uso Público.
                                 Dicha suma es el resultado del valor que deberá costear EL
                                 ADMINISTRADOR, de conformidad con la cotización de mantenimiento anual
@@ -585,269 +639,78 @@ const PublicUseDoc = () => {
                             </p>
                             <table cellPadding="0" cellSpacing="0" className="t0">
                                 <tr>
-                                    <td colSpan={2} className="tr0 td0">
+                                    <td className="tr0 td0">
                                         <p className="p40 ft0">Riesgo Previsible</p>
                                     </td>
-                                    <td className="tr0 td1"><p className="p41 ft0">Grado de</p></td>
-                                    <td className="tr0 td2"><p className="p41 ft0">Grado de</p></td>
+                                    <td className="tr0 td1"><p className="p41 ft0">Grado de Ocurrencia</p></td>
+                                    <td className="tr0 td2"><p className="p41 ft0">Grado de Impacto</p></td>
                                     <td className="tr0 td1"><p className="p41 ft0">Contratista</p></td>
                                     <td className="tr0 td3"><p className="p41 ft0">Municipio</p></td>
-                                    <td colSpan={7} className="tr0 td4">
-                                        <p className="p41 ft0">Mecanismo de Mitigación</p>
+                                    <td className="tr0 td4">
+                                        <p className="p41 ft0" style={{ whiteSpace: 'nowrap' }}>Mecanismo de Mitigación</p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="tr1 td5"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td6"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td7"><p className="p41 ft24">Ocurrencia</p></td>
-                                    <td className="tr1 td8"><p className="p41 ft24">Impacto</p></td>
-                                    <td className="tr1 td7"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td9"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td10"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td11"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td12"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td13"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td14"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td15"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td6"><p className="p42 ft23">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr2 td16"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td17"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td19"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td21"><p className="p41 ft0">Ejercer</p></td>
-                                    <td className="tr2 td22"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td23"><p className="p43 ft0">un</p></td>
-                                    <td className="tr2 td24"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr2 td25"><p className="p42 ft0">control</p></td>
-                                    <td className="tr2 td17"><p className="p44 ft0">y</p></td>
-                                </tr>
-                                <tr>
-                                    <td colSpan={2} rowSpan={2} className="tr3 td26">
+                                    <td className="tr0 td0">
                                         <p className="p40 ft0">REGULATORIO</p>
                                     </td>
-                                    <td rowSpan={2} className="tr3 td18"><p className="p41 ft0">MEDIO</p></td>
-                                    <td rowSpan={2} className="tr3 td19"><p className="p41 ft0">MEDIO</p></td>
-                                    <td rowSpan={2} className="tr3 td18"><p className="p41 ft0">X</p></td>
-                                    <td className="tr2 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr2 td27">
-                                        <p className="p41 ft0">vigilancia</p>
-                                    </td>
-                                    <td className="tr2 td23"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr2 td28">
-                                        <p className="p42 ft0">estrictos</p>
-                                    </td>
-                                    <td className="tr2 td29"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td17"><p className="p44 ft0">al</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr4 td20"><p className="p42 ft26">&nbsp;</p></td>
-                                    <td colSpan={2} rowSpan={2} className="tr5 td27">
-                                        <p className="p41 ft27">contrato</p>
-                                    </td>
-                                    <td colSpan={2} rowSpan={2} className="tr5 td30">
-                                        <p className="p41 ft27">por</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr5 td31"><p className="p45 ft27">parte</p></td>
-                                    <td className="tr4 td29"><p className="p42 ft26">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr5 td17"><p className="p44 ft27">del</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr6 td16"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td17"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td18"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td19"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td18"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td20"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td29"><p className="p42 ft28">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr7 td5"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td6"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td7"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td8"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td7"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td9"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={3} className="tr7 td32">
-                                        <p className="p41 ft0">supervisor.</p>
-                                    </td>
-                                    <td className="tr7 td13"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td14"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td15"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td6"><p className="p42 ft25">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr5 td16"><p className="p42 ft29">&nbsp;</p></td>
-                                    <td className="tr5 td17"><p className="p42 ft29">&nbsp;</p></td>
-                                    <td className="tr5 td18"><p className="p42 ft29">&nbsp;</p></td>
-                                    <td className="tr5 td19"><p className="p42 ft29">&nbsp;</p></td>
-                                    <td className="tr5 td18"><p className="p42 ft29">&nbsp;</p></td>
-                                    <td className="tr5 td20"><p className="p42 ft29">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr5 td27">
-                                        <p className="p41 ft27">Realizar</p>
-                                    </td>
-                                    <td className="tr5 td23"><p className="p42 ft29">&nbsp;</p></td>
-                                    <td className="tr5 td24"><p className="p42 ft29">&nbsp;</p></td>
-                                    <td colSpan={3} className="tr5 td33">
-                                        <p className="p44 ft27">visitas</p>
+                                    <td className="tr0 td1"><p className="p41 ft0">{values?.regulatory_degree_occurrence === "" ? "MEDIO" : values?.regulatory_degree_occurrence}</p></td>
+                                    <td className="tr0 td2"><p className="p41 ft0">{values?.regulatory_impact_degree === "" ? "MEDIO" : values?.regulatory_impact_degree}</p></td>
+                                    {values?.regulatory_responsable === "municipio" &&
+                                        <>
+                                            <td className="tr0 td1"><p className="p41 ft0 text-center"></p></td>
+                                            <td className="tr0 td3"><p className="p41 ft0 text-center">X</p></td>
+                                        </>
+                                    }
+                                    {(values?.regulatory_responsable === "Contratista" || values?.regulatory_responsable === "") &&
+                                        <>
+                                            <td className="tr0 td1"><p className="p41 ft0 text-center">X</p></td>
+                                            <td className="tr0 td3"><p className="p41 ft0 text-center"></p></td>
+                                        </>
+                                    }
+                                    <td className="tr0 td4">
+                                        <p className="p41 ft0">
+                                            {values?.regulatory_mitigation_mechanism === ""
+                                                ?
+                                                "Ejercer un control y vigilancia estrictos al contrato por parte del supervisor."
+                                                :
+                                                values?.regulatory_mitigation_mechanism
+                                            }
+
+                                        </p>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td className="tr2 td16"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td17"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td19"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={3} className="tr2 td34">
-                                        <p className="p41 ft0">trimestrales</p>
+                                <tr style={{ borderBottom: '1px solid #000' }}>
+                                    <td className="tr0 td0">
+                                        <p className="p40 ft0" style={{ width: '150px', height: 'auto' }}>
+                                            OPERATIVOS: Incumplimiento del contratista de las obligaciones y prohibiciones contraídas en virtud del contrato.
+                                        </p>
                                     </td>
-                                    <td className="tr2 td24"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td31"><p className="p45 ft0">al</p></td>
-                                    <td colSpan={2} className="tr2 td35"><p className="p44 ft0">bien</p></td>
-                                </tr>
-                                <tr>
-                                    <td colSpan={2} className="tr2 td26">
-                                        <p className="p40 ft0">OPERATIVOS:</p>
+                                    <td className="tr0 td1"><p className="p41 ft0">{values?.operative_degree_occurrence === "" ? "MEDIO" : values?.operative_degree_occurrence}</p></td>
+                                    <td className="tr0 td2"><p className="p41 ft0">{values?.operative_impact_degree === "" ? "MEDIO" : values?.operative_impact_degree}</p></td>
+                                    {values?.operative_responsable === "municipio" &&
+                                        <>
+                                            <td className="tr0 td1"><p className="p41 ft0 text-center"></p></td>
+                                            <td className="tr0 td3"><p className="p41 ft0 text-center">X</p></td>
+                                        </>
+                                    }
+                                    {(values?.operative_responsable === "Contratista" || values?.operative_responsable === "") &&
+                                        <>
+                                            <td className="tr0 td1"><p className="p41 ft0 text-center">X</p></td>
+                                            <td className="tr0 td3"><p className="p41 ft0 text-center"></p></td>
+                                        </>
+                                    }
+                                    <td className="tr0 td4">
+                                        <p className="p41 ft0">
+                                            {values?.operative_mitigation_mechanism === ""
+                                                ?
+                                                "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual"
+                                                :
+                                                values?.operative_mitigation_mechanism
+                                            }
+
+                                        </p>
                                     </td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td19"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr2 td27">
-                                        <p className="p41 ft0">inmueble</p>
-                                    </td>
-                                    <td className="tr2 td23"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr2 td28"><p className="p45 ft0">objeto</p></td>
-                                    <td className="tr2 td29"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td17"><p className="p44 ft0">del</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr2 td16"><p className="p40 ft0">Incumplimiento</p></td>
-                                    <td className="tr2 td17"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td19"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr2 td27">
-                                        <p className="p41 ft0">contrato</p>
-                                    </td>
-                                    <td className="tr2 td23"><p className="p46 ft0">y</p></td>
-                                    <td colSpan={4} className="tr2 td36">
-                                        <p className="p44 ft0">seguimiento</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="tr2 td16"><p className="p40 ft0">del contratista</p></td>
-                                    <td className="tr2 td17"><p className="p44 ft0">de</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td19"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={7} className="tr2 td37">
-                                        <p className="p41 ft0">mensual a los pagos de</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colSpan={2} className="tr8 td26">
-                                        <p className="p40 ft0">las obligaciones y</p>
-                                    </td>
-                                    <td className="tr8 td18"><p className="p41 ft0">MEDIO</p></td>
-                                    <td className="tr8 td19"><p className="p41 ft0">MEDIO</p></td>
-                                    <td className="tr8 td18"><p className="p41 ft0">X</p></td>
-                                    <td className="tr8 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr8 td27">
-                                        <p className="p41 ft0">cánones,</p>
-                                    </td>
-                                    <td className="tr8 td23"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr8 td24"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={3} className="tr8 td33">
-                                        <p className="p44 ft0">servicios</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="tr1 td16"><p className="p40 ft24">prohibiciones</p></td>
-                                    <td className="tr1 td17"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td18"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td19"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td18"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td20"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr1 td27">
-                                        <p className="p41 ft24">públicos</p>
-                                    </td>
-                                    <td colSpan={5} className="tr1 td38">
-                                        <p className="p44 ft24">y administración</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="tr2 td16"><p className="p40 ft0">contraídas</p></td>
-                                    <td className="tr2 td17"><p className="p44 ft0">en</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td19"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={7} className="tr2 td37">
-                                        <p className="p41 ft0">cuando aplique, por parte</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="tr2 td16"><p className="p40 ft0">virtud</p></td>
-                                    <td className="tr2 td17"><p className="p44 ft0">del</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td19"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td21"><p className="p41 ft0">del</p></td>
-                                    <td colSpan={4} className="tr2 td39">
-                                        <p className="p42 ft0">supervisor</p>
-                                    </td>
-                                    <td colSpan={2} className="tr2 td35"><p className="p44 ft0">para</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr2 td16"><p className="p40 ft0">contrato.</p></td>
-                                    <td className="tr2 td17"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td19"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr2 td27">
-                                        <p className="p41 ft0">realizar</p>
-                                    </td>
-                                    <td colSpan={4} className="tr2 td40">
-                                        <p className="p47 ft0">seguimiento</p>
-                                    </td>
-                                    <td className="tr2 td17"><p className="p44 ft0">y</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr2 td16"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td17"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td19"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td18"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td20"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={3} className="tr2 td34">
-                                        <p className="p41 ft0">evaluación</p>
-                                    </td>
-                                    <td className="tr2 td24"><p className="p42 ft0">al</p></td>
-                                    <td colSpan={3} className="tr2 td33">
-                                        <p className="p44 ft0">desarrollo</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="tr2 td5"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td6"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td7"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td8"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td7"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td9"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={5} className="tr2 td41">
-                                        <p className="p41 ft0">del objeto contractual</p>
-                                    </td>
-                                    <td className="tr2 td15"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr2 td6"><p className="p42 ft25">&nbsp;</p></td>
                                 </tr>
                             </table>
                             <p className="p48 ft3">
@@ -860,228 +723,42 @@ const PublicUseDoc = () => {
                             </p>
                             <table cellPadding="0" cellSpacing="0" className="t1">
                                 <tr>
-                                    <td className="tr0 td42"><p className="p40 ft0">Tipificación</p></td>
-                                    <td className="tr0 td43"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr0 td44">
+                                    <td className="tr0 td42" style={{borderRight: "1px solid #000"}}>
+                                        <p className="p40 ft0">Tipificación</p>
+                                    </td>
+                                    <td className="tr0 td44">
                                         <p className="p41 ft0">Estimación</p>
                                     </td>
-                                    <td className="tr0 td45"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr0 td46">
-                                        <p className="p42 ft0">Mecanismo</p>
+                                    <td className="tr0 td46" style={{borderRight: '1px solid #000'}}>
+                                        <p className="p42 ft0" style={{width: '135px', height: 'auto'}}>Mecanismo de Cobertura</p>
                                     </td>
-                                    <td colSpan={2} className="tr0 td47"><p className="p41 ft0">de</p></td>
                                     <td className="tr0 td48"><p className="p41 ft0">Asignación</p></td>
                                     <td className="tr0 td49"><p className="p41 ft0">Vigencia</p></td>
                                     <td className="tr0 td50"><p className="p41 ft0">Aplica</p></td>
                                 </tr>
-                                <tr>
-                                    <td className="tr1 td51"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td52"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td53"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td6"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td54"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr1 td55">
-                                        <p className="p42 ft24">Cobertura</p>
+                                <tr style={{borderBottom: "1px solid #000"}}>
+                                    <td className="tr0 td42" style={{borderRight: "1px solid #000"}}>
+                                        <p className="p40 ft0" style={{width: '135px', height: 'auto'}}>
+                                            Incumplimiento del contratista de las obligaciones y prohibiciones  contraídas en virtud del contrato
+                                        </p>
                                     </td>
-                                    <td className="tr1 td56"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td57"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td58"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td59"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td60"><p className="p42 ft23">&nbsp;</p></td>
+                                    <td className="tr0 td44">
+                                        <p className="p41 ft0">
+                                            {values?.lockable_base}% del valor del contrato
+                                        </p>
+                                    </td>
+                                    <td className="tr0 td46" style={{borderRight: '1px solid #000'}}>
+                                        <p className="p42 ft0" >
+                                            Garantía de Cumplimiento: Ampara al Beneficiario el total y perfecto cumplimiento del contrato pactado de acuerdo a sus términos, condiciones y especificaciones contractuales
+                                        </p>
+                                    </td>
+                                    <td className="tr0 td48"><p className="p41 ft0">Contratista</p></td>
+                                    <td className="tr0 td49"><p className="p41 ft0">Plazo del contrato y 4 meses más</p></td>
+                                    <td className="tr0 td50"><p className="p41 ft0 text-center">SI</p></td>
                                 </tr>
-                                <tr>
-                                    <td className="tr9 td61"><p className="p42 ft30">&nbsp;</p></td>
-                                    <td className="tr9 td62"><p className="p42 ft30">&nbsp;</p></td>
-                                    <td className="tr9 td63"><p className="p42 ft30">&nbsp;</p></td>
-                                    <td className="tr9 td17"><p className="p42 ft30">&nbsp;</p></td>
-                                    <td className="tr9 td64"><p className="p42 ft30">&nbsp;</p></td>
-                                    <td className="tr9 td65"><p className="p42 ft31">Garantía</p></td>
-                                    <td className="tr9 td66"><p className="p42 ft30">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr9 td67"><p className="p49 ft31">de</p></td>
-                                    <td className="tr9 td68"><p className="p42 ft30">&nbsp;</p></td>
-                                    <td className="tr9 td69"><p className="p42 ft30">&nbsp;</p></td>
-                                    <td className="tr9 td70"><p className="p42 ft30">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td rowSpan={2} className="tr0 td61">
-                                        <p className="p40 ft0">Incumplimiento</p>
-                                    </td>
-                                    <td className="tr7 td62"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td63"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td17"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td64"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td colSpan={2} className="tr2 td46">
-                                        <p className="p42 ft0"><span className="ft32">Cumplimiento</span>:</p>
-                                    </td>
-                                    <td className="tr2 td71"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td72"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td68"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td69"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td70"><p className="p42 ft25">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr6 td62"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td63"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td17"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td64"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr5 td65"><p className="p42 ft27">Ampara</p></td>
-                                    <td className="tr6 td66"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td colSpan={2} rowSpan={2} className="tr5 td67">
-                                        <p className="p49 ft27">al</p>
-                                    </td>
-                                    <td className="tr6 td68"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td69"><p className="p42 ft28">&nbsp;</p></td>
-                                    <td className="tr6 td70"><p className="p42 ft28">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td rowSpan={2} className="tr10 td61">
-                                        <p className="p40 ft0">del contratista</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr10 td62"><p className="p42 ft0">de</p></td>
-                                    <td rowSpan={2} className="tr10 td63"><p className="p41 ft0">10%</p></td>
-                                    <td rowSpan={2} className="tr10 td17"><p className="p42 ft0">del</p></td>
-                                    <td className="tr4 td64"><p className="p42 ft26">&nbsp;</p></td>
-                                    <td className="tr4 td66"><p className="p42 ft26">&nbsp;</p></td>
-                                    <td className="tr4 td68"><p className="p42 ft26">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr10 td69">
-                                        <p className="p41 ft0">Plazo del</p>
-                                    </td>
-                                    <td className="tr4 td70"><p className="p42 ft26">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr11 td64"><p className="p42 ft33">&nbsp;</p></td>
-                                    <td colSpan={4} className="tr11 td73">
-                                        <p className="p42 ft34">Beneficiario el total y</p>
-                                    </td>
-                                    <td className="tr11 td68"><p className="p42 ft33">&nbsp;</p></td>
-                                    <td className="tr11 td70"><p className="p42 ft33">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td colSpan={2} className="tr11 td26">
-                                        <p className="p40 ft34">las obligaciones y</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr8 td63"><p className="p41 ft0">valor</p></td>
-                                    <td rowSpan={2} className="tr8 td17"><p className="p42 ft0">del</p></td>
-                                    <td className="tr11 td64"><p className="p42 ft33">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr8 td65">
-                                        <p className="p42 ft0">perfecto</p>
-                                    </td>
-                                    <td className="tr11 td66"><p className="p42 ft33">&nbsp;</p></td>
-                                    <td className="tr11 td74"><p className="p42 ft33">&nbsp;</p></td>
-                                    <td className="tr11 td72"><p className="p42 ft33">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr8 td68">
-                                        <p className="p41 ft0">Contratista</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr8 td69">
-                                        <p className="p41 ft0">contrato y 4</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr8 td70"><p className="p41 ft0">SI</p></td>
-                                </tr>
-                                <tr>
-                                    <td rowSpan={2} className="tr5 td61">
-                                        <p className="p40 ft27">prohibiciones</p>
-                                    </td>
-                                    <td className="tr12 td62"><p className="p42 ft35">&nbsp;</p></td>
-                                    <td className="tr12 td64"><p className="p42 ft35">&nbsp;</p></td>
-                                    <td className="tr12 td66"><p className="p42 ft35">&nbsp;</p></td>
-                                    <td className="tr12 td74"><p className="p42 ft35">&nbsp;</p></td>
-                                    <td className="tr12 td72"><p className="p42 ft35">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr12 td62"><p className="p42 ft35">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr10 td63">
-                                        <p className="p41 ft0">contrato</p>
-                                    </td>
-                                    <td className="tr12 td17"><p className="p42 ft35">&nbsp;</p></td>
-                                    <td className="tr12 td64"><p className="p42 ft35">&nbsp;</p></td>
-                                    <td colSpan={2} rowSpan={2} className="tr10 td75">
-                                        <p className="p42 ft0">cumplimiento</p>
-                                    </td>
-                                    <td colSpan={2} rowSpan={2} className="tr10 td67">
-                                        <p className="p49 ft0">del</p>
-                                    </td>
-                                    <td className="tr12 td68"><p className="p42 ft35">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr10 td69">
-                                        <p className="p41 ft0">meses más</p>
-                                    </td>
-                                    <td className="tr12 td70"><p className="p42 ft35">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr13 td61"><p className="p40 ft36">contraídas</p></td>
-                                    <td className="tr13 td62"><p className="p42 ft36">en</p></td>
-                                    <td className="tr13 td17"><p className="p42 ft37">&nbsp;</p></td>
-                                    <td className="tr13 td64"><p className="p42 ft37">&nbsp;</p></td>
-                                    <td className="tr13 td68"><p className="p42 ft37">&nbsp;</p></td>
-                                    <td className="tr13 td70"><p className="p42 ft37">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td colSpan={2} rowSpan={2} className="tr10 td26">
-                                        <p className="p40 ft0">virtud del contrato</p>
-                                    </td>
-                                    <td className="tr1 td63"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td17"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td64"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td65"><p className="p42 ft24">contrato</p></td>
-                                    <td className="tr1 td66"><p className="p42 ft24">pactado</p></td>
-                                    <td colSpan={2} className="tr1 td67"><p className="p49 ft24">de</p></td>
-                                    <td className="tr1 td68"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td69"><p className="p42 ft23">&nbsp;</p></td>
-                                    <td className="tr1 td70"><p className="p42 ft23">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr14 td63"><p className="p42 ft38">&nbsp;</p></td>
-                                    <td className="tr14 td17"><p className="p42 ft38">&nbsp;</p></td>
-                                    <td className="tr14 td64"><p className="p42 ft38">&nbsp;</p></td>
-                                    <td rowSpan={2} className="tr5 td65">
-                                        <p className="p42 ft27">acuerdo</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr5 td66"><p className="p50 ft27">a</p></td>
-                                    <td colSpan={2} rowSpan={2} className="tr5 td67">
-                                        <p className="p49 ft21">sus</p>
-                                    </td>
-                                    <td className="tr14 td68"><p className="p42 ft38">&nbsp;</p></td>
-                                    <td className="tr14 td69"><p className="p42 ft38">&nbsp;</p></td>
-                                    <td className="tr14 td70"><p className="p42 ft38">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr15 td61"><p className="p42 ft39">&nbsp;</p></td>
-                                    <td className="tr15 td62"><p className="p42 ft39">&nbsp;</p></td>
-                                    <td className="tr15 td63"><p className="p42 ft39">&nbsp;</p></td>
-                                    <td className="tr15 td17"><p className="p42 ft39">&nbsp;</p></td>
-                                    <td className="tr15 td64"><p className="p42 ft39">&nbsp;</p></td>
-                                    <td className="tr15 td68"><p className="p42 ft39">&nbsp;</p></td>
-                                    <td className="tr15 td69"><p className="p42 ft39">&nbsp;</p></td>
-                                    <td className="tr15 td70"><p className="p42 ft39">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr7 td51"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td52"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td53"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td6"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td54"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td76"><p className="p42 ft0">términos,</p></td>
-                                    <td className="tr7 td77"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td56"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td57"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td58"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td59"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr7 td60"><p className="p42 ft25">&nbsp;</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr16 td78"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td79"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td63"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td80"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td64"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td65"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td66"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td74"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td81"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td39"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td40"><p className="p42 ft25">&nbsp;</p></td>
-                                    <td className="tr16 td82"><p className="p51 ft11">Página 6 de 8</p></td>
-                                </tr>
+                                <tr></tr>
                             </table>
+                            <p className="p37 ft11">Página 6 de 8</p>
                             <p className="p52 ft12">
                                 _________________________________________________________________________________________________
                             </p>
@@ -1100,8 +777,7 @@ const PublicUseDoc = () => {
                     <div id="page_7">
                         <div id="p7dimg1">
                             <img
-                                src="data:image/png;base64,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li1BUL788sta60WLFhHR17/+9ROLrdy+7LLLFi1adFydtdazZ8++9dZbt23bRkSbNm3q6em56aabDhw4cNwOVj6W6o8L7WkAAJgczOz7/uOPPz5v3rzDhw+/9tprIuI4DhG5rpvL5W644YYzzjhj1apVAwMD2Wz2q1/96sKFCy+55JKXXnopGo0mk0nXdY0xd9111+LFi+++++5EIuG67o4dOxoaGpqbmzds2LB8+fLFixd/97vfLZVKdKzV+9xzz1100UWXX355b29vMpnUWj/44IPnnnvuypUrN23aVOk/tywrFou1tLS8++67vb29hUIhKN8Yc//9959//vlXXnnljh07lFKvvPLKypUrr7766qGhoVQqRUTr1q274IILLrvssq1btyqlEolEJBJhZtd1bdvevn37jBkzksnkt771rfvvv/+KK6647rrrenp6Ttr7jZwGAIDJwcxvvfXWu+++e88997S3tz/22GOV7l/Lsu68885f/OIXF1544aOPPnrHHXds2LDhscceu+qqq3p7e2+55ZZSqRTE3vr16+++++729vbu7u6xsTHHcTZv3vzQQw8NDAx87Wtfa2trW758+S233LJ169agI723t/fqq6/etWsXM2/bti0ej2/cuPH6668//fTTtdZf+MIXDh8+XIlq27aXLl26devWHTt2JBKJjo4OpdT69etvvvnmrq6u3bt3X3vttT09PatWrXrrrbey2eyWLVsSicTzzz9/3XXXtba2Dg8PB78GbNuujLvbtv3ss8/ee++9/f39P/jBD775zW/GYrFf/epXa9euPekwNuaRAQDAJAjy+IknnojFYu3t7XPmzHn66adLpVKQkZlMZsOGDddcc81999137bXXZjKZ9vb2G264IZPJFItFx3E8zwtS7amnnurs7Ay6u88880ytteu6QWv7pptuOnz4cHd3NxFls9kgAt9+++1Dhw4988wzF1100aWXXlooFDZv3hyPx2fMmGGM2bhx45tvvtna2krHRpcXLlz46quvvvDCC6eeeurOnTuJ6Omnn25sbOzs7Mxms7/85S9/+9vf7tu378knn7z44osvuugiz/M2btzouu6CBQuamppefPHF119/3bZtOjbISESRSKSmpkYp5bruqlWr7rnnnoGBgT179tDJBqrRngYAgAkVTORWShWLxaeeempoaOgzn/nMxo0bd+/e/cYbbziOE/SHi0g0GiWiWCxWW1v7m9/85oc//GFNTc2CBQsqy4MQkYhEIpFgs6DPnIhs2+7r6/v+97+/c+fOrq4ux3GqZoOTUiqdThNRIpEIwthxHMuyOjs777zzzra2tmAzEfF9f86cOWNjY+vXr1+6dGmlBMuyBgYG2tvbb7vttrq6Omauq6sjomQyGVTedd3h4eF0On377be3tbX5vk9/Pu8sKL9SExEJsvxEyGkAAJhQQWQy86uvvrp169Y1a9Y88sgjDz/8cCKR+PnPf14ul0Wkqanp7LPPfuSRR+69996lS5c+8MADW7duDXqhd+7cmc1mtdajo6PFYvGSSy7Ztm3b2rVrb7755sHBQREplUr5fP7AgQPd3d3Lly8vHxO8e2dnZyqVuuOOOx544IFf//rXhUJh0aJFY2NjDQ0Nxpig4zrYUmtdKBRaW1uNMe+9994ZZ5yRyWTK5fKSJUtGRka6urqC2elnnXVWKpX69re//bOf/eyJJ54olUrLli3L5XLz5s1ramravn17Q0NDLpcrlUpaa8/ztNalUimXy4lINpstFApEND4+ns/nT/pxod8bAAAmgYiMjIxcddVVX/nKV4I25a5duzKZTDKZ/OxnP9vY2LhmzZpisfjQQw9dfPHFq1ev7unp6e3tXb169ac+9alcLmeMWblyZVtb28qVKzdv3rxu3br58+cHL5w3b97IyMiiRYtWrVr105/+dMGCBStXrqwspj1z5swf/ehHa9asWb9+/Re/+MWWlpaVK1fecccd9913n2VZX/rSl4IOcKVUbW3t+eefH2zQ2Ng4d+7cc889t6Oj45prrnnjjTe+8Y1vOI5z4403dnV1fe9731u9evXBgwcvvPDC+fPnf+5zn/vyl7+8evVqpdS1117b2Ni4bNmy2bNnJ5PJ5cuX19bWzpkz57zzzovH4ytWrJg1axYRLV68uPqTqf6gsB7Zxx2OPgBMpOr1yCp90cFqXNXdwsH3EjOXy+VKb3b1lkGUVh4vFotBJ7n8+ZohhUIhFotVXlt5X6119ZnZRJTP523bdl23MopMx65hFWx23Dtms9l4PG5ZVvB4sVhk5qAHPqhGNpt1HCcWi0nVlTYqy4BW3w06wI+rYeXjQk5/3OHoA8BEqs7pD1oxtPK9VAlvrXVlxTGpWhO7knDHrZUdrMRZvX31s3wMVS1nVgnjSo5WRsGrc/rE7YNij0v0E8unP8/p6vxFTsOHwdEHgInEH3AdDvmAtTMrSVYd6iedkFXJ4+pn/5qvOP7g62GctIZBa/6k73Jcbf9m1TmNeWQAADD5PiQdq5896RnGQev5xHL4QxcJr87m6qL+Yg0rPwuqG83VRX1IIX8D5DQAAPx/ozqwKw8e1349sT/5w4uiqnbwX1mByltUfgdU996ftNH/t0OfJwAAQGgdOy/rJz+Z1GoAAADACa6/Hv3eAAAA4YWcBgAACC/kNAAAQHghpwEAAMILOQ0AABBeyGkAAIDwQk4DAACEF3IaAAAgvJDTAAAA4YWcBgAACC/kNAAAQHghpwEAAMILOQ0AABBeyGkAAIDwQk4DAACEF3IaAAAgxERksqsAAAAAJ8fIaQAAgNBCvzcAAEB4IacBAADCCzkNAAAQXshpAACA8EJOAwAAhBdyGgAAILyQ0wAAAOGFnAYAAAgv5DQAAEB4IacBAADCCzkNAAAQXshpAACA8EJOAwAAhBdyGgAAILyQ0wAAAOGFnAYAAAgxEZnsKgAAAMBJiIgd/GNmBHZ44HD8lfBBTQ04jh8CH061j9unwcyEfm8AAIAwQ04DAACEF3IaAAAgvJDTAAAA4YWcBgAACC/kNAAAQHghpwEAAMILOQ0AABBeyGkAAIDwQk4DAACEF3IaAAAgvJDTAAAA4YWcBgAACC/kNAAAQHghpwEAAMILOQ0AABBeyGkAAIDwQk4DAACEF3IaAAAgvJDTAAAA4YWcBgAACC/kNAAAQHghpwEAAMILOQ0AABBeyGkAAIDwQk4DAACEF3IaAAAgvJDTAAAA4YWcBgAACC/kNAAAQHghpwEAAMILOQ0AABBeyGkAAIDwQk4DAACEF3IaAAAgvJDTAAAA4YWcBgAACC/kNAAAQHghpwEAAMILOQ0AABBeyGkAAIDwQk4DAACEF3IaAAAgvJDTAAAA4YWcBgAACC/kNAAAQHghpwEAAMILOQ0AABBeyGkAAIAQE5HJrgIAAAAcT0RE5P8B43aVghkEz0oAAAAASUVORK5CYII="
-                                alt="" id="p7img1"
+                                src={imgbs64} alt="" id="p7img1"
                             />
                         </div>
 
@@ -1120,7 +796,6 @@ const PublicUseDoc = () => {
                             </div>
                         </div>
                         <div id="id7_2">
-                            <p className="p57 ft5">condiciones y especificaciones contractuales</p>
                             <p className="p7 ft0">
                                 Así mismo, con el fin de minimizar el riesgo y garantizar el
                                 cumplimiento del contrato, el Municipio de Medellín establecerá en el
@@ -1162,8 +837,9 @@ const PublicUseDoc = () => {
                             <p className="p24 ft5">
                                 Dentro del presente proceso contractual el contratista deberá cumplir
                                 con los riesgos ambientales que le apliquen a la destinación del bien
-                                inmueble entregado en Administración del Espacio Público (Digitar los
-                                riesgos ambientales que apliquen para el contrato).
+                                inmueble entregado en Administración del Espacio Público
+                                <span className="ft3">{` ${values?.environmental_risk}. `}</span>
+                                {/* (Digitar los riesgos ambientales que apliquen para el contrato). */}
                             </p>
                             <p className="p22 ft3">
                                 13. Supervisión del contrato e inspección del inmueble:
@@ -1231,21 +907,17 @@ const PublicUseDoc = () => {
                             </p>
                             <p className="p29 ft0">
                                 <span className="ft3">14.</span
-                                ><span className="ft4">Lugar de Ejecución: </span>Municipio de Medellín
-                                <span>–Antioquia</span>
+                                ><span className="ft4">Lugar de Ejecución: </span>Municipio de Medellín–Antioquia
                             </p>
                             <p className="p24 ft0">
                                 <span className="ft3">15.</span
                                 ><span className="ft4">Cláusula de Publicación. </span>De conformidad con
                                 el Decreto 1082 de 2015, y con el artículo 223 del
-                                <span>Decreto-Ley</span> 019 de 2012, el presente contrato una vez
+                                Decreto-Ley 019 de 2012, el presente contrato una vez
                                 perfeccionado, deberá ser publicado por parte del
-                                <span className="ft3">MUNICIPIO DE MEDELLÍN </span>en el Sistema
+                                <span className="ft3"> MUNICIPIO DE MEDELLÍN </span>en el Sistema
                                 Electrónico para la contratación Público, SECOP y a través del Portal
-                                único de Contratación
-                                <a href="http://www.colombiacompra.gov.co"
-                                ><span className="ft32">www.colombiacompra.gov.co</span></a
-                                >.
+                                único de Contratación <span className="ft32">www.colombiacompra.gov.co</span>
                             </p>
                             <p className="p60 ft0">
                                 <span className="ft3">16.</span
@@ -1257,11 +929,13 @@ const PublicUseDoc = () => {
                                 1.3.4.5 Gestión y conservación de activos.
                             </p>
                             <p className="p62 ft0">
-                                Medellín, Antioquia, (Digite el día) de (Digite el mes) de (digite el
-                                año)
+                                Medellín, Antioquia, {`${new Date().getDate()} de ${months(today_date.toString())} de ${new Date().getFullYear()}`}
+                                {/* (Digite el día) de (Digite el mes) de (digite el año) */}
                             </p>
-                            <p className="p63 ft0">(Digite Nombres y apellidos) (Digite cargo)</p>
-                            <p className="p64 ft5">(Digite dependencia) (Digite secretaria)</p>
+                            <p className="p63 ft0">{`${values?.name_Leader} ${values?.lastname_Leader}`}{/*(Digite Nombres y apellidos)*/}</p>
+                            <p className="p64 ft0">{`${values?.post_leader}`} {/*(Digite cargo)*/}</p>
+                            <p className="p64 ft5">{`${values?.dependence_leader}`}{/*(Digite dependencia)*/}</p>
+                            <p className="p64 ft5">{`${values?.Secretary_leader}`}{/*(Digite secretaria)*/}</p>
                             <table cellPadding="0" cellSpacing="0" className="t2">
                                 <tr>
                                     <td className="tr17 td83"><p className="p40 ft0">Elaboró:</p></td>
@@ -1269,14 +943,14 @@ const PublicUseDoc = () => {
                                     <td className="tr17 td85"><p className="p41 ft0">Aprobó:</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr2 td86"><p className="p40 ft0">(Nombre)</p></td>
-                                    <td className="tr2 td87"><p className="p41 ft0">(Nombre)</p></td>
-                                    <td className="tr2 td88"><p className="p41 ft0">(Nombre)</p></td>
+                                    <td className="tr2 td86"><p className="p40 ft0">{values?.name_elaborated}{/*(Nombre)*/}</p></td>
+                                    <td className="tr2 td87"><p className="p41 ft0">{values?.name_revised}{/*(Nombre)*/}</p></td>
+                                    <td className="tr2 td88"><p className="p41 ft0">{values?.name_approved}{/*(Nombre)*/}</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr18 td86"><p className="p40 ft0">(Cargo)</p></td>
-                                    <td className="tr18 td87"><p className="p41 ft0">(Cargo)</p></td>
-                                    <td className="tr18 td88"><p className="p41 ft0">(Cargo)</p></td>
+                                    <td className="tr18 td86"><p className="p40 ft0">{values?.post_elaborated}{/*(Cargo)*/}</p></td>
+                                    <td className="tr18 td87"><p className="p41 ft0">{values?.post_revised}{/*(Cargo)*/}</p></td>
+                                    <td className="tr18 td88"><p className="p41 ft0">{values?.post_approved}{/*(Cargo)*/}</p></td>
                                 </tr>
                                 <tr>
                                     <td className="tr9 td89"><p className="p42 ft30">&nbsp;</p></td>
@@ -1299,6 +973,22 @@ const PublicUseDoc = () => {
                         </div>
                     </div>
                 </Card>
+            </div>
+            <div
+                className="bg-white d-flex flex-row justify-content-between"
+                style={{ padding: 16, borderTop: '1px solid #ccc' }}
+            >
+                <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={() => {
+                        // console.log('@values uso Publico',values)
+                        history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
+                    }}
+                >
+                    Atras
+                </button>
+                <div className="flex-fill" />
             </div>
         </div>
     )

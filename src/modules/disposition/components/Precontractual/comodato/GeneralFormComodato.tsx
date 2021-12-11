@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik'
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 import { Card } from '../../../../../utils/ui'
 import { ModalNotificar } from './../../ModalNotificar';
 import { FormPrecontractualComodato } from './FormPrecontractualComodato';
@@ -9,34 +9,29 @@ import { Formobligation } from '../Formobligation';
 import FormLider from '../FormLider';
 import * as Yup from 'yup';
 import BeneficiaryForm from './BeneficiaryForm';
-import { ITipologyAttributes } from '../../../../../utils/interfaces';
-import { useDispatch, useSelector } from 'react-redux';
-import { getTipology } from '../../../../acquisitions/redux/actions/realEstates';
 
 interface FormPros {
     innerRef?: any;
     realEstate?: any;
     onSubmit?: (values, form?, isFinish?: boolean) => Promise<any>;
+    values_form?: any;
 }
 
-export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstate}) => {
-    const dispatch = useDispatch();
-    const tipology: ITipologyAttributes = useSelector((states: any) => states.acquisitions.tipology.value);
-    console.log(tipology)
-    useEffect(() => {
-        dispatch(getTipology(realEstate?.tipology_id))
-    }, [])
+export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstate,values_form }) => {
+
     let initialValues = {
         environmental_risk: "",
         registration_date: "",
         contract_period: "",
         //solicitante
-        names_applicant: "",
-        surnames_applicant: "",
-        id_type_document: "NIT",
-        number_doc_applicant_id: "",
+        companyname_applicant: "",
+        type_document_applicant: "NIT",
+        number_doc_applicant: "",
         type_society_applicant: "Persona Juridica",
-        location_applicant: "",
+        location_applicant: {
+            address: "",
+            id: ""
+        },
         email_applicant: "",
         mobile_applicant: "",
         telephone_applicant: "",
@@ -58,7 +53,7 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
         competitive_process: "",
         competitive_process_value: 0,
         activities: "",
-        Horizontal_property: "",
+        horizontal_property: "",
         destination_realEstate: "",
         peacesafe: "",
         social_event: "",
@@ -66,9 +61,9 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
         value_public_service: "",
         economic_exploitation: "",
         type_economic_exploitation: "",
-        Action_field: "",
+        action_field: "",
         resolution: "",
-        lockable_base: "",
+        lockable_base: 10,
         dependence: "",
         obligations: [
 
@@ -91,7 +86,7 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
         lastname_Leader: "",
         post_leader: "",
         dependence_leader: "",
-        Secretary_leader: "",
+        secretary_leader: "",
         name_elaborated: "",
         post_elaborated: "",
         name_revised: "",
@@ -105,7 +100,8 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
             commune: "",
             neighborhood: ""
         },
-        tipology
+        business_type: "",
+        ...values_form,
     }
     const submit = (values, actions) => {
         onSubmit(values, actions).then(() => {
@@ -115,6 +111,49 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
     };
 
     const schema = Yup.object().shape({
+        //solicitante
+        companyname_applicant: Yup.string().required('obligatorio'),
+        type_document_applicant: Yup.string().required('obligatorio'),
+        number_doc_applicant: Yup.number().required('obligatorio'),
+        type_society_applicant: Yup.string().required('obligatorio'),
+        email_applicant: Yup.string().email().required('obligatorio'),
+        telephone_applicant: Yup.number().required('obligatorio'),
+
+        loan_typology: Yup.string().required('obligatorio'),
+        activities: Yup.string().required('obligatorio'),
+        business_type: Yup.string().required('obligatorio'),
+
+        //Beneficiario
+        population: Yup.string().required('obligatorio'),
+        benefited_sector: Yup.string().required('obligatorio'),
+        dependence: Yup.string().required('obligatorio'),
+        registration_date: Yup.string().required('obligatorio'),
+
+        destination_realEstate: Yup.string().required('obligatorio'),
+        peacesafe: Yup.string().required('obligatorio'),
+        contract_period: Yup.string().required('obligatorio'),
+        social_event: Yup.string().required('obligatorio'),
+        public_service: Yup.string().required('obligatorio'),
+        economic_exploitation: Yup.string().required('obligatorio'),
+        action_field: Yup.string().required('obligatorio'),
+        resolution: Yup.string().required('obligatorio'),
+        lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
+        environmental_risk: Yup.string().required('obligatorio'),
+        horizontal_property: Yup.string().required('obligatorio'),
+
+        //lider y personas a cargo
+        name_Leader: Yup.string().required('obligatorio'),
+        lastname_Leader: Yup.string().required('obligatorio'),
+        post_leader: Yup.string().required('obligatorio'),
+        dependence_leader: Yup.string().required('obligatorio'),
+        secretary_leader: Yup.string().required('obligatorio'),
+        name_elaborated: Yup.string().required('obligatorio'),
+        post_elaborated: Yup.string().required('obligatorio'),
+        name_revised: Yup.string().required('obligatorio'),
+        post_revised: Yup.string().required('obligatorio'),
+        name_approved: Yup.string().required('obligatorio'),
+        post_approved: Yup.string().required('obligatorio'),
+
     });
     return (
         <Formik enableReinitialize onSubmit={submit} innerRef={innerRef} initialValues={initialValues} validationSchema={schema} >

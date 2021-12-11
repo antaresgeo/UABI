@@ -11,9 +11,7 @@ interface FormProps {
 }
 
 export const FormContract: FC<FormProps> = ({ formik }) => {
-    console.log(formik)
-
-    const dispositions = [
+        const dispositions = [
         "Dependencias",
         "Comodato",
         "arrendamiento",
@@ -232,19 +230,33 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                 </div>
             </div>
             <div className="row">
-                <div className="form-group col-12">
+                <div className="form-group col-6">
                     <label htmlFor="object_contract_id" className="form-label">
                         Objeto del contrato
                     </label>
                     <Field
+                        as="textarea"
                         disabled={false}
                         name="object_contract"
                         id="object_contract_id"
-                        as="textarea"
                         className="form-control"
-                        maxLength={1000}
+                        maxLength={250}
                     />
-                    <ErrorMessage name="object_contract" withCount max={1000} />
+                    <ErrorMessage name="object_contract" withCount max={250} />
+                </div>
+                <div className="form-group col-6">
+                    <label htmlFor="guarantee_id" className="form-label">
+                        Garantias
+                    </label>
+                    <Field
+                        as="textarea"
+                        disabled={false}
+                        name="guarantee"
+                        id="guarantee_id"
+                        className="form-control"
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="guarantee" withCount max={200} />
                 </div>
             </div>
         </>

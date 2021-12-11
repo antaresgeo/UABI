@@ -1,4 +1,4 @@
-import { Field, Formik } from 'formik';
+import { Field } from 'formik';
 import ErrorMessage from '../../../../../utils/ui/error_messge'
 import Tooltip from 'antd/lib/tooltip';
 import { FC, useState } from 'react';
@@ -129,14 +129,14 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="registration_date" />
                 </div>
                 <div className="form-group col-3">
-                    <label htmlFor="Horizontal_property_id" className="form-label">
+                    <label htmlFor="horizontal_property_id" className="form-label">
                         Propiedad Horizontal
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="Horizontal_property_id"
-                        name="Horizontal_property"
+                        id="horizontal_property_id"
+                        name="horizontal_property"
                         disabled={false}
 
                     >
@@ -146,7 +146,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         <option key="si" value="si">Si</option>
                         <option key="no" value="no">No</option>
                     </Field>
-                    <ErrorMessage name="Horizontal_property"></ErrorMessage>
+                    <ErrorMessage name="horizontal_property"></ErrorMessage>
                 </div>
                 <div className="col-3">
                     <label htmlFor="contract_period_id" className="form-label">
@@ -275,6 +275,23 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         <option key="no" value="no">No</option>
                     </Field>
                     <ErrorMessage name="public_service" />
+
+                </div>
+                <div className="col-3">
+                    <label htmlFor="business_type_id" className="form-label">
+                        Tipo de negocio
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="business_type_id"
+                        name="business_type"
+                        aria-describedby="emailHelp"
+                        placeholder="Tipo de negocio"
+                        autoComplete="off"
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="business_type" withCount max={200} />
                 </div>
                 {formik.values.public_service === "si" &&
                     <div className="col-6">
@@ -314,6 +331,9 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 <div className="col-6">
                     <label htmlFor="peacesafe_id" className="form-label">
                         Paz y Salvo de Rubros
+                        <Tooltip title="paz y salvo de cuotas de administración, constancia de pago de impuesto predial cuando el inmueble se encuentre por fuera de la circunscripción territorial del Municipio de Medellín, entre otros">
+                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
+                        </Tooltip>
                     </label>
                     <Field
                         as="textarea"
@@ -321,7 +341,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         id="peacesafe_id"
                         name="peacesafe"
                         aria-describedby="emailHelp"
-                        placeholder="Actividades"
+                        placeholder=""
                         autoComplete="off"
                         maxLength={200}
                     />
@@ -344,20 +364,23 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="social_event" withCount max={200} />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="Action_field_id" className="form-label">
+                    <label htmlFor="action_field_id" className="form-label">
                         Campo de acción
+                        <Tooltip title="La Secretaría que tiene a cargo el inmueble debe motivar el por qué las actividades desarrolladas por el contratista solo pueden ser ejecutadas por el mismo, en razón de su campo de acción. ejemplo: Atención de necesidades territoriales, beneficios que presta para la Secretaría en razón de sus objetivos misionales y que no sean prestados por otros contratistas, entre otros que marquen factor decisivo y directo de su escogencia">
+                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
+                        </Tooltip>
                     </label>
                     <Field
                         as="textarea"
                         className="form-control"
-                        id="Action_field_id"
-                        name="Action_field"
+                        id="action_field_id"
+                        name="action_field"
                         aria-describedby="emailHelp"
                         placeholder="Descripción campo de acción"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="Action_field" withCount max={200} />
+                    <ErrorMessage name="action_field" withCount max={200} />
                 </div>
 
 
@@ -380,6 +403,9 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 <div className="col-6">
                     <label htmlFor="dependence_id" className="form-label">
                         Como contribuye la dependencia
+                        <Tooltip title="Digite claramente en la forma como la dependencia que entrega el inmueble se ve identificada en el objeto social y la forma como contribuye según la gestión misional">
+                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
+                        </Tooltip>
                     </label>
                     <Field
                         as="textarea"
@@ -387,7 +413,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         id="dependence_id"
                         name="dependence"
                         aria-describedby="emailHelp"
-                        placeholder="Descripcion de como contribuye la dependencia"
+                        placeholder="Descripcion"
                         autoComplete="off"
                         maxLength={200}
                     />
@@ -396,6 +422,9 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 <div className="col-12">
                     <label htmlFor="activities_id" className="form-label">
                         Actividades
+                        <Tooltip title="Realice una descripción detallada de la necesidad que se pretende solucionarle al solicitante con la entrega en comodato del inmueble- se deben describir los programas específicos de la entidad y su relación en cuanto a la línea del plan de desarrollo actual que se apoyará con su operación">
+                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
+                        </Tooltip>
                     </label>
                     <Field
                         as="textarea"

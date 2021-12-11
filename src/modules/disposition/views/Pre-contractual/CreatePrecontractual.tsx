@@ -1,25 +1,28 @@
 import { FC, useRef } from 'react'
-import { useHistory } from 'react-router-dom';
 import GeneralFormPublicUse from '../../components/Precontractual/PublicUse/GeneralFormPublicUse';
 import { GeneralFormComodato } from './../../components/Precontractual/comodato/GeneralFormComodato';
 import { GeneralFormLease } from './../../components/Precontractual/Lease/GeneralFormLease';
-
+import { useHistory } from 'react-router-dom';
 
 interface FormPros {
     dispositionType?: string;
     realEstate?: any;
+    values_form?: any;
 }
 
-const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate }) => {
+const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, values_form }) => {
     const form_ref = useRef<any>();
     const history = useHistory();
     const on_submit_lease = async (values) => {
-        history.push({ pathname: "/document/lease/", state: { values, realEstate } })
+        history.push({ pathname: "/document/lease/", state: { values, realEstate, dispositionType } })
     }
 
     const on_submit_comodato = async (values) => {
-        console.log(values)
-        history.push({ pathname: "/document/comodato/", state: { values, realEstate } })
+        history.push({ pathname: "/document/comodato/", state: { values, realEstate, dispositionType } })
+    }
+
+    const on_submit_publicuse = async (values) => {
+        history.push({ pathname: "/document/use-public/", state: { values, realEstate, dispositionType } })
     }
 
 
@@ -35,6 +38,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate }) => 
                                     realEstate={realEstate}
                                     innerRef={form_ref}
                                     onSubmit={on_submit_comodato}
+                                    values_form={values_form}
                                 />
                             }
                             {dispositionType === "arrendamiento" &&
@@ -42,10 +46,16 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate }) => 
                                     realEstate={realEstate}
                                     innerRef={form_ref}
                                     onSubmit={on_submit_lease}
+                                    values_form={values_form}
                                 />
                             }
                             {(dispositionType !== "arrendamiento" && dispositionType !== "Comodato") &&
-                                <GeneralFormPublicUse />
+                                <GeneralFormPublicUse
+                                    realEstate={realEstate}
+                                    innerRef={form_ref}
+                                    onSubmit={on_submit_publicuse}
+                                    values_form={values_form}
+                                />
                             }
 
                         </div>
@@ -60,7 +70,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate }) => 
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => {
-                        history.goBack();
+                        history.push({ pathname: `/disposition/edit/${realEstate.id}`, state: { dispositionType } })
                     }}
                 >
                     Atras
@@ -73,7 +83,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate }) => 
                         form_ref.current.submitForm();
                     }}
                 >
-                    Guardar
+                    Vista Previa
                 </button>
             </div>
         </div>

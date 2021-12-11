@@ -219,9 +219,9 @@ export const TableAreas = () => {
                     type="button"
                     className="btn btn-outline-primary me-3"
                     onClick={() => {
-                        console.log('data', data)
-                        console.log('antes',realEstates)
-                        console.log('editar',realEstatesEdit)
+                        // console.log('data', data)
+                        // console.log('antes',realEstates)
+                        // console.log('editar',realEstatesEdit)
                         let completeRealEstates = DataRealEstate.every(b => b.name !== "")
 
                         if (Number(totalArea.toFixed(0)) > Number(valueArea) || Number(totalArea.toFixed(0)) < Number(valueArea)) {
@@ -238,7 +238,7 @@ export const TableAreas = () => {
                             )
                         } else {
 
-                            dispatch(actions.createRealEstates(DataRealEstate))
+                            dispatch(actions.createRealEstates(DataRealEstate, "many"))
                             //console.log('bienes inmuebles a editar', real_estates_edit);
                         }
                     }}

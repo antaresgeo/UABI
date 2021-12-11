@@ -151,11 +151,19 @@ export const createRealEstate = async (
 };
 
 //TODO: Crear realEstates englobe - desenglobe
-export const createRealEstates = async (data: any): Promise<any | []> => {
+export const createRealEstates = async (data: any, action) => {
+    console.log('crear', data)
     try {
-        console.log('bienes inmuebles a crear', data);
         let URI = `/real-estates`;
-        //servicio
+        let res: AxiosResponse<IRealEstateResponse> = await http.post(
+            URI,
+            data,
+            {
+                params: { action },
+            }
+        );
+
+        return res.data.results;
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');

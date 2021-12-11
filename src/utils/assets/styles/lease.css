@@ -599,24 +599,28 @@ body {
     margin-bottom: 0px;
   }
   .p6_lease {
-    text-align: left;
+    text-align: justify;
     padding-left: 7px;
+    padding-right: 7px;
     margin-top: 0px;
     margin-bottom: 0px;
-    white-space: nowrap;
+    /* white-space: nowrap; */
   }
   .p7_lease {
-    text-align: left;
+    text-align: justify;
+    padding-left: 7px;
+    padding-right: 7px;
     margin-top: 0px;
     margin-bottom: 0px;
-    white-space: nowrap;
+    /* white-space: nowrap; */
   }
   .p8_lease {
-    text-align: left;
+    text-align: justify;
     padding-left: 6px;
+    padding-right: 6px;
     margin-top: 0px;
     margin-bottom: 0px;
-    white-space: nowrap;
+    /* white-space: nowrap; */
   }
   .p9_lease {
     text-align: left;
@@ -788,7 +792,7 @@ body {
     padding-left: 8px;
     margin-top: 0px;
     margin-bottom: 0px;
-    white-space: nowrap;
+    /* white-space: nowrap; */
   }
   .p36_lease {
     text-align: left;
@@ -915,7 +919,7 @@ body {
     margin-bottom: 0px;
   }
   .p55_lease {
-    text-align: left;
+    text-align: justify;
     padding-left: 95px;
     padding-right: 72px;
     margin-top: 1px;
@@ -968,7 +972,7 @@ body {
     padding: 0px;
     margin: 0px;
     width: 75px;
-    vertical-align: bottom;
+    vertical-align: middle;
   }
   .td3_lease {
     border-top: #000000 1px solid;
@@ -1164,15 +1168,15 @@ body {
     border-top: #000000 1px solid;
     padding: 0px;
     margin: 0px;
-    width: 133px;
-    vertical-align: bottom;
+    width: 100px;
+    vertical-align: middle;
   }
   .td29_lease {
     border-top: #000000 1px solid;
     padding: 0px;
     margin: 0px;
     width: 77px;
-    vertical-align: bottom;
+    vertical-align: middle;
   }
   .td30_lease {
     border-right: #000000 1px solid;
@@ -1188,7 +1192,7 @@ body {
     padding: 0px;
     margin: 0px;
     width: 65px;
-    vertical-align: bottom;
+    vertical-align: middle;
   }
   .td32_lease {
     border-right: #000000 1px solid;
@@ -1533,7 +1537,7 @@ body {
     padding: 0px;
     margin: 0px;
     width: 88px;
-    vertical-align: bottom;
+    vertical-align: text-top;
   }
   .td82_lease {
     border-right: #000000 1px solid;
@@ -1549,7 +1553,7 @@ body {
     padding: 0px;
     margin: 0px;
     width: 98px;
-    vertical-align: bottom;
+    vertical-align: middle;
   }
   .td84_lease {
     border-top: #000000 1px solid;
@@ -1586,7 +1590,7 @@ body {
     padding: 0px;
     margin: 0px;
     width: 94px;
-    vertical-align: bottom;
+    vertical-align: middle;
   }
   .td89_lease {
     border-right: #000000 1px solid;
@@ -1594,7 +1598,7 @@ body {
     padding: 0px;
     margin: 0px;
     width: 90px;
-    vertical-align: bottom;
+    vertical-align: middle;
   }
   .td90_lease {
     border-right: #000000 1px solid;
@@ -1602,7 +1606,7 @@ body {
     padding: 0px;
     margin: 0px;
     width: 58px;
-    vertical-align: bottom;
+    vertical-align: middle;
   }
   .td91_lease {
     border-left: #000000 1px solid;
