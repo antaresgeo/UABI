@@ -1,4 +1,3 @@
-
 import {
     get_all_contracts,
     get_list_contracts,

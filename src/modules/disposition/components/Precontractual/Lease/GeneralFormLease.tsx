@@ -1,5 +1,5 @@
-import { Form, Formik } from 'formik'
-import { Card } from '../../../../../utils/ui'
+import { Form, Formik } from 'formik';
+import { Card } from '../../../../../utils/ui';
 import FormLider from '../FormLider';
 import { ModalNotificar } from './../../ModalNotificar';
 import { FormUser } from './../FormUser';
@@ -7,7 +7,6 @@ import { FormRiskAnalysis } from '../FormRiskAnalysis';
 import FormPrecontractualLease from './FormPrecontractualLease';
 import * as Yup from 'yup';
 import { FC,  } from 'react';
-
 
 
 interface FormPros {
@@ -144,7 +143,13 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
 
     // });
     return (
-        <Formik enableReinitialize onSubmit={submit} innerRef={innerRef} initialValues={initialValues} validationSchema={schema} >
+        <Formik
+            enableReinitialize
+            onSubmit={submit}
+            innerRef={innerRef}
+            initialValues={initialValues}
+            validationSchema={schema}
+        >
             {(formik) => {
                 return <Form>
                     <Card
@@ -167,5 +172,5 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
                 </Form>
             }}
         </Formik>
-    )
-}
+    );
+};

@@ -1,9 +1,7 @@
-import { Field, Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Select from '../../../utils/ui/select';
-import { IRealEstateAttributes } from '../../../utils/interfaces/realEstates';
 import { FC } from 'react';
-import { ModalNotificar } from './ModalNotificar';
 
 interface DispositionFormPros {
     realEstate: any;
@@ -18,7 +16,7 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
         ...realEstate
     };
 
-    const submit = (values, actions) => {
+    const submit = (values /*, actions*/) => {
         console.log(values);
     };
 
@@ -52,21 +50,14 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
     // ]
 
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema} >
+        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema}>
             <Form>
                 <div className="row">
                     <div className="col-3">
                         <label htmlFor="type_use_id" className="form-label">
                             Tipo de Uso
                         </label>
-                        <Field
-                            type="text"
-                            id="type_use_id"
-                            name="type_use"
-                            className="form-control"
-                            disabled
-
-                        />
+                        <Field type="text" id="type_use_id" name="type_use" className="form-control" disabled />
                     </div>
                     <div className="col-3">
                         <label htmlFor="disposition_type_id" className="form-label">
@@ -97,6 +88,5 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
                 </div>
             </Form>
         </Formik>
-    )
-}
-
+    );
+};

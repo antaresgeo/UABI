@@ -14,7 +14,7 @@ interface LocationProps {
     innerRef?: any;
 }
 
-const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...props }) => {
+const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
     const [countries, setCountries] = useState<ICountryAddressAttributes[]>([]);
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
@@ -196,7 +196,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                 <ErrorMessage name="city" />
                             </div>
                         </div>
-                        {(view === 'general' || view === 'user' || view === 'comodato' ) && (
+                        {(view === 'general' || view === 'user' || view === 'comodato') && (
                             <div className="form-row row">
                                 <div className="form-group col-4">
                                     <label htmlFor="" className="form-label">
@@ -254,7 +254,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
                                     <ErrorMessage name="neighborhood" />
                                 </div>
 
-                                {(view !== 'user' && view !== 'comodato') && (
+                                {view !== 'user' && view !== 'comodato' && (
                                     <>
                                         <div className="form-group col-4">
                                             <label htmlFor="" className="form-label">
@@ -558,21 +558,6 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef, ...prop
 };
 
 export default Location;
-
-const a = {
-    acquisition_type: 'Compraventa',
-    active_type: 'Lote',
-    title_type: 'Escritura',
-    act_number: 10000,
-    act_value: 100,
-    plot_area: 100,
-    acquired_percentage: 100,
-    origin: '2',
-    entity_type: '',
-    entity_number: 1111,
-    city: '05001',
-    real_estate_id: 6,
-};
 
 const generate_two_letters_combination = () => {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

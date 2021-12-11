@@ -1,13 +1,13 @@
-import { AxiosResponse } from 'axios';
-import { http } from '../../../../config/axios_instances';
-import { swal } from '../../../../utils';
+// import { AxiosResponse } from 'axios';
+// import { http } from '../../../../config/axios_instances';
+// import { swal } from '../../../../utils';
 
-import {
-    // IPaginable,
-    IProjectAttributes,
-    IProjectsResponse,
-    IProjectResponse,
-} from '../../../../utils/interfaces';
+// import {
+//     // IPaginable,
+//     IProjectAttributes,
+//     IProjectsResponse,
+//     IProjectResponse,
+// } from '../../../../utils/interfaces';
 
 // REAL ESTATES
 // Services: GET

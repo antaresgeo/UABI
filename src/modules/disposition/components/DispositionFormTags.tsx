@@ -10,11 +10,10 @@ interface IParams {
     values?:any;
 }
 
-
 export const DispositionFormTags = () => {
     const location = useLocation<IParams>();
     const { dispositionType, realEstate, values } = location.state;
-    console.log(location.state)
+    // console.log(location.state)
 
     const { TabPane } = Tabs;
 
@@ -50,5 +49,5 @@ export const DispositionFormTags = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

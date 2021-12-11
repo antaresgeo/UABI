@@ -1,6 +1,6 @@
 import types from './types';
-import {Loadable, Pageable} from "../../../custom_types";
-import { IContractAttributes } from './../../../utils/interfaces/contracts';
+import { Loadable, Pageable } from '../../../custom_types';
+import { IContractAttributes } from '../../../utils/interfaces/contracts';
 interface State {
     contract: Loadable<IContractAttributes>;
     contracts: Pageable<IContractAttributes>;
@@ -8,7 +8,6 @@ interface State {
     // disposition: Loadable<any>;
     // dispositions: Pageable<any>;
 }
-
 
 const emptyInitialState: State = {
     contract: {
@@ -145,7 +144,7 @@ const contractReducer = (aux_state: State, action: any) => {
             return state;
         }
     }
-}
+};
 
 const precontractualtReducer = (aux_state: State, action: any) => {
     const { precontractual } = aux_state;

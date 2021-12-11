@@ -59,7 +59,7 @@ const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_form
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CreateContract
+export default CreateContract;

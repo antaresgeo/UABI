@@ -1,7 +1,5 @@
-
-
-import React, { useState } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
+import React from 'react';
+import { Input, InputNumber, Form } from 'antd';
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     editing: boolean;
@@ -48,22 +46,6 @@ export const EditableCell: React.FC<EditableCellProps> = ({
         </td>
     );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useState, useEffect, useRef } from 'react';
 // import { Input, Form,  InputNumber} from 'antd';

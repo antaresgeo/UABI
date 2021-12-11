@@ -1,12 +1,11 @@
-import { Field } from 'formik'
-import React, { FC } from 'react'
-import ErrorMessage from '../../../../../utils/ui/error_messge'
+import { Field } from 'formik';
+import React, { FC } from 'react';
+import ErrorMessage from '../../../../../utils/ui/error_messge';
 import LocationModal from './../../../../../utils/components/Location/LocationModal';
 interface FormProps {
     formik: any;
-
 }
-const BeneficiaryForm: FC<FormProps> = ({ formik })=> {
+const BeneficiaryForm: FC<FormProps> = ({ formik }) => {
     return (
         <>
             <div className="row">
@@ -22,7 +21,7 @@ const BeneficiaryForm: FC<FormProps> = ({ formik })=> {
                         aria-describedby="emailHelp"
                         autoComplete="off"
                     />
-                    <ErrorMessage name="population"/>
+                    <ErrorMessage name="population" />
                 </div>
                 <div className="col-3">
                     <label htmlFor="benefited_sector_id" className="form-label">
@@ -37,7 +36,7 @@ const BeneficiaryForm: FC<FormProps> = ({ formik })=> {
                         placeholder=""
                         autoComplete="off"
                     />
-                    <ErrorMessage name="benefited_sector"/>
+                    <ErrorMessage name="benefited_sector" />
                 </div>
                 <div className="form-group col-6">
                     <label htmlFor="location_id" className="form-label">
@@ -57,7 +56,7 @@ const BeneficiaryForm: FC<FormProps> = ({ formik })=> {
                                 // disabled
                                 view="comodato"
                                 onSave={async (values: any) => {
-                                    console.log('valores modal',values)
+                                    console.log('valores modal', values);
                                     formik.setFieldValue('location.commune', `${values.commune_name}`, false);
                                     formik.setFieldValue('location.neighborhood', `${values.neighborhood_name}`, false);
                                     return Promise.resolve();
@@ -67,11 +66,9 @@ const BeneficiaryForm: FC<FormProps> = ({ formik })=> {
                     </div>
                     <ErrorMessage name="location" />
                 </div>
-
             </div>
-
         </>
-    )
-}
+    );
+};
 
-export default BeneficiaryForm
+export default BeneficiaryForm;

@@ -1,5 +1,5 @@
 import { Field } from 'formik';
-import ErrorMessage from '../../../../utils/ui/error_messge'
+import ErrorMessage from '../../../../utils/ui/error_messge';
 import { FC } from 'react';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 
@@ -25,7 +25,6 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                         name="type_society_applicant"
                         autoComplete="off"
                         disabled={comodato}
-
                     >
                         <option value="type_society_applicant" hidden>
                             --Tipo de Sociedad--
@@ -425,5 +424,5 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                 }
             </div>
         </>
-    )
-}
+    );
+};

@@ -19,7 +19,6 @@ export const Formobligation = () => {
                         name="value_locative_repairs"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="value_locative_repairs_id" />
                 </div>
@@ -36,11 +35,9 @@ export const Formobligation = () => {
                         name="value_repairs_damages"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="value_repairs_damages" />
                 </div>
-
             </div>
             <div className="row">
                 <div className="col-6">
@@ -56,7 +53,6 @@ export const Formobligation = () => {
                         name="value_domiciliary_public"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="value_domiciliary_public" />
                 </div>
@@ -83,7 +79,6 @@ export const Formobligation = () => {
                         name="cleaning_value"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="cleaning_value" />
                 </div>
@@ -102,7 +97,6 @@ export const Formobligation = () => {
                         name="conservation_value"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="conservation_value" />
                 </div>
@@ -119,7 +113,6 @@ export const Formobligation = () => {
                         name="administration_value"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="administration_value" />
                 </div>
@@ -138,7 +131,6 @@ export const Formobligation = () => {
                         name="network_value"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="network_value" />
                 </div>
@@ -155,11 +147,10 @@ export const Formobligation = () => {
                         name="Value_economic_obligations"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="Value_economic_obligations" />
                 </div>
             </div>
         </>
-    )
-}
+    );
+};

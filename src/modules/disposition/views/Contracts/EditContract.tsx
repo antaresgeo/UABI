@@ -1,5 +1,5 @@
-import React from 'react'
-import { GeneralDataContract } from './../../components/Contractual/GeneralDataContract';
+import React from 'react';
+import { GeneralDataContract } from '../../components/Contractual/GeneralDataContract';
 
 const EditContract = () => {
     return (
@@ -14,7 +14,7 @@ const EditContract = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default EditContract
+export default EditContract;

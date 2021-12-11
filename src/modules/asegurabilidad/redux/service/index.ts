@@ -1,4 +1,10 @@
-import { createPolicy, getPolicies, getPolicy, updatePolicy, realEstatesPolicy } from './policy';
+import {
+    createPolicy,
+    getPolicies,
+    getPolicy,
+    updatePolicy,
+    realEstatesPolicy,
+} from './policy';
 import {
     get_list_companies,
     get_all_companies,

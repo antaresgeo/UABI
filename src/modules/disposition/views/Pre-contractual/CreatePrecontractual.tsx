@@ -87,8 +87,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CreatePrecontractual
-
+export default CreatePrecontractual;

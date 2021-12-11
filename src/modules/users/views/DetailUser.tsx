@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { actions } from '../redux';
 import { useDispatch, useSelector } from 'react-redux';
-import { IUserAttributes } from './../../../utils/interfaces/users';
+import { IUserAttributes } from '../../../utils/interfaces/users';
 import { useHistory } from 'react-router-dom';
-import { Card, Link } from '../../../utils/ui';
-import GeneralForm from './../components/GerenalForm';
+import { Link } from '../../../utils/ui';
 import UserViewForm from './../components/UserViewForm';
 
 interface IParams {
@@ -21,11 +20,11 @@ const DetailUser = () => {
         dispatch(actions.get_user_by_id(parseInt(id)));
     }, []);
 
-    const getUser = async (dataPolicy) => {
-        const action = actions.get_user_by_id(1);
-        await dispatch(action);
-    };
-    console.log(user)
+    // const getUser = async (dataPolicy) => {
+    //     const action = actions.get_user_by_id(1);
+    //     await dispatch(action);
+    // };
+
     return (
         // <div className="h-100 d-flex flex-column">
         //     <div className="flex-fill overflow-auto">
@@ -66,19 +65,24 @@ const DetailUser = () => {
             <div className="flex-fill overflow-auto">
                 <div className="bg-white d-flex flex-column h-100">
                     <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
-                        <h5 className='col-11 '>Detalle Usuario</h5>
+                        <h5 className="col-11 ">Detalle Usuario</h5>
                         <Link
                             to={`/users/edit/${id}/`}
                             name=""
                             avatar={false}
-                            icon={<i style={{ marginLeft: '30px', fontSize: 16, color: '#000' }} className="fa fa-pencil" aria-hidden="true" />}
+                            icon={
+                                <i
+                                    style={{ marginLeft: '30px', fontSize: 16, color: '#000' }}
+                                    className="fa fa-pencil"
+                                    aria-hidden="true"
+                                />
+                            }
                         />
                     </div>
                     <div className="container-fluid">
                         <div className="row justify-content-center">
                             <div className="col-md-12">
                                 <UserViewForm user={user} />
-
                             </div>
                         </div>
                     </div>
@@ -103,5 +107,3 @@ const DetailUser = () => {
 };
 
 export default DetailUser;
-
-

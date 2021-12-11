@@ -17,7 +17,7 @@ const EnglobeProject = () => {
     const [project_id, set_project_id] = useState(id);
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
     const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
-    const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
+    // const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
 
     useEffect(() => {
         dispatch(actions.getProjects());
@@ -25,7 +25,7 @@ const EnglobeProject = () => {
             dispatch(actions.getRealEstatesByProject(Number(project_id)));
         }
     }, [id]);
-    const registration_number = realEstates.map((realEstate) => realEstate.registry_number);
+    // const registration_number = realEstates.map((realEstate) => realEstate.registry_number);
     const createRealEstate = async (values, form, isFinish) => {
         try {
             const res: any = await dispatch(actions.createRealEstate(values));

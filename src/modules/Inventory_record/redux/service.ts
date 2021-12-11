@@ -28,11 +28,14 @@ export interface registration {
 export const get_all_registrations = async (filters?) => {
     try {
         const URI = '/inventoryRecord/';
-        const res: AxiosResponse<AllRegistrationsResponse> = await http.get(URI, {
-            params: {
-                ...filters,
-            },
-        });
+        const res: AxiosResponse<AllRegistrationsResponse> = await http.get(
+            URI,
+            {
+                params: {
+                    ...filters,
+                },
+            }
+        );
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -42,7 +45,9 @@ export const get_all_registrations = async (filters?) => {
 export const get_list_registration = async () => {
     try {
         const URI = '/inventoryRecord/list/';
-        const res: AxiosResponse<ListRegistrationsResponse> = await http.get(URI);
+        const res: AxiosResponse<ListRegistrationsResponse> = await http.get(
+            URI
+        );
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -52,7 +57,10 @@ export const get_list_registration = async () => {
 export const create_registration = async (data: registration) => {
     try {
         const URI = '/inventoryRecord/';
-        const res: AxiosResponse<RegistrationResponse> = await http.post(URI,data);
+        const res: AxiosResponse<RegistrationResponse> = await http.post(
+            URI,
+            data
+        );
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -73,7 +81,8 @@ export const update_registration = async (id, data) => {
     try {
         const URI = '/inventoryRecord/';
         const res: AxiosResponse<RegistrationResponse> = await http.put(
-            URI,data,
+            URI,
+            data,
             {
                 params: {
                     id,
@@ -96,17 +105,13 @@ export const delete_registration = async (id) => {
     }
 };
 
-
-
-
 const services = {
     get_all_registrations,
     get_list_registration,
     create_registration,
     get_registration_by_id,
     update_registration,
-    delete_registration
-
+    delete_registration,
 };
 
 export default services;

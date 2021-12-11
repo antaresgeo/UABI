@@ -1,12 +1,11 @@
 import { Field } from 'formik';
-import ErrorMessage from '../../../../../utils/ui/error_messge'
+import ErrorMessage from '../../../../../utils/ui/error_messge';
 import Tooltip from 'antd/lib/tooltip';
 import { FC, useState } from 'react';
 import { LinkButton } from '../../../../../utils/ui/link';
 
 interface FormProps {
     formik: any;
-
 }
 
 export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
@@ -73,7 +72,6 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="contract_period" />
                 </div>
@@ -300,5 +298,5 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
 
             </div>
         </>
-    )
-}
+    );
+};

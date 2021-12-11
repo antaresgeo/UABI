@@ -1,11 +1,10 @@
 import { Field } from 'formik';
-import ErrorMessage from '../../../../../utils/ui/error_messge'
+import ErrorMessage from '../../../../../utils/ui/error_messge';
 import Tooltip from 'antd/lib/tooltip';
 import { FC, useEffect } from 'react';
 
 interface FormProps {
     formik: any;
-
 }
 
 const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
@@ -98,7 +97,6 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         id="public_service_id"
                         name="public_service"
                         disabled={false}
-
                     >
                         <option key="public_service" value="" hidden>
                             --Seleccione Servicio público--
@@ -113,8 +111,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 </div>
             </div>
             <div className="row">
-
-                {formik.values.public_service === "Aforo" &&
+                {formik.values.public_service === 'Aforo' && (
                     <div className="col-3">
                         <label htmlFor="value_aforo_id" className="form-label">
                             Valor aforo
@@ -136,8 +133,8 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
 
                         <ErrorMessage name="value_aforo" />
                     </div>
-                }
-                {formik.values.public_service === "Recobro" &&
+                )}
+                {formik.values.public_service === 'Recobro' && (
                     <div className="col-3">
                         <label htmlFor="recovery_value_id" className="form-label">
                             Valor Recobro
@@ -162,8 +159,8 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
 
                         <ErrorMessage name="recovery_value" />
                     </div>
-                }
-                {formik.values.public_service === "Contador individualizado" &&
+                )}
+                {formik.values.public_service === 'Contador individualizado' && (
                     <div className="col-3">
                         <label htmlFor="counter_value_id" className="form-label">
                             Valor
@@ -188,7 +185,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
 
                         <ErrorMessage name="counter_value" />
                     </div>
-                }
+                )}
                 <div className="col-3">
                     <label htmlFor="administration_value_id" className="form-label">
                         Valor Administración
@@ -268,7 +265,6 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                             min={0}
                             max={9999999999}
                         />
-
                     </div>
                     <ErrorMessage name="total" />
                 </div>
@@ -296,7 +292,6 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         name="prediation_number"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="prediation_number" />
                 </div>
@@ -310,7 +305,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         name="prediation_date"
                         placeholder="Fecha Final"
                         className="form-control"
-                    // disabled={true}
+                        // disabled={true}
                     />
                     <ErrorMessage name="prediation_date" />
                 </div>
@@ -379,7 +374,6 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         disabled={false}
                         min={1}
                         max={12}
-
                     />
                     <ErrorMessage name="contract_period" />
                 </div>
@@ -393,14 +387,16 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         id="coverage_id"
                         name="coverage"
                         disabled={false}
-
                     >
                         <option key="public_service" value="" hidden>
                             --Seleccione Servicio público--
                         </option>
-                        <option key="cumplimiento" value="cumplimiento">cumplimiento</option>
-                        <option key="seguro arrendamiento" value="seguro arrendamiento">seguro arrendamiento</option>
-
+                        <option key="cumplimiento" value="cumplimiento">
+                            cumplimiento
+                        </option>
+                        <option key="seguro arrendamiento" value="seguro arrendamiento">
+                            seguro arrendamiento
+                        </option>
                     </Field>
                     <ErrorMessage name="coverage" />
                 </div>
@@ -470,9 +466,8 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="destination_realEstate" withCount max={200} />
                 </div>
             </div>
-
         </>
-    )
-}
+    );
+};
 
-export default FormPrecontractualLease
+export default FormPrecontractualLease;

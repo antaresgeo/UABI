@@ -71,7 +71,7 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disable
                       title: 'Ver',
                       dataIndex: 'id',
                       align: 'center' as 'center',
-                      render: (id) => {
+                      render: () => {
                           return <i className="fa fa-eye text-muted" aria-hidden="true" />;
                       },
                   },
@@ -96,7 +96,7 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disable
                                   }
                                   onChange={(values) => {
                                       console.log('acquisitions list', values);
-                                      return Promise.resolve()
+                                      return Promise.resolve();
                                   }}
                               />
                           );
@@ -108,14 +108,9 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disable
             title: 'Desactivar',
             dataIndex: '',
             align: 'center' as 'center',
-            render: (id) => {
+            render: () => {
                 return (
-                    <Link
-                        to=""
-                        name=""
-                        avatar={false}
-                        icon={<i className="fa fa-times-circle" aria-hidden="true"></i>}
-                    />
+                    <Link to="" name="" avatar={false} icon={<i className="fa fa-times-circle" aria-hidden="true" />} />
                 );
             },
         },

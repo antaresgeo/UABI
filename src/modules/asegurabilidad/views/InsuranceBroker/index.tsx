@@ -2,14 +2,14 @@ import { useEffect, useState /*, useState*/ } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
-import { formatDate, swal } from '../../../../utils';
+import { swal } from '../../../../utils';
 
 const InsuranceBrokers = () => {
     const dispatch = useDispatch();
     const insurance_brokers: any = useSelector((store: any) => store.insurability.brokers.value);
     const loading: boolean = useSelector((store: any) => store.insurability.brokers.loading);
     const { total_results } = useSelector((store: any) => store.insurability.brokers.pagination);
-    const [query, set_query] = useState<string>('');
+    const [query /*, set_query*/] = useState<string>('');
 
     const filter = () => {
         const filters = { page: 1, ...(query ? { q: query } : {}) };

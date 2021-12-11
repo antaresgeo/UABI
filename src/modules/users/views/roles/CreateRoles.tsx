@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Card } from '../../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 import RoleForm from './../../components/RoleForm';
@@ -10,8 +10,8 @@ export const CreateRoles = () => {
     const dispatch = useDispatch();
     const createUser = async (values) => {
         console.log(values);
-        await dispatch(actions.createRole(values))
-    }
+        await dispatch(actions.createRole(values));
+    };
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -46,5 +46,5 @@ export const CreateRoles = () => {
                 <div className="flex-fill" />
             </div>
         </div>
-    )
-}
+    );
+};

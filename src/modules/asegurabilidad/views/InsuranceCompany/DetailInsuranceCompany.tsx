@@ -2,9 +2,7 @@ import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
-import { Card, Link } from '../../../../utils/ui';
-import InsuranceCompanyForm from '../../components/InsuranceCompanyForm';
-import InsuranceCompanyDetail from "../../components/InsuranceCompanyDetail";
+import InsuranceCompanyDetail from '../../components/InsuranceCompanyDetail';
 
 interface IParams {
     id: string;
@@ -30,7 +28,7 @@ const DetailInsuranceCompany = () => {
                             <h5>Compañía aseguradora</h5>
                         </div>
                         <div className="col-md-12">
-                            <InsuranceCompanyDetail company={insurance_company}/>
+                            <InsuranceCompanyDetail company={insurance_company} />
                         </div>
                     </div>
                 </div>

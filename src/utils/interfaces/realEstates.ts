@@ -42,15 +42,6 @@ export interface IRealEstateResponse {
     message: string;
 }
 
-export interface IItemRealEstate {
-    id: string;
-    matricula: string | number;
-    name: string;
-    project?: number | string;
-    creationDate: string;
-    createdBy?: string;
-}
-
 export interface ITipologyAttributes {
     id: string;
     tipology: string;
@@ -59,10 +50,5 @@ export interface ITipologyAttributes {
 
 export interface ITipologiesResponse {
     results: ITipologyAttributes[];
-    message: string;
-}
-
-export interface ITipologyResponse {
-    results: ITipologyAttributes;
     message: string;
 }

@@ -14,14 +14,12 @@ export const getRealEstates = (filters: {
     return request_dispatch(types.realEstates, service.getRealEstates(filters));
 };
 
-export const getRealEstatesByProject = (id) =>{
+export const getRealEstatesByProject = (id) => {
     return request_dispatch(
         types.realEstates,
         service.getRealEstatesByProject(id)
     );
-
-}
-
+};
 
 export const getRealEstate = (id: string) =>
     request_dispatch(types.realEstate, service.getRealEstate(id));
@@ -41,7 +39,8 @@ export const updateRealEstate = (data, id) =>
 export const deleteRealEstate = (id) =>
     request_dispatch(types.deleteRealEstate, service.deleteRealEstate(id));
 
-export const createAcquisitionForRealEstate = (id,
+export const createAcquisitionForRealEstate = (
+    id,
     acquisitions: AdquisitionsItf[]
 ) =>
     request_dispatch(
@@ -49,11 +48,20 @@ export const createAcquisitionForRealEstate = (id,
         service.createAcquisitionForRealEstate(id, acquisitions)
     );
 
+export const updateAcquisition = (
+    id,
+    acquisitions: AdquisitionsItf[]
+) =>
+    request_dispatch(
+        types.acquisition_create,
+        service.updateAcquisition(id, acquisitions)
+    );
+
 export const clearRealEstate = () =>
-        request_dispatch(types.clearRealEstate, Promise.resolve(null) )
+    request_dispatch(types.clearRealEstate, Promise.resolve(null));
 
 export const getTipologies = () =>
-        request_dispatch(types.tipologies,  service.getTipologies())
+    request_dispatch(types.tipologies, service.getTipologies());
 
 export const getTipology = (id) =>
-        request_dispatch(types.tipology,  service.getTipology(id))
+    request_dispatch(types.tipology, service.getTipology(id));

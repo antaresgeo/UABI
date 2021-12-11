@@ -1,13 +1,11 @@
 import { useParams, useHistory } from 'react-router-dom';
-import { IPolicyAttributes } from '../../../../utils/interfaces/insurability';
+import { IPolicyAttributes } from '../../../../utils/interfaces';
 import { useEffect } from 'react';
 import PolizaForm from '../../components/PolizaForm';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Card } from '../../../../utils/ui';
 import { actions } from '../../redux';
-import { getRealEstates } from '../../../acquisitions/redux/actions/realEstates';
-
 
 interface IParams {
     id: string;
@@ -20,19 +18,17 @@ const EditPolicy = () => {
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
     const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
     const insurance_brokers: any = useSelector((store: any) => store.insurability.brokers.value);
-    const realEstatesPolicy: any = useSelector((store: any) => store.insurability.policiesRealEstate.value)
+    const realEstatesPolicy: any = useSelector((store: any) => store.insurability.policiesRealEstate.value);
     useEffect(() => {
         dispatch(actions.get_list_companies());
         dispatch(actions.get_all_brokers());
         dispatch(actions.getPolicy(id));
-        dispatch(actions.realEstatesPolicy(Number(id)))
-
+        dispatch(actions.realEstatesPolicy(Number(id)));
     }, []);
 
     const _updatePolicy = async (policyForm) => {
         console.log(policyForm);
-        let res: any;
-        res = await dispatch(actions.updatePolicy(policyForm, id ));
+        await dispatch(actions.updatePolicy(policyForm, id));
     };
 
     return (
@@ -41,21 +37,19 @@ const EditPolicy = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                    <Card
-                        title="Póliza"
-                    >
-                        <PolizaForm
-                            type='edit'
-                            policy={policy}
-                            companies={insurance_companies}
-                            brokers={insurance_brokers}
-                            realEstatesPolicy={realEstatesPolicy}
-                            onSubmit={(values) => {
-                                return _updatePolicy(values);
-                            }}
-                        />
-                    </Card>
-                    </div>
+                            <Card title="Póliza">
+                                <PolizaForm
+                                    type="edit"
+                                    policy={policy}
+                                    companies={insurance_companies}
+                                    brokers={insurance_brokers}
+                                    realEstatesPolicy={realEstatesPolicy}
+                                    onSubmit={(values) => {
+                                        return _updatePolicy(values);
+                                    }}
+                                />
+                            </Card>
+                        </div>
                     </div>
                 </div>
             </div>

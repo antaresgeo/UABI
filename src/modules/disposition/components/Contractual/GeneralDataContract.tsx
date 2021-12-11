@@ -1,12 +1,9 @@
-import { Formik, Form } from 'formik'
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Card } from '../../../../utils/ui';
 import { FormContract } from './FormContract';
-import { FormUser } from './../Precontractual/FormUser';
-import { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getTipology } from '../../../acquisitions/redux/actions/realEstates';
-import { ITipologyAttributes } from '../../../../utils/interfaces';
+import { FormUser } from '../Precontractual/FormUser';
+import { FC } from 'react';
 
 interface FormPros {
     innerRef?: any;
@@ -42,21 +39,21 @@ export const GeneralDataContract: FC<FormPros> = ({onSubmit, innerRef, realEstat
         });
     };
 
-    const schema = Yup.object().shape({
-    });
+    const schema = Yup.object().shape({});
     return (
         <Formik enableReinitialize onSubmit={submit} innerRef={innerRef} initialValues={initialValues} validationSchema={schema} >
             {(formik) => {
-                return <Form>
-                    <Card title="Contrato">
-                        <FormContract formik={formik}/>
-                    </Card>
-                    <Card title="Datos del solicitante">
-                        <FormUser formik={formik}/>
-                    </Card>
-
-                </Form>
+                return (
+                    <Form>
+                        <Card title="Contrato">
+                            <FormContract formik={formik} />
+                        </Card>
+                        <Card title="Datos del solicitante">
+                            <FormUser formik={formik} />
+                        </Card>
+                    </Form>
+                );
             }}
         </Formik>
-    )
-}
+    );
+};

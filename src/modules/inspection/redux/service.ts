@@ -93,9 +93,9 @@ export const update_inspection = async (id, data: Inspection) => {
         const URI = '/inspections/';
         const res: AxiosResponse<InspectionResponse> = await http.put(
             URI,
-            {
-                // TODO: campos de la inspeccion
-            },
+            data,
+            // TODO: campos de la inspeccion
+
             {
                 params: {
                     id,

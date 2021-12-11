@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Card } from '../../../utils/ui';
-import { useHistory } from 'react-router-dom';
 import InspectionPhysicalForm from './InspectionPhysicalForm';
 import TableInspectionPhysycal from './TableInspectionPhysycal';
 import ErrorMessage from '../../../utils/ui/error_messge';
@@ -10,10 +9,15 @@ interface CreateInspectionPhysicalProps {
     physical_inspection: PhysicalInspection;
     innerRef: any;
     onSubmit: (values) => void;
-    obs?: string
+    obs?: string;
 }
-const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({ physical_inspection, obs, innerRef, onSubmit }) => {
-    const history = useHistory();
+const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({
+    physical_inspection,
+    obs,
+    innerRef,
+    onSubmit,
+}) => {
+    // const history = useHistory();
     const inicial_values = {
         public_services: physical_inspection?.public_services || [
             { name: 'Energia', subscriber: '', accountant: '', status: '' },
@@ -188,7 +192,7 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({ physical_
                         enableReinitialize
                         onSubmit={(values, form) => {
                             onSubmit(values);
-                            form.setSubmitting(false)
+                            form.setSubmitting(false);
                         }}
                         initialValues={inicial_values}
                         innerRef={innerRef}

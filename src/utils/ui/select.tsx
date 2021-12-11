@@ -9,7 +9,6 @@ interface SelectProps extends FieldProps {
 }
 const Select: FC<SelectProps> = ({ children, field, form, options, className, extra_on_change, ...props }) => {
     const { Option } = AntdSelect;
-    options = options;
     if (options && Array.isArray(options)) {
         options = [...options];
     } else {

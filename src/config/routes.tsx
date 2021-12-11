@@ -11,8 +11,6 @@ import { routes as occupationRoutes } from '../modules/inspection';
 import { routes as InventoryRecordRoutes } from '../modules/Inventory_record';
 import { routes as dispositionRoutes } from '../modules/disposition';
 
-
-
 const useRoutes = (props = null): IRoute[] => {
     return combineRoutes(props, [
         authRoutes,

@@ -17,7 +17,7 @@ const store = createStore(
         notifications: notificationReducer,
         users: userReducer,
         inspection: inspectionReducer,
-        auth: authReducer
+        auth: authReducer,
     }),
     composeEnhancer(applyMiddleware(thunk))
 );

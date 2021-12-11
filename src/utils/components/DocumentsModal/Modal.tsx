@@ -1,9 +1,9 @@
-import { FC, useState, useRef, useEffect } from 'react';
+import { FC, useState, useRef } from 'react';
 import Modal from 'antd/lib/modal/Modal';
 import Form from './Form';
 import { FormikProps, FormikValues } from 'formik';
 import Tag from 'antd/lib/tag';
-import {delete_document, download_document} from './services';
+import { delete_document, download_document } from './services';
 
 interface LocationModalProps {
     doc_name?: string;
@@ -41,20 +41,17 @@ const DocumentsModal: FC<LocationModalProps> = ({
 
     const is_submitting = form_ref.current?.isSubmitting;
 
-    const on_change = (new_doc,  _delete = false, prev_doc = null) => {
-
+    const on_change = (new_doc, _delete = false, prev_doc = null) => {
         if (doc.hasOwnProperty('id') && doc.id) {
-
             delete_document(doc.id).then(() => {
                 onChange(new_doc);
                 _delete && onDelete && onDelete(new_doc);
             });
-
         } else {
             onChange(new_doc);
             _delete && onDelete && onDelete(new_doc);
         }
-    }
+    };
     return (
         <>
             <div className={['input-group', btn_class].join(' ')}>
@@ -63,13 +60,16 @@ const DocumentsModal: FC<LocationModalProps> = ({
                         <Tag
                             closable={!disabled}
                             onClose={() => {
-                                on_change({
-                                    type: doc.type,
-                                    label: doc.label,
-                                }, true);
+                                on_change(
+                                    {
+                                        type: doc.type,
+                                        label: doc.label,
+                                    },
+                                    true
+                                );
                             }}
                             onClick={() => {
-                                download_document(doc.id, doc.name)
+                                download_document(doc.id, doc.name);
                                 console.log(doc);
                             }}
                         >
@@ -106,11 +106,15 @@ const DocumentsModal: FC<LocationModalProps> = ({
                     name={doc_name}
                     innerRef={form_ref}
                     onSubmit={(values) => {
-                        on_change({
-                            label: doc.label,
-                            type: doc.type,
-                            ...values,
-                        }, false, doc)
+                        on_change(
+                            {
+                                label: doc.label,
+                                type: doc.type,
+                                ...values,
+                            },
+                            false,
+                            doc
+                        );
                         close();
                         return Promise.resolve();
                     }}

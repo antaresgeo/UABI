@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { IProjectAttributes, IRealEstateAttributes } from '../../../../utils/interfaces';
+import { useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { useHistory } from 'react-router-dom';
 import RealEstateForm from '../../components/RealEstateForm';

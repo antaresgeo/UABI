@@ -1,18 +1,18 @@
 import { AxiosResponse } from 'axios';
 import { documents_http, http } from '../../../../config/axios_instances';
 import { swal } from '../../../../utils';
-import { IPaginable } from './../../../../utils/interfaces/index';
+import { IPaginable } from '../../../../utils/interfaces';
 import {
-    IPoliciesResponse,
     IPolicyAttributes,
     IPolicyResponse,
-} from '../../../../utils/interfaces/insurability';
+} from '../../../../utils/interfaces';
 import { compute_doc_policy } from '../../views/Policies/poliza.utils';
-import { create_document, delete_document } from './../../../../utils/components/DocumentsModal/services';
-import { Pagination } from './../../../../custom_types';
+import { create_document } from '../../../../utils/components/DocumentsModal/services';
 
 // Services: POST
-export const createPolicy = async (data: any): Promise<IPolicyAttributes | string> => {
+export const createPolicy = async (
+    data: any
+): Promise<IPolicyAttributes | string> => {
     try {
         console.log('service', data);
         let URI = `/insurabilities`;
@@ -22,15 +22,18 @@ export const createPolicy = async (data: any): Promise<IPolicyAttributes | strin
         delete data.registry_numbers;
         const dataFinal = {
             ...data,
-            insurance_document_id: create_doc.id
-        }
-        console.log('final', dataFinal)
-        let res: AxiosResponse<IPolicyResponse> = await http.post(URI, dataFinal);
+            insurance_document_id: create_doc.id,
+        };
+        console.log('final', dataFinal);
+        let res: AxiosResponse<IPolicyResponse> = await http.post(
+            URI,
+            dataFinal
+        );
         await swal.fire('poliza creada', res.data.message, 'success');
         return res.data.results;
     } catch (error) {
         console.error(error);
-        console.log('error')
+        console.log('error');
         //await swal.fire('Error', '', 'error');
 
         return Promise.reject('Error');
@@ -45,14 +48,17 @@ export const getPolicies = async ({
 }): Promise<IPaginable<IPolicyAttributes> | string> => {
     try {
         let URI = `/insurabilities`;
-        let res: AxiosResponse<IPaginable<IPolicyAttributes>> = await http.get(URI, {
-            params: {
-                page,
-                pageSize,
-                with: pagination,
-                ...(q ? { q } : {}),
-            },
-        });
+        let res: AxiosResponse<IPaginable<IPolicyAttributes>> = await http.get(
+            URI,
+            {
+                params: {
+                    page,
+                    pageSize,
+                    with: pagination,
+                    ...(q ? { q } : {}),
+                },
+            }
+        );
         return res.data;
     } catch (error) {
         console.error(error);
@@ -88,25 +94,28 @@ const getDocument = async (ids) => {
     } catch (error) {
         return Promise.reject('Error');
     }
-}
+};
 
 // Services: PUT
 export const updatePolicy = async (data: any, id: number) => {
     try {
-        console.log('servicio',data)
+        console.log('servicio', data);
         // Crea un documento nuevo si se cambio el documento
-        let new_doc: any = {id: ''};
-        if(!data.insurance_document.hasOwnProperty('id') && data.insurance_document.hasOwnProperty('pdf') ){
+        let new_doc: any = { id: '' };
+        if (
+            !data.insurance_document.hasOwnProperty('id') &&
+            data.insurance_document.hasOwnProperty('pdf')
+        ) {
             new_doc = await create_document(data.insurance_document);
-            data.insurance_document_id = new_doc.id
+            data.insurance_document_id = new_doc.id;
         }
 
         // guarda las compañias con id y porcentaje
         const companias = [];
-        data.insurance_companies.map(company =>
+        data.insurance_companies.map((company) =>
             companias.push({
                 id: company.id,
-                percentage_insured: company.percentage_insured
+                percentage_insured: company.percentage_insured,
             })
         );
 
@@ -116,21 +125,24 @@ export const updatePolicy = async (data: any, id: number) => {
             id: id,
             insurance_broker_id: data.insurance_broker.id,
             insurance_document_id: data.insurance_document_id,
-            insurance_companies: companias
-        }
+            insurance_companies: companias,
+        };
         delete finalData.insurance_document;
         delete finalData.insurance_broker;
         delete finalData.registry_numbers;
         delete finalData.audit_trail;
         delete finalData.status;
-        console.log('servicio final', finalData)
+        console.log('servicio final', finalData);
 
         let URI = `/insurabilities`;
-        let res: AxiosResponse<IPolicyResponse> = await http.put(URI, finalData , {
-            params: { id },
-        });
+        let res: AxiosResponse<IPolicyResponse> = await http.put(
+            URI,
+            finalData,
+            {
+                params: { id },
+            }
+        );
         await swal.fire('poliza actualizada', res.data.message, 'success');
-
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');
@@ -139,7 +151,7 @@ export const updatePolicy = async (data: any, id: number) => {
 
 export const realEstatesPolicy = async (policy_id: number) => {
     try {
-        let URI = `/insurabilities`
+        let URI = `/insurabilities`;
         let res: AxiosResponse<IPolicyResponse> = await http.get(URI, {
             params: { policy_id },
         });
@@ -147,7 +159,7 @@ export const realEstatesPolicy = async (policy_id: number) => {
     } catch (error) {
         return Promise.reject('Error');
     }
-}
+};
 
 const services = {
     createPolicy,

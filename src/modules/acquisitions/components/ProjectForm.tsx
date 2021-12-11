@@ -34,9 +34,11 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
 
     const submit = (values, form) => {
         const aux_values = { ...values };
-        onSubmit(values, form).then(() => {
-            form.setSubmitting(false);
-        }).catch(() => form.setSubmitting(false));
+        onSubmit(aux_values, form)
+            .then(() => {
+                form.setSubmitting(false);
+            })
+            .catch(() => form.setSubmitting(false));
     };
     const format_list = (list) => {
         if (list && Array.isArray(list)) {
@@ -66,7 +68,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
-            {({ values, isValid, isSubmitting, setFieldValue }) => {
+            {({ values, isSubmitting, setFieldValue }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -276,6 +278,6 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
 };
 
 ProjectForm.defaultProps = {
-    onSubmit: (v) => Promise.resolve(),
+    onSubmit: (/*v*/) => Promise.resolve(),
 };
 export default ProjectForm;

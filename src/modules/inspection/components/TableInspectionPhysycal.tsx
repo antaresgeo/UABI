@@ -5,7 +5,7 @@ const TableInspectionPhysycal = () => {
             <div className="table_content">
                 <table className="box-table">
                     <thead>
-                        <tr >
+                        <tr>
                             <th>Descripción</th>
                             <th>Observaciones</th>
                         </tr>
@@ -19,7 +19,7 @@ const TableInspectionPhysycal = () => {
                 </table>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default TableInspectionPhysycal
+export default TableInspectionPhysycal;

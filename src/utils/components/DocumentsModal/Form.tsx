@@ -19,11 +19,13 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, onSubmit }) => 
     const submit = (values, form) => {
         const res_values = { ...values };
         delete res_values.fileList;
-        res_values.name = res_values.name + '.pdf'
+        res_values.name = res_values.name + '.pdf';
         form.setSubmitting(true);
-        onSubmit(res_values).then(() => {
-            form.setSubmitting(false);
-        }).catch(() => form.setSubmitting(false));
+        onSubmit(res_values)
+            .then(() => {
+                form.setSubmitting(false);
+            })
+            .catch(() => form.setSubmitting(false));
     };
 
     return (
@@ -53,7 +55,7 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, onSubmit }) => 
                                         Seleccionar PDF
                                     </button>
                                 </Upload>
-                                <span className="d-block" style={{ height: 20 }}></span>
+                                <span className="d-block" style={{ height: 20 }} />
                             </div>
                             <div className="form-group col-12">
                                 <label htmlFor="" className="form-label">

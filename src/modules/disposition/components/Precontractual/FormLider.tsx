@@ -196,7 +196,7 @@ const FormLider: FC<FormProps> = ({ lease }) => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default FormLider
+export default FormLider;

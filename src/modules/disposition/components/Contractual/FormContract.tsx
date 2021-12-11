@@ -1,13 +1,11 @@
-import { Field, Form, Formik } from 'formik';
+import { Field } from 'formik';
 import { FC } from 'react';
-import * as Yup from 'yup';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import Select from './../../../../utils/ui/select';
 
 interface FormProps {
     formik: any;
-
 }
 
 export const FormContract: FC<FormProps> = ({ formik }) => {
@@ -36,7 +34,6 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                         name="contract_number"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="contract_number" />
                 </div>
@@ -49,7 +46,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                         name="type_contract"
                         id="type_contract_id"
                         className="w-100"
-                        options={dispositions.map(realestate => ({ id: realestate, name: realestate }))}
+                        options={dispositions.map((realestate) => ({ id: realestate, name: realestate }))}
                     />
                     <ErrorMessage name="type_contract" />
                 </div>
@@ -63,7 +60,6 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                         name="monthly_canon"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="monthly_canon" />
                 </div>
@@ -77,7 +73,6 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                         name="subscription_date"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="subscription_date" />
                 </div>
@@ -87,14 +82,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                     <label htmlFor="start_date_id" className="form-label">
                         Fecha de Inicio
                     </label>
-                    <Field
-                        type="date"
-                        id="start_date_id"
-                        name="start_date"
-                        className="form-control"
-                        disabled={false}
-
-                    />
+                    <Field type="date" id="start_date_id" name="start_date" className="form-control" disabled={false} />
                     <ErrorMessage name="start_date" />
                 </div>
                 <div className="col-3">
@@ -107,7 +95,6 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                         name="finish_date"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="finish_date" />
                 </div>
@@ -180,7 +167,6 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                         name="dispose_area"
                         className="form-control"
                         disabled={false}
-
                     />
                     <ErrorMessage name="dispose_area" />
                 </div>
@@ -193,20 +179,18 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                         name="digital_contract"
                         component={DocumentModal}
                         btn_label="Adjuntar"
-
                     />
                     <ErrorMessage name="digital_contract" />
                 </div>
                 <div className="form-group col-3">
-                    <label htmlFor="manager_uabi_id" className="form-label">
+                    <label htmlFor="manager_sabi_id" className="form-label">
                         ¿UABI es la encargada del contrato?
                     </label>
                     <div className="form-check-inline ">
                         <label style={{ fontWeight: 400 }}>
                             <Field
-
-                                name="manager_uabi"
-                                id="manager_uabi_id"
+                                name="manager_sabi"
+                                id="manager_sabi_id"
                                 type="radio"
                                 className="form-check-input"
                                 value="si"
@@ -217,8 +201,8 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                     <div className="form-check-inline ">
                         <label style={{ fontWeight: 400 }}>
                             <Field
-                                name="manager_uabi"
-                                id="manager_uabi_id"
+                                name="manager_sabi"
+                                id="manager_sabi_id"
                                 type="radio"
                                 className="form-check-input"
                                 value="no"
@@ -226,7 +210,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                             no
                         </label>
                     </div>
-                    <ErrorMessage name="manager_uabi"></ErrorMessage>
+                    <ErrorMessage name="manager_sabi" />
                 </div>
             </div>
             <div className="row">
@@ -260,5 +244,5 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};

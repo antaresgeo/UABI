@@ -2,11 +2,9 @@ import { auth_http } from '../../../config/axios_instances';
 import { base64Encode } from '../../../utils';
 // import { PasswordResetBody, RequestAccessBody } from "../custom_types";
 
-
-const get_roles_and_permits=  async () => {
-    const res = await auth_http.get('/users/roles-and-permits/');
-    return res
-}
+const get_roles_and_permits = async () => {
+    return await auth_http.get('/users/roles-and-permits/');
+};
 const services = {
     login: async (idNumber, pass) => {
         const password64 = await base64Encode(pass);
@@ -19,9 +17,9 @@ const services = {
             idNumber,
             password64,
             attemp,
-        })
+        });
     },
-    get_roles_and_permits
+    get_roles_and_permits,
     // tokenRefresh: async () => {
     //     console.log(
     //         `%c Refresh `,

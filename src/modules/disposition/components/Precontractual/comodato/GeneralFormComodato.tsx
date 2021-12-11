@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { Card } from '../../../../../utils/ui'
 import { ModalNotificar } from './../../ModalNotificar';
 import { FormPrecontractualComodato } from './FormPrecontractualComodato';
-import { FormUser } from './../FormUser';
+import { FormUser } from '../FormUser';
 import { FormRiskAnalysis } from '../FormRiskAnalysis';
 import { Formobligation } from '../Formobligation';
 import FormLider from '../FormLider';
@@ -20,9 +20,9 @@ interface FormPros {
 export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstate,values_form }) => {
 
     let initialValues = {
-        environmental_risk: "",
-        registration_date: "",
-        contract_period: "",
+        environmental_risk: '',
+        registration_date: '',
+        contract_period: '',
         //solicitante
         companyname_applicant: "",
         type_document_applicant: "NIT",
@@ -36,21 +36,21 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
         mobile_applicant: "",
         telephone_applicant: "",
         //analisis de riegos
-        regulatory_degree_occurrence: "",
-        regulatory_impact_degree: "",
-        regulatory_responsable: "",
-        regulatory_description: "",
-        regulatory_mitigation_mechanism: "",
-        operative_degree_occurrence: "",
-        operative_impact_degree: "",
-        operative_responsable: "",
-        operative_description: "",
-        operative_mitigation_mechanism: "",
+        regulatory_degree_occurrence: '',
+        regulatory_impact_degree: '',
+        regulatory_responsable: '',
+        regulatory_description: '',
+        regulatory_mitigation_mechanism: '',
+        operative_degree_occurrence: '',
+        operative_impact_degree: '',
+        operative_responsable: '',
+        operative_description: '',
+        operative_mitigation_mechanism: '',
         //comodato
-        loan_value: "",
-        patrimonial_value: "",
-        loan_typology: "",
-        competitive_process: "",
+        loan_value: '',
+        patrimonial_value: '',
+        loan_typology: '',
+        competitive_process: '',
         competitive_process_value: 0,
         activities: "",
         horizontal_property: "",
@@ -94,11 +94,11 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
         name_approved: "",
         post_approved: "",
         //beneficiario
-        population: "",
-        benefited_sector: "",
-        location:{
-            commune: "",
-            neighborhood: ""
+        population: '',
+        benefited_sector: '',
+        location: {
+            commune: '',
+            neighborhood: '',
         },
         business_type: "",
         ...values_form,
@@ -156,37 +156,39 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
 
     });
     return (
-        <Formik enableReinitialize onSubmit={submit} innerRef={innerRef} initialValues={initialValues} validationSchema={schema} >
+        <Formik
+            enableReinitialize
+            onSubmit={submit}
+            innerRef={innerRef}
+            initialValues={initialValues}
+            validationSchema={schema}
+        >
             {(formik) => {
-                return <Form>
-                    <Card
-                        title="Comodato"
-                        extra={
-                            <ModalNotificar />
-                        }
-                    >
-                        <FormPrecontractualComodato formik={formik} />
-                    </Card>
-                    <Card title="Datos del solicitante">
-                        <FormUser formik={formik} comodato={true} />
-                    </Card>
-                    <Card title="Beneficiario">
-                        <BeneficiaryForm formik={formik} />
-                    </Card>
-                    <Card title="Análisis de riesgos">
-                        <FormRiskAnalysis formik={formik} />
-                    </Card>
-                    {formik.values.resolution === "si" &&
-                        <Card title="Obligaciones">
-                            <Formobligation />
+                return (
+                    <Form>
+                        <Card title="Comodato" extra={<ModalNotificar />}>
+                            <FormPrecontractualComodato formik={formik} />
                         </Card>
-                    }
-                    <Card >
-                        <FormLider />
-                    </Card>
-
-                </Form>
+                        <Card title="Datos del solicitante">
+                            <FormUser formik={formik} comodato={true} />
+                        </Card>
+                        <Card title="Beneficiario">
+                            <BeneficiaryForm formik={formik} />
+                        </Card>
+                        <Card title="Análisis de riesgos">
+                            <FormRiskAnalysis formik={formik} />
+                        </Card>
+                        {formik.values.resolution === 'si' && (
+                            <Card title="Obligaciones">
+                                <Formobligation />
+                            </Card>
+                        )}
+                        <Card>
+                            <FormLider />
+                        </Card>
+                    </Form>
+                );
             }}
         </Formik>
-    )
-}
+    );
+};

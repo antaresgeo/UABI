@@ -55,7 +55,7 @@ const SupportDocumentsForm: FC<AcquisitionsFromProps> = ({ type, disabled, formi
                                     btn_label="Adjuntar"
                                     disabled={disabled}
                                     onDelete={(doc) => {
-                                        if(doc.type === 6) {
+                                        if (doc.type === 6) {
                                             const list: any[] = formik.values.supports_documents;
                                             const supports_documents_list = list.filter((v, j) => i !== j);
                                             formik.setFieldValue('supports_documents', supports_documents_list, false);

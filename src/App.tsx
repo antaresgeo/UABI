@@ -2,7 +2,7 @@ import useRoutes from './config/routes';
 import Router from './utils/components/app_router';
 import Template from './utils/components/template';
 import { useDispatch, useSelector } from 'react-redux';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import actions from './modules/auth/redux/actions';
 import PasswordChangeModal from './modules/auth/views/pass_change_modal';
 import { TemplateContext } from './utils/components/template/template_context';

@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
-import CheckboxGroup from 'react-checkbox-group';
+import React, { FC } from 'react';
+
 import { AdquisitionsItf } from '../../../../utils/interfaces';
 import { Formik, Form, Field } from 'formik';
 import ErrorMessage from '../../../../utils/ui/error_messge';
@@ -16,30 +16,38 @@ interface AcquisitionsFromProps {
     onChange: (values, count) => Promise<any>;
 }
 
-const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
-    type,
-    disabled,
-    acquisition,
-    onChange,
-    innerRef,
-    active_type,
-}) => {
+const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, onChange, innerRef }) => {
     const initial_values = {
         acquisition_type: '',
         area: '',
         title_type: '',
         act_number: '',
         act_value: '',
+        recognition_value: '',
         acquired_percentage: '',
         origin: '',
         entity_type: '',
         entity_number: '',
         city: '',
+        acquisition_date: '',
         real_estate_id: '',
         ...acquisition,
     };
 
-    const schema = Yup.object().shape({});
+    const schema = Yup.object().shape({
+        acquisition_type: Yup.string().required('Campo obligatorio'),
+        area: Yup.number().required('Campo obligatorio'),
+        title_type: Yup.string().required('Campo obligatorio'),
+        act_number: Yup.string().required('Campo obligatorio'),
+        act_value: Yup.number().required('Campo obligatorio'),
+        recognition_value: Yup.number().required('Campo obligatorio'),
+        acquired_percentage: Yup.number().required('Campo obligatorio'),
+        origin: Yup.number().required('Campo obligatorio'),
+        entity_type: Yup.string().required('Campo obligatorio'),
+        entity_number: Yup.string().required('Campo obligatorio'),
+        acquisition_date: Yup.date().required('Campo obligatorio'),
+        city: Yup.string().required('Campo obligatorio'),
+    });
 
     const submit = (values, form) => {
         form.setSubmitting(true);
@@ -58,7 +66,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
             validationSchema={schema}
             innerRef={innerRef}
         >
-            {({ values, setFieldValue }) => {
+            {({ setFieldValue }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -114,7 +122,13 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                                         <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
                                     </Tooltip>
                                 </label>
-                                <Field as="select" className="form-select" aria-label="origin" id="origin_id" name="origin">
+                                <Field
+                                    as="select"
+                                    className="form-select"
+                                    aria-label="origin"
+                                    id="origin_id"
+                                    name="origin"
+                                >
                                     <option value="">-- Seleccione Procedencia --</option>
                                     <option value={1}>Alexander</option>
                                     <option value={2}>Sergio</option>
@@ -125,36 +139,27 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                         </div>
                         <div className="row">
                             <div className="col-3">
-                                <label htmlFor="area_id" className="form-label">
-                                    Área
+                                <label htmlFor="entity_type_id" className="form-label">
+                                    Tipo de Entidad
                                 </label>
-                                <div className="input-group">
-                                    <Field
-                                        type="number"
-                                        className="form-control border-end-0"
-                                        id="area_id"
-                                        name="area"
-                                        min={0}
-                                    />
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text bg-white border-start-0">
-                                            m<sup>2</sup>
-                                        </span>
-                                    </div>
-                                </div>
-                                <ErrorMessage name="plot_area" />
+                                <Field as="select" className="form-select" id="entity_type_id" name="entity_type">
+                                    <option value="">-- Seleccione Tipo de Entidad --</option>
+                                    <option value="Notaría">Notaría</option>
+                                </Field>
+                                <ErrorMessage name="entity_type" />
                             </div>
                             <div className="col-3">
-                                <label htmlFor="acquisition_value_id" className="form-label">
-                                    Valor de adquisición
+                                <label htmlFor="entity_number_id" className="form-label">
+                                    N° de entidad
                                 </label>
                                 <Field
-                                    type="number"
+                                    type="text"
                                     className="form-control"
-                                    id="acquisition_value_id"
-                                    name="act_value"
+                                    id="entity_number_id"
+                                    aria-describedby="entity_number"
+                                    name="entity_number"
                                 />
-                                <ErrorMessage name="act_value" />
+                                <ErrorMessage name="entity_number" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="acquired_percentage_id" className="form-label">
@@ -174,56 +179,52 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                                 <ErrorMessage name="acquired_percentage" />
                             </div>
                             <div className="col-3">
-                                <label htmlFor="address_id" className="form-label">
-                                    Ciudad
+                                <label htmlFor="area_id" className="form-label">
+                                    Área
                                 </label>
                                 <div className="input-group">
                                     <Field
-                                        name="city"
-                                        id="address_id"
-                                        type="text"
-                                        className="form-control"
-                                        disabled
+                                        type="number"
+                                        className="form-control border-end-0"
+                                        id="area_id"
+                                        name="area"
+                                        min={0}
                                     />
                                     <div className="input-group-prepend">
-                                        <LocationModal
-                                            disabled={disabled}
-                                            onSave={async (_values) => {
-                                                setFieldValue('city', _values.city_name, false);
-                                            }}
-                                        />
+                                        <span className="input-group-text bg-white border-start-0">
+                                            m<sup>2</sup>
+                                        </span>
                                     </div>
                                 </div>
-
-                                <ErrorMessage name="city_name" />
+                                <ErrorMessage name="area" />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-3">
-                                <label htmlFor="entity_type_id" className="form-label">
-                                    Tipo de Entidad
-                                </label>
-                                <Field as="select" className="form-select" id="entity_type_id" name="entity_type">
-                                    <option value="">-- Seleccione Tipo de Entidad --</option>
-                                    <option value="Notaría">Notaría</option>
-                                </Field>
-                                <ErrorMessage name="entity_type" />
-                            </div>
-                            <div className="col-3">
-                                <label htmlFor="entity_number_id" className="form-label">
-                                    N° de entidad
+                                <label htmlFor="acquisition_value_id" className="form-label">
+                                    Valor de adquisición
                                 </label>
                                 <Field
-                                    type="test"
+                                    type="number"
                                     className="form-control"
-                                    id="entity_number_id"
-                                    aria-describedby="entity_number"
-                                    name="entity_number"
+                                    id="acquisition_value_id"
+                                    name="act_value"
                                 />
-                                <ErrorMessage name="entity_number" />
+                                <ErrorMessage name="act_value" />
                             </div>
-
-                            <div className="col-6">
+                            <div className="col-3">
+                                <label htmlFor="acquisition_value_id" className="form-label">
+                                    Valor de Reconocimiento
+                                </label>
+                                <Field
+                                    type="number"
+                                    className="form-control"
+                                    id="acquisition_value_id"
+                                    name="recognition_value"
+                                />
+                                <ErrorMessage name="recognition_value" />
+                            </div>
+                            <div className="col-3">
                                 <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">
                                     Fecha de Adquisición
                                 </label>
@@ -235,6 +236,23 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({
                                     disabled={disabled}
                                 />
                                 <ErrorMessage name="acquisition_date" />
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="address_id" className="form-label">
+                                    Ciudad
+                                </label>
+                                <div className="input-group">
+                                    <Field name="city" id="address_id" type="text" className="form-control" disabled />
+                                    <div className="input-group-prepend">
+                                        <LocationModal
+                                            disabled={disabled}
+                                            onSave={async (_values) => {
+                                                setFieldValue('city', _values.city_name, false);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                                <ErrorMessage name="city" />
                             </div>
                         </div>
                     </Form>

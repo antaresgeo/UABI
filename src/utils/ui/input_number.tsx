@@ -20,5 +20,3 @@ const InputNumber: FC<InputNumberProps> = ({ field, form, ...props }) => {
 };
 
 InputNumber.defaultProps = {};
-
-export default InputNumber;

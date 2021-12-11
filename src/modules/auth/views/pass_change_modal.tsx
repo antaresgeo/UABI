@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, Fragment } from 'react';
+import React, { FC, ReactElement } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'antd/lib/modal';
 
@@ -57,7 +57,7 @@ export default connect(
         can_access: store.auth.can_access,
         is_new_user: store.auth.user?.is_new_user || false,
     }),
-    (dispatch: any) => ({
+    (/*dispatch: any*/) => ({
         // update_password: (password: string, is_new_user: boolean) =>
         //     dispatch(redux.actions.update_password(password, is_new_user)),
     })

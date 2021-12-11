@@ -1,18 +1,14 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import { formatDate, swal } from '../../../../utils';
 import { Card, Link, Table as UiTable } from '../../../../utils/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux';
-import { Switch } from "antd";
-import { IRolAttributes, IRoleSelectAttributes } from '../../../../utils/interfaces/roles';
-
+import { IRoleSelectAttributes } from '../../../../utils/interfaces/roles';
 
 export const ListRoles = () => {
     const dispatch = useDispatch();
     const roles: IRoleSelectAttributes[] = useSelector((store: any) => {
-
-        return store.users.rolesSelect.value
-
+        return store.users.rolesSelect.value;
     });
     //  const loading: boolean = useSelector((store: any) => store.users.roles.loading);
     //  const { total_results } = useSelector((store: any) => store.users.roles.pagination);
@@ -21,19 +17,21 @@ export const ListRoles = () => {
     //     dispatch(actions.getRoles());
     // };
     useEffect(() => {
-        dispatch(actions.getRoles())
-    }, [])
+        dispatch(actions.getRoles());
+    }, []);
 
     const deleteRol = (id) => async () => {
         let res: any;
         if (id !== '' && id !== undefined) {
             //res = await dispatch(actions.getRealEstatesByProject(id));
         }
-        if (res?.total && res.total !== 0) {
+        if (res?.total) {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
-                text: `El rol contiene ${res?.total || ''} usuarios asociados.\n\nSi desea continuar los usuario quedarán sin rol asiciado.`,
+                text: `El rol contiene ${
+                    res?.total || ''
+                } usuarios asociados.\n\nSi desea continuar los usuario quedarán sin rol asiciado.`,
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -51,10 +49,9 @@ export const ListRoles = () => {
                     denyButtonText: `Cancelar`,
                 }).then(async (result) => {
                     if (result.isConfirmed) {
-                        console.log('inactivar rol con usuarios')
+                        console.log('inactivar rol con usuarios');
                         // await dispatch(actions.deleteRole(id));
                         // await dispatch(actions.getRoles());
-
 
                         // swal.fire({
                         //     title: "Proyecto Inactivado",
@@ -82,7 +79,7 @@ export const ListRoles = () => {
             });
 
             if (result.isConfirmed) {
-                console.log('inactivar rol sin usuarios')
+                console.log('inactivar rol sin usuarios');
                 await dispatch(actions.deleteRole(id));
                 await dispatch(actions.getRoles());
 
@@ -122,7 +119,7 @@ export const ListRoles = () => {
             title: 'Creado por',
             dataIndex: 'audit_trail',
             align: 'center' as 'center',
-            render: (data) => (data?.created_by),
+            render: (data) => data?.created_by,
         },
         {
             title: 'Acciones',
@@ -171,7 +168,7 @@ export const ListRoles = () => {
                                 </div>
                             );
                         } else {
-                            return  <i className="fa fa-times-circle" aria-hidden="true" />
+                            return <i className="fa fa-times-circle" aria-hidden="true" />;
                         }
                     },
                 },
@@ -179,30 +176,22 @@ export const ListRoles = () => {
         },
     ];
 
-
-
-
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-md-12">
-                    <Card
-                        title="Registro de roles"
-                        extra={<Link to="/roles/create/" name="Crear" iconText="+" />}
-                    >
+                    <Card title="Registro de roles" extra={<Link to="/roles/create/" name="Crear" iconText="+" />}>
                         <UiTable
                             columns={table_columns}
                             items={roles}
-                        //with_pagination
-                        //count={total_results}
-                        //loading={loading}
-                        //change_page={change_page}
+                            //with_pagination
+                            //count={total_results}
+                            //loading={loading}
+                            //change_page={change_page}
                         />
-
                     </Card>
                 </div>
             </div>
         </div>
-
-    )
-}
+    );
+};

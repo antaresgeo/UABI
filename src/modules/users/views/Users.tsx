@@ -4,7 +4,7 @@ import { Card, Link } from '../../../utils/ui';
 import { actions } from '../redux';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import UserList from './UserList';
-import { guards } from './../routes';
+import { guards } from '../routes';
 import FilterForm from '../../../utils/ui/filter_form';
 
 const Users = () => {

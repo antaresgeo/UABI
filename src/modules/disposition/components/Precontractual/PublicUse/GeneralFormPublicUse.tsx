@@ -130,13 +130,14 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
                         <FormRiskAnalysis formik={formik} />
                     </Card>
 
-                    <Card >
-                        <FormLider />
-                    </Card>
-                </Form>
+                        <Card>
+                            <FormLider />
+                        </Card>
+                    </Form>
+
             }}
         </Formik>
-    )
-}
+    );
+};
 
-export default GeneralFormPublicUse
+export default GeneralFormPublicUse;

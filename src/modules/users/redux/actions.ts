@@ -1,5 +1,5 @@
 import types from './types';
-import service, {User} from './service';
+import service, { User } from './service';
 import { request_dispatch } from '../../../utils';
 
 // ROLES //
