@@ -4,15 +4,22 @@ import { Card } from '../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 import GeneralForm from './../components/GerenalForm';
 import { swal_success } from '../../../utils';
+import { useEffect } from 'react';
 
 const CreateUser = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+
+    useEffect(() => {
+        dispatch(actions.clear_user());
+    }, []);
+
     const createUser = async (values) => {
         const res: any = await dispatch(actions.create_user(values));
         await swal_success.fire({ title: 'Usuario Creado', text: res.message, icon: 'success' });
         history.push(`/users/${res.results.detailsUser.id}`);
     };
+
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">

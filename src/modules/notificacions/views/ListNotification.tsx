@@ -1,7 +1,5 @@
 import { Card, Link, Table as UiTable } from '../../../utils/ui';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { INotificationtAttributes } from '../../../utils/interfaces/notification';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { actions } from '../redux';
 
@@ -39,57 +37,28 @@ const table_columns = [
 ];
 const ListNotification = () => {
     const dispatch = useDispatch();
-    const notifications: INotificationtAttributes[] = useSelector(
-        (store: any) => store.notifications.notifications.value
-    );
+    const [notifications, loading, total_results, user] = useSelector((store: any) => [
+        store.notifications.notifications.value,
+        store.notifications.notifications.loading,
+        store.notifications.notifications.pagination.total_results,
+        store.auth.user.detailsUser
+    ]);
 
     useEffect(() => {
-        dispatch(actions.getNotifications());
+        dispatch(actions.get_all_notifications({ ...(user? { to: user.id}: {})}));
     }, []);
 
-    useEffect(() => {
-        dispatch(actions.getNotifications());
-    }, [notifications]);
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card title="Notificaciones">
-                        <form>
-                            <div className="row justify-content-between">
-                                <div className="col-5 d-flex">
-                                    <div className="col-6">
-                                        <div className="input-group">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="Nombre / Código"
-                                                aria-label="Nombre / Código"
-                                                aria-describedby="button-addon2"
-                                            />
-                                            <span className="input-group-text">
-                                                <span>
-                                                    <i className="fa fa-search" aria-hidden="true" />
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <Link
-                                        to=""
-                                        className="ml-4"
-                                        name="Filtro de búsqueda"
-                                        avatar={false}
-                                        icon={<i className="fa fa-filter" aria-hidden="true" />}
-                                    />
-                                </div>
-                            </div>
-                        </form>
-
                         <UiTable
                             columns={table_columns}
                             items={notifications}
+                            loading={loading}
                             with_pagination
-                            count={10}
+                            count={total_results}
                             change_page={() => {}}
                         />
                     </Card>

@@ -26,21 +26,7 @@
     border-radius: 0 0 11px 11px;
 }
 
-.ant-drawer-body {
-    padding: 0;
-    .drawer-content {
-        padding: 16px;
-        height: calc(100% - 244px);
-    }
-}
 
-.ant-drawer-close {
-    color: rgba(255, 255, 255, 0.45);
-    &:focus,
-    &:hover {
-        color: rgba(255, 255, 255, 0.75);
-    }
-}
 
 .trigger {
     font-size: 18px;
@@ -222,3 +208,47 @@
         }
     }
 }
+
+.session-close {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background-color: #fff;
+    text-align: center;
+    cursor: pointer;
+    color: #dc3545;
+    padding: 1.5rem;
+    transition: all 300ms ;
+    &:hover {
+        border-color: #dc3545;
+        color: #fff;
+        background-color: #dc3545;
+    }
+}
+
+.user-drawer {
+    .ant-drawer-header {
+        position: absolute;
+        background: transparent;
+        width: 300px;
+        justify-content: end;
+        .ant-drawer-close {
+            color: rgba(255, 255, 255, 0.65);
+            &:focus,
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+
+    .ant-drawer-body {
+        padding: 0;
+
+        .drawer-content {
+            padding: 16px;
+            height: calc(100% - 244px);
+        }
+    }
+}
+
+
+

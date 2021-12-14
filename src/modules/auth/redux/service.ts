@@ -67,10 +67,14 @@ const services = {
     //     return auth_http.post("/accounts/reset/", { password, code });
     // },
 
-    // update_password: async (password: string) => { // TODO: realizar esta actulizacion con el servicio de update del usuario
-    //     const response = await http.post("/accounts/update/", { password });
-    //     return response?.data;
-    // },
+    update_password: async (password: string) => {
+        const password64 = await base64Encode(password);
+        const response = await auth_http.post('/users/password/', {
+            password: password64,
+        });
+        return response?.data;
+    },
+
     // recovery_password: async (email) => {
     //     return auth_http.post("/accounts/recovery/", { email });
     // },

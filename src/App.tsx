@@ -6,6 +6,8 @@ import { useContext, useEffect } from 'react';
 import actions from './modules/auth/redux/actions';
 import PasswordChangeModal from './modules/auth/views/pass_change_modal';
 import { TemplateContext } from './utils/components/template/template_context';
+
+
 function App() {
     const user = useSelector((store: any) => store.auth.user);
     const context = useContext(TemplateContext);
@@ -19,6 +21,7 @@ function App() {
     };
     const show = token ? !!(token && user) : true;
 
+
     useEffect(() => {
         if (token && !user) {
             dispatch(actions.get_user(token));
@@ -29,7 +32,9 @@ function App() {
         <>
             {show && <Router routes={routes} template={Template} user={aux_user} />}
             <PasswordChangeModal
-                update_password={async () => {}}
+                update_password={async (password) => {
+                    await dispatch(actions.update_password(password))
+                }}
                 open={context.pass_modal}
                 toggle={context.toggle_pass_modal}
             />

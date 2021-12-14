@@ -2,10 +2,16 @@ import { useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { useHistory } from 'react-router-dom';
 import RealEstateForm from '../../components/RealEstateForm';
+import {clearRealEstate} from "../../redux/actions/realEstates";
+import {useEffect} from "react";
 
 const RealEstate = () => {
     const history: any = useHistory();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(clearRealEstate());
+    }, [])
 
     const createRealEstate = async (values, form, isFinish) => {
         try {
