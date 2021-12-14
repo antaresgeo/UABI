@@ -9,8 +9,7 @@ import FilterForm from '../../../utils/ui/filter_form';
 
 const Users = () => {
     const dispatch = useDispatch();
-    const users: IUserAttributes[] = useSelector((store: any) => store.users.users.value);
-    const user: any = useSelector((store: any) => store.auth.user);
+    const [users, user, total_results] = useSelector((store: any) => [store.users.users.value, store.auth.user, store.users.users.pagination.total_results ]);
     //const { total_results } = useSelector((store: any) => store.users.pagination);
 
     const [filters, set_filters] = useState<object>(null);
@@ -59,7 +58,7 @@ const Users = () => {
                             users={users}
                             user={aux_user}
                             change_page={change_page}
-                            //total={total_results}
+                            total={total_results}
                         />
                     </Card>
                 </div>

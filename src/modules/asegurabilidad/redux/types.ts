@@ -118,8 +118,5 @@ const types = Object.freeze({
         fail: 'Se consulta endpoint de servicio inactivar comapñia aseguradora [fail]',
     },
 });
+
 export default types;
-
-/*
-
-* */

@@ -13,12 +13,12 @@ const fake_inspection: Inspection = {
 
 const emptyInitialState: State = {
     inspection: {
-        value: fake_inspection,
+        value: null,
         loading: false,
         loaded: false,
     },
     inspections: {
-        value: [fake_inspection],
+        value: [],
         pagination: {
             page: 1,
             count: 0,

@@ -199,14 +199,14 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
                         </TabPane>
                         <TabPane tab="Ocupación" key="2" disabled={parseInt(activeKey) < 2}>
                             <CreateOccupation
-                                ocupation={inspection.ocupation}
+                                ocupation={inspection?.ocupation}
                                 innerRef={steps[1].ref}
                                 onSubmit={steps[1].onSave}
                             />
                         </TabPane>
                         <TabPane tab="Inspección física" key="3" disabled={parseInt(activeKey) < 3}>
                             <CreateInspectionPhysical
-                                physical_inspection={inspection.physical_inspection}
+                                physical_inspection={inspection?.physical_inspection}
                                 innerRef={steps[2].ref}
                                 onSubmit={steps[2].onSave}
                                 obs={obs}
@@ -214,7 +214,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
                         </TabPane>
                         <TabPane tab="Actualización" key="4" disabled={parseInt(activeKey) < 4}>
                             <CreateUpgrade
-                                owner={inspection.owner}
+                                owner={inspection?.owner}
                                 innerRef={steps[3].ref}
                                 onSubmit={steps[3].onSave}
                             />

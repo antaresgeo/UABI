@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import Layout from 'antd/lib/layout';
 import { TemplateContext } from './template_context';
 import Drawer from 'antd/lib/drawer';
@@ -7,6 +7,7 @@ import AppHeader from './header';
 import { Link, useHistory } from 'react-router-dom';
 import { Breadcrumb } from '../app_router/custom_types';
 import Menu from 'antd/lib/menu';
+
 
 interface ITemplate {
     breadcrumbs?: Breadcrumb[];
@@ -33,6 +34,8 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
     const name = `${(user && Object.values(user?.names).join(' ')) || ''} ${
         (user && Object.values(user?.surnames).join(' ')) || ''
     }`;
+
+
     return (
         <>
             <Layout className="w-100 h-100">
@@ -64,7 +67,13 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                     </Content>
                 </Layout>
             </Layout>
-            <Drawer placement="right" onClose={context.drawer_close} visible={context.drawer_collapsed} width={300}>
+            <Drawer
+                placement="right"
+                onClose={context.drawer_close}
+                visible={context.drawer_collapsed}
+                width={300}
+                className="user-drawer"
+            >
                 <div
                     className="d-flex justify-content-center align-items-center text-white"
                     style={{
@@ -114,8 +123,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                     </Menu>
                 </div>
                 <div
-                    className="text-danger p-4"
-                    style={{ outline: ' 1px solid #ccc', textAlign: 'center' }}
+                    className=" p-4 session-close"
                     onClick={() => {
                         localStorage.removeItem('_tk_');
                         context.drawer_close();

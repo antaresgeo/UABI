@@ -1,51 +1,146 @@
 import { AxiosResponse } from 'axios';
-import { http } from '../../../config/axios_instances';
-import {
-    INotificationtAttributes,
-    INotificationResponse,
-    INotificationsResponse,
-} from '../../../utils/interfaces/notification';
+import { notification_http } from '../../../config/axios_instances';
 
-const getNotification = async (
-    id: string
-): Promise<INotificationtAttributes | string> => {
-    try {
-        let URI = `/notification`;
-        let res: AxiosResponse<INotificationResponse> = await http.get(URI, {
-            params: { id },
+export interface AllNotificationsResponse {
+    message: string;
+    results: Notification[];
+    page: number;
+    count: number;
+    next_page?: any;
+    ous_page?: any;
+    total_results: number;
+}
+
+export interface ListNotificationsResponse {
+    message: string;
+    results: Notification[];
+}
+
+export interface NotificationResponse {
+    message: string;
+    results: Notification;
+}
+
+export interface Notification {
+    id: number;
+    title: string;
+    description: string;
+    priority: number;
+    action: string;
+    received: boolean;
+    readed: boolean;
+    to: number;
+    from: number;
+    status?: number;
+    audit_trail?: any;
+    status_info?: any;
+    key?: string;
+}
+
+const format_response = (data) => {
+    if (Array.isArray(data) && data?.length > 0) {
+        return data.map((d) => {
+            d.key = `nt-${d.id}`;
+            return d;
         });
+    }
+    return [];
+};
 
-        return res.data.results;
-    } catch (error) {
-        console.error(error);
+export const get_all_notifications = async (filters?) => {
+    try {
+        const URI = '/notifications/';
+        const res: AxiosResponse<AllNotificationsResponse> =
+            await notification_http.get(URI, {
+                params: {
+                    ...filters,
+                    with: 'pagination',
+                },
+            });
+        res.data.results = format_response(res?.data?.results);
+        return res.data;
+    } catch (e) {
         return Promise.reject('Error');
     }
 };
 
-const getNotifications = async ({
-    page = 1,
-    pageSize = 10,
-    q = null,
-}): Promise<INotificationtAttributes[] | string> => {
+export const get_list_notifications = async () => {
     try {
-        let URI = `/notification/list`;
-        let res: AxiosResponse<INotificationsResponse> = await http.get(URI, {
-            params: {
-                page,
-                pageSize,
-                ...(q ? { q } : {}),
-            },
-        });
-        return res.data.results;
-    } catch (error) {
-        console.error(error);
+        const URI = '/notifications/';
+        const res: AxiosResponse<ListNotificationsResponse> =
+            await notification_http.get(URI);
+        res.data.results = format_response(res?.data?.results);
+        return res.data;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
+
+export const create_notification = async (data: Notification) => {
+    try {
+        const URI = '/notifications/';
+        const res: AxiosResponse<NotificationResponse> =
+            await notification_http.post(URI, {
+                ...data,
+            });
+        return res.data;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
+
+export const get_notification_by_id = async (id) => {
+    try {
+        const URI = `/notifications/`;
+        const res: AxiosResponse<NotificationResponse> =
+            await notification_http.get(URI, {
+                params: {
+                    id,
+                },
+            });
+        return res.data;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
+
+export const update_notification = async (id, data) => {
+    try {
+        const URI = '/notifications/';
+        const res: AxiosResponse<NotificationResponse> =
+            await notification_http.put(
+                URI,
+                { ...data },
+                {
+                    params: {
+                        id,
+                    },
+                }
+            );
+        return res.data;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
+
+export const delete_notification = async (id) => {
+    try {
+        const URI = `/notifications/${id}/`;
+        const res: AxiosResponse<NotificationResponse> =
+            await notification_http.delete(URI);
+        return res.data;
+    } catch (e) {
         return Promise.reject('Error');
     }
 };
 
 const services = {
-    getNotification,
-    getNotifications,
+    get_all_notifications,
+    get_list_notifications,
+    get_notification_by_id,
+    create_notification,
+    update_notification,
+    delete_notification,
 };
 
 export default services;

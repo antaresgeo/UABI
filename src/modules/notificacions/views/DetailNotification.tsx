@@ -3,8 +3,10 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { actions } from '../redux';
-import { INotificationtAttributes } from '../../../utils/interfaces/notification';
 import { Card } from '../../../utils/ui';
+import { Formik, Form, Field } from 'formik';
+
+
 
 interface IParams {
     id: string;
@@ -14,66 +16,79 @@ const DetailNotification = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
 
-    const notification: INotificationtAttributes = useSelector((store: any) => store.notifications.notification.value);
+    const notification: any = useSelector((store: any) => store.notifications.notification.value);
 
     useEffect(() => {
-        dispatch(actions.getNotification(id));
+        dispatch(actions.get_notification_by_id(parseInt(id)));
+
     }, []);
+
+    const initial_values = {
+        title: "",
+        action: "",
+        description: "",
+        ...notification,
+    };
 
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card title="Notificacion">
-                        <form>
-                            <div className="row">
-                                <div className="col-6">
-                                    <label htmlFor="path" className="form-label mt-3 mt-lg-0">
-                                        Tiulo
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="initialDate"
-                                        name="initialDate"
-                                        placeholder="Titulo"
-                                        className="form-control"
-                                        value={notification.path}
-                                        disabled
-                                    />
-                                </div>
-                                <div className="col-6">
-                                    <label htmlFor="path" className="form-label mt-3 mt-lg-0">
-                                        Path
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="initialDate"
-                                        name="initialDate"
-                                        placeholder="Path"
-                                        className="form-control"
-                                        value={notification.path}
-                                        disabled
-                                    />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-12">
-                                    <label htmlFor="description" className="form-label">
-                                        Descripción
-                                    </label>
-                                    <textarea
-                                        className="form-control"
-                                        id="description_id"
-                                        aria-describedby="emailHelp"
-                                        placeholder="Descripción..."
-                                        name="description"
-                                        value={notification.description}
-                                        autoComplete="off"
-                                        disabled
-                                    />
-                                </div>
-                            </div>
-                        </form>
+                        <Formik enableReinitialize initialValues={initial_values} onSubmit={() => {}}>
+                            {({ values }) => {
+                                console.log(values);
+                                return (
+                                    <Form>
+                                        <div className="row">
+                                            <div className="col-6">
+                                                <label htmlFor="title_id" className="form-label mt-3 mt-lg-0">
+                                                    Tiulo
+                                                </label>
+                                                <Field
+                                                    type="text"
+                                                    id="title_id"
+                                                    name="title"
+                                                    placeholder="Titulo"
+                                                    className="form-control"
+                                                    disabled
+                                                />
+                                            </div>
+                                            <div className="col-6">
+                                                <label htmlFor="action_id" className="form-label mt-3 mt-lg-0">
+                                                    Enlace
+                                                </label>
+                                                <Field
+                                                    type="text"
+                                                    id="action_id"
+                                                    name="action"
+                                                    placeholder="Path"
+                                                    className="form-control"
+                                                    disabled
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <label htmlFor="description_id" className="form-label">
+                                                    Descripción
+                                                </label>
+                                                <Field
+                                                    as="textarea"
+                                                    className="form-control"
+                                                    id="description_id"
+                                                    aria-describedby="emailHelp"
+                                                    placeholder="Descripción..."
+                                                    name="description"
+                                                    autoComplete="off"
+                                                    disabled
+                                                />
+                                            </div>
+                                        </div>
+                                    </Form>
+                                );
+                            }}
+                        </Formik>
                     </Card>
                 </div>
             </div>

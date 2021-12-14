@@ -15,7 +15,7 @@ const DetailUser = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
     const history = useHistory();
-    const user: IUserAttributes = useSelector((store: any) => store.users.user.value?.detailsUser);
+    const [user, roles] = useSelector((store: any) => [store.users.user.value?.detailsUser, store.users.user.value?.roles]);
     useEffect(() => {
         dispatch(actions.get_user_by_id(parseInt(id)));
     }, []);
@@ -82,7 +82,7 @@ const DetailUser = () => {
                     <div className="container-fluid">
                         <div className="row justify-content-center">
                             <div className="col-md-12">
-                                <UserViewForm user={user} />
+                                <UserViewForm user={user} roles={roles} />
                             </div>
                         </div>
                     </div>

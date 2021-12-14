@@ -2,16 +2,15 @@ import types from './types';
 import service from './service';
 import { request_dispatch } from '../../../utils';
 
-// const example = (filters = {}) =>
-//     request_dispatch(types.example_type, service.example_service(filters));
-const getNotification = (id: string) =>
-    request_dispatch(types.notification, service.getNotification(id));
+const get_notification_by_id= (id: number) =>
+    request_dispatch(types.get_notification, service.get_notification_by_id(id));
 
-const getNotifications = () =>
-    request_dispatch(types.notifications, service.getNotifications({}));
+const get_all_notifications = (filters?) =>
+    request_dispatch(types.get_all_notifications, service.get_all_notifications(filters));
+
 const actions = {
-    getNotification,
-    getNotifications,
+    get_notification_by_id,
+    get_all_notifications,
     // example
 };
 

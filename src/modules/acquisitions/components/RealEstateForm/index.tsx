@@ -32,9 +32,11 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
 }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const tipologies: ITipologyAttributes[] = useSelector((states: any) => states.acquisitions.tipologies.value);
-    const realEstate: any = useSelector((states: any) => states.acquisitions.realEstate.value);
-    const projects: IProjectAttributes[] = useSelector((states: any) => states.acquisitions.projects.value);
+    const [tipologies, realEstate, projects] = useSelector((store: any) => [
+        store.acquisitions.tipologies.value,
+        store.acquisitions.realEstate.value,
+        store.acquisitions.projects.value,
+    ]);
 
     let initial_values: any = {
         id: '',

@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { chunk } from 'lodash';
 
 interface IUserFormPros {
     role: any;
@@ -6,10 +7,8 @@ interface IUserFormPros {
 const RoleViewForm: FC<IUserFormPros> = ({ role }) => {
     // console.log(role)
     // let contar = 0;
-    const valores = role?.permits?.filter((role, i) => i < 10);
-    const valores2 = role?.permits?.filter((role, i) => i >= 10 && i < 20);
-    const valores3 = role?.permits?.filter((role, i) => i >= 20 && i < 30);
-    const valores4 = role?.permits?.filter((role, i) => i >= 30 && i < 40);
+    const has_permits = role?.permits?.length > 0;
+    const valores = chunk(role?.permits, 10);
 
     // console.log(valores)
 
@@ -32,45 +31,28 @@ const RoleViewForm: FC<IUserFormPros> = ({ role }) => {
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <label htmlFor="">Permisos</label>
-                            <div className="col-3">
-                                <div className="my-3">
-                                    <ul>
-                                        {valores.map((v) => (
-                                            <li>{v.name}</li>
-                                        ))}
-                                    </ul>
+                            {has_permits && (
+                                <div className="row">
+                                    {valores.map((vals: any[], i) => {
+                                        return (
+                                            <div className="col-3">
+                                                <div className="my-3" key={i}>
+                                                    <ul>
+                                                        {vals?.map((v: any, j) => (
+                                                            <li key={`${i}-${j}`}>{v.name}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                            </div>
-                            <div className="col-3">
-                                <label htmlFor="" />
-                                <div className="my-3">
-                                    <ul>
-                                        {valores2.map((v) => (
-                                            <li>{v.name}</li>
-                                        ))}
-                                    </ul>
+                            )}
+                            {!has_permits && (
+                                <div className="row">
+                                    <div className="col-12">Sin Permisos</div>
                                 </div>
-                            </div>
-                            <div className="col-3">
-                                <label htmlFor="" />
-                                <div className="my-3">
-                                    <ul>
-                                        {valores3.map((v) => (
-                                            <li>{v.name}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="col-3">
-                                <label htmlFor="" />
-                                <div className="my-3">
-                                    <ul>
-                                        {valores4.map((v) => (
-                                            <li>{v.name}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
