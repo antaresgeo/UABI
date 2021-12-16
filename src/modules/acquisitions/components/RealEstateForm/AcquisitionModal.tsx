@@ -70,12 +70,18 @@ const AcquisitionModal: FC<AcquisitionModalProps> = ({
                         key={2}
                         className="btn btn-primary ms-2"
                         type="button"
-                        disabled={disabled}
+                        disabled={disabled || form_ref.current?.isSubmitting}
                         onClick={() => {
                             form_ref.current.submitForm();
                         }}
                     >
-                        Guardar
+                        Guardar{' '}
+                        {form_ref.current?.isSubmitting && (
+                            <i
+                                className="fa fa-circle-notch fa-spin"
+                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                            />
+                        )}
                     </button>,
                 ]}
             >

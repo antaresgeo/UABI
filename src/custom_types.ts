@@ -18,8 +18,8 @@ export interface Loadable<L> {
 }
 
 export interface Action {
-    type: string,
-    payload?: any
+    type: string;
+    payload?: any;
 }
 
 export interface ServerToClientEvents {

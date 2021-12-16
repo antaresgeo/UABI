@@ -233,7 +233,7 @@ const EstateAreas = () => {
                                         </div>
                                     </div>
                                     <div className="d-flex my-3">
-                                        <button type="submit" className="btn btn-primary mr-3">
+                                        <button type="submit" className="btn btn-primary mr-3" >
                                             Guardar
                                         </button>
                                         <button type="submit" className="btn btn-primary mx-3">

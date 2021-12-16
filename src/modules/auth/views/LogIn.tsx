@@ -22,7 +22,7 @@ export default function SignIn() {
         //     console.log(document.cookie);
         // }
         const promise: any = dispatch(actions.login(values.user, values.password));
-        promise
+        await promise
             .then(() => {
                 history.push('/');
             })

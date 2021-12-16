@@ -66,6 +66,14 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
             cellphone_number: Yup.number().required('Campo obligatorio'),
             phone_number: Yup.number().required('Campo obligatorio'),
             gender: Yup.string().required('Campo obligatorio'),
+            dependency: Yup.string().when('entity_type', {
+                is: 'P',
+                then: Yup.string().required('Campo obligatorio'),
+            }),
+            subdependency: Yup.string().when('entity_type', {
+                is: 'P',
+                then: Yup.string().required('Campo obligatorio'),
+            }),
         }),
     });
 
@@ -103,7 +111,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                         <div className="row">
                             <div className={`col-${values.entity_type === 'Publica' ? 3 : 6}`}>
                                 <label htmlFor="id" className="form-label">
-                                    Tipo de Sociedad
+                                    Tipo de Sociedad <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     as="select"
@@ -123,7 +131,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                             </div>
                             <div className={`col-${values.entity_type === 'Publica' ? 3 : 6}`}>
                                 <label htmlFor="id" className="form-label">
-                                    Tipo Entidad
+                                    Tipo Entidad <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     as="select"
@@ -147,7 +155,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 <>
                                     <div className="col-6">
                                         <label htmlFor="dependency_id" className="form-label">
-                                            Dependecia
+                                            Dependecia <span className="text-danger">*</span>
                                         </label>
                                         <Field
                                             component={Select}
@@ -176,7 +184,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     </div>
                                     <div className="col-6">
                                         <label htmlFor="subdependency_id" className="form-label">
-                                            Sub. Dependecia
+                                            Sub. Dependecia <span className="text-danger">*</span>
                                         </label>
                                         <Field
                                             component={Select}
@@ -201,7 +209,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="first_name_id" className="form-label">
-                                    Primer Nombre
+                                    Primer Nombre <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="text"
@@ -233,7 +241,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                             </div>
                             <div className="col-3">
                                 <label htmlFor="surname_id" className="form-label">
-                                    Primer apellido
+                                    Primer apellido <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="text"
@@ -267,7 +275,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="id" className="form-label">
-                                    Tipo de Documento
+                                    Tipo de Documento <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     as="select"
@@ -289,7 +297,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                             </div>
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
-                                    Numero de documento
+                                    Numero de documento <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="number"
@@ -312,7 +320,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                             </div>
                             <div className={`col-${type === 'create' ? 3 : 6}`}>
                                 <label htmlFor="username" className="form-label">
-                                    Correo Electronico
+                                    Correo Electronico <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="email"
@@ -346,7 +354,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
-                                    Celular
+                                    Celular <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="number"
@@ -362,7 +370,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                             </div>
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
-                                    Telefono
+                                    Telefono <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="number"
@@ -378,7 +386,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                             </div>
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">
-                                    Genero
+                                    Genero <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     as="select"
@@ -399,7 +407,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                             </div>
                             <div className="form-group col-3">
                                 <label htmlFor="location" className="form-label">
-                                    Dirección
+                                    Dirección <span className="text-danger">*</span>
                                 </label>
                                 <div className="input-group">
                                     <Field
@@ -420,8 +428,6 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                             }}
                                         />
                                     </div>
-
-
                                 </div>
                                 <ErrorMessage name="detailsUser.location" />
                             </div>
@@ -465,7 +471,13 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                         disabled={isSubmitting || disabled}
                                         type="submit"
                                     >
-                                        Guardar
+                                        Guardar{' '}
+                                        {isSubmitting && (
+                                            <i
+                                                className="fa fa-circle-notch fa-spin"
+                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                            />
+                                        )}
                                     </button>
                                 )}
                             </div>

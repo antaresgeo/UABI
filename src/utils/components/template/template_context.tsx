@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import 'moment/locale/es';
 import { io, Socket } from 'socket.io-client';
 import { BASE_URL } from '../../../config/axios_instances/notifications';
-import config from '@arcgis/core/config';
 import Map from '@arcgis/core/Map';
 
 type KeyPath = [string, string?];
@@ -33,7 +32,6 @@ const TemplateProvider: FC = React.memo(({ children }) => {
     const [idNode, set_idNode] = useState<string>(null);
     const [map, set_map] = useState<Map>(null);
     const [socket, set_socket] = useState<Socket>(null);
-    config.apiKey = process.env.REAT_APP_ARGIS_KEY;
 
     useEffect(() => {
         const new_socket = io(BASE_URL);
@@ -47,10 +45,9 @@ const TemplateProvider: FC = React.memo(({ children }) => {
         set_socket(new_socket);
         return () => {
             new_socket.close();
-            set_socket(null)
+            set_socket(null);
         };
     }, [set_socket]);
-
 
     useEffect(() => {
         const _map = new Map({

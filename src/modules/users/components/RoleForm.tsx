@@ -138,8 +138,6 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
     //     name: Yup.string().required('Campo obligatorio'),
     // });
 
-    console.log({ targetKeys });
-
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues}>
             {({ /* values, isValid,*/ isSubmitting }) => {
@@ -220,7 +218,13 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
                             <div className="col text-end">
                                 {type !== 'view' && (
                                     <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
-                                        Guardar
+                                        {type === "assign"? "Asignar": "Guardar"}
+                                        {isSubmitting && (
+                                            <i
+                                                className="fa fa-circle-notch fa-spin"
+                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                            />
+                                        )}
                                     </button>
                                 )}
                             </div>

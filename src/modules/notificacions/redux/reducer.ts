@@ -1,6 +1,6 @@
 import types from './types';
-import {Loadable, Pageable, Action} from "../../../custom_types";
-import {Notification} from "./service";
+import { Loadable, Pageable, Action } from '../../../custom_types';
+import { Notification } from './service';
 
 interface State {
     notification: Loadable<Notification>;
@@ -27,15 +27,14 @@ const emptyInitialState: State = {
 };
 const initialState = emptyInitialState;
 
-const reducer = (state: State = initialState, action: Action): State=> {
+const reducer = (state: State = initialState, action: Action): State => {
     return {
         ...state,
-        ...notificationReducer(state, action)
-    }
+        ...notificationReducer(state, action),
+    };
 };
 
 export default reducer;
-
 
 const notificationReducer = (aux_state: State, action: Action): State => {
     const { notification, notifications } = aux_state;

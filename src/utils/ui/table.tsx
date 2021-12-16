@@ -53,9 +53,7 @@ const CompressTable: FC<CompressTableProps> = ({
     const ops = {
         columns: columns,
         dataSource: data,
-        ...(with_pagination
-            ? { pagination: getPaginator(count ? count : data?.length, change_page) }
-            : { }),
+        ...(with_pagination ? { pagination: getPaginator(count ? count : data?.length, change_page) } : {}),
         loading: loading,
         bordered: true,
         className: 'w-100',

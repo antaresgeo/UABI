@@ -100,7 +100,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
             <div className="row">
                 <div className="form-group col-6">
                     <label htmlFor="project_id_id" className="form-label">
-                        Proyecto al que pertenece
+                        Proyecto al que pertenece <span className="text-danger">*</span>
                     </label>
                     <Field
                         disabled={disabled}
@@ -114,7 +114,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="tipology_id" className="form-label">
-                        Tipología
+                        Tipología <span className="text-danger">*</span>
                     </label>
                     <Field
                         component={Select}
@@ -168,7 +168,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 const _subs = format_list(dependency.subs);
                                 formik.setFieldValue('subdependency', dependency.name);
                                 formik.setFieldValue('cost_center', dependency.cost_center);
-                                formik.setFieldValue('management_center', dependency.management_center);
+                                formik.setFieldValue('management_center', dependency.cost_center);
                                 set_subs(_subs);
                             }
                         }}
@@ -228,7 +228,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
             <div className="row">
                 <div className="form-group col-3">
                     <label htmlFor="name_id" className="form-label">
-                        Nombre Inmueble
+                        Nombre Inmueble <span className="text-danger">*</span>
                     </label>
                     <Field
                         disabled={disabled}
@@ -246,7 +246,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="registry_number_noc" className="form-label">
-                        Número matrícula
+                        Número matrícula <span className="text-danger">*</span>
                         <Tooltip title="Lorem impsu texto descriptivo">
                             <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
                         </Tooltip>
@@ -279,7 +279,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="destination_type_id" className="form-label">
-                        Tipo de Uso
+                        Tipo de Uso <span className="text-danger">*</span>
                     </label>
                     <Field
                         disabled={disabled}
@@ -308,7 +308,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
             <div className="row">
                 <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
                     <label htmlFor="patrimonial_value_id" className="form-label">
-                        Valor Patrimonial
+                        Valor Patrimonial <span className="text-danger">*</span>
                     </label>
                     <div className="input-group w-100">
                         <div className="input-group-prepend">
@@ -392,7 +392,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 )}
                 <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
                     <label htmlFor="reconstruction_value_id" className="form-label">
-                        Valor de reconstrucción
+                        Valor de reconstrucción <span className="text-danger">*</span>
                     </label>
                     <div className="input-group">
                         <div className="input-group-prepend">
@@ -413,7 +413,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
                 <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
                     <label htmlFor="total_percentage_id" className="form-label">
-                        Porcentaje Total
+                        Porcentaje Total <span className="text-danger">*</span>
                     </label>
                     <div className="input-group">
                         <Field
@@ -488,7 +488,9 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <ErrorMessage name="zone" />
                 </div>
                 <div className="col-6">
-                    <label className="form-label">Tipo de activo</label>
+                    <label className="form-label">
+                        Tipo de activo <span className="text-danger">*</span>
+                    </label>
                     <div style={{ height: '33.5px', lineHeight: '33.5px' }}>
                         {active_type.map((item, i) => {
                             return (
@@ -590,7 +592,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 onSave={async (values: any) => {
                                     formik.setFieldValue('address', values.id, false);
                                     formik.setFieldValue('_address.name', `${values.address}`, false);
-                                    formik.setFieldValue('_address.cbml', `${values.cbmls.sabi}`, false);
+                                    formik.setFieldValue('_address.cbml', `${values.cbmls.uabi}`, false);
                                     return Promise.resolve();
                                 }}
                             />
@@ -613,7 +615,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
             <div className="row">
                 <div className="form-group col-12">
                     <label htmlFor="description_id" className="form-label">
-                        Descripción del inmueble
+                        Descripción del inmueble  <span className="text-danger">*</span>
                         <Tooltip title="Lorem impsu texto descriptivo">
                             <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
                         </Tooltip>

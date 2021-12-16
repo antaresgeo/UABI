@@ -8,6 +8,11 @@ import './utils/assets/styles/index.scss';
 import TemplateProvider from './utils/components/template/template_context';
 import ConfigProvider from 'antd/lib/config-provider';
 import esES from 'antd/lib/locale/es_ES';
+import _config from '@arcgis/core/config';
+
+if (process.env.REACT_APP_ARGIS_KEY) {
+    _config.apiKey = process.env.REACT_APP_ARGIS_KEY;
+}
 
 declare global {
     interface Window {
@@ -103,8 +108,6 @@ if (!window.__sabi) {
         }),
     };
 }
-
-// borrar esto cuando se termine la autenticacion
 
 ReactDOM.render(
     <Provider store={store}>

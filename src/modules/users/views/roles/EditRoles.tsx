@@ -25,6 +25,7 @@ export const EditRoles = () => {
 
     const editRol = async (values) => {
         await dispatch(actions.updateRole(values, id));
+        history.push(`/roles/${id}/`)
     };
     return (
         <div className="h-100 d-flex flex-column">
@@ -37,6 +38,7 @@ export const EditRoles = () => {
                                     rol={finalRole}
                                     type="edit"
                                     onSubmit={(values) => {
+                                        console.log(values)
                                         return editRol(values);
                                     }}
                                 />

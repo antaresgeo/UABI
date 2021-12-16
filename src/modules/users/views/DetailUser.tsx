@@ -15,7 +15,10 @@ const DetailUser = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [user, roles] = useSelector((store: any) => [store.users.user.value?.detailsUser, store.users.user.value?.roles]);
+    const [user, roles] = useSelector((store: any) => [
+        store.users.user.value?.detailsUser,
+        store.users.user.value?.roles,
+    ]);
     useEffect(() => {
         dispatch(actions.get_user_by_id(parseInt(id)));
     }, []);

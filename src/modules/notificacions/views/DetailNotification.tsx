@@ -6,8 +6,6 @@ import { actions } from '../redux';
 import { Card } from '../../../utils/ui';
 import { Formik, Form, Field } from 'formik';
 
-
-
 interface IParams {
     id: string;
 }
@@ -20,13 +18,12 @@ const DetailNotification = () => {
 
     useEffect(() => {
         dispatch(actions.get_notification_by_id(parseInt(id)));
-
     }, []);
 
     const initial_values = {
-        title: "",
-        action: "",
-        description: "",
+        title: '',
+        action: '',
+        description: '',
         ...notification,
     };
 

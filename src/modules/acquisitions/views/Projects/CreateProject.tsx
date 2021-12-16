@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 import { Card } from '../../../../utils/ui';
 import ProjectForm from '../../components/ProjectForm';
-import {useEffect} from "react";
+import { useEffect } from 'react';
 
 const CreateRealEstate = () => {
     const history = useHistory();
