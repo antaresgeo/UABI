@@ -16,14 +16,14 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
             <div className="row">
                 {/* <div className="col-2 text-center" style={{marginTop: 30, fontSize: '14px', fontWeight: 'bold'}}>Riesgo regulatorio</div> */}
                 <div className="col-3">
-                    <label htmlFor="regulatory_degree_occurrence_id" className="form-label">
+                    <label htmlFor="regulatory_risk.degree_occurrence" className="form-label">
                         Grado de Ocurrencia
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="regulatory_degree_occurrence_id"
-                        name="regulatory_degree_occurrence"
+                        id="regulatory_risk.degree_occurrence"
+                        name="regulatory_risk.degree_occurrence"
                         disabled={false}
                     >
                         <option key="regulatory" value="" disabled>
@@ -48,14 +48,14 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                     <ErrorMessage name="regulatory_degree_occurrence" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="regulatory_impact_degree_id" className="form-label">
+                    <label htmlFor="regulatory_risk.impact_degree" className="form-label">
                         Grado de Impacto
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="regulatory_impact_degree_id"
-                        name="regulatory_impact_degree"
+                        id="regulatory_risk.impact_degree"
+                        name="regulatory_risk.impact_degree"
                         disabled={false}
                     >
                         <option key="regulatory_impact" value="" disabled>
@@ -77,17 +77,17 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                             muy alto
                         </option>
                     </Field>
-                    <ErrorMessage name="regulatory_impact_degree" />
+                    <ErrorMessage name="regulatory_risk.impact_degree" />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="regulatory_responsable_id" className="form-label">
+                    <label htmlFor="regulatory_risk.responsable" className="form-label">
                         Responsable
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="regulatory_responsable_id"
-                        name="regulatory_responsable"
+                        id="regulatory_risk.responsable"
+                        name="regulatory_risk.responsable"
                         disabled={false}
                     >
                         <option key="regulatory_responsable_id" value="" disabled>
@@ -100,39 +100,24 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                             municipio
                         </option>
                     </Field>
-                    <ErrorMessage name="regulatory_responsable" />
+                    <ErrorMessage name="regulatory_risk.responsable" />
                 </div>
             </div>
             <div className="row">
-                <div className="col-6">
-                    <label htmlFor="regulatory_description_id" className="form-label">
-                        Descripción
-                    </label>
-                    <Field
-                        as="textarea"
-                        className="form-control"
-                        id="regulatory_description_id"
-                        name="regulatory_description"
-                        placeholder=""
-                        autoComplete="off"
-                        maxLength={200}
-                    />
-                    <ErrorMessage name="regulatory_description" withCount max={200} />
-                </div>
-                <div className="col-6">
-                    <label htmlFor="regulatory_mitigation_mechanism_id" className="form-label">
+                <div className="col">
+                    <label htmlFor="regulatory_risk.mitigation_mechanism" className="form-label">
                         Mecanismo de mitigación
                     </label>
                     <Field
                         as="textarea"
                         className="form-control"
-                        id="regulatory_mitigation_mechanism_id"
-                        name="regulatory_mitigation_mechanism"
+                        id="regulatory_risk.mitigation_mechanism"
+                        name="regulatory_risk.mitigation_mechanism"
                         placeholder=""
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="regulatory_mitigation_mechanism" withCount max={200} />
+                    <ErrorMessage name="regulatory_risk.mitigation_mechanism" withCount max={200} />
                 </div>
             </div>
             <div className="div" style={{ fontWeight: 'bold', marginTop: '10px', fontSize: '14px' }}>
@@ -141,17 +126,17 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
             <hr />
             <div className="row">
                 <div className="col-3">
-                    <label htmlFor="operative_degree_occurrence_id" className="form-label">
+                    <label htmlFor="operational_risk.degree_occurrence" className="form-label">
                         Grado de Ocurrencia
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="operative_degree_occurrence_id"
-                        name="operative_degree_occurrence"
+                        id="operational_risk.degree_occurrence"
+                        name="operational_risk.degree_occurrence"
                         disabled={false}
                     >
-                        <option key="operative_degree_occurrence" value="" disabled>
+                        <option key="operational_risk.degree_occurrence" value="" disabled>
                             --Seleccionar--
                         </option>
                         <option key="muy bajo" value="MUY BAJO">
@@ -170,17 +155,17 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                             muy alto
                         </option>
                     </Field>
-                    <ErrorMessage name="operative_degree_occurrence" />
+                    <ErrorMessage name="operational_risk.degree_occurrence" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="operative_impact_degree_id" className="form-label">
+                    <label htmlFor="operational_risk.impact_degree" className="form-label">
                         Grado de Impacto
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="operative_impact_degree_id"
-                        name="operative_impact_degree"
+                        id="operational_risk.impact_degree"
+                        name="operational_risk.impact_degree"
                         disabled={false}
                     >
                         <option key="operative_impact_degree" value="" disabled>
@@ -202,17 +187,17 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                             muy alto
                         </option>
                     </Field>
-                    <ErrorMessage name="operative_impact_degree" />
+                    <ErrorMessage name="operational_risk.impact_degree" />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="operative_responsable_id" className="form-label">
+                    <label htmlFor="operational_risk.responsable" className="form-label">
                         Responsable
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="operative_responsable_id"
-                        name="operative_responsable"
+                        id="operational_risk.responsable"
+                        name="operational_risk.responsable"
                         disabled={false}
                     >
                         <option key="operative_responsable" value="" disabled>
@@ -225,41 +210,25 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                             municipio
                         </option>
                     </Field>
-                    <ErrorMessage name="operative_responsable" />
+                    <ErrorMessage name="operational_risk.responsable" />
                 </div>
             </div>
 
             <div className="row">
-                <div className="col-6">
-                    <label htmlFor="operative_description_id" className="form-label">
-                        Descripción
-                    </label>
-                    <Field
-                        as="textarea"
-                        className="form-control"
-                        id="operative_description_id"
-                        name="operative_description"
-                        aria-describedby="emailHelp"
-                        placeholder=""
-                        autoComplete="off"
-                        maxLength={200}
-                    />
-                    <ErrorMessage name="operative_description" withCount max={200} />
-                </div>
-                <div className="col-6">
-                    <label htmlFor="operative_mitigation_mechanism_id" className="form-label">
+                <div className="col">
+                    <label htmlFor="operational_risk.mitigation_mechanism" className="form-label">
                         Mecanismo de mitigación
                     </label>
                     <Field
                         as="textarea"
                         className="form-control"
-                        id="operative_mitigation_mechanism_id"
-                        name="operative_mitigation_mechanism"
+                        id="operational_risk.mitigation_mechanism"
+                        name="operational_risk.mitigation_mechanism"
                         placeholder=""
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="operative_mitigation_mechanism" withCount max={200} />
+                    <ErrorMessage name="operational_risk.mitigation_mechanism" withCount max={200} />
                 </div>
             </div>
         </>

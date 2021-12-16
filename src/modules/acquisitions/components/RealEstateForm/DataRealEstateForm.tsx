@@ -35,8 +35,14 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     inventory,
     englobe,
     inventoryEdit,
+    acquisitions,
     onProjectSelectedChange,
 }) => {
+    useEffect(() => {
+        let value_patrimonial = 0;
+        console.log(acquisitions?.map(a => value_patrimonial = a.act_value + Number(a.recognition_value)))
+        formik.setFieldValue('patrimonial_value',value_patrimonial , false);
+    }, [acquisitions])
     // const valorPatrimonial = formik.values.patrimonial_value;
     const dispatch = useDispatch();
     useEffect(() => {
@@ -309,22 +315,23 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             <span className="input-group-text bg-white border-end-0">$</span>
                         </div>
                         <Field
-                            //disabled
+                            disabled
                             name="patrimonial_value"
                             id="patrimonial_value_id"
                             type="number"
                             className="form-control text-end"
                             style={{ borderLeft: 'none' }}
-                            //value={""} //TODO: sumas el valor de adquisicion con valor de reconocimiento
+                            //TODO: sumas el valor de adquisicion con valor de reconocimiento
                             min={0}
                             max={99999999999999999999}
-                            // onChange={(e, values) => {
-                            //     console.log(e.target.value)
-                            //     formik.handleChange(e)
-                            // }}
+                        // onChange={(e, values) => {
+                        //     console.log(e.target.value)
+                        //     formik.handleChange(e)
+                        // }}
                         />
                     </div>
                     <ErrorMessage name="patrimonial_value" />
+
                 </div>
                 {/* {console.log(formik.values.patrimonial_value,'valor anterior', valorPatrimonial)} */}
                 {inventoryEdit === false && (
@@ -337,9 +344,9 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             component={DocumentModal}
                             btn_label="Adjuntar"
                             disables={disabled}
-                            // onDelete={(values) => {
-                            //     setFieldValue('insurance_document_id', '', false)
-                            // }}
+                        // onDelete={(values) => {
+                        //     setFieldValue('insurance_document_id', '', false)
+                        // }}
                         />
                         <ErrorMessage name="appraisal_document" />
                     </div>
@@ -376,9 +383,9 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             component={DocumentModal}
                             btn_label="Adjuntar"
                             disables={disabled}
-                            // onDelete={(values) => {
-                            //     setFieldValue('insurance_document_id', '', false)
-                            // }}
+                        // onDelete={(values) => {
+                        //     setFieldValue('insurance_document_id', '', false)
+                        // }}
                         />
                         <ErrorMessage name="prediation_document" />
                     </div>
@@ -626,7 +633,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
             {type !== 'create' && (
                 <>
                     <div className="row">
-                        <div className={`form-group col-${inventory ? 3 : 6}`}>
+                        <div className={`form-group col-6`}>
                             <label htmlFor="audit_trail_created_by_id" className="form-label">
                                 Creado por
                             </label>
@@ -667,9 +674,10 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             />
                             <ErrorMessage />
                         </div>
-
-                        {inventory && (
-                            <>
+                    </div>
+                    {inventory && (
+                        <>
+                            <div className="row">
                                 <div className="col-3">
                                     <label htmlFor="accounting_amount_id" className="form-label">
                                         Importe Contabilidad
@@ -683,12 +691,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     />
                                     <ErrorMessage />
                                 </div>
-                            </>
-                        )}
-                    </div>
-                    {inventory && (
-                        <>
-                            <div className="row">
                                 <div className="col-3">
                                     <label htmlFor="periodo_contable_id" className="form-label">
                                         Periodo contable
@@ -701,7 +703,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         value={extractMonth(formik.values.audit_trail?.created_on)}
                                         disabled
 
-                                        // EL MES
+                                    // EL MES
                                     />
                                     <ErrorMessage />
                                 </div>
@@ -733,47 +735,96 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         />
                                         <ErrorMessage />
                                     </div>
-                                    <div className="col-3">
-                                        <label htmlFor="exploitation_value_id" className="form-label">
-                                            Valor Aprovechamiento
-                                        </label>
-                                        <Field
-                                            type="number"
-                                            className="form-control"
-                                            id="exploitation_value_id"
-                                            name="exploitation_value"
-                                            disabled={inventoryEdit}
-                                        />
-                                        <ErrorMessage />
-                                    </div>
                                 </>
                             </div>
                             <div className="row">
                                 <div className="col-3">
+                                    <label htmlFor="exploitation_value_id" className="form-label">
+                                        Valor Aprovechamiento
+                                    </label>
+                                    <div className="input-group w-100">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text bg-white border-end-0">$</span>
+                                        </div>
+                                        <Field
+                                            type="number"
+                                            className="form-control text-end"
+                                            id="exploitation_value_id"
+                                            name="exploitation_value"
+                                            disabled={inventoryEdit}
+                                            min={0}
+                                            max={99999999999999999999}
+                                        />
+                                        <ErrorMessage />
+                                    </div>
+                                </div>
+                                <div className="col-3">
                                     <label htmlFor="authorization_value_id" className="form-label">
                                         Valor de Autorización
                                     </label>
-                                    <Field
-                                        type="number"
-                                        className="form-control"
-                                        id="authorization_value_id"
-                                        name="authorization_value"
-                                        disabled={inventoryEdit}
-                                    />
+                                    <div className="input-group w-100">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text bg-white border-end-0">$</span>
+                                        </div>
+                                        <Field
+                                            type="number"
+                                            className="form-control text-end"
+                                            id="authorization_value_id"
+                                            name="authorization_value"
+                                            disabled={inventoryEdit}
+                                            min={0}
+                                            max={99999999999999999999}
+                                        />
+                                    </div>
                                     <ErrorMessage />
                                 </div>
                                 <div className="col-3">
                                     <label htmlFor="canyon_value_id" className="form-label">
                                         Valor del Canon
                                     </label>
+                                    <div className="input-group w-100">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text bg-white border-end-0">$</span>
+                                        </div>
+                                        <Field
+                                            type="number"
+                                            className="form-control text-end"
+                                            id="canyon_value_id"
+                                            name="canyon_value"
+                                            disabled={inventoryEdit}
+                                            min={0}
+                                            max={99999999999999999999}
+                                        />
+                                    </div>
+                                    <ErrorMessage />
+                                </div>
+                                <div className="col-3">
+                                    <label htmlFor="useful_life_years_id" className="form-label">
+                                        Vida util años
+                                    </label>
                                     <Field
+                                        //disabled
+                                        name="useful_life_years"
+                                        id="useful_life_years_id"
                                         type="number"
                                         className="form-control"
-                                        id="canyon_value_id"
-                                        name="canyon_value"
-                                        disabled={inventoryEdit}
                                     />
-                                    <ErrorMessage />
+                                    <ErrorMessage name="useful_life_years" />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-6">
+                                    <label htmlFor="useful_life_periods_id" className="form-label">
+                                        Vida util Períodos
+                                    </label>
+                                    <Field
+                                        //disabled
+                                        name="useful_life_periods"
+                                        id="useful_life_periods_id"
+                                        type="number"
+                                        className="form-control"
+                                    />
+                                    <ErrorMessage name="useful_life_periods" />
                                 </div>
                                 <div className="col-6">
                                     <label htmlFor="disposition_type_id" className="form-label">
@@ -807,20 +858,20 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         )}
                                         {formik.values.destination_type !== 'FISCAL' && (
                                             <>
-                                                <option key="availability_type5" value="administracion">
+                                                <option key="availability_type5" value="Administración">
                                                     Administración
                                                 </option>
-                                                <option key="availability_type6" value="mantenimiento">
+                                                <option key="availability_type6" value="Mantenimiento">
                                                     Mantenimiento
                                                 </option>
-                                                <option key="availability_type7" value="aprovechamiento">
+                                                <option key="availability_type7" value="Aprovechamiento">
                                                     Aprovechamiento
                                                 </option>
-                                                <option key="availability_type8" value="aprovechamiento">
+                                                <option key="availability_type8" value="Calles">
                                                     Calles
                                                 </option>
                                                 <option key="availability_type9" value="Via">
-                                                    Via
+                                                    Vía
                                                 </option>
                                                 <option key="availability_type10" value="Plaza">
                                                     Plaza
@@ -834,7 +885,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                                 <option key="availability_type13" value="Zona dura">
                                                     Zona dura
                                                 </option>
-                                                <option key="availability_type14" value="Playa">
+                                                <option key="availability_type14" value="Plaza">
                                                     Plaza
                                                 </option>
                                             </>
@@ -844,6 +895,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         </option>
                                     </Field>
                                     <ErrorMessage />
+
                                 </div>
                             </div>
                         </>

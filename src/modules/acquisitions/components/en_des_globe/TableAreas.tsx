@@ -220,10 +220,10 @@ export const TableAreas = () => {
                     type="button"
                     className="btn btn-outline-primary me-3"
                     onClick={() => {
-                        console.log('data', data);
-                        console.log('antes', realEstates);
-                        console.log('editar', realEstatesEdit);
-                        let completeRealEstates = DataRealEstate.every((b) => b.name !== '');
+                        // console.log('data', data)
+                        // console.log('antes',realEstates)
+                        // console.log('editar',realEstatesEdit)
+                        let completeRealEstates = DataRealEstate.every(b => b.name !== "")
 
                         if (
                             Number(totalArea.toFixed(0)) > Number(valueArea) ||
@@ -239,7 +239,8 @@ export const TableAreas = () => {
                                 text: 'se deben completar los datos de todos los bienes Inmuebles',
                             });
                         } else {
-                            dispatch(actions.createRealEstates(DataRealEstate));
+                            console.log('desde tabla',DataRealEstate)
+                            dispatch(actions.createRealEstates(DataRealEstate, "many"))
                             //console.log('bienes inmuebles a editar', real_estates_edit);
                         }
                     }}

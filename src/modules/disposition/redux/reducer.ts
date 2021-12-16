@@ -4,6 +4,7 @@ import { IContractAttributes } from '../../../utils/interfaces/contracts';
 interface State {
     contract: Loadable<IContractAttributes>;
     contracts: Pageable<IContractAttributes>;
+    precontractual: Loadable<any>;
     // disposition: Loadable<any>;
     // dispositions: Pageable<any>;
 }
@@ -26,6 +27,11 @@ const emptyInitialState: State = {
         loading: false,
         loaded: false,
     },
+    precontractual: {
+        value: null,
+        loading: false,
+        loaded: false,
+    },
 };
 const initialState = emptyInitialState;
 
@@ -33,6 +39,7 @@ const reducer = (state: State = initialState, action: any): State => {
     return {
         ...state,
         ...contractReducer(state, action),
+        ...precontractualtReducer(state, action)
     };
 };
 
@@ -138,5 +145,53 @@ const contractReducer = (aux_state: State, action: any) => {
         }
     }
 };
+
+const precontractualtReducer = (aux_state: State, action: any) => {
+    const { precontractual } = aux_state;
+    const state = { precontractual };
+    switch (action.type) {
+        case types.create_precontractual.default:
+        case types.update_precontractual.default:
+        case types.get_precontractual.default: {
+            return {
+                ...state,
+                contract: {
+                    ...state.precontractual,
+                    loading: true,
+                    loaded: false,
+                },
+            };
+        }
+        case types.update_precontractual.success:
+        case types.create_precontractual.success:
+        case types.get_precontractual.success: {
+            return {
+                ...state,
+                company: {
+                    ...state.precontractual,
+                    value: action.payload.results,
+                    loading: false,
+                    loaded: true,
+                },
+            };
+        }
+        case types.create_precontractual.fail:
+        case types.update_precontractual.fail:
+        case types.get_precontractual.fail: {
+            return {
+                ...state,
+                contract: {
+                    ...state.precontractual,
+                    value: emptyInitialState.contract.value,
+                    loading: false,
+                    loaded: false,
+                },
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+}
 
 export default reducer;

@@ -597,28 +597,32 @@ body {
     padding-left: 95px;
     margin-top: 17px;
     margin-bottom: 0px;
-}
-.p6_lease {
-    text-align: left;
+  }
+  .p6_lease {
+    text-align: justify;
     padding-left: 7px;
+    padding-right: 7px;
     margin-top: 0px;
     margin-bottom: 0px;
-    white-space: nowrap;
-}
-.p7_lease {
-    text-align: left;
+    /* white-space: nowrap; */
+  }
+  .p7_lease {
+    text-align: justify;
+    padding-left: 7px;
+    padding-right: 7px;
     margin-top: 0px;
     margin-bottom: 0px;
-    white-space: nowrap;
-}
-.p8_lease {
-    text-align: left;
+    /* white-space: nowrap; */
+  }
+  .p8_lease {
+    text-align: justify;
     padding-left: 6px;
+    padding-right: 6px;
     margin-top: 0px;
     margin-bottom: 0px;
-    white-space: nowrap;
-}
-.p9_lease {
+    /* white-space: nowrap; */
+  }
+  .p9_lease {
     text-align: left;
     padding-left: 95px;
     margin-top: 12px;
@@ -788,9 +792,9 @@ body {
     padding-left: 8px;
     margin-top: 0px;
     margin-bottom: 0px;
-    white-space: nowrap;
-}
-.p36_lease {
+    /* white-space: nowrap; */
+  }
+  .p36_lease {
     text-align: left;
     padding-left: 4px;
     margin-top: 0px;
@@ -913,9 +917,9 @@ body {
     padding-right: 72px;
     margin-top: 2px;
     margin-bottom: 0px;
-}
-.p55_lease {
-    text-align: left;
+  }
+  .p55_lease {
+    text-align: justify;
     padding-left: 95px;
     padding-right: 72px;
     margin-top: 1px;
@@ -968,9 +972,9 @@ body {
     padding: 0px;
     margin: 0px;
     width: 75px;
-    vertical-align: bottom;
-}
-.td3_lease {
+    vertical-align: middle;
+  }
+  .td3_lease {
     border-top: #000000 1px solid;
     padding: 0px;
     margin: 0px;
@@ -1164,17 +1168,17 @@ body {
     border-top: #000000 1px solid;
     padding: 0px;
     margin: 0px;
-    width: 133px;
-    vertical-align: bottom;
-}
-.td29_lease {
+    width: 100px;
+    vertical-align: middle;
+  }
+  .td29_lease {
     border-top: #000000 1px solid;
     padding: 0px;
     margin: 0px;
     width: 77px;
-    vertical-align: bottom;
-}
-.td30_lease {
+    vertical-align: middle;
+  }
+  .td30_lease {
     border-right: #000000 1px solid;
     border-top: #000000 1px solid;
     padding: 0px;
@@ -1188,9 +1192,9 @@ body {
     padding: 0px;
     margin: 0px;
     width: 65px;
-    vertical-align: bottom;
-}
-.td32_lease {
+    vertical-align: middle;
+  }
+  .td32_lease {
     border-right: #000000 1px solid;
     border-top: #000000 1px solid;
     padding: 0px;
@@ -1533,9 +1537,9 @@ body {
     padding: 0px;
     margin: 0px;
     width: 88px;
-    vertical-align: bottom;
-}
-.td82_lease {
+    vertical-align: text-top;
+  }
+  .td82_lease {
     border-right: #000000 1px solid;
     border-top: #000000 1px solid;
     padding: 0px;
@@ -1549,9 +1553,9 @@ body {
     padding: 0px;
     margin: 0px;
     width: 98px;
-    vertical-align: bottom;
-}
-.td84_lease {
+    vertical-align: middle;
+  }
+  .td84_lease {
     border-top: #000000 1px solid;
     padding: 0px;
     margin: 0px;
@@ -1586,25 +1590,25 @@ body {
     padding: 0px;
     margin: 0px;
     width: 94px;
-    vertical-align: bottom;
-}
-.td89_lease {
+    vertical-align: middle;
+  }
+  .td89_lease {
     border-right: #000000 1px solid;
     border-top: #000000 1px solid;
     padding: 0px;
     margin: 0px;
     width: 90px;
-    vertical-align: bottom;
-}
-.td90_lease {
+    vertical-align: middle;
+  }
+  .td90_lease {
     border-right: #000000 1px solid;
     border-top: #000000 1px solid;
     padding: 0px;
     margin: 0px;
     width: 58px;
-    vertical-align: bottom;
-}
-.td91_lease {
+    vertical-align: middle;
+  }
+  .td91_lease {
     border-left: #000000 1px solid;
     border-bottom: #000000 1px solid;
     padding: 0px;

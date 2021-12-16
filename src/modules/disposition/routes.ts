@@ -10,6 +10,8 @@ import { ListContracts } from './views/Contracts/ListContracts';
 import LeaseDoc from './components/Precontractual/Lease/LeaseDoc';
 import PublicUseDoc from './components/Precontractual/PublicUse/PublicUseDoc';
 import ComodatoDoc from './components/Precontractual/comodato/ComodatoDoc';
+import ComodatoDocContract from './components/Contractual/comodatoContract/ComodatoDocContract';
+import LeaseDocContract from './components/Contractual/Lease/LeaseDocContract';
 const get_routes = (): IRoute[] => {
     return [
         {
@@ -96,6 +98,30 @@ const get_routes = (): IRoute[] => {
                 breadcrumbs: [{ name: 'Contratos' }],
             },
             component: ListContracts,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/document/comodato/contract',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Contrato Comodato' },
+                ],
+            },
+            component: ComodatoDocContract,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/document/lease/contract',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Contrato Arrendamiento' },
+                ],
+            },
+            component: LeaseDocContract,
         },
         {
             exact: true,

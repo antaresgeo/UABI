@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import  { useEffect, useState } from 'react'
+import {  useLocation } from 'react-router-dom';
 import { Tabs } from 'antd';
 import CreatePrecontractual from '../views/Pre-contractual/CreatePrecontractual';
 import CreateContract from './../views/Contracts/CreateContract';
@@ -7,15 +7,27 @@ import CreateContract from './../views/Contracts/CreateContract';
 interface IParams {
     dispositionType: any;
     realEstate: any;
+    values?:any;
+    stage?: string;
+    values_contract?: any;
 }
 
 export const DispositionFormTags = () => {
     const location = useLocation<IParams>();
-    const { dispositionType, realEstate } = location.state;
-    // const history = useHistory();
+    const { dispositionType, realEstate, values,values_contract, stage } = location.state;
+    // console.log(location.state)
+
     const { TabPane } = Tabs;
 
     const [activeKey, set_activeKey] = useState<string>('1');
+
+    useEffect(() => {
+        if(stage === "contractual") {
+            set_activeKey('2')
+        }else {
+            set_activeKey('1')
+        }
+    }, [stage])
 
     // const next_tab = () => {
     //     const key = parseInt(activeKey);
@@ -38,10 +50,10 @@ export const DispositionFormTags = () => {
 
                     <Tabs activeKey={activeKey} className="w-100 h-100" onChange={callback}>
                         <TabPane tab="Proceso Precontractual" key="1">
-                            <CreatePrecontractual dispositionType={dispositionType} realEstate={realEstate} />
+                            <CreatePrecontractual dispositionType={dispositionType} realEstate={realEstate} values_form={values} stage={stage}/>
                         </TabPane>
                         <TabPane tab="Proceso Contractual" key="2">
-                            <CreateContract />
+                            <CreateContract dispositionType={dispositionType} realEstate={realEstate} values_contract={values_contract}/>
                         </TabPane>
                     </Tabs>
                 </div>

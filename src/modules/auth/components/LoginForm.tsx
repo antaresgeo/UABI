@@ -90,7 +90,7 @@ const LoginForm: FC<IloginFormPros> = ({ onSubmit, disabled, alert }) => {
                 {alert && (
                     <div className="row">
                         <div className="col-12">
-                            <Alert message="" description={alert} type="error" closable style={{ fontSize: 13 }} />
+                            <Alert description={alert} type="error" closable style={{ fontSize: 13 }} message />
                         </div>
                     </div>
                 )}

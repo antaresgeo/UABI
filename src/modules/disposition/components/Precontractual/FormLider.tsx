@@ -1,190 +1,235 @@
 import { Field } from 'formik';
-import ErrorMessage from '../../../../utils/ui/error_messge';
+import { FC } from 'react';
+import ErrorMessage from '../../../../utils/ui/error_messge'
+import LocationModal from '../../../../utils/components/Location/LocationModal';
+import PersonaM from './../../../../utils/ui/PersonaM';
 
-const FormLider = () => {
+interface FormProps {
+    lease?: boolean;
+    formik?: any;
+}
+
+const FormLider: FC<FormProps> = ({ lease, formik }) => {
     return (
         <>
-            <h5>Lider encargado</h5>
+            <div className="div" style={{ fontWeight: 'bold', fontSize: '15px' }}>
+                Lider encargado
+            </div>
             <hr />
             <div className="row">
-                <div className="col-6">
-                    <label htmlFor="name_Leader_id" className="form-label">
-                        Nombres
+                <div className="col-3">
+                    <label htmlFor="leader.type_society" className="form-label">
+                        Tipo de persona
                     </label>
                     <Field
-                        type="text"
-                        className="form-control"
-                        id="name_Leader_id"
-                        name="name_Leader"
-                        placeholder=""
+                        as="select"
+                        className="form-select"
+                        id="leader.type_society"
+                        name="leader.type_society"
                         autoComplete="off"
-                        maxLength={201}
-                    />
-                    <ErrorMessage name="name_Leader" />
+                        disabled
+
+                    >
+                        <option value="type_society_Leader" hidden>
+                            --Tipo de Sociedad--
+                        </option>
+                        <option value="Persona Natural">Persona Natural</option>
+                        <option value="Persona Juridica">Persona Juridica</option>
+                    </Field>
+                    <ErrorMessage name="leader.type_society" />
                 </div>
-                <div className="col-6">
-                    <label htmlFor="lastname_Leader_id" className="form-label">
-                        Apellidos
-                    </label>
-                    <Field
-                        type="text"
-                        className="form-control"
-                        id="lastname_Leader_id"
-                        name="lastname_Leader"
-                        placeholder=""
-                        autoComplete="off"
-                        maxLength={201}
-                    />
-                    <ErrorMessage name="lastname_Leader" />
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-6">
-                    <label htmlFor="post_leader_id" className="form-label">
+                <div className="col-3">
+                    <label htmlFor="leader.post" className="form-label">
                         cargo
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="post_leader_id"
-                        name="post_leader"
+                        id="leader.post"
+                        name="leader.post"
                         placeholder=""
                         autoComplete="off"
                         maxLength={201}
+                        disabled={lease}
                     />
-                    <ErrorMessage name="post_leader" />
+                    <ErrorMessage name="leader.post" />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="dependence_leader_id" className="form-label">
+                    <label htmlFor="detailsLeader" className="form-label">
+                        Información Lider
+                    </label>
+                    <Field
+                        component={PersonaM}
+                        name="detailsLeader"
+                    />
+                    <ErrorMessage name="detailsLeader" />
+                </div>
+                <div className="form-group col-3">
+                    <label htmlFor="location_leader" className="form-label">
+                        Dirección
+                    </label>
+                    <div className="input-group">
+                        <Field
+                            name="location_leader.address"
+                            id="location_leader"
+                            type="text"
+                            className="form-control"
+                            disabled
+                            // value={formik?.values?.location_leader?.address}
+                        />
+                        <div className="input-group-prepend">
+                            <LocationModal
+                                view="user"
+                                onSave={async (values) => {
+                                    formik.setFieldValue('location_Leader.address', values.address);
+                                    formik.setFieldValue('location_Leader.id', `${values.id}`);
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <ErrorMessage name="location_leader.address" />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-6">
+                    <label htmlFor="leader.dependence" className="form-label">
                         dependencia
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="dependence_leader_id"
-                        name="dependence_leader"
+                        id="leader.dependence"
+                        name="leader.dependence"
                         placeholder=""
                         autoComplete="off"
                         maxLength={201}
+                        disabled={lease}
                     />
-                    <ErrorMessage name="dependence_leader" />
+                    <ErrorMessage name="leader.dependence" />
                 </div>
-                <div className="col-3">
-                    <label htmlFor="Secretary_leader_id" className="form-label">
+                <div className="col-6">
+                    <label htmlFor="leader.secretary" className="form-label">
                         Secretaria
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="Secretary_leader_id"
-                        name="Secretary_leader"
+                        id="leader.secretary"
+                        name="leader.secretary"
                         placeholder=""
                         autoComplete="off"
                         maxLength={201}
+                        disabled={lease}
                     />
-                    <ErrorMessage name="Secretary_leader" />
+                    <ErrorMessage name="leader.secretary" />
                 </div>
             </div>
-            <h5>Elaboró</h5>
+            <div className="div" style={{ fontWeight: 'bold', fontSize: '15px' }}>
+                Elaboró
+            </div>
             <hr />
             <div className="row">
                 <div className="col-6">
-                    <label htmlFor="name_elaborated_id" className="form-label">
+                    <label htmlFor="elaborated.name" className="form-label">
                         Nombre
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="name_elaborated_id"
-                        name="name_elaborated"
+                        id="elaborated.name"
+                        name="elaborated.name"
                         placeholder="Nombre del que lo elaboró"
                         autoComplete="off"
                         maxLength={201}
                     />
-                    <ErrorMessage name="name_elaborated" />
+                    <ErrorMessage name="elaborated.name" />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="post_elaborated_id" className="form-label">
+                    <label htmlFor="elaborated.post" className="form-label">
                         cargo
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="post_elaborated_id"
-                        name="post_elaborated"
+                        id="elaborated.post"
+                        name="elaborated.post"
                         placeholder="Cargo del que lo elaboró"
                         autoComplete="off"
                         maxLength={201}
                     />
-                    <ErrorMessage name="post_elaborated" />
+                    <ErrorMessage name="elaborated.post" />
                 </div>
             </div>
-            <h5>Revisó</h5>
+            <div className="div" style={{ fontWeight: 'bold', fontSize: '15px' }}>
+                Revisó
+            </div>
             <hr />
             <div className="row">
                 <div className="col-6">
-                    <label htmlFor="name_revised_id" className="form-label">
+                    <label htmlFor="revised.name" className="form-label">
                         Nombre
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="name_revised_id"
-                        name="name_revised"
+                        id="revised.name"
+                        name="revised.name"
                         placeholder="Nombre del que lo revisó"
                         autoComplete="off"
                         maxLength={201}
                     />
-                    <ErrorMessage name="name_revised" />
+                    <ErrorMessage name="revised.name" />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="post_revised_id" className="form-label">
+                    <label htmlFor="revised.post" className="form-label">
                         cargo
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="post_revised_id"
-                        name="post_revised"
+                        id="revised.post"
+                        name="revised.post"
                         placeholder="Cargo Nombre del que lo revisó"
                         autoComplete="off"
                         maxLength={201}
                     />
-                    <ErrorMessage name="post_revised" />
+                    <ErrorMessage name="revised.post" />
                 </div>
             </div>
-            <h5>Aprobó</h5>
+            <div className="div" style={{ fontWeight: 'bold', fontSize: '15px' }}>
+                Aprobó
+            </div>
             <hr />
             <div className="row">
                 <div className="col-6">
-                    <label htmlFor="name_approved_id" className="form-label">
+                    <label htmlFor="approved.name" className="form-label">
                         Nombre
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="name_approved_id"
-                        name="name_approved"
+                        id="approved.name"
+                        name="approved.name"
                         placeholder="Nombre del que lo aprobó"
                         autoComplete="off"
                         maxLength={201}
                     />
-                    <ErrorMessage name="name_approved" />
+                    <ErrorMessage name="approved.name" />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="post_approved_id" className="form-label">
+                    <label htmlFor="approved.post" className="form-label">
                         cargo
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="post_approved_id"
-                        name="post_approved"
+                        id="approved.post"
+                        name="approved.post"
                         placeholder="Cargo del que lo aprobó"
                         autoComplete="off"
                         maxLength={201}
                     />
-                    <ErrorMessage name="post_approved" />
+                    <ErrorMessage name="approved.post" />
                 </div>
             </div>
         </>

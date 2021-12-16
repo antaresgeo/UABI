@@ -1,65 +1,191 @@
-import { Form, Formik } from 'formik';
-import React from 'react';
-import { Card } from '../../../../../utils/ui';
-import { ModalNotificar } from '../../ModalNotificar';
+import { Form, Formik } from 'formik'
+import  { FC } from 'react'
+import { Card } from '../../../../../utils/ui'
+import { ModalNotificar } from './../../ModalNotificar';
 import { FormPrecontractualPublicUse } from './FormPrecontractualPublicUse';
-import { FormUser } from '../FormUser';
+import { FormUser } from './../FormUser';
 import FormLider from '../FormLider';
 import * as Yup from 'yup';
 import { FormRiskAnalysis } from '../FormRiskAnalysis';
-const GeneralFormPublicUse = () => {
+import moment from 'moment';
+
+interface FormPros {
+    innerRef?: any;
+    realEstate?: any;
+    onSubmit?: (values, form?, isFinish?: boolean) => Promise<any>;
+    values_form?: any;
+}
+
+const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, values_form}) => {
     let initialValues = {
-        environmental_risk: '',
-        registration_date: '',
-        contract_period: '',
+        environmental_risk: "",
+        registration_date:  moment(new Date().getTime()).format('YYYY-MM-DD'),
+        contract_period: "",
+        prediation_number: "",
+        prediation_date: "",
+        lockable_base: 10,
+        business_type: "",
+        boundaries: "",
         //solicitante
-        names_applicant: '',
-        surnames_applicant: '',
-        id_type_document: 0,
-        number_doc_applicant_id: '',
-        type_society_applicant: '',
-        location_applicant: '',
-        email_applicant: '',
-        mobile_applicant: '',
-        telephone_applicant: '',
+        applicant: {
+            type_society: "Persona Juridica",
+            id_type: 4,
+            id_number: "",
+            company_name: "",
+            email: "",
+            phone_number: "",
+        },
+        location_applicant: {
+            address: "",
+            id: "",
+        },
+        detailsRepresentative: {
+            id_type: '',
+            id_number: '',
+            names: { firstName: '', lastName: '' },
+            surnames: { firstSurname: '', lastSurname: '' },
+            email: '',
+            phone_number: '',
+            gender: '',
+        },
+        representative: {
+            type_society: "Persona Natural",
+        },
+
         //analisis de riegos
-        regulatory_degree_occurrence: '',
-        regulatory_impact_degree: '',
-        regulatory_responsable: '',
-        regulatory_description: '',
-        operative_degree_occurrence: '',
-        operative_impact_degree: '',
-        operative_responsable: '',
-        operative_description: '',
+        regulatory_risk: {
+            degree_occurrence: "",
+            impact_degree: "",
+            responsable: "",
+            mitigation_mechanism: "",
+        },
+        operational_risk: {
+            degree_occurrence: "",
+            impact_degree: "",
+            responsable: "",
+            mitigation_mechanism: "",
+        },
         //uso publico
-        destination_realEstate: '',
-        contract_value: '',
-    };
-    const submit = (values /*, actions*/) => {
-        console.log(values);
+        destination_realEstate: "",
+        contract_value: "",
+        obligations: [],
+        prohibitions: [],
+        cadastral_value: "",
+
+        //lider y personas a cargo
+        detailsLeader: {
+            id_type: '',
+            id_number: '',
+            names: { firstName: '', lastName: '' },
+            surnames: { firstSurname: '', lastSurname: '' },
+            email: '',
+            phone_number: '',
+            gender: '',
+        },
+        leader: {
+            type_society: "Persona Natural",
+            post: "",
+            dependence: "",
+            secretary: "",
+        },
+        location_leader: {
+            address: "",
+            id: "",
+        },
+        elaborated: {
+            name: "",
+            post: "",
+        },
+        revised: {
+            name: "",
+            post: "",
+        },
+        approved: {
+            name: "",
+            post: "",
+        },
+        ...values_form,
+    }
+    const submit = (values, actions) => {
+        onSubmit(values, actions).then(() => {
+            actions.setSubmitting(false);
+            actions.resetForm();
+        });
     };
 
-    const schema = Yup.object().shape({});
+    const schema = Yup.object().shape({
+        cadastral_value: Yup.string().required('obligatorio'),
+        prediation_number: Yup.number().required('obligatorio'),
+        prediation_date: Yup.string().required('obligatorio'),
+        destination_realEstate: Yup.string().required('obligatorio'),
+        contract_period: Yup.string().required('obligatorio'),
+        contract_value: Yup.string().required('obligatorio'),
+        environmental_risk: Yup.string().required('obligatorio'),
+        lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
+        business_type: Yup.string().required('obligatorio'),
+        registration_date: Yup.string().required('obligatorio'),
+        boundaries: Yup.string().required('obligatorio'),
+
+        // Solicitante
+        applicant: Yup.object({
+            type_society: Yup.string().required('obligatorio'),
+            company_name: Yup.string().required('obligatorio'),
+            id_number:  Yup.number().required('obligatorio'),
+            phone_number:  Yup.number().required('obligatorio'),
+            email:  Yup.string().email().required('obligatorio'),
+        }),
+        // location_applicant: Yup.object({
+        //     address: Yup.string().required('obligatorio')
+        // }),
+
+
+        //lider a cargo
+        leader:Yup.object({
+            type_society: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio'),
+            dependence: Yup.string().required('obligatorio'),
+            secretary: Yup.string().required('obligatorio'),
+        }),
+
+        //personas
+        elaborated: Yup.object({
+            name: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio')
+        }),
+        revised: Yup.object({
+            name: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio')
+        }),
+        approved: Yup.object({
+            name: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio')
+        }),
+
+    });
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema}>
+        <Formik enableReinitialize onSubmit={submit} innerRef={innerRef} initialValues={initialValues} validationSchema={schema} >
             {(formik) => {
-                return (
-                    <Form>
-                        <Card title="Uso Público" extra={<ModalNotificar />}>
-                            <FormPrecontractualPublicUse formik={formik} />
-                        </Card>
-                        <Card title="Información del solicitante">
-                            <FormUser formik={formik} />
-                        </Card>
-                        <Card>
-                            <FormRiskAnalysis formik={formik} />
-                        </Card>
+                return <Form>
+                    <Card
+                        title="Estudio previo para Uso Público"
+                        extra={
+                            <ModalNotificar/>
+                        }
+                    >
+                        <FormPrecontractualPublicUse formik={formik} />
+                    </Card>
+                    <Card title="Información del solicitante">
+                        <FormUser formik={formik} comodato={true} />
+                    </Card>
+                    <Card >
+                        <FormRiskAnalysis formik={formik} />
+                    </Card>
 
                         <Card>
                             <FormLider />
                         </Card>
                     </Form>
-                );
+
             }}
         </Formik>
     );
