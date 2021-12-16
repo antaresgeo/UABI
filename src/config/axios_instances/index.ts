@@ -3,6 +3,7 @@ export { http } from './general';
 export { http as location_http } from './location';
 export { http as documents_http } from './documents';
 export { http as auth_http } from './auth';
+export { http as notification_http } from './notifications';
 export { zero } from './zero';
 export const UNAUTHORIZED = 401;
 export const FORBIDDEN = 403;

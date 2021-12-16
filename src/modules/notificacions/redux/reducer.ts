@@ -1,16 +1,14 @@
 import types from './types';
+import {Loadable, Pageable, Action} from "../../../custom_types";
+import {Notification} from "./service";
 
-const emptyInitialState: any = {
+interface State {
+    notification: Loadable<Notification>;
+    notifications: Pageable<Notification>;
+}
+const emptyInitialState: State = {
     notifications: {
-        Value: [
-            {
-                id: '-1',
-                title: '',
-                description: '',
-                path: '',
-                status: -1,
-            },
-        ],
+        value: [],
         pagination: {
             page: 1,
             count: 0,
@@ -22,37 +20,86 @@ const emptyInitialState: any = {
         loaded: false,
     },
     notification: {
-        value: [
-            {
-                id: '-1',
-                title: '',
-                description: '',
-                path: '',
-                status: -1,
-            },
-        ],
+        value: null,
         loading: false,
         loaded: false,
     },
 };
 const initialState = emptyInitialState;
 
-const reducer = (state: any = initialState, action: any): any => {
+const reducer = (state: State = initialState, action: Action): State=> {
+    return {
+        ...state,
+        ...notificationReducer(state, action)
+    }
+};
+
+export default reducer;
+
+
+const notificationReducer = (aux_state: State, action: Action): State => {
+    const { notification, notifications } = aux_state;
+    const state = { notification, notifications };
     switch (action.type) {
-        case types.notifications.default: {
+        case types.create_notification.default:
+        case types.update_notification.default:
+        case types.delete_notification.default:
+        case types.get_notification.default: {
             return {
                 ...state,
-                notifications: { ...state.notifications, loading: true },
+                notification: {
+                    ...state.notification,
+                    loading: true,
+                    loaded: false,
+                },
             };
         }
-
-        case types.notifications.success: {
+        case types.update_notification.success:
+        case types.create_notification.success:
+        case types.get_notification.success: {
+            return {
+                ...state,
+                notification: {
+                    ...state.notification,
+                    value: action.payload.results,
+                    loading: false,
+                    loaded: true,
+                },
+            };
+        }
+        case types.create_notification.fail:
+        case types.update_notification.fail:
+        case types.delete_notification.fail:
+        case types.delete_notification.success:
+        case types.clear_notification.success:
+        case types.get_notification.fail: {
+            return {
+                ...state,
+                notification: {
+                    ...state.notification,
+                    value: emptyInitialState.notification.value,
+                    loading: false,
+                    loaded: false,
+                },
+            };
+        }
+        case types.get_list_notifications.default:
+        case types.get_all_notifications.default: {
             return {
                 ...state,
                 notifications: {
                     ...state.notifications,
-                    value: action.payload,
-
+                    loading: true,
+                    loaded: false,
+                },
+            };
+        }
+        case types.get_all_notifications.success: {
+            return {
+                ...state,
+                notifications: {
+                    ...state.notifications,
+                    value: action.payload?.results || [],
                     pagination: {
                         page: action.payload?.page || 1,
                         count: action.payload?.count || 0,
@@ -65,50 +112,28 @@ const reducer = (state: any = initialState, action: any): any => {
                 },
             };
         }
-
-        case types.notifications.fail: {
+        case types.get_list_notifications.fail:
+        case types.get_all_notifications.fail: {
             return {
                 ...state,
                 notifications: {
                     ...state.notifications,
+                    value: emptyInitialState.notifications.value,
+                    pagination: emptyInitialState.notifications.pagination,
                     loading: false,
                     loaded: false,
-                    value: emptyInitialState.notifications.value,
                 },
             };
         }
-
-        // ONE NOTIFICATION
-        case types.notification.default: {
+        case types.get_list_notifications.success: {
             return {
                 ...state,
-                notification: { ...state.notification, loading: true },
-            };
-        }
-
-        case types.notification.success: {
-            return {
-                ...state,
-                notification: {
-                    ...state.notification,
-
-                    value: action.payload,
-
+                notifications: {
+                    ...state.notifications,
+                    value: action.payload || [],
+                    pagination: emptyInitialState.notifications.pagination,
                     loading: false,
                     loaded: true,
-                },
-            };
-        }
-
-        case types.notification.fail: {
-            return {
-                ...state,
-                notification: {
-                    ...state.notification,
-                    message: emptyInitialState.notification.message,
-                    loading: false,
-                    loaded: false,
-                    value: emptyInitialState.notification.value,
                 },
             };
         }
@@ -118,5 +143,3 @@ const reducer = (state: any = initialState, action: any): any => {
         }
     }
 };
-
-export default reducer;

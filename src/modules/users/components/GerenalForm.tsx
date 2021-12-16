@@ -52,6 +52,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                 .min(8, 'minimo 8 caracteres'),
         }),
         detailsUser: Yup.object().shape({
+            location: Yup.string().required('Campo obligatorio'),
             society_type: Yup.string().required('Campo obligatorio'),
             entity_type: Yup.string().required('Campo obligatorio'),
             id_type: Yup.string().required('Campo obligatorio'),
@@ -408,6 +409,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                         className="form-control"
                                         disabled
                                     />
+
                                     <div className="input-group-prepend">
                                         <LocationModal
                                             view="user"
@@ -418,7 +420,10 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                             }}
                                         />
                                     </div>
+
+
                                 </div>
+                                <ErrorMessage name="detailsUser.location" />
                             </div>
                         </div>
                         {type === 'view' && (
@@ -457,7 +462,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 {type !== 'view' && (
                                     <button
                                         className="btn btn-primary my-3"
-                                        disabled={isSubmitting || !isValid || disabled}
+                                        disabled={isSubmitting || disabled}
                                         type="submit"
                                     >
                                         Guardar

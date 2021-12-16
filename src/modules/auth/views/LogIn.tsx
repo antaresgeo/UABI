@@ -1,7 +1,7 @@
 import { Image, Grid } from 'semantic-ui-react';
 import loginimage from './../../../utils/assets/img/login.jpeg';
 import logo from './../../../utils/assets/img/escudoAlcaldia.png';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import LoginForm from './../components/LoginForm';
 import actions from '../redux/actions';
 import { useDispatch } from 'react-redux';
@@ -10,6 +10,7 @@ import { useState } from 'react';
 
 export default function SignIn() {
     const dispatch = useDispatch();
+    const history = useHistory();
     // const [disabled, setDisabled] = useState(parseInt(localStorage.getItem('attemp')) >= 9);
     const [alert, set_alert] = useState(null);
 
@@ -20,20 +21,28 @@ export default function SignIn() {
         //     document.cookie = c;
         //     console.log(document.cookie);
         // }
-        const [mg, i]: any = await dispatch(actions.login(values.user, values.password));
-        const val = (
-            <>
-                <span>{mg}</span>
-                <br />
-                <span>{i >= 3 ? `Intentos restantes ${i}` : ''}</span>
-            </>
-        );
-        // console.log(val)
-        set_alert(val);
+        const promise: any = dispatch(actions.login(values.user, values.password));
+        promise
+            .then(() => {
+                history.push('/');
+            })
+            .catch((e) => {
+                const [message, intententos, block] = e;
+                if (message && intententos) {
+                    const val = (
+                        <>
+                            <span>{message}</span>
+                            <br />
+                            <span>{intententos >= 3 ? `Intentos restantes ${intententos}` : ''}</span>
+                        </>
+                    );
+                    set_alert(val);
+                }
+            });
     };
 
     const token: string = localStorage.getItem('_tk_');
-
+    // console.log(token)
     return (
         <div>
             {token && <Redirect to="/" />}

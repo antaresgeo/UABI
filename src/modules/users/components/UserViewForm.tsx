@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 interface IUserFormPros {
     user: any;
+    roles: any[];
 }
-const UserViewForm: FC<IUserFormPros> = ({ user }) => {
+const UserViewForm: FC<IUserFormPros> = ({ user, roles }) => {
     let genero = '';
     let type_doc = '';
     let type_society = '';
@@ -68,7 +69,7 @@ const UserViewForm: FC<IUserFormPros> = ({ user }) => {
         default:
             break;
     }
-    console.log(user);
+    console.log(roles);
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -138,6 +139,19 @@ const UserViewForm: FC<IUserFormPros> = ({ user }) => {
                             <div className="col-3">
                                 <label htmlFor="">Dirección</label>
                                 <div className="my-3">{user?.location}</div>
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="">Roles</label>
+                                <div className="my3">
+                                    {roles && roles.length > 0 && (
+                                        <ul>
+                                            {roles.map((rol, i) => (
+                                                <li key={i}>{rol.name}</li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                    {roles && roles.length === 0 && <span>Sin Roles Asignados</span>}
+                                </div>
                             </div>
                             {user?.entity_type === 'P' && (
                                 <>

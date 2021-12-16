@@ -23,13 +23,13 @@ const bad_login = (dispatch) => (error) => {
         const { message, attemp } = error.response.data;
         const intententos = 9 - attemp;
         if (intententos <= 0) {
-            return Promise.reject({ block: true });
+            return Promise.reject([null, null, true]);
         } else {
             localStorage.setItem('attemp', attemp);
-            return [message, intententos];
+            return Promise.reject([message, intententos]);
         }
     }
-    return Promise.reject();
+    return Promise.reject([null, null, null]);
 };
 
 const get_user = (token: string) => {
@@ -101,18 +101,16 @@ const loginFail = (payload) => {
 //     };
 // };
 
-// const update_password = (password: string, is_new_user = false) => {
-//     return (dispatch) => {
-//         console.log("action update_password", password);
-//         return service.update_password(password).then((response) => {
-//             console.log(response);
-//             if (is_new_user) {
-//                 dispatch({ type: authTypes.FIRST_LOGIN });
-//             }
-//             return response;
-//         });
-//     };
-// };
+const update_password = (password: string, is_new_user = false) => {
+    return (dispatch) => {
+        return service.update_password(password).then((response) => {
+            if (is_new_user) {
+                dispatch({ type: authTypes.FIRST_LOGIN });
+            }
+            return response;
+        });
+    };
+};
 
 // const recovery_password = (user_text: string) => {
 //     return (dispatch) => {
@@ -142,6 +140,6 @@ const actions = {
     // change_password,
     // recovery_password,
     // get_access,
-    // update_password,
+    update_password,
 };
 export default actions;
