@@ -9,7 +9,7 @@ import { Formobligation } from '../Formobligation';
 import FormLider from '../FormLider';
 import * as Yup from 'yup';
 import BeneficiaryForm from './BeneficiaryForm';
-
+import moment from 'moment';
 interface FormPros {
     innerRef?: any;
     realEstate?: any;
@@ -17,41 +17,59 @@ interface FormPros {
     values_form?: any;
 }
 
-export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstate,values_form }) => {
+export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_form }) => {
 
     let initialValues = {
         environmental_risk: '',
-        registration_date: '',
+        registration_date: moment(new Date().getTime()).format('YYYY-MM-DD'),
         contract_period: '',
+        patrimonial_value: realEstate.patrimonial_value,
+        prediation_date: "",
+        business_type: "",
+        lockable_base: 10,
         //solicitante
-        companyname_applicant: "",
-        type_document_applicant: "NIT",
-        number_doc_applicant: "",
-        type_society_applicant: "Persona Juridica",
+        applicant: {
+            type_society: "Persona Juridica",
+            id_type: 4,
+            id_number: "",
+            company_name: "",
+            email: "",
+            phone_number: "",
+        },
         location_applicant: {
             address: "",
-            id: ""
+            id: "",
         },
-        email_applicant: "",
-        mobile_applicant: "",
-        telephone_applicant: "",
+        detailsRepresentative: {
+            id_type: '',
+            id_number: '',
+            names: { firstName: '', lastName: '' },
+            surnames: { firstSurname: '', lastSurname: '' },
+            email: '',
+            phone_number: '',
+            gender: '',
+        },
+        representative: {
+            type_society: "Persona Natural",
+        },
         //analisis de riegos
-        regulatory_degree_occurrence: '',
-        regulatory_impact_degree: '',
-        regulatory_responsable: '',
-        regulatory_description: '',
-        regulatory_mitigation_mechanism: '',
-        operative_degree_occurrence: '',
-        operative_impact_degree: '',
-        operative_responsable: '',
-        operative_description: '',
-        operative_mitigation_mechanism: '',
+        regulatory_risk: {
+            degree_occurrence: "",
+            impact_degree: "",
+            responsable: "",
+            mitigation_mechanism: "",
+        },
+        operational_risk: {
+            degree_occurrence: "",
+            impact_degree: "",
+            responsable: "",
+            mitigation_mechanism: "",
+        },
         //comodato
         loan_value: '',
-        patrimonial_value: '',
         loan_typology: '',
         competitive_process: '',
-        competitive_process_value: 0,
+        competitive_process_value: "",
         activities: "",
         horizontal_property: "",
         destination_realEstate: "",
@@ -59,12 +77,13 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
         social_event: "",
         public_service: "",
         value_public_service: "",
+        capacity_specification: "",
         economic_exploitation: "",
         type_economic_exploitation: "",
         action_field: "",
         resolution: "",
-        lockable_base: 10,
         dependence: "",
+        commercial_appraisal: "",
         obligations: [
 
         ],
@@ -72,27 +91,47 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
 
         ],
         //obligaciones
-        value_locative_repairs: 0,
-        value_repairs_damages: 0,
-        value_domiciliary_public: 0,
-        surveillance_value: 0,
-        cleaning_value: 0,
-        conservation_value: 0,
-        administration_value: 0,
-        network_value: 0,
-        Value_economic_obligations: 0,
-        //lider y personas a cargo
-        name_Leader: "",
-        lastname_Leader: "",
-        post_leader: "",
-        dependence_leader: "",
-        secretary_leader: "",
-        name_elaborated: "",
-        post_elaborated: "",
-        name_revised: "",
-        post_revised: "",
-        name_approved: "",
-        post_approved: "",
+        value_locative_repairs: "",
+        value_repairs_damages: "",
+        value_domiciliary_public: "",
+        surveillance_value: "",
+        cleaning_value: "",
+        conservation_value: "",
+        administration_value: "",
+        network_value: "",
+        value_economic_obligations: "",
+        //lider  a cargo
+        detailsLeader: {
+            id_type: '',
+            id_number: '',
+            names: { firstName: '', lastName: '' },
+            surnames: { firstSurname: '', lastSurname: '' },
+            email: '',
+            phone_number: '',
+            gender: '',
+        },
+        leader: {
+            type_society: "Persona Natural",
+            post: "",
+            dependence: "",
+            secretary: "",
+        },
+        location_leader: {
+            address: "",
+            id: "",
+        },
+        elaborated: {
+            name: "",
+            post: "",
+        },
+        revised: {
+            name: "",
+            post: "",
+        },
+        approved: {
+            name: "",
+            post: "",
+        },
         //beneficiario
         population: '',
         benefited_sector: '',
@@ -100,7 +139,7 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
             commune: '',
             neighborhood: '',
         },
-        business_type: "",
+
         ...values_form,
     }
     const submit = (values, actions) => {
@@ -111,48 +150,112 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
     };
 
     const schema = Yup.object().shape({
-        //solicitante
-        companyname_applicant: Yup.string().required('obligatorio'),
-        type_document_applicant: Yup.string().required('obligatorio'),
-        number_doc_applicant: Yup.number().required('obligatorio'),
-        type_society_applicant: Yup.string().required('obligatorio'),
-        email_applicant: Yup.string().email().required('obligatorio'),
-        telephone_applicant: Yup.number().required('obligatorio'),
+        //obligaciones
+        resolution: Yup.string().required('obligatorio'),
+        value_locative_repairs: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number().required('obligatorio')
+        }),
+        value_repairs_damages: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number().required('obligatorio')
+        }),
+        value_domiciliary_public: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number().required('obligatorio')
+        }),
+        surveillance_value: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number().required('obligatorio')
+        }),
+        cleaning_value: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number().required('obligatorio')
+        }),
+        conservation_value: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number().required('obligatorio')
+        }),
+        administration_value: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number().required('obligatorio')
+        }),
+        network_value: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number().required('obligatorio')
+        }),
+        value_economic_obligations: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number().required('obligatorio')
+        }),
+        commercial_appraisal: Yup.number().when('resolution', {
+            is: "no",
+            then: Yup.number().required('obligatorio')
+        }),
+        //service public
+        public_service: Yup.string().required('obligatorio'),
+        value_public_service: Yup.number().when('public_service', {
+            is: "si",
+            then: Yup.number().required('obligatorio')
+        }),
+        capacity_specification: Yup.string().when('public_service', {
+            is: "si",
+            then: Yup.string().required('obligatorio')
+        }),
+        prediation_date: Yup.string().required('obligatorio'),
+        environmental_risk: Yup.string().required('obligatorio'),
+        business_type: Yup.string().required('obligatorio'),
+        lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
+        contract_period: Yup.string().required('obligatorio'),
 
         loan_typology: Yup.string().required('obligatorio'),
+        destination_realEstate: Yup.string().required('obligatorio'),
+        peacesafe: Yup.string().required('obligatorio'),
+        social_event: Yup.string().required('obligatorio'),
+        economic_exploitation: Yup.string().required('obligatorio'),
+        action_field: Yup.string().required('obligatorio'),
+        horizontal_property: Yup.string().required('obligatorio'),
         activities: Yup.string().required('obligatorio'),
-        business_type: Yup.string().required('obligatorio'),
-
         //Beneficiario
         population: Yup.string().required('obligatorio'),
         benefited_sector: Yup.string().required('obligatorio'),
         dependence: Yup.string().required('obligatorio'),
         registration_date: Yup.string().required('obligatorio'),
+        // Solicitante
+        applicant: Yup.object({
+            type_society: Yup.string().required('obligatorio'),
+            company_name: Yup.string().required('obligatorio'),
+            id_number:  Yup.number().required('obligatorio'),
+            phone_number:  Yup.number().required('obligatorio'),
+            email:  Yup.string().email().required('obligatorio'),
+        }),
+        location_applicant: Yup.object({
+            address: Yup.string().required('obligatorio')
+        }),
 
-        destination_realEstate: Yup.string().required('obligatorio'),
-        peacesafe: Yup.string().required('obligatorio'),
-        contract_period: Yup.string().required('obligatorio'),
-        social_event: Yup.string().required('obligatorio'),
-        public_service: Yup.string().required('obligatorio'),
-        economic_exploitation: Yup.string().required('obligatorio'),
-        action_field: Yup.string().required('obligatorio'),
-        resolution: Yup.string().required('obligatorio'),
-        lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
-        environmental_risk: Yup.string().required('obligatorio'),
-        horizontal_property: Yup.string().required('obligatorio'),
+        //lider a cargo
+        leader:Yup.object({
+            type_society: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio'),
+            dependence: Yup.string().required('obligatorio'),
+            secretary: Yup.string().required('obligatorio'),
+        }),
 
-        //lider y personas a cargo
-        name_Leader: Yup.string().required('obligatorio'),
-        lastname_Leader: Yup.string().required('obligatorio'),
-        post_leader: Yup.string().required('obligatorio'),
-        dependence_leader: Yup.string().required('obligatorio'),
-        secretary_leader: Yup.string().required('obligatorio'),
-        name_elaborated: Yup.string().required('obligatorio'),
-        post_elaborated: Yup.string().required('obligatorio'),
-        name_revised: Yup.string().required('obligatorio'),
-        post_revised: Yup.string().required('obligatorio'),
-        name_approved: Yup.string().required('obligatorio'),
-        post_approved: Yup.string().required('obligatorio'),
+
+        //personas
+        elaborated: Yup.object({
+            name: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio')
+        }),
+        revised: Yup.object({
+            name: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio')
+        }),
+        approved: Yup.object({
+            name: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio')
+        }),
+
 
     });
     return (
@@ -166,16 +269,16 @@ export const GeneralFormComodato: FC<FormPros> = ({onSubmit, innerRef, realEstat
             {(formik) => {
                 return (
                     <Form>
-                        <Card title="Comodato" extra={<ModalNotificar />}>
+                        <Card title="Estudio previo para Comodato" extra={<ModalNotificar />}>
                             <FormPrecontractualComodato formik={formik} />
                         </Card>
-                        <Card title="Datos del solicitante">
+                        <Card title="Información del solicitante">
                             <FormUser formik={formik} comodato={true} />
                         </Card>
-                        <Card title="Beneficiario">
+                        <Card title="Información del Beneficiario">
                             <BeneficiaryForm formik={formik} />
                         </Card>
-                        <Card title="Análisis de riesgos">
+                        <Card>
                             <FormRiskAnalysis formik={formik} />
                         </Card>
                         {formik.values.resolution === 'si' && (

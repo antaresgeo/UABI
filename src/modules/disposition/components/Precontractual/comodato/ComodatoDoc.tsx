@@ -15,10 +15,25 @@ interface IParams {
 const ComodatoDoc = () => {
     const location = useLocation<IParams>();
     const history = useHistory();
-    let date = [];
     const { values, realEstate, dispositionType } = location.state;
-    console.log(values, realEstate, dispositionType );
-    date = values?.registration_date.split("-");
+    console.log(values, realEstate, dispositionType);
+    let date = values?.registration_date.split("-")
+    let prediationDate = values?.prediation_date.split("-")
+    let contract_value = 0;
+    if (values?.resolution === "si") {
+        contract_value =
+            (values?.Value_economic_obligations +
+                values?.network_value +
+                values?.administration_value +
+                values?.conservation_value +
+                values?.cleaning_value +
+                values?.surveillance_value +
+                values?.value_domiciliary_public +
+                values?.value_repairs_damages +
+                values?.value_locative_repairs)
+    } else {
+        contract_value = values?.commercial_appraisal;
+    }
 
     return (
         <div className="h-100 d-flex flex-column">
@@ -56,14 +71,14 @@ const ComodatoDoc = () => {
                                 <span className="ft4">Estimación del valor del contrato:</span>
                             </p>
                             <p className="p6_comodato ft5">
-                                Para efectos del contrato de comodato se tendrá como valor (Digite la opción que aplique
-                                continuando con el párrafo)
+
+                                (${contract_value}) {writtenNumber(contract_value, { lang: 'es' })}
                             </p>
 
                             <p className="p10_comodato ft0_comodato">
                                 <span className="ft3">3.</span
                                 ><span className="ft11_comodato">Solicitante:</span>
-                                <span className="ft3_comodato">{` ${values?.companyname_applicant} ${values?.type_document_applicant}: ${values?.number_doc_applicant}`}</span>
+                                <span className="ft3_comodato">{` ${values?.applicant.company_name} NIT: ${values?.applicant.id_number}`}</span>
                                 {/* (Digite el nombre de la
                                 entidad pública que solicita el inmueble en comodato) NIT: (Digite el
                                 número de identificación tributaria de la entidad pública que solicita
@@ -92,17 +107,15 @@ const ComodatoDoc = () => {
                                 <span className="ft3_comodato">
                                     {values?.loan_typology === 'las juntas de acción comunal' &&
                                         ' de la Junta de Acción Comunal de conformidad con el radio de acción' +
-                                            ' establecido en los respectivos estatutos de la organización y el' +
-                                            ' reconocimiento de la personería jurídica otorgada por la Secretaría' +
-                                            ' de Participación Ciudadana '}
-                                </span>
-                                con fundamento en lo establecido en el artículo 355 de la Constitución Política de
+                                        ' establecido en los respectivos estatutos de la organización y el' +
+                                        ' reconocimiento de la personería jurídica otorgada por la Secretaría' +
+                                        ' de Participación Ciudadana '}
+                                </span> con fundamento en lo establecido en el artículo 355 de la Constitución Política de
                                 Colombia, el decreto 092 de 2017
                                 <span className="ft3_comodato">
                                     {values?.loan_typology === 'las juntas de acción comunal' &&
                                         ', la Ley 743 de 2002 modificada por la ley 1989 de 2019 '}
-                                </span>
-                                y la Ley 9 de 1989.
+                                </span> y la Ley 9 de 1989.
                             </p>
                             <p className="p10_comodato ft0_comodato">
                                 En este orden, las Entidades Estatales del Gobierno nacional, departamental, distrital y
@@ -152,8 +165,8 @@ const ComodatoDoc = () => {
                                 establecido en el artículo 4 inciso primero, cuando en la etapa de planeación se
                                 verifique que no existe más de una entidad sin ánimo de lucro para el desarrollo del
                                 programa o actividad de interés público, no se requiere adelantar proceso competitivo.
-                                Así las cosas, como se indicó antes y para el caso concreto, se identificó que{' '}
-                                <span className="ft3_comodato">{` ${values?.names_applicant}, `}</span>
+                                Así las cosas, como se indicó antes y para el caso concreto, se identificó que
+                                <span className="ft3_comodato">{` ${values?.applicant.company_name}, `}</span>
                                 {/* <span className="ft3_comodato">(DIGITE LA RAZÓN SOCIAL DE LA ENTIDAD COMODATARIA)</span>, */}
                                 de acuerdo con la circunscripción territorial, los proyectos y actividades a ejecutar
                                 con la comunidad inscrita en la organización y la demás población beneficiaria de su
@@ -162,7 +175,7 @@ const ComodatoDoc = () => {
                             </p>
                             <p className="p19_comodato ft0_comodato">
                                 De acuerdo con lo expuesto y la documentación aportada,{' '}
-                                <span className="ft3_comodato">{` ${values?.names_applicant}, `}</span>
+                                <span className="ft3_comodato">{` ${values?.applicant.company_name}, `}</span>
                                 {/* <span className="ft3_comodato"> (DIGITE LA RAZÓN SOCIAL DE LA ENTIDAD COMODATARIA)</span> */}
                                 presentó solicitud mediante la cual indica que con el bien o los bienes entregados en
                                 comodato, llevará a cabo las siguientes actividades,{' '}
@@ -288,12 +301,12 @@ const ComodatoDoc = () => {
                                 escritura).*/}
                                 El espacio a entregar en comodato consta de
                                 <span className="ft3_comodato">
-                                {values?.horizontal_property === "si"
-                                    ?
-                                    ` ${realEstate?.construction_area}`
-                                    :
-                                    ` ${realEstate?.total_area}`
-                                }
+                                    {values?.horizontal_property === "si"
+                                        ?
+                                        ` ${realEstate?.construction_area}`
+                                        :
+                                        ` ${realEstate?.total_area}`
+                                    }
                                 </span>
                                 {/*(Digite el
                                 número de metros cuadrados que comprende el bien a entregar, tanto del
@@ -305,9 +318,7 @@ const ComodatoDoc = () => {
                                 {/*(indicar si o no)*/} se encuentra sometido a régimen de propiedad horizontal, cuyas
                                 áreas y linderos se describen de la siguiente manera, según informe técnico de
                                 Prediación con fecha de
-                                <span className="ft3_comodato">{` ${date[2]} de ${months(date[1])} de ${
-                                    date[0]
-                                }.`}</span>
+                                <span className="ft3_comodato">{` ${prediationDate[2]} de ${months(prediationDate[1])} de ${prediationDate[0]}.`}</span>
                                 {/* (digite el día del informe) de (Digite el mes del informe) de (Digite
                                 el número del año del informe). */}
                             </p>
@@ -549,11 +560,8 @@ const ComodatoDoc = () => {
                                 se determinó por aforo.
                                 <span className="ft3_comodato">
                                     {values?.public_service === 'si' &&
-                                        ` cuyo valor es ($${values?.value_public_service})
+                                        `  especificación: ${values?.capacity_specification}, cuyo valor es ($${values?.value_public_service})
                                     ${writtenNumber(values?.value_public_service, { lang: 'es' })} pesos
-                                    (en caso de ser determinado por
-                                    aforo, indicar la especificación del aforo para su determinación, así
-                                    como el valor en números y letras que indica el documento)
                                 `}
                                 </span>
                             </p>
@@ -564,7 +572,7 @@ const ComodatoDoc = () => {
                                     COMODATARIO{' '}
                                 </span>
 
-                                {values?.economic_exploitation === 'si' && values?.type_economic_exploitation !== '' ? (
+                                {values?.economic_exploitation === 'si' ? (
                                     <>
                                         <span className="ft0_comodato">
                                             tendrá la posibilidad de constituir o crear a su cuenta y riesgo unidades
@@ -689,7 +697,7 @@ const ComodatoDoc = () => {
                             <p className="p23_comodato ft0_comodato">
                                 <span className="ft3_comodato">Verificación de un solo solicitante: </span>
                                 Una vez realizado el análisis de la solicitud de contrato de comodato instaurada por
-                                <span className="ft3_comodato"> {`${values?.names_applicant} `}</span>
+                                <span className="ft3_comodato">{` ${values?.applicant.company_name}, `}</span>
                                 {/* (DIGITAR EL NOMBRE DE LA ENTIDAD SOLICITANTE) */}
                                 se identificó que el programa o actividad de interés público, la satisfacción de la
                                 necesidad o aspiración de la comunidad desarrollada por la entidad no
@@ -827,20 +835,12 @@ const ComodatoDoc = () => {
                                         <p className="p45_comodato my-4 ft0">REGULATORIO</p>
                                     </td>
                                     <td className="tr0 td1_comodato">
-                                        <p className="text-center my-4 ft0">
-                                            {values?.regulatory_degree_occurrence === ''
-                                                ? 'MEDIO'
-                                                : values?.regulatory_degree_occurrence}
-                                        </p>
+                                        <p className="text-center my-4 ft0">{values?.regulatory_risk.degree_occurrence === "" ? "MEDIO" : values?.regulatory_risk.degree_occurrence}</p>
                                     </td>
                                     <td className="tr0 td1_comodato">
-                                        <p className="text-center  my-4 ft0">
-                                            {values?.regulatory_impact_degree === ''
-                                                ? 'MEDIO'
-                                                : values?.regulatory_impact_degree}
-                                        </p>
+                                        <p className="text-center  my-4 ft0">{values?.regulatory_risk.impact_degree === "" ? "MEDIO" : values?.regulatory_risk.impact_degree}</p>
                                     </td>
-                                    {values?.regulatory_responsable === 'municipio' && (
+                                    {values?.regulatory_risk.responsable === 'municipio' && (
                                         <>
                                             <td className="tr0 td1_comodato">
                                                 <p className="text-center my-4 ft0"></p>
@@ -850,22 +850,22 @@ const ComodatoDoc = () => {
                                             </td>
                                         </>
                                     )}
-                                    {(values?.regulatory_responsable === 'Contratista' ||
-                                        values?.regulatory_responsable === '') && (
-                                        <>
-                                            <td className="tr0 td1_comodato">
-                                                <p className="text-center my-4 ft0">X</p>
-                                            </td>
-                                            <td className="tr0 td1_comodato">
-                                                <p className="text-center my-4 ft0"></p>
-                                            </td>
-                                        </>
-                                    )}
+                                    {(values?.regulatory_risk.responsable === 'Contratista' ||
+                                        values?.regulatory_risk.responsable === '') && (
+                                            <>
+                                                <td className="tr0 td1_comodato">
+                                                    <p className="text-center my-4 ft0">X</p>
+                                                </td>
+                                                <td className="tr0 td1_comodato">
+                                                    <p className="text-center my-4 ft0"></p>
+                                                </td>
+                                            </>
+                                        )}
                                     <td colSpan={6} className="tr0 td1_comodato">
                                         <p className="p46_comodato ft0">
-                                            {values?.regulatory_mitigation_mechanism === ''
+                                            {values?.regulatory_risk.mitigation_mechanism === ''
                                                 ? 'Ejercer un control y vigilancia estrictos al contrato por parte del supervisor.'
-                                                : values?.regulatory_mitigation_mechanism}
+                                                : values?.regulatory_risk.mitigation_mechanism}
                                         </p>
                                     </td>
                                 </tr>
@@ -882,19 +882,19 @@ const ComodatoDoc = () => {
                                     </td>
                                     <td className="tr0 td1_comodato">
                                         <p className="text-center ft0">
-                                            {values?.operative_degree_occurrence === ''
+                                            {values?.operational_risk.degree_occurrence === ''
                                                 ? 'MEDIO'
-                                                : values?.operative_degree_occurrence}
+                                                : values?.operational_risk.degree_occurrence}
                                         </p>
                                     </td>
                                     <td className="tr0 td1_comodato">
                                         <p className="text-center ft0">
-                                            {values?.operative_impact_degree === ''
+                                            {values?.operational_risk.impact_degree === ''
                                                 ? 'MEDIO'
-                                                : values?.operative_impact_degree}
+                                                : values?.operational_risk.impact_degree}
                                         </p>
                                     </td>
-                                    {values?.operative_responsable === 'municipio' && (
+                                    {values?.operational_risk.responsable === 'municipio' && (
                                         <>
                                             <td className="tr0 td1_comodato">
                                                 <p className="text-center ft0"></p>
@@ -904,23 +904,23 @@ const ComodatoDoc = () => {
                                             </td>
                                         </>
                                     )}
-                                    {(values?.operative_responsable === 'Contratista' ||
-                                        values?.operative_responsable === '') && (
-                                        <>
-                                            <td className="tr0 td1_comodato">
-                                                <p className="text-center ft0">X</p>
-                                            </td>
-                                            <td className="tr0 td1_comodato">
-                                                <p className="text-center ft0"></p>
-                                            </td>
-                                        </>
-                                    )}
+                                    {(values?.operational_risk.responsable === 'Contratista' ||
+                                        values?.operational_risk.responsable === '') && (
+                                            <>
+                                                <td className="tr0 td1_comodato">
+                                                    <p className="text-center ft0">X</p>
+                                                </td>
+                                                <td className="tr0 td1_comodato">
+                                                    <p className="text-center ft0"></p>
+                                                </td>
+                                            </>
+                                        )}
 
                                     <td colSpan={6} className="tr0 td1_comodato">
                                         <p className="p46_comodato ft0">
-                                            {values?.operative_mitigation_mechanism === ''
+                                            {values?.operational_risk.mitigation_mechanism === ''
                                                 ? 'Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual'
-                                                : values?.operative_mitigation_mechanism}
+                                                : values?.operational_risk.mitigation_mechanism}
                                         </p>
                                     </td>
                                 </tr>
@@ -1268,16 +1268,7 @@ const ComodatoDoc = () => {
                                                 <p className="p55_comodato ft3_comodato">
                                                     Valor total:
                                                     <span className="ft3" style={{ paddingLeft: '30px' }}>
-                                                        ${' '}
-                                                        {values?.Value_economic_obligations +
-                                                            values?.network_value +
-                                                            values?.administration_value +
-                                                            values?.conservation_value +
-                                                            values?.cleaning_value +
-                                                            values?.surveillance_value +
-                                                            values?.value_domiciliary_public +
-                                                            values?.value_repairs_damages +
-                                                            values?.value_locative_repairs}
+                                                        ${contract_value}
                                                     </span>
                                                 </p>
                                             </td>
@@ -1637,23 +1628,22 @@ const ComodatoDoc = () => {
                                 .
                             </p>
                             <p className="p79_comodato ft0_comodato">
-                                Medellín, Antioquia, (deje este espacio para fechar los estudios previos por parte de la
-                                Unidad
+                                Medellín, Antioquia, {`${date[2]} de ${months(date[1])} de ${date[0]}`}
                             </p>
                             <p className="p81_comodato ft22_comodato" style={{ marginTop: '49px' }}>
-                                {`${values?.name_Leader} ${values?.lastname_Leader}`}
+                                {`${values?.detailsLeader.names.firstName} ${values?.detailsLeader.names.lastName} ${values?.detailsLeader.surnames.firstSurname} ${values?.detailsLeader.surnames.lastSurname}`}
                                 {/*(Digite Nombres y apellidos)*/}
                             </p>
                             <p className="p81_comodato ft22_comodato">
-                                {`${values?.post_leader}`}
+                                {`${values?.leader.post}`}
                                 {/*(Digite cargo)*/}
                             </p>
                             <p className="p81_comodato ft22_comodato">
-                                {`${values?.dependence_leader}`}
+                                {`${values?.leader.dependence}`}
                                 {/*(Digite dependencia)*/}
                             </p>
                             <p className="p81_comodato ft22_comodato">
-                                {`${values?.Secretary_leader}`}
+                                {`${values?.leader.secretary}`}
                                 {/*(Digite secretaria)*/}
                             </p>
                         </div>
@@ -1673,19 +1663,19 @@ const ComodatoDoc = () => {
                                 <tr>
                                     <td className="tr2 td86">
                                         <p className="ft0" style={{ width: '215px', paddingLeft: '7px' }}>
-                                            {values?.name_elaborated}
+                                            {values?.elaborated.name}
                                             {/*(Nombre)*/}
                                         </p>
                                     </td>
                                     <td className="tr2 td87">
                                         <p className="ft0" style={{ width: '215px', paddingLeft: '7px' }}>
-                                            {values?.name_revised}
+                                            {values?.revised.name}
                                             {/*(Nombre)*/}
                                         </p>
                                     </td>
                                     <td className="tr2 td88">
                                         <p className="ft0" style={{ width: '215px', paddingLeft: '7px' }}>
-                                            {values?.name_approved}
+                                            {values?.approved.name}
                                             {/*(Nombre)*/}
                                         </p>
                                     </td>
@@ -1693,19 +1683,19 @@ const ComodatoDoc = () => {
                                 <tr>
                                     <td className="tr18 td86">
                                         <p className="p40 ft0">
-                                            {values?.post_elaborated}
+                                            {values?.elaborated.post}
                                             {/*(Cargo)*/}
                                         </p>
                                     </td>
                                     <td className="tr18 td87">
                                         <p className="p41 ft0">
-                                            {values?.post_revised}
+                                            {values?.revised.post}
                                             {/*(Cargo)*/}
                                         </p>
                                     </td>
                                     <td className="tr18 td88">
                                         <p className="p41 ft0">
-                                            {values?.post_approved}
+                                            {values?.approved.post}
                                             {/*(Cargo)*/}
                                         </p>
                                     </td>
@@ -1750,12 +1740,19 @@ const ComodatoDoc = () => {
                     className="btn btn-outline-primary"
                     onClick={() => {
                         //console.log('@values',values)
-                        history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
+                        history.push({ pathname: "/disposition/create/", state: { dispositionType, stage: "pre-contractual", realEstate, values } })
                     }}
                 >
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={() => { }}
+                >
+                    guardar y descargar
+                </button>
             </div>
         </div>
     );

@@ -66,6 +66,14 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 label: 'Documento de Titulo',
                 type: 4,
             },
+            {
+                label: 'Documento Avalúo',
+                type: 6,
+            },
+            {
+                label: 'Documento de Prediación',
+                type: 7,
+            },
         ],
         active_type: ['Lote'],
         status: 0,
@@ -82,44 +90,43 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         },
         ...(realEstateData
             ? {
-                  ...realEstateData,
-                  ...(realEstateData?.tipology_id
-                      ? {
-                            accounting_account: tipologies.find(
-                                (tipology) => tipology.id === realEstateData?.tipology_id
-                            ).accounting_account,
-                        }
-                      : {}),
-                  ...(realEstateData && realEstateData?.address?.id
-                      ? {
-                            address: realEstateData.address.id,
-                            _address: {
-                                name: realEstateData.address.address,
-                                cbml: realEstateData.address.cbmls.uabi,
-                            },
-                        }
-                      : {}),
-                  projects_id: realEstateData?.project?.id || 0,
-              }
+                ...realEstateData,
+                ...(realEstateData?.tipology_id
+                    ? {
+                        accounting_account: tipologies?.find(
+                            (tipology) => tipology.id === realEstateData?.tipology_id
+                        )?.accounting_account,
+                    }
+                    : {}),
+                ...(realEstateData && realEstateData?.address?.id
+                    ? {
+                        address: realEstateData.address.id,
+                        _address: {
+                            name: realEstateData.address.address,
+                            cbml: realEstateData.address.cbmls.uabi,
+                        },
+                    }
+                    : {}),
+                projects_id: realEstateData?.project?.id || 0,
+            }
             : {
-                  ...realEstate,
-                  ...(realEstate?.tipology_id
-                      ? {
-                            accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id)
-                                .accounting_account,
-                        }
-                      : {}),
-                  ...(realEstate && realEstate?.address?.id
-                      ? {
-                            address: realEstate.address.id,
-                            _address: {
-                                name: realEstate.address.address,
-                                cbml: realEstate.address.cbmls.uabi,
-                            },
-                        }
-                      : {}),
-                  projects_id: realEstate?.project?.id || 0,
-              }),
+                ...realEstate,
+                ...(realEstate?.tipology_id
+                    ? {
+                        accounting_account: tipologies?.find((tipology) => tipology.id === realEstate?.tipology_id)?.accounting_account,
+                    }
+                    : {}),
+                ...(realEstate && realEstate?.address?.id
+                    ? {
+                        address: realEstate.address.id,
+                        _address: {
+                            name: realEstate.address.address,
+                            cbml: realEstate.address.cbmls.uabi,
+                        },
+                    }
+                    : {}),
+                projects_id: realEstate?.project?.id || 0,
+            }),
     };
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
@@ -135,6 +142,14 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             {
                 label: 'Documento de Titulo',
                 type: 4,
+            },
+            {
+                label: 'Documento Avalúo',
+                type: 6,
+            },
+            {
+                label: 'Documento de Prediación',
+                type: 7,
             },
         ];
     }
@@ -273,7 +288,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 <Card
                                                     title={
                                                         <>
-                                                            <b>Inmuebles del Proyecto: {}</b>
+                                                            <b>Inmuebles del Proyecto: { }</b>
                                                         </>
                                                     }
                                                 >

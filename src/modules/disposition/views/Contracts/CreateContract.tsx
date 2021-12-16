@@ -5,19 +5,19 @@ import { GeneralDataContract } from './../../components/Contractual/GeneralDataC
 interface FormPros {
     dispositionType?: string;
     realEstate?: any;
-    values_form?: any;
+    values_contract?: any;
 }
 
-const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_form }) => {
+const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_contract }) => {
     const form_ref = useRef<any>();
     const history = useHistory();
-    const submit_contract = async (values) => {
-        console.log("vaules contrato",values)
-        if(values.type_contract === "Comodato" ) {
-            history.push({ pathname: "/document/comodato/contract", state: { values, realEstate, dispositionType } })
+    const submit_contract = async (values_contract) => {
+        console.log("vaules contrato",values_contract)
+        if(values_contract.type_contract === "Comodato" ) {
+            history.push({ pathname: "/document/comodato/contract", state: { values_contract, realEstate, dispositionType } })
 
-        }else if(values.type_contract === "arrendamiento" ) {
-            history.push({ pathname: "/document/lease/contract", state: { values, realEstate, dispositionType } })
+        }else if(values_contract.type_contract === "arrendamiento" ) {
+            history.push({ pathname: "/document/lease/contract", state: { values_contract, realEstate, dispositionType } })
         }
     }
     return (
@@ -29,6 +29,10 @@ const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_form
                             <GeneralDataContract
                                 innerRef={form_ref}
                                 onSubmit={submit_contract}
+                                dispositionType={dispositionType}
+                                realEstate={realEstate}
+                                values_contract={values_contract}
+
                             />
                         </div>
                     </div>
@@ -55,7 +59,7 @@ const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_form
                         form_ref.current.submitForm();
                     }}
                 >
-                    Guardar
+                    Vista Previa
                 </button>
             </div>
         </div>

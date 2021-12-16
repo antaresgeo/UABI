@@ -576,11 +576,11 @@
     line-height: 8px;
   }
   .ft13_ContratoComodato {
-    font: bold 15px "Arial";
+    font: bold 14px "Arial";
     line-height: 20px;
   }
   .ft14_ContratoComodato {
-    font: 15px "Arial";
+    font: 14px "Arial";
     line-height: 19px;
   }
   .ft15_ContratoComodato {
@@ -609,7 +609,7 @@
     line-height: 19px;
   }
   .ft21_ContratoComodato {
-    font: bold 15px "Arial";
+    font: bold 14px "Arial";
     line-height: 19px;
   }
   .ft22_ContratoComodato {
@@ -659,7 +659,7 @@
     line-height: 17px;
   }
   .ft32_ContratoComodato {
-    font: italic bold 15px "Arial";
+    font: italic 15px "Arial";
     line-height: 19px;
   }
   .ft33_ContratoComodato {
@@ -686,15 +686,16 @@
   }
   .p3_ContratoComodato {
     text-align: left;
-    padding-left: 120px;
+    padding-left: 100px;
     margin-top: 0px;
     margin-bottom: 0px;
   }
   .p4_ContratoComodato {
-    text-align: left;
+    text-align: center;
     padding-left: 130px;
     margin-top: 30px;
-    margin-bottom: 0px;
+    /* margin-bottom: 0px; */
+    width: 700px;
   }
   .p5_ContratoComodato {
     text-align: left;
@@ -718,15 +719,15 @@
   }
   .p8_ContratoComodato {
     text-align: left;
-    padding-left: 120px;
+    padding-left: 100px;
     margin-top: 13px;
     margin-bottom: 0px;
   }
   .p9_ContratoComodato {
     text-align: justify;
-    padding-left: 120px;
-    padding-right: 115px;
-    margin-top: 2px;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 20px;
     margin-bottom: 0px;
   }
   .p10_ContratoComodato {
@@ -745,45 +746,45 @@
   }
   .p12_ContratoComodato {
     text-align: right;
-    padding-right: 120px;
+    padding-right: 100px;
     margin-top: 13px;
     margin-bottom: 0px;
   }
   .p13_ContratoComodato {
     text-align: left;
-    padding-left: 121px;
+    padding-left: 100px;
     margin-top: 0px;
     margin-bottom: 0px;
   }
   .p14_ContratoComodato {
     text-align: left;
-    padding-left: 450px;
+    padding-left: 460px;
     margin-top: 0px;
     margin-bottom: 0px;
   }
   .p15_ContratoComodato {
     text-align: left;
-    padding-left: 496px;
+    padding-left: 507px;
     margin-top: 0px;
     margin-bottom: 0px;
   }
   .p16_ContratoComodato {
     text-align: right;
-    padding-right: 120px;
+    padding-right: 102px;
     margin-top: 0px;
     margin-bottom: 0px;
   }
   .p17_ContratoComodato {
     text-align: left;
-    padding-left: 618px;
+    padding-left: 633px;
     margin-top: 0px;
     margin-bottom: 0px;
   }
   .p18_ContratoComodato {
     text-align: justify;
-    padding-left: 120px;
-    padding-right: 115px;
-    margin-top: 0px;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 20px;
     margin-bottom: 0px;
   }
   .p19_ContratoComodato {
@@ -794,21 +795,21 @@
   }
   .p20_ContratoComodato {
     text-align: right;
-    padding-right: 120px;
+    padding-right: 100px;
     margin-top: 5px;
     margin-bottom: 0px;
   }
   .p21_ContratoComodato {
     text-align: right;
-    padding-right: 120px;
+    padding-right: 100px;
     margin-top: 19px;
     margin-bottom: 0px;
   }
   .p22_ContratoComodato {
     text-align: justify;
-    padding-left: 120px;
-    padding-right: 120px;
-    margin-top: 0px;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 20px;
     margin-bottom: 0px;
   }
   .p23_ContratoComodato {
@@ -819,26 +820,26 @@
   }
   .p24_ContratoComodato {
     text-align: right;
-    padding-right: 120px;
+    padding-right: 100px;
     margin-top: 9px;
     margin-bottom: 0px;
   }
   .p25_ContratoComodato {
     text-align: left;
-    padding-left: 120px;
+    padding-left: 100px;
     margin-top: 2px;
     margin-bottom: 0px;
   }
   .p26_ContratoComodato {
     text-align: justify;
-    padding-left: 120px;
-    padding-right: 115px;
-    margin-top: 1px;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 20px;
     margin-bottom: 0px;
   }
   .p27_ContratoComodato {
     text-align: right;
-    padding-right: 120px;
+    padding-right: 100px;
     margin-top: 12px;
     margin-bottom: 0px;
   }
@@ -856,31 +857,31 @@
   }
   .p30_ContratoComodato {
     text-align: right;
-    padding-right: 120px;
+    padding-right: 100px;
     margin-top: 16px;
     margin-bottom: 0px;
   }
   .p31_ContratoComodato {
     text-align: left;
-    padding-left: 120px;
+    padding-left: 100px;
     margin-top: 1px;
     margin-bottom: 0px;
   }
   .p32_ContratoComodato {
     text-align: left;
-    padding-left: 120px;
+    padding-left: 100px;
     margin-top: 48px;
     margin-bottom: 0px;
   }
   .p33_ContratoComodato {
     text-align: left;
-    padding-left: 120px;
+    padding-left: 100px;
     margin-top: 47px;
     margin-bottom: 0px;
   }
   .p34_ContratoComodato {
     text-align: left;
-    padding-left: 120px;
+    padding-left: 100px;
     padding-right: 276px;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -901,7 +902,7 @@
   }
   .p37_ContratoComodato {
     text-align: right;
-    padding-right: 120px;
+    padding-right: 100px;
     margin-top: 271px;
     margin-bottom: 0px;
   }
@@ -1032,7 +1033,8 @@
     font: 15px "Arial";
   }
   .t1_ContratoComodato {
-    width: 577px;
-    margin-left: 120px;
+    width: 618px;
+    margin-left: 100px;
     font: 15px "Arial";
+    margin-top: 50px;
   }

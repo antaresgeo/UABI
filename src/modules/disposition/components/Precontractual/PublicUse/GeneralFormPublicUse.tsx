@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik'
-import  { FC, useEffect } from 'react'
+import  { FC } from 'react'
 import { Card } from '../../../../../utils/ui'
 import { ModalNotificar } from './../../ModalNotificar';
 import { FormPrecontractualPublicUse } from './FormPrecontractualPublicUse';
@@ -7,10 +7,7 @@ import { FormUser } from './../FormUser';
 import FormLider from '../FormLider';
 import * as Yup from 'yup';
 import { FormRiskAnalysis } from '../FormRiskAnalysis';
-import { useDispatch, useSelector } from 'react-redux';
-import { ITipologyAttributes } from '../../../../../utils/interfaces';
-import { getTipology } from '../../../../acquisitions/redux/actions/realEstates';
-
+import moment from 'moment';
 
 interface FormPros {
     innerRef?: any;
@@ -20,58 +17,93 @@ interface FormPros {
 }
 
 const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, values_form}) => {
-    const dispatch = useDispatch();
-    const tipology: ITipologyAttributes = useSelector((states: any) => states.acquisitions.tipology.value);
-    useEffect(() => {
-        dispatch(getTipology(realEstate?.tipology_id))
-    }, [])
     let initialValues = {
         environmental_risk: "",
-        registration_date: "",
+        registration_date:  moment(new Date().getTime()).format('YYYY-MM-DD'),
         contract_period: "",
         prediation_number: "",
         prediation_date: "",
         lockable_base: 10,
+        business_type: "",
+        boundaries: "",
         //solicitante
-        names_applicant: "",
-        surnames_applicant: "",
-        id_type_document: "NIT",
-        number_doc_applicant_id: "",
-        type_society_applicant: "Persona Juridica",
-        location_applicant: "",
-        email_applicant: "",
-        mobile_applicant: "",
-        telephone_applicant: "",
+        applicant: {
+            type_society: "Persona Juridica",
+            id_type: 4,
+            id_number: "",
+            company_name: "",
+            email: "",
+            phone_number: "",
+        },
+        location_applicant: {
+            address: "",
+            id: "",
+        },
+        detailsRepresentative: {
+            id_type: '',
+            id_number: '',
+            names: { firstName: '', lastName: '' },
+            surnames: { firstSurname: '', lastSurname: '' },
+            email: '',
+            phone_number: '',
+            gender: '',
+        },
+        representative: {
+            type_society: "Persona Natural",
+        },
+
         //analisis de riegos
-        regulatory_degree_occurrence: "",
-        regulatory_impact_degree: "",
-        regulatory_responsable: "",
-        regulatory_description: "",
-        regulatory_mitigation_mechanism: "",
-        operative_degree_occurrence: "",
-        operative_impact_degree: "",
-        operative_responsable: "",
-        operative_description: "",
-        operative_mitigation_mechanism: "",
+        regulatory_risk: {
+            degree_occurrence: "",
+            impact_degree: "",
+            responsable: "",
+            mitigation_mechanism: "",
+        },
+        operational_risk: {
+            degree_occurrence: "",
+            impact_degree: "",
+            responsable: "",
+            mitigation_mechanism: "",
+        },
         //uso publico
         destination_realEstate: "",
         contract_value: "",
-        tipology,
         obligations: [],
         prohibitions: [],
         cadastral_value: "",
-        // //lider y personas a cargo
-        name_Leader: "",
-        lastname_Leader: "",
-        post_leader: "",
-        dependence_leader: "",
-        secretary_leader: "",
-        name_elaborated: "",
-        post_elaborated: "",
-        name_revised: "",
-        post_revised: "",
-        name_approved: "",
-        post_approved: "",
+
+        //lider y personas a cargo
+        detailsLeader: {
+            id_type: '',
+            id_number: '',
+            names: { firstName: '', lastName: '' },
+            surnames: { firstSurname: '', lastSurname: '' },
+            email: '',
+            phone_number: '',
+            gender: '',
+        },
+        leader: {
+            type_society: "Persona Natural",
+            post: "",
+            dependence: "",
+            secretary: "",
+        },
+        location_leader: {
+            address: "",
+            id: "",
+        },
+        elaborated: {
+            name: "",
+            post: "",
+        },
+        revised: {
+            name: "",
+            post: "",
+        },
+        approved: {
+            name: "",
+            post: "",
+        },
         ...values_form,
     }
     const submit = (values, actions) => {
@@ -90,25 +122,44 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
         contract_value: Yup.string().required('obligatorio'),
         environmental_risk: Yup.string().required('obligatorio'),
         lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
+        business_type: Yup.string().required('obligatorio'),
+        registration_date: Yup.string().required('obligatorio'),
+        boundaries: Yup.string().required('obligatorio'),
 
-        //solicitante
-        names_applicant: Yup.string().required('obligatorio'),
-        number_doc_applicant: Yup.number().required('obligatorio'),
-        email_applicant: Yup.string().email().required('obligatorio'),
-        telephone_applicant: Yup.number().required('obligatorio'),
+        // Solicitante
+        applicant: Yup.object({
+            type_society: Yup.string().required('obligatorio'),
+            company_name: Yup.string().required('obligatorio'),
+            id_number:  Yup.number().required('obligatorio'),
+            phone_number:  Yup.number().required('obligatorio'),
+            email:  Yup.string().email().required('obligatorio'),
+        }),
+        // location_applicant: Yup.object({
+        //     address: Yup.string().required('obligatorio')
+        // }),
 
-        //lider y personas a cargo
-        name_Leader: Yup.string().required('obligatorio'),
-        lastname_Leader: Yup.string().required('obligatorio'),
-        post_leader: Yup.string().required('obligatorio'),
-        dependence_leader: Yup.string().required('obligatorio'),
-        secretary_leader: Yup.string().required('obligatorio'),
-        name_elaborated: Yup.string().required('obligatorio'),
-        post_elaborated: Yup.string().required('obligatorio'),
-        name_revised: Yup.string().required('obligatorio'),
-        post_revised: Yup.string().required('obligatorio'),
-        name_approved: Yup.string().required('obligatorio'),
-        post_approved: Yup.string().required('obligatorio'),
+
+        //lider a cargo
+        leader:Yup.object({
+            type_society: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio'),
+            dependence: Yup.string().required('obligatorio'),
+            secretary: Yup.string().required('obligatorio'),
+        }),
+
+        //personas
+        elaborated: Yup.object({
+            name: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio')
+        }),
+        revised: Yup.object({
+            name: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio')
+        }),
+        approved: Yup.object({
+            name: Yup.string().required('obligatorio'),
+            post: Yup.string().required('obligatorio')
+        }),
 
     });
     return (
@@ -116,14 +167,14 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
             {(formik) => {
                 return <Form>
                     <Card
-                        title="Uso Público"
+                        title="Estudio previo para Uso Público"
                         extra={
                             <ModalNotificar/>
                         }
                     >
                         <FormPrecontractualPublicUse formik={formik} />
                     </Card>
-                    <Card title="Datos del solicitante">
+                    <Card title="Información del solicitante">
                         <FormUser formik={formik} comodato={true} />
                     </Card>
                     <Card >

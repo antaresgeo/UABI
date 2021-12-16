@@ -8,9 +8,10 @@ interface FormPros {
     dispositionType?: string;
     realEstate?: any;
     values_form?: any;
+    stage?: string;
 }
 
-const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, values_form }) => {
+const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, values_form, stage }) => {
     const form_ref = useRef<any>();
     const history = useHistory();
     const on_submit_lease = async (values) => {

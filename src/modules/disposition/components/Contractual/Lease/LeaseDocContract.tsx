@@ -4,22 +4,24 @@ import imgbs64 from '../../../../../utils/assets/img/header.png';
 import '../../../../../utils/assets/styles/contract_lease.css';
 import { useLocation, useHistory } from 'react-router-dom';
 import writtenNumber from 'written-number';
+import moment from 'moment';
 
 interface IParams {
-    values: any;
+    values_contract: any;
     realEstate: any;
     dispositionType: any;
 }
 const LeaseDocContract = () => {
     const location = useLocation<IParams>();
     const history = useHistory();
-    const { values, realEstate, dispositionType } = location.state;
-    console.log(values, realEstate, dispositionType);
+    const { values_contract, realEstate, dispositionType } = location.state;
+    console.log(values_contract, realEstate, dispositionType);
     const data_previous_study = {
         IVA: 28500,
         administration_value: 9872000,
         appraisal_date: "2021-12-23",
         appraisal_number: 258896,
+        boundaries: "descripcion de areas y linderos aqui",
         business_type: "cafeteria",
         canon_value: 150000,
         companyname_applicant: "empresa",
@@ -34,14 +36,14 @@ const LeaseDocContract = () => {
         fines: "multas",
         firstname_applicant: "Karen",
         firstname_representative: "Jesus",
-        lastname_Leader: "Zambrano",
-        location_applicant: { address: '', id: '' },
+        location_applicant: { address: 'CL 14 #1 - 10', id: '89' },
         lockable_base: 10,
         mobile_applicant: "",
-        name_Leader: "Gladys ",
+        name_Leader: "Yang Aparicio Abadia ",
         name_approved: "Gladys Zambrano",
         name_elaborated: "Mayron Nova",
         name_revised: "Matias Nova",
+        name_secretary: "yeisson esteban jimenez",
         number_doc_applicant: 36985211,
         number_doc_representative: 1007788713,
         operative_degree_occurrence: "",
@@ -65,6 +67,7 @@ const LeaseDocContract = () => {
         secondname_representative: "Marin",
         secondsurname_applicant: "Zambrano",
         secondsurname_representative: "Jimenez",
+        secretary_doc_number: 1458239,
         secretary_leader: "Subsecretaría de Gestión de Bienes",
         subtotal: 178500,
         surname_applicant: "Nova",
@@ -107,10 +110,10 @@ const LeaseDocContract = () => {
                         <div id="id1_2">
                             <p className="p4_contractLease ft6_contractLease">
                                 <span className="ft5_contractLease">Contrato de Arrendamiento No.</span>
-                                {values?.contract_number}
+                                {values_contract?.contract_number}
                             </p>
                             <p className="p5_contractLease ft7_contractLease">
-                                CONTRATO DE ARRENDAMIENTO N°{values?.contract_number}
+                                CONTRATO DE ARRENDAMIENTO N°{values_contract?.contract_number}
                             </p>
                             <table cellPadding="0" cellSpacing="0" className="t0">
                                 <tr>
@@ -236,7 +239,7 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">OBJETO DEL CONTRATO:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease" style={{ width: '365px', textAlign: 'justify' }}>
-                                            {values?.object_contract}
+                                            {values_contract?.object_contract}
                                         </p>
                                     </td>
                                 </tr>
@@ -244,7 +247,7 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">DURACIÓN DEL CONTRATO:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft10_contractLease" style={{ width: '365px', textAlign: 'justify' }}>
-                                            (Duración en letras y números) diga si es años, meses o días
+                                            {`(${data_previous_study.contract_period}) ${writtenNumber(data_previous_study.contract_period, { lang: 'es' })} meses`}
                                         </p>
                                     </td>
                                 </tr>
@@ -353,9 +356,10 @@ const LeaseDocContract = () => {
                                 </tr>
                             </table>
                             <p className="p11_contractLease ft15_contractLease">
-                                Entre los suscritos a saber, Digite el nombre del Secretario en
-                                mayúscula sostenida y negrilla, identificado(a) con cédula de
-                                ciudadanía No. Digite el número de documento, en su calidad de
+                                Entre los suscritos a saber,
+                                <span className='ft3_comodato'>{` ${data_previous_study.name_secretary} `}</span>
+                                con cédula de ciudadanía No. <span className='ft3_comodato'>{`${data_previous_study.secretary_doc_number} `}</span>
+                                Digite el número de documento, en su calidad de
                                 Secretario(a) de Suministros y Servicios del Municipio de Medellín,
                                 nombrado mediante el Decreto Municipal N° 001 del 1 de enero de 2016 y
                                 acta de posesión N° 11 del 03/01/2020, en uso de sus facultades
@@ -453,14 +457,13 @@ const LeaseDocContract = () => {
                                 área a entregar en arrendamiento corresponde a digite el área m<span
                                     className="ft17_contractLease"
                                 >2 </span
-                                >y los linderos son los siguientes: (digite descripción de linderos
-                                citar informe de prediación por radicado y fecha de elaboración).
-                                <span className="ft14_contractLease">TERCERA: DESTINACIÓN. </span>EL (LA)
+                                >y los linderos son los siguientes: {data_previous_study.boundaries} con radicado del informe de Prediación: {data_previous_study.prediation_number} y fecha {data_previous_study.prediation_date}. <span className="ft14_contractLease">TERCERA: DESTINACIÓN. </span>EL (LA)
                                 ARRENDATARIO(A) podrá hacer uso del inmueble objeto del presente
                                 contrato, única y exclusivamente para {data_previous_study?.destination_realEstate}
-                                <span className="ft14_contractLease"> CUARTA: PLAZO</span>. (Inserte tiempo en letras
-                                (tiempo en número) a partir de la fecha de suscripción del acta de
-                                inicio, previa aprobación de la póliza de arrendamiento o póliza de
+                                <span className="ft14_contractLease"> CUARTA: PLAZO</span>.
+                                {` (${data_previous_study?.contract_period}) ${writtenNumber(data_previous_study?.contract_period, { lang: 'es' })} meses `}
+                                a partir de la fecha de suscripción del acta de
+                                inicio: {moment(values_contract.start_date).format('DD/MM/YYYY')}, previa aprobación de la póliza de arrendamiento o póliza de
                                 cumplimiento por la Unidad Administración de Bienes Inmuebles de la
                                 Secretaría de Suministros y Servicios (si aplica).
                                 <span className="ft14_contractLease">PARÁGRAFO PRIMERO: </span>No obstante, el plazo de
@@ -728,9 +731,9 @@ const LeaseDocContract = () => {
                                 que son inmodificables; de presentarse pluralidad de arrendatarios la
                                 factura electrónica será expedida a nombre de
                                 {data_previous_study.type_society_applicant === "Persona Juridica" ?
-                                    `${data_previous_study.companyname_applicant}`
+                                    ` ${data_previous_study.firstname_representative} ${data_previous_study.secondname_representative} ${data_previous_study.surname_representative} ${data_previous_study.secondsurname_representative} `
                                     :
-                                    `${data_previous_study.firstname_applicant} ${data_previous_study.secondname_applicant} ${data_previous_study.surname_applicant} ${data_previous_study.secondsurname_applicant}`
+                                    ` ${data_previous_study.firstname_applicant} ${data_previous_study.secondname_applicant} ${data_previous_study.surname_applicant} ${data_previous_study.secondsurname_applicant} `
 
                                 }
                                 sin perjuicio de que todos sean deudores solidarios.
@@ -1728,9 +1731,9 @@ const LeaseDocContract = () => {
                 </Card>
                 <Card style={{ width: '850px', margin: '0 auto' }}>
                     <div id="page_17_contractLease">
-                        <div id="p17_contractLeasedimg1">
+                        <div id="p17dimg1">
                             <img
-                                src={imgbs64} alt="" id="p17_contractLeaseimg1"
+                                src={imgbs64} alt="" id="p17img1"
                             />
                         </div>
 
@@ -1765,19 +1768,8 @@ const LeaseDocContract = () => {
                                 conformidad con el Decreto 1082 de 2015 y con el artículo 223 del
                                 <span>Decreto-Ley</span> 019 de 2012, el presente contrato una vez
                                 perfeccionado, deberá ser publicado por parte del MUNICIPIO DE
-                                MEDELLÍN. <span className="ft14_contractLease">TRIGÉSIMA TERCERA:</span>
-                            </p>
-                            <p className="p24_contractLease ft7_contractLease">
-                                PERFECCIONAMIENTO DEL CONTRATO Y EJECUCIÓN.
-                                <span className="ft9_contractLease">El presente contrato</span>
-                            </p>
-                            <p className="p41_contractLease ft15_contractLease">
-                                requiere para su perfeccionamiento el acuerdo sobre el objeto y la
-                                contraprestación y éste se eleve a escrito, y para su ejecución la
-                                aprobación de la garantía por parte de la Unidad Administración de
-                                Bienes Inmuebles de la Secretaría de Suministros y Servicios del
-                                MUNICIPIO DE MEDELLÍN; así mismo la firma y suscripción del acta de
-                                inicio por parte de EL (LA) ARRENDATARIO(A) (Si aplica).
+                                MEDELLÍN. <span className="ft14_contractLease">TRIGÉSIMA TERCERA: PERFECCIONAMIENTO DEL CONTRATO Y EJECUCIÓN.</span>
+                                {` ${values_contract?.object_contract} `}
                                 <span className="ft14_contractLease">TRIGÉSIMA CUARTA: NOTIFICACIONES. </span>Las
                                 notificaciones que cualquiera de las partes deseare hacer a la otra,
                                 deben formularse por escrito a las siguientes direcciones: (INSERTE
@@ -1797,11 +1789,12 @@ const LeaseDocContract = () => {
                                 ____________________
                             </p>
                             <p className="p62_contractLease ft42_contractLease">
-                                (DIGITE NOMBRE DEL SECRETARIO DE SUMINISTROS Y SERVICIOS)
-                                <span className="ft15_contractLease">Cédula N° </span>(DIGITE NÚMERO DE IDENTIFICACIÓN)
+                                {` ${data_previous_study.name_Leader} `}
                             </p>
-                            <p className="p0_contractLease ft9_contractLease">Secretario de Suministros y Servicios</p>
+                            <p className="p37_contractLease ft15_contractLease"> Cédula N° (DIGITE NÚMERO DE IDENTIFICACIÓN)</p>
+                            <p className="p37_contractLease ft9_contractLease">Secretario de Suministros y Servicios</p>
                             <p className="p37_contractLease ft9_contractLease">Municipio de Medellín</p>
+                            <p className="p37_contractLease ft9_contractLease">Arrendador</p>
                             <p className="p50_contractLease ft6_contractLease">Página 17 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
                                 _________________________________________________________________________________________________
@@ -1819,9 +1812,9 @@ const LeaseDocContract = () => {
                 </Card>
                 <Card style={{ width: '850px', margin: '0 auto' }}>
                     <div id="page_18_contractLease">
-                        <div id="p18_contractLeasedimg1">
+                        <div id="p18dimg1">
                             <img
-                                src={imgbs64} alt="" id="p18_contractLeaseimg1"
+                                src={imgbs64} alt="" id="p18img1"
                             />
                         </div>
 
@@ -1846,86 +1839,60 @@ const LeaseDocContract = () => {
                                 <span className="ft5_contractLease">Contrato de Arrendamiento No. </span>(DIGITE SÓLO
                                 NÚMERO DE CONTRATO – SIN FECHA)
                             </p>
-                            <p className="p36_contractLease ft9_contractLease">Arrendador</p>
                             <p className="p63_contractLease ft35_contractLease">
-                                (DIGITE NOMBRE COMPLETO DEL (LA) ARRENDATARIO(A))
-                                <span className="ft36_contractLease">Cédula N° </span>(DIGITE NÚMERO DE IDENTIFICACIÓN)
+                                {data_previous_study.type_society_applicant === "Persona Juridica" ?
+                                    `${data_previous_study?.firstname_representative} ${data_previous_study?.secondsurname_representative} ${data_previous_study?.surname_representative} ${data_previous_study?.secondsurname_representative}`
+                                    :
+                                    `${data_previous_study.firstname_applicant} ${data_previous_study.secondname_applicant} ${data_previous_study.surname_applicant} ${data_previous_study.secondsurname_applicant}`
+                                }
                             </p>
-                            <p className="p64_contractLease ft42_contractLease">
-                                (DIGITE NOMBRE COMPLETO O RAZÓN SOCIAL DEL (LA) ARRENDATARIO(A) SI
-                                OBRA EN REPRESENTACIÓN DE… DIGITE RAZON SOCIAL)
+                            <p className="p64_contractLease ft36_contractLease">Cédula N° (DIGITE NÚMERO DE IDENTIFICACIÓN)</p>
+                            <p className="p64_contractLease ft36_contractLease">
+
+                                {data_previous_study.type_society_applicant === "Persona Juridica" &&
+                                    <>
+                                        Obra en representacion de
+                                        <span className="ft42_contractLease"> {data_previous_study?.companyname_applicant}</span>
+                                    </>
+                                }
+
                             </p>
-                            <p className="p0_contractLease ft7_contractLease">
-                                <span className="ft9_contractLease">Dirección: </span>(DIGITE DIRECCIÓN RESIDENCIA Y/O
-                                NOTIFICACIONES)
+                            <p className="p64_contractLease ft7_contractLease">
+                                <span className="ft9_contractLease">Dirección: </span> {data_previous_study?.location_applicant?.address}
+
                             </p>
                             <p className="p48_contractLease ft7_contractLease">
-                                <span className="ft9_contractLease">Teléfono: </span>(DIGITE TELÉFONO Y CELULAR DEL (LA)
-                                ARRENDATARIO(A))
+                                <span className="ft9_contractLease">Teléfono: </span> {data_previous_study.telephone_applicant}
                             </p>
                             <p className="p65_contractLease ft42_contractLease">
-                                <span className="ft15_contractLease">Correo electrónico: </span>(DIGITE DIRECCIÓN DE
-                                CORREO ELECTRÓNICO) <span className="ft15_contractLease">NIT N° </span>(DIGITE NÚMERO DE
-                                IDENTIFICACIÓN)
+                                <span className="ft15_contractLease">Correo electrónico: </span> {data_previous_study.email_applicant}
                             </p>
-                            <p className="p0_contractLease ft9_contractLease">Arrendatario</p>
-                            <table cellPadding="0" cellSpacing="0" className="t2">
+                            <p className='p65_contractLease ft42_contractLease'>
+                                <span className="ft15_contractLease">NIT N° </span> {data_previous_study.number_doc_applicant}
+                            </p>
+                            <p className="p65_contractLease ft9_contractLease">Arrendatario</p>
+
+                            <table cellPadding="0" cellSpacing="0" className="t2_contractLease">
                                 <tr>
                                     <td className="tr7_contractLease td2_contractLease"></td>
                                     <td className="tr7_contractLease td3_contractLease"><p className="p66_contractLease ft43_contractLease">Elaboró:</p></td>
                                     <td className="tr7_contractLease td4_contractLease"><p className="p67_contractLease ft43_contractLease">Revisó:</p></td>
-                                    <td className="tr7_contractLease td4_contractLease"><p className="p68_contractLease ft43_contractLease">Revisó:</p></td>
+                                    <td className="tr7_contractLease td4_contractLease"><p className="p68_contractLease ft43_contractLease">Aprobó:</p></td>
                                     <td className="tr7_contractLease td5_contractLease"><p className="p68_contractLease ft43_contractLease">Revisó y Aprobó:</p></td>
                                 </tr>
                                 <tr>
                                     <td className="tr8_contractLease td2_contractLease"></td>
-                                    <td className="tr8_contractLease td6_contractLease"><p className="p66_contractLease ft43_contractLease">(DIGITE NOMBRE)</p></td>
-                                    <td className="tr8_contractLease td7_contractLease"><p className="p67_contractLease ft43_contractLease">(DIGITE NOMBRE)</p></td>
-                                    <td className="tr8_contractLease td7_contractLease"><p className="p68_contractLease ft43_contractLease">(DIGITE NOMBRE)</p></td>
-                                    <td className="tr8_contractLease td8_contractLease"><p className="p68_contractLease ft43_contractLease">(DIGITE NOMBRE)</p></td>
+                                    <td className="tr8_contractLease td6_contractLease"><p className="p66_contractLease ft43_contractLease">{data_previous_study.name_elaborated}</p></td>
+                                    <td className="tr8_contractLease td7_contractLease"><p className="p67_contractLease ft43_contractLease">{data_previous_study.name_revised}</p></td>
+                                    <td className="tr8_contractLease td7_contractLease"><p className="p68_contractLease ft43_contractLease">{data_previous_study.name_Leader}</p></td>
+                                    <td className="tr8_contractLease td8_contractLease"><p className="p68_contractLease ft43_contractLease">{data_previous_study.name_secretary}</p></td>
                                 </tr>
-                                <tr>
+                                <tr style={{borderBottom: '1px solid #000'}}>
                                     <td className="tr9_contractLease td2_contractLease"></td>
-                                    <td className="tr9_contractLease td9_contractLease"><p className="p66_contractLease ft43_contractLease">Abogado Contratista</p></td>
-                                    <td className="tr9_contractLease td10_contractLease">
-                                        <p className="p67_contractLease ft43_contractLease">Coordinadora Jurídica</p>
-                                    </td>
-                                    <td className="tr9_contractLease td10_contractLease"><p className="p68_contractLease ft43_contractLease">Líder de Programa</p></td>
-                                    <td rowSpan={2} className="tr10_contractLease td11_contractLease">
-                                        <p className="p68_contractLease ft43_contractLease">Subsecretario de Gestión de</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="tr11_contractLease td2_contractLease"></td>
-                                    <td rowSpan={2} className="tr9_contractLease td9_contractLease">
-                                        <p className="p66_contractLease ft43_contractLease">Unidad Administración de Bienes</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr9_contractLease td10_contractLease">
-                                        <p className="p67_contractLease ft43_contractLease">Unidad Administración de Bienes</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr9_contractLease td10_contractLease">
-                                        <p className="p68_contractLease ft43_contractLease">Unidad Administración de Bienes</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="tr11_contractLease td2_contractLease"></td>
-                                    <td rowSpan={2} className="tr8_contractLease td11_contractLease"><p className="p68_contractLease ft43_contractLease">Bienes</p></td>
-                                </tr>
-                                <tr>
-                                    <td className="tr12_contractLease td2_contractLease"></td>
-                                    <td rowSpan={2} className="tr8_contractLease td6_contractLease">
-                                        <p className="p66_contractLease ft43_contractLease">Inmuebles</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr8_contractLease td7_contractLease">
-                                        <p className="p67_contractLease ft43_contractLease">Inmuebles</p>
-                                    </td>
-                                    <td rowSpan={2} className="tr8_contractLease td7_contractLease">
-                                        <p className="p68_contractLease ft43_contractLease">Inmuebles</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="tr11_contractLease td2_contractLease"></td>
-                                    <td className="tr11_contractLease td8_contractLease"><p className="p6_contractLease ft44_contractLease">&nbsp;</p></td>
+                                    <td className="tr9_contractLease td9_contractLease"><p className="p66_contractLease ft43_contractLease">Abogado Contratista Unidad Administración de Bienes Inmuebles</p></td>
+                                    <td className="tr9_contractLease td10_contractLease"><p className="p67_contractLease ft43_contractLease">Coordinadora Jurídica Unidad Administración de Bienes Inmuebles</p></td>
+                                    <td className="tr9_contractLease td10_contractLease"><p className="p68_contractLease ft43_contractLease">Líder de Programa Unidad Administración de Bienes Inmuebles</p></td>
+                                    <td className="tr10_contractLease td11_contractLease"><p className="p68_contractLease ft43_contractLease">Subsecretario de Gestión de bienes</p></td>
                                 </tr>
                             </table>
                             <p className="p69_contractLease ft6_contractLease">Página 18 de 18</p>
@@ -1952,14 +1919,19 @@ const LeaseDocContract = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => {
-                        //console.log('@values',values)
-                        history.goBack();
-                        //history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
+                        history.push({ pathname: "/disposition/create/", state: { dispositionType, stage:"contractual", realEstate, values_contract } })
                     }}
                 >
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={() => {}}
+                >
+                    guardar y descargar
+                </button>
             </div>
         </div>
     )

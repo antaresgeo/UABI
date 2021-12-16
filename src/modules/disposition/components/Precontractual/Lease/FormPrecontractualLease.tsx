@@ -32,19 +32,31 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
             formik.values.subtotal + Number(formik.values.administration_value) + valueServPublic,
             false
         );
-    }, [formik.values.value_aforo, formik.values.recovery_value, formik.values.counter_value, formik.values.public_service, formik.values.administration_value])
-
-    useEffect(() => {
         formik.setFieldValue(
             'subtotal',
             formik.values.IVA + formik.values.canon_value,
             false
         );
-    }, [])
+    }, [formik.values.value_aforo, formik.values.recovery_value, formik.values.counter_value, formik.values.public_service, formik.values.administration_value])
+
 
     return (
         <>
             <div className="row">
+                <div className="col-3">
+                    <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
+                        Fecha de Registro estudio previo
+                    </label>
+                    <Field
+                        type="date"
+                        id="registration_date_id"
+                        name="registration_date"
+                        placeholder="Fecha Final"
+                        className="form-control"
+                        disabled
+                    />
+                    <ErrorMessage name="registration_date" />
+                </div>
                 <div className="col-3">
                     <label htmlFor="consecutive_number_id" className="form-label">
                         Número Consecutivo
@@ -87,6 +99,9 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="IVA" />
                 </div>
+
+            </div>
+            <div className="row">
                 <div className="col-3">
                     <label htmlFor="public_service_id" className="form-label">
                         Valor de servicio público
@@ -109,8 +124,6 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     </Field>
                     <ErrorMessage name="public_service" />
                 </div>
-            </div>
-            <div className="row">
                 {formik.values.public_service === 'Aforo' && (
                     <div className="col-3">
                         <label htmlFor="value_aforo_id" className="form-label">
@@ -268,20 +281,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     </div>
                     <ErrorMessage name="total" />
                 </div>
-                <div className="col-3">
-                    <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
-                        Fecha de Registro
-                    </label>
-                    <Field
-                        type="date"
-                        id="registration_date_id"
-                        name="registration_date"
-                        placeholder="Fecha Final"
-                        className="form-control"
-                        disabled
-                    />
-                    <ErrorMessage name="registration_date" />
-                </div>
+
                 <div className="col-3">
                     <label htmlFor="prediation_number_id" className="form-label">
                         Número Prediación
@@ -305,7 +305,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         name="prediation_date"
                         placeholder="Fecha Final"
                         className="form-control"
-                        // disabled={true}
+                    // disabled={true}
                     />
                     <ErrorMessage name="prediation_date" />
                 </div>
@@ -377,7 +377,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="contract_period" />
                 </div>
-                <div className={`col-${(formik.values.public_service === 'Aforo' || formik.values.public_service === 'Recobro' || formik.values.public_service === 'Contador individualizado' ) ? 6 : 3}`}>
+                <div className={`col-${(formik.values.public_service === 'Aforo' || formik.values.public_service === 'Recobro' || formik.values.public_service === 'Contador individualizado') ? 6 : 3}`}>
                     <label htmlFor="coverage_id" className="form-label">
                         Mecanismo de cobertura
                     </label>
@@ -448,7 +448,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="fines" withCount max={250} />
                 </div>
-                <div className={`col-${(formik.values.public_service === 'Aforo' || formik.values.public_service === 'Recobro' || formik.values.public_service === 'Contador individualizado' ) ? 12 : 6}`}>
+                <div className={`col-${(formik.values.public_service === 'Aforo' || formik.values.public_service === 'Recobro' || formik.values.public_service === 'Contador individualizado') ? 12 : 6}`}>
                     <label htmlFor="destination_realEstate_id" className="form-label">
                         Destinación de bien Inmueble
                     </label>
@@ -464,6 +464,23 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         maxLength={200}
                     />
                     <ErrorMessage name="destination_realEstate" withCount max={200} />
+                </div>
+                <div className="col-12">
+                    <label htmlFor="boundaries_id" className="form-label">
+                        Descripcion de linderos
+                    </label>
+                    <Field
+                        as="textarea"
+                        className="form-control"
+                        id="boundaries_id"
+                        name="boundaries"
+                        aria-describedby="emailHelp"
+                        placeholder="descripción de linderos"
+                        autoComplete="off"
+                        style={{ height: '33px' }}
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="boundaries" withCount max={200} />
                 </div>
             </div>
         </>

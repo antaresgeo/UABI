@@ -16,9 +16,9 @@ const PublicUseDoc = () => {
     const history = useHistory();
     const { values, realEstate, dispositionType } = location.state;
     console.log(values, realEstate, dispositionType);
-    let date = [];
-    let today_date = new Date().getMonth() + 1;
-    date = values?.prediation_date.split("-");
+    let date = values?.registration_date.split("-")
+    let prediationDate = values?.prediation_date.split("-")
+
     return (
         <div className="h-100 d-flex flex-column">
             <div className="container-fluid">
@@ -61,11 +61,11 @@ const PublicUseDoc = () => {
                                 (Inserte valor en números). */}
                             </p>
                             <p className="p9 ft6">
-                                <span className="ft3">3.</span><span className="ft4">Solicitante: {values?.names_applicant} </span>
+                                <span className="ft3">3.</span><span className="ft4">Solicitante: {values?.applicant.company_name} </span>
                                 {/* (Digite el nombre de la persona
                                 jurídica que solicita el inmueble en Administración del Espacio
                                 Público)  */}
-                                NIT: <span className="ft3">{values?.number_doc_applicant_id}</span>
+                                NIT: <span className="ft3">{values?.applicant.id_number}</span>
                                 {/* (Digite el número de identificación tributaria de la
                                 persona jurídica que solicita el inmueble en Administración del
                                 Espacio Público.) */}
@@ -198,11 +198,11 @@ const PublicUseDoc = () => {
                                 Previsto lo anterior y para satisfacer la necesidad planteada, se
                                 solicita celebrar un contrato de Administración de Bien Inmueble de
                                 Uso Público, el cual permita entregar en calidad de administración un
-                                bien inmueble propiedad del Municipio de Medellín a la <span className="ft3">{values?.names_applicant}</span>,
+                                bien inmueble propiedad del Municipio de Medellín a la <span className="ft3">{values?.applicant.company_name}</span>,
                                 {/* (digite nombre de la persona jurídica)*/}
                                 persona Jurídica, de naturaleza civil, sin
                                 ánimo de lucro, identificado con número de identificación tributaria
-                                No. <span className="ft3">{values?.number_doc_applicant_id}</span>
+                                No. <span className="ft3">{values?.applicant.id_number}</span>
                                 {/* (Digite el NIT) */}
                             </p>
                             <p className="p24 ft5">
@@ -256,7 +256,7 @@ const PublicUseDoc = () => {
                                 {/* (Digite el número del código del activo fijo correspondiente al bien a entregar en Administración del Espacio Público), */}
                                 <span className="ft3">{` ${realEstate?.address?.address}`}</span>, cuyo tipo es
                                 {/* (digite la dirección del bien teniendo en cuenta el manual de nomenclatura), */}
-                                <span className="ft3">{` ${values?.tipology?.tipology}`}</span>, escritura N°
+                                <span className="ft3">{` ${values?.business_type}`}</span>, escritura N°
                                 {/* (Digite el tipo de bien, si es casa, local, bodega,etc.) */}
                                 <span className="ft3">
                                     {realEstate?.acquisitions?.length > 0 &&
@@ -275,8 +275,11 @@ const PublicUseDoc = () => {
                                 cuyas áreas y linderos se describen de la siguiente manera, según
                                 informe de prediación con radicado: <span className="ft3">{values?.prediation_number}</span> del
                                 {/* (Digite el número del radicado delinforme de prediación)  */}
-                                <span className="ft3_comodato">{` ${date[2]} de ${months(date[1])} de ${date[0]}.`}</span>
+                                <span className="ft3_comodato">{` ${prediationDate[2]} de ${months(prediationDate[1])} de ${prediationDate[0]}.`}</span>
                                 {/* (digite el día del informe) de (Digite el mes del informe) de (Digite el número del año del informe). */}
+                            </p>
+                            <p className="p9 ft0">
+                                descripción de Linderos: <span className="ft3_comodato">{` ${values?.boundaries}.`}</span>
                             </p>
                             <p className="p26 ft0">
                                 <span className="ft3">3.</span><span className="ft4">Destinación</span>: debe
@@ -305,7 +308,7 @@ const PublicUseDoc = () => {
                                 destinación y uso propuesto para el bien, determinado en la cláusula tercera de este
                                 contrato. 7) Responder por los daños que los bienes entregados causen a terceros. 8) A
                                 permitir el ingreso del personal adscrito al Municipio de Medellín, cuando EL
-                                <span className="ft17">ADMINISTRADOR </span>lo considere necesario, para inspecciones
+                                <span className="ft17"> ADMINISTRADOR </span>lo considere necesario, para inspecciones
                                 físicas de rutina del bien o efectos de la ejecución de supervisión del presente
                                 contrato de Administración del Espacio Público. 9) Deberá pagar y aportar los paz y
                                 salvos de Servicios Públicos y cuotas de administración cuando aplique en el cual conste
@@ -614,15 +617,15 @@ const PublicUseDoc = () => {
                                     <td className="tr0 td0">
                                         <p className="p40 ft0">REGULATORIO</p>
                                     </td>
-                                    <td className="tr0 td1"><p className="p41 ft0">{values?.regulatory_degree_occurrence === "" ? "MEDIO" : values?.regulatory_degree_occurrence}</p></td>
-                                    <td className="tr0 td2"><p className="p41 ft0">{values?.regulatory_impact_degree === "" ? "MEDIO" : values?.regulatory_impact_degree}</p></td>
-                                    {values?.regulatory_responsable === "municipio" &&
+                                    <td className="tr0 td1"><p className="p41 ft0">{values?.regulatory_risk.degree_occurrence === "" ? "MEDIO" : values?.regulatory_risk.degree_occurrence}</p></td>
+                                    <td className="tr0 td2"><p className="p41 ft0">{values?.regulatory_risk.impact_degree === "" ? "MEDIO" : values?.regulatory_risk.impact_degree}</p></td>
+                                    {values?.regulatory_risk.responsable === "municipio" &&
                                         <>
                                             <td className="tr0 td1"><p className="p41 ft0 text-center"></p></td>
                                             <td className="tr0 td3"><p className="p41 ft0 text-center">X</p></td>
                                         </>
                                     }
-                                    {(values?.regulatory_responsable === "Contratista" || values?.regulatory_responsable === "") &&
+                                    {(values?.regulatory_risk.responsable === "Contratista" || values?.regulatory_risk.responsable === "") &&
                                         <>
                                             <td className="tr0 td1"><p className="p41 ft0 text-center">X</p></td>
                                             <td className="tr0 td3"><p className="p41 ft0 text-center"></p></td>
@@ -630,11 +633,11 @@ const PublicUseDoc = () => {
                                     }
                                     <td className="tr0 td4">
                                         <p className="p41 ft0">
-                                            {values?.regulatory_mitigation_mechanism === ""
+                                            {values?.regulatory_risk.mitigation_mechanism === ""
                                                 ?
                                                 "Ejercer un control y vigilancia estrictos al contrato por parte del supervisor."
                                                 :
-                                                values?.regulatory_mitigation_mechanism
+                                                values?.regulatory_risk.mitigation_mechanism
                                             }
 
                                         </p>
@@ -646,15 +649,15 @@ const PublicUseDoc = () => {
                                             OPERATIVOS: Incumplimiento del contratista de las obligaciones y prohibiciones contraídas en virtud del contrato.
                                         </p>
                                     </td>
-                                    <td className="tr0 td1"><p className="p41 ft0">{values?.operative_degree_occurrence === "" ? "MEDIO" : values?.operative_degree_occurrence}</p></td>
-                                    <td className="tr0 td2"><p className="p41 ft0">{values?.operative_impact_degree === "" ? "MEDIO" : values?.operative_impact_degree}</p></td>
-                                    {values?.operative_responsable === "municipio" &&
+                                    <td className="tr0 td1"><p className="p41 ft0">{values?.operational_risk.degree_occurrence === "" ? "MEDIO" : values?.operational_risk.degree_occurrence}</p></td>
+                                    <td className="tr0 td2"><p className="p41 ft0">{values?.operational_risk.impact_degree === "" ? "MEDIO" : values?.operational_risk.impact_degree}</p></td>
+                                    {values?.operational_risk.responsable === "municipio" &&
                                         <>
                                             <td className="tr0 td1"><p className="p41 ft0 text-center"></p></td>
                                             <td className="tr0 td3"><p className="p41 ft0 text-center">X</p></td>
                                         </>
                                     }
-                                    {(values?.operative_responsable === "Contratista" || values?.operative_responsable === "") &&
+                                    {(values?.operational_risk.responsable === "Contratista" || values?.operational_risk.responsable === "") &&
                                         <>
                                             <td className="tr0 td1"><p className="p41 ft0 text-center">X</p></td>
                                             <td className="tr0 td3"><p className="p41 ft0 text-center"></p></td>
@@ -662,11 +665,11 @@ const PublicUseDoc = () => {
                                     }
                                     <td className="tr0 td4">
                                         <p className="p41 ft0">
-                                            {values?.operative_mitigation_mechanism === ""
+                                            {values?.operational_risk.mitigation_mechanism === ""
                                                 ?
                                                 "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual"
                                                 :
-                                                values?.operative_mitigation_mechanism
+                                                values?.operational_risk.mitigation_mechanism
                                             }
 
                                         </p>
@@ -683,22 +686,22 @@ const PublicUseDoc = () => {
                             </p>
                             <table cellPadding="0" cellSpacing="0" className="t1">
                                 <tr>
-                                    <td className="tr0 td42" style={{borderRight: "1px solid #000"}}>
+                                    <td className="tr0 td42" style={{ borderRight: "1px solid #000" }}>
                                         <p className="p40 ft0">Tipificación</p>
                                     </td>
                                     <td className="tr0 td44">
                                         <p className="p41 ft0">Estimación</p>
                                     </td>
-                                    <td className="tr0 td46" style={{borderRight: '1px solid #000'}}>
-                                        <p className="p42 ft0" style={{width: '135px', height: 'auto'}}>Mecanismo de Cobertura</p>
+                                    <td className="tr0 td46" style={{ borderRight: '1px solid #000' }}>
+                                        <p className="p42 ft0" style={{ width: '135px', height: 'auto' }}>Mecanismo de Cobertura</p>
                                     </td>
                                     <td className="tr0 td48"><p className="p41 ft0">Asignación</p></td>
                                     <td className="tr0 td49"><p className="p41 ft0">Vigencia</p></td>
                                     <td className="tr0 td50"><p className="p41 ft0">Aplica</p></td>
                                 </tr>
-                                <tr style={{borderBottom: "1px solid #000"}}>
-                                    <td className="tr0 td42" style={{borderRight: "1px solid #000"}}>
-                                        <p className="p40 ft0" style={{width: '135px', height: 'auto'}}>
+                                <tr style={{ borderBottom: "1px solid #000" }}>
+                                    <td className="tr0 td42" style={{ borderRight: "1px solid #000" }}>
+                                        <p className="p40 ft0" style={{ width: '135px', height: 'auto' }}>
                                             Incumplimiento del contratista de las obligaciones y prohibiciones  contraídas en virtud del contrato
                                         </p>
                                     </td>
@@ -707,7 +710,7 @@ const PublicUseDoc = () => {
                                             {values?.lockable_base}% del valor del contrato
                                         </p>
                                     </td>
-                                    <td className="tr0 td46" style={{borderRight: '1px solid #000'}}>
+                                    <td className="tr0 td46" style={{ borderRight: '1px solid #000' }}>
                                         <p className="p42 ft0" >
                                             Garantía de Cumplimiento: Ampara al Beneficiario el total y perfecto cumplimiento del contrato pactado de acuerdo a sus términos, condiciones y especificaciones contractuales
                                         </p>
@@ -795,9 +798,6 @@ const PublicUseDoc = () => {
                                 <span className="ft3">{` ${values?.environmental_risk}. `}</span>
                                 {/* (Digitar los riesgos ambientales que apliquen para el contrato). */}
                             </p>
-                            <p className="p22 ft3">
-                                13. Supervisión del contrato e inspección del inmueble:
-                            </p>
                             <p className="p22 ft3">13. Supervisión del contrato e inspección del inmueble:</p>
                             <p className="p24 ft0">
                                 De conformidad con lo dispuesto por el artículo 83 de la Ley 1474 de 2011, y la
@@ -880,13 +880,14 @@ const PublicUseDoc = () => {
                                 conservación de activos.
                             </p>
                             <p className="p62 ft0">
-                                Medellín, Antioquia, {`${new Date().getDate()} de ${months(today_date.toString())} de ${new Date().getFullYear()}`}
+                                Medellín, Antioquia,
+                                {`${date[2]} de ${months(date[1])} de ${date[0]}`}
                                 {/* (Digite el día) de (Digite el mes) de (digite el año) */}
                             </p>
-                            <p className="p63 ft0">{`${values?.name_Leader} ${values?.lastname_Leader}`}{/*(Digite Nombres y apellidos)*/}</p>
-                            <p className="p64 ft0">{`${values?.post_leader}`} {/*(Digite cargo)*/}</p>
-                            <p className="p64 ft5">{`${values?.dependence_leader}`}{/*(Digite dependencia)*/}</p>
-                            <p className="p64 ft5">{`${values?.Secretary_leader}`}{/*(Digite secretaria)*/}</p>
+                            <p className="p63 ft0">{`${values?.detailsLeader.names.firstName} ${values?.detailsLeader.names.lastName} ${values?.detailsLeader.surnames.firstSurname} ${values?.detailsLeader.surnames.lastSurname}  `}{/*(Digite Nombres y apellidos)*/}</p>
+                            <p className="p64 ft0">{`${values?.leader.post}`} {/*(Digite cargo)*/}</p>
+                            <p className="p64 ft5">{`${values?.leader.dependence}`}{/*(Digite dependencia)*/}</p>
+                            <p className="p64 ft5">{`${values?.leader.secretary}`}{/*(Digite secretaria)*/}</p>
                             <table cellPadding="0" cellSpacing="0" className="t2">
                                 <tr>
                                     <td className="tr17 td83">
@@ -900,14 +901,14 @@ const PublicUseDoc = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="tr2 td86"><p className="p40 ft0">{values?.name_elaborated}{/*(Nombre)*/}</p></td>
-                                    <td className="tr2 td87"><p className="p41 ft0">{values?.name_revised}{/*(Nombre)*/}</p></td>
-                                    <td className="tr2 td88"><p className="p41 ft0">{values?.name_approved}{/*(Nombre)*/}</p></td>
+                                    <td className="tr2 td86"><p className="p40 ft0">{values?.elaborated.name}{/*(Nombre)*/}</p></td>
+                                    <td className="tr2 td87"><p className="p41 ft0">{values?.revised.name}{/*(Nombre)*/}</p></td>
+                                    <td className="tr2 td88"><p className="p41 ft0">{values?.approved.name}{/*(Nombre)*/}</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr18 td86"><p className="p40 ft0">{values?.post_elaborated}{/*(Cargo)*/}</p></td>
-                                    <td className="tr18 td87"><p className="p41 ft0">{values?.post_revised}{/*(Cargo)*/}</p></td>
-                                    <td className="tr18 td88"><p className="p41 ft0">{values?.post_approved}{/*(Cargo)*/}</p></td>
+                                    <td className="tr18 td86"><p className="p40 ft0">{values?.elaborated.post}{/*(Cargo)*/}</p></td>
+                                    <td className="tr18 td87"><p className="p41 ft0">{values?.revised.post}{/*(Cargo)*/}</p></td>
+                                    <td className="tr18 td88"><p className="p41 ft0">{values?.approved.post}{/*(Cargo)*/}</p></td>
                                 </tr>
                                 <tr>
                                     <td className="tr9 td89">
@@ -942,7 +943,7 @@ const PublicUseDoc = () => {
                     className="btn btn-outline-primary"
                     onClick={() => {
                         // console.log('@values uso Publico',values)
-                        history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
+                        history.push({ pathname: "/disposition/create/", state: { dispositionType, stage: "pre-contractual", realEstate, values } })
                     }}
                 >
                     Atras

@@ -92,8 +92,8 @@ const get_docucments_whit_service = async (docs) => {
                     doc.type === 3
                         ? 'Documento de Matricula'
                         : doc.type === 4
-                        ? 'Documento de Titulo'
-                        : 'Anexo',
+                            ? 'Documento de Titulo'
+                            : 'Anexo',
             }));
         }
         return [];
@@ -140,6 +140,7 @@ export const createRealEstate = async (
     try {
         let URI = `/real-estates`;
         const docs: any = await compute_docs(data.supports_documents);
+        console.log(docs)
         const aux_data = finalData(data);
         let res: AxiosResponse<IRealEstateResponse> = await http.post(
             URI,
@@ -163,21 +164,61 @@ export const createRealEstate = async (
 //TODO: Crear realEstates englobe - desenglobe
 export const createRealEstates = async (data: any, action) => {
     console.log('crear', data)
+    let realEstates = [];
+    const docs = await Promise.all(
+        data.map(async (d) => {
+            return await compute_docs(d.supports_documents);
+        })
+    )
+    data.map(d => realEstates.push(finalData(d)));
+    realEstates.map(dr => {
+        if (dr.plot_area === "") {
+            dr.plot_area = 0
+        }
+        delete dr.value;
+        delete dr.key
+        delete dr.project_id
+    })
+    const data_final = { realEstates }
+
     try {
         let URI = `/real-estates`;
         let res: AxiosResponse<IRealEstateResponse> = await http.post(
             URI,
-            data,
+            data_final,
             {
                 params: { action },
             }
         );
+
+        const docs_ids = await Promise.all(
+            docs.map(async (d) => {
+                return await upload_documents(d);
+            })
+        )
+
+        // res.data.results.map(result => {
+
+        // })
+        await http.put(
+            URI,
+            { supports_documents: docs_ids || '' },
+            {
+                params: { id: res.data.results.id },
+            }
+        );
+
+
 
         return res.data.results;
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');
     }
+
+
+
+
 };
 
 export const updateRealEstates = async (data: any) => {

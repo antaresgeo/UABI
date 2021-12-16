@@ -58,7 +58,7 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">CBML</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{realEstate?.address?.cbmls?.uabi}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Código Activo Sap</label>
@@ -112,7 +112,7 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                                 {showCanon && (
                                     <div className="col-3">
                                         <label htmlFor="">Ultimo Canon de Arrendamiento</label>
-                                        <div className="my-3">-</div>
+                                        <div className="my-3">{realEstate?.canyon_value === null ? 0 : realEstate?.canyon_value }</div>
                                     </div>
                                 )}
                             </div>
@@ -121,11 +121,11 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                             <div className="row my-3">
                                 <div className="col-3">
                                     <label htmlFor="">Valor de Aprovechamiento</label>
-                                    <div className="my-3">-</div>
+                                    <div className="my-3">{realEstate?.exploitation_value === null ? 0 : realEstate?.exploitation_value}</div>
                                 </div>
                                 <div className="col-3">
                                     <label htmlFor="">Valor Autorización</label>
-                                    <div className="my-3">-</div>
+                                    <div className="my-3">{realEstate?.authorization_value === null ? 0 : realEstate?.authorization_value}</div>
                                 </div>
                             </div>
                         )}

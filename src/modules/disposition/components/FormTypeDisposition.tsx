@@ -9,8 +9,9 @@ interface DispositionFormPros {
 }
 
 export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTypeDispositionChange }) => {
+    console.log(realEstate)
     const initialValues = {
-        type_use: realEstate ? realEstate?.destination_type : "",
+        destination_type: "",
         disposition_type: "",
         availability: "",
         ...realEstate
@@ -23,20 +24,39 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
     const schema = Yup.object().shape({
     });
     let dispositions = [];
-    if(initialValues.type_use === "FISCAL" && initialValues.disposition_type === "Misional social" ){
+    if(initialValues.destination_type === "FISCAL" && initialValues.disposition_type === "Misional" ){
+        dispositions = [
+            "Dependencias"
+        ]
+    } else if(initialValues.destination_type === "FISCAL" && initialValues.disposition_type === "Misional social" ){
         dispositions = [
             "Dependencias",
-            "Comodato",
-            "arrendamiento", //TODO: arreglar cuando este listo
-    //     "ventas",
-    //     "AEP",
-    //     "MTEP",
-    //     "APRED",
-    //     "servidumbre",
-    //     "autorizaciones"
+            "Comodato"
+        ]
+
+    }else if (initialValues.destination_type === "FISCAL" && initialValues.disposition_type === "Inversión") {
+            dispositions = [
+                "arrendamiento",
+                "ventas"
+            ]
+
+    }else if (initialValues.destination_type === "FISCAL" && initialValues.disposition_type === "Inversión Social") {
+        dispositions = [
+            "arrendamiento"
+        ]
+    }else if(initialValues.destination_type === "PÚBLICO" && initialValues.disposition_type === "Administración") {
+        dispositions = [
+            "AEP"
+        ]
+    } else if (initialValues.destination_type === "PÚBLICO" && initialValues.disposition_type === "Mantenimiento") {
+        dispositions = [
+            "MTEP"
+        ]
+    } else if (initialValues.destination_type === "PÚBLICO" && initialValues.disposition_type === "Aprovechamiento") {
+        dispositions = [
+            "APRED"
         ]
     }
-
     // dispositions = [
     //     "Dependencias",
     //     "Comodato",
@@ -54,10 +74,10 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
             <Form>
                 <div className="row">
                     <div className="col-3">
-                        <label htmlFor="type_use_id" className="form-label">
+                        <label htmlFor="destination_type_id" className="form-label">
                             Tipo de Uso
                         </label>
-                        <Field type="text" id="type_use_id" name="type_use" className="form-control" disabled />
+                        <Field type="text" id="destination_type_id" name="destination_type" className="form-control" disabled />
                     </div>
                     <div className="col-3">
                         <label htmlFor="disposition_type_id" className="form-label">

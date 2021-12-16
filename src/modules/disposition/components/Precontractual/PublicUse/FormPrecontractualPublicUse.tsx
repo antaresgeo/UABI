@@ -16,7 +16,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
             <div className="row">
                 <div className="col-6">
                     <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
-                        Fecha de Registro
+                        Fecha de Registro estudio previo
                     </label>
                     <Field
                         type="date"
@@ -24,7 +24,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                         name="registration_date"
                         placeholder="Fecha Final"
                         className="form-control"
-                    // disabled
+                        disabled
                     />
                     <ErrorMessage name="registration_date" />
                 </div>
@@ -140,6 +140,22 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="contract_value" />
                 </div>
                 <div className="col-6">
+                    <label htmlFor="business_type_id" className="form-label">
+                        Tipo de negocio
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="business_type_id"
+                        name="business_type"
+                        aria-describedby="emailHelp"
+                        placeholder="Tipo de negocio"
+                        autoComplete="off"
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="business_type" withCount max={200} />
+                </div>
+                <div className="col-6">
                     <label htmlFor="environmental_risk_id" className="form-label">
                         Riesgos Ambientales
                     </label>
@@ -155,7 +171,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="environmental_risk" withCount max={200} />
                 </div>
-                <div className="col-6">
+                <div className="col-12">
                     <label htmlFor="destination_realEstate_id" className="form-label">
                         Destinación de bien Inmueble
                     </label>
@@ -171,6 +187,24 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="destination_realEstate" withCount max={200} />
                 </div>
+                <div className="col-12">
+                    <label htmlFor="boundaries_id" className="form-label">
+                        Descripcion de linderos
+                    </label>
+                    <Field
+                        as="textarea"
+                        className="form-control"
+                        id="boundaries_id"
+                        name="boundaries"
+                        aria-describedby="emailHelp"
+                        placeholder="descripción de linderos"
+                        autoComplete="off"
+                        style={{ height: '33px' }}
+                        maxLength={200}
+                    />
+                    <ErrorMessage name="boundaries" withCount max={200} />
+                </div>
+
                 <div className="bg-white d-flex flex-row justify-content-between">
                     <div className="flex-fill" />
 

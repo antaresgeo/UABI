@@ -20,7 +20,7 @@ const LeaseDoc = () => {
     const dispatch = useDispatch();
     const { values, realEstate, dispositionType } = location.state;
     console.log(values, realEstate, dispositionType);
-    let today_date = new Date().getMonth() + 1;
+    let date = values?.registration_date.split("-")
     let valueServPublic = 0
     switch (values?.public_service) {
         case "Recobro":
@@ -168,22 +168,22 @@ const LeaseDoc = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="tr5_lease td13_lease"><p className="p6_lease ft10_lease">$ {realEstate?.canyon_value}</p></td>
+                                    <td className="tr5_lease td13_lease"><p className="p6_lease ft10_lease">${realEstate?.canyon_value}</p></td>
                                     <td className="tr5_lease td22_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
-                                    <td className="tr5_lease td23_lease"><p className="p8_lease ft10_lease">$ {values.IVA}</p></td>
+                                    <td className="tr5_lease td23_lease"><p className="p8_lease ft10_lease">${values.IVA}</p></td>
                                     <td colSpan={2} className="tr5_lease td15_lease"><p className="p6_lease ft10_lease">$
                                         {values?.public_service === "Recobro" && ` ${values?.recovery_value}`}
                                         {values?.public_service === "Aforo" && ` ${values?.value_aforo}`}
                                         {values?.public_service === "Contador individualizado" && ` ${values?.counter_value}`}
                                         {values?.public_service === "Prepago" && "--"}
                                     </p></td>
-                                    <td className="tr5_lease td24_lease"><p className="p8_lease ft10_lease">$ {values.administration_value}</p></td>
-                                    <td className="tr5_lease td16_lease"><p className="p8_lease ft10_lease">$ {values.subtotal}</p></td>
+                                    <td className="tr5_lease td24_lease"><p className="p8_lease ft10_lease">${values.administration_value}</p></td>
+                                    <td className="tr5_lease td16_lease"><p className="p8_lease ft10_lease">${values.subtotal}</p></td>
                                     <td className="tr5_lease td25_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                     <td className="tr5_lease td18_lease"><p className="p6_lease ft10_lease">{values.contract_period}</p></td>
                                     <td className="tr5_lease td26_lease"><p className="p7_lease ft11_lease">&nbsp;</p></td>
                                     <td colSpan={2} className="tr5_lease td20_lease">
-                                        <p className="p8_lease ft10_lease">$ {values.total}</p>
+                                        <p className="p8_lease ft10_lease">${values.total}</p>
                                     </td>
                                     <td className="tr5_lease td27_lease">
                                         <p className="p7_lease ft11_lease">&nbsp;</p>
@@ -210,12 +210,12 @@ const LeaseDoc = () => {
                             </p>
                             <p className="p12_lease ft0_lease">
                                 <span className="ft3_lease">Solicitante: </span>
-                                {values?.type_society_applicant === "Persona Natural" ?
-                                    `${values.firstname_applicant} ${values.secondname_applicant} ${values.surname_applicant} ${values.secondsurname_applicant}`
+                                {values?.applicant.type_society === "Persona Natural" ?
+                                    `${values.detailsApplicant.names.firstName} ${values.detailsApplicant.names.lastName} ${values.detailsApplicant.surnames.firstSurname} ${values.detailsApplicant.surnames.lastSurname}`
                                 :
-                                    `${values.companyname_applicant}`
+                                    `${values.applicant.company_name}`
                                 }
-                                {values?.type_society_applicant === "Persona Natural" ? ` C.C.: ${values.number_doc_applicant}` : ` NIT: ${values.number_doc_applicant}`}
+                                {values?.applicant.type_society === "Persona Natural" ? ` C.C.: ${values.detailsApplicant.id_number}` : ` NIT: ${values.applicant.id_number}`}
                             </p>
                             <p className="p13_lease ft0_lease">
 
@@ -307,6 +307,9 @@ const LeaseDoc = () => {
                                 el espacio a entregar en arrendamiento consta de {realEstate?.total_area} m<span className="ft19_lease">2</span>,
                                 cuyas áreas y linderos se describen de la siguiente manera según
                                 informe de Prediación con radicado: <span className="ft3_lease">{values.prediation_number}, de {moment(values.prediation_date).format('DD/MM/YYYY')}.</span>
+                            </p>
+                            <p className='p24_lease ft0_lease'>
+                                {values?.boundaries}
                             </p>
                             <p className="p25_lease ft21_lease">
                                 <span className="ft3_lease">3.</span><span className="ft22_lease">Destinación</span>: debe
@@ -445,7 +448,7 @@ const LeaseDoc = () => {
                                 tributaria de las reformas legales futuras y la adopción de decisiones administrativas:
                             </p>
                             <p className="p30_lease ft0_lease">
-                                <span className="ft26_lease"></span>
+
                                 <span className="ft27_lease">Financieras del arrendatario.</span>
                             </p>
                             <p className="p30_lease ft0_lease">
@@ -549,15 +552,15 @@ const LeaseDoc = () => {
                                     <td className="tr6_lease td28_lease">
                                         <p className="p35_lease ft0_lease">REGULATORIO</p>
                                     </td>
-                                    <td className="tr6_lease td29_lease" style={{ borderRight: '1px solid #000' }}><p className="p8_lease ft0_lease" >{values?.regulatory_degree_occurrence === "" ? "MEDIO" : values?.regulatory_degree_occurrence}</p></td>
-                                    <td className="tr7_lease td31_lease"><p className="p8_lease ft0_lease">{values?.regulatory_impact_degree === "" ? "MEDIO" : values?.regulatory_impact_degree}</p></td>
-                                    {values?.regulatory_responsable === "municipio" &&
+                                    <td className="tr6_lease td29_lease" style={{ borderRight: '1px solid #000' }}><p className="p8_lease ft0_lease" >{values?.regulatory_risk.degree_occurrence === "" ? "MEDIO" : values?.regulatory_risk.degree_occurrence}</p></td>
+                                    <td className="tr7_lease td31_lease"><p className="p8_lease ft0_lease">{values?.regulatory_risk.impact_degree === "" ? "MEDIO" : values?.regulatory_risk.impact_degree}</p></td>
+                                    {values?.regulatory_risk.responsable === "municipio" &&
                                         <>
                                             <td className="tr6_lease td2_lease"><p className="p8_lease ft0_lease text-center"></p></td>
                                             <td className="tr6_lease td2_lease"><p className="p8_lease ft0_lease text-center">X</p></td>
                                         </>
                                     }
-                                    {(values?.regulatory_responsable === "Contratista" || values?.regulatory_responsable === "") &&
+                                    {(values?.regulatory_risk.responsable === "Contratista" || values?.regulatory_risk.responsable === "") &&
                                         <>
                                             <td className="tr6_lease td2_lease"><p className="p8_lease ft0_lease text-center">X</p></td>
                                             <td className="tr6_lease td2_lease"><p className="p8_lease ft0_lease text-center"></p></td>
@@ -566,11 +569,11 @@ const LeaseDoc = () => {
 
                                     <td className="tr6_lease td2_lease">
                                         <p className="p8_lease ft0_lease">
-                                            {values?.regulatory_mitigation_mechanism === ""
+                                            {values?.regulatory_risk.mitigation_mechanism === ""
                                                 ?
                                                 "Ejercer un control y vigilancia estrictos al contrato por parte del supervisor."
                                                 :
-                                                values?.regulatory_mitigation_mechanism
+                                                values?.regulatory_risk.mitigation_mechanism
                                             }
                                         </p>
                                     </td>
@@ -581,15 +584,15 @@ const LeaseDoc = () => {
                                             OPERATIVOS: Incumplimiento del contratista de las obligaciones y prohibiciones  contraídas en virtud del contrato.
                                         </p>
                                     </td>
-                                    <td className="tr6_lease td29_lease" style={{ borderRight: '1px solid #000' }} ><p className="p8_lease ft0_lease" >{values?.operative_degree_occurrence === "" ? "MEDIO" : values?.operative_degree_occurrence}</p></td>
-                                    <td className="tr7_lease td31_lease"><p className="p8_lease ft0_lease">{values?.operative_impact_degree === "" ? "MEDIO" : values?.operative_impact_degree}</p></td>
-                                    {values?.operative_responsable === "municipio" &&
+                                    <td className="tr6_lease td29_lease" style={{ borderRight: '1px solid #000' }} ><p className="p8_lease ft0_lease" >{values?.operational_risk.degree_occurrence === "" ? "MEDIO" : values?.operational_risk.degree_occurrence}</p></td>
+                                    <td className="tr7_lease td31_lease"><p className="p8_lease ft0_lease">{values?.operational_risk.impact_degree === "" ? "MEDIO" : values?.operational_risk.impact_degree}</p></td>
+                                    {values?.operational_risk.responsable === "municipio" &&
                                         <>
                                             <td className="tr6_lease td2_lease"><p className="p8_lease ft0_lease text-center"></p></td>
                                             <td className="tr6_lease td2_lease"><p className="p8_lease ft0_lease text-center">X</p></td>
                                         </>
                                     }
-                                    {(values?.operative_responsable === "Contratista" || values?.operative_responsable === "") &&
+                                    {(values?.operational_risk.responsable === "Contratista" || values?.operational_risk.responsable === "") &&
                                         <>
                                             <td className="tr6_lease td2_lease"><p className="p8_lease ft0_lease text-center">X</p></td>
                                             <td className="tr6_lease td2_lease"><p className="p8_lease ft0_lease text-center"></p></td>
@@ -598,11 +601,11 @@ const LeaseDoc = () => {
 
                                     <td className="tr6_lease td2_lease">
                                         <p className="p8_lease ft0_lease">
-                                            {values?.operative_mitigation_mechanism === ""
+                                            {values?.operational_risk.mitigation_mechanism === ""
                                                 ?
                                                 "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual"
                                                 :
-                                                values?.operative_mitigation_mechanism
+                                                values?.operational_risk.mitigation_mechanism
                                             }
                                         </p>
                                     </td>
@@ -814,9 +817,9 @@ const LeaseDoc = () => {
                                 conservación de activos.
                             </p>
                             <p className="p56_lease ft0_lease">
-                                Medellín, Antioquia,  {`${new Date().getDate()} de ${months(today_date.toString())} de ${new Date().getFullYear()}`}
+                                Medellín, Antioquia,  {`${date[2]} de ${months(date[1])} de ${date[0]}`}
                             </p>
-                            <p className="p57_lease ft0_lease">{`${values?.name_Leader} ${values?.lastname_Leader}`}</p>
+                            <p className="p57_lease ft0_lease">{`${values?.detailsLeader.names.firstName} ${values?.detailsLeader.names.lastName} ${values?.detailsLeader.surnames.firstSurname} ${values?.detailsLeader.surnames.lastSurname}  `}</p>
                             <p className="p58_lease ft0_lease">Líder de Programa</p>
                             <p className="p10_lease ft0_lease">Unidad Administración de Bienes Inmuebles</p>
                             <p className="p10_lease ft0_lease">Subsecretaría de Gestión de Bienes</p>
@@ -827,14 +830,14 @@ const LeaseDoc = () => {
                                     <td className="tr17 td85"><p className="p41 ft0">Aprobó:</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr2 td86"><p className="p40 ft0">{values?.name_elaborated}{/*(Nombre)*/}</p></td>
-                                    <td className="tr2 td87"><p className="p41 ft0">{values?.name_revised}{/*(Nombre)*/}</p></td>
-                                    <td className="tr2 td88"><p className="p41 ft0">{values?.name_approved}{/*(Nombre)*/}</p></td>
+                                    <td className="tr2 td86"><p className="p40 ft0">{values?.elaborated.name}{/*(Nombre)*/}</p></td>
+                                    <td className="tr2 td87"><p className="p41 ft0">{values?.revised.name}{/*(Nombre)*/}</p></td>
+                                    <td className="tr2 td88"><p className="p41 ft0">{values?.approved.name}{/*(Nombre)*/}</p></td>
                                 </tr>
                                 <tr>
-                                    <td className="tr18 td86"><p className="p40 ft0">{values?.post_elaborated}{/*(Cargo)*/}</p></td>
-                                    <td className="tr18 td87"><p className="p41 ft0">{values?.post_revised}{/*(Cargo)*/}</p></td>
-                                    <td className="tr18 td88"><p className="p41 ft0">{values?.post_approved}{/*(Cargo)*/}</p></td>
+                                    <td className="tr18 td86"><p className="p40 ft0">{values?.elaborated.post}{/*(Cargo)*/}</p></td>
+                                    <td className="tr18 td87"><p className="p41 ft0">{values?.revised.post}{/*(Cargo)*/}</p></td>
+                                    <td className="tr18 td88"><p className="p41 ft0">{values?.approved.post}{/*(Cargo)*/}</p></td>
                                 </tr>
                                 <tr>
                                     <td className="tr9 td89"><p className="p42 ft30">&nbsp;</p></td>
@@ -866,7 +869,7 @@ const LeaseDoc = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => {
-                        history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
+                        history.push({ pathname: "/disposition/create/", state: { dispositionType, stage:"pre-contractual", realEstate, values } })
                     }}
                 >
                     Atras

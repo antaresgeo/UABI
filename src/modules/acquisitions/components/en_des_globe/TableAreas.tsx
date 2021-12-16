@@ -239,7 +239,7 @@ export const TableAreas = () => {
                                 text: 'se deben completar los datos de todos los bienes Inmuebles',
                             });
                         } else {
-
+                            console.log('desde tabla',DataRealEstate)
                             dispatch(actions.createRealEstates(DataRealEstate, "many"))
                             //console.log('bienes inmuebles a editar', real_estates_edit);
                         }
