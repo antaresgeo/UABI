@@ -280,7 +280,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                                 name="block"
                                                 autoComplete="off"
                                                 min={0}
-                                                max={999}
+                                                max={9999}
                                                 onChange={(e) => {
                                                     e.preventDefault();
                                                     const { value } = e.target;
@@ -548,6 +548,12 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                         <div className="d-flex justify-content-end mt-2">
                             <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isValid}>
                                 Consultar
+                                {isSubmitting && (
+                                    <i
+                                        className="fa fa-circle-notch fa-spin"
+                                        style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                    />
+                                )}
                             </button>
                         </div>
                     </Form>

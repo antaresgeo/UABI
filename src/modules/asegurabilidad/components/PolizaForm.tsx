@@ -162,7 +162,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema}>
-            {({ setFieldValue, values, handleChange }) => {
+            {({ setFieldValue, values, handleChange, isSubmitting }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -531,8 +531,14 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                         <div className="row justify-content-end">
                             <div className="col text-end">
                                 {type !== 'view' && (
-                                    <button type="submit" className="btn btn-primary my-3" disabled={disabled}>
+                                    <button type="submit" className="btn btn-primary my-3" disabled={disabled || isSubmitting}>
                                         Guardar
+                                        {isSubmitting && (
+                                            <i
+                                                className="fa fa-circle-notch fa-spin"
+                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                            />
+                                        )}
                                     </button>
                                 )}
                             </div>

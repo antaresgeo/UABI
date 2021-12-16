@@ -37,7 +37,12 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
                 [
                     // <div className="d-flex flex-row-reverse px-3 py-1">
                     //     <button type="button" className="btn btn-primary">
-                    //         Guardar
+                    //         Guardar {isSubmitting && (
+                    //                     <i
+                    //                         className="fa fa-circle-notch fa-spin"
+                    //                         style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                    //                     />
+                    //                 )}
                     //     </button>
                     // </div>,
                 ]

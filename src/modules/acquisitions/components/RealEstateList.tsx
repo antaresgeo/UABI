@@ -27,11 +27,11 @@ const RealEstateList: FC<RealEstateListProps> = ({
     // change_page
 }) => {
     const dispatch = useDispatch();
-    const [realEstates, loading, total_results] = useSelector((store: any) => ([
+    const [realEstates, loading, total_results] = useSelector((store: any) => [
         store.acquisitions.realEstates.value,
         store.acquisitions.realEstates.loading,
-        store.acquisitions.realEstates.pagination.total_results
-    ]))
+        store.acquisitions.realEstates.pagination.total_results,
+    ]);
 
     const deleteRealEstate = (id) => async () => {
         const result = await swal.fire({

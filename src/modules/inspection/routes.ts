@@ -3,7 +3,7 @@ import { IRoute } from '../../utils/components/app_router/custom_types';
 import InspectionCreate from './views/inspection/InspectionCreate';
 
 import ListInspection from './views/inspection';
-import Scheduler from "./views/scheduler";
+import Scheduler from './views/scheduler';
 
 const get_routes = (): IRoute[] => {
     return [

@@ -1,10 +1,11 @@
 // import store from "../../config/store";
 import { IRoute } from '../../utils/components/app_router/custom_types';
 import { Home } from './views';
+import { clearObjectNulls } from '../../utils';
 
 export const guards = {
     general: (props?) => {
-        return props.user;
+        return props.user.detailsUser;
     },
 };
 
@@ -20,13 +21,6 @@ const get_routes = (): IRoute[] => {
                 show_breadcrumbs: false,
             },
         },
-        // {
-        //     exact: true,
-        //     is_private: true,
-        //     can_access: true,
-        //     path: "/location/",
-        //     component: Location,
-        // },
     ];
 };
 

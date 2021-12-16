@@ -8,7 +8,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { Breadcrumb } from '../app_router/custom_types';
 import Menu from 'antd/lib/menu';
 
-
 interface ITemplate {
     breadcrumbs?: Breadcrumb[];
     show_breadcrumbs?: boolean;
@@ -34,7 +33,6 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
     const name = `${(user && Object.values(user?.names).join(' ')) || ''} ${
         (user && Object.values(user?.surnames).join(' ')) || ''
     }`;
-
 
     return (
         <>

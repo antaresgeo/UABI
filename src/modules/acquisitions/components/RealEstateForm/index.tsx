@@ -112,23 +112,24 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 projects_id: realEstateData?.project?.id || 0,
             }
             : {
-                ...realEstate,
-                ...(realEstate?.tipology_id
-                    ? {
-                        accounting_account: tipologies?.find((tipology) => tipology.id === realEstate?.tipology_id)?.accounting_account,
-                    }
-                    : {}),
-                ...(realEstate && realEstate?.address?.id
-                    ? {
-                        address: realEstate.address.id,
-                        _address: {
-                            name: realEstate.address.address,
-                            cbml: realEstate.address.cbmls.uabi,
-                        },
-                    }
-                    : {}),
-                projects_id: realEstate?.project?.id || 0,
-            }),
+                  ...realEstate,
+                  ...(realEstate?.tipology_id
+                      ? {
+                            accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id)
+                                ?.accounting_account,
+                        }
+                      : {}),
+                  ...(realEstate && realEstate?.address?.id
+                      ? {
+                            address: realEstate.address.id,
+                            _address: {
+                                name: realEstate.address.address,
+                                cbml: realEstate.address.cbmls.uabi,
+                            },
+                        }
+                      : {}),
+                  projects_id: realEstate?.project?.id || 0,
+              }),
     };
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
@@ -329,8 +330,16 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 formik.setFieldValue('_type', 'finish');
                                                 formik.submitForm();
                                             }}
+                                            disabled={formik.isSubmitting}
                                         >
-                                            Guardar y Finalizar
+                                            Guardar
+                                            {formik.isSubmitting && (
+                                                <i
+                                                    className="fa fa-circle-notch fa-spin"
+                                                    style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                                />
+                                            )}{' '}
+                                            y Finalizar
                                         </button>
                                         {type === 'create' && (
                                             <button
@@ -340,8 +349,16 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                     formik.setFieldValue('_type', 'normal');
                                                     formik.submitForm();
                                                 }}
+                                                disabled={formik.isSubmitting}
                                             >
-                                                Guardar y Crear otro
+                                                Guardar{' '}
+                                                {formik.isSubmitting && (
+                                                    <i
+                                                        className="fa fa-circle-notch fa-spin"
+                                                        style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                                    />
+                                                )}{' '}
+                                                y Crear otro
                                             </button>
                                         )}
                                     </>
@@ -368,8 +385,15 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 formik.setFieldValue('_type', 'normal');
                                                 formik.submitForm();
                                             }}
+                                            disabled={formik.isSubmitting}
                                         >
                                             Guardar
+                                            {formik.isSubmitting && (
+                                                <i
+                                                    className="fa fa-circle-notch fa-spin"
+                                                    style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                                />
+                                            )}
                                         </button>
                                     </>
                                 )}

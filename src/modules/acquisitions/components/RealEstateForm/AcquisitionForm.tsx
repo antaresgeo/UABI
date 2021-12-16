@@ -40,7 +40,6 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
         title_type: Yup.string().required('Campo obligatorio'),
         act_number: Yup.string().required('Campo obligatorio'),
         act_value: Yup.number().required('Campo obligatorio'),
-        recognition_value: Yup.number().required('Campo obligatorio'),
         acquired_percentage: Yup.number().required('Campo obligatorio'),
         origin: Yup.number().required('Campo obligatorio'),
         entity_type: Yup.string().required('Campo obligatorio'),
@@ -51,7 +50,6 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
 
     const submit = (values, form) => {
         form.setSubmitting(true);
-
         onChange(values, form).then(() => {
             form.setSubmitting(false);
             form.resetForm();
@@ -72,7 +70,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="acquisition_type_id" className="form-label">
-                                    Tipo de Adquisición
+                                    Tipo de Adquisición  <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     as="select"
@@ -95,7 +93,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="title_type_id" className="form-label">
-                                    Tipo de Título
+                                    Tipo de Título  <span className="text-danger">*</span>
                                 </label>
                                 <Field as="select" className="form-select" name="title_type" id="title_type_id">
                                     <option value="">-- Seleccione Tipo de Título --</option>
@@ -110,14 +108,14 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="act_number_id" className="form-label">
-                                    N° acto administrativo
+                                    N° acto administrativo  <span className="text-danger">*</span>
                                 </label>
                                 <Field type="text" className="form-control" id="act_number_id" name="act_number" />
                                 <ErrorMessage name="act_number" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="origin_id" className="form-label">
-                                    Procedencia
+                                    Procedencia  <span className="text-danger">*</span>
                                     <Tooltip title="Lorem impsu texto descriptivo">
                                         <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
                                     </Tooltip>
@@ -140,7 +138,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="entity_type_id" className="form-label">
-                                    Tipo de Entidad
+                                    Tipo de Entidad  <span className="text-danger">*</span>
                                 </label>
                                 <Field as="select" className="form-select" id="entity_type_id" name="entity_type">
                                     <option value="">-- Seleccione Tipo de Entidad --</option>
@@ -150,7 +148,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="entity_number_id" className="form-label">
-                                    N° de entidad
+                                    N° de entidad  <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="text"
@@ -163,7 +161,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="acquired_percentage_id" className="form-label">
-                                    Porcentaje Adquirido
+                                    Porcentaje Adquirido  <span className="text-danger">*</span>
                                 </label>
                                 <div className="input-group">
                                     <Field
@@ -180,7 +178,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="area_id" className="form-label">
-                                    Área
+                                    Área  <span className="text-danger">*</span>
                                 </label>
                                 <div className="input-group">
                                     <Field
@@ -202,7 +200,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="acquisition_value_id" className="form-label">
-                                    Valor de adquisición
+                                    Valor de adquisición  <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="number"
@@ -226,7 +224,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">
-                                    Fecha de Adquisición
+                                    Fecha de Adquisición  <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="date"
@@ -239,7 +237,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="address_id" className="form-label">
-                                    Ciudad
+                                    Ciudad  <span className="text-danger">*</span>
                                 </label>
                                 <div className="input-group">
                                     <Field name="city" id="address_id" type="text" className="form-control" disabled />

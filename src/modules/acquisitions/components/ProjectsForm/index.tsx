@@ -141,6 +141,16 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                                         // <div className="d-flex flex-row-reverse px-3 py-1">
                                                         //     <button type="button" className="btn btn-primary">
                                                         //         Guardar
+                                                        //         {isSubmitting && (
+                                                        //             <i
+                                                        //                 className="fa fa-circle-notch fa-spin"
+                                                        //                 style={{
+                                                        //                     fontSize: 12,
+                                                        //                     marginLeft: 4,
+                                                        //                     color: '#fff',
+                                                        //                 }}
+                                                        //             />
+                                                        //         )}
                                                         //     </button>
                                                         // </div>,
                                                     ]
@@ -173,8 +183,18 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                                 </div>
                                                 <div className="row justify-content-center">
                                                     <div className="col text-start">
-                                                        <button type="submit" className="btn btn-primary mr-3">
-                                                            Guardar
+                                                        <button type="submit" className="btn btn-primary mr-3" disabled={formik.isSubmitting}>
+                                                            Guardar{' '}
+                                                            {formik.isSubmitting && (
+                                                                <i
+                                                                    className="fa fa-circle-notch fa-spin"
+                                                                    style={{
+                                                                        fontSize: 12,
+                                                                        marginLeft: 4,
+                                                                        color: '#fff',
+                                                                    }}
+                                                                />
+                                                            )}
                                                         </button>
                                                         <button
                                                             type="button"
@@ -215,8 +235,15 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                         formik.setFieldValue('_type', 'finish');
                                         formik.submitForm();
                                     }}
+                                    disabled={formik.isSubmitting}
                                 >
                                     Guardar y Finalizar
+                                    {formik.isSubmitting && (
+                                        <i
+                                            className="fa fa-circle-notch fa-spin"
+                                            style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                        />
+                                    )}
                                 </button>
                                 <button
                                     type="button"
@@ -225,8 +252,16 @@ const ProjectEnglobarForm: FC<RealEstateFormProps> = ({
                                         formik.setFieldValue('_type', 'normal');
                                         formik.submitForm();
                                     }}
+                                    disabled={formik.isSubmitting}
                                 >
-                                    Guardar y Crear otro
+                                    Guardar
+                                    {formik.isSubmitting && (
+                                        <i
+                                            className="fa fa-circle-notch fa-spin"
+                                            style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                        />
+                                    )}{' '}
+                                    y Crear otro
                                 </button>
                             </div>
                         </div>

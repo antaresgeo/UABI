@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { auth_http } from '../../../../config/axios_instances';
-import { base64Encode, swal_success, swal_warning } from '../../../../utils';
+import { base64Encode, swal_warning } from '../../../../utils';
 
 export interface AllUsersResponse {
     message: string;
@@ -107,14 +107,51 @@ export const create_user = async (_data) => {
         pass = await base64Encode(data.user.password);
     }
 
+    const body = {
+        ...data,
+        user: {
+            ...data.user,
+            ...(pass ? { password: pass } : { password: '' }),
+        },
+    };
+
     try {
         const URI = '/users/';
-        const res: AxiosResponse<UserResponse> = await auth_http.post(URI, {
-            ...data,
-            user: { ...data.user, ...(pass ? { password: pass } : {}) },
-        });
+        const res: AxiosResponse<UserResponse> = await auth_http.post(
+            URI,
+            body
+        );
         return res.data;
     } catch (e) {
+        if (e?.response) {
+            if (e.response?.status === 422) {
+                const messages =
+                    e.response.data?.errors?.map((er) => {
+                        let name = er.field.split('.');
+                        name = name[name.length - 1];
+                        let message = '';
+                        switch (er.rule) {
+                            case 'unique':
+                                message = `El campo ${name} ya se encuentra registrado`;
+                                break;
+                            default:
+                                message = `EL campo ${name} es incorrecto`;
+                                break;
+                        }
+                        return message.replace('email', 'Correo Electronico');
+                    }) || [];
+                swal_warning.fire({
+                    html: `<ul>
+                         ${messages.map((d) => `<li>${d}</li>`)}
+                    </ul>`,
+                });
+            }
+            if (e.response?.status === 400) {
+                swal_warning.fire({
+                    text: e.response.data.message,
+                });
+            }
+        }
         return Promise.reject('Error');
     }
 };
@@ -187,11 +224,11 @@ export const assignRolesAndPermits = async (id, data) => {
                     params: { to: id },
                 }
             );
-            await swal_success.fire({
-                title: 'Usuario actualizado',
-                text: 'Roles y Permisos asignados',
-                icon: 'success',
-            });
+            // await swal_success.fire({
+            //     title: 'Usuario actualizado',
+            //     text: 'Roles y Permisos asignados',
+            //     icon: 'success',
+            // });
         }
     } catch (e) {
         return Promise.reject('Error');

@@ -1,11 +1,9 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { Card } from '../../../utils/ui';
 import { Field, Form, Formik } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import { ModalNotificar } from '../../disposition/components/ModalNotificar';
-import config from "@arcgis/core/config";
-import Map from "@arcgis/core/Map";
-import MapView from "@arcgis/core/views/MapView";
+import Map from '../../../utils/components/template/map';
 
 interface BasicInformationProps {
     inspection: any;
@@ -13,15 +11,10 @@ interface BasicInformationProps {
     disabled?: boolean;
     innerRef: any;
     onSubmit: (values) => void;
-
 }
 const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs, innerRef, onSubmit }) => {
-
-
-
     return (
         <div className="container-fluid">
-
             <div className="col-12">
                 <div className="content_box_table">
                     <div
@@ -127,10 +120,8 @@ const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs
             </Card>
 
             <Card>
-                <div></div>
-                <div id="viewDiv" className="w-100" style={{height: 400}}></div>
+                <Map center={[-75.56359, 6.25184]} />
             </Card>
-
         </div>
     );
 };

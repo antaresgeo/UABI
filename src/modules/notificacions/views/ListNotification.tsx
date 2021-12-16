@@ -41,11 +41,11 @@ const ListNotification = () => {
         store.notifications.notifications.value,
         store.notifications.notifications.loading,
         store.notifications.notifications.pagination.total_results,
-        store.auth.user.detailsUser
+        store.auth.user.detailsUser,
     ]);
 
     useEffect(() => {
-        dispatch(actions.get_all_notifications({ ...(user? { to: user.id}: {})}));
+        dispatch(actions.get_all_notifications({ ...(user ? { to: user.id } : {}) }));
     }, []);
 
     return (

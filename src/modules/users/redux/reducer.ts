@@ -49,7 +49,7 @@ const emptyInitialState: State = {
         loaded: false,
     },
     roles: {
-        value: [fake_role],
+        value: [],
         pagination: {
             page: 1,
             count: 0,

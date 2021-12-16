@@ -32,20 +32,20 @@ const Home = () => {
                                 links={[
                                     { name: 'Registrar póliza', to: '/insurabilities/policy/' },
                                     { name: 'Gestionar corredor de seguros', to: '/insurabilities/company/' },
-                                    { name: 'Gestionar compañía aseguradora', to: '/insurabilities/broker/'},
+                                    { name: 'Gestionar compañía aseguradora', to: '/insurabilities/broker/' },
                                 ]}
                             />
                         </div>
                         <div className="row justify-content-center mt-3">
-                            <Card name="Inspección" links={[
-                                { name: 'Gestionar inspección', to: '/inspection/'},
-                            ]} />
-                            <Card name="Disposición" links={[
-                                { name: 'Gestionar Disposición', to: '/disposition/list/'},
-                                { name: 'Gestionar Contratos', to: '/dispositions/contract/list'},
-                            ]} />
+                            <Card name="Inspección" links={[{ name: 'Gestionar inspección', to: '/inspection/' }]} />
+                            <Card
+                                name="Disposición"
+                                links={[
+                                    { name: 'Gestionar Disposición', to: '/disposition/list/' },
+                                    { name: 'Gestionar Contratos', to: '/dispositions/contract/list' },
+                                ]}
+                            />
                             <Card name="Supervisión" links={[]} />
-
                         </div>
                         <div className="row justify-content-center mt-3">
                             <Card name="Mantenimiento" links={[]} />

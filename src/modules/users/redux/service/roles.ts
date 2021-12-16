@@ -78,8 +78,7 @@ export const updateRole = async (data: any, id: number) => {
             params: { id },
         });
         await swal.fire('Rol actualizado', res.data.message, 'success');
-        console.log(res);
-        return res;
+        return res.data.results;
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');

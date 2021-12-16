@@ -45,6 +45,6 @@ const types = Object.freeze({
         default: 'Se limpia notificaciones [default]',
         success: 'Se limpia notificaciones [success]',
         fail: 'Se limpia notificaciones [fail]',
-    }
+    },
 });
 export default types;

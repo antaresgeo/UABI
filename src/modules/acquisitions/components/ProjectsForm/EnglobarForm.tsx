@@ -29,15 +29,19 @@ const EnglobarForm: FC<GeneralDataFormProps> = ({
     return (
         <Card
             title="Información del bien Inmueble"
-            actions={
-                [
-                    // <div className="d-flex flex-row-reverse px-3 py-1">
-                    //     <button type="button" className="btn btn-primary">
-                    //         Guardar
-                    //     </button>
-                    // </div>,
-                ]
-            }
+            actions={[
+                // <div className="d-flex flex-row-reverse px-3 py-1">
+                //     <button type="button" className="btn btn-primary">
+                //         Guardar{' '}
+                //         {isSubmitting && (
+                //             <i
+                //                 className="fa fa-circle-notch fa-spin"
+                //                 style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                //             />
+                //         )}
+                //     </button>
+                // </div>,
+            ]}
         >
             <div className="row">
                 <div className="form-group col-6">

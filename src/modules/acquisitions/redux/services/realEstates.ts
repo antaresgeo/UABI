@@ -5,7 +5,7 @@ import { swal } from '../../../../utils';
 import {
     createAcquisitionForRealEstate,
     getAcquisitionForRealEstate,
-    updateAcquisition
+    updateAcquisition,
 } from './acquisitions';
 import {
     IPaginable,
@@ -381,7 +381,7 @@ const services = {
     getAcquisitionForRealEstate,
     getTipologies,
     getTipology,
-    updateAcquisition
+    updateAcquisition,
 };
 
 export default services;

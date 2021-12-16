@@ -48,10 +48,7 @@ export const createAcquisitionForRealEstate = (
         service.createAcquisitionForRealEstate(id, acquisitions)
     );
 
-export const updateAcquisition = (
-    id,
-    acquisitions: AdquisitionsItf[]
-) =>
+export const updateAcquisition = (id, acquisitions: AdquisitionsItf[]) =>
     request_dispatch(
         types.acquisition_create,
         service.updateAcquisition(id, acquisitions)

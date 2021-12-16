@@ -20,7 +20,7 @@ const ErrorMessage: FC<ErrorMessageProps> = ({ name, withCount, max }) => {
                 <span className="form-error">{name && <AntErrorMessage name={name} />}</span>
             </div>
             {hasCount && (
-                <div className="col">
+                <div className="col-4">
                     <span className="text-end d-block w-100 mt-1" style={{ height: '22px', color: '#F28C02' }}>
                         {`${`${value}`.length}${max ? `/${max}` : ''}`}
                     </span>

@@ -12,7 +12,7 @@ const nice_login = (dispatch) => (response) => {
     if (response?.data) {
         localStorage.removeItem('attemp');
         const { results } = response.data;
-        dispatch(get_user(results));
+        return dispatch(get_user(results));
     }
     return Promise.reject(response);
 };

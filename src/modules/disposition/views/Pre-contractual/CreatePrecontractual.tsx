@@ -34,22 +34,22 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            {dispositionType === "Comodato" &&
+                            {dispositionType === 'Comodato' && (
                                 <GeneralFormComodato
                                     realEstate={realEstate}
                                     innerRef={form_ref}
                                     onSubmit={on_submit_comodato}
                                     values_form={values_form}
                                 />
-                            }
-                            {dispositionType === "arrendamiento" &&
+                            )}
+                            {dispositionType === 'arrendamiento' && (
                                 <GeneralFormLease
                                     realEstate={realEstate}
                                     innerRef={form_ref}
                                     onSubmit={on_submit_lease}
                                     values_form={values_form}
                                 />
-                            }
+                            )}
                             {(dispositionType !== "arrendamiento" && dispositionType !== "Comodato") &&
                                 <GeneralFormPublicUse
                                     realEstate={realEstate}
@@ -83,8 +83,15 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                     onClick={() => {
                         form_ref.current.submitForm();
                     }}
+                    disabled={form_ref.current?.isSubmitting}
                 >
                     Vista Previa
+                    {form_ref.current?.isSubmitting && (
+                        <i
+                            className="fa fa-circle-notch fa-spin"
+                            style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                        />
+                    )}
                 </button>
             </div>
         </div>

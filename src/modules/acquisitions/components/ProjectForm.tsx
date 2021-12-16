@@ -123,7 +123,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                             const _subs = format_list(dependency.subs);
                                             setFieldValue('subdependency', dependency.name);
                                             setFieldValue('cost_center', dependency.cost_center);
-                                            setFieldValue('management_center', dependency.management_center);
+                                            setFieldValue('management_center', dependency.cost_center);
                                             set_subs(_subs);
                                         }
                                     }}
@@ -265,7 +265,13 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                             <div className="col text-end">
                                 {type !== 'view' && (
                                     <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
-                                        Guardar
+                                        Guardar{' '}
+                                        {isSubmitting && (
+                                            <i
+                                                className="fa fa-circle-notch fa-spin"
+                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                            />
+                                        )}
                                     </button>
                                 )}
                             </div>

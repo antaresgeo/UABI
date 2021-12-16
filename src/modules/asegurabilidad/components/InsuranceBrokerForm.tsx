@@ -191,7 +191,13 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                             <div className="col text-end">
                                 {type !== 'view' && (
                                     <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
-                                        Guardar
+                                        Guardar{' '}
+                                        {isSubmitting && (
+                                            <i
+                                                className="fa fa-circle-notch fa-spin"
+                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                            />
+                                        )}
                                     </button>
                                 )}
                             </div>

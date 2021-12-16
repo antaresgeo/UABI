@@ -97,6 +97,12 @@ export const PassChangeForm: FC<OwnProps> = ({ change_password, onOk, children, 
                                         disabled={formik.isSubmitting || !formik.isValid}
                                     >
                                         Guardar
+                                        {formik.isSubmitting && (
+                                            <i
+                                                className="fa fa-circle-notch fa-spin"
+                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                            />
+                                        )}
                                     </button>
                                 </div>
                             </Fragment>
