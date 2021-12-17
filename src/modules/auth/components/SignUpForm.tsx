@@ -136,7 +136,7 @@ const SignUpForm = () => {
                 <div className="row">
                     <div className="col-6">
                         <label htmlFor="telephone_id" className="form-label">
-                            Telefono
+                            Teléfono
                         </label>
                         <Field
                             type="number"

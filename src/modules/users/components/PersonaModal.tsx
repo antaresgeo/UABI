@@ -230,21 +230,39 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                                         <ErrorMessage name="email" />
                                     </div>
                                     <div className="col-3">
-                                        <label htmlFor="username" className="form-label">
-                                            Telefono
-                                        </label>
-                                        <Field
-                                            type="number"
-                                            className="form-control"
-                                            id="phone_number"
-                                            name="phone_number"
-                                            placeholder="Telefono"
-                                            autoComplete="off"
-                                            disabled={disabled}
-                                            maxLength={20}
-                                            onChange={length_valid(20)}
-                                        />
-                                        <ErrorMessage name="phone_number" withCount max={20} />
+                                        <div className="row">
+                                            <div className="col-8">
+                                                <label htmlFor="phone_number" className="form-label">
+                                                    Teléfono <span className="text-danger">*</span>
+                                                </label>
+                                                <Field
+                                                    type="number"
+                                                    className="form-control"
+                                                    id="phone_number"
+                                                    name="phone_number"
+                                                    placeholder="Teléfono"
+                                                    autoComplete="off"
+                                                    disabled={disabled}
+                                                    maxLength={20}
+                                                />
+                                                <ErrorMessage name="phone_number" />
+                                            </div>
+                                            <div className="col-4">
+                                                <label htmlFor="phone_number_ext" className="form-label">
+                                                    Ext
+                                                </label>
+                                                <Field
+                                                    type="number"
+                                                    className="form-control"
+                                                    id="phone_number_ext"
+                                                    name="phone_number_ext"
+                                                    autoComplete="off"
+                                                    disabled={disabled}
+                                                    maxLength={20}
+                                                />
+                                                <ErrorMessage name="phone_number_ext" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="row">

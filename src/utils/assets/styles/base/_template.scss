@@ -247,3 +247,22 @@
         }
     }
 }
+
+.info-tooltip + .form-control,
+.info-tooltip + .form-select {
+    float: left;
+    margin-right: 4px;
+    width: calc(100% - 37px);
+}
+
+.info-tooltip {
+    float: right;
+    width: 33px;
+    height: 33px;
+    outline: #555 solid 1px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555;
+}

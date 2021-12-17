@@ -127,7 +127,7 @@ const UserViewForm: FC<IUserFormPros> = ({ user, roles }) => {
                                 <div className="my-3">{user?.cellphone_number}</div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor="">Telefono</label>
+                                <label htmlFor="">Teléfono</label>
                                 <div className="my-3">{user?.phone_number}</div>
                             </div>
                             <div className="col-3">

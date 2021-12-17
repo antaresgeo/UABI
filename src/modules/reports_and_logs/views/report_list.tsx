@@ -21,7 +21,7 @@ const ReportList: FC<ReportListProps> = () => {
     //         align: 'left' as 'left',
     //     },
     //     {
-    //         title: 'Telefono',
+    //         title: 'Teléfono',
     //         dataIndex: 'phone',
     //         align: 'left' as 'left',
     //     },

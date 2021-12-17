@@ -133,7 +133,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                                     <div className="my-3">-</div>
                                 </div>
                                 <div className="col-3">
-                                    <label htmlFor="">Telefono</label>
+                                    <label htmlFor="">Teléfono</label>
                                     <div className="my-3">-</div>
                                 </div>
                             </div>
@@ -184,7 +184,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                                     <div className="my-3">-</div>
                                 </div>
                                 <div className="col-3">
-                                    <label htmlFor="">Telefono</label>
+                                    <label htmlFor="">Teléfono</label>
                                     <div className="my-3">-</div>
                                 </div>
                             </div>
@@ -234,7 +234,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                                     <div className="my-3">-</div>
                                 </div>
                                 <div className="col-3">
-                                    <label htmlFor="">Telefono</label>
+                                    <label htmlFor="">Teléfono</label>
                                     <div className="my-3">-</div>
                                 </div>
                             </div>

@@ -16,7 +16,7 @@ const Register = () => {
     // const [nombres, setNombres] = React.useState('');
     // const [apellidos, setApellidos] = React.useState('');
     // const [direccion, setDireccion] = React.useState('');
-    // const [telefono, setTelefono] = React.useState('');
+    // const [telefono, setTeléfono] = React.useState('');
     // const [tipo_identificacion, setTipo_identificacion] = React.useState('');
     // //   const [fecha_creacion, setFecha_creacion] = React.useState("");
     // const [email, setEmail] = React.useState('');
@@ -126,8 +126,8 @@ const Register = () => {
                             </Form.Group>
                             <Form.Group widths="equal">
                                 <Form.Field>
-                                    <label>Telefono</label>
-                                    <Input onChange={(e) => setTelefono(e.target.value)} value={telefono} />
+                                    <label>Teléfono</label>
+                                    <Input onChange={(e) => setTeléfono(e.target.value)} value={telefono} />
                                 </Form.Field>
                                 <Form.Field>
                                     <label>Email</label>

@@ -15,7 +15,7 @@ const ErrorMessage: FC<ErrorMessageProps> = ({ name, withCount, max }) => {
         hasCount = withCount && (typeof value === 'string' || typeof value === 'number');
     }
     return (
-        <div className="row">
+        <div className="row w-100 m-0">
             <div className="col">
                 <span className="form-error">{name && <AntErrorMessage name={name} />}</span>
             </div>
