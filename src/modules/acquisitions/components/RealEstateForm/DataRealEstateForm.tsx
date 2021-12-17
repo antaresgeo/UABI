@@ -10,6 +10,7 @@ import { extractMonth, formatDate } from '../../../../utils';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import dependencias from '../../dependencias';
 import { useDispatch } from 'react-redux';
+import TooltipField from "../../../../utils/ui/tooltip_field";
 
 interface DataRealEstateFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -230,6 +231,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <label htmlFor="name_id" className="form-label">
                         Nombre Inmueble <span className="text-danger">*</span>
                     </label>
+                    <TooltipField text="Lorem impsu texto descriptivo"/>
                     <Field
                         disabled={disabled}
                         name="name"
@@ -239,18 +241,13 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         autoComplete="off"
                         maxLength={200}
                     />
-                    {/*<Popover content={<div>Lorem impsu texto descriptivo</div>} trigger="hover">*/}
-                    {/*    <InfoCircleOutlined />*/}
-                    {/*</Popover>*/}
                     <ErrorMessage name="name" withCount max={200} />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="registry_number_noc" className="form-label">
                         Número matrícula <span className="text-danger">*</span>
-                        <Tooltip title="Lorem impsu texto descriptivo">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
                     </label>
+                    <TooltipField text="Lorem impsu texto descriptivo"/>
                     <Field
                         type="text"
                         name="registry_number"
@@ -261,6 +258,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         disabled={disabled}
                         maxLength={20}
                     />
+
                     <ErrorMessage name="registry_number" withCount max={20} />
                 </div>
                 <div className="form-group col-3">

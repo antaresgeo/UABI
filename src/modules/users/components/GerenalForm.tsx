@@ -369,20 +369,39 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 <ErrorMessage name="detailsUser.cellphone_number" />
                             </div>
                             <div className="col-3">
-                                <label htmlFor="username" className="form-label">
-                                    Telefono <span className="text-danger">*</span>
-                                </label>
-                                <Field
-                                    type="number"
-                                    className="form-control"
-                                    id="phone_number"
-                                    name="detailsUser.phone_number"
-                                    placeholder="Telefono"
-                                    autoComplete="off"
-                                    disabled={disabled}
-                                    maxLength={201}
-                                />
-                                <ErrorMessage name="detailsUser.phone_number" />
+                                <div className="row">
+                                    <div className="col-8">
+                                        <label htmlFor="phone_number" className="form-label">
+                                            Teléfono <span className="text-danger">*</span>
+                                        </label>
+                                        <Field
+                                            type="number"
+                                            className="form-control"
+                                            id="phone_number"
+                                            name="detailsUser.phone_number"
+                                            placeholder="Teléfono"
+                                            autoComplete="off"
+                                            disabled={disabled}
+                                            maxLength={20}
+                                        />
+                                        <ErrorMessage name="detailsUser.phone_number" />
+                                    </div>
+                                    <div className="col-4">
+                                        <label htmlFor="phone_number_ext" className="form-label">
+                                            Ext
+                                        </label>
+                                        <Field
+                                            type="number"
+                                            className="form-control"
+                                            id="phone_number_ext"
+                                            name="detailsUser.phone_number_ext"
+                                            autoComplete="off"
+                                            disabled={disabled}
+                                            maxLength={20}
+                                        />
+                                        <ErrorMessage name="detailsUser.phone_number_ext" />
+                                    </div>
+                                </div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="username" className="form-label">

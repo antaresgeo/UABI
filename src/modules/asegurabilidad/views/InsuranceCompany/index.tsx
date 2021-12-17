@@ -95,7 +95,7 @@ const InsuranceCompanies = () => {
             align: 'left' as 'left',
         },
         {
-            title: 'Telefono',
+            title: 'Teléfono',
             dataIndex: 'phone',
             align: 'left' as 'left',
         },
