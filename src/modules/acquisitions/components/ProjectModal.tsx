@@ -28,9 +28,11 @@ const ProjectModal: FC<LocationModalProps> = ({ /*onSave,*/ disabled, openArea, 
     }, [realEstates]);
     return (
         <>
+
             <button
                 type="button"
                 className="btn btn-primary"
+                disabled={visibleButton}
                 onClick={() => {
                     if (realEstates.length > 0) {
                         open();
@@ -63,7 +65,7 @@ const ProjectModal: FC<LocationModalProps> = ({ /*onSave,*/ disabled, openArea, 
                             }
                         }}
                     >
-                        Englobar
+                        ------
                     </button>,
                     ...(realEstates?.length > 1
                         ? [

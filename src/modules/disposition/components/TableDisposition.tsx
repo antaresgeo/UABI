@@ -41,6 +41,16 @@ export const TableDiszposition: FC<DispositionListProps> = ({ filters /*, init*/
         },
         {
             title: 'Dirección',
+            dataIndex: 'address.address',
+            align: 'left' as 'left',
+        },
+        {
+            title: 'CBML',
+            dataIndex: '',
+            align: 'left' as 'left',
+        },
+        {
+            title: 'Activo Fijo',
             dataIndex: 'address',
             align: 'left' as 'left',
         },

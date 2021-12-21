@@ -24,7 +24,7 @@ const SupportDocumentsForm: FC<AcquisitionsFromProps> = ({ type, disabled, formi
                             ...formik.values.supports_documents,
                             {
                                 label: 'Anexo',
-                                type: 6,
+                                type: 5,
                             },
                         ];
                         formik.setFieldValue('supports_documents', supports_documents_list, false);

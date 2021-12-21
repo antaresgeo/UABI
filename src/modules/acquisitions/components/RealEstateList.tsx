@@ -207,7 +207,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
     };
 
     useEffect(() => {
-        console.log(project_id);
+        // console.log(project_id);
         if (project_id) {
             dispatch(actions.getRealEstatesByProject(project_id));
         } else if (init) {

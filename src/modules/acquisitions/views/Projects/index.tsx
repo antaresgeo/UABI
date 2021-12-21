@@ -6,6 +6,7 @@ import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 import { formatDate, swal } from '../../../../utils';
 import Tag from 'antd/lib/tag';
+import FilterForm from './../../../../utils/ui/filter_form';
 
 const Projects = () => {
     const dispatch = useDispatch();
@@ -13,10 +14,15 @@ const Projects = () => {
     const loading: boolean = useSelector((states: any) => states.acquisitions.projects.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.projects.pagination);
     const [query, set_query] = useState<string>('');
+    const [filters, set_filters] = useState<object>(null);
 
-    const filter = () => {
-        dispatch(actions.getProjects({ page: 1, q: query }));
+    const filter = async (_filters, _) => {
+        set_filters(_filters);
+        await dispatch(actions.getProjects({ page: 1, with: 'pagination', ..._filters }));
     };
+    // const filter = () => {
+    //     dispatch(actions.getProjects({ page: 1, q: query }));
+    // };
 
     const change_page = (page, pageSize) => {
         dispatch(actions.getProjects({ page, pageSize, q: query }));
@@ -197,8 +203,9 @@ const Projects = () => {
     useEffect(() => {
         dispatch(actions.getProjects());
     }, []);
-
+    console.log(projects)
     return (
+
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-md-12">
@@ -206,32 +213,22 @@ const Projects = () => {
                         title="Proyectos"
                         extra={<Link to="/acquisitions/projects/create/" name="Crear" iconText="+" />}
                     >
-                        <form>
-                            <div className="row justify-content-between">
-                                <div className="col-5 d-flex">
-                                    <div className="col-6">
-                                        <div className="input-group">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="Dependencia / Código"
-                                                aria-label="Dependencia / Código"
-                                                aria-describedby="button-addon2"
-                                                value={query}
-                                                onChange={(e) => {
-                                                    set_query(e.target.value);
-                                                }}
-                                            />
-                                            <span className="input-group-text" onClick={filter}>
-                                                <span>
-                                                    <i className="fa fa-search" aria-hidden="true" />
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
+                        <div className="row justify-content-between">
+                            <div className="col-5 d-flex">
+                                <div className="col-6 ">
+                                    <FilterForm
+                                        filters={[
+                                            { key: 'id', name: 'Código' },
+                                            { key: 'name', name: 'Nombre' },
+                                            { key: 'dependency', name: 'Dependencia' },
+                                            { key: 'subdependency', name: 'Subdependencia' },
+                                            { key: 'audit_trail.created_by', name: 'Fecha' /*type: 'date'*/ },
+                                        ]}
+                                        onSubmit={filter}
+                                    />
                                 </div>
                             </div>
-                        </form>
+                        </div>
                         <UiTable
                             columns={table_columns}
                             items={projects}

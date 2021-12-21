@@ -24,6 +24,7 @@ interface InsurabilityFormPros {
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
     type_assurance?: 'Normal';
+    innerRef?: any;
     onSubmit: (values, actions?) => Promise<any>;
 }
 
@@ -34,6 +35,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
     brokers,
     disabled,
     type,
+    innerRef,
     onSubmit,
 }) => {
     //console.log(realEstatesPolicy);
@@ -41,7 +43,8 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
     useEffect(() => {
-        dispatch(actions.getRealEstates({}));
+        dispatch(actions.getRealEstates({}))
+        //dispatch(actions.getRealEstateByPolicy("policies"));
     }, []);
 
     let newrealEstates = [];
@@ -72,6 +75,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
     const ids_real = [];
     const initialValues = {
         registry_numbers: realEstatesPolicy ? realEstatesPolicy.map((r) => r.registry_number) : [],
+        //policy_number: "",
         policy_type: '',
         vigency_start: '',
         vigency_end: '',
@@ -119,6 +123,13 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                 percentage_insured: Yup.number().required('obligatorio'),
             })
         ),
+        // policy_number: Yup.number()
+        //     .required('Campo obligatorio')
+        //     .min(0, 'El minimo es 0')
+        //     .max(9999999999, 'El maximo 10 es caracteres'),
+
+
+
         // .test({
         //     message: 'Revise los porcentajes',
         //     test: arr => {
@@ -161,7 +172,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
     };
 
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema}>
+        <Formik enableReinitialize onSubmit={submit} innerRef={innerRef} initialValues={initialValues} validationSchema={schema}>
             {({ setFieldValue, values, handleChange, isSubmitting }) => {
                 return (
                     <Form>
@@ -188,13 +199,13 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                             });
                                             setFieldValue('registry_numbers', registryNumberRealEstates, false);
                                         }}
-                                        // onChange={(e) => {
-                                        //handleChange(e)
-                                        // const realEstate = realEstates.find((r) => {
-                                        //     return e.target.value === r.registry_number
-                                        // })
-                                        // setFieldValue('real_estate_id', realEstate.id, false);
-                                        // }}
+                                    // onChange={(e) => {
+                                    //handleChange(e)
+                                    // const realEstate = realEstates.find((r) => {
+                                    //     return e.target.value === r.registry_number
+                                    // })
+                                    // setFieldValue('real_estate_id', realEstate.id, false);
+                                    // }}
                                     >
                                         {/* <option key="matricula" value="" disabled>
                                             --Seleccione el tipo de póliza--
@@ -240,6 +251,20 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                     <div className="row"></div>
                                 </>
                             )} */}
+                            <div className="col-6">
+                                <label htmlFor="policy_number_id" className="form-label mt-3 mt-lg-0">
+                                    Número de Póliza
+                                </label>
+                                <Field
+                                    type="number"
+                                    id="policy_number_id"
+                                    name="policy_number"
+                                    placeholder="No. póliza"
+                                    className="form-control"
+                                    disabled={disabled}
+                                />
+                                <ErrorMessage name="policy_number" />
+                            </div>
                             <div className="col-3">
                                 <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">
                                     Fecha de Inicio
@@ -291,9 +316,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                     <ErrorMessage name="insurance_broker_id" />
                                 </span>
                             </div>
-                        </div>
-                        {type !== 'view' && (
-                            <div className="row">
+                            {type !== 'view' && (
                                 <div className="col-6">
                                     <label htmlFor="form-select" className="form-label">
                                         Adjuntar Póliza
@@ -311,8 +334,9 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                     />
                                     <ErrorMessage name="insurance_document" />
                                 </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
+
                         <div className="row">
                             <div className="col-6">
                                 <label htmlFor="rebuild_value" className="form-label">
@@ -362,11 +386,11 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                                     const insurance_companies_list = [
                                                         values.insurance_companies[0],
                                                     ] || [
-                                                        {
-                                                            id: '',
-                                                            percentage_insured: '',
-                                                        },
-                                                    ];
+                                                            {
+                                                                id: '',
+                                                                percentage_insured: '',
+                                                            },
+                                                        ];
                                                     setFieldValue(
                                                         'insurance_companies',
                                                         insurance_companies_list,
@@ -528,21 +552,6 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                     })}
                             </>
                         )}
-                        <div className="row justify-content-end">
-                            <div className="col text-end">
-                                {type !== 'view' && (
-                                    <button type="submit" className="btn btn-primary my-3" disabled={disabled || isSubmitting}>
-                                        Guardar
-                                        {isSubmitting && (
-                                            <i
-                                                className="fa fa-circle-notch fa-spin"
-                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
-                                            />
-                                        )}
-                                    </button>
-                                )}
-                            </div>
-                        </div>
                     </Form>
                 );
             }}

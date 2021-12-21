@@ -1,19 +1,34 @@
 import moment from 'moment';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from '../redux';
 
 interface IpolizaFormPros {
-    poliza: any;
-    realEstatesPolicy: any;
+    policy_id: string;
+
 }
-export const PolizaViewForm: FC<IpolizaFormPros> = ({ poliza /*, realEstatesPolicy*/ }) => {
-    const companies = poliza.insurance_companies.map((policy) => policy.name).join(', ');
+export const PolizaViewForm: FC<IpolizaFormPros> = ({ policy_id }) => {
+    //const companies = poliza.insurance_companies.map((policy) => policy.name).join(', ');
+    const dispatch = useDispatch();
+    const poliza: any = useSelector((store: any) => store.insurability.policy.value);
+    useEffect(() => {
+        dispatch(actions.getPolicy(policy_id));
+    }, [policy_id])
+    console.log(policy_id)
+    console.log(poliza)
     const tmpDateStart = new Date(parseInt(poliza?.vigency_start));
     const newDateStart = moment(tmpDateStart).format('MM/DD/YYYY');
     const tmpDateEnd = new Date(parseInt(poliza?.vigency_end));
     const newDateEnd = moment(tmpDateEnd).format('MM/DD/YYYY');
 
+    const companies = poliza?.insurance_companies?.map( p => {
+        const company = `${p.name} - ${p.percentage_insured}%`
+        return company
+    }).join(', ');
+
+
     return (
-        <div className="col-3-12">
+        <div className="col-3-12" id="poliza">
             <div className="content_box_table">
                 <div
                     className="title"

@@ -16,69 +16,92 @@ const LeaseDocContract = () => {
     const history = useHistory();
     const { values_contract, realEstate, dispositionType } = location.state;
     console.log(values_contract, realEstate, dispositionType);
-    const data_previous_study = {
-        IVA: 28500,
-        administration_value: 9872000,
-        appraisal_date: "2021-12-23",
-        appraisal_number: 258896,
-        boundaries: "descripcion de areas y linderos aqui",
-        business_type: "cafeteria",
-        canon_value: 150000,
-        companyname_applicant: "empresa",
-        consecutive_number: "3600000000000",
-        contract_period: 18,
-        counter_value: "",
-        coverage: "seguro arrendamiento",
-        dependence_leader: "Unidad Administración de Bienes Inmuebles",
-        destination_realEstate: "destinacion",
-        email_applicant: "empresa@correo.com",
-        environmental_risk: "riesgos ambientales",
-        fines: "multas",
-        firstname_applicant: "Karen",
-        firstname_representative: "Jesus",
-        location_applicant: { address: 'CL 14 #1 - 10', id: '89' },
+    const arrendamiento = {
+        //info general
+        boundaries: "descripcion de linderos",
+        business_type: "Tipo de negocio",
+        contract_period: 12,
+        destination_realEstate: "destinacion del bien inmueble",
+        environmental_risk: "riesgos",
         lockable_base: 10,
-        mobile_applicant: "",
-        name_Leader: "Yang Aparicio Abadia ",
-        name_approved: "Gladys Zambrano",
-        name_elaborated: "Mayron Nova",
-        name_revised: "Matias Nova",
-        name_secretary: "yeisson esteban jimenez",
-        number_doc_applicant: 36985211,
-        number_doc_representative: 1007788713,
-        operative_degree_occurrence: "",
-        operative_impact_degree: "",
-        operative_mitigation_mechanism: "",
-        operative_responsable: "",
-        post_approved: "cargo 3",
-        post_elaborated: "cargo 1",
-        post_leader: "Líder de Programa",
-        post_revised: "cargo 2",
-        prediation_date: "2021-12-25",
-        prediation_number: "1234569",
+        registration_date: "2021-12-15",
+        //Arrendamiento
+        IVA: 260300,
+        administration_value: 150000,
+        coverage: "cumplimiento",
+        fines: "Multas",
+        appraisal_date: "2021-12-01",
+        appraisal_number: 6565556,
+        prediation_date: "2021-12-22",
+        prediation_number: "635465",
         public_service: "Aforo",
-        recovery_value: "",
-        registration_date: "",
-        regulatory_degree_occurrence: "",
-        regulatory_impact_degree: "",
-        regulatory_mitigation_mechanism: "",
-        regulatory_responsable: "",
-        secondname_applicant: "Daiana",
-        secondname_representative: "Marin",
-        secondsurname_applicant: "Zambrano",
-        secondsurname_representative: "Jimenez",
-        secretary_doc_number: 1458239,
-        secretary_leader: "Subsecretaría de Gestión de Bienes",
-        subtotal: 178500,
-        surname_applicant: "Nova",
-        surname_representative: "Nova",
-        telephone_applicant: 8519325,
-        total: 10190500,
-        type_document_applicant: "Cedula de Ciudadania",
-        type_document_representative: "Cedula de Ciudadania",
-        type_society_applicant: "Persona Juridica",
-        value_aforo: 140000,
-        vigilance_value: 7895222,
+        subtotal: 1630300,
+        total: 1793300,
+        value_public_service: 13000,
+        vigilance_value: 14000,
+        //solicitante
+        //si es persona natural se agrega:
+        detailsApplicant: {
+            id_type: '1',
+            id_number: 10085632,
+            names: { firstName: 'Bryan', lastName: 'Manuel' },
+            surnames: { firstSurname: 'Cendales', lastSurname: 'Rodriguez' },
+            email: 'Bryan@correo.com',
+        },
+
+        applicant: {
+            type_society: 'Persona Juridica',
+            id_type: '',
+            id_number: 3658950,
+            company_name: 'nombre de la razon social',
+            email: 'empresa@correo.com',
+        },
+        location_applicant: { address: 'CL 5266 #58 - 45', id: '127' },
+        //representante legal
+        representative: { type_society: 'Persona Natural' },
+        detailsRepresentative: {
+            id_type: '1',
+            id_number: 4582103699,
+            names: { firstName: 'Juan', lastName: 'Pablo' },
+            surnames: { firstSurname: 'Hernandez', lastSurname: 'Gil' },
+            email: 'juanHer@gmail.com',
+        },
+        //lider acargo
+        leader: {
+            type_society: 'Persona Natural',
+            post: 'Líder de Programa',
+            dependence: 'Unidad Administración de Bienes Inmuebles',
+            secretary: 'Subsecretaría de Gestión de Bienes'
+        },
+        detailsLeader: {
+            id_type: '1',
+            id_number: 10085632,
+            names: { firstName: 'Bryan', lastName: 'Manuel' },
+            surnames: { firstSurname: 'Cendales', lastSurname: 'Rodriguez' },
+            email: 'Bryan@correo.com',
+        },
+        location_leader: { address: 'CR 1 #6 - 8', id: '129' },
+
+        //analisis de riesgos
+        operational_risk: {
+            degree_occurrence: '',
+            impact_degree: '',
+            responsable: '',
+            mitigation_mechanism: ''
+        },
+        regulatory_risk: {
+            degree_occurrence: '',
+            impact_degree: '',
+            responsable: '',
+            mitigation_mechanism: ''
+        },
+
+        //info tabla final
+        approved: { name: 'aprobo nombre', post: 'aprobo cargo' },
+        elaborated: { name: 'elaboro nombre', post: 'elaboro cargo' },
+        revised: { name: 'reviso nombre', post: 'reviso cargo' },
+
+        idRealEstate: 31
     }
     return (
         <div className="h-100 d-flex flex-column">
@@ -130,10 +153,10 @@ const LeaseDocContract = () => {
                                     </td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease" style={{ width: '365px' }}>
-                                            {data_previous_study.type_society_applicant === "Persona Juridica" ?
-                                                `${data_previous_study.companyname_applicant}`
+                                            {arrendamiento.applicant.type_society === "Persona Juridica" ?
+                                                `${arrendamiento.applicant.company_name}`
                                                 :
-                                                `${data_previous_study.firstname_applicant} ${data_previous_study.secondname_applicant} ${data_previous_study.surname_applicant} ${data_previous_study.secondsurname_applicant}`
+                                                `${arrendamiento.detailsApplicant.names.firstName} ${arrendamiento.detailsApplicant.names.lastName} ${arrendamiento.detailsApplicant.surnames.firstSurname} ${arrendamiento.detailsApplicant.surnames.lastSurname}`
 
                                             }
                                             {/* Digite el nombre de la institución, organización o persona natural */}
@@ -146,10 +169,10 @@ const LeaseDocContract = () => {
                                     </td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease">
-                                            {data_previous_study.type_society_applicant === "Persona Juridica" ?
-                                                `NIT : ${data_previous_study?.number_doc_applicant}`
+                                            {arrendamiento.applicant.type_society === "Persona Juridica" ?
+                                                `NIT : ${arrendamiento?.applicant.id_number}`
                                                 :
-                                                `C.C : ${data_previous_study?.number_doc_applicant}`
+                                                `C.C : ${arrendamiento?.detailsApplicant.id_number}`
 
                                             }
                                         </p>
@@ -159,10 +182,10 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">REPRESENTANTE LEGAL</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft10_contractLease" style={{ width: '365px' }}>
-                                            {data_previous_study.type_society_applicant === "Persona Juridica" ?
-                                                `${data_previous_study?.firstname_representative} ${data_previous_study?.secondsurname_representative} ${data_previous_study?.surname_representative} ${data_previous_study?.secondsurname_representative}`
+                                            {arrendamiento.applicant.type_society === "Persona Juridica" ?
+                                                `${arrendamiento?.detailsRepresentative.names.firstName} ${arrendamiento?.detailsRepresentative.names.lastName} ${arrendamiento?.detailsRepresentative.surnames.firstSurname} ${arrendamiento?.detailsRepresentative.surnames.lastSurname}`
                                                 :
-                                                `${data_previous_study.firstname_applicant} ${data_previous_study.secondname_applicant} ${data_previous_study.surname_applicant} ${data_previous_study.secondsurname_applicant}`
+                                                `${arrendamiento.detailsApplicant.names.firstName} ${arrendamiento.detailsApplicant.names.lastName} ${arrendamiento.detailsApplicant.surnames.firstSurname} ${arrendamiento.detailsApplicant.surnames.lastSurname}`
                                             }
                                         </p>
                                     </td>
@@ -171,10 +194,10 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease" style={{ width: '200px' }}>C.C. REPRESENTANTE LEGAL:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease" style={{ width: '365px' }}>
-                                            {data_previous_study.type_society_applicant === "Persona Juridica" ?
-                                                `${data_previous_study?.number_doc_representative} `
+                                            {arrendamiento.applicant.type_society === "Persona Juridica" ?
+                                                `${arrendamiento?.detailsRepresentative.id_number} `
                                                 :
-                                                `${data_previous_study?.number_doc_representative} `
+                                                `${arrendamiento?.detailsApplicant.id_number} `
                                             }
                                         </p>
                                     </td>
@@ -207,7 +230,7 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">AVALÚO DEL INMUEBLE:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease" style={{ width: '365px', textAlign: 'justify' }}>
-                                            {`($${data_previous_study.appraisal_number}) ${writtenNumber(data_previous_study.appraisal_number, { lang: 'es' })}`} Pesos M. L.
+                                            {`($${arrendamiento.appraisal_number}) ${writtenNumber(arrendamiento.appraisal_number, { lang: 'es' })}`} Pesos M. L.
                                         </p>
                                     </td>
                                 </tr>
@@ -231,7 +254,7 @@ const LeaseDocContract = () => {
                                     <td className="tr6_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">TIPO DE INMUEBLE:</p></td>
                                     <td className="tr6_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease">
-                                            {data_previous_study.business_type}
+                                            {arrendamiento.business_type}
                                         </p>
                                     </td>
                                 </tr>
@@ -247,7 +270,7 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">DURACIÓN DEL CONTRATO:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft10_contractLease" style={{ width: '365px', textAlign: 'justify' }}>
-                                            {`(${data_previous_study.contract_period}) ${writtenNumber(data_previous_study.contract_period, { lang: 'es' })} meses`}
+                                            {`(${arrendamiento.contract_period}) ${writtenNumber(arrendamiento.contract_period, { lang: 'es' })} meses`}
                                         </p>
                                     </td>
                                 </tr>
@@ -311,7 +334,7 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">IVA 19%:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease" style={{ width: '365px', textAlign: 'justify' }}>
-                                            {`($${data_previous_study.IVA})  ${writtenNumber(data_previous_study?.IVA, { lang: 'es' })}`}
+                                            {`($${arrendamiento.IVA})  ${writtenNumber(arrendamiento?.IVA, { lang: 'es' })}`}
                                         </p>
                                     </td>
                                 </tr>
@@ -319,10 +342,11 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">AFORO O RECOBRO SERVICIOS PÚBLICOS:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease" style={{ width: '365px', textAlign: 'justify' }}>
-                                            {data_previous_study?.public_service === "Recobro" && ` ($${data_previous_study?.recovery_value}) ${writtenNumber(data_previous_study?.recovery_value, { lang: 'es' })} este valor sera variable`}
-                                            {data_previous_study?.public_service === "Aforo" && ` ($${data_previous_study?.value_aforo}) ${writtenNumber(data_previous_study?.value_aforo, { lang: 'es' })}`}
-                                            {data_previous_study?.public_service === "Contador individualizado" && ` ($${data_previous_study?.counter_value}) ${writtenNumber(data_previous_study?.counter_value, { lang: 'es' })}`}
-                                            {data_previous_study?.public_service === "Prepago" && "prepago"}
+                                            {arrendamiento.value_public_service}
+                                            {/* {arrendamiento?.public_service === "Recobro" && ` ($${arrendamiento?.recovery_value}) ${writtenNumber(arrendamiento?.recovery_value, { lang: 'es' })} este valor sera variable`}
+                                            {arrendamiento?.public_service === "Aforo" && ` ($${arrendamiento?.value_aforo}) ${writtenNumber(arrendamiento?.value_aforo, { lang: 'es' })}`}
+                                            {arrendamiento?.public_service === "Contador individualizado" && ` ($${arrendamiento?.counter_value}) ${writtenNumber(arrendamiento?.counter_value, { lang: 'es' })}`}
+                                            {arrendamiento?.public_service === "Prepago" && "prepago"} */}
                                             {/* (Digite en letras y números el valor del aforo de
                                             servicios públicos mensual o la cifra que se determinará
                                             mensualmente con respecto al consumo y aclare que
@@ -334,7 +358,7 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease" style={{ width: '200px' }}>ADMINISTRACIÓN U OTROS:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease" style={{ width: '365px', textAlign: 'justify' }}>
-                                            {` ($${data_previous_study?.administration_value}) ${writtenNumber(data_previous_study?.administration_value, { lang: 'es' })}`}
+                                            {` ($${arrendamiento?.administration_value}) ${writtenNumber(arrendamiento?.administration_value, { lang: 'es' })}`}
                                         </p>
                                     </td>
                                 </tr>
@@ -342,7 +366,7 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">VALOR TOTAL MENSUAL:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease" style={{ width: '365px', textAlign: 'justify' }}>
-                                            {` ($${data_previous_study?.subtotal}) ${writtenNumber(data_previous_study?.subtotal, { lang: 'es' })}`}
+                                            {` ($${arrendamiento?.subtotal}) ${writtenNumber(arrendamiento?.subtotal, { lang: 'es' })}`}
                                         </p>
                                     </td>
                                 </tr>
@@ -350,15 +374,15 @@ const LeaseDocContract = () => {
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease" style={{ width: '200px' }}>VALOR TOTAL DEL CONTRATO:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease" style={{ width: '365px', textAlign: 'justify' }}>
-                                            {` ($${data_previous_study?.total}) ${writtenNumber(data_previous_study?.total, { lang: 'es' })}`}
+                                            {` ($${arrendamiento?.total}) ${writtenNumber(arrendamiento?.total, { lang: 'es' })}`}
                                         </p>
                                     </td>
                                 </tr>
                             </table>
                             <p className="p11_contractLease ft15_contractLease">
                                 Entre los suscritos a saber,
-                                <span className='ft3_comodato'>{` ${data_previous_study.name_secretary} `}</span>
-                                con cédula de ciudadanía No. <span className='ft3_comodato'>{`${data_previous_study.secretary_doc_number} `}</span>
+                                <span className='ft3_comodato'>{` ${arrendamiento.detailsLeader.names.firstName} `}</span>
+                                con cédula de ciudadanía No. <span className='ft3_comodato'>{`${arrendamiento.detailsLeader.id_number} `}</span>
                                 Digite el número de documento, en su calidad de
                                 Secretario(a) de Suministros y Servicios del Municipio de Medellín,
                                 nombrado mediante el Decreto Municipal N° 001 del 1 de enero de 2016 y
@@ -371,26 +395,26 @@ const LeaseDocContract = () => {
                                 acuerdo a las disposiciones pertinentes del Código Civil, quien en
                                 adelante se denominará EL ARRENDADOR, de una parte y de la otra,
                                 <span className="ft14_contractLease">
-                                    {data_previous_study.type_society_applicant === "Persona Juridica" ?
-                                        ` ${data_previous_study?.firstname_representative} ${data_previous_study?.secondname_representative} ${data_previous_study?.surname_representative} ${data_previous_study?.secondsurname_representative} `
+                                    {arrendamiento.applicant.type_society === "Persona Juridica" ?
+                                        ` ${arrendamiento?.detailsRepresentative.names.firstName} ${arrendamiento?.detailsRepresentative.names.lastName} ${arrendamiento?.detailsRepresentative.surnames.firstSurname} ${arrendamiento?.detailsRepresentative.surnames.lastSurname} `
 
                                         :
-                                        ` ${data_previous_study.firstname_applicant} ${data_previous_study.secondname_applicant} ${data_previous_study.surname_applicant} ${data_previous_study.secondsurname_applicant} `
+                                        ` ${arrendamiento.detailsApplicant.names.firstName} ${arrendamiento.detailsApplicant.names.lastName} ${arrendamiento.detailsApplicant.surnames.firstSurname} ${arrendamiento.detailsApplicant.surnames.lastSurname} `
 
                                     }
                                 </span>
                                 identificado con la cédula de ciudadanía No
                                 <span className="ft14_contractLease">
-                                    {data_previous_study.type_society_applicant === "Persona Juridica" ?
-                                        ` ${data_previous_study?.number_doc_representative} `
+                                    {arrendamiento.applicant.type_society === "Persona Juridica" ?
+                                        ` ${arrendamiento?.detailsRepresentative.id_number} `
                                         :
-                                        ` ${data_previous_study?.number_doc_applicant} `
+                                        ` ${arrendamiento?.detailsApplicant.id_number} `
                                     }
                                 </span>
                                 quien actúa en
                                 <span className="ft14_contractLease">
-                                    {data_previous_study.type_society_applicant === "Persona Juridica" ?
-                                        ` nombre y representación  legal de ${data_previous_study.companyname_applicant} con NIT ${data_previous_study.number_doc_applicant}, `
+                                    {arrendamiento.applicant.type_society === "Persona Juridica" ?
+                                        ` nombre y representación  legal de ${arrendamiento.applicant.company_name} con NIT ${arrendamiento.applicant.id_number}, `
                                         :
                                         ` nombre propio, `
                                     }
@@ -457,11 +481,11 @@ const LeaseDocContract = () => {
                                 área a entregar en arrendamiento corresponde a digite el área m<span
                                     className="ft17_contractLease"
                                 >2 </span
-                                >y los linderos son los siguientes: {data_previous_study.boundaries} con radicado del informe de Prediación: {data_previous_study.prediation_number} y fecha {data_previous_study.prediation_date}. <span className="ft14_contractLease">TERCERA: DESTINACIÓN. </span>EL (LA)
+                                >y los linderos son los siguientes: {arrendamiento.boundaries} con radicado del informe de Prediación: {arrendamiento.prediation_number} y fecha {arrendamiento.prediation_date}. <span className="ft14_contractLease">TERCERA: DESTINACIÓN. </span>EL (LA)
                                 ARRENDATARIO(A) podrá hacer uso del inmueble objeto del presente
-                                contrato, única y exclusivamente para {data_previous_study?.destination_realEstate}
+                                contrato, única y exclusivamente para {arrendamiento?.destination_realEstate}
                                 <span className="ft14_contractLease"> CUARTA: PLAZO</span>.
-                                {` (${data_previous_study?.contract_period}) ${writtenNumber(data_previous_study?.contract_period, { lang: 'es' })} meses `}
+                                {` (${arrendamiento?.contract_period}) ${writtenNumber(arrendamiento?.contract_period, { lang: 'es' })} meses `}
                                 a partir de la fecha de suscripción del acta de
                                 inicio: {moment(values_contract.start_date).format('DD/MM/YYYY')}, previa aprobación de la póliza de arrendamiento o póliza de
                                 cumplimiento por la Unidad Administración de Bienes Inmuebles de la
@@ -637,8 +661,8 @@ const LeaseDocContract = () => {
                                 <span className="ft7_contractLease">SÉPTIMA: CANON. </span
                                 >El canon de arrendamiento como valor de este contrato corresponderá a la suma de
                                 {` ($${realEstate?.canyon_value}) ${writtenNumber(realEstate?.canyon_value, { lang: 'es' })}`} mensuales, más el IVA del 19% correspondiente a la suma de
-                                {` ($${data_previous_study?.IVA}) ${writtenNumber(data_previous_study?.IVA, { lang: 'es' })} `}
-                                mensuales, para un total mensual de {`($${realEstate?.canyon_value + data_previous_study?.IVA}) ${writtenNumber((realEstate?.canyon_value + data_previous_study?.IVA), { lang: 'es' })}. `}
+                                {` ($${arrendamiento?.IVA}) ${writtenNumber(arrendamiento?.IVA, { lang: 'es' })} `}
+                                mensuales, para un total mensual de {`($${realEstate?.canyon_value + arrendamiento?.IVA}) ${writtenNumber((realEstate?.canyon_value + arrendamiento?.IVA), { lang: 'es' })}. `}
                                 <span className="ft27_contractLease">PARÁGRAFO PRIMERO: </span>Cuando el plazo del
                                 contrato sea superior a un (01) año o cuando al vencimiento del plazo
                                 se realice la renovación con el nuevo contrato, el canon establecido
@@ -676,7 +700,7 @@ const LeaseDocContract = () => {
                                 No. 000042 de 05 de mayo de 2020, modificada con la resolución 000094
                                 del 30 de septiembre de 2020, en lo relacionado a la facturación electrónica, motivo por el cual
                                 las facturas de cobro que le serán expedidas a EL (LA)
-                                ARRENDATARIO(A) le serán remitidas al correo electrónico {`${data_previous_study?.email_applicant}, `}
+                                ARRENDATARIO(A) le serán remitidas al correo electrónico {`${arrendamiento?.detailsApplicant.email}, `}
                                 para lo cual deberá realizar el pago mediante la presentación de la factura
                                 ante la entidad bancaria respectiva o a través de los canales
                                 virtuales destinados para tal fin.
@@ -730,10 +754,10 @@ const LeaseDocContract = () => {
                                 de las fechas señalas en la respectiva factura, fechas de vencimiento
                                 que son inmodificables; de presentarse pluralidad de arrendatarios la
                                 factura electrónica será expedida a nombre de
-                                {data_previous_study.type_society_applicant === "Persona Juridica" ?
-                                    ` ${data_previous_study.firstname_representative} ${data_previous_study.secondname_representative} ${data_previous_study.surname_representative} ${data_previous_study.secondsurname_representative} `
+                                {arrendamiento.applicant.type_society === "Persona Juridica" ?
+                                    ` ${arrendamiento.detailsRepresentative.names.firstName} ${arrendamiento.detailsRepresentative.names.lastName} ${arrendamiento.detailsRepresentative.surnames.firstSurname} ${arrendamiento.detailsRepresentative.surnames.lastSurname} `
                                     :
-                                    ` ${data_previous_study.firstname_applicant} ${data_previous_study.secondname_applicant} ${data_previous_study.surname_applicant} ${data_previous_study.secondsurname_applicant} `
+                                    ` ${arrendamiento.detailsApplicant.names.firstName} ${arrendamiento.detailsApplicant.names.lastName} ${arrendamiento.detailsApplicant.surnames.firstSurname} ${arrendamiento.detailsApplicant.surnames.lastSurname} `
 
                                 }
                                 sin perjuicio de que todos sean deudores solidarios.
@@ -1789,7 +1813,7 @@ const LeaseDocContract = () => {
                                 ____________________
                             </p>
                             <p className="p62_contractLease ft42_contractLease">
-                                {` ${data_previous_study.name_Leader} `}
+                                {` ${arrendamiento.detailsLeader.names.firstName} ${arrendamiento.detailsLeader.names.lastName} ${arrendamiento.detailsLeader.surnames.firstSurname} ${arrendamiento.detailsLeader.surnames.lastSurname} `}
                             </p>
                             <p className="p37_contractLease ft15_contractLease"> Cédula N° (DIGITE NÚMERO DE IDENTIFICACIÓN)</p>
                             <p className="p37_contractLease ft9_contractLease">Secretario de Suministros y Servicios</p>
@@ -1840,35 +1864,36 @@ const LeaseDocContract = () => {
                                 NÚMERO DE CONTRATO – SIN FECHA)
                             </p>
                             <p className="p63_contractLease ft35_contractLease">
-                                {data_previous_study.type_society_applicant === "Persona Juridica" ?
-                                    `${data_previous_study?.firstname_representative} ${data_previous_study?.secondsurname_representative} ${data_previous_study?.surname_representative} ${data_previous_study?.secondsurname_representative}`
+                                {arrendamiento.applicant.type_society === "Persona Juridica" ?
+                                    `${arrendamiento?.detailsRepresentative.names.firstName} ${arrendamiento?.detailsRepresentative.names.lastName} ${arrendamiento?.detailsRepresentative.surnames.firstSurname} ${arrendamiento?.detailsRepresentative.surnames.lastSurname}`
                                     :
-                                    `${data_previous_study.firstname_applicant} ${data_previous_study.secondname_applicant} ${data_previous_study.surname_applicant} ${data_previous_study.secondsurname_applicant}`
+                                    `${arrendamiento.detailsApplicant.names.firstName} ${arrendamiento.detailsApplicant.names.lastName} ${arrendamiento.detailsApplicant.surnames.firstSurname} ${arrendamiento.detailsApplicant.surnames.lastSurname}`
                                 }
                             </p>
                             <p className="p64_contractLease ft36_contractLease">Cédula N° (DIGITE NÚMERO DE IDENTIFICACIÓN)</p>
                             <p className="p64_contractLease ft36_contractLease">
 
-                                {data_previous_study.type_society_applicant === "Persona Juridica" &&
+                                {arrendamiento.applicant.type_society === "Persona Juridica" &&
                                     <>
                                         Obra en representacion de
-                                        <span className="ft42_contractLease"> {data_previous_study?.companyname_applicant}</span>
+                                        <span className="ft42_contractLease"> {arrendamiento?.applicant.company_name}</span>
                                     </>
                                 }
 
                             </p>
                             <p className="p64_contractLease ft7_contractLease">
-                                <span className="ft9_contractLease">Dirección: </span> {data_previous_study?.location_applicant?.address}
+                                <span className="ft9_contractLease">Dirección: </span> {arrendamiento?.location_applicant?.address}
 
                             </p>
                             <p className="p48_contractLease ft7_contractLease">
-                                <span className="ft9_contractLease">Teléfono: </span> {data_previous_study.telephone_applicant}
+                                <span className="ft9_contractLease">Teléfono: </span> {arrendamiento.detailsApplicant.email}
+                                {/* TODO: revisar numero */}
                             </p>
                             <p className="p65_contractLease ft42_contractLease">
-                                <span className="ft15_contractLease">Correo electrónico: </span> {data_previous_study.email_applicant}
+                                <span className="ft15_contractLease">Correo electrónico: </span> {arrendamiento.detailsApplicant.email}
                             </p>
                             <p className='p65_contractLease ft42_contractLease'>
-                                <span className="ft15_contractLease">NIT N° </span> {data_previous_study.number_doc_applicant}
+                                <span className="ft15_contractLease">NIT N° </span> {arrendamiento.detailsApplicant.id_number}
                             </p>
                             <p className="p65_contractLease ft9_contractLease">Arrendatario</p>
 
@@ -1882,12 +1907,12 @@ const LeaseDocContract = () => {
                                 </tr>
                                 <tr>
                                     <td className="tr8_contractLease td2_contractLease"></td>
-                                    <td className="tr8_contractLease td6_contractLease"><p className="p66_contractLease ft43_contractLease">{data_previous_study.name_elaborated}</p></td>
-                                    <td className="tr8_contractLease td7_contractLease"><p className="p67_contractLease ft43_contractLease">{data_previous_study.name_revised}</p></td>
-                                    <td className="tr8_contractLease td7_contractLease"><p className="p68_contractLease ft43_contractLease">{data_previous_study.name_Leader}</p></td>
-                                    <td className="tr8_contractLease td8_contractLease"><p className="p68_contractLease ft43_contractLease">{data_previous_study.name_secretary}</p></td>
+                                    <td className="tr8_contractLease td6_contractLease"><p className="p66_contractLease ft43_contractLease">{arrendamiento.elaborated.name}</p></td>
+                                    <td className="tr8_contractLease td7_contractLease"><p className="p67_contractLease ft43_contractLease">{arrendamiento.revised.name}</p></td>
+                                    <td className="tr8_contractLease td7_contractLease"><p className="p68_contractLease ft43_contractLease">{arrendamiento.approved.name}</p></td>
+                                    <td className="tr8_contractLease td8_contractLease"><p className="p68_contractLease ft43_contractLease">{`${arrendamiento.detailsLeader.names.firstName} ${arrendamiento.detailsLeader.names.lastName} ${arrendamiento.detailsLeader.surnames.firstSurname} ${arrendamiento.detailsLeader.surnames.lastSurname}`}</p></td>
                                 </tr>
-                                <tr style={{borderBottom: '1px solid #000'}}>
+                                <tr style={{ borderBottom: '1px solid #000' }}>
                                     <td className="tr9_contractLease td2_contractLease"></td>
                                     <td className="tr9_contractLease td9_contractLease"><p className="p66_contractLease ft43_contractLease">Abogado Contratista Unidad Administración de Bienes Inmuebles</p></td>
                                     <td className="tr9_contractLease td10_contractLease"><p className="p67_contractLease ft43_contractLease">Coordinadora Jurídica Unidad Administración de Bienes Inmuebles</p></td>
@@ -1919,7 +1944,7 @@ const LeaseDocContract = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => {
-                        history.push({ pathname: "/disposition/create/", state: { dispositionType, stage:"contractual", realEstate, values_contract } })
+                        history.push({ pathname: "/disposition/create/", state: { dispositionType, stage: "contractual", realEstate, values_contract } })
                     }}
                 >
                     Atras
@@ -1928,7 +1953,7 @@ const LeaseDocContract = () => {
                 <button
                     type="button"
                     className="btn btn-outline-primary"
-                    onClick={() => {}}
+                    onClick={() => { }}
                 >
                     guardar y descargar
                 </button>

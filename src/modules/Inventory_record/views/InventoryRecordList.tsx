@@ -10,18 +10,18 @@ const InventoryRecordList = () => {
     const dispatch = useDispatch();
     const [filters, set_filters] = useState<object>(null);
 
-    const change_page = (page, pageSize) => {
-        dispatch(getRealEstates({ page, pageSize, with: 'pagination', ...filters }));
-    };
+    // const change_page = (page, pageSize) => {
+    //     dispatch(getRealEstates({ page, pageSize, with: 'pagination', ...filters }));
+    // };
 
     const filter = async (_filters, _) => {
         set_filters(_filters);
         await dispatch(getRealEstates({ page: 1, with: 'pagination', ..._filters }));
     };
 
-    useEffect(() => {
-        dispatch(getRealEstates({}));
-    }, []);
+    // useEffect(() => {
+    //     dispatch(getRealEstates({}));
+    // }, []);
 
     return (
         <div className="container-fluid">
@@ -48,7 +48,7 @@ const InventoryRecordList = () => {
                             </div>
                         </div>
 
-                        <RealEstateList withProject register change_page={change_page} />
+                        <RealEstateList withProject register /*change_page={change_page}*/ />
                     </Card>
                 </div>
             </div>

@@ -23,7 +23,7 @@ import {
 // Services: GET
 const getRealEstates = async (filters?) => {
     try {
-        console.log('filtros', filters);
+        // console.log('filtros', filters);
         let URI = `/real-estates/list/`;
         let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
             await http.get(URI, {
@@ -77,6 +77,21 @@ export const getRealEstate = async (
     }
 };
 
+export const getRealEstatesBypolicy = async (
+    without: string
+): Promise<IRealEstateAttributes | string> => {
+    try {
+        let URI = `/real-estates`;
+        let res: AxiosResponse = await http.get(URI, {
+            params: { without },
+        });
+        return res.data.results;
+    } catch (error) {
+        console.error(error);
+        return Promise.reject('Error');
+    }
+};
+
 const get_docucments_whit_service = async (docs) => {
     try {
         if (!Array.isArray(docs) && typeof docs === 'string') {
@@ -93,7 +108,11 @@ const get_docucments_whit_service = async (docs) => {
                         ? 'Documento de Matricula'
                         : doc.type === 4
                             ? 'Documento de Titulo'
-                            : 'Anexo',
+                            : doc.type === 6
+                                ? 'Documento Avalúo'
+                                : doc.type === 7
+                                    ? 'Documento de Prediación'
+                                    : 'Anexo'
             }));
         }
         return [];
@@ -117,7 +136,11 @@ const finalData = (data, docs_ids?) => {
     delete aux_data.registry_number_document_id;
     delete aux_data.accounting_account;
     delete aux_data.tipology;
-    delete aux_data.sap_id;
+    if (!aux_data.type) {
+        delete aux_data.sap_id;
+    } else {
+        delete aux_data.type
+    }
     delete aux_data.active_code;
     delete aux_data.fixed_assets;
     delete aux_data._address;
@@ -196,17 +219,19 @@ export const createRealEstates = async (data: any, action) => {
                 return await upload_documents(d);
             })
         )
+        console.log(docs_ids);
+
 
         // res.data.results.map(result => {
 
         // })
-        await http.put(
-            URI,
-            { supports_documents: docs_ids || '' },
-            {
-                params: { id: res.data.results.id },
-            }
-        );
+        // await http.put(
+        //     URI,
+        //     { supports_documents: docs_ids || '' },
+        //     {
+        //         params: { id: res.data.results.id },
+        //     }
+        // );
 
 
 
@@ -370,6 +395,7 @@ const getTipology = async (id) => {
 const services = {
     getRealEstates,
     getRealEstatesByProject,
+    getRealEstatesBypolicy,
     getRealEstate,
     createRealEstate,
     createRealEstates,

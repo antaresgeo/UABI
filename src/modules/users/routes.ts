@@ -3,7 +3,7 @@ import CreateUser from './views/CreateUser';
 import Users from './views/Users';
 import DetailUser from './views/DetailUser';
 import EditUser from './views/EditUser';
-import { Role } from '../..';
+import { Permit } from '../..';
 import PermitsUser from './views/PermitsUser';
 import { ListRoles } from './views/roles/ListRoles';
 import { CreateRoles } from './views/roles/CreateRoles';
@@ -11,30 +11,66 @@ import DetailRoles from './views/roles/DetailRoles';
 import { EditRoles } from './views/roles/EditRoles';
 
 export const guards = {
-    view: (props?) => {
+    createRole: (props?) => {
         const user = props.user;
         if (!user) return false;
-        return user.roles.includes(Role.ADMINISTRATOR);
+        const { permits } = user;
+        return permits.includes(Permit.CREATE_ROLE);
+    },
+    detailRole: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DETAIL_ROLE);
+    },
+    editRole: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.UPDATE_ROLE);
+    },
+    deleteRole: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DELETE_ROLE);
+    },
+    listRole: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.LIST_ROLE);
+    },
+    listPermit: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.LIST_PERMIT);
+    },
+    list: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        return user.roles.includes(Permit.LIST_USER);
     },
     create: (props?) => {
         const user = props.user;
         if (!user) return false;
-        return user.roles.includes(Role.ADMINISTRATOR);
+        return user.roles.includes(Permit.CREATE_ROLE);
     },
     detail: (props?) => {
         const user = props.user;
         if (!user) return false;
-        return user.roles.includes(Role.ADMINISTRATOR);
+        return user.roles.includes(Permit.DETAIL_USER);
     },
     edit: (props?) => {
         const user = props.user;
         if (!user) return false;
-        return user.roles.includes(Role.ADMINISTRATOR);
+        return user.roles.includes(Permit.UPDATE_USER);
     },
     delete: (props?) => {
         const user = props.user;
         if (!user) return false;
-        return user.roles.includes(Role.ADMINISTRATOR);
+        return user.roles.includes(Permit.DELETE_USER);
     },
 };
 
@@ -43,7 +79,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: guards.view,
+            can_access: guards.list,
             path: '/users/',
             template_props: {
                 breadcrumbs: [{ name: 'Usuarios' }],
@@ -105,7 +141,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.listRole,
             path: '/roles/',
             template_props: {
                 breadcrumbs: [{ name: 'Roles' }],
@@ -115,7 +151,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.createRole,
             path: '/roles/create/',
             template_props: {
                 breadcrumbs: [
@@ -128,7 +164,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.detailRole,
             path: '/roles/:id/',
             template_props: {
                 breadcrumbs: [
@@ -141,7 +177,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.editRole,
             path: '/roles/edit/:id/',
             template_props: {
                 breadcrumbs: [

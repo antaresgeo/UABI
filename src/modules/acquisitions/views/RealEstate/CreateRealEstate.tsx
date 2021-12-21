@@ -5,9 +5,12 @@ import RealEstateForm from '../../components/RealEstateForm';
 import { clearRealEstate } from '../../redux/actions/realEstates';
 import { useEffect } from 'react';
 
+
+
 const RealEstate = () => {
     const history: any = useHistory();
     const dispatch = useDispatch();
+    // console.log(history.location.state.project_id);
 
     useEffect(() => {
         dispatch(clearRealEstate());

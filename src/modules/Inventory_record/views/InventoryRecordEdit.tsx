@@ -32,7 +32,7 @@ const InventoryRecordEdit = () => {
                         await dispatch(actions.createAcquisitionForRealEstate(res.id, acquisitions));
                     }
                     if (isFinish) {
-                        history.push('/acquisitions/real-estates/');
+                        history.push('/InventoryRecordList');
                     } else {
                         if (res.project_id) return dispatch(actions.getRealEstatesByProject(res.project_id));
                     }

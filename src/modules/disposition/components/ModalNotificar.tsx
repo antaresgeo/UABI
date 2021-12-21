@@ -35,7 +35,7 @@ export const ModalNotificar: FC<ModalProps> = ({ /*onSave,*/ disabled }) => {
                                     close();
                                 }}
                             >
-                                Guardar
+                                Notificar
                             </button>
                         </div>
 

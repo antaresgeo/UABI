@@ -1,7 +1,6 @@
 import { Card, Link } from '../../../../utils/ui';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { IPolicyAttributes } from '../../../../utils/interfaces';
 import { useEffect } from 'react';
 import { actions } from '../../redux';
 import { useHistory } from 'react-router-dom';
@@ -14,20 +13,15 @@ interface IParams {
 const DetailInsurability = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-
     const { id } = useParams<IParams>();
-    const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
+
     const realEstatesPolicy: any = useSelector((store: any) => store.insurability.policiesRealEstate.value);
-    //console.log('bienes inmuebles de la poliza', realEstatesPolicy)
+
     useEffect(() => {
-        dispatch(actions.getPolicy(id));
         dispatch(actions.realEstatesPolicy(Number(id)));
     }, [dispatch, id]);
 
-    // const getPolicy = async (dataPolicy) => {
-    //     const action = actions.getPolicy(id);
-    //     await dispatch(action);
-    // };
+
 
     return (
         <div className="h-100 d-flex flex-column">
@@ -51,7 +45,7 @@ const DetailInsurability = () => {
                     <div className="container-fluid">
                         <div className="row justify-content-center">
                             <div className="col-md-12">
-                                <PolizaViewForm poliza={policy} realEstatesPolicy={realEstatesPolicy} />
+                                <PolizaViewForm  policy_id={id}/>
                                 <Card title="Bienes Inmuebles de la póliza">
                                     <RealEstateList realEstateFilter={realEstatesPolicy} />
                                 </Card>

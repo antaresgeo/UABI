@@ -1,24 +1,32 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { formatDate, swal } from '../../../../utils';
 import { Card, Link, Table as UiTable } from '../../../../utils/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux';
 import { IRoleSelectAttributes } from '../../../../utils/interfaces/roles';
+import FilterForm from '../../../../utils/ui/filter_form';
 
 export const ListRoles = () => {
     const dispatch = useDispatch();
     const roles: IRoleSelectAttributes[] = useSelector((store: any) => {
-        return store.users.rolesSelect.value;
+        return store.users.roles.value;
     });
-    //  const loading: boolean = useSelector((store: any) => store.users.roles.loading);
-    //  const { total_results } = useSelector((store: any) => store.users.roles.pagination);
+    const loading: boolean = useSelector((store: any) => store.users.roles.loading);
+    const { total_results } = useSelector((store: any) => store.users.roles.pagination);
 
-    // const change_page = (page, pageSize) => {
-    //     dispatch(actions.getRoles());
-    // };
+    const change_page = (page, pageSize) => {
+        dispatch(actions.getRolesList({ page, pageSize, with: 'pagination', ...filters }));
+    };
     useEffect(() => {
-        dispatch(actions.getRoles());
+        dispatch(actions.getRolesList({ with: 'pagination' }));
     }, []);
+
+    const [filters, set_filters] = useState<object>(null);
+
+    const filter = async (_filters, _) => {
+        set_filters(_filters);
+        await dispatch(actions.getRolesList({ page: 1, with: 'pagination', ..._filters }));
+    };
 
     const deleteRol = (id) => async () => {
         let res: any;
@@ -29,9 +37,8 @@ export const ListRoles = () => {
             const result = await swal.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
-                text: `El rol contiene ${
-                    res?.total || ''
-                } usuarios asociados.\n\nSi desea continuar los usuario quedarán sin rol asiciado.`,
+                text: `El rol contiene ${res?.total || ''
+                    } usuarios asociados.\n\nSi desea continuar los usuario quedarán sin rol asiciado.`,
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -181,13 +188,20 @@ export const ListRoles = () => {
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card title="Registro de roles" extra={<Link to="/roles/create/" name="Crear" iconText="+" />}>
+                        <div className="row justify-content-between">
+                            <div className="col-5 d-flex">
+                                <div className="col-6 ">
+                                    <FilterForm filters={[{ key: 'name', name: 'Nombre' }]} onSubmit={filter} />
+                                </div>
+                            </div>
+                        </div>
                         <UiTable
                             columns={table_columns}
                             items={roles}
-                            //with_pagination
-                            //count={total_results}
-                            //loading={loading}
-                            //change_page={change_page}
+                            change_page={change_page}
+                            with_pagination
+                            count={total_results}
+                            loading={loading}
                         />
                     </Card>
                 </div>

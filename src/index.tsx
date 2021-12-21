@@ -44,6 +44,12 @@ export enum Permit {
     DETAIL_USER = 'detalles_Usuarios',
     UPDATE_USER = 'actualizar_Usuarios',
     DELETE_USER = 'inactivar_Usuarios',
+    CREATE_ROLE = 'crear_Roles',
+    DETAIL_ROLE = 'detalles_Roles',
+    UPDATE_ROLE = 'actualizar_Roles',
+    DELETE_ROLE = 'inactivar_Roles',
+    LIST_ROLE = 'listar_Roles',
+    LIST_PERMIT = 'listar_Permisos',
     LIST_USER = 'listar_Usuarios',
     CREATE_POLICY = 'crear_Polizas',
     DETAIL_POLICY = 'detalles_Polizas',
@@ -73,12 +79,10 @@ export enum Permit {
     LIST_REALESTATE = 'listar_BienesInmuebles',
     ASSIGN_ROLEPERMIT = 'asignar_RolesPermisos',
     DETAIL_REGISTROSAUDITORIA = 'detalles_RegistrosAuditoria',
-    CREATE_ROLE = 'crear_Roles',
-    DETAIL_ROLE = 'detalles_Roles',
-    UPDATE_ROLE = 'actualizar_Roles',
-    DELETE_ROLE = 'inactivar_Roles',
-    LIST_ROLE = 'listar_Roles',
-    LIST_PERMIT = 'listar_Permisos',
+    LIST_INSPECTION = 'listar_inpeccion',
+    CREATE_INSPECTION = 'crear_inpeccion',
+    SCHEDULER = 'calendario'
+
 }
 
 if (!window.__sabi) {

@@ -24,18 +24,12 @@ export const getRole = async (id: number): Promise<IRolAttributes | number> => {
     }
 };
 
-export const getRolesList = async ({
-    page = 1,
-    pageSize = 10,
-    q = null,
-}): Promise<IRolAttributes[] | string> => {
+export const getRolesList = async (filters?): Promise<IRolAttributes[] | string> => {
     try {
         let URI = `/roles/`;
         let res: AxiosResponse<IRolesResponse> = await auth_http.get(URI, {
             params: {
-                page,
-                pageSize,
-                ...(q ? { q } : {}),
+                ...filters,
             },
         });
         return res.data.results;
