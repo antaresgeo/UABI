@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import MapView from '@arcgis/core/views/MapView';
 import  _Map from '@arcgis/core/Map';
 interface MapProps {
-    center: [number, number];
+    center?: [number, number];
     zoom?: number;
 }
 
@@ -29,6 +29,7 @@ const Map: FC<MapProps> = ({ center, zoom }) => {
 };
 
 Map.defaultProps = {
+    center: [-75.56359, 6.25184],
     zoom: 13,
 };
 

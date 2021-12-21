@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Formik, Form, Field } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
@@ -93,19 +93,39 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                 <ErrorMessage name="nit" withCount max={20} />
                             </div>
                             <div className="col-6">
-                                <label htmlFor="phone_id" className="form-label">
-                                    Teléfono
-                                </label>
-                                <Field
-                                    type="text"
-                                    className="form-control"
-                                    id="phone_id"
-                                    name="phone"
-                                    disabled={disabled}
-                                    autoComplete="off"
-                                    maxLength={20}
-                                />
-                                <ErrorMessage name="phone" withCount max={20} />
+                                <div className="row">
+                                    <div className="col-8">
+                                        <label htmlFor="phone_number" className="form-label">
+                                            Teléfono <span className="text-danger">*</span>
+                                        </label>
+                                        <Field
+                                            type="number"
+                                            className="form-control"
+                                            id="phone_number"
+                                            name="phone"
+                                            placeholder="Teléfono"
+                                            autoComplete="off"
+                                            disabled={disabled}
+                                            maxLength={20}
+                                        />
+                                        <ErrorMessage name="phone" />
+                                    </div>
+                                    <div className="col-4">
+                                        <label htmlFor="phone_number_ext" className="form-label">
+                                            Ext
+                                        </label>
+                                        <Field
+                                            type="number"
+                                            className="form-control"
+                                            id="phone_number_ext"
+                                            name="phone_ext"
+                                            autoComplete="off"
+                                            disabled={disabled}
+                                            maxLength={20}
+                                        />
+                                        <ErrorMessage name="phone_ext" />
+                                    </div>
+                                </div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="state_id" className="form-label">
@@ -171,19 +191,39 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                 <ErrorMessage name="contact_information.email" />
                             </div>
                             <div className="form-group col-6">
-                                <label htmlFor="contact_phone_id" className="form-label">
-                                    Telefono de contacto
-                                </label>
-                                <Field
-                                    type="text"
-                                    className="form-control"
-                                    id="contact_phone_id"
-                                    name="contact_information.phone"
-                                    disabled={disabled}
-                                    autoComplete="off"
-                                    maxLength={20}
-                                />
-                                <ErrorMessage name="contact_information.phone" withCount max={20} />
+                                <div className="row">
+                                    <div className="col-8">
+                                        <label htmlFor="phone_number" className="form-label">
+                                            Teléfono <span className="text-danger">*</span>
+                                        </label>
+                                        <Field
+                                            type="number"
+                                            className="form-control"
+                                            id="phone_number"
+                                            name="contact_information.phone"
+                                            placeholder="Teléfono"
+                                            autoComplete="off"
+                                            disabled={disabled}
+                                            maxLength={20}
+                                        />
+                                        <ErrorMessage name="contact_information.phone" />
+                                    </div>
+                                    <div className="col-4">
+                                        <label htmlFor="phone_number_ext" className="form-label">
+                                            Ext
+                                        </label>
+                                        <Field
+                                            type="number"
+                                            className="form-control"
+                                            id="phone_number_ext"
+                                            name="contact_information.phone_ext"
+                                            autoComplete="off"
+                                            disabled={disabled}
+                                            maxLength={20}
+                                        />
+                                        <ErrorMessage name="contact_information.phone_ext" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

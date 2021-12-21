@@ -120,7 +120,7 @@ const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs
             </Card>
 
             <Card>
-                <Map center={[-75.56359, 6.25184]} />
+                <Map center={[-75.56359, 6.25184]}  />
             </Card>
         </div>
     );

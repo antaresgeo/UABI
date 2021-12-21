@@ -58,7 +58,7 @@ const InsuranceBrokerDetail: FC<InsuranceBrokerDetailProps> = ({ broker }) => {
                                 <div className="my-3">{broker?.contact_information?.email || '-'}</div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor="">Telefono de contacto</label>
+                                <label htmlFor="">Teléfono de contacto</label>
                                 <div className="my-3">{broker?.contact_information?.phone || '-'}</div>
                             </div>
                             <div className="col-3">
