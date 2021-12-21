@@ -10,8 +10,13 @@ const createPolicy = (dataPolicy) =>
 const getPolicy = (id: string) => {
     return request_dispatch(types.policy, service.getPolicy(id));
 };
-const getPolicies = (data) =>
-    request_dispatch(types.policies, service.getPolicies(data));
+const getPolicies = (filters: {
+    with?: string;
+    page?: number;
+    pageSize?: 10 | 20 | 30;
+    q?: {};
+}) =>
+    request_dispatch(types.policies, service.getPolicies(filters));
 
 const updatePolicy = (data: any, id) =>
     request_dispatch(types.policy, service.updatePolicy(data, id));

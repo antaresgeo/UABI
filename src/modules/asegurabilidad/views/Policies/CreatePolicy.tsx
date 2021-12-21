@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { Card } from '../../../../utils/ui';
 import { actions } from '../../redux';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { clearRealEstate, getRealEstate } from '../../../acquisitions/redux/actions/realEstates';
 import PolizaForm from '../../components/PolizaForm';
 import { IRealEstateAttributes } from '../../../../utils/interfaces';
@@ -14,6 +14,7 @@ const CreateInsurability = () => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
+    const form_ref = useRef<any>();
 
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
@@ -51,9 +52,8 @@ const CreateInsurability = () => {
                                     type="create"
                                     companies={insurance_companies}
                                     brokers={insurance_brokers}
-                                    onSubmit={(values) => {
-                                        return createPolicy(values);
-                                    }}
+                                    innerRef={form_ref}
+                                    onSubmit={createPolicy}
                                 />
                             </Card>
                         </div>
@@ -74,6 +74,22 @@ const CreateInsurability = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form_ref.current.submitForm();
+                    }}
+                    disabled={form_ref.current?.isSubmitting}
+                >
+                    Guardar
+                    {form_ref.current?.isSubmitting && (
+                        <i
+                            className="fa fa-circle-notch fa-spin"
+                            style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                        />
+                    )}
+                </button>
             </div>
         </div>
     );

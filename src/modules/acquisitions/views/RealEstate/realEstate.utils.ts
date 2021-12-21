@@ -2,7 +2,9 @@ import { swal_warning } from '../../../../utils';
 import { create_document } from '../../../../utils/components/DocumentsModal/services';
 
 const doc_required_message = (supports_documents) => {
+
     const missing_docs = supports_documents
+        .filter((d) => d.type !== 6 &&  d.type !== 7 )
         .filter((d) => !d.id)
         .filter((d) => !d.hasOwnProperty('pdf') || !d.pdf);
     if (missing_docs.length > 0) {

@@ -40,22 +40,14 @@ export const createPolicy = async (
     }
 };
 
-export const getPolicies = async ({
-    pagination,
-    page = 1,
-    pageSize = 10,
-    q = null,
-}): Promise<IPaginable<IPolicyAttributes> | string> => {
+export const getPolicies = async (filters?): Promise<IPaginable<IPolicyAttributes> | string> => {
     try {
         let URI = `/insurabilities`;
         let res: AxiosResponse<IPaginable<IPolicyAttributes>> = await http.get(
             URI,
             {
                 params: {
-                    page,
-                    pageSize,
-                    with: pagination,
-                    ...(q ? { q } : {}),
+                    ...filters,
                 },
             }
         );

@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Select from '../../../utils/ui/select';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 interface DispositionFormPros {
     realEstate: any;
@@ -9,13 +9,15 @@ interface DispositionFormPros {
 }
 
 export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTypeDispositionChange }) => {
-    console.log(realEstate)
-    const initialValues = {
-        destination_type: "",
-        disposition_type: "",
+
+    let initialValues = {
+        destination_type: realEstate?.destination_type,
+        disposition_type: realEstate?.disposition_type === null ? "" : realEstate?.disposition_type,
         availability: "",
-        ...realEstate
     };
+
+
+    console.log(initialValues)
 
     const submit = (values /*, actions*/) => {
         console.log(values);
@@ -77,7 +79,13 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
                         <label htmlFor="destination_type_id" className="form-label">
                             Tipo de Uso
                         </label>
-                        <Field type="text" id="destination_type_id" name="destination_type" className="form-control" disabled />
+                        <Field
+                        type="text"
+                        id="destination_type_id"
+                        name="destination_type"
+                        className="form-control"
+                        disabled
+                        />
                     </div>
                     <div className="col-3">
                         <label htmlFor="disposition_type_id" className="form-label">
@@ -89,7 +97,6 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
                             name="disposition_type"
                             className="form-control"
                             disabled
-
                         />
                     </div>
                     <div className="col-6">

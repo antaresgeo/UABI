@@ -18,7 +18,7 @@ export const EditDisposition = () => {
     const history = useHistory();
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const [dispositionType, setDispositionType] = useState('');
-    console.log('realEstate', realEstate);
+    // console.log('realEstate', realEstate);
     useEffect(() => {
         dispatch(actions.getRealEstate(id));
     }, [id]);

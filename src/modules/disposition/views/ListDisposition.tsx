@@ -28,9 +28,12 @@ export const ListDisposition = () => {
                                 <div className="col-6 ">
                                     <FilterForm
                                         filters={[
+                                            { key: '', name: 'Proyecto' },
                                             { key: 'register_number', name: 'Matrícula' },
                                             { key: 'name', name: 'Nombre' },
                                             { key: 'address', name: 'Dirección' },
+                                            { key: 'CBML', name: 'CBML' },
+                                            { key: '', name: 'Activo fijo' },
                                         ]}
                                         onSubmit={filter}
                                     />

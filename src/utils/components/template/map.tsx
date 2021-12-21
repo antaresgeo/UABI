@@ -1,21 +1,23 @@
-import React, { FC, useContext, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import MapView from '@arcgis/core/views/MapView';
-import { TemplateContext } from './template_context';
+import  _Map from '@arcgis/core/Map';
 interface MapProps {
     center?: [number, number];
     zoom?: number;
 }
 
 const Map: FC<MapProps> = ({ center, zoom }) => {
-    const context = useContext(TemplateContext);
     const ref = useRef(false);
     const [view, set_view] = useState<MapView>(null);
     useEffect(() => {
         if (!ref.current) {
             ref.current = true;
         } else {
+            const _map = new _Map({
+                basemap: 'arcgis-navigation', // Basemap layer service
+            });
             const _view = new MapView({
-                map: context.map,
+                map: _map,
                 center, // Longitude, latitude
                 zoom, // Zoom level
                 container: 'viewDiv', // Div element

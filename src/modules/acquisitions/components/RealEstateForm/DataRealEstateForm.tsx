@@ -10,6 +10,7 @@ import { extractMonth, formatDate } from '../../../../utils';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import dependencias from '../../dependencias';
 import { useDispatch } from 'react-redux';
+import ModalDivideAreas from '../../../Inventory_record/components/ModalDivideAreas';
 import TooltipField from "../../../../utils/ui/tooltip_field";
 
 interface DataRealEstateFormProps {
@@ -41,10 +42,10 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 }) => {
     useEffect(() => {
         let value_patrimonial = 0;
-        console.log(acquisitions?.map(a => value_patrimonial = a.act_value + Number(a.recognition_value)))
-        formik.setFieldValue('patrimonial_value',value_patrimonial , false);
+        acquisitions?.map(a => value_patrimonial = a.act_value + Number(a.recognition_value))
+        formik.setFieldValue('patrimonial_value', value_patrimonial, false);
+        formik.setFieldValue('accounting_amount', value_patrimonial, false);
     }, [acquisitions])
-    // const valorPatrimonial = formik.values.patrimonial_value;
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(actions.getTipologies());
@@ -72,12 +73,12 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         if (!aux_data.includes(active_type[2]) && !aux_data.includes(active_type[3])) {
             formik.setFieldValue('construction_area', '', false);
             const value1 = parseFloat(formik.values.plot_area || 0);
-            formik.setFieldValue('total_area', value1, false);
+            //formik.setFieldValue('total_area', value1, false);
         }
         if (!aux_data.includes(active_type[0])) {
             formik.setFieldValue('plot_area', '', false);
             const value1 = parseFloat(formik.values.construction_area || 0);
-            formik.setFieldValue('total_area', value1, false);
+            //formik.setFieldValue('total_area', value1, false);
         }
         setFieldValue('active_type', aux_data, false);
     };
@@ -304,7 +305,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
             </div>
             <div className="row">
-                <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
+                <div className="col-3">
                     <label htmlFor="patrimonial_value_id" className="form-label">
                         Valor Patrimonial <span className="text-danger">*</span>
                     </label>
@@ -313,7 +314,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             <span className="input-group-text bg-white border-end-0">$</span>
                         </div>
                         <Field
-                            disabled
+                            disabled={!inventory}
                             name="patrimonial_value"
                             id="patrimonial_value_id"
                             type="number"
@@ -322,44 +323,35 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             //TODO: sumas el valor de adquisicion con valor de reconocimiento
                             min={0}
                             max={99999999999999999999}
-                        // onChange={(e, values) => {
-                        //     console.log(e.target.value)
-                        //     formik.handleChange(e)
-                        // }}
+                            onChange={(e, values) => {
+                                let cambio = "a";
+                                cambio = e.target.value
+                                formik.handleChange(e)
+                                if(cambio !== "a") {
+                                    console.log('documeto obligatorio')
+                                }
+                            }}
                         />
                     </div>
                     <ErrorMessage name="patrimonial_value" />
 
                 </div>
-                {/* {console.log(formik.values.patrimonial_value,'valor anterior', valorPatrimonial)} */}
-                {inventoryEdit === false && (
-                    <div className="col-6">
-                        <label htmlFor="form-select" className="form-label">
-                            Documento Avalúo
-                        </label>
-                        <Field
-                            name="appraisal_document"
-                            component={DocumentModal}
-                            btn_label="Adjuntar"
-                            disables={disabled}
-                        // onDelete={(values) => {
-                        //     setFieldValue('insurance_document_id', '', false)
-                        // }}
-                        />
-                        <ErrorMessage name="appraisal_document" />
+                <div className="col-3">
+                    <div className="row">
+                        <div className="col-9">
+                            <label htmlFor="total_area_id" className="form-label">
+                                Área Total
+                            </label>
+                        </div>
+
                     </div>
-                )}
-                <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
-                    <label htmlFor="total_area_id" className="form-label">
-                        Área Total
-                    </label>
+
                     <div className="input-group">
                         <Field
                             name="total_area"
                             type="number"
                             id="total_area_id"
                             className="form-control border-end-0"
-                            disabled
                             min={0}
                         />
                         <div className="input-group-prepend">
@@ -371,24 +363,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="total_area" />
                 </div>
-                {inventoryEdit === false && (
-                    <div className="col-6">
-                        <label htmlFor="form-select" className="form-label">
-                            Documento de Prediación
-                        </label>
-                        <Field
-                            name="prediation_document"
-                            component={DocumentModal}
-                            btn_label="Adjuntar"
-                            disables={disabled}
-                        // onDelete={(values) => {
-                        //     setFieldValue('insurance_document_id', '', false)
-                        // }}
-                        />
-                        <ErrorMessage name="prediation_document" />
-                    </div>
-                )}
-                <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
+                <div className="col-3">
                     <label htmlFor="reconstruction_value_id" className="form-label">
                         Valor de reconstrucción <span className="text-danger">*</span>
                     </label>
@@ -409,7 +384,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="reconstruction_value" />
                 </div>
-                <div className={`form-group col-${inventoryEdit ? 3 : 6}`}>
+                <div className="col-3">
                     <label htmlFor="total_percentage_id" className="form-label">
                         Porcentaje Total <span className="text-danger">*</span>
                     </label>
@@ -485,90 +460,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="zone" />
                 </div>
-                <div className="col-6">
-                    <label className="form-label">
-                        Tipo de activo <span className="text-danger">*</span>
-                    </label>
-                    <div style={{ height: '33.5px', lineHeight: '33.5px' }}>
-                        {active_type.map((item, i) => {
-                            return (
-                                <label key={i} className="d-inline-block ms-1 me-1">
-                                    <Field
-                                        type="checkbox"
-                                        name="active_type"
-                                        value={item}
-                                        className="me-2"
-                                        onChange={onChangeActiveType(formik.values.active_type, formik.setFieldValue)}
-                                    />
-                                    {item}
-                                </label>
-                            );
-                        })}
-                    </div>
-                    <ErrorMessage name="active_type" />
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-3">
-                    <label htmlFor="plot_area_id" className="form-label">
-                        Área Lote
-                    </label>
-                    <div className="input-group">
-                        <Field
-                            type="number"
-                            className="form-control border-end-0"
-                            id="plot_area_id"
-                            name="plot_area"
-                            disabled={!formik.values.active_type?.includes('Lote')}
-                            onChange={(e) => {
-                                formik.handleChange(e);
-                                const value1 = parseFloat(e.target.value || 0);
-                                const value2 = parseFloat(formik.values.construction_area || 0);
-                                formik.setFieldValue('total_area', value1 + value2, false);
-                            }}
-                            min={0}
-                        />
-                        <div className="input-group-prepend">
-                            <span className="input-group-text bg-white border-start-0">
-                                m<sup>2</sup>
-                            </span>
-                        </div>
-                    </div>
-                    <ErrorMessage name="plot_area" />
-                </div>
-                <div className="col-3">
-                    <label htmlFor="area_construccion_id" className="form-label">
-                        Área Construcción
-                    </label>
-                    <div className="input-group">
-                        <Field
-                            type="number"
-                            className="form-control border-end-0"
-                            id="area_construccion_id"
-                            name="construction_area"
-                            min={0}
-                            disabled={
-                                !(
-                                    formik.values.active_type?.includes(active_type[1]) ||
-                                    formik.values.active_type?.includes(active_type[2]) ||
-                                    formik.values.active_type?.includes(active_type[3])
-                                )
-                            }
-                            onChange={(e) => {
-                                formik.handleChange(e);
-                                const value2 = parseFloat(e.target.value || 0);
-                                const value1 = parseFloat(formik.values.plot_area || 0);
-                                formik.setFieldValue('total_area', value1 + value2, false);
-                            }}
-                        />
-                        <div className="input-group-prepend">
-                            <span className="input-group-text bg-white border-start-0">
-                                m<sup>2</sup>
-                            </span>
-                        </div>
-                    </div>
-                    <ErrorMessage name="construction_area" />
-                </div>
                 <div className="form-group col-3">
                     <label htmlFor="address" className="form-label">
                         CBML
@@ -599,6 +490,114 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <ErrorMessage name="_address.name" />
                 </div>
             </div>
+            <div className="row">
+                <div className="col-12">
+                    <label className="form-label">
+                        Tipo de activo <span className="text-danger">*</span>
+                    </label>
+                    {/* {console.log(formik.values.active_type)} */}
+                    <div style={{ height: '33.5px', lineHeight: '33.5px' }}>
+                        {active_type.map((item, i) => {
+                            return (
+                                <label key={i} className="d-inline-block ms-1 me-1">
+                                    <Field
+                                        type="checkbox"
+                                        name="active_type"
+                                        value={item}
+                                        className="me-2"
+                                        onChange={onChangeActiveType(formik.values.active_type, formik.setFieldValue)}
+                                    />
+                                    {item}
+                                </label>
+                            );
+                        })}
+                    </div>
+                    <ErrorMessage name="active_type" />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-6">
+                    <div className="row">
+                        <div className="col-9">
+                            <label htmlFor="plot_area_id" className="form-label">
+                                Área Lote
+                            </label>
+                        </div>
+                        {inventory &&
+                            <div className="col-3" >
+                                <ModalDivideAreas total_area={formik.values.plot_area} formik={formik} type={"Lote"} />
+                            </div>
+                        }
+                    </div>
+
+                    <div className="input-group">
+                        <Field
+                            type="number"
+                            className="form-control border-end-0"
+                            id="plot_area_id"
+                            name="plot_area"
+                            disabled={!formik.values.active_type?.includes('Lote')}
+                            onChange={(e) => {
+                                formik.handleChange(e);
+                                const value1 = parseFloat(e.target.value || 0);
+                                const value2 = parseFloat(formik.values.construction_area || 0);
+                                //formik.setFieldValue('total_area', value1 + value2, false);
+                            }}
+                            min={0}
+                        />
+                        <div className="input-group-prepend">
+                            <span className="input-group-text bg-white border-start-0">
+                                m<sup>2</sup>
+                            </span>
+                        </div>
+                    </div>
+                    <ErrorMessage name="plot_area" />
+                </div>
+                <div className="col-6">
+                    <div className="row">
+                        <div className="col-9">
+                            <label htmlFor="area_construccion_id" className="form-label">
+                                Área Construcción
+                            </label>
+                        </div>
+                        {inventory &&
+                            <div className="col-3" >
+                                <ModalDivideAreas total_area={formik.values.construction_area} formik={formik} type={"Construcción"} />
+                            </div>
+                        }
+                    </div>
+                    <div className="input-group">
+                        <Field
+                            type="number"
+                            className="form-control border-end-0"
+                            id="area_construccion_id"
+                            name="construction_area"
+                            min={0}
+                            disabled={
+                                !(
+                                    formik.values.active_type?.includes(active_type[1]) ||
+                                    formik.values.active_type?.includes(active_type[2]) ||
+                                    formik.values.active_type?.includes(active_type[3])
+                                )
+                            }
+                            onChange={(e) => {
+                                formik.handleChange(e);
+                                const value2 = parseFloat(e.target.value || 0);
+                                const value1 = parseFloat(formik.values.plot_area || 0);
+                                //formik.setFieldValue('total_area', value1 + value2, false);
+                            }}
+                        />
+                        <div className="input-group-prepend">
+                            <span className="input-group-text bg-white border-start-0">
+                                m<sup>2</sup>
+                            </span>
+                        </div>
+                    </div>
+                    <ErrorMessage name="construction_area" />
+                </div>
+
+            </div>
+
             {englobe && (
                 <div className="row">
                     <div className="col-8">
@@ -678,20 +677,24 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     {inventory && (
                         <>
                             <div className="row">
-                                <div className="col-3">
+                                <div className="col-6">
                                     <label htmlFor="accounting_amount_id" className="form-label">
                                         Importe Contabilidad
                                     </label>
-                                    <Field
-                                        type="number"
-                                        className="form-control"
-                                        id="accounting_amount_id"
-                                        name="accounting_amount"
-                                        disabled
-                                    />
+                                    <div className="input-group w-100">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text bg-white border-end-0">$</span>
+                                        </div>
+                                        <Field
+                                            type="number"
+                                            className="form-control text-end"
+                                            id="accounting_amount_id"
+                                            name="accounting_amount"
+                                        />
+                                    </div>
                                     <ErrorMessage />
                                 </div>
-                                <div className="col-3">
+                                <div className="col-6">
                                     <label htmlFor="periodo_contable_id" className="form-label">
                                         Periodo contable
                                     </label>
@@ -708,36 +711,32 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     <ErrorMessage />
                                 </div>
 
-                                <>
-                                    <div className="col-3">
-                                        <label htmlFor="counterpart_id" className="form-label">
-                                            Contrapartida
-                                        </label>
-                                        <Field
-                                            type="number"
-                                            className="form-control"
-                                            id="counterpart_id"
-                                            name="counterpart"
-                                            disabled
-                                        />
-                                        <ErrorMessage />
-                                    </div>
-                                    <div className="col-3">
-                                        <label htmlFor="assignments_id" className="form-label">
-                                            Asignaciones
-                                        </label>
-                                        <Field
-                                            type="text"
-                                            className="form-control"
-                                            id="assignments_id"
-                                            name="assignments"
-                                            disabled={inventoryEdit}
-                                        />
-                                        <ErrorMessage />
-                                    </div>
-                                </>
-                            </div>
-                            <div className="row">
+
+                                <div className="col-3">
+                                    <label htmlFor="counterpart_id" className="form-label">
+                                        Contrapartida
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        className="form-control"
+                                        id="counterpart_id"
+                                        name="counterpart"
+                                    />
+                                    <ErrorMessage />
+                                </div>
+                                <div className="col-3">
+                                    <label htmlFor="assignments_id" className="form-label">
+                                        Asignaciones
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        className="form-control"
+                                        id="assignments_id"
+                                        name="assignments"
+                                        disabled={inventoryEdit}
+                                    />
+                                    <ErrorMessage />
+                                </div>
                                 <div className="col-3">
                                     <label htmlFor="exploitation_value_id" className="form-label">
                                         Valor Aprovechamiento
@@ -778,6 +777,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     </div>
                                     <ErrorMessage />
                                 </div>
+                            </div>
+                            <div className="row">
                                 <div className="col-3">
                                     <label htmlFor="canyon_value_id" className="form-label">
                                         Valor del Canon
@@ -811,9 +812,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     />
                                     <ErrorMessage name="useful_life_years" />
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-6">
+
+                                <div className="col-3">
                                     <label htmlFor="useful_life_periods_id" className="form-label">
                                         Vida util Períodos
                                     </label>
@@ -826,7 +826,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     />
                                     <ErrorMessage name="useful_life_periods" />
                                 </div>
-                                <div className="col-6">
+                                <div className="col-3">
                                     <label htmlFor="disposition_type_id" className="form-label">
                                         Tipo Disposición
                                     </label>
@@ -838,7 +838,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         disabled={inventoryEdit}
                                     >
                                         <option key="availability_type" value="" hidden>
-                                            --Seleccione Tipo de uso disponibilidad--
+                                            --Seleccione disponibilidad--
                                         </option>
                                         {formik.values.destination_type !== 'PÚBLICO' && (
                                             <>

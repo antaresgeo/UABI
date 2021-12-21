@@ -164,6 +164,14 @@ export const TableAreas = () => {
     if (Array.isArray(DataRealEstate)) {
         DataRealEstate.map((data) => (totalArea = totalArea + Number(data.total_area)));
     }
+
+    const CreateRealEstate = async (DataRealEstate) => {
+        const result = await dispatch(actions.createRealEstates(DataRealEstate, "many"))
+        console.log(result);
+        //history.push(`/acquisitions/real-estates/`);
+        //return Promise.resolve();
+
+    }
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -239,9 +247,10 @@ export const TableAreas = () => {
                                 text: 'se deben completar los datos de todos los bienes Inmuebles',
                             });
                         } else {
-                            console.log('desde tabla',DataRealEstate)
-                            dispatch(actions.createRealEstates(DataRealEstate, "many"))
+                            CreateRealEstate(DataRealEstate);
+                            //console.log('desde tabla', DataRealEstate)
                             //console.log('bienes inmuebles a editar', real_estates_edit);
+
                         }
                     }}
                 >

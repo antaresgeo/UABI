@@ -8,6 +8,7 @@ const getRole = (id: number) => {
 };
 
 const getRolesList = (filters: {
+    with?: string;
     page?: number;
     pageSize?: 10 | 20 | 30;
     q?: string;

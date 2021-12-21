@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import 'moment/locale/es';
 import { io, Socket } from 'socket.io-client';
 import { BASE_URL } from '../../../config/axios_instances/notifications';
-import Map from '@arcgis/core/Map';
 
 type KeyPath = [string, string?];
 interface TemplateProps {
@@ -18,7 +17,6 @@ interface TemplateProps {
     pass_modal: boolean;
     toggle_pass_modal: () => void;
     idNode: string;
-    map: Map;
     socket: Socket;
 }
 export const TemplateContext = React.createContext<TemplateProps>(null);
@@ -30,7 +28,6 @@ const TemplateProvider: FC = React.memo(({ children }) => {
     const [drawer_menu_collapsed, set_drawer_menu_collapsed] = useState<boolean>(false);
     const [pass_modal, set_pass_modal] = useState<boolean>(false);
     const [idNode, set_idNode] = useState<string>(null);
-    const [map, set_map] = useState<Map>(null);
     const [socket, set_socket] = useState<Socket>(null);
 
     useEffect(() => {
@@ -49,12 +46,6 @@ const TemplateProvider: FC = React.memo(({ children }) => {
         };
     }, [set_socket]);
 
-    useEffect(() => {
-        const _map = new Map({
-            basemap: 'arcgis-navigation', // Basemap layer service
-        });
-        set_map(_map);
-    }, []);
     return (
         <TemplateContext.Provider
             value={{
@@ -65,7 +56,6 @@ const TemplateProvider: FC = React.memo(({ children }) => {
                 pass_modal,
                 idNode,
                 socket,
-                map,
                 set_menu_key_path,
                 set_drawer_menu_collapsed,
                 menu_toggle: () => set_menu_collapsed((collapsed) => !collapsed),
