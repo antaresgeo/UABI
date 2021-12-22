@@ -115,9 +115,9 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                         name="regulatory_risk.mitigation_mechanism"
                         placeholder=""
                         autoComplete="off"
-                        maxLength={200}
+                        maxLength={280}
                     />
-                    <ErrorMessage name="regulatory_risk.mitigation_mechanism" withCount max={200} />
+                    <ErrorMessage name="regulatory_risk.mitigation_mechanism" withCount max={280} />
                 </div>
             </div>
             <div className="div" style={{ fontWeight: 'bold', marginTop: '10px', fontSize: '14px' }}>
@@ -226,9 +226,9 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                         name="operational_risk.mitigation_mechanism"
                         placeholder=""
                         autoComplete="off"
-                        maxLength={200}
+                        maxLength={280}
                     />
-                    <ErrorMessage name="operational_risk.mitigation_mechanism" withCount max={200} />
+                    <ErrorMessage name="operational_risk.mitigation_mechanism" withCount max={280} />
                 </div>
             </div>
         </>

@@ -54,16 +54,16 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         },
         //analisis de riegos
         regulatory_risk: {
-            degree_occurrence: "",
-            impact_degree: "",
-            responsable: "",
-            mitigation_mechanism: "",
+            degree_occurrence: "MEDIO",
+            impact_degree: "MEDIO",
+            responsable: "Contratista",
+            mitigation_mechanism: "Ejercer un control y vigilancia estrictos al contrato por parte del supervisor.",
         },
         operational_risk: {
-            degree_occurrence: "",
-            impact_degree: "",
-            responsable: "",
-            mitigation_mechanism: "",
+            degree_occurrence: "MEDIO",
+            impact_degree: "MEDIO",
+            responsable: "Contratista",
+            mitigation_mechanism: "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual",
         },
         //comodato
         loan_value: '',
@@ -113,8 +113,8 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         leader: {
             type_society: "Persona Natural",
             post: "",
-            dependence: "",
-            secretary: "",
+            dependence: realEstate?.dependency,
+            secretary: realEstate?.subdependency,
         },
         location_leader: {
             address: "",
@@ -123,14 +123,17 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         elaborated: {
             name: "",
             post: "",
+            email: "",
         },
         revised: {
             name: "",
             post: "",
+            email: "",
         },
         approved: {
             name: "",
             post: "",
+            email: "",
         },
         //beneficiario
         population: '',
@@ -245,15 +248,18 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         //personas
         elaborated: Yup.object({
             name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio')
+            post: Yup.string().required('obligatorio'),
+            email: Yup.string().required('obligatorio')
         }),
         revised: Yup.object({
             name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio')
+            post: Yup.string().required('obligatorio'),
+            email: Yup.string().required('obligatorio')
         }),
         approved: Yup.object({
             name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio')
+            post: Yup.string().required('obligatorio'),
+            email: Yup.string().required('obligatorio')
         }),
 
 
@@ -286,7 +292,7 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                                 <Formobligation />
                             </Card>
                         )}
-                        <Card>
+                        <Card >
                             <FormLider />
                         </Card>
                     </Form>

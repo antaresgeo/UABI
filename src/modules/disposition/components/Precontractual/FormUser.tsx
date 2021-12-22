@@ -100,7 +100,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                                     type="text"
                                     className="form-control"
                                     disabled
-                                //value={formik.values.location_applicant.address}
+                                    value={formik.values.location_applicant?.address}
                                 />
                                 <div className="input-group-prepend">
                                     <LocationModal

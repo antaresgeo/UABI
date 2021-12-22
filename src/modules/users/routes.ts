@@ -50,27 +50,32 @@ export const guards = {
     list: (props?) => {
         const user = props.user;
         if (!user) return false;
-        return user.roles.includes(Permit.LIST_USER);
+        const { permits } = user;
+        return permits.includes(Permit.LIST_USER);
     },
     create: (props?) => {
         const user = props.user;
         if (!user) return false;
-        return user.roles.includes(Permit.CREATE_ROLE);
+        const { permits } = user;
+        return permits.includes(Permit.CREATE_ROLE);
     },
     detail: (props?) => {
         const user = props.user;
         if (!user) return false;
-        return user.roles.includes(Permit.DETAIL_USER);
+        const { permits } = user;
+        return permits.includes(Permit.DETAIL_USER);
     },
     edit: (props?) => {
         const user = props.user;
         if (!user) return false;
-        return user.roles.includes(Permit.UPDATE_USER);
+        const { permits } = user;
+        return permits.includes(Permit.UPDATE_USER);
     },
     delete: (props?) => {
         const user = props.user;
         if (!user) return false;
-        return user.roles.includes(Permit.DELETE_USER);
+        const { permits } = user;
+        return permits.includes(Permit.DELETE_USER);
     },
 };
 

@@ -201,7 +201,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         total_area: Yup.number()
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
-                then: Yup.number()
+                then: Yup.number().nullable()
                     .moreThan(Yup.ref('plot_area'), (plot_area) => {
                         if (plot_area.more !== undefined) {
                             return 'debe ser mayor a área Lote'
@@ -210,7 +210,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             })
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && (active_type.includes('Construccion') || active_type.includes('Construccion para demoler') || active_type.includes('Mejora')),
-                then: Yup.number()
+                then: Yup.number().nullable()
                     .moreThan(Yup.ref('construction_area'), (construction_area) => {
                         if (construction_area.more !== undefined) {
                             return 'debe ser mayor a área construccion'
@@ -224,22 +224,22 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         plot_area: Yup.number()
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
-                then: Yup.number()
+                then: Yup.number().nullable()
                     .lessThan(Yup.ref('total_area'), 'debe ser menor que el área total'),
             })
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
                 then: Yup.number().required('obligatorio')
             }),
-        construction_area: Yup.number()
+        construction_area: Yup.number().nullable()
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && (active_type.includes('Construccion') || active_type.includes('Construccion para demoler') || active_type.includes('Mejora')),
-                then: Yup.number()
+                then: Yup.number().nullable()
                     .lessThan(Yup.ref('total_area'), 'debe ser menor que el área total')
             })
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && (active_type.includes('Construccion') || active_type.includes('Construccion para demoler') || active_type.includes('Mejora')),
-                then: Yup.number().required('obligatorio')
+                then: Yup.number().nullable()
             }),
 
 
@@ -259,6 +259,13 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         delete values._type;
         values.projects_id = [project_id];
         values.materials = values.materials.join(', ');
+        if(realEstate.patrimonial_value !== values.patrimonial_value ) {
+            console.log('obligatorio avaluo')
+            return
+        }else if(realEstate.total_area !== values.total_area || realEstate.plot_area !== values.plot_area || realEstate.construction_area !== values.construction_area  ) {
+            console.log('oblifatorio prediacion')
+            return
+        }
         onSubmit(values, form, isFinish)
             .then(() => {
                 form.setSubmitting(false);

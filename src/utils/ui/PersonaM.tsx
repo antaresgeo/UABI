@@ -163,7 +163,7 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                                             className="form-control"
                                             id="surname_id"
                                             name="surnames.firstSurname"
-                                            placeholder="Primer pellido"
+                                            placeholder="Primer apellido"
                                             autoComplete="off"
                                             disabled={disabled}
                                             maxLength={20}
@@ -244,7 +244,8 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                                             </option>
                                             <option value="f">Femenino</option>
                                             <option value="m">Masculino</option>
-                                            <option value="o">Otro</option>
+                                            <option value="o">Intersexual</option>
+                                            <option value="o">No Deseo Responder</option>
                                         </Field>
                                         <ErrorMessage name="gender" />
                                     </div>

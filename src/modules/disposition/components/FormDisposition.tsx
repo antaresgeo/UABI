@@ -1,4 +1,6 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from '../../acquisitions/redux';
 
 interface DispositionFormPros {
     dispositionType: string;
@@ -6,6 +8,13 @@ interface DispositionFormPros {
 }
 
 export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, realEstate }) => {
+    const dispatch = useDispatch();
+    const tipology: any = useSelector((store: any) => store.acquisitions.tipology.value);
+    console.log(realEstate)
+    useEffect(() => {
+        dispatch(actions.getTipology(realEstate?.tipology_id));
+    }, []);
+
     const is_aepDisposition = dispositionType === 'AEP';
     const is_ComodatoDisposition = dispositionType === 'Comodato';
     const is_mtepDisposition = dispositionType === 'MTEP';
@@ -53,8 +62,8 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                                 <div className="my-3">{realEstate?.name}</div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor="">Comuna/Barrio</label>
-                                <div className="my-3">{realEstate?.address?.location?.commune}</div>
+                                <label htmlFor="">Comuna - Barrio</label>
+                                <div className="my-3">{realEstate?.address?.location?.commune} - {realEstate?.address?.location?.neighborhood}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">CBML</label>
@@ -85,7 +94,7 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                             {dispositionType !== 'ventas' && dispositionType !== 'autorizaciones' && (
                                 <div className="col-3">
                                     <label htmlFor="">Tipología</label>
-                                    <div className="my-3">-</div>
+                                    <div className="my-3">{tipology?.tipology}</div>
                                 </div>
                             )}
                         </div>
@@ -93,7 +102,7 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                             <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                                 {showInspeccion && (
                                     <div className="col-3">
-                                        <label htmlFor="">Inspección</label>
+                                        <label htmlFor="">Ultima Fecha de Inspección</label>
                                         <div className="my-3">-</div>
                                     </div>
                                 )}
@@ -112,23 +121,34 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                                 {showCanon && (
                                     <div className="col-3">
                                         <label htmlFor="">Ultimo Canon de Arrendamiento</label>
-                                        <div className="my-3">{realEstate?.canyon_value === null ? 0 : realEstate?.canyon_value }</div>
+                                        <div className="my-3">{realEstate?.canyon_value === null ? 0 : realEstate?.canyon_value}</div>
                                     </div>
                                 )}
                             </div>
                         )}
-                        {showAprovechamiento && (
-                            <div className="row my-3">
-                                <div className="col-3">
-                                    <label htmlFor="">Valor de Aprovechamiento</label>
-                                    <div className="my-3">{realEstate?.exploitation_value === null ? 0 : realEstate?.exploitation_value}</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Valor Autorización</label>
-                                    <div className="my-3">{realEstate?.authorization_value === null ? 0 : realEstate?.authorization_value}</div>
-                                </div>
+
+                        <div className="row my-3">
+                            {showAprovechamiento && (
+                                <>
+                                    <div className="col-3">
+                                        <label htmlFor="">Valor de Aprovechamiento</label>
+                                        <div className="my-3">{realEstate?.exploitation_value === null ? 0 : realEstate?.exploitation_value}</div>
+                                    </div>
+                                    <div className="col-3">
+                                        <label htmlFor="">Valor Autorización</label>
+                                        <div className="my-3">{realEstate?.authorization_value === null ? 0 : realEstate?.authorization_value}</div>
+                                    </div>
+                                </>
+                            )}
+                            {/* <div className="col-3">
+                                <label htmlFor="">Dependencia</label>
+                                <div className="my-3">{realEstate?.dependency}</div>
                             </div>
-                        )}
+                            <div className="col-3">
+                                <label htmlFor="">Subdpendencia</label>
+                                <div className="my-3">{realEstate?.subdependency}</div>
+                            </div> */}
+                        </div>
                     </div>
                 </div>
             </div>
