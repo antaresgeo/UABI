@@ -26,7 +26,7 @@ const getProject = (id: string) =>
     request_dispatch(types.project, service.getProject(id));
 
 const getProjects = (filters?: any) =>
-    request_dispatch(types.projects, service.getProjects({ ...filters }));
+    request_dispatch(types.projects, service.getProjects(filters));
 
 const createProject = (values) =>
     request_dispatch(types.project, service.createProject(values));

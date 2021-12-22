@@ -26,19 +26,13 @@ export const getProject = async (
     }
 };
 
-const getProjects = async ({
-    page = 1,
-    pageSize = 10,
-    q = null,
-}): Promise<any | string> => {
+const getProjects = async (filters): Promise<any | string> => {
     try {
         let URI = `/projects/list`;
         let res: AxiosResponse<IProjectsResponse> = await http.get(URI, {
             params: {
-                page,
-                pageSize,
                 with: 'pagination',
-                ...(q ? { q } : {}),
+                ...filters,
             },
         });
         return res.data;

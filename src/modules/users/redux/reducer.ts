@@ -61,7 +61,7 @@ const emptyInitialState: State = {
         loaded: false,
     },
     rolesSelect: {
-        value: [fake_role],
+        value: [],
         loading: false,
         loaded: false,
     },

@@ -114,6 +114,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                     const city = cities.find((c: any) => c.id === 1);
                     setFieldValue('city_name', city?.name, false);
                 }
+                const number_validate = (limit?: number) => (e) => {
+                    e.preventDefault();
+                    const regex = new RegExp(`^[+]?\\d${limit ? `{0,${limit}}` : '*'}$`);
+                    if (regex.test(e.target.value.toString())) {
+                        handleChange(e);
+                    }
+                };
                 return (
                     <Form>
                         <div className="form-row row">
@@ -281,14 +288,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                                 autoComplete="off"
                                                 min={0}
                                                 max={9999}
-                                                onChange={(e) => {
-                                                    e.preventDefault();
-                                                    const { value } = e.target;
-                                                    const regex = /^[+]?\d{0,4}$/;
-                                                    if (regex.test(value.toString())) {
-                                                        handleChange(e);
-                                                    }
-                                                }}
+                                                onChange={number_validate(4)}
                                             />
 
                                             <ErrorMessage name="block" />
@@ -312,14 +312,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                                 autoComplete="off"
                                                 min={0}
                                                 max={999}
-                                                onChange={(e) => {
-                                                    e.preventDefault();
-                                                    const { value } = e.target;
-                                                    const regex = /^[+]?\d{0,3}$/;
-                                                    if (regex.test(value.toString())) {
-                                                        handleChange(e);
-                                                    }
-                                                }}
+                                                onChange={number_validate(3)}
                                             />
 
                                             <ErrorMessage name="lot" />
@@ -373,14 +366,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                             type="number"
                                             className="w-100 form-control"
                                             min={0}
-                                            onChange={(e) => {
-                                                e.preventDefault();
-                                                const { value } = e.target;
-                                                const regex = /^[+]?\d*$/;
-                                                if (regex.test(value.toString())) {
-                                                    handleChange(e);
-                                                }
-                                            }}
+                                            onChange={number_validate(3)}
                                         />
 
                                         <ErrorMessage name="first_number" />
@@ -442,14 +428,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                                 className="form-control"
                                                 style={{ borderLeft: 'none' }}
                                                 min={0}
-                                                onChange={(e) => {
-                                                    e.preventDefault();
-                                                    const { value } = e.target;
-                                                    const regex = /^[+]?\d*$/;
-                                                    if (regex.test(value.toString())) {
-                                                        handleChange(e);
-                                                    }
-                                                }}
+                                                onChange={number_validate(3)}
                                             />
                                         </div>
 
@@ -496,7 +475,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                         <label htmlFor="" className="form-label">
                                             Indicativo <span className="text-danger">*</span>
                                         </label>
-                                        <Field name="identifier" type="number" className="w-100 form-control" min={0} />
+                                        <Field
+                                            name="identifier"
+                                            type="number"
+                                            className="w-100 form-control"
+                                            min={0}
+                                            onChange={number_validate(3)}
+                                        />
 
                                         <ErrorMessage name="identifier" />
                                     </div>

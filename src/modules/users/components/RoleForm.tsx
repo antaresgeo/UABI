@@ -1,5 +1,5 @@
-import { FC, useEffect } from 'react';
-import { Field, Formik, Form } from 'formik';
+import { FC, MutableRefObject, useEffect } from 'react';
+import { Field, Formik, Form, FormikProps, FormikValues } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import { useState } from 'react';
 import { Transfer } from 'antd';
@@ -18,9 +18,10 @@ interface IUserFormPros {
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit' | 'assign';
     onSubmit?: (values, actions?) => Promise<any>;
+    innerRef?: MutableRefObject<FormikProps<FormikValues>>;
 }
 
-const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_permits, onSubmit }) => {
+const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_permits, onSubmit, innerRef }) => {
     const permitsAll: IPermitAttributes[] = useSelector((store: any) => store.users.permits.value);
     const roles: any[] = useSelector((store: any) => store.users.roles.value);
     const dispatch = useDispatch();
@@ -139,8 +140,8 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
     // });
 
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues}>
-            {({ /* values, isValid,*/ isSubmitting }) => {
+        <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} innerRef={innerRef}>
+            {({ isSubmitting }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -214,21 +215,23 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
                             </div>
                         </div>
 
-                        <div className="row justify-content-end">
-                            <div className="col text-end">
-                                {type !== 'view' && (
-                                    <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
-                                        {type === "assign"? "Asignar": "Guardar"}
-                                        {isSubmitting && (
-                                            <i
-                                                className="fa fa-circle-notch fa-spin"
-                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
-                                            />
-                                        )}
-                                    </button>
-                                )}
+                        {!innerRef && (
+                            <div className="row justify-content-end">
+                                <div className="col text-end">
+                                    {type !== 'view' && (
+                                        <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
+                                            {type === "assign"? "Asignar": "Guardar"}
+                                            {isSubmitting && (
+                                                <i
+                                                    className="fa fa-circle-notch fa-spin"
+                                                    style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                                />
+                                            )}
+                                        </button>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </Form>
                 );
             }}

@@ -1,11 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { actions } from '../redux';
+import { actions, service } from '../redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import { useHistory } from 'react-router-dom';
-import { Link } from '../../../utils/ui';
+import { Card, Link } from '../../../utils/ui';
 import UserViewForm from './../components/UserViewForm';
+import RoleForm from '../components/RoleForm';
+import { log } from 'util';
+import { FormikProps, FormikValues } from 'formik';
 
 interface IParams {
     id: string;
@@ -15,10 +18,12 @@ const DetailUser = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [user, roles] = useSelector((store: any) => [
+    const [user, roles, permits] = useSelector((store: any) => [
         store.users.user.value?.detailsUser,
         store.users.user.value?.roles,
+        store.users.user.value?.permits,
     ]);
+    const form = useRef<FormikProps<FormikValues>>();
     useEffect(() => {
         dispatch(actions.get_user_by_id(parseInt(id)));
     }, []);
@@ -64,6 +69,7 @@ const DetailUser = () => {
         //         <div className="flex-fill" />
         //     </div>
         // </div>
+
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
                 <div className="bg-white d-flex flex-column h-100">
@@ -86,6 +92,19 @@ const DetailUser = () => {
                         <div className="row justify-content-center">
                             <div className="col-md-12">
                                 <UserViewForm user={user} roles={roles} />
+                                <Card title="Asignar permisos al Usuario">
+                                    <RoleForm
+                                        type="assign"
+                                        innerRef={form}
+                                        user_roles={roles || []}
+                                        user_permits={permits || []}
+                                        onSubmit={async (values) => {
+                                            await service.assignRolesAndPermits(id, values);
+                                            history.push('/temp');
+                                            history.goBack();
+                                        }}
+                                    />
+                                </Card>
                             </div>
                         </div>
                     </div>
@@ -103,6 +122,16 @@ const DetailUser = () => {
                     }}
                 >
                     Atras
+                </button>
+                <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form.current?.submitForm();
+                    }}
+                >
+                    Asignar Roles y Permisos
                 </button>
             </div>
         </div>

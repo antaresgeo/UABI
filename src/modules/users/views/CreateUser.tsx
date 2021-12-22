@@ -4,11 +4,13 @@ import { Card } from '../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 import GeneralForm from './../components/GerenalForm';
 import { swal_success } from '../../../utils';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { FormikProps, FormikValues } from 'formik';
 
 const CreateUser = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const form = useRef<FormikProps<FormikValues>>();
 
     useEffect(() => {
         dispatch(actions.clear_user());
@@ -29,6 +31,7 @@ const CreateUser = () => {
                             <Card title="información Usuario">
                                 <GeneralForm
                                     type="create"
+                                    innerRef={form}
                                     onSubmit={(values) => {
                                         return createUser(values);
                                     }}
@@ -52,6 +55,15 @@ const CreateUser = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form.current?.submitForm();
+                    }}
+                >
+                    Guardar
+                </button>
             </div>
         </div>
     );
