@@ -85,7 +85,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                                 name="applicant.company_name"
                                 placeholder="Razón social"
                                 autoComplete="off"
-                                maxLength={201}
+                                maxLength={20}
                             />
                             <ErrorMessage name="applicant.company_name" />
                         </div>
@@ -128,7 +128,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                                     name="applicant.phone_number"
                                     placeholder="Teléfono"
                                     autoComplete="off"
-                                    maxLength={201}
+                                    maxLength={20}
                                 />
                                 <ErrorMessage name="applicant.phone_number" />
                             </div>
@@ -143,7 +143,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                                     name="applicant.email"
                                     placeholder="Correo"
                                     autoComplete="off"
-                                    maxLength={201}
+                                    maxLength={20}
                                 />
                                 <ErrorMessage name="applicant.email" />
                             </div>

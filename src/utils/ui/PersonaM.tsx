@@ -32,6 +32,7 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
         surnames: { firstSurname: '', lastSurname: '' },
         email: '',
         phone_number: '',
+        phone_number_ext: '',
         gender: '',
         ...persona,
     };

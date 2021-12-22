@@ -1,12 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { FC, useEffect } from 'react';
+import {FC, useEffect, useRef} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions, service } from '../redux';
 import { Card } from '../../../utils/ui';
 import GeneralForm from './../components/GerenalForm';
 import RoleForm from './../components/RoleForm';
 import { swal_success } from '../../../utils';
+import {FormikProps, FormikValues} from "formik";
 
 interface IParams {
     id: string;
@@ -20,6 +21,7 @@ const EditUser: FC<IProps> = () => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
+    const form = useRef<FormikProps<FormikValues>>();
 
     const user: any = useSelector((store: any) => store.users.user.value);
     const _updateUser = async (userForm) => {
@@ -27,7 +29,6 @@ const EditUser: FC<IProps> = () => {
         if (userForm) {
             res = await dispatch(actions.update_user(id, userForm));
             await swal_success.fire({ title: 'Usuario actualizado', text: res.message, icon: 'success' });
-            console.log('noc', res);
             history.push(`/users/${user.results.id}`);
         }
     };
@@ -45,19 +46,10 @@ const EditUser: FC<IProps> = () => {
                             <Card title="Edición de Usuario">
                                 <GeneralForm
                                     type="edit"
+                                    innerRef={form}
                                     user={user?.detailsUser}
                                     onSubmit={(values) => {
                                         return _updateUser(values);
-                                    }}
-                                />
-                            </Card>
-                            <Card title="Asignar permisos al Usuario">
-                                <RoleForm
-                                    type="assign"
-                                    user_roles={user?.roles || []}
-                                    user_permits={user?.permits || []}
-                                    onSubmit={(values) => {
-                                        return service.assignRolesAndPermits(id, values);
                                     }}
                                 />
                             </Card>
@@ -79,6 +71,15 @@ const EditUser: FC<IProps> = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form.current?.submitForm();
+                    }}
+                >
+                    Guardar
+                </button>
             </div>
         </div>
     );

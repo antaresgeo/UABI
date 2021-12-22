@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import Table, { ColumnsType, TablePaginationConfig } from 'antd/lib/table';
+import {Empty} from "antd";
 
 interface CompressTableProps {
     columns: ColumnsType<any>;
@@ -57,6 +58,24 @@ const CompressTable: FC<CompressTableProps> = ({
         loading: loading,
         bordered: true,
         className: 'w-100',
+        locale: {
+            emptyText: (
+                <Empty
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    imageStyle={{
+                        height: 60,
+                        color: "blue"
+                    }}
+                    description={
+                        <span className="text-primary">
+                            No hay datos para mostrar.
+                            <br/>
+                            Por favor intente realizar una busqueda.
+                        </span>
+                    }
+                />
+            ),
+        },
         ...(scroll ? { scroll: { x: 'max-content' } } : {}),
     };
     return (

@@ -1,7 +1,7 @@
-import { FC, useState } from 'react';
+import { FC, MutableRefObject, useState } from 'react';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import LocationModal from '../../../utils/components/Location/LocationModal';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FormikProps, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import dependencias from '../../acquisitions/dependencias';
@@ -12,9 +12,10 @@ interface IUserFormPros {
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
     onSubmit: (values, actions?) => Promise<any>;
+    innerRef?: MutableRefObject<FormikProps<FormikValues>>;
 }
 
-const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
+const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerRef }) => {
     // const history = useHistory();
     const [subs, set_subs] = useState<any[]>([]);
 
@@ -104,7 +105,13 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
 
     const dependency_ops = format_list(dependencias);
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
+        <Formik
+            enableReinitialize
+            onSubmit={submit}
+            initialValues={initial_values}
+            validationSchema={schema}
+            innerRef={innerRef}
+        >
             {({ values, isValid, isSubmitting, setFieldValue, handleChange }) => {
                 return (
                     <Form>
@@ -219,7 +226,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     placeholder="Primer nombre"
                                     autoComplete="off"
                                     disabled={disabled}
-                                    maxLength={201}
+                                    maxLength={20}
                                 />
                                 <ErrorMessage name="detailsUser.names.firstName" />
                             </div>
@@ -235,7 +242,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     placeholder="Segundo nombre"
                                     autoComplete="off"
                                     disabled={disabled}
-                                    maxLength={201}
+                                    maxLength={20}
                                 />
                                 <ErrorMessage name="detailsUser.names.lastName" />
                             </div>
@@ -251,7 +258,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     placeholder="Primer pellido"
                                     autoComplete="off"
                                     disabled={disabled}
-                                    maxLength={201}
+                                    maxLength={20}
                                 />
                                 <ErrorMessage name="detailsUser.surnames.firstSurname" />
                             </div>
@@ -267,7 +274,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     placeholder="Segundo apellido"
                                     autoComplete="off"
                                     disabled={disabled}
-                                    maxLength={201}
+                                    maxLength={20}
                                 />
                                 <ErrorMessage name="detailsUser.surnames.lastSurname" />
                             </div>
@@ -330,7 +337,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     name="detailsUser.email"
                                     autoComplete="off"
                                     disabled={disabled}
-                                    maxLength={201}
+                                    maxLength={20}
                                 />
                                 <ErrorMessage name="detailsUser.email" />
                             </div>
@@ -364,7 +371,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                     placeholder="celular"
                                     autoComplete="off"
                                     disabled={disabled}
-                                    maxLength={201}
+                                    maxLength={20}
                                 />
                                 <ErrorMessage name="detailsUser.cellphone_number" />
                             </div>
@@ -482,25 +489,27 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user }) => {
                                 </div>
                             </div>
                         )}
-                        <div className="row justify-content-end">
-                            <div className="col text-end">
-                                {type !== 'view' && (
-                                    <button
-                                        className="btn btn-primary my-3"
-                                        disabled={isSubmitting || disabled}
-                                        type="submit"
-                                    >
-                                        Guardar{' '}
-                                        {isSubmitting && (
-                                            <i
-                                                className="fa fa-circle-notch fa-spin"
-                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
-                                            />
-                                        )}
-                                    </button>
-                                )}
+                        {!innerRef && (
+                            <div className="row justify-content-end">
+                                <div className="col text-end">
+                                    {type !== 'view' && (
+                                        <button
+                                            className="btn btn-primary my-3"
+                                            disabled={isSubmitting || disabled}
+                                            type="submit"
+                                        >
+                                            Guardar{' '}
+                                            {isSubmitting && (
+                                                <i
+                                                    className="fa fa-circle-notch fa-spin"
+                                                    style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                                />
+                                            )}
+                                        </button>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </Form>
                 );
             }}

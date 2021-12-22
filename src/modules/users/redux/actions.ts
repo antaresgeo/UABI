@@ -31,6 +31,8 @@ const get_list_users = () =>
     request_dispatch(types.get_list_users, service.get_list_users());
 const get_all_users = (filters?) =>
     request_dispatch(types.get_all_users, service.get_all_users(filters));
+const clear_get_all_users = (filters?) =>
+    request_dispatch(types.get_all_users, Promise.resolve([]));
 const create_user = (data: User) =>
     request_dispatch(types.create_user, service.create_user(data));
 const delete_user = (id) =>
@@ -45,6 +47,7 @@ const actions = {
     // example
     get_list_users,
     get_all_users,
+    clear_get_all_users,
     create_user,
     delete_user,
     get_user_by_id,

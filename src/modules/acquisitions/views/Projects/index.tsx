@@ -14,10 +14,8 @@ const Projects = () => {
     const loading: boolean = useSelector((states: any) => states.acquisitions.projects.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.projects.pagination);
     const [query, set_query] = useState<string>('');
-    const [filters, set_filters] = useState<object>(null);
 
     const filter = async (_filters, _) => {
-        set_filters(_filters);
         await dispatch(actions.getProjects({ page: 1, with: 'pagination', ..._filters }));
     };
     // const filter = () => {
@@ -222,7 +220,7 @@ const Projects = () => {
                                             { key: 'name', name: 'Nombre' },
                                             { key: 'dependency', name: 'Dependencia' },
                                             { key: 'subdependency', name: 'Subdependencia' },
-                                            { key: 'audit_trail.created_by', name: 'Fecha' /*type: 'date'*/ },
+                                            { key: 'audit_trail.created_by', name: 'Fecha', type: 'date' },
                                         ]}
                                         onSubmit={filter}
                                     />
