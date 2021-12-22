@@ -12,6 +12,7 @@ import {
     createRealEstates,
     updateRealEstate,
     deleteRealEstate,
+    clearRealEstate,
     createAcquisitionForRealEstate,
     getTipologies,
     getTipology,
@@ -27,6 +28,9 @@ const getProject = (id: string) =>
 
 const getProjects = (filters?: any) =>
     request_dispatch(types.projects, service.getProjects(filters));
+
+const clearProjects = () =>
+    request_dispatch(types.projects, Promise.resolve([]));
 
 const createProject = (values) =>
     request_dispatch(types.project, service.createProject(values));
@@ -44,6 +48,7 @@ const actions = {
     createProject,
     updateProject,
     deleteProject,
+    clearProjects,
     getRealEstates,
     getRealEstatesByProject,
     getRealEstateByPolicy,
@@ -52,6 +57,7 @@ const actions = {
     createRealEstates,
     updateRealEstate,
     deleteRealEstate,
+    clearRealEstate,
     createAcquisitionForRealEstate,
     getTipologies,
     getTipology,

@@ -141,6 +141,12 @@ const finalData = (data, docs_ids?) => {
     } else {
         delete aux_data.type
     }
+    if(aux_data.construction_area === "") {
+        aux_data.construction_area = null
+    }
+    if(aux_data.plot_area === "") {
+        aux_data.plot_area = 0
+    }
     delete aux_data.active_code;
     delete aux_data.fixed_assets;
     delete aux_data._address;

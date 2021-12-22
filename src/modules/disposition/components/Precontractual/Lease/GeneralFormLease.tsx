@@ -18,6 +18,7 @@ interface FormPros {
 }
 
 export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_form }) => {
+
     let initialValues = {
         environmental_risk: "",
         registration_date: moment(new Date().getTime()).format('YYYY-MM-DD'),
@@ -45,29 +46,29 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
 
         //analisis de riegos
         regulatory_risk: {
-            degree_occurrence: "",
-            impact_degree: "",
-            responsable: "",
-            mitigation_mechanism: "",
+            degree_occurrence: "MEDIO",
+            impact_degree: "MEDIO",
+            responsable: "Contratista",
+            mitigation_mechanism: "Ejercer un control y vigilancia estrictos al contrato por parte del supervisor.",
         },
         operational_risk: {
-            degree_occurrence: "",
-            impact_degree: "",
-            responsable: "",
-            mitigation_mechanism: "",
+            degree_occurrence: "MEDIO",
+            impact_degree: "MEDIO",
+            responsable: "Contratista",
+            mitigation_mechanism: "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual",
         },
 
         //Arrendamiento
         consecutive_number: "36000000", //TODO: preguntar a Diego valor ?
-        canon_value: realEstate.canyon_value,
-        IVA: realEstate.canyon_value * 0.19,
+        canon_value: realEstate?.canyon_value,
+        IVA: (realEstate.canyon_value * 0.19).toFixed(2),
         public_service: "",
         value_aforo: "",
         recovery_value: "",
         counter_value: "",
         administration_value: "",
         vigilance_value: "",
-        subtotal: 0,
+        subtotal: parseInt(realEstate?.canyon_value + (realEstate.canyon_value * 0.19)) ,
         total: 0,
         prediation_number: "",
         prediation_date: "",
@@ -83,8 +84,8 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         leader: {
             type_society: "Persona Natural",
             post: "Líder de Programa",
-            dependence: "Unidad Administración de Bienes Inmuebles",
-            secretary: "Subsecretaría de Gestión de Bienes",
+            dependence: realEstate?.dependency,
+            secretary: realEstate?.subdependency,
         },
         location_leader: {
             address: "",
@@ -93,14 +94,17 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         elaborated: {
             name: "",
             post: "",
+            email: "",
         },
         revised: {
             name: "",
             post: "",
+            email: "",
         },
         approved: {
             name: "",
             post: "",
+            email: "",
         },
         ...values_form,
     }
@@ -171,15 +175,19 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         // }),
         elaborated: Yup.object({
             name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio')
+            post: Yup.string().required('obligatorio'),
+            email: Yup.string().required('obligatorio')
+
         }),
         revised: Yup.object({
             name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio')
+            post: Yup.string().required('obligatorio'),
+            email: Yup.string().required('obligatorio')
         }),
         approved: Yup.object({
             name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio')
+            post: Yup.string().required('obligatorio'),
+            email: Yup.string().required('obligatorio')
         }),
 
 

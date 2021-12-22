@@ -3,6 +3,8 @@ import ErrorMessage from '../../../../../utils/ui/error_messge'
 import Tooltip from 'antd/lib/tooltip';
 import { FC, useState } from 'react';
 import { LinkButton } from '../../../../../utils/ui/link';
+import moment from 'moment';
+import TooltipField from './../../../../../utils/ui/tooltip_field';
 
 interface FormProps {
     formik: any;
@@ -69,11 +71,9 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="contract_period_id" className="form-label">
-                        Duración del contrato
-                        <Tooltip title="Número de meses">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
+                        Duración del contrato<span className="text-danger">*</span>
                     </label>
+                    <TooltipField text="Número de meses" />
                     <Field
                         type="number"
                         id="contract_period_id"
@@ -87,7 +87,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="loan_typology_id" className="form-label">
-                        Tipología del comodato
+                        Tipología del comodato<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="select"
@@ -110,11 +110,9 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3 form-inline">
                     <label htmlFor="lockable_base_id" className="form-label">
-                        Base asegurable
-                        <Tooltip title="no inferior del 10%">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
+                        Base asegurable<span className="text-danger">*</span>
                     </label>
+                    <TooltipField text="no inferior del 10%" />
                     <div className="input-group">
                         <Field
                             id="lockable_base_id"
@@ -133,7 +131,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="competitive_process_id" className="form-label">
-                        Aplica Proceso competitivo
+                        Aplica Proceso competitivo<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="select"
@@ -179,7 +177,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
             <div className="row">
                 <div className="col-3">
                     <label htmlFor="prediation_date_id" className="form-label mt-3 mt-lg-0">
-                        Fecha de Registro de Prediación
+                        Fecha de Prediación<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="date"
@@ -187,12 +185,13 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         name="prediation_date"
                         placeholder=""
                         className="form-control"
+                        max={ moment(new Date().getTime()).format('YYYY-MM-DD')}
                     />
                     <ErrorMessage name="prediation_date" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="horizontal_property_id" className="form-label">
-                        Propiedad Horizontal
+                        Propiedad Horizontal<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="select"
@@ -215,7 +214,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="resolution_id" className="form-label">
-                        ¿Aplica resolución SSS202050083439?
+                        ¿resolución SSS202050083439?<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="select"
@@ -261,7 +260,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 <div className={`col-${(formik.values.resolution === 'no') ? 6 : 3}`}>
                     {/*{`col-${(formik.values.economic_exploitation === 'si' ) ? 3 : 6}`}*/}
                     <label htmlFor="economic_exploitation_id" className="form-label">
-                        ¿Autoriza explotación económica?
+                        ¿Autoriza explotación económica?<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="select"
@@ -285,7 +284,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 {/* {console.log('valor', formik.values.public_service)} */}
                 <div className="col-6">
                     <label htmlFor="public_service_id" className="form-label">
-                        Servicios publicos por Aforo
+                        Servicios publicos por Aforo<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="select"
@@ -311,7 +310,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     <>
                         <div className="col-6">
                             <label htmlFor="value_public_service_id" className="form-label">
-                                valor de servicios públicos por aforo
+                                valor de servicios públicos por aforo<span className="text-danger">*</span>
                             </label>
                             <div className="input-group">
                                 <div className="input-group-prepend">
@@ -330,7 +329,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         </div>
                         <div className="col-6">
                             <label htmlFor="capacity_specification_id" className="form-label">
-                                Especificación del Aforo
+                                Especificación del Aforo<span className="text-danger">*</span>
                             </label>
                             <Field
                                 type="text"
@@ -348,7 +347,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 )}
                 <div className="col-6">
                     <label htmlFor="business_type_id" className="form-label">
-                        Tipo de negocio
+                        Tipo de negocio<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -364,7 +363,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="destination_realEstate_id" className="form-label">
-                        Destinación de bien Inmueble
+                        Destinación de bien Inmueble<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="textarea"
@@ -381,11 +380,9 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="peacesafe_id" className="form-label">
-                        Paz y Salvo de Rubros
-                        <Tooltip title="paz y salvo de cuotas de administración, constancia de pago de impuesto predial cuando el inmueble se encuentre por fuera de la circunscripción territorial del Municipio de Medellín, entre otros">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
+                        Paz y Salvo de Rubros<span className="text-danger">*</span>
                     </label>
+                    <TooltipField text="paz y salvo de cuotas de administración, constancia de pago de impuesto predial cuando el inmueble se encuentre por fuera de la circunscripción territorial del Municipio de Medellín, entre otros" />
                     <Field
                         as="textarea"
                         className="form-control"
@@ -401,7 +398,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="social_event_id" className="form-label">
-                        Eventos sociales
+                        Eventos sociales<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="textarea"
@@ -418,11 +415,9 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="action_field_id" className="form-label">
-                        Campo de acción
-                        <Tooltip title="La Secretaría que tiene a cargo el inmueble debe motivar el por qué las actividades desarrolladas por el contratista solo pueden ser ejecutadas por el mismo, en razón de su campo de acción. ejemplo: Atención de necesidades territoriales, beneficios que presta para la Secretaría en razón de sus objetivos misionales y que no sean prestados por otros contratistas, entre otros que marquen factor decisivo y directo de su escogencia">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
+                        Campo de acción<span className="text-danger">*</span>
                     </label>
+                    <TooltipField text="La Secretaría que tiene a cargo el inmueble debe motivar el por qué las actividades desarrolladas por el contratista solo pueden ser ejecutadas por el mismo, en razón de su campo de acción. ejemplo: Atención de necesidades territoriales, beneficios que presta para la Secretaría en razón de sus objetivos misionales y que no sean prestados por otros contratistas, entre otros que marquen factor decisivo y directo de su escogencia" />
                     <Field
                         as="textarea"
                         className="form-control"
@@ -438,11 +433,9 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className={`col-${formik.values.resolution === "si" ? 12 : 6 }`}>
                     <label htmlFor="dependence_id" className="form-label">
-                        Como contribuye la dependencia
-                        <Tooltip title="Digite claramente en la forma como la dependencia que entrega el inmueble se ve identificada en el objeto social y la forma como contribuye según la gestión misional">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
+                        Como contribuye la dependencia<span className="text-danger">*</span>
                     </label>
+                    <TooltipField text="Digite claramente en la forma como la dependencia que entrega el inmueble se ve identificada en el objeto social y la forma como contribuye según la gestión misional" />
                     <Field
                         as="textarea"
                         className="form-control"
@@ -458,7 +451,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="environmental_risk_id" className="form-label">
-                        Riesgos Ambientales
+                        Riesgos Ambientales<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="textarea"
@@ -475,11 +468,9 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
 
                 <div className="col-6">
                     <label htmlFor="activities_id" className="form-label">
-                        Actividades
-                        <Tooltip title="Realice una descripción detallada de la necesidad que se pretende solucionarle al solicitante con la entrega en comodato del inmueble- se deben describir los programas específicos de la entidad y su relación en cuanto a la línea del plan de desarrollo actual que se apoyará con su operación">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
+                        Actividades<span className="text-danger">*</span>
                     </label>
+                    <TooltipField text="Realice una descripción detallada de la necesidad que se pretende solucionarle al solicitante con la entrega en comodato del inmueble - se deben describir los programas específicos de la entidad y su relación en cuanto a la línea del plan de desarrollo actual que se apoyará con su operación." />
                     <Field
                         as="textarea"
                         className="form-control"
@@ -494,7 +485,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-12">
                     <label htmlFor="boundaries_id" className="form-label">
-                        Descripcion de linderos
+                        Descripcion de linderos<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="textarea"

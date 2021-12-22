@@ -17,6 +17,7 @@ interface FormPros {
 }
 
 const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, values_form}) => {
+    console.log(realEstate)
     let initialValues = {
         environmental_risk: "",
         registration_date:  moment(new Date().getTime()).format('YYYY-MM-DD'),
@@ -54,16 +55,16 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
 
         //analisis de riegos
         regulatory_risk: {
-            degree_occurrence: "",
-            impact_degree: "",
-            responsable: "",
-            mitigation_mechanism: "",
+            degree_occurrence: "MEDIO",
+            impact_degree: "MEDIO",
+            responsable: "Contratista",
+            mitigation_mechanism: "Ejercer un control y vigilancia estrictos al contrato por parte del supervisor.",
         },
         operational_risk: {
-            degree_occurrence: "",
-            impact_degree: "",
-            responsable: "",
-            mitigation_mechanism: "",
+            degree_occurrence: "MEDIO",
+            impact_degree: "MEDIO",
+            responsable: "Contratista",
+            mitigation_mechanism: "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual",
         },
         //uso publico
         destination_realEstate: "",
@@ -85,8 +86,8 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
         leader: {
             type_society: "Persona Natural",
             post: "",
-            dependence: "",
-            secretary: "",
+            dependence: realEstate?.dependency,
+            secretary: realEstate?.subdependency,
         },
         location_leader: {
             address: "",
@@ -95,14 +96,17 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
         elaborated: {
             name: "",
             post: "",
+            email: "",
         },
         revised: {
             name: "",
             post: "",
+            email: "",
         },
         approved: {
             name: "",
             post: "",
+            email: "",
         },
         ...values_form,
     }
@@ -150,15 +154,18 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
         //personas
         elaborated: Yup.object({
             name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio')
+            post: Yup.string().required('obligatorio'),
+            email: Yup.string().required('obligatorio')
         }),
         revised: Yup.object({
             name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio')
+            post: Yup.string().required('obligatorio'),
+            email: Yup.string().required('obligatorio')
         }),
         approved: Yup.object({
             name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio')
+            post: Yup.string().required('obligatorio'),
+            email: Yup.string().required('obligatorio')
         }),
 
     });

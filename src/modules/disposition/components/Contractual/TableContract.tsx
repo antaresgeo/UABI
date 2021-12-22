@@ -9,6 +9,21 @@ export const TableContract = () => {
             align: 'left' as 'left',
         },
         {
+            title: 'Activo Fijo',
+            dataIndex: '',
+            align: 'left' as 'left',
+        },
+        {
+            title: 'CBML',
+            dataIndex: '',
+            align: 'left' as 'left',
+        },
+        {
+            title: 'Dirección',
+            dataIndex: '',
+            align: 'left' as 'left',
+        },
+        {
             title: 'Numero de contrato',
             dataIndex: '',
             align: 'left' as 'left',

@@ -3,6 +3,8 @@ import ErrorMessage from '../../../../../utils/ui/error_messge';
 import Tooltip from 'antd/lib/tooltip';
 import { FC, useState } from 'react';
 import { LinkButton } from '../../../../../utils/ui/link';
+import moment from 'moment';
+import TooltipField from '../../../../../utils/ui/tooltip_field';
 
 interface FormProps {
     formik: any;
@@ -30,7 +32,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="prediation_number_id" className="form-label">
-                        Número de prediación
+                        Número de prediación<span className="text-danger">*</span>
                     </label>
                     <div className="input-group">
                         <Field
@@ -45,7 +47,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="prediation_date_id" className="form-label mt-3 mt-lg-0">
-                        Fecha de Prediación
+                        Fecha de Prediación<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="date"
@@ -53,17 +55,16 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                         name="prediation_date"
                         placeholder=""
                         className="form-control"
+                        max={ moment(new Date().getTime()).format('YYYY-MM-DD')}
                     // disabled={true}
                     />
                     <ErrorMessage name="prediation_date" />
                 </div>
                 <div className="col-3">
                     <label htmlFor="contract_period_id" className="form-label">
-                        Duración del contrato
-                        <Tooltip title="Número de meses">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
+                        Duración del contrato<span className="text-danger">*</span>
                     </label>
+                    <TooltipField text="Número de meses" />
                     <Field
                         type="number"
                         id="contract_period_id"
@@ -78,10 +79,8 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                 <div className="col-3 form-inline">
                     <label htmlFor="lockable_base_id" className="form-label">
                         Base asegurable
-                        <Tooltip title="no inferior del 10%">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
                     </label>
+                    <TooltipField text="no inferior del 10%" />
                     <div className="input-group">
                         <Field
 
@@ -101,7 +100,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="cadastral_value_id" className="form-label">
-                        Valor avalúo catastral
+                        Valor avalúo catastral<span className="text-danger">*</span>
                     </label>
                     <div className="input-group">
                         <div className="input-group-prepend">
@@ -121,7 +120,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="contract_value_id" className="form-label">
-                        Valor del contrato
+                        Valor del contrato<span className="text-danger">*</span>
                     </label>
                     <div className="input-group">
                         <div className="input-group-prepend">
@@ -141,7 +140,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="business_type_id" className="form-label">
-                        Tipo de negocio
+                        Tipo de negocio<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -157,7 +156,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="environmental_risk_id" className="form-label">
-                        Riesgos Ambientales
+                        Riesgos Ambientales<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -173,7 +172,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-12">
                     <label htmlFor="destination_realEstate_id" className="form-label">
-                        Destinación de bien Inmueble
+                        Destinación de bien Inmueble<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -189,7 +188,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-12">
                     <label htmlFor="boundaries_id" className="form-label">
-                        Descripcion de linderos
+                        Descripcion de linderos<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="textarea"

@@ -199,7 +199,9 @@ const Projects = () => {
     ];
 
     useEffect(() => {
-        dispatch(actions.getProjects());
+        // dispatch(actions.getProjects());
+        dispatch(actions.clearProjects());
+
     }, []);
     console.log(projects)
     return (

@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import moment from 'moment';
 import { extractMonth } from '../../../../utils';
+import { array } from 'yup';
 
 interface IpolizaFormPros {
     realEstate: any;
@@ -92,7 +93,7 @@ const RealEstateViewForm: FC<IpolizaFormPros> = ({ realEstate, tipology, invento
 
                             <div className="col-3">
                                 <label htmlFor="">Materiales de construcción</label>
-                                <div className="my-3">{realEstate?.materials?.map(m => m).join(", ")}</div>
+                                <div className="my-3">{Array.isArray(realEstate?.materials) && realEstate?.materials?.map(m => m)?.join(", ")}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Porcentaje Total</label>
@@ -106,7 +107,7 @@ const RealEstateViewForm: FC<IpolizaFormPros> = ({ realEstate, tipology, invento
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Tipo de activo</label>
-                                <div className="my-3">{realEstate?.active_type.map(active => active).join(", ")}</div>
+                                <div className="my-3">{Array.isArray(realEstate?.active_type) && realEstate?.active_type?.map(active => active)?.join(", ")}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Área Lote</label>

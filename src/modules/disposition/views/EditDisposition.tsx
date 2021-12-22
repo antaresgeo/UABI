@@ -2,12 +2,16 @@ import { useEffect, useState } from 'react';
 import { Card } from '../../../utils/ui';
 import { FormDisposition } from '../components/FormDisposition';
 import { FormTypeDisposition } from '../components/FormTypeDisposition';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { ModalNotificar } from '../components/ModalNotificar';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../acquisitions/redux';
 import { IRealEstateAttributes } from '../../../utils/interfaces';
 import { TableContract } from '../components/Contractual/TableContract';
+
+interface IParams {
+    sap_id?: any;
+}
 
 interface IProps {
     id: string;
@@ -16,6 +20,8 @@ export const EditDisposition = () => {
     const { id } = useParams<IProps>();
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation<IParams>();
+    console.log(location)
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const [dispositionType, setDispositionType] = useState('');
     // console.log('realEstate', realEstate);
@@ -62,7 +68,7 @@ export const EditDisposition = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => {
-                        history.goBack();
+                        history.push("/disposition/list/");
                     }}
                 >
                     Atras

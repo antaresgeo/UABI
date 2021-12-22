@@ -4,5 +4,10 @@ const types = Object.freeze({
         success: 'type string [success]',
         fail: 'type string [fail]',
     },
+    file: {
+        default: 'Se consulta endpoint de servicio expediente [default]',
+        success: 'Se consulta endpoint de servicio expediente [success]',
+        fail: 'Se consulta endpoint de servicio expediente [fail]',
+    },
 });
 export default types;

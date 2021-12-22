@@ -40,7 +40,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="leader.post" className="form-label">
-                        cargo
+                        cargo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -56,7 +56,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="detailsLeader" className="form-label">
-                        Información Lider
+                        Información Lider<span className="text-danger">*</span>
                     </label>
                     <Field
                         component={PersonaM}
@@ -66,7 +66,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="location_leader" className="form-label">
-                        Dirección
+                        Dirección<span className="text-danger">*</span>
                     </label>
                     <div className="input-group">
                         <Field
@@ -75,14 +75,14 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                             type="text"
                             className="form-control"
                             disabled
-                            // value={formik?.values?.location_leader?.address}
+                            value={formik?.values?.location_leader?.address}
                         />
                         <div className="input-group-prepend">
                             <LocationModal
                                 view="user"
                                 onSave={async (values) => {
-                                    formik.setFieldValue('location_Leader.address', values.address);
-                                    formik.setFieldValue('location_Leader.id', `${values.id}`);
+                                    formik.setFieldValue('location_leader.address', values.address);
+                                    formik.setFieldValue('location_leader.id', `${values.id}`);
                                 }}
                             />
                         </div>
@@ -102,8 +102,8 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="leader.dependence"
                         placeholder=""
                         autoComplete="off"
-                        maxLength={20}
-                        disabled={lease}
+                        maxLength={201}
+                        disabled
                     />
                     <ErrorMessage name="leader.dependence" />
                 </div>
@@ -118,8 +118,8 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="leader.secretary"
                         placeholder=""
                         autoComplete="off"
-                        maxLength={20}
-                        disabled={lease}
+                        maxLength={201}
+                        disabled
                     />
                     <ErrorMessage name="leader.secretary" />
                 </div>
@@ -129,9 +129,9 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             </div>
             <hr />
             <div className="row">
-                <div className="col-6">
+                <div className="col-12">
                     <label htmlFor="elaborated.name" className="form-label">
-                        Nombre
+                        Nombre<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -144,9 +144,11 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                     />
                     <ErrorMessage name="elaborated.name" />
                 </div>
+            </div>
+            <div className="row">
                 <div className="col-6">
                     <label htmlFor="elaborated.post" className="form-label">
-                        cargo
+                        Cargo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -159,15 +161,29 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                     />
                     <ErrorMessage name="elaborated.post" />
                 </div>
+                <div className="col-6">
+                    <label htmlFor="elaborated.email" className="form-label">
+                        Correo<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="elaborated.email"
+                        name="elaborated.email"
+                        placeholder="Correo del que lo elaboró"
+                        autoComplete="off"
+                    />
+                    <ErrorMessage name="elaborated.email" />
+                </div>
             </div>
             <div className="div" style={{ fontWeight: 'bold', fontSize: '15px' }}>
                 Revisó
             </div>
             <hr />
             <div className="row">
-                <div className="col-6">
+                <div className="col-12">
                     <label htmlFor="revised.name" className="form-label">
-                        Nombre
+                        Nombre<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -180,20 +196,37 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                     />
                     <ErrorMessage name="revised.name" />
                 </div>
+            </div>
+            <div className="row">
                 <div className="col-6">
                     <label htmlFor="revised.post" className="form-label">
-                        cargo
+                        Cargo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
                         className="form-control"
                         id="revised.post"
                         name="revised.post"
-                        placeholder="Cargo Nombre del que lo revisó"
+                        placeholder="Cargo del que lo revisó"
                         autoComplete="off"
                         maxLength={20}
                     />
                     <ErrorMessage name="revised.post" />
+                </div>
+                <div className="col-6">
+                    <label htmlFor="revised.email" className="form-label">
+                        Correo<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="revised.email"
+                        name="revised.email"
+                        placeholder="Correo del que lo revisó"
+                        autoComplete="off"
+                        maxLength={201}
+                    />
+                    <ErrorMessage name="revised.email" />
                 </div>
             </div>
             <div className="div" style={{ fontWeight: 'bold', fontSize: '15px' }}>
@@ -201,9 +234,9 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             </div>
             <hr />
             <div className="row">
-                <div className="col-6">
+                <div className="col-12">
                     <label htmlFor="approved.name" className="form-label">
-                        Nombre
+                        Nombre<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -216,9 +249,11 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                     />
                     <ErrorMessage name="approved.name" />
                 </div>
+            </div>
+            <div className="row">
                 <div className="col-6">
                     <label htmlFor="approved.post" className="form-label">
-                        cargo
+                        Cargo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -230,6 +265,21 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         maxLength={20}
                     />
                     <ErrorMessage name="approved.post" />
+                </div>
+                <div className="col-6">
+                    <label htmlFor="approved.email" className="form-label">
+                        Correo<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="approved.email"
+                        name="approved.email"
+                        placeholder="Correo del que lo aprobó"
+                        autoComplete="off"
+                        maxLength={201}
+                    />
+                    <ErrorMessage name="approved.email" />
                 </div>
             </div>
         </>

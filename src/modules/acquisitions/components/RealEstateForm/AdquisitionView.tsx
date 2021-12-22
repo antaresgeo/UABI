@@ -9,23 +9,30 @@ interface AcquisitionsFromProps {
     disabled?: boolean;
     acquisitions?: AdquisitionsItf[];
     formik: any;
+    inventory?: boolean
 }
 
-const AcquisitionsView: FC<AcquisitionsFromProps> = ({ type, disabled, acquisitions, formik }) => {
+const AcquisitionsView: FC<AcquisitionsFromProps> = ({ type, disabled, acquisitions, formik, inventory }) => {
     return (
         <Card
             title="Información de Adquisición"
             extra={
-                <AcquisitionModal
-                    type="create"
-                    btn_label="Agregar Adquisición"
-                    active_type={formik.values.active_type}
-                    onChange={async (aux_values) => {
-                        const values = { ...aux_values, origin: aux_values.origin ? parseInt(aux_values.origin) : '' };
-                        const new_acquisitions = [...formik.values.acquisitions, values];
-                        formik.setFieldValue('acquisitions', new_acquisitions, false);
-                    }}
-                />
+                <>{!inventory ?
+                    <AcquisitionModal
+                        type="create"
+                        btn_label="Agregar Adquisición"
+                        active_type={formik.values.active_type}
+                        onChange={async (aux_values) => {
+                            const values = { ...aux_values, origin: aux_values.origin ? parseInt(aux_values.origin) : '' };
+                            const new_acquisitions = [...formik.values.acquisitions, values];
+                            formik.setFieldValue('acquisitions', new_acquisitions, false);
+                        }}
+                    />
+                    :
+                    ""
+                }
+                </>
+
             }
         >
             <div className="col-12">

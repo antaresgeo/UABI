@@ -14,8 +14,6 @@ export const PolizaViewForm: FC<IpolizaFormPros> = ({ policy_id }) => {
     useEffect(() => {
         dispatch(actions.getPolicy(policy_id));
     }, [policy_id])
-    console.log(policy_id)
-    console.log(poliza)
     const tmpDateStart = new Date(parseInt(poliza?.vigency_start));
     const newDateStart = moment(tmpDateStart).format('MM/DD/YYYY');
     const tmpDateEnd = new Date(parseInt(poliza?.vigency_end));
@@ -41,7 +39,7 @@ export const PolizaViewForm: FC<IpolizaFormPros> = ({ policy_id }) => {
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Tipo de Póliza</label>
-                                <div className="my-3">{poliza.policy_type}</div>
+                                <div className="my-3">{poliza?.policy_type}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Fecha de Inicio</label>
@@ -53,17 +51,17 @@ export const PolizaViewForm: FC<IpolizaFormPros> = ({ policy_id }) => {
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Corredor de Seguros</label>
-                                <div className="my-3">{poliza.insurance_broker?.name}</div>
+                                <div className="my-3">{poliza?.insurance_broker?.name}</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Valor de Póliza</label>
-                                <div className="my-3">{poliza.insurance_value}</div>
+                                <div className="my-3">{poliza?.insurance_value}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Tipo de aseguramiento</label>
-                                <div className="my-3">{poliza.type_assurance}</div>
+                                <div className="my-3">{poliza?.type_assurance}</div>
                             </div>
 
                             <div className="col-6">

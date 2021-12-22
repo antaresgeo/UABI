@@ -1,4 +1,3 @@
-import { IPolicyAttributes, IProjectAttributes, ITipologyAttributes } from '../../../../utils/interfaces';
 import { Formik, Form } from 'formik';
 import React, { FC, useEffect } from 'react';
 import GeneralDataForm from './GeneralDataForm';
@@ -13,8 +12,7 @@ import { actions, service } from '../../redux';
 import RealEstateViewForm from './RealEstateViewForm';
 import Map from '../../../../utils/components/template/map';
 import { PolizaViewForm } from '../../../asegurabilidad/components/PolizaViewForm';
-import { getPolicy } from '../../../asegurabilidad/redux/service';
-import Detail_disposition from '../../../disposition/components/Detail_disposition';
+import { swal_warning } from '../../../../utils';
 
 interface RealEstateFormProps {
     onSubmit?: (values, form?, isFinish?: boolean) => Promise<any>;
@@ -134,7 +132,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         initial_values.materials = initial_values.materials.split(',');
     }
 
-    //console.log(initial_values.supports_documents)
 
     if (initial_values.supports_documents.length === 0) {
         initial_values.supports_documents = [
@@ -149,7 +146,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         ];
         if (inventory) {
             initial_values.supports_documents = [
-                initial_values.supports_documents,
+                ...initial_values.supports_documents,
                 {
                     label: 'Documento Avalúo',
                     type: 6,
@@ -160,18 +157,39 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 },
             ]
         }
-    } else if (initial_values.supports_documents.length === 2 && inventory) {
-        initial_values.supports_documents = [
-            ...initial_values.supports_documents,
-            {
-                label: 'Documento Avalúo',
-                type: 6,
-            },
-            {
-                label: 'Documento de Prediación',
-                type: 7,
-            },
-        ]
+    } else if (initial_values.supports_documents.length >= 2 && inventory) {
+        const doc_avaluo = initial_values.supports_documents.filter(d => d.label === "Documento Avalúo")
+        const doc_prediacion = initial_values.supports_documents.filter(d => d.label === "Documento de Prediación")
+        if(doc_avaluo.length === 0 && doc_prediacion.length === 0 ) {
+            initial_values.supports_documents = [
+                ...initial_values.supports_documents,
+                {
+                    label: 'Documento Avalúo',
+                    type: 6,
+                },
+                {
+                    label: 'Documento de Prediación',
+                    type: 7,
+                },
+            ]
+        }else if(doc_avaluo.length === 0) {
+            initial_values.supports_documents = [
+                ...initial_values.supports_documents,
+                {
+                    label: 'Documento Avalúo',
+                    type: 6,
+                },
+            ]
+        }else if(doc_prediacion.length === 0) {
+            initial_values.supports_documents = [
+                ...initial_values.supports_documents,
+                {
+                    label: 'Documento de Prediación',
+                    type: 7,
+                },
+            ]
+        }
+
     }
 
 
@@ -201,7 +219,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         total_area: Yup.number()
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
-                then: Yup.number()
+                then: Yup.number().nullable()
                     .moreThan(Yup.ref('plot_area'), (plot_area) => {
                         if (plot_area.more !== undefined) {
                             return 'debe ser mayor a área Lote'
@@ -210,7 +228,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             })
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && (active_type.includes('Construccion') || active_type.includes('Construccion para demoler') || active_type.includes('Mejora')),
-                then: Yup.number()
+                then: Yup.number().nullable()
                     .moreThan(Yup.ref('construction_area'), (construction_area) => {
                         if (construction_area.more !== undefined) {
                             return 'debe ser mayor a área construccion'
@@ -221,25 +239,25 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
 
 
 
-        plot_area: Yup.number()
+        plot_area: Yup.number().nullable()
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
-                then: Yup.number()
+                then: Yup.number().nullable()
                     .lessThan(Yup.ref('total_area'), 'debe ser menor que el área total'),
             })
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
                 then: Yup.number().required('obligatorio')
             }),
-        construction_area: Yup.number()
+        construction_area: Yup.number().nullable()
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && (active_type.includes('Construccion') || active_type.includes('Construccion para demoler') || active_type.includes('Mejora')),
-                then: Yup.number()
+                then: Yup.number().nullable()
                     .lessThan(Yup.ref('total_area'), 'debe ser menor que el área total')
             })
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && (active_type.includes('Construccion') || active_type.includes('Construccion para demoler') || active_type.includes('Mejora')),
-                then: Yup.number().required('obligatorio')
+                then: Yup.number().nullable()
             }),
 
 
@@ -259,6 +277,18 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         delete values._type;
         values.projects_id = [project_id];
         values.materials = values.materials.join(', ');
+        if (realEstate.patrimonial_value !== values.patrimonial_value && inventory) {
+            if (validateDocuments(values.supports_documents, "Documento Avalúo")) {
+                form.setSubmitting(false);
+                return
+            }
+        }
+        if ((realEstate.total_area !== values.total_area || realEstate.plot_area !== values.plot_area || realEstate.construction_area !== values.construction_area) && inventory) {
+            if (validateDocuments(values.supports_documents, "Documento de Prediación")) {
+                form.setSubmitting(false);
+                return
+            }
+        }
         onSubmit(values, form, isFinish)
             .then(() => {
                 form.setSubmitting(false);
@@ -272,6 +302,24 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     useEffect(() => {
         dispatch(actions.getProjects());
     }, []);
+
+    const validateDocuments = (supports_documents, text) => {
+        const doc = supports_documents
+            .filter((d) => d.hasOwnProperty('pdf') && d.pdf)
+            .filter((d) => d.label === text)
+        const doc_create = supports_documents
+            .filter((d) => d.label === text)
+            .filter((d) => d.id)
+        if (doc.length === 0 && doc_create.length === 0) {
+            swal_warning.fire({
+                title: 'Documentos Requeridos',
+                text: `el Archivo ${text} es Obligatorio`,
+            });
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     const _disabled = disabled || type === 'view';
 
@@ -373,6 +421,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             }
                                             {globe !== true && (
                                                 <AdquisitionView
+                                                    inventory={inventory}
                                                     type={type}
                                                     formik={formik}
                                                     disabled={_disabled}
@@ -392,7 +441,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 </Card>
                                             )}
                                             {(inventory && realEstate?.policy_id) !== null &&
-                                                <PolizaViewForm policy_id={realEstate?.policy_id}/>
+                                                <PolizaViewForm policy_id={realEstate?.policy_id} />
                                             }
                                             {type === 'create' && globe !== true && (
                                                 <Card title="Inmuebles del Proyecto">

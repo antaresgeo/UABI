@@ -26,13 +26,13 @@ const RealEstateList: FC<RealEstateListProps> = ({
     realEstateFilter,
     // change_page
 }) => {
+
     const dispatch = useDispatch();
     const [realEstates, loading, total_results] = useSelector((store: any) => [
         store.acquisitions.realEstates.value,
         store.acquisitions.realEstates.loading,
         store.acquisitions.realEstates.pagination.total_results,
     ]);
-
     const deleteRealEstate = (id) => async () => {
         const result = await swal.fire({
             icon: 'warning',
@@ -207,13 +207,12 @@ const RealEstateList: FC<RealEstateListProps> = ({
     };
 
     useEffect(() => {
-        // console.log(project_id);
         if (project_id) {
             dispatch(actions.getRealEstatesByProject(project_id));
         } else if (init) {
-            dispatch(actions.getRealEstates({ with: 'pagination' })); //TODO: mirar filtro de poliza
+            dispatch(actions.getRealEstates({ with: 'pagination' }));
         }
-    }, [project_id]);
+    }, []);
 
     return (
         <Table
