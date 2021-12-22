@@ -68,12 +68,12 @@ const fake_policiesRealEstate = {
 
 const emptyInitialState: State = {
     policy: {
-        value: fake_policy,
+        value: null,
         loading: false,
         loaded: false,
     },
     policies: {
-        value: [fake_policy],
+        value: [],
         pagination: {
             page: 1,
             count: 0,
@@ -85,7 +85,7 @@ const emptyInitialState: State = {
         loaded: false,
     },
     policiesRealEstate: {
-        value: [fake_policiesRealEstate],
+        value: [],
         loading: false,
         loaded: false,
     },

@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import React, {useEffect, useRef} from 'react';
 import { Card } from '../../../../utils/ui';
 import { useHistory, useParams } from 'react-router-dom';
 import RoleForm from './../../components/RoleForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux';
+import {FormikProps, FormikValues} from "formik";
 
 interface IParams {
     id: string;
@@ -12,6 +13,7 @@ export const EditRoles = () => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
+    const form = useRef<FormikProps<FormikValues>>();
     const role: any = useSelector((store: any) => store.users.rol.value);
 
     useEffect(() => {
@@ -37,6 +39,7 @@ export const EditRoles = () => {
                                 <RoleForm
                                     rol={finalRole}
                                     type="edit"
+                                    innerRef={form}
                                     onSubmit={(values) => {
                                         console.log(values)
                                         return editRol(values);
@@ -61,6 +64,15 @@ export const EditRoles = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form.current?.submitForm();
+                    }}
+                >
+                    Guardar
+                </button>
             </div>
         </div>
     );

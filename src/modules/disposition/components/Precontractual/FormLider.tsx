@@ -49,7 +49,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="leader.post"
                         placeholder=""
                         autoComplete="off"
-                        maxLength={201}
+                        maxLength={20}
                         disabled={lease}
                     />
                     <ErrorMessage name="leader.post" />
@@ -102,7 +102,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="leader.dependence"
                         placeholder=""
                         autoComplete="off"
-                        maxLength={201}
+                        maxLength={20}
                         disabled={lease}
                     />
                     <ErrorMessage name="leader.dependence" />
@@ -118,7 +118,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="leader.secretary"
                         placeholder=""
                         autoComplete="off"
-                        maxLength={201}
+                        maxLength={20}
                         disabled={lease}
                     />
                     <ErrorMessage name="leader.secretary" />
@@ -140,7 +140,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="elaborated.name"
                         placeholder="Nombre del que lo elaboró"
                         autoComplete="off"
-                        maxLength={201}
+                        maxLength={20}
                     />
                     <ErrorMessage name="elaborated.name" />
                 </div>
@@ -155,7 +155,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="elaborated.post"
                         placeholder="Cargo del que lo elaboró"
                         autoComplete="off"
-                        maxLength={201}
+                        maxLength={20}
                     />
                     <ErrorMessage name="elaborated.post" />
                 </div>
@@ -176,7 +176,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="revised.name"
                         placeholder="Nombre del que lo revisó"
                         autoComplete="off"
-                        maxLength={201}
+                        maxLength={20}
                     />
                     <ErrorMessage name="revised.name" />
                 </div>
@@ -191,7 +191,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="revised.post"
                         placeholder="Cargo Nombre del que lo revisó"
                         autoComplete="off"
-                        maxLength={201}
+                        maxLength={20}
                     />
                     <ErrorMessage name="revised.post" />
                 </div>
@@ -212,7 +212,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="approved.name"
                         placeholder="Nombre del que lo aprobó"
                         autoComplete="off"
-                        maxLength={201}
+                        maxLength={20}
                     />
                     <ErrorMessage name="approved.name" />
                 </div>
@@ -227,7 +227,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         name="approved.post"
                         placeholder="Cargo del que lo aprobó"
                         autoComplete="off"
-                        maxLength={201}
+                        maxLength={20}
                     />
                     <ErrorMessage name="approved.post" />
                 </div>

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import { Card } from '../../../../utils/ui';
 import { useHistory } from 'react-router-dom';
 import RoleForm from './../../components/RoleForm';
 import { useDispatch } from 'react-redux';
 import { actions } from '../../redux';
+import {FormikProps, FormikValues} from "formik";
 
 export const CreateRoles = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const form = useRef<FormikProps<FormikValues>>();
     const createUser = async (values) => {
         console.log(values);
         await dispatch(actions.createRole(values));
@@ -21,6 +23,7 @@ export const CreateRoles = () => {
                             <Card title="Crear Rol">
                                 <RoleForm
                                     type="create"
+                                    innerRef={form}
                                     onSubmit={(values) => {
                                         return createUser(values);
                                     }}
@@ -44,6 +47,15 @@ export const CreateRoles = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form.current?.submitForm();
+                    }}
+                >
+                    Guardar
+                </button>
             </div>
         </div>
     );

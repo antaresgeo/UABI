@@ -1,13 +1,14 @@
 import { FC } from 'react';
-import { ErrorMessage as AntErrorMessage, useField } from 'formik';
+import { ErrorMessage as FormikErrorMessage, useField } from 'formik';
 
 interface ErrorMessageProps {
     name?: string;
     withCount?: boolean;
     max?: number;
+    className?: string;
 }
 
-const ErrorMessage: FC<ErrorMessageProps> = ({ name, withCount, max }) => {
+const ErrorMessage: FC<ErrorMessageProps> = ({ name, withCount, max, className, ...props }) => {
     let [field] = useField(name ? { name } : { name: '_' });
     let hasCount = false;
     const value = field.value;
@@ -17,7 +18,7 @@ const ErrorMessage: FC<ErrorMessageProps> = ({ name, withCount, max }) => {
     return (
         <div className="row w-100 m-0">
             <div className="col">
-                <span className="form-error">{name && <AntErrorMessage name={name} />}</span>
+                <span className="form-error">{name && <FormikErrorMessage className={className} name={name}  />}</span>
             </div>
             {hasCount && (
                 <div className="col-4">

@@ -10,9 +10,10 @@ interface UserListProps {
     users: IUserAttributes[];
     change_page?: (page: number, pageSize?: number) => void;
     total?: number;
+    loading?: boolean;
     user: any;
 }
-const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
+const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading }) => {
     const dispatch = useDispatch();
     const deleteUser = (id) => async () => {
         const result = await swal.fire({
@@ -128,7 +129,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user }) => {
         table_columns[4].children[2] = eliminar;
     }
 
-    return <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} />;
+    return <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} loading={loading} />;
 };
 
 export default UserList;

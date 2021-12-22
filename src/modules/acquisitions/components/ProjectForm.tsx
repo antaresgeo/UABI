@@ -6,6 +6,10 @@ import * as Yup from 'yup';
 import Select from '../../../utils/ui/select';
 import dependencias from '../dependencias';
 import { formatDate } from '../../../utils';
+import { Card } from '../../../utils/ui';
+import { AntRangePicker } from '../../../utils/ui/date_picker';
+import { LinkButton } from '../../../utils/ui/link';
+import { Empty } from 'antd';
 
 interface ProjectFormPros {
     project?: IProjectAttributes;
@@ -15,12 +19,22 @@ interface ProjectFormPros {
 }
 const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type }) => {
     const [subs, set_subs] = useState<any[]>([]);
+
+    const empty_contract = {
+        contract_number: '',
+        validity: {
+            start_date: '',
+            end_date: '',
+        },
+        contractor: '',
+    };
     const initial_values = {
         id: '',
         name: '',
         description: '',
         dependency: '',
         subdependency: '',
+        contracts: [],
         ...project,
     };
 
@@ -71,211 +85,326 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
             {({ values, isSubmitting, setFieldValue }) => {
                 return (
                     <Form>
-                        <div className="row">
-                            {project && (
-                                <div className="col-3">
-                                    <label htmlFor="id_id" className="form-label">
-                                        Código del proyecto
+                        <Card title="Información del Proyecto">
+                            <div className="row">
+                                {project && (
+                                    <div className="col-3">
+                                        <label htmlFor="id_id" className="form-label">
+                                            Código del proyecto
+                                        </label>
+                                        <Field
+                                            type="text"
+                                            id="id_id"
+                                            className="form-control"
+                                            aria-describedby="codigo del projecto"
+                                            disabled={true}
+                                            name="id"
+                                            autoComplete="off"
+                                        />
+                                        <ErrorMessage name="id" />
+                                    </div>
+                                )}
+                                <div className={`col-${project ? 3 : 4}`}>
+                                    <label htmlFor="name_id" className="form-label">
+                                        Nombre del proyecto
                                     </label>
                                     <Field
                                         type="text"
-                                        id="id_id"
                                         className="form-control"
-                                        aria-describedby="codigo del projecto"
-                                        disabled={true}
-                                        name="id"
+                                        id="name_id"
+                                        aria-describedby="nombre del projecto"
+                                        name="name"
                                         autoComplete="off"
-                                    />
-                                    <ErrorMessage name="id" />
-                                </div>
-                            )}
-                            <div className={`col-${project ? 3 : 4}`}>
-                                <label htmlFor="name_id" className="form-label">
-                                    Nombre del proyecto
-                                </label>
-                                <Field
-                                    type="text"
-                                    className="form-control"
-                                    id="name_id"
-                                    aria-describedby="nombre del projecto"
-                                    name="name"
-                                    autoComplete="off"
-                                    disabled={disabled}
-                                    maxLength={201}
-                                />
-                                <ErrorMessage name="name" />
-                            </div>
-                            <div className={`col-${project ? 3 : 4}`}>
-                                <label htmlFor="dependency_id" className="form-label">
-                                    Dependecia
-                                </label>
-                                <Field
-                                    component={Select}
-                                    name="dependency"
-                                    id="dependency_id"
-                                    disabled={disabled}
-                                    placeholder="Selecciona una Dependencia"
-                                    options={dependency_ops}
-                                    showSearch
-                                    extra_on_change={(value) => {
-                                        if (value) {
-                                            const dependency = dependencias.find((d) => d.name === value);
-                                            const _subs = format_list(dependency.subs);
-                                            setFieldValue('subdependency', dependency.name);
-                                            setFieldValue('cost_center', dependency.cost_center);
-                                            setFieldValue('management_center', dependency.cost_center);
-                                            set_subs(_subs);
-                                        }
-                                    }}
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-                                    }}
-                                />
-                                <ErrorMessage name="dependency" />
-                            </div>
-                            <div className={`col-${project ? 3 : 4}`}>
-                                <label htmlFor="subdependency_id" className="form-label">
-                                    Sub. Dependecia
-                                </label>
-                                <Field
-                                    component={Select}
-                                    name="subdependency"
-                                    id="subdependency_id"
-                                    disabled={disabled || !values.dependency || subs.length === 0}
-                                    placeholder="Selecciona una Sub. Dependencia"
-                                    options={subs}
-                                    showSearch
-                                    allowClear
-                                    extra_on_change={(value) => {
-                                        if (value) {
-                                            const dependency = dependencias.find((d) => d.name === values.dependency);
-                                            const subdependency = dependency.subs.find((d) => d.name === value);
-                                            setFieldValue('cost_center', subdependency.cost_center);
-                                        }
-                                    }}
-                                    filterOption={(input, option) => {
-                                        return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-                                    }}
-                                />
-                                <ErrorMessage name="subdependency" />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="form-group col-4">
-                                <label htmlFor="management_center_id" className="form-label">
-                                    Centro Gestor
-                                </label>
-                                <Field
-                                    disabled
-                                    name="management_center"
-                                    type="text"
-                                    className="form-control"
-                                    id="management_center_id"
-                                />
-                                <ErrorMessage name="cost_center" />
-                            </div>
-                            <div className="form-group col-4">
-                                <label htmlFor="cost_center_id" className="form-label">
-                                    Centro de Costos
-                                </label>
-                                <Field
-                                    disabled
-                                    name="cost_center"
-                                    type="text"
-                                    className="form-control"
-                                    id="cost_center_id"
-                                />
-                                <ErrorMessage name="cost_center" />
-                            </div>
-                            <div className="col-4">
-                                <label htmlFor="budget_value" className="form-label">
-                                    Valor Presupuestal
-                                </label>
-                                <div className="input-group">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text bg-white border-end-0">$</span>
-                                    </div>
-                                    <Field
                                         disabled={disabled}
-                                        name="budget_value"
-                                        type="number"
-                                        id="budget_value_id"
-                                        className="form-control border-start-0 text-end"
-                                        min={0}
-                                        max={9999999999}
+                                        maxLength={20}
                                     />
+                                    <ErrorMessage name="name" />
+                                </div>
+                                <div className={`col-${project ? 3 : 4}`}>
+                                    <label htmlFor="dependency_id" className="form-label">
+                                        Dependecia
+                                    </label>
+                                    <Field
+                                        component={Select}
+                                        name="dependency"
+                                        id="dependency_id"
+                                        disabled={disabled}
+                                        placeholder="Selecciona una Dependencia"
+                                        options={dependency_ops}
+                                        showSearch
+                                        extra_on_change={(value) => {
+                                            if (value) {
+                                                const dependency = dependencias.find((d) => d.name === value);
+                                                const _subs = format_list(dependency.subs);
+                                                setFieldValue('subdependency', dependency.name);
+                                                setFieldValue('cost_center', dependency.cost_center);
+                                                setFieldValue('management_center', dependency.cost_center);
+                                                set_subs(_subs);
+                                            }
+                                        }}
+                                        filterOption={(input, option) => {
+                                            return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                        }}
+                                    />
+                                    <ErrorMessage name="dependency" />
+                                </div>
+                                <div className={`col-${project ? 3 : 4}`}>
+                                    <label htmlFor="subdependency_id" className="form-label">
+                                        Sub. Dependecia
+                                    </label>
+                                    <Field
+                                        component={Select}
+                                        name="subdependency"
+                                        id="subdependency_id"
+                                        disabled={disabled || !values.dependency || subs.length === 0}
+                                        placeholder="Selecciona una Sub. Dependencia"
+                                        options={subs}
+                                        showSearch
+                                        allowClear
+                                        extra_on_change={(value) => {
+                                            if (value) {
+                                                const dependency = dependencias.find(
+                                                    (d) => d.name === values.dependency
+                                                );
+                                                const subdependency = dependency.subs.find((d) => d.name === value);
+                                                setFieldValue('cost_center', subdependency.cost_center);
+                                            }
+                                        }}
+                                        filterOption={(input, option) => {
+                                            return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                        }}
+                                    />
+                                    <ErrorMessage name="subdependency" />
                                 </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <label htmlFor="description_id" className="form-label">
-                                    Descripción
-                                </label>
-                                <Field
-                                    as="textarea"
-                                    className="form-control"
-                                    id="description_id"
-                                    aria-describedby="emailHelp"
-                                    placeholder="Descripción del Proyecto"
-                                    name="description"
-                                    disabled={disabled}
-                                    autoComplete="off"
-                                    maxLength={1000}
-                                />
-                                <ErrorMessage name="description" withCount max={1000} />
-                            </div>
-                        </div>
-                        <div className="row">
-                            {type === 'view' && (
-                                <>
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <label htmlFor="audit_trail_created_on_id" className="form-label">
-                                                Fecha de creación
-                                            </label>
-                                            <Field
-                                                type="text"
-                                                className="form-control"
-                                                id="audit_trail_created_on_id"
-                                                name="audit_trail.created_on"
-                                                value={formatDate(project?.audit_trail?.created_on)}
-                                                disabled
-                                            />
-                                            <ErrorMessage />
+                            <div className="row">
+                                <div className="form-group col-4">
+                                    <label htmlFor="management_center_id" className="form-label">
+                                        Centro Gestor
+                                    </label>
+                                    <Field
+                                        disabled
+                                        name="management_center"
+                                        type="text"
+                                        className="form-control"
+                                        id="management_center_id"
+                                    />
+                                    <ErrorMessage name="cost_center" />
+                                </div>
+                                <div className="form-group col-4">
+                                    <label htmlFor="cost_center_id" className="form-label">
+                                        Centro de Costos
+                                    </label>
+                                    <Field
+                                        disabled
+                                        name="cost_center"
+                                        type="text"
+                                        className="form-control"
+                                        id="cost_center_id"
+                                    />
+                                    <ErrorMessage name="cost_center" />
+                                </div>
+                                <div className="col-4">
+                                    <label htmlFor="budget_value" className="form-label">
+                                        Valor Presupuestal
+                                    </label>
+                                    <div className="input-group">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text bg-white border-end-0">$</span>
                                         </div>
-                                        <div className="col-6">
-                                            <label htmlFor="audit_trail_created_by_id" className="form-label">
-                                                Creado por
-                                            </label>
-                                            <Field
-                                                type="text"
-                                                className="form-control"
-                                                id="audit_trail_created_by_id"
-                                                name="audit_trail.created_by"
-                                                disabled
-                                            />
-                                            <ErrorMessage />
-                                        </div>
+                                        <Field
+                                            disabled={disabled}
+                                            name="budget_value"
+                                            type="number"
+                                            id="budget_value_id"
+                                            className="form-control border-start-0 text-end"
+                                            min={0}
+                                            max={9999999999}
+                                        />
                                     </div>
-                                </>
-                            )}
-                        </div>
-                        <div className="row justify-content-end">
-                            <div className="col text-end">
-                                {type !== 'view' && (
-                                    <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
-                                        Guardar{' '}
-                                        {isSubmitting && (
-                                            <i
-                                                className="fa fa-circle-notch fa-spin"
-                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
-                                            />
-                                        )}
-                                    </button>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <label htmlFor="description_id" className="form-label">
+                                        Descripción
+                                    </label>
+                                    <Field
+                                        as="textarea"
+                                        className="form-control"
+                                        id="description_id"
+                                        aria-describedby="emailHelp"
+                                        placeholder="Descripción del Proyecto"
+                                        name="description"
+                                        disabled={disabled}
+                                        autoComplete="off"
+                                        maxLength={1000}
+                                    />
+                                    <ErrorMessage name="description" withCount max={1000} />
+                                </div>
+                            </div>
+                            <div className="row">
+                                {type === 'view' && (
+                                    <>
+                                        <div className="row">
+                                            <div className="col-6">
+                                                <label htmlFor="audit_trail_created_on_id" className="form-label">
+                                                    Fecha de creación
+                                                </label>
+                                                <Field
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="audit_trail_created_on_id"
+                                                    name="audit_trail.created_on"
+                                                    value={formatDate(project?.audit_trail?.created_on)}
+                                                    disabled
+                                                />
+                                                <ErrorMessage />
+                                            </div>
+                                            <div className="col-6">
+                                                <label htmlFor="audit_trail_created_by_id" className="form-label">
+                                                    Creado por
+                                                </label>
+                                                <Field
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="audit_trail_created_by_id"
+                                                    name="audit_trail.created_by"
+                                                    disabled
+                                                />
+                                                <ErrorMessage />
+                                            </div>
+                                        </div>
+                                    </>
                                 )}
                             </div>
-                        </div>
+                            <div className="row justify-content-end">
+                                <div className="col text-end">
+                                    {type !== 'view' && (
+                                        <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
+                                            Guardar{' '}
+                                            {isSubmitting && (
+                                                <i
+                                                    className="fa fa-circle-notch fa-spin"
+                                                    style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                                />
+                                            )}
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </Card>
+                        <Card
+                            title="Contratos"
+                            extra={
+                                <LinkButton
+                                    name={'Agregar Contrato'}
+                                    iconText="+"
+                                    avatar
+                                    onClick={() => {
+                                        setFieldValue(
+                                            'contracts',
+                                            [
+                                                ...values.contracts,
+                                                {
+                                                    ...empty_contract,
+                                                },
+                                            ],
+                                            false
+                                        );
+                                    }}
+                                />
+                            }
+                        >
+                            {values.contracts.length > 0 &&
+                                values.contracts.map((contract, i) => (
+                                    <div className="row">
+                                        <div className="col-3">
+                                            <label htmlFor="contract_number_id" className="form-label">
+                                                Numero de Contrato
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                className="form-control"
+                                                id="contract_number_id"
+                                                aria-describedby="nombre del projecto"
+                                                name={`contracts[${i}].contract_number`}
+                                                autoComplete="off"
+                                                disabled={disabled}
+                                                maxLength={20}
+                                            />
+                                            <ErrorMessage name={`contracts[${i}].contract_number`} />
+                                        </div>
+                                        <div className="col-5">
+                                            <div className="form-group">
+                                                <label>Vigencia</label>
+                                                <Field
+                                                    component={AntRangePicker}
+                                                    name={`contracts[${i}].validity`}
+                                                    className="ant-date-range"
+                                                />
+                                                <ErrorMessage
+                                                    className="d-inline-block ml-2 form-text text-danger small"
+                                                    name={`contracts[${i}].validity.start_date`}
+                                                />
+                                                <ErrorMessage
+                                                    className="d-inline-block ml-2 form-text text-danger small"
+                                                    name={`contracts[${i}].validity.end_date`}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-3">
+                                            <label htmlFor="contract_number_id" className="form-label">
+                                                Contratista
+                                            </label>
+                                            <Field
+                                                type="text"
+                                                className="form-control"
+                                                id="contract_number_id"
+                                                aria-describedby="nombre del projecto"
+                                                name={`contracts[${i}].contractor`}
+                                                autoComplete="off"
+                                                disabled={disabled}
+                                                maxLength={20}
+                                            />
+                                            <ErrorMessage name={`contracts[${i}].contractor`} />
+                                        </div>
+                                        <div
+                                            className="col-1 "
+                                            style={{ display: 'flex', alignItems: 'center', marginTop: '-30px' }}
+                                        >
+                                            <LinkButton
+                                                name=""
+                                                icon={<i className="fa fa-times" aria-hidden="true" />}
+                                                onClick={() => {
+                                                    const contracts_list = values.contracts.filter((v, j) => j !== i);
+                                                    setFieldValue('contracts', contracts_list, false);
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+
+                            {values.contracts.length === 0 && (
+                                <div className="row">
+                                    <div className="col-12">
+                                        <Empty
+                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                            imageStyle={{
+                                                height: 60,
+                                            }}
+                                            description={
+                                                <span className="text-primary">
+                                                    No hay contratos para mostrar.
+                                                    <br />
+                                                    Por favor agregue un cotrato.
+                                                </span>
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </Card>
                     </Form>
                 );
             }}
