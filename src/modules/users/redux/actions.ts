@@ -14,6 +14,8 @@ const getRolesList = (filters: {
     q?: string;
 }) => request_dispatch(types.roles, service.getRolesList(filters));
 
+const clearRolesList = () => request_dispatch(types.roles, Promise.resolve([]));
+
 const getRoles = () => request_dispatch(types.rolesSelect, service.getRoles());
 
 const createRole = (data) =>
@@ -31,7 +33,7 @@ const get_list_users = () =>
     request_dispatch(types.get_list_users, service.get_list_users());
 const get_all_users = (filters?) =>
     request_dispatch(types.get_all_users, service.get_all_users(filters));
-const clear_get_all_users = (filters?) =>
+const clear_get_all_users = () =>
     request_dispatch(types.get_all_users, Promise.resolve([]));
 const create_user = (data: User) =>
     request_dispatch(types.create_user, service.create_user(data));
@@ -60,6 +62,7 @@ const actions = {
     updateRole,
     deleteRole,
     getPermits,
+    clearRolesList
 };
 
 export default actions;

@@ -32,4 +32,5 @@ export interface IAppRouter {
     template?: any;
     user: any;
     test?: boolean;
+    show?: boolean;
 }

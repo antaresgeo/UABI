@@ -6,6 +6,7 @@ import { useContext, useEffect } from 'react';
 import actions from './modules/auth/redux/actions';
 import PasswordChangeModal from './modules/auth/views/pass_change_modal';
 import { TemplateContext } from './utils/components/template/template_context';
+import { Redirect } from 'react-router-dom';
 
 function App() {
     const user = useSelector((store: any) => store.auth.user);
@@ -28,7 +29,8 @@ function App() {
 
     return (
         <>
-            {show && <Router routes={routes} template={Template} user={aux_user} />}
+
+            <Router routes={routes} template={Template} user={aux_user} show={show} />
             <PasswordChangeModal
                 update_password={async (password) => {
                     await dispatch(actions.update_password(password));
