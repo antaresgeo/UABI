@@ -17,8 +17,9 @@ export const ListRoles = () => {
     const change_page = (page, pageSize) => {
         dispatch(actions.getRolesList({ page, pageSize, with: 'pagination', ...filters }));
     };
+
     useEffect(() => {
-        dispatch(actions.getRolesList({ with: 'pagination' }));
+        dispatch(actions.clearRolesList());
     }, []);
 
     const [filters, set_filters] = useState<object>(null);
