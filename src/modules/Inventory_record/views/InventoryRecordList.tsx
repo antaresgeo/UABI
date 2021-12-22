@@ -5,6 +5,7 @@ import { Card, Link } from '../../../utils/ui';
 import { getRealEstates } from '../../acquisitions/redux/actions/realEstates';
 import RealEstateList from '../../acquisitions/components/RealEstateList';
 import FilterForm from './../../../utils/ui/filter_form';
+import { actions } from '../../acquisitions/redux';
 
 const InventoryRecordList = () => {
     const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const InventoryRecordList = () => {
     };
 
     // useEffect(() => {
-    //     dispatch(getRealEstates({}));
+    //     dispatch(actions.clearRealEstate());
     // }, []);
 
     return (

@@ -40,7 +40,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="leader.post" className="form-label">
-                        cargo
+                        cargo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -56,7 +56,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="detailsLeader" className="form-label">
-                        Información Lider
+                        Información Lider<span className="text-danger">*</span>
                     </label>
                     <Field
                         component={PersonaM}
@@ -66,7 +66,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="location_leader" className="form-label">
-                        Dirección
+                        Dirección<span className="text-danger">*</span>
                     </label>
                     <div className="input-group">
                         <Field
@@ -131,7 +131,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             <div className="row">
                 <div className="col-12">
                     <label htmlFor="elaborated.name" className="form-label">
-                        Nombre
+                        Nombre<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -148,7 +148,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             <div className="row">
                 <div className="col-6">
                     <label htmlFor="elaborated.post" className="form-label">
-                        Cargo
+                        Cargo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -163,7 +163,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="elaborated.email" className="form-label">
-                        Correo
+                        Correo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -183,7 +183,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             <div className="row">
                 <div className="col-12">
                     <label htmlFor="revised.name" className="form-label">
-                        Nombre
+                        Nombre<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -200,7 +200,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             <div className="row">
                 <div className="col-6">
                     <label htmlFor="revised.post" className="form-label">
-                        cargo
+                        Cargo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -215,7 +215,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="revised.email" className="form-label">
-                        Correo
+                        Correo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -236,7 +236,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             <div className="row">
                 <div className="col-12">
                     <label htmlFor="approved.name" className="form-label">
-                        Nombre
+                        Nombre<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -253,7 +253,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             <div className="row">
                 <div className="col-6">
                     <label htmlFor="approved.post" className="form-label">
-                        Cargo
+                        Cargo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -268,7 +268,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="approved.email" className="form-label">
-                        Correo
+                        Correo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"

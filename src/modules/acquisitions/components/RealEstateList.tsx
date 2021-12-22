@@ -207,13 +207,12 @@ const RealEstateList: FC<RealEstateListProps> = ({
     };
 
     useEffect(() => {
-        // console.log(project_id);
         if (project_id) {
             dispatch(actions.getRealEstatesByProject(project_id));
         } else if (init) {
-            dispatch(actions.getRealEstates({ with: 'pagination' })); //TODO: mirar filtro de poliza
+            dispatch(actions.getRealEstates({ with: 'pagination' }));
         }
-    }, [project_id]);
+    }, []);
 
     return (
         <Table

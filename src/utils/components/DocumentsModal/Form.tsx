@@ -57,7 +57,6 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, onSubmit }) => 
                     fileList: values.fileList,
                 };
                 const Button = (...props) => {
-                    console.log(props);
                     return (
                         <button
                             type="button"

@@ -60,15 +60,15 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
 
         //Arrendamiento
         consecutive_number: "36000000", //TODO: preguntar a Diego valor ?
-        canon_value: realEstate.canyon_value,
-        IVA: realEstate.canyon_value * 0.19,
+        canon_value: realEstate?.canyon_value,
+        IVA: (realEstate.canyon_value * 0.19).toFixed(2),
         public_service: "",
         value_aforo: "",
         recovery_value: "",
         counter_value: "",
         administration_value: "",
         vigilance_value: "",
-        subtotal: 0,
+        subtotal: parseInt(realEstate?.canyon_value + (realEstate.canyon_value * 0.19)) ,
         total: 0,
         prediation_number: "",
         prediation_date: "",

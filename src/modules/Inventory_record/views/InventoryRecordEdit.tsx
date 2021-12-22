@@ -24,7 +24,6 @@ const InventoryRecordEdit = () => {
             inventory={true}
             inventoryEdit={false}
             onSubmit={async (values, form, isFinish) => {
-                console.log('valores', values);
                 const { acquisitions } = values;
                 try {
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));

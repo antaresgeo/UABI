@@ -40,12 +40,14 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     acquisitions,
     onProjectSelectedChange,
 }) => {
-    // useEffect(() => {
-    //     let value_patrimonial = 0;
-    //     acquisitions?.map(a => value_patrimonial = a.act_value + Number(a.recognition_value))
-    //     formik.setFieldValue('patrimonial_value', value_patrimonial, false);
-    //     formik.setFieldValue('accounting_amount', value_patrimonial, false);
-    // }, [acquisitions])
+    useEffect(() => {
+        if (!inventory) {
+            let value_patrimonial = 0;
+            acquisitions?.map(a => value_patrimonial = a.act_value + Number(a.recognition_value))
+            formik.setFieldValue('patrimonial_value', value_patrimonial, false);
+            formik.setFieldValue('accounting_amount', value_patrimonial, false);
+        }
+    }, [acquisitions,inventory])
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(actions.getTipologies());
@@ -232,7 +234,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <label htmlFor="name_id" className="form-label">
                         Nombre Inmueble <span className="text-danger">*</span>
                     </label>
-                    <TooltipField text="Lorem impsu texto descriptivo"/>
+                    <TooltipField text="Lorem impsu texto descriptivo" />
                     <Field
                         disabled={disabled}
                         name="name"
@@ -248,7 +250,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <label htmlFor="registry_number_noc" className="form-label">
                         Número matrícula <span className="text-danger">*</span>
                     </label>
-                    <TooltipField text="Lorem impsu texto descriptivo"/>
+                    <TooltipField text="Lorem impsu texto descriptivo" />
                     <Field
                         type="text"
                         name="registry_number"
@@ -323,16 +325,16 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             //TODO: sumas el valor de adquisicion con valor de reconocimiento
                             min={0}
                             max={99999999999999999999}
-                            // onChange={(e, values) => {
-                            //     let anterior = formik.values.patrimonial_value
-                            //     let cambio = 0;
-                            //     cambio = Number(e.target.value)
-                            //     console.log(anterior, cambio)
-                            //     formik.handleChange(e)
-                            //     if(cambio !== 0) {
-                            //         console.log('documeto obligatorio')
-                            //     }
-                            // }}
+                        // onChange={(e, values) => {
+                        //     let anterior = formik.values.patrimonial_value
+                        //     let cambio = 0;
+                        //     cambio = Number(e.target.value)
+                        //     console.log(anterior, cambio)
+                        //     formik.handleChange(e)
+                        //     if(cambio !== 0) {
+                        //         console.log('documeto obligatorio')
+                        //     }
+                        // }}
                         />
                     </div>
                     <ErrorMessage name="patrimonial_value" />

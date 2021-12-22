@@ -382,8 +382,8 @@ const LeaseDocContract = () => {
                             <p className="p11_contractLease ft15_contractLease">
                                 Entre los suscritos a saber,
                                 <span className='ft3_comodato'>{` ${arrendamiento.detailsLeader.names.firstName} `}</span>
-                                con cédula de ciudadanía No. <span className='ft3_comodato'>{`${arrendamiento.detailsLeader.id_number} `}</span>
-                                Digite el número de documento, en su calidad de
+                                con cédula de ciudadanía No. <span className='ft3_comodato'>{`${arrendamiento.detailsLeader.id_number}, `}</span>
+                                en su calidad de
                                 Secretario(a) de Suministros y Servicios del Municipio de Medellín,
                                 nombrado mediante el Decreto Municipal N° 001 del 1 de enero de 2016 y
                                 acta de posesión N° 11 del 03/01/2020, en uso de sus facultades
@@ -421,15 +421,18 @@ const LeaseDocContract = () => {
                                 </span>
                                 quien en lo sucesivo se denominará
                                 EL(LA) ARRENDATARIO(A), se ha decidido celebrar el presente CONTRATO
-                                DE
+                                DE ARRENDAMIENTO, previo el agotamiento de los requisitos establecidos en
+                                las normas
                             </p>
                             <p className="p12_contractLease ft6_contractLease">Página 2 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
                                 _________________________________________________________________________________________________
                             </p>
                             <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
+                            </p>
+                            <p className="p14_contractLease ft12_contractLease">
+                                Línea Única de Atención a la Ciudadanía 44 44 144
                             </p>
                             <p className="p15_contractLease ft16_contractLease">
                                 <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
@@ -468,8 +471,7 @@ const LeaseDocContract = () => {
                                 NÚMERO DE CONTRATO – SIN FECHA)
                             </p>
                             <p className="p17_contractLease ft15_contractLease">
-                                ARRENDAMIENTO, previo el agotamiento de los requisitos establecidos en
-                                las normas vigentes, de carácter municipal y nacional, contrato que se
+                                vigentes, de carácter municipal y nacional, contrato que se
                                 regirá por la ley aplicable y las cláusulas que a continuación se
                                 enuncian: <span className="ft14_contractLease">PRIMERA: OBJETO. </span>EL ARRENDADOR
                                 entrega a título de arrendamiento y EL (LA) ARRENDATARIO(A) recibe al

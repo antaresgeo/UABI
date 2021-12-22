@@ -18,6 +18,9 @@ const getPolicies = (filters: {
 }) =>
     request_dispatch(types.policies, service.getPolicies(filters));
 
+const clearPolicies = () =>
+    request_dispatch(types.policies, Promise.resolve([]));
+
 const updatePolicy = (data: any, id) =>
     request_dispatch(types.policy, service.updatePolicy(data, id));
 
@@ -67,6 +70,7 @@ const actions = {
     getPolicies,
     updatePolicy,
     realEstatesPolicy,
+    clearPolicies,
     get_list_companies,
     get_all_companies,
     create_company,

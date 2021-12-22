@@ -17,7 +17,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
             <div className="row">
                 <div className="col-6">
                     <label htmlFor="applicant_type_society" className="form-label">
-                        Tipo de persona
+                        Tipo de persona<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="select"
@@ -41,7 +41,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                         <div className="col-6">
                             <div className="row">
                                 <label htmlFor="applicant.id_type" className="form-label">
-                                    Tipo de Documento
+                                    Tipo de Documento<span className="text-danger">*</span>
                                 </label>
                                 <div className="col-5">
                                     <Field
@@ -76,7 +76,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                         </div>
                         <div className="col-6">
                             <label htmlFor="applicant.company_name" className="form-label">
-                                Nombre de la empresa
+                                Nombre de la empresa<span className="text-danger">*</span>
                             </label>
                             <Field
                                 type="text"
@@ -91,7 +91,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                         </div>
                         <div className="form-group col-6">
                             <label htmlFor="location_applicant_id" className="form-label">
-                                Dirección
+                                Dirección<span className="text-danger">*</span>
                             </label>
                             <div className="input-group">
                                 <input
@@ -119,7 +119,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
 
                             <div className="col-6">
                                 <label htmlFor="applicant.phone_number" className="form-label">
-                                    Teléfono
+                                    Teléfono<span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="number"
@@ -134,7 +134,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                             </div>
                             <div className="col-6">
                                 <label htmlFor="applicant.email" className="form-label">
-                                    Correo Electronico
+                                    Correo Electronico<span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="email"
@@ -174,7 +174,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                             </div>
                             <div className="col-6">
                             <label htmlFor="detailsRepresentative" className="form-label">
-                                Información Representante
+                                Información Representante<span className="text-danger">*</span>
                             </label>
                             <Field
                                 component={PersonaM}
@@ -188,7 +188,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                     <>
                         <div className="col-3">
                             <label htmlFor="detailsApplicant" className="form-label">
-                                Información Solicitante
+                                Información Solicitante<span className="text-danger">*</span>
                             </label>
                             <Field
                                 component={PersonaM}
@@ -198,7 +198,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                         </div>
                         <div className="form-group col-3">
                             <label htmlFor="location_applicant_id" className="form-label">
-                                Dirección
+                                Dirección<span className="text-danger">*</span>
                             </label>
 
                             <div className="input-group">

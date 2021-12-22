@@ -2,6 +2,8 @@ import { Field } from 'formik';
 import ErrorMessage from '../../../../../utils/ui/error_messge';
 import Tooltip from 'antd/lib/tooltip';
 import { FC, useEffect } from 'react';
+import moment from 'moment';
+import TooltipField from './../../../../../utils/ui/tooltip_field';
 
 interface FormProps {
     formik: any;
@@ -29,14 +31,15 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
         }
         formik.setFieldValue(
             'total',
-            formik.values.subtotal + Number(formik.values.administration_value) + valueServPublic,
+            parseInt(formik.values.subtotal + Number(formik.values.administration_value) + valueServPublic),
             false
         );
-        formik.setFieldValue(
-            'subtotal',
-            formik.values.IVA + formik.values.canon_value,
-            false
-        );
+
+        // formik.setFieldValue(
+        //     'subtotal',
+        //     parseInt(formik?.values.IVA + formik.values.canon_value),
+        //     false
+        // );
     }, [formik.values.value_aforo, formik.values.recovery_value, formik.values.counter_value, formik.values.public_service, formik.values.administration_value])
 
 
@@ -104,7 +107,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
             <div className="row">
                 <div className="col-3">
                     <label htmlFor="public_service_id" className="form-label">
-                        Valor de servicio público
+                        Valor de servicio público<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="select"
@@ -151,10 +154,8 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     <div className="col-3">
                         <label htmlFor="recovery_value_id" className="form-label">
                             Valor Recobro
-                            <Tooltip title="el valor se calcula cada mes de acuerdo al valor de factura por EPM y distribución correspondiente">
-                                <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                            </Tooltip>
                         </label>
+                        <TooltipField text="el valor se calcula cada mes de acuerdo al valor de factura por EPM y distribución correspondiente" />
                         <div className="input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text bg-white border-end-0">$</span>
@@ -176,11 +177,9 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 {formik.values.public_service === 'Contador individualizado' && (
                     <div className="col-3">
                         <label htmlFor="counter_value_id" className="form-label">
-                            Valor
-                            <Tooltip title="valor facturado directamentepor EPM">
-                                <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                            </Tooltip>
+                            Valor Contador Individualizado
                         </label>
+                        <TooltipField text="valor facturado directamente por EPM" />
                         <div className="input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text bg-white border-end-0">$</span>
@@ -201,7 +200,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 )}
                 <div className="col-3">
                     <label htmlFor="administration_value_id" className="form-label">
-                        Valor Administración
+                        Valor Administración<span className="text-danger">*</span>
                     </label>
                     <div className="input-group">
                         <div className="input-group-prepend">
@@ -284,7 +283,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
 
                 <div className="col-3">
                     <label htmlFor="prediation_number_id" className="form-label">
-                        Número Prediación
+                        Número Prediación<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -297,7 +296,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="prediation_date_id" className="form-label mt-3 mt-lg-0">
-                        Fecha de Prediación
+                        Fecha de Prediación<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="date"
@@ -305,13 +304,14 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         name="prediation_date"
                         placeholder="Fecha Final"
                         className="form-control"
+                        max={moment(new Date().getTime()).format('YYYY-MM-DD')}
                     // disabled={true}
                     />
                     <ErrorMessage name="prediation_date" />
                 </div>
                 <div className="col-3">
                     <label htmlFor="appraisal_number_id" className="form-label">
-                        Número de avalúo
+                        Número de avalúo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="number"
@@ -324,7 +324,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="appraisal_date_id" className="form-label mt-3 mt-lg-0">
-                        Fecha de avalúo
+                        Fecha de avalúo<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="date"
@@ -338,11 +338,9 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3 form-inline">
                     <label htmlFor="lockable_base_id" className="form-label">
-                        Base asegurable
-                        <Tooltip title="no inferior del 10%">
-                            <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                        </Tooltip>
+                        Base asegurable<span className="text-danger">*</span>
                     </label>
+                    <TooltipField text="no inferior del 10%" />
                     <div className="input-group">
                         <Field
 
@@ -361,7 +359,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3"> {/*{`col-${(formik.values.public_service === 'Prepago') ? 3 : 6}`}*/}
                     <label htmlFor="contract_period_id" className="form-label">
-                        Duración del contrato
+                        Duración del contrato<span className="text-danger">*</span>
                         <Tooltip title="Número de meses">
                             <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
                         </Tooltip>
@@ -402,7 +400,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="business_type_id" className="form-label">
-                        Tipo de negocio
+                        Tipo de negocio<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -418,7 +416,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="environmental_risk_id" className="form-label">
-                        Riesgos Ambientales
+                        Riesgos Ambientales<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -434,8 +432,9 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="fines_id" className="form-label">
-                        Multas
+                        Multas<span className="text-danger">*</span>
                     </label>
+                    <TooltipField text="Las multas serán fijadas de acuerdo a las condiciones especiales del bien inmueble dado en arrendamiento y se verificaran al momento de la elaboración de cada estudio previo, cuales aplican" />
                     <Field
                         type="text"
                         className="form-control"
@@ -450,7 +449,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className={`col-${(formik.values.public_service === 'Aforo' || formik.values.public_service === 'Recobro' || formik.values.public_service === 'Contador individualizado') ? 12 : 6}`}>
                     <label htmlFor="destination_realEstate_id" className="form-label">
-                        Destinación de bien Inmueble
+                        Destinación de bien Inmueble<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="textarea"
@@ -467,7 +466,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-12">
                     <label htmlFor="boundaries_id" className="form-label">
-                        Descripcion de linderos
+                        Descripcion de linderos<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="textarea"

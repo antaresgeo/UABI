@@ -110,7 +110,9 @@ const Policies = () => {
     };
 
     useEffect(() => {
-        dispatch(actions.getPolicies({ with: 'pagination' }));
+
+        dispatch(actions.clearPolicies());
+        // dispatch(actions.getPolicies({ with: 'pagination' }));
     }, []);
 
     const filter = async (_filters, _) => {

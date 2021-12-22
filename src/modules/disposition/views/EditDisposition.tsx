@@ -68,7 +68,7 @@ export const EditDisposition = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => {
-                        history.goBack();
+                        history.push("/disposition/list/");
                     }}
                 >
                     Atras
