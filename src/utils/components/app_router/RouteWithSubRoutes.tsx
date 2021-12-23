@@ -45,6 +45,7 @@ const Route: FC<RouteWithSubRoutesProps> = ({
         });
     }
     const has_access = get_can_access(can_access, _props);
+
     const custom_render = (props: any) => {
         const dr = compute_redirect(defaultRedirect, location);
         if (redirect) {

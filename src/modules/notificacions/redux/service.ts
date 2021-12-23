@@ -54,7 +54,8 @@ export const get_all_notifications = async (filters?) => {
             await notification_http.get(URI, {
                 params: {
                     ...filters,
-                    with: 'pagination',
+                    // with: 'pagination',
+                    last: 10
                 },
             });
         res.data.results = format_response(res?.data?.results);
