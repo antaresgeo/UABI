@@ -179,6 +179,35 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="guarantee" withCount max={200} />
                 </div>
             </div>
+            <div className="row">
+                <div className="col">
+                    <label htmlFor="secretary_name_id" className="form-label">
+                        Nombre Seretario de Suministros y Servicios
+                    </label>
+                    <Field
+                        type="text"
+                        id="secretary_name_id"
+                        name="secretary.name"
+                        className="form-control"
+                        disabled={false}
+                    />
+                    <ErrorMessage name="secretary.name" />
+                </div>
+                <div className="col">
+                    <label htmlFor="secretary_id_number" className="form-label">
+                        Número documento
+                    </label>
+                    <Field
+                        type="number"
+                        id="secretary_id_number"
+                        name="secretary.id_number"
+                        placeholder="Nombre completo"
+                        className="form-control"
+                        disabled={false}
+                    />
+                    <ErrorMessage name="secretary.id_number" />
+                </div>
+            </div>
         </>
     );
 };

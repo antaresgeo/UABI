@@ -4,6 +4,7 @@ import { Card } from '../../../../utils/ui';
 import { FormContract } from './FormContract';
 import { FormUser } from '../Precontractual/FormUser';
 import { FC } from 'react';
+import ViewPerson from './../Precontractual/ViewPerson';
 
 interface FormPros {
     innerRef?: any;
@@ -28,6 +29,10 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         object_contract: "",
         guarantee: "",
         type_contract: dispositionType,
+        secretary: {
+            name: "",
+            id_number: "",
+        },
         ...values_contract
     };
     const submit = (values, actions) => {
@@ -90,158 +95,9 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                     );
                 }}
             </Formik>
-            <div className="col-3-12">
-                <div className="content_box_table">
-                    <div
-                        className="title"
-                        style={{ borderBottom: '1px solid #e2e4e4', color: '#2F2D2D', fontSize: '14px' }}
-                    >
-                        {dispositionType === "Comodato" && "Informacióm del Comodatario"}
-                        {dispositionType === "arrendamiento" && "Informacióm del Arrendatario"}
-                    </div>
-                    <div className="table_content" style={{ margin: 7 }}>
-                        <div className="detailForm" style={{ width: '100%' }}>
-                            <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                                <div className="col-3">
-                                    <label htmlFor="">Tipo de persona</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Nombre</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Tipo de documento</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Número de documento</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                            </div>
-                            <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                                <div className="col-3">
-                                    <label htmlFor="">Genero</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Direccion</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Correo Electronico</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Teléfono</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="col-3-12">
-                <div className="content_box_table">
-                    <div
-                        className="title"
-                        style={{ borderBottom: '1px solid #e2e4e4', color: '#2F2D2D', fontSize: '14px' }}
-                    >
-                        {dispositionType === "Comodato" && "Informacióm del Comodante"}
-                        {dispositionType === "arrendamiento" && "Informacióm del Arrendador"}
-                    </div>
-                    <div className="table_content" style={{ margin: 7 }}>
-                        <div className="detailForm" style={{ width: '100%' }}>
-                            <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                                <div className="col-3">
-                                    <label htmlFor="">Tipo de persona</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Nombre</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Tipo de documento</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Número de documento</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                            </div>
-                            <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                                <div className="col-3">
-                                    <label htmlFor="">Genero</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Direccion</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Correo Electronico</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Teléfono</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="col-3-12">
-                <div className="content_box_table">
-                    <div
-                        className="title"
-                        style={{ borderBottom: '1px solid #e2e4e4', color: '#2F2D2D', fontSize: '14px' }}
-                    >
-                        Informacióm del Representante Legal
-                    </div>
-                    <div className="table_content" style={{ margin: 7 }}>
-                        <div className="detailForm" style={{ width: '100%' }}>
-                            <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                                <div className="col-3">
-                                    <label htmlFor="">Tipo de persona</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Nombre</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Tipo de documento</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Número de documento</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                            </div>
-                            <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                                <div className="col-3">
-                                    <label htmlFor="">Genero</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Direccion</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Correo Electronico</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                                <div className="col-3">
-                                    <label htmlFor="">Teléfono</label>
-                                    <div className="my-3">-</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ViewPerson title={`Información del ${dispositionType === "arrendamiento" ? "Arrendador" : dispositionType === "Comodato" ? "Comodante" : ""  }`}/> {/*encargado */}
+            <ViewPerson title={`Información del ${dispositionType === "arrendamiento" ? "Arrendatario" : dispositionType === "Comodato" ? "Comodatario" : ""  }`}/>{/*solicitante */}
+            <ViewPerson title='Informacion del Representante Legal'/>
 
         </>
     );

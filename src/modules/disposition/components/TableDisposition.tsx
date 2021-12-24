@@ -74,15 +74,12 @@ export const TableDiszposition: FC<DispositionListProps> = ({ filters /*, init*/
             children: [
                 {
                     title: 'Ver',
-                    dataIndex: ['id','sap_id'],
+                    dataIndex: 'id',
                     align: 'center' as 'center',
-                    render: (id,sap_id) => {
+                    render: (id) => {
                         return (
                             <Link
-                                to={{
-                                    pathname:`/disposition/${id}`,
-                                    state: { sap_id },
-                                }}
+                                to={`/disposition/${id}`}
                                 name=""
                                 avatar={false}
                                 icon={<i className="fa fa-eye" aria-hidden="true" />}

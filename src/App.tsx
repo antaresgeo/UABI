@@ -19,7 +19,7 @@ function App() {
         permits: user?.permits?.map((a) => a.name) || [],
         roles: user?.roles?.map((a) => a.name) || [],
     };
-    const show = token ? !!(token && user) : true;
+    const show = token ? !!(token /*&& !!user*/) : true;
 
     useEffect(() => {
         if (token && !user) {
@@ -29,8 +29,7 @@ function App() {
 
     return (
         <>
-
-            <Router routes={routes} template={Template} user={aux_user} show={show} />
+            <Router routes={routes} template={Template} user={aux_user} show={show} test />
             <PasswordChangeModal
                 update_password={async (password) => {
                     await dispatch(actions.update_password(password));

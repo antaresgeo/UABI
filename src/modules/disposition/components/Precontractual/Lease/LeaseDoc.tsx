@@ -175,7 +175,7 @@ const LeaseDoc = () => {
                                         {values?.public_service === "Recobro" && ` ${values?.recovery_value}`}
                                         {values?.public_service === "Aforo" && ` ${values?.value_aforo}`}
                                         {values?.public_service === "Contador individualizado" && ` ${values?.counter_value}`}
-                                        {values?.public_service === "Prepago" && "--"}
+                                        {values?.public_service === "Prepago" && " 0"}
                                     </p></td>
                                     <td className="tr5_lease td24_lease"><p className="p8_lease ft10_lease">${values.administration_value}</p></td>
                                     <td className="tr5_lease td16_lease"><p className="p8_lease ft10_lease">${values.subtotal}</p></td>
@@ -235,7 +235,7 @@ const LeaseDoc = () => {
                                 <span className="ft3_lease">{` ${realEstate?.address?.cbmls?.sap.cb}${realEstate?.address?.cbmls?.sap.ml}`}</span>, activo fijo
                                 <span className="ft3_lease">{` ${realEstate?.sap_id}`}</span>, ubicado en la dirección
                                 <span className="ft3_lease">{` ${realEstate?.address?.address}`}</span>, cuyo tipo es
-                                <span className="ft3_lease">{` ${values?.business_type}`}</span>.
+                                <span className="ft3_lease"> {values?.business_type?.select === "otro" ? values?.business_type?.input : values?.business_type?.select}. </span>
                                 Según la factibilidad del bien, en cuanto lo técnico, físico, estado de
                                 habitabilidad y disponibilidad, se puede determinar que cumple
                                 requisitos mínimos para ser destinado al servicio de la comunidad,
@@ -297,7 +297,7 @@ const LeaseDoc = () => {
                                 <span className="ft3_lease">{` ${realEstate?.address?.cbmls?.sap.cb}${realEstate?.address?.cbmls?.sap.ml}`}</span>, activo fijo
                                 <span className="ft3_lease">{` ${realEstate?.sap_id}`}</span>, ubicado en la dirección
                                 <span className="ft3_lease">{` ${realEstate?.address?.address}`}</span>, cuyo tipo es
-                                <span className="ft3_lease">{` ${values?.business_type}`}</span>, escritura N°
+                                <span className="ft3_lease"> {values?.business_type?.select === "otro" ? values?.business_type?.input : values?.business_type?.select}</span>, escritura N°
                                 <span className="ft3_lease">
                                     {realEstate?.acquisitions?.map(ad => {
                                         let i = ad.acquisition_date.split("-")

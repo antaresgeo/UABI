@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useHistory } from 'react-router-dom';
 
 interface DispositionFormPros {
     //dispositionType: string;
@@ -6,6 +7,7 @@ interface DispositionFormPros {
 }
 
 const Detail_disposition: FC<DispositionFormPros> = () => {
+    const history = useHistory();
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -79,7 +81,27 @@ const Detail_disposition: FC<DispositionFormPros> = () => {
                                 <label htmlFor="">Dirección</label>
                                 <div className="my-3">-</div>
                             </div>
-                            <div className="col-6 movimiento">
+                            <div className="col-3">
+                                <label htmlFor="">Etapa Precontractual</label>
+                                <div className=" my-3">
+                                    <button type="button" className="btn btn-outline-primary  btn-sm"
+                                            onClick={() => history.push('/dispositions/precontractual/view')}
+                                    >
+                                        ver estudio Previo
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="">Contrato Vigente</label>
+                                <div className=" my-3">
+                                    <button type="button" className="btn btn-outline-primary  btn-sm">
+                                        ver Contrato
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
+                        <div className="col-12 movimiento">
                                 <label htmlFor="">Descripción del inmueble</label>
                                 <div className="my-3" style={{ height: '60px', overflowX: 'auto' }}>
                                     <div style={{ width: '1000px' }}>

@@ -18,100 +18,130 @@ const ComodatoDocContract = () => {
     const { values_contract, realEstate, dispositionType } = location.state;
     console.log(values_contract, realEstate, dispositionType);
     let date = values_contract?.subscription_date.split("-")
-    const data_prev = {
-        action_field: "campo de accion",
-        activities: "actividades",
-        administration_value: 0,
-        benefited_sector: "sector",
-        boundaries: "descripcion de linderos",
-        business_type: "negocio",
-        capacity_specification: "",
-        cleaning_value: 0,
-        commercial_appraisal: 7895,
-        companyname_applicant: "empresa",
-        competitive_process: "No aplica",
-        competitive_process_value: "",
-        conservation_value: 0,
-        contract_period: 15,
-        dependence: "dependencia",
-        dependence_leader: "dependencia",
+    const comodato = {
+        //info general
+        business_type: "tipo negocio",
+        contract_period: 12,
+        environmental_risk: "riesgos",
+        registration_date: "2021-12-15",
         destination_realEstate: "destinacion",
-        economic_exploitation: "no",
-        email_applicant: "empresa@correo.com",
-        environmental_risk: "riesgos ambientales",
-        firstname_representative: "karen",
-        gender_representative: "f",
-        horizontal_property: "no",
-        loan_typology: "entidades sin animo de lucro",
-        loan_value: "",
-        location: { commune: '', neighborhood: '' },
-        location_applicant: {address: 'CL 1 #2 - 3', id: '109'},
         lockable_base: 10,
-        name_Leader: "Mayron Nova",
-        name_approved: "daniela mendez",
-        name_elaborated: "paula solano",
-        name_revised: "laura montañez",
-        name_secretary: "secretario",
-        network_value: 0,
-        number_doc_applicant: 86565584,
-        number_doc_representative: 1007788713,
-        obligations: [],
-        operative_degree_occurrence: "",
-        operative_description: "",
-        operative_impact_degree: "",
-        operative_mitigation_mechanism: "",
-        operative_responsable: "",
-        patrimonial_value: 369581,
+        prediation_date: "2021-12-30",
+        boundaries: "descripcion de linderos",
+
+        //info comodato
+        action_field: "campo",
+        activities: "actividades",
+        economic_exploitation: "si",
+        horizontal_property: "si",
+        loan_typology: "entidades sin animo de lucro",
         peacesafe: "paz y salvo",
-        population: "poblacion",
-        post_approved: "cargo 4",
-        post_elaborated: "cargo 2",
-        post_leader: "cargo1",
-        post_revised: "cargo 3",
-        post_secretary: "cargo",
-        prediation_date: "2021-12-21",
-        prohibitions: [],
-        public_service: "no",
-        registration_date: "2021-12-14",
-        regulatory_degree_occurrence: "",
-        regulatory_description: "",
-        regulatory_impact_degree: "",
-        regulatory_mitigation_mechanism: "",
-        regulatory_responsable: "",
         resolution: "no",
-        secondname_representative: "Daiana",
-        secondsurname_representative: "Zambrano",
-        secretary_doc_number: 88551236,
-        secretary_leader: "secretaria",
         social_event: "eventos",
-        surname_representative: "Nova",
-        surveillance_value: 0,
-        telephone_applicant: 8519328,
-        type_document_applicant: "NIT",
-        type_document_representative: "Cedula de Ciudadania",
-        type_economic_exploitation: "",
-        type_society_applicant: "Persona Juridica",
-        type_society_representative: "",
-        value_domiciliary_public: 0,
-        value_economic_obligations: 0,
-        value_locative_repairs: 0,
-        value_public_service: "",
-        value_repairs_damages: 0,
+        public_service: "no",
+        loan_value: "", //valor comodato
+        /* si public_service: si entonces
+            capacity_specification: "",
+            value_public_service: 0,
+        */
+        competitive_process: "",
+        competitive_process_value: "",
+        dependence: "contribuye",
+        obligations: [],
+        prohibitions: [],
+
+        commercial_appraisal: 145000,
+
+        //solicitante
+        applicant: {
+            type_society: 'Persona Juridica',
+            id_type: 4,
+            id_number: 15565,
+            company_name: 'empresa',
+            email: 'correo@correo.com',
+            phone_number: 6545
+        },
+        location_applicant: { address: 'CQ 1 #5 - 5', id: '121' },
+        //representante
+        representative: { type_society: 'Persona Natural' },
+        detailsRepresentative: {
+            id_type: '',
+            id_number: 1001456259,
+            names: { firstName: 'Yang', lastName: '' },
+            surnames: { firstSurname: 'Aparicio', lastSurname: 'Abadia' },
+            email: '',
+            phone_number: 564654,
+            phone_number_ext: 14,
+        },
+
+        //obligaciones
+        network_value: 100,
+        administration_value: 200,
+        conservation_value: 300,
+        cleaning_value: 400,
+        surveillance_value: 500,
+        value_domiciliary_public: 600,
+        value_repairs_damages: 700,
+        value_locative_repairs: 800,
+        value_economic_obligations: 900,
+
+        //info tabla final
+        approved: { name: 'persona 3', post: 'cargo 3' },
+        elaborated: { name: 'persona 1', post: 'CARGO 1' },
+        revised: { name: 'persona 2', post: 'Cargo 2' },
+
+        //beneficiario
+        benefited_sector: "sector",
+        population: "poblacion",
+        location_beneficiary: { commune: '', neighborhood: '' },
+
+        //lider a cargo
+        leader: {
+            type_society: 'Persona Natural',
+            post: 'cargo',
+            dependence: 'secretario',
+            secretary: 'secretaria'
+        },
+        detailsLeader: {
+            id_type: '',
+            id_number: 120255,
+            names: { firstName: 'Juan', lastName: 'Pablo' },
+            surnames: { firstSurname: 'Hernandez', lastSurname: 'Gil' },
+            email: '',
+            phone_number: 564654,
+            phone_number_ext: 14,
+        },
+        location_leader: { address: 'cra 4 # 2-66', id: '' },
+
+        //analisis de riesgo
+        regulatory_risk: {
+            degree_occurrence: '',
+            impact_degree: '',
+            responsable: '',
+            mitigation_mechanism: ''
+        },
+        operational_risk: {
+            degree_occurrence: '',
+            impact_degree: '',
+            responsable: '',
+            mitigation_mechanism: ''
+        },
+
     }
     let contract_value = 0;
-    if (data_prev?.resolution === "si") {
+    if (comodato?.resolution === "si") {
         contract_value =
-            (data_prev?.value_economic_obligations +
-                data_prev?.network_value +
-                data_prev?.administration_value +
-                data_prev?.conservation_value +
-                data_prev?.cleaning_value +
-                data_prev?.surveillance_value +
-                data_prev?.value_domiciliary_public +
-                data_prev?.value_repairs_damages +
-                data_prev?.value_locative_repairs)
+            (comodato?.value_economic_obligations +
+                comodato?.network_value +
+                comodato?.administration_value +
+                comodato?.conservation_value +
+                comodato?.cleaning_value +
+                comodato?.surveillance_value +
+                comodato?.value_domiciliary_public +
+                comodato?.value_repairs_damages +
+                comodato?.value_locative_repairs)
     } else {
-        contract_value = data_prev?.commercial_appraisal;
+        contract_value = comodato?.commercial_appraisal;
     }
     return (
         <div className="h-100 d-flex flex-column">
@@ -153,7 +183,7 @@ const ComodatoDocContract = () => {
                                     </td>
                                     <td className="tr1_ContratoComodato td2_ContratoComodato">
                                         <p className="p7_ContratoComodato ft6_ContratoComodato">
-                                            Municipio de Medellín - {data_prev.name_secretary}
+                                            Municipio de Medellín - {realEstate.dependency}
                                         </p>
                                     </td>
                                 </tr>
@@ -175,7 +205,7 @@ const ComodatoDocContract = () => {
                                     </td>
                                     <td className="tr1_ContratoComodato td2_ContratoComodato">
                                         <p className="p7_ContratoComodato ft6_ContratoComodato">
-                                            {data_prev.companyname_applicant}
+                                            {comodato.applicant.company_name}
                                         </p>
                                     </td>
                                 </tr>
@@ -186,7 +216,7 @@ const ComodatoDocContract = () => {
                                     </td>
                                     <td className="tr1_ContratoComodato td2_ContratoComodato">
                                         <p className="p7_ContratoComodato ft6_ContratoComodato">
-                                            {data_prev.number_doc_applicant}
+                                            {comodato.applicant.id_number}
                                         </p>
                                     </td>
                                 </tr>
@@ -197,7 +227,7 @@ const ComodatoDocContract = () => {
                                     </td>
                                     <td className="tr1_ContratoComodato td2_ContratoComodato">
                                         <p className="p7_ContratoComodato ft6_ContratoComodato">
-                                            {`${data_prev.firstname_representative} ${data_prev.secondname_representative} ${data_prev.surname_representative} ${data_prev.secondsurname_representative}`}
+                                            {`${comodato.detailsRepresentative.names.firstName} ${comodato.detailsRepresentative.names.lastName} ${comodato.detailsRepresentative.surnames.firstSurname} ${comodato.detailsRepresentative.surnames.lastSurname}`}
                                         </p>
                                     </td>
                                 </tr>
@@ -208,7 +238,7 @@ const ComodatoDocContract = () => {
                                     </td>
                                     <td className="tr1_ContratoComodato td2_ContratoComodato">
                                         <p className="p7_ContratoComodato ft6_ContratoComodato">
-                                            {data_prev.number_doc_representative}
+                                            {comodato.detailsRepresentative.id_number}
                                         </p>
                                     </td>
                                 </tr>
@@ -219,7 +249,7 @@ const ComodatoDocContract = () => {
                                     </td>
                                     <td className="tr1_ContratoComodato td2_ContratoComodato">
                                         <p className="p7_ContratoComodato ft6_ContratoComodato">
-                                            ({data_prev.contract_period})  {writtenNumber(data_prev.contract_period, { lang: 'es' })} meses
+                                            ({comodato.contract_period})  {writtenNumber(comodato.contract_period, { lang: 'es' })} meses
                                         </p>
                                     </td>
                                 </tr>
@@ -263,7 +293,9 @@ const ComodatoDocContract = () => {
                                     </td>
                                     <td className="tr1_ContratoComodato td2_ContratoComodato">
                                         <p className="p7_ContratoComodato ft6_ContratoComodato">
-                                            {/* {realEstate.address.cbmls.uabi} */}
+                                            {realEstate?.acquisitions?.map(ad => {
+                                                return ` ${ad.act_value} / ${moment(ad.acquisition_date).format('DD-MM-YYYY')} /  Notaría ${ad.entity_number} `
+                                            })}
                                         </p>
                                     </td>
                                 </tr>
@@ -285,7 +317,7 @@ const ComodatoDocContract = () => {
                                     </td>
                                     <td className="tr1_ContratoComodato td2_ContratoComodato">
                                         <p className="p7_ContratoComodato ft6_ContratoComodato">
-                                            {data_prev.business_type}
+                                            {comodato.business_type}
                                         </p>
                                     </td>
                                 </tr>
@@ -294,8 +326,8 @@ const ComodatoDocContract = () => {
                             </table>
                             <p className="p9_ContratoComodato ft14_ContratoComodato" >
                                 Entre los suscritos a saber,
-                                <span className="ft13_ContratoComodato"> {data_prev.name_secretary} </span>identificado con cédula
-                                de ciudadanía {data_prev.secretary_doc_number}, en su
+                                <span className="ft13_ContratoComodato"> {values_contract.secretary.name} </span>identificado con cédula
+                                de ciudadanía {values_contract.secretary.id_number}, en su
                                 calidad de Secretario de Suministros y Servicios del Municipio
                                 de Medellín, nombrado mediante Decreto Municipal N° {`${values_contract.decree_number} del ${moment(values_contract.decree_date).format('DD/MM/YYYY')} `}
                                 mediante Acta N°. {`${values_contract.act_number} del ${moment(values_contract.minutes_date).format('DD/MM/YYYY')}, `}
@@ -307,11 +339,11 @@ const ComodatoDocContract = () => {
                                 y de acuerdo a las disposiciones pertinentes del Código Civil,
                                 de una parte, quien en adelante se denominará el
                                 <span className='ft13_ContratoComodato'> COMODANTE y
-                                    {` ${data_prev.firstname_representative} ${data_prev.secondname_representative} ${data_prev.surname_representative} ${data_prev.secondsurname_representative}`}
+                                    {` ${comodato.detailsRepresentative.names.firstName} ${comodato.detailsRepresentative.names.lastName} ${comodato.detailsRepresentative.surnames.firstSurname} ${comodato.detailsRepresentative.surnames.lastSurname}`}
                                 </span>,
-                                identificado con cédula de ciudadanía N° {data_prev.number_doc_representative} , quien actua en nombre
-                                y representacion legal de la <span className='ft13_ContratoComodato'>{data_prev.companyname_applicant} </span>
-                                con NIT. {data_prev.number_doc_applicant},
+                                identificado con cédula de ciudadanía N° {comodato.detailsRepresentative.id_number} , quien actua en nombre
+                                y representacion legal de la <span className='ft13_ContratoComodato'>{comodato.applicant.company_name} </span>
+                                con NIT. {comodato.applicant.id_number},
                                 de la otra parte, quien en adelante se denominará el
                                 <span className='ft13_ContratoComodato'> COMODATARIO, </span>
                                 se ha convenido celebrar el presente contrato de comodato,
@@ -379,11 +411,11 @@ const ComodatoDocContract = () => {
                                 <span className='ft18_ContratoComodato'> PRIMERA: OBJETO DEL CONTRATO. El COMODANTE </span>
                                 se compromete a entregar al <span className="ft13_ContratoComodato">COMODATARIO</span>, el inmueble identificado
                                 en la parte inicial del presente contrato. <span className="ft13_ContratoComodato">SEGUNDA: ÁREAS Y LINDEROS. </span>Las áreas y
-                                los linderos son los siguientes: {data_prev.boundaries} con base al informe técnico de Prediación con fecha de
-                                {` ${moment(data_prev.prediation_date).format('DD/MM/YYYY')}`}
+                                los linderos son los siguientes: {comodato.boundaries} con base al informe técnico de Prediación con fecha de
+                                {` ${moment(comodato.prediation_date).format('DD/MM/YYYY')}`}
                                 <span className="ft13_ContratoComodato">. TERCERA: DESTINACIÓN. </span>En el
                                 presente contrato de comodato debe destinarse el inmueble para:
-                                {` ${data_prev.destination_realEstate}. `}
+                                {` ${comodato.destination_realEstate}. `}
                                 <span className='ft13_ContratoComodato'>CUARTA: PROHIBICIONES DEL COMODATARIO. </span>
                                 Le queda expresamente prohibido al
                                 <span className="ft13_ContratoComodato"> COMODATARIO </span>realizar en el inmueble
@@ -400,17 +432,17 @@ const ComodatoDocContract = () => {
                                 almacenamiento de productos ilegales, hurtados, entre otros que
                                 no estén estipulados expresamente dentro del objeto y alcance
                                 del presente contrato de comodato.
-                                {data_prev.prohibitions.length > 0 &&
+                                {comodato.prohibitions.length > 0 &&
                                     <>
                                         <span className="ft13_ContratoComodato"> PARÁGRAFO SEGUNDO: </span>
-                                        {data_prev?.prohibitions.map((p) => ` ${p.id}) ${p.prohibition}.`)}
+                                        {comodato?.prohibitions.map((p) => ` ${p.id}) ${p.prohibition}.`)}
                                     </>
 
                                 }
                                 <span className="ft13_ContratoComodato"> QUINTA: TÉRMINO DE DURACIÓN. </span>El
                                 término de duración del presente contrato de comodato será
                                 <span className="ft13_ContratoComodato">
-                                    {` (${data_prev.contract_period})  ${writtenNumber(data_prev.contract_period, { lang: 'es' })} meses, `}
+                                    {` (${comodato.contract_period})  ${writtenNumber(comodato.contract_period, { lang: 'es' })} meses, `}
                                 </span>
                                 contado a partir de la suscripción del acta de inicio y
                                 entrega material del inmueble, de conformidad con lo establecido
@@ -506,7 +538,7 @@ const ComodatoDocContract = () => {
                                 destinación del inmueble.
                                 <span className="ft18_ContratoComodato"> OCTAVA: </span>
                                 <span className="ft18_ContratoComodato">
-                                    {data_prev.economic_exploitation === "si" ?
+                                    {comodato.economic_exploitation === "si" ?
                                         <>
                                             SI AUTORIZACIÓN DE EXPLOTACIÓN ECONÓMICA: EL
                                             COMODATARIO{" "}
@@ -518,7 +550,7 @@ const ComodatoDocContract = () => {
                                         </>
                                     }
                                 </span>
-                                {data_prev.economic_exploitation === "si" ?
+                                {comodato.economic_exploitation === "si" ?
                                     <>
                                         tendrá la posibilidad de constituir o crear a su cuenta y riesgo
                                         unidades productivas dentro del inmueble, tales como cafeterías,
@@ -708,7 +740,7 @@ const ComodatoDocContract = () => {
                                 inspecciones físicas de rutina del bien o efectos de la
                                 ejecución de supervisión del presente contrato de comodato. 9)
                                 Deberá pagar y aportar los recibos de paz y salvos de Servicios
-                                Públicos cancelados, {data_prev.peacesafe} de tal forma que se pueda
+                                Públicos cancelados, {comodato.peacesafe} de tal forma que se pueda
                                 verificar el pago de todos los servicios públicos contratados y
                                 trabajos realizados por cuenta del
                                 <span className="ft23_ContratoComodato"> COMODATARIO</span>, y ante los requerimientos
@@ -734,8 +766,8 @@ const ComodatoDocContract = () => {
                                 contrato como garantías, impuestos y publicación cuando a ello
                                 haya lugar. 16) Participar en la terminación y liquidación del
                                 contrato así como suscribir las actas correspondientes.
-                                {data_prev.obligations.length > 0 &&
-                                    data_prev?.prohibitions.map((p) => ` ${p.id}) ${p.prohibition}.`)
+                                {comodato.obligations.length > 0 &&
+                                    comodato?.prohibitions.map((p) => ` ${p.id}) ${p.prohibition}.`)
                                 }
                                 <span className="ft23_ContratoComodato"> DÉCIMA SEGUNDA: RELACIÓN CON TERCEROS. </span>
                                 El<span className="ft23_ContratoComodato"> MUNICIPIO DE MEDELLÍN </span>no adquiere ni
@@ -837,9 +869,9 @@ const ComodatoDocContract = () => {
                                 de garantizar las obligaciones que en razón de este contrato
                                 asume el
                                 <span className="ft13_ContratoComodato"> COMODATARIO, </span>deberá otorgar una
-                                garantía correspondiente al {writtenNumber(data_prev.lockable_base, { lang: 'es' })} (%) por ciento de
+                                garantía correspondiente al {writtenNumber(comodato.lockable_base, { lang: 'es' })} (%) por ciento de
                                 acuerdo con la base asegurable obtenida a partir de{" "}
-                                {data_prev.resolution === "si" ?
+                                {comodato.resolution === "si" ?
                                     <>
                                         la sumatoria de la cuantificación de las obligaciones
                                         contractuales y extracontractuales del comodatario la cual asciende a
@@ -985,7 +1017,7 @@ const ComodatoDocContract = () => {
                                 El presente contrato de comodato se
                                 fundamenta en su aplicación bajo el Código Civil Colombiano, el
                                 artículo 355 de la Constitución Política de Colombia, Decreto 092 de 2017
-                                {data_prev.loan_typology === "las juntas de acción comunal" &&
+                                {comodato.loan_typology === "las juntas de acción comunal" &&
                                     "la Ley 743 de 2002 modificada por la ley 1989 de 2019"
                                 }, Ley 9 de 1989 en la modalidad de contratación especial, en la tipología de
                                 contrato de comodato con entidades sin ánimo de lucro (ESAL),
@@ -1156,35 +1188,35 @@ const ComodatoDocContract = () => {
                                 <span className="ft13_ContratoComodato">VIGÉSIMA SEXTA: NOTIFICACIONES</span>: Las
                                 notificaciones que cualquiera de las partes deseare hacer a la
                                 otra, deben formularse por escrito a las siguientes direcciones:
-                                <span className="ft13_ContratoComodato"> COMODANTE: (</span>digite la dirección de
-                                correspondencia del comodante
+                                <span className="ft13_ContratoComodato"> COMODANTE: </span>
+                                {comodato.location_leader.address}
                                 <span className="ft13_ContratoComodato"> COMODATARIO: </span>
-                                {`Dirección: ${data_prev.location_applicant.address}
-                                 Correo electrónico: ${data_prev.email_applicant}
-                                Teléfono: ${data_prev.telephone_applicant}`}
+                                {`Dirección: ${comodato.location_applicant.address}
+                                 Correo electrónico: ${comodato.applicant.email}
+                                Teléfono: ${comodato.applicant.phone_number}`}
                             </p>
                             <p className="p8_ContratoComodato ft6_ContratoComodato">
                                 Para constancia se firma en la ciudad de Medellín, en la fecha {`${date[2]} de ${months(date[1])} de ${date[0]}`}
                             </p>
                             <p className="p32_ContratoComodato ft4_ContratoComodato">
-                                {data_prev.name_secretary}
+                                {values_contract.secretary.name}
                             </p>
                             <p className="p25_ContratoComodato ft6_ContratoComodato">Secretario de Despacho</p>
                             <p className="p3_ContratoComodato ft6_ContratoComodato">Secretaría de Suministros y Servicios</p>
                             <p className="p3_ContratoComodato ft6_ContratoComodato">Comodante</p>
-                            <p className="p33_ContratoComodato ft4_ContratoComodato">{data_prev.companyname_applicant}</p>
+                            <p className="p33_ContratoComodato ft4_ContratoComodato">{comodato.applicant.company_name}</p>
                             <p className="p3_ContratoComodato ft6_ContratoComodato">
-                                NIT {data_prev.number_doc_applicant}
+                                NIT {comodato.applicant.id_number}
 
                             </p>
                             <p className="p31_ContratoComodato ft6_ContratoComodato">
-                                Teléfono: {data_prev.telephone_applicant}
+                                Teléfono: {comodato.applicant.phone_number}
                             </p>
                             <p className="p31_ContratoComodato ft6_ContratoComodato">
-                                Dirección: {data_prev.location_applicant.address}
+                                Dirección: {comodato.location_applicant.address}
                             </p>
                             <p className="p34_ContratoComodato ft6_ContratoComodato">
-                                Correo electrónico: {data_prev.email_applicant}
+                                Correo electrónico: {comodato.applicant.email}
                             </p>
                             <p className="p34_ContratoComodato ft6_ContratoComodato">
                                 Comodatario
@@ -1203,24 +1235,24 @@ const ComodatoDocContract = () => {
                                 </tr>
                                 <tr>
                                     <td className="tr10_ContratoComodato td5_ContratoComodato">
-                                        <p className="p35_ContratoComodato ft6_ContratoComodato">{data_prev.name_elaborated}</p>
+                                        <p className="p35_ContratoComodato ft6_ContratoComodato">{comodato.elaborated.name}</p>
                                     </td>
                                     <td className="tr10_ContratoComodato td6_ContratoComodato">
-                                        <p className="p36_ContratoComodato ft6_ContratoComodato">{data_prev.name_revised}</p>
+                                        <p className="p36_ContratoComodato ft6_ContratoComodato">{comodato.revised.name}</p>
                                     </td>
                                     <td className="tr10_ContratoComodato td6_ContratoComodato">
-                                        <p className="p36_ContratoComodato ft6_ContratoComodato">{data_prev.name_approved}</p>
+                                        <p className="p36_ContratoComodato ft6_ContratoComodato">{comodato.approved.name}</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="tr14_ContratoComodato td5_ContratoComodato">
-                                        <p className="p35_ContratoComodato ft6_ContratoComodato">{data_prev.post_elaborated}</p>
+                                        <p className="p35_ContratoComodato ft6_ContratoComodato">{comodato.elaborated.post}</p>
                                     </td>
                                     <td className="tr14_ContratoComodato td6_ContratoComodato">
-                                        <p className="p36_ContratoComodato ft6_ContratoComodato">{data_prev.post_revised}</p>
+                                        <p className="p36_ContratoComodato ft6_ContratoComodato">{comodato.revised.post}</p>
                                     </td>
                                     <td className="tr14_ContratoComodato td6_ContratoComodato">
-                                        <p className="p36_ContratoComodato ft6_ContratoComodato">{data_prev.post_approved}</p>
+                                        <p className="p36_ContratoComodato ft6_ContratoComodato">{comodato.approved.post}</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1259,7 +1291,7 @@ const ComodatoDocContract = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => {
-                        history.push({ pathname: "/disposition/create/", state: { dispositionType, stage:"contractual", realEstate, values_contract } })
+                        history.push({ pathname: "/disposition/create/", state: { dispositionType, stage: "contractual", realEstate, values_contract } })
                     }}
                 >
                     Atras
@@ -1268,7 +1300,7 @@ const ComodatoDocContract = () => {
                 <button
                     type="button"
                     className="btn btn-outline-primary"
-                    onClick={() => {}}
+                    onClick={() => { }}
                 >
                     guardar y descargar
                 </button>
