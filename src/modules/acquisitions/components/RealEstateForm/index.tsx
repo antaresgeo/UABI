@@ -440,7 +440,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                     <RealEstateList project_id={projects_id} init={false} />
                                                 </Card>
                                             )}
-                                            {(inventory && realEstate?.policy_id) !== null &&
+                                            {(inventory && realEstate?.policy_id !== null) &&
                                                 <PolizaViewForm policy_id={realEstate?.policy_id} />
                                             }
                                             {type === 'create' && globe !== true && (

@@ -104,6 +104,21 @@ export const get_all_documents = async (): Promise<Document[] | string> => {
     }
 };
 
+export const get_all_documents_by_bi = async (re_id): Promise<Document[] | string> => {
+    try {
+        const URI = `/docs/`;
+        const res: AxiosResponse<GetAllDocumentsResponse> =
+            await documents_http.get(URI, {
+                params: {
+                    re_id,
+                },
+            });
+        return res.data.results;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
+
 export const delete_document = async (id) => {
     try {
         const URI = `/docs/${id}/`;

@@ -211,7 +211,7 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                                         </Field>
                                         <ErrorMessage name="id_type" />
                                     </div>
-                                    <div className="col-6">
+                                    <div className="col-3">
                                         <label htmlFor="username" className="form-label">
                                             Número de documento
                                         </label>
@@ -226,9 +226,7 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                                         />
                                         <ErrorMessage name="id_number" />
                                     </div>
-                                </div>
-                                <div className="row">
-                                <div className="col-3">
+                                    <div className="col-3">
                                         <label htmlFor="username" className="form-label">
                                             Genero
                                         </label>
@@ -250,20 +248,38 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                                         </Field>
                                         <ErrorMessage name="gender" />
                                     </div>
-                                    <div className="col-3">
-                                        <label htmlFor="username" className="form-label">
-                                            Teléfono
-                                        </label>
-                                        <Field
-                                            type="number"
-                                            className="form-control"
-                                            id="phone_number"
-                                            name="phone_number"
-                                            placeholder="Teléfono"
-                                            autoComplete="off"
-                                            disabled={disabled}
-                                        />
-                                        <ErrorMessage name="phone_number" />
+                                </div>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <div className="row">
+                                            <label htmlFor="username" className="form-label">
+                                                Teléfono
+                                            </label>
+                                            <div className="col-8">
+                                                <Field
+                                                    type="number"
+                                                    className="form-control"
+                                                    id="phone_number"
+                                                    name="phone_number"
+                                                    placeholder="Teléfono"
+                                                    autoComplete="off"
+                                                    disabled={disabled}
+                                                />
+                                                <ErrorMessage name="phone_number" />
+                                            </div>
+                                            <div className="col-4">
+                                                <Field
+                                                    type="number"
+                                                    className="form-control"
+                                                    id="phone_number_ext"
+                                                    name="phone_number_ext"
+                                                    placeholder="Ext"
+                                                    autoComplete="off"
+                                                    disabled={disabled}
+                                                />
+                                                <ErrorMessage name="phone_number_ext" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="col-6">
                                         <label htmlFor="username" className="form-label">

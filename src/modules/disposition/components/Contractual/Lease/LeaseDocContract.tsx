@@ -5,6 +5,7 @@ import '../../../../../utils/assets/styles/contract_lease.css';
 import { useLocation, useHistory } from 'react-router-dom';
 import writtenNumber from 'written-number';
 import moment from 'moment';
+import months from './../../../../../utils/ui/months';
 
 interface IParams {
     values_contract: any;
@@ -19,7 +20,7 @@ const LeaseDocContract = () => {
     const arrendamiento = {
         //info general
         boundaries: "descripcion de linderos",
-        business_type: "Tipo de negocio",
+        business_type: { select: 'otro', input: 'casino' },
         contract_period: 12,
         destination_realEstate: "destinacion del bien inmueble",
         environmental_risk: "riesgos",
@@ -47,6 +48,7 @@ const LeaseDocContract = () => {
             names: { firstName: 'Bryan', lastName: 'Manuel' },
             surnames: { firstSurname: 'Cendales', lastSurname: 'Rodriguez' },
             email: 'Bryan@correo.com',
+            phone_number: "1455499"
         },
 
         applicant: {
@@ -106,7 +108,7 @@ const LeaseDocContract = () => {
     return (
         <div className="h-100 d-flex flex-column">
             <div className="comodato container-fluid">
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_1_contractLease">
                         <div id="p1dimg1">
                             <img
@@ -138,7 +140,7 @@ const LeaseDocContract = () => {
                             <p className="p5_contractLease ft7_contractLease">
                                 CONTRATO DE ARRENDAMIENTO N°{values_contract?.contract_number}
                             </p>
-                            <table cellPadding="0" cellSpacing="0" className="t0">
+                            <table cellPadding="0" cellSpacing="0" className="t0_contractLease">
                                 <tr>
                                     <td className="tr1_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">EL ARRENDADOR:</p></td>
                                     <td className="tr1_contractLease td1_contractLease">
@@ -219,10 +221,16 @@ const LeaseDocContract = () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">ESCRITURA /FECHA/NOTARIA</p></td>
+                                    <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">
+                                        ESCRITURA /FECHA/NOTARIA
+                                    </p>
+                                    </td>
                                     <td className="tr3_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease" style={{ width: '365px' }}>
-                                            Digite Nro. escritura/fecha escritura/notaría donde se hizo, sepárelos con /
+                                            {realEstate?.acquisitions?.map(ad => {
+                                                let i = ad.acquisition_date.split("-")
+                                                return ` ${ad.act_value} / ${moment(ad.acquisition_date).format('DD-MM-YYYY')} /  Notaría ${ad.entity_number} `
+                                            })}
                                         </p>
                                     </td>
                                 </tr>
@@ -254,7 +262,7 @@ const LeaseDocContract = () => {
                                     <td className="tr6_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">TIPO DE INMUEBLE:</p></td>
                                     <td className="tr6_contractLease td1_contractLease">
                                         <p className="p6_contractLease ft9_contractLease">
-                                            {arrendamiento.business_type}
+                                            {arrendamiento.business_type.select === "otro" ? arrendamiento.business_type.input : arrendamiento.business_type.select}
                                         </p>
                                     </td>
                                 </tr>
@@ -287,20 +295,21 @@ const LeaseDocContract = () => {
                                 </tr>
                             </table>
                             <p className="p0_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ___________________________________________________________________________________________
                             </p>
                             <p className="p9_contractLease ft6_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
-                                <a href="http://www.medellin.gov.co"
-                                ><span className="ft13_contractLease">www.medellin.gov.co</span></a
-                                >
-                                Medellín - Colombia
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
+
                             </p>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
+                            </p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_2_contractLease">
                         <div id="p2dimg1">
                             <img
@@ -329,7 +338,7 @@ const LeaseDocContract = () => {
                                 <span className="ft5_contractLease">Contrato de Arrendamiento No. </span>(DIGITE SÓLO
                                 NÚMERO DE CONTRATO – SIN FECHA)
                             </p>
-                            <table cellPadding="0" cellSpacing="0" className="t1">
+                            <table cellPadding="0" cellSpacing="0" className="t1_contractLease">
                                 <tr>
                                     <td className="tr3_contractLease td0_contractLease"><p className="p6_contractLease ft9_contractLease">IVA 19%:</p></td>
                                     <td className="tr3_contractLease td1_contractLease">
@@ -381,12 +390,12 @@ const LeaseDocContract = () => {
                             </table>
                             <p className="p11_contractLease ft15_contractLease">
                                 Entre los suscritos a saber,
-                                <span className='ft3_comodato'>{` ${arrendamiento.detailsLeader.names.firstName} `}</span>
-                                con cédula de ciudadanía No. <span className='ft3_comodato'>{`${arrendamiento.detailsLeader.id_number}, `}</span>
+                                <span className='ft3_comodato'>{` ${values_contract?.secretary?.name} `}</span>
+                                con cédula de ciudadanía No. <span className='ft3_comodato'>{`${values_contract?.secretary?.id_number}, `}</span>
                                 en su calidad de
                                 Secretario(a) de Suministros y Servicios del Municipio de Medellín,
-                                nombrado mediante el Decreto Municipal N° 001 del 1 de enero de 2016 y
-                                acta de posesión N° 11 del 03/01/2020, en uso de sus facultades
+                                nombrado mediante el Decreto Municipal N° {`${values_contract.decree_number} del ${moment(values_contract.decree_date).format('DD/MM/YYYY')} `}
+                                y acta de posesión N° {`${values_contract.act_number} del ${moment(values_contract.minutes_date).format('DD/MM/YYYY')}, `}, en uso de sus facultades
                                 legales y las otorgadas por los Decretos Municipales Nros. 883 de
                                 2015, 1039 de 2016 y manual de contratación expedidos por el Señor
                                 Alcalde de Medellín, obrando en nombre y representación del
@@ -426,22 +435,20 @@ const LeaseDocContract = () => {
                             </p>
                             <p className="p12_contractLease ft6_contractLease">Página 2 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
+                            <p className="p9_contractLease ft6_contractLease">
                                 Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Línea Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
-                            </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_3_contractLease">
                         <div id="p3dimg1">
                             <img
@@ -478,9 +485,12 @@ const LeaseDocContract = () => {
                                 mismo título, un inmueble de propiedad del Municipio de Medellín
                                 ubicado en {realEstate?.address?.address}. Bien Inmueble identificado con
                                 Matrícula {realEstate?.registry_number}, CBML {realEstate?.address?.cbmls?.uabi},  Código de activo fijo
-                                {` ${realEstate?.sap_id}`} y Título de adquisición.
-                                {/*  TODO: falta agregar titulo de adquisicion */} <span className="ft14_contractLease">SEGUNDA: ÁREAS Y LINDEROS. </span>El
-                                área a entregar en arrendamiento corresponde a digite el área m<span
+                                {` ${realEstate?.sap_id}`} y Título de adquisición:
+                                {realEstate?.acquisitions?.map(ad => {
+                                    return ` ${ad.title_type} `;
+                                })}
+                                <span className="ft14_contractLease">SEGUNDA: ÁREAS Y LINDEROS. </span>El
+                                área a entregar en arrendamiento corresponde a {values_contract?.dispose_area} m<span
                                     className="ft17_contractLease"
                                 >2 </span
                                 >y los linderos son los siguientes: {arrendamiento.boundaries} con radicado del informe de Prediación: {arrendamiento.prediation_number} y fecha {arrendamiento.prediation_date}. <span className="ft14_contractLease">TERCERA: DESTINACIÓN. </span>EL (LA)
@@ -500,39 +510,43 @@ const LeaseDocContract = () => {
                                 otra parte, se indicará la fecha en que se entregará o recibirá real y
                                 materialmente el inmueble, la cual no podrá ser superior a treinta
                                 (30) días calendario. <span className="ft14_contractLease">QUINTA: </span
-                                ><span className="ft18_contractLease">RENOVACIÓN DEL</span>
+                                ><span className="ft18_contractLease">RENOVACIÓN DEL CONTRATO.</span>
+                                <span className="ft19_contractLease"> Antes del vencimiento del plazo,
+                                    el contrato podrá renovarse mediante comunicado en el formato
+                                    establecido para el efecto y con una antelación de noventa (90) días
+                                    calendario anteriores a su terminación previo acuerdo entre las
+                                    partes, para lo cual se surtirán todos los trámites pertinentes de una
+                                    nueva relación contractual, de acuerdo con el procedimiento y política
+                                    vigente aplicable previo cumplimiento de trámites y documentos que
+                                    indicará el supervisor del contrato.
+
+                                </span>
+                                <span className="ft18_contractLease">PARÁGRAFO: </span>
+                                <span className="ft19_contractLease">
+                                    En caso de que se acepte por las
+                                    partes la renovación del contrato, el canon aplicable será igual al
+                                    último pagado más el incremento del porcentaje que para el efecto haya
+                                    establecido la Subsecretaría de Catastro y se haya adoptado por la
+                                    Secretaría de Suministros y
+                                </span>
                             </p>
-                            <p className="p18_contractLease ft19_contractLease">
-                                <span className="ft18_contractLease">CONTRATO. </span>Antes del vencimiento del plazo,
-                                el contrato podrá renovarse mediante comunicado en el formato
-                                establecido para el efecto y con una antelación de noventa (90) días
-                                calendario anteriores a su terminación previo acuerdo entre las
-                                partes, para lo cual se surtirán todos los trámites pertinentes de una
-                                nueva relación contractual, de acuerdo con el procedimiento y política
-                                vigente aplicable previo cumplimiento de trámites y documentos que
-                                indicará el supervisor del contrato.
-                                <span className="ft18_contractLease">PARÁGRAFO: </span>En caso de que se acepte por las
-                                partes la renovación del contrato, el canon aplicable será igual al
-                                último pagado más el incremento del porcentaje que para el efecto haya
-                                establecido la Subsecretaría de Catastro y se haya adoptado por la
-                                Secretaría de Suministros y
-                            </p>
+
                             <p className="p19_contractLease ft6_contractLease">Página 3 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_4_contractLease">
                         <div id="p4dimg1">
                             <img
@@ -561,33 +575,33 @@ const LeaseDocContract = () => {
                                 <span className="ft5_contractLease">Contrato de Arrendamiento No. </span>(DIGITE SÓLO
                                 NÚMERO DE CONTRATO – SIN FECHA)
                             </p>
-                            <p className="p20_contractLease ft21_contractLease">
-                                Servicios mediante circular para la vigencia que corresponda.
-                                <span className="ft20_contractLease">PRÓRROGA DEL</span>
-                            </p>
-                            <p className="p21_contractLease ft23_contractLease">
-                                <span className="ft22_contractLease">CONTRATO. </span>El presente contrato no podrá
-                                prorrogarse de manera automática. No obstante, previo mutuo acuerdo
-                                entre las partes y cumplimiento de los trámites y documentos que
-                                indicará el supervisor del contrato, se podrá prorrogar el plazo por
-                                un término igual al inicialmente pactado, a través de un otrosí
-                                modificatorio. La solicitud de prórroga presentada por cualquiera de
-                                las partes, se hará mediante comunicación escrita, en la cual se
-                                manifieste de forma clara, expresa e inequívoca la voluntad de
-                                prorrogar el plazo contractual y deberá solicitarse con una antelación
-                                mínima de treinta (30) días calendario a la fecha de terminación del
-                                contrato. Una vez agotado el requisito anterior, el Secretario de
-                                Despacho con competencia para la celebración del otrosí modificatorio,
-                                procederá a suscribirlo y dará validez con su firma.
-                                <span className="ft22_contractLease">PARÁGRAFO</span>: Podrá pactarse un plazo superior,
-                                siempre que el mismo sea justificado, previo análisis de conveniencia
-                                y oportunidad sobre los criterios técnicos, administrativos,
-                                financieros y jurídicos del
-                            </p>
-                            <p className="p22_contractLease ft25_contractLease">
-                                contrato. <span className="ft14_contractLease">SEXTA</span
-                                ><span className="ft18_contractLease">: PRÓRROGA DEL CONTRATO. </span
-                                ><span className="ft19_contractLease"
+                            <p className="p21_contractLease ft14_contractLease ">
+                                <span className='ft21_contractLease'>Servicios mediante circular para la vigencia que corresponda.</span>
+                                <span className="ft20_contractLease">PRÓRROGA DEL CONTRATO.</span>
+                                <span className="ft23_contractLease"> El presente contrato no podrá
+                                    prorrogarse de manera automática. No obstante, previo mutuo acuerdo
+                                    entre las partes y cumplimiento de los trámites y documentos que
+                                    indicará el supervisor del contrato, se podrá prorrogar el plazo por
+                                    un término igual al inicialmente pactado, a través de un otrosí
+                                    modificatorio. La solicitud de prórroga presentada por cualquiera de
+                                    las partes, se hará mediante comunicación escrita, en la cual se
+                                    manifieste de forma clara, expresa e inequívoca la voluntad de
+                                    prorrogar el plazo contractual y deberá solicitarse con una antelación
+                                    mínima de treinta (30) días calendario a la fecha de terminación del
+                                    contrato. Una vez agotado el requisito anterior, el Secretario de
+                                    Despacho con competencia para la celebración del otrosí modificatorio,
+                                    procederá a suscribirlo y dará validez con su firma.
+                                </span>
+                                <span className="ft22_contractLease">PARÁGRAFO: </span>
+                                <span className=" ft23_contractLease">
+                                    Podrá pactarse un plazo superior,
+                                    siempre que el mismo sea justificado, previo análisis de conveniencia
+                                    y oportunidad sobre los criterios técnicos, administrativos,
+                                    financieros y jurídicos del contrato.
+                                </span>
+                                <span className="ft14_contractLease">SEXTA</span>
+                                <span className="ft18_contractLease">: PRÓRROGA DEL CONTRATO. </span>
+                                <span className="ft19_contractLease"
                                 >El presente contrato no podrá prorrogarse de manera automática. No
                                     obstante, previo mutuo acuerdo entre las partes y cumplimiento de
                                     los trámites y documentos que indicará el supervisor del contrato,
@@ -601,36 +615,40 @@ const LeaseDocContract = () => {
                                     el requisito anterior, el Secretario de Despacho con competencia
                                     para la celebración del otrosí modificatorio, procederá a
                                     suscribirlo y dará validez con su firma.</span
-                                ><span className="ft24_contractLease"> :</span>
-                            </p>
-                            <p className="p23_contractLease ft26_contractLease">
-                                <span className="ft24_contractLease">RENOVACIÓN DEL CONTRATO. </span>A la terminación
-                                del contrato, sólo por vencimiento del plazo, el contrato podrá
-                                renovarse previo acuerdo entre las partes, para lo cual se surtirán
-                                todos los trámites pertinentes de una nueva relación contractual, de
-                                acuerdo con el procedimiento y política vigente aplicable.
-                                <span className="ft24_contractLease">PARÁGRAFO: </span>En caso de que se acepte por las
-                                partes la renovación del contrato, el canon aplicable será igual al
-                                último pagado más el incremento del porcentaje que para el efecto haya
-                                establecido la Subsecretaría de Catastro y se haya adoptado por la
-                                Secretaría de Suministros y Servicios mediante circular para la vigencia que corresponda.
+                                >
+                                <span className="ft24_contractLease"> : RENOVACIÓN DEL CONTRATO.</span>
+                                <span className="ft26_contractLease">
+                                    A la terminación
+                                    del contrato, sólo por vencimiento del plazo, el contrato podrá
+                                    renovarse previo acuerdo entre las partes, para lo cual se surtirán
+                                    todos los trámites pertinentes de una nueva relación contractual, de
+                                    acuerdo con el procedimiento y política vigente aplicable.
+                                </span>
+                                <span className="ft24_contractLease">PARÁGRAFO: </span>
+                                <span className="ft26_contractLease">
+                                    En caso de que se acepte por las
+                                    partes la renovación del contrato, el canon aplicable será igual al
+                                    último pagado más el incremento del porcentaje que para el efecto haya
+                                    establecido la Subsecretaría de Catastro y se haya adoptado por la
+                                    Secretaría de Suministros y Servicios mediante circular para la vigencia que corresponda.
+                                </span>
                             </p>
                             <p className="p25_contractLease ft6_contractLease">Página 4 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_5_contractLease">
                         <div id="p5dimg1">
                             <img
@@ -672,14 +690,10 @@ const LeaseDocContract = () => {
                                 efecto indique la Subsecretaría de Catastro y sea adoptado por la
                                 Secretaría de Suministros y Servicios mediante circular, lo anterior,
                                 conforme lo señala la Circular No. 003 del 10 de agosto de 2016 que
-                                establece las <span className="ft28_contractLease">“Políticas de Operación del</span>
-                            </p>
-                            <p className="p27_contractLease ft30_contractLease">
-                                Ingreso no Tributario arrendamientos e intereses de mora rentas
-                                contractuales”,
-                            </p>
-                            <p className="p28_contractLease ft15_contractLease">
-                                emanada de la Subsecretaria de Ingresos de la Secretaría de Hacienda.
+                                establece las <span className="ft28_contractLease">
+                                    “Políticas de Operación del Ingreso no Tributario arrendamientos e intereses de mora rentas
+                                    contractuales”,
+                                </span> emanada de la Subsecretaria de Ingresos de la Secretaría de Hacienda.
                                 <span className="ft14_contractLease">PARÁGRAFO SEGUNDO</span>: Para los inmuebles
                                 destinados a vivienda, se aplicará el incremento establecido por la
                                 ley 820 de 2003 o la normatividad que la modifique o derogue. De no
@@ -702,27 +716,27 @@ const LeaseDocContract = () => {
                                 No. 000042 de 05 de mayo de 2020, modificada con la resolución 000094
                                 del 30 de septiembre de 2020, en lo relacionado a la facturación electrónica, motivo por el cual
                                 las facturas de cobro que le serán expedidas a EL (LA)
-                                ARRENDATARIO(A) le serán remitidas al correo electrónico {`${arrendamiento?.detailsApplicant.email}, `}
+                                ARRENDATARIO(A) le serán remitidas al correo electrónico {arrendamiento.applicant.type_society === "Persona Natural" ? arrendamiento.detailsApplicant.email : arrendamiento.applicant.email}
                                 para lo cual deberá realizar el pago mediante la presentación de la factura
                                 ante la entidad bancaria respectiva o a través de los canales
                                 virtuales destinados para tal fin.
                             </p>
                             <p className="p31_contractLease ft6_contractLease">Página 5 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_6_contractLease">
                         <div id="p6dimg1">
                             <img
@@ -757,7 +771,7 @@ const LeaseDocContract = () => {
                                 que son inmodificables; de presentarse pluralidad de arrendatarios la
                                 factura electrónica será expedida a nombre de
                                 {arrendamiento.applicant.type_society === "Persona Juridica" ?
-                                    ` ${arrendamiento.detailsRepresentative.names.firstName} ${arrendamiento.detailsRepresentative.names.lastName} ${arrendamiento.detailsRepresentative.surnames.firstSurname} ${arrendamiento.detailsRepresentative.surnames.lastSurname} `
+                                    ` ${arrendamiento.applicant.company_name} `
                                     :
                                     ` ${arrendamiento.detailsApplicant.names.firstName} ${arrendamiento.detailsApplicant.names.lastName} ${arrendamiento.detailsApplicant.surnames.firstSurname} ${arrendamiento.detailsApplicant.surnames.lastSurname} `
 
@@ -779,14 +793,10 @@ const LeaseDocContract = () => {
                                 <span className="ft14_contractLease">DÉCIMA: RENUNCIAS. </span>EL (LA) ARRENDATARIO(A)
                                 renuncia expresamente a los requerimientos para ser constituido en
                                 mora, así como al derecho de retención que a cualquier título le
-                                conceda la Ley sobre el inmueble objeto del presente
-                            </p>
-                            <p className="p32_contractLease ft7_contractLease">
-                                <span className="ft9_contractLease">contrato. </span>DÉCIMA PRIMERA: RÉGIMEN JURÍDICO
-                                APLICABLE AL CONTRATO. <span className="ft9_contractLease">Las</span>
-                            </p>
-                            <p className="p28_contractLease ft15_contractLease">
-                                partes manifiestan que el régimen aplicable a este acto o contrato
+                                conceda la Ley sobre el inmueble objeto del presente contrato.
+                                <span className=" ft7_contractLease">
+                                    DÉCIMA PRIMERA: RÉGIMEN JURÍDICO APLICABLE AL CONTRATO.
+                                </span> Las partes manifiestan que el régimen aplicable a este acto o contrato
                                 corresponde al descrito en el Código Civil para los contratos de
                                 arrendamiento, a lo dispuesto en la Ley 80 de 1993, ley 1150 del 2007
                                 sus decretos reglamentarios, o la normatividad vigente y manifiestan
@@ -794,14 +804,10 @@ const LeaseDocContract = () => {
                                 actos mercantiles o de comercio, razón por la cual no será aplicable
                                 el régimen jurídico contenido en el Código de Comercio en parte
                                 alguna. Para los bienes inmuebles destinados a vivienda se aplicará la
-                                Ley 820 de 2003. <span className="ft14_contractLease">DÉCIMA SEGUNDA:</span>
-                            </p>
-                            <p className="p33_contractLease ft7_contractLease">
-                                OBLIGACIONES. (I) De EL (LA) ARRENDATARIO(A):
-                                <span className="ft9_contractLease">Se obliga a: 1) Pagar el canon de</span>
-                            </p>
-                            <p className="p34_contractLease ft15_contractLease">
-                                arrendamiento pactado en la forma y términos convenidos y demás
+                                Ley 820 de 2003. <span className="ft14_contractLease">DÉCIMA SEGUNDA:
+                                    OBLIGACIONES. (I) De EL (LA) ARRENDATARIO(A):
+                                </span> Se obliga a: 1) Pagar el canon de arrendamiento pactado en la
+                                forma y términos convenidos y demás
                                 valores generados (cuando apliquen). 2) Emplear el mayor cuidado en la
                                 conservación del bien objeto de este contrato, siendo responsable de
                                 cualquier deterioro que no provenga de la naturaleza o uso legítimo de
@@ -809,20 +815,20 @@ const LeaseDocContract = () => {
                             </p>
                             <p className="p35_contractLease ft6_contractLease">Página 6 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_7_contractLease">
                         <div id="p7dimg1">
                             <img
@@ -851,25 +857,20 @@ const LeaseDocContract = () => {
                                 <span className="ft5_contractLease">Contrato de Arrendamiento No. </span>(DIGITE SÓLO
                                 NÚMERO DE CONTRATO – SIN FECHA)
                             </p>
-                            <p className="p36_contractLease ft9_contractLease">
-                                concernientes a la conservación, custodia y a la prevención del bien,
-                                dimensionando los
-                            </p>
                             <p className="p37_contractLease ft9_contractLease">
-                                riesgos inherentes a su conservación y frente a las actividades
-                                desarrolladas en el mismo.
+
                             </p>
                             <p className="p21_contractLease ft29_contractLease">
-                                <span className="ft9_contractLease">4)</span
-                                ><span className="ft33_contractLease"
-                                >Vigilar el inmueble por su cuenta y riesgo. En consecuencia, EL
-                                    ARRENDADOR no asume responsabilidad por daños, pérdidas, robos,
-                                    etc., que allí se llegaren a presentar y por ende, no se genera
-                                    ninguna clase de responsabilidad civil por daños causados a terceros
-                                    o a sus bienes atribuible a EL ARRENDADOR. 5) Dar aviso a EL
-                                    ARRENDADOR sobre los daños del inmueble que lo pongan en peligro o
-                                    el normal funcionamiento de los </span
-                                ><span className="ft34_contractLease">servicios. </span>6) Destinar el bien únicamente
+                                concernientes a la conservación, custodia y a la prevención del bien, dimensionando los
+                                riesgos inherentes a su conservación y frente a las actividades
+                                desarrolladas en el mismo. 4)
+                                Vigilar el inmueble por su cuenta y riesgo. En consecuencia, EL
+                                ARRENDADOR no asume responsabilidad por daños, pérdidas, robos,
+                                etc., que allí se llegaren a presentar y por ende, no se genera
+                                ninguna clase de responsabilidad civil por daños causados a terceros
+                                o a sus bienes atribuible a EL ARRENDADOR. 5) Dar aviso a EL
+                                ARRENDADOR sobre los daños del inmueble que lo pongan en peligro o
+                                el normal funcionamiento de los servicios.6) Destinar el bien únicamente
                                 para el fin acordado, previo el cumplimiento de los requisitos
                                 exigidos por la(s) autoridad(es) competente(s). 7) Restituir el
                                 inmueble en buenas condiciones, dentro de los plazos pactados y a paz
@@ -904,20 +905,20 @@ const LeaseDocContract = () => {
                             </p>
                             <p className="p38_contractLease ft6_contractLease">Página 7 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_8_contractLease">
                         <div id="p8dimg1">
                             <img
@@ -946,42 +947,39 @@ const LeaseDocContract = () => {
                                 <span className="ft5_contractLease">Contrato de Arrendamiento No. </span>(DIGITE SÓLO
                                 NÚMERO DE CONTRATO – SIN FECHA)
                             </p>
-                            <p className="p39_contractLease ft29_contractLease">
+                            <p className="p40_contractLease ft15_contractLease">
                                 los cambios de los datos de contacto del arrendatario, tales como
                                 dirección, correo electrónico, teléfono, celular que figuran en el
                                 contrato; 17) Las demás que se establezcan
-                            </p>
-                            <p className="p40_contractLease ft15_contractLease">
-                                en el presente contrato y en la Ley; 18) En caso de ser un restaurante
-                                cafeterías y similares dejar la siguientes obligaciones: EL (LA)
-                                ARRENDATARIO (A) deberá cumplir con el Decreto Municipal 0440 de 2009
-                                “Por medio del cual se adopta el Manual para el Manejo Integral de
-                                Residuos Sólidos (PMIRS), del Área Metropolitana del Valle de Aburrá y
-                                se dictan otras disposiciones generales para la Gestión Integral de
-                                Residuos Sólidos en Municipio de Medellín” y con el Decreto Nacional
-                                2981 de 2013, especialmente lo consagrado en el Capítulo II Artículo
-                                17 “Obligaciones de los usuarios para el almacenamiento y presentación
-                                de residuos sólidos”; EL (LA) ARRENDATARIO(A) no podrá utilizar ICOPOR
-                                en la prestación de la actividad económica desarrollada en el local
-                                objeto de este contrato. Para esto deberá dar opciones más amigables
-                                con el ambiente como productos reutilizables, productos de polyboard
-                                (cartón) y/o caña de azúcar y/o almidón de maíz y/o biodegradables; EL
-                                (LA) ARRENDATARIO(A) deberá realizar el adecuado almacenamiento,
-                                recolección y disposición final de aceite usado, con un gestor que
-                                cumpla con la normatividad ambiental vigente.
+                                en el presente contrato y en la Ley;
+                                {(arrendamiento.business_type.select === "Restaurante" || arrendamiento.business_type.select === "Cafetería") &&
+                                    <>
+                                        18) EL (LA) ARRENDATARIO (A) deberá cumplir con el Decreto Municipal 0440 de 2009
+                                        “Por medio del cual se adopta el Manual para el Manejo Integral de
+                                        Residuos Sólidos (PMIRS), del Área Metropolitana del Valle de Aburrá y
+                                        se dictan otras disposiciones generales para la Gestión Integral de
+                                        Residuos Sólidos en Municipio de Medellín” y con el Decreto Nacional
+                                        2981 de 2013, especialmente lo consagrado en el Capítulo II Artículo
+                                        17 “Obligaciones de los usuarios para el almacenamiento y presentación
+                                        de residuos sólidos”; EL (LA) ARRENDATARIO(A) no podrá utilizar ICOPOR
+                                        en la prestación de la actividad económica desarrollada en el local
+                                        objeto de este contrato. Para esto deberá dar opciones más amigables
+                                        con el ambiente como productos reutilizables, productos de polyboard
+                                        (cartón) y/o caña de azúcar y/o almidón de maíz y/o biodegradables; EL
+                                        (LA) ARRENDATARIO(A) deberá realizar el adecuado almacenamiento,
+                                        recolección y disposición final de aceite usado, con un gestor que
+                                        cumpla con la normatividad ambiental vigente.
+                                    </>
+                                }
                                 <span className="ft14_contractLease">(II) DEL ARRENDADOR: </span>1) Entregar el bien
                                 arrendado en condiciones de habitabilidad o de uso; 2) Realizar las
                                 mejoras que sean necesarias para garantizar las condiciones de
                                 habitabilidad o de uso en beneficio de EL (LA) ARRENDATARIO(A); 3)
                                 Entregar factura física o digital para el pago del canon de
                                 arrendamiento y demás conceptos.
-                                <span className="ft14_contractLease">DÉCIMA TERCERA: PROHIBICIONES</span>
-                            </p>
-                            <p className="p27_contractLease ft7_contractLease">
-                                ESPECIALES DE EL (LA) ARRENDATARIO(A).
-                                <span className="ft9_contractLease">1) Queda expresamente prohibido a</span>
-                            </p>
-                            <p className="p41_contractLease ft15_contractLease">
+                                <span className="ft14_contractLease">DÉCIMA TERCERA: PROHIBICIONES
+                                    ESPECIALES DE EL (LA) ARRENDATARIO(A).</span>
+                                1) Queda expresamente prohibido a
                                 EL(LA) ARRENDATARIO(A) almacenar material inflamable, explosivo,
                                 radiactivo o similar o sustancias ilegales o prohibidas o cualquier
                                 tipo de armas de fuego y que puedan constituir violación de las leyes;
@@ -998,20 +996,20 @@ const LeaseDocContract = () => {
                             </p>
                             <p className="p42_contractLease ft6_contractLease">Página 8 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_9_contractLease">
                         <div id="p9dimg1">
                             <img
@@ -1070,12 +1068,8 @@ const LeaseDocContract = () => {
                                 reportan utilidad, beneficio y comodidad a EL (LA) ARRENDATARIO(A) y
                                 no son necesarias ni útiles para EL ARRENDADOR, por lo tanto, no habrá
                                 lugar a indemnización o compensación alguna por este concepto.
-                            </p>
-                            <p className="p43_contractLease ft7_contractLease">
-                                PARÁGRAFO PRIMERO: MEJORAS REMOVIBLES.
-                                <span className="ft9_contractLease">Son aquellas que pueden ser</span>
-                            </p>
-                            <p className="p28_contractLease ft15_contractLease">
+                                <span className=" ft7_contractLease">PARÁGRAFO PRIMERO: MEJORAS REMOVIBLES.</span>
+                                Son aquellas que pueden ser
                                 retiradas sin que se deterioren las condiciones normales del inmueble
                                 objeto de arrendamiento. Para el efecto, EL (LA) ARRENDATARIO(A)
                                 cuenta con diez (10) días contados a partir de la terminación del
@@ -1088,20 +1082,20 @@ const LeaseDocContract = () => {
                             </p>
                             <p className="p44_contractLease ft6_contractLease">Página 9 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_10_contractLease">
                         <div id="p10dimg1">
                             <img
@@ -1176,20 +1170,20 @@ const LeaseDocContract = () => {
                             </p>
                             <p className="p46_contractLease ft6_contractLease">Página 10 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_11_contractLease">
                         <div id="p11dimg1">
                             <img
@@ -1255,28 +1249,26 @@ const LeaseDocContract = () => {
                                 cualquier circunstancia el mismo permanezca abandonado o deshabitado
                                 por parte EL LA ARRENDATARIO (A) y que la exposición al riesgo amenace
                                 la integridad física del bien o de sus vecinos.
-                                <span className="ft35_contractLease">DÉCIMA OCTAVA: GARANTÍAS. </span>EL (LA)
-                                ARRENDATARIO(A) deberá otorgar garantía única de cumplimiento en favor
-                                de Entidades Estatales, de conformidad con lo establecido por el
-                                Decreto Nacional 1082 de 2015, la normativa vigente y demás normas que
-                                lo modifiquen, adicionen o sustituyan, la
+                                <span className="ft35_contractLease">DÉCIMA OCTAVA: GARANTÍAS. </span>
+
+
                             </p>
                             <p className="p47_contractLease ft6_contractLease">Página 11 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_12_contractLease">
                         <div id="p12dimg1">
                             <img
@@ -1306,27 +1298,8 @@ const LeaseDocContract = () => {
                                 NÚMERO DE CONTRATO – SIN FECHA)
                             </p>
                             <p className="p26_contractLease ft15_contractLease">
-                                cual debe ser aceptada por EL ARRENDADOR y deberá cubrir los
-                                siguientes amparos: 1) Seguro de arrendamiento. Con el fin de
-                                garantizar las obligaciones que en razón de este contrato asume EL
-                                (LA) ARRENDATARIO(A), deberá otorgar una garantía correspondiente al
-                                cien por ciento (100 %) del valor total del contrato, con una vigencia
-                                igual al plazo pactado en el contrato y cuatro (4) meses más. En caso
-                                de que sea Centros Comerciales Populares o Cerros Tutelares deberá
-                                otorgar garantía única de cumplimiento en favor de Entidades
-                                Estatales, la cual debe ser aceptada por EL ARRENDADOR y deberá cubrir
-                                los siguientes amparos: 1) Cumplimiento. Con el fin de garantizar las
-                                obligaciones que en razón de este contrato asume EL (LA)
-                                ARRENDATARIO(A), deberá otorgar una garantía correspondiente al
-                                treinta por ciento (30 %) del valor del contrato, con una vigencia
-                                igual al plazo pactado y cuatro (4) meses más, para dar cumplimiento a
-                                lo estipulado en la Ley 80 de 1993 y decretos reglamentarios. En caso
-                                de que sea vivienda urbana, no se exigirán garantías al
-                                ARRENDATARIO(A) para la ejecución del contrato de arrendamiento,
-                                teniendo en cuenta las condiciones sociales y económicas de los
-                                arrendatarios, a quienes les es muy difícil cumplir con los requisitos
-                                exigidos por las empresas aseguradoras para la expedición de las
-                                garantías. <span className="ft14_contractLease">PARÁGRAFO PRIMERO: </span>EL (LA)
+                                {values_contract.guarantee}
+                                <span className="ft14_contractLease"> PARÁGRAFO PRIMERO: </span>EL (LA)
                                 ARRENDATARIO (A) ampliará las garantías cuando se presenten
                                 modificaciones en el canon de arrendamiento y el plazo de ejecución
                                 del contrato. <span className="ft14_contractLease">PARÁGRAFO SEGUNDO: </span>Las citadas
@@ -1335,46 +1308,35 @@ const LeaseDocContract = () => {
                                 del presente contrato, de no ser así, se entenderá que desiste del
                                 contrato y se iniciarán los procedimientos requeridos para darlo por
                                 terminado. La aprobación de la póliza será requisito previo para la
-                                firma del acta de inicio
-                            </p>
-                            <p className="p43_contractLease ft9_contractLease">
-                                del presente contrato.
-                                <span className="ft7_contractLease">DÉCIMA NOVENA: CLÁUSULA PENAL. </span>En el presente
-                                contrato
-                            </p>
-                            <p className="p34_contractLease ft15_contractLease">
-                                se pacta entre las partes cláusula penal, la cual se hará exigible de
+                                firma del acta de inicio del presente contrato.
+                                <span className="ft7_contractLease">DÉCIMA NOVENA: CLÁUSULA PENAL. </span>
+                                En el presente contrato se pacta entre las partes cláusula penal, la cual se hará exigible de
                                 manera unilateral sin necesidad de declaratoria judicial, cuando a
                                 juicio del Secretario competente, previo informe de supervisión, el
                                 contratista incurra en el incumplimiento del contrato. Esta cláusula
                                 penal se considerará como tasación anticipada de los perjuicios
                                 causados a EL ARRENDADOR, la que se estima en un veinte (20%) del
                                 valor total del contrato.
-                            </p>
-                            <p className="p48_contractLease ft7_contractLease">
-                                VIGÉSIMA: PROHIBICIÓN DE CESIÓN O SUBARRIENDO.
-                                <span className="ft9_contractLease">EL (LA)</span>
-                            </p>
-                            <p className="p49_contractLease ft9_contractLease">
+                                <span className="ft7_contractLease"> VIGÉSIMA: PROHIBICIÓN DE CESIÓN O SUBARRIENDO. </span>
                                 ARRENDATARIO(A) se obliga expresamente a no ceder o subarrendar el
                                 inmueble
                             </p>
                             <p className="p50_contractLease ft6_contractLease">Página 12 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_13_contractLease">
                         <div id="p13dimg1">
                             <img
@@ -1415,63 +1377,55 @@ const LeaseDocContract = () => {
                                 pertenezca al programa de reubicación de venteros ambulantes, éste
                                 deberá ser atendido exclusivamente por EL (LA) ARRENDATARIO(A). El
                                 incumplimiento dará lugar a la terminación del contrato y restitución
-                                del bien. <span className="ft14_contractLease">VIGÉSIMA PRIMERA: CAUSALES</span>
-                            </p>
-                            <p className="p51_contractLease ft7_contractLease">
-                                DE TERMINACIÓN Y/O ANTICIPADA DEL CONTRATO.
-                                <span className="ft9_contractLease">Son causales para terminar</span>
-                            </p>
-                            <p className="p52_contractLease ft15_contractLease">
-                                anticipadamente el presente contrato, dando lugar a la restitución
+                                del bien. <span className="ft14_contractLease">
+                                    VIGÉSIMA PRIMERA: CAUSALES DE TERMINACIÓN Y/O ANTICIPADA DEL CONTRATO.
+                                </span>
+                                Son causales para terminar anticipadamente el presente contrato, dando lugar a la restitución
                                 inmediata del inmueble, las siguientes: a) Cuando las exigencias del
                                 servicio público lo requieran o la situación de orden público lo
                                 imponga; b) El incumplimiento de cualquiera de las obligaciones de EL
                                 (LA) ARRENDATARIO(A); c) Cuando se comprobare que la documentación
                                 aportada para la adjudicación fuere fraudulenta; d) Por la renuencia
                                 en la suscripción del acta de inicio se dará la terminación del
-                                contrato o se entenderá como desistimiento del contrato
-                            </p>
-                            <p className="p28_contractLease ft15_contractLease">
-                                <span className="ft9_contractLease">e)</span
-                                ><span className="ft37_contractLease"
-                                >Por disolución o liquidación de persona jurídica de EL (LA)
-                                    ARRENDATARIO(A); f) Por liquidación forzosa de EL (LA)
-                                    ARRENDATARIO(A); g) Por embargos judiciales de EL (LA)
-                                    ARRENDATARIO(A) que afecten el normal cumplimiento de las
-                                    obligaciones surgidas por medio del presente contrato; h) Por no
-                                    mantener vigente las garantías de este contrato; i) Por destrucción
-                                    o deterioro del inmueble que haga imposible su utilización, j) Por
-                                    las causales especiales de terminación anticipada previstas en este
-                                    contrato; k) Por ceder o subarrendar el inmueble objeto de este
-                                    contrato, transferir su tenencia o permitir el uso por parte de
-                                    terceros l) Por no ocupación del inmueble arrendado por parte de
-                                    EL(LA) ARRENDATARIO(A), dentro de los sesenta (60) días calendario
-                                    siguientes a la fecha de la suscripción del contrato o del acta de
-                                    entrega; m) Por solicitud de EL ARRENDADOR para ser utilizado en
-                                    fines propios, n) El desuso del inmueble en virtud del contrato de
-                                    arrendamiento por parte de EL(LA) ARRENDATARIO(A), será causal para
-                                    la terminación del mismo, ñ) En caso que el inmueble se destine a
-                                    objeto diferente al estipulado en este contrato, o) En el caso en
-                                    que EL ARRENDADOR requiera el inmueble para ejercer las funciones
-                                    que le son</span
-                                >
+                                contrato o se entenderá como desistimiento del contrato e)
+                                Por disolución o liquidación de persona jurídica de EL (LA)
+                                ARRENDATARIO(A); f) Por liquidación forzosa de EL (LA)
+                                ARRENDATARIO(A); g) Por embargos judiciales de EL (LA)
+                                ARRENDATARIO(A) que afecten el normal cumplimiento de las
+                                obligaciones surgidas por medio del presente contrato; h) Por no
+                                mantener vigente las garantías de este contrato; i) Por destrucción
+                                o deterioro del inmueble que haga imposible su utilización, j) Por
+                                las causales especiales de terminación anticipada previstas en este
+                                contrato; k) Por ceder o subarrendar el inmueble objeto de este
+                                contrato, transferir su tenencia o permitir el uso por parte de
+                                terceros l) Por no ocupación del inmueble arrendado por parte de
+                                EL(LA) ARRENDATARIO(A), dentro de los sesenta (60) días calendario
+                                siguientes a la fecha de la suscripción del contrato o del acta de
+                                entrega; m) Por solicitud de EL ARRENDADOR para ser utilizado en
+                                fines propios, n) El desuso del inmueble en virtud del contrato de
+                                arrendamiento por parte de EL(LA) ARRENDATARIO(A), será causal para
+                                la terminación del mismo, ñ) En caso que el inmueble se destine a
+                                objeto diferente al estipulado en este contrato, o) En el caso en
+                                que EL ARRENDADOR requiera el inmueble para ejercer las funciones
+                                que le son
+
                             </p>
                             <p className="p53_contractLease ft6_contractLease">Página 13 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_14_contractLease">
                         <div id="p14dimg1">
                             <img
@@ -1505,12 +1459,7 @@ const LeaseDocContract = () => {
                                 venteros ambulantes en los Centros Comerciales Populares, el concepto
                                 desfavorable del estudio socioeconómico verificado en cualquier
                                 momento de la ejecución del presente contrato.
-                            </p>
-                            <p className="p40_contractLease ft29_contractLease">
-                                <span className="ft9_contractLease">q)</span
-                                ><span className="ft38_contractLease"
-                                >Digite un literal en caso de ser necesario, de lo contrario borrar </span
-                                ><span className="ft27_contractLease">PARÁGRAFO PRIMERO: </span>EL (LA) ARRENDATARIO(A)
+                                <span className="ft27_contractLease"> PARÁGRAFO PRIMERO: </span>EL (LA) ARRENDATARIO(A)
                                 está facultado para solicitar la terminación anticipada del presente
                                 contrato. Para el efecto, manifestará por escrito su interés de
                                 restituir el inmueble otorgado en arrendamiento con una antelación no
@@ -1553,20 +1502,20 @@ const LeaseDocContract = () => {
                             </p>
                             <p className="p55_contractLease ft6_contractLease">Página 14 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_15_contractLease">
                         <div id="p15dimg1">
                             <img
@@ -1608,17 +1557,11 @@ const LeaseDocContract = () => {
                                 dependientes.
                                 <span className="ft14_contractLease">VIGÉSIMA OCTAVA: TRATAMIENTO DE DATOS. </span>El
                                 Municipio de Medellín, en concordancia con lo establecido en la
-                                Constitución Política de Colombia (arts. 15 y 20), la Ley 1581 de
-                                <span className="ft39_contractLease">2012</span>
-                            </p>
-                            <p className="p57_contractLease ft41_contractLease">
-                                "Por la cual se dictan disposiciones generales para la protección de
-                                datos personales"
-                                <span className="ft40_contractLease">y el Decreto 1377 de 2013 </span>"Por el cual se
-                                reglamenta parcialmente la Ley 1581 de 2012"
-                                <span className="ft40_contractLease">y</span>
-                            </p>
-                            <p className="p58_contractLease ft15_contractLease">
+                                Constitución Política de Colombia (arts. 15 y 20), la Ley 1581 de 2012
+                                <span className='ft41_contractLease'> "Por la cual se dictan disposiciones generales para la protección de
+                                    datos personales"
+                                </span> y el Decreto 1377 de 2013
+                                <span className=" ft41_contractLease"> "Por el cual se reglamenta parcialmente la Ley 1581 de 2012" </span>
                                 comprometido con el uso legal, el tratamiento de datos de acuerdo con
                                 los fines establecidos y la seguridad y privacidad de la información
                                 que recolecte, almacene, use, circule o suprima, y en cumplimiento del
@@ -1648,20 +1591,20 @@ const LeaseDocContract = () => {
                             </p>
                             <p className="p59_contractLease ft6_contractLease">Página 15 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_16_contractLease">
                         <div id="p16dimg1">
                             <img
@@ -1690,19 +1633,13 @@ const LeaseDocContract = () => {
                                 <span className="ft5_contractLease">Contrato de Arrendamiento No. </span>(DIGITE SÓLO
                                 NÚMERO DE CONTRATO – SIN FECHA)
                             </p>
-                            <p className="p36_contractLease ft9_contractLease">
-                                deberes y obligaciones que para tal figura prevé la Ley 1581 de 2012 y
-                                sus decretos
-                            </p>
-                            <p className="p49_contractLease ft7_contractLease">
-                                <span className="ft9_contractLease">reglamentarios. </span>VIGÉSIMA NOVENA: AUTORIZACIÓN
-                                DE TRATAMIENTO DE
-                            </p>
                             <p className="p40_contractLease ft15_contractLease">
-                                <span className="ft14_contractLease">DATOS. </span>EL LA ARRENDATARIO (A)<span
-                                    className="ft14_contractLease"
-                                >, </span
-                                >manifiesta que ha sido informado por el Municipio de Medellín, de lo
+                                deberes y obligaciones que para tal figura prevé la Ley 1581 de 2012 y
+                                sus decretos reglamentarios.
+                                <span className=" ft7_contractLease">
+                                    VIGÉSIMA NOVENA: AUTORIZACIÓN DE TRATAMIENTO DE DATOS.
+                                </span>
+                                EL LA ARRENDATARIO (A) manifiesta que ha sido informado por el Municipio de Medellín, de lo
                                 siguiente: 1) Que el Municipio de Medellín actuará como responsable
                                 del tratamiento de datos personales de los cuales es titular 2) De la
                                 finalidad del tratamiento de datos 3) De los derechos que como titular
@@ -1742,20 +1679,20 @@ const LeaseDocContract = () => {
                             </p>
                             <p className="p60_contractLease ft6_contractLease">Página 16 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_17_contractLease">
                         <div id="p17dimg1">
                             <img
@@ -1798,10 +1735,10 @@ const LeaseDocContract = () => {
                                 {` ${values_contract?.object_contract} `}
                                 <span className="ft14_contractLease">TRIGÉSIMA CUARTA: NOTIFICACIONES. </span>Las
                                 notificaciones que cualquiera de las partes deseare hacer a la otra,
-                                deben formularse por escrito a las siguientes direcciones: (INSERTE
-                                DESCRIPCIÓN DE LA DIRECCIÓN DE NOTIFICACIONES DE AMBAS PARTES,
+                                deben formularse por escrito a las siguientes direcciones:
+                                DIRECCIÓN ARRENDATARIO {arrendamiento.location_applicant.address}
                                 DIRECCIÓN ARRENDADOR Oficina 701 Centro Administrativo Municipal – CAM
-                                – Calle 44 No. 52 – 165).
+                                – Calle 44 No. 52 – 165.
                                 <span className="ft14_contractLease">TRIGÉSIMA QUINTA: IMPUESTOS. </span>EL (LA)
                                 ARRENDATARIO(A) procederá a cancelar el impuesto de timbre así como
                                 cualquier otro impuesto y/o estampilla a que hubiere lugar con la
@@ -1811,32 +1748,31 @@ const LeaseDocContract = () => {
                                 fija como domicilio, el municipio de Medellín.
                             </p>
                             <p className="p61_contractLease ft9_contractLease">
-                                Para constancia, se firma en la ciudad de Medellín, a los
-                                ____________________
+                                Para constancia, se firma en la ciudad de Medellín, a los  del {new Date().getDate()} dias del mes de  {months((new Date().getMonth() + 1).toString())} de  {new Date().getFullYear()}
                             </p>
                             <p className="p62_contractLease ft42_contractLease">
-                                {` ${arrendamiento.detailsLeader.names.firstName} ${arrendamiento.detailsLeader.names.lastName} ${arrendamiento.detailsLeader.surnames.firstSurname} ${arrendamiento.detailsLeader.surnames.lastSurname} `}
+                                {values_contract.secretary.name}
                             </p>
-                            <p className="p37_contractLease ft15_contractLease"> Cédula N° (DIGITE NÚMERO DE IDENTIFICACIÓN)</p>
+                            <p className="p37_contractLease ft15_contractLease"> Cédula N° {values_contract.secretary.id_number}</p>
                             <p className="p37_contractLease ft9_contractLease">Secretario de Suministros y Servicios</p>
                             <p className="p37_contractLease ft9_contractLease">Municipio de Medellín</p>
                             <p className="p37_contractLease ft9_contractLease">Arrendador</p>
                             <p className="p50_contractLease ft6_contractLease">Página 17 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
-                <Card style={{ width: '850px', margin: '0 auto' }}>
+                <Card style={{ width: '850px', margin: '0 auto', marginBottom: '16px' }}>
                     <div id="page_18_contractLease">
                         <div id="p18dimg1">
                             <img
@@ -1872,23 +1808,25 @@ const LeaseDocContract = () => {
                                     `${arrendamiento.detailsApplicant.names.firstName} ${arrendamiento.detailsApplicant.names.lastName} ${arrendamiento.detailsApplicant.surnames.firstSurname} ${arrendamiento.detailsApplicant.surnames.lastSurname}`
                                 }
                             </p>
-                            <p className="p64_contractLease ft36_contractLease">Cédula N° (DIGITE NÚMERO DE IDENTIFICACIÓN)</p>
-                            <p className="p64_contractLease ft36_contractLease">
-
-                                {arrendamiento.applicant.type_society === "Persona Juridica" &&
-                                    <>
-                                        Obra en representacion de
-                                        <span className="ft42_contractLease"> {arrendamiento?.applicant.company_name}</span>
-                                    </>
+                            <p className="p64_contractLease ft36_contractLease">Cédula N°
+                                {arrendamiento.applicant.type_society === "Persona Juridica" ?
+                                    `${arrendamiento.detailsRepresentative.id_number}`
+                                    :
+                                    `${arrendamiento.detailsApplicant.id_number}`
                                 }
-
                             </p>
+                            {arrendamiento.applicant.type_society === "Persona Juridica" &&
+                                <p className="p64_contractLease ft36_contractLease">
+                                    Obra en representacion de
+                                    <span className="ft42_contractLease"> {arrendamiento?.applicant.company_name}</span>
+                                </p>
+                            }
                             <p className="p64_contractLease ft7_contractLease">
                                 <span className="ft9_contractLease">Dirección: </span> {arrendamiento?.location_applicant?.address}
 
                             </p>
                             <p className="p48_contractLease ft7_contractLease">
-                                <span className="ft9_contractLease">Teléfono: </span> {arrendamiento.detailsApplicant.email}
+                                <span className="ft9_contractLease">Teléfono: </span> {arrendamiento.detailsApplicant.phone_number}
                                 {/* TODO: revisar numero */}
                             </p>
                             <p className="p65_contractLease ft42_contractLease">
@@ -1912,7 +1850,7 @@ const LeaseDocContract = () => {
                                     <td className="tr8_contractLease td6_contractLease"><p className="p66_contractLease ft43_contractLease">{arrendamiento.elaborated.name}</p></td>
                                     <td className="tr8_contractLease td7_contractLease"><p className="p67_contractLease ft43_contractLease">{arrendamiento.revised.name}</p></td>
                                     <td className="tr8_contractLease td7_contractLease"><p className="p68_contractLease ft43_contractLease">{arrendamiento.approved.name}</p></td>
-                                    <td className="tr8_contractLease td8_contractLease"><p className="p68_contractLease ft43_contractLease">{`${arrendamiento.detailsLeader.names.firstName} ${arrendamiento.detailsLeader.names.lastName} ${arrendamiento.detailsLeader.surnames.firstSurname} ${arrendamiento.detailsLeader.surnames.lastSurname}`}</p></td>
+                                    <td className="tr8_contractLease td8_contractLease"><p className="p68_contractLease ft43_contractLease">{values_contract.secretary.name}</p></td>
                                 </tr>
                                 <tr style={{ borderBottom: '1px solid #000' }}>
                                     <td className="tr9_contractLease td2_contractLease"></td>
@@ -1924,16 +1862,16 @@ const LeaseDocContract = () => {
                             </table>
                             <p className="p69_contractLease ft6_contractLease">Página 18 de 18</p>
                             <p className="p13_contractLease ft12_contractLease">
-                                _________________________________________________________________________________________________
+                                ______________________________________________________________________________________________
                             </p>
-                            <p className="p14_contractLease ft12_contractLease">
-                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165 Línea
-                                Única de Atención a la Ciudadanía 44 44 144
+                            <p className="p9_contractLease ft6_contractLease">
+                                Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165
                             </p>
-                            <p className="p15_contractLease ft16_contractLease">
-                                <a href="http://www.medellin.gov.co">www.medellin.gov.co</a>
+                            <p className="p9_contractLease ft6_contractLease">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p9_contractLease ft6_contractLease">
+                                <a href="http://www.medellin.gov.co"><span className="ft13_contractLease">www.medellin.gov.co</span></a>
                             </p>
-                            <p className="p16_contractLease ft6_contractLease">Medellín - Colombia</p>
+                            <p className="p9_contractLease ft6_contractLease">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>

@@ -23,7 +23,10 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         environmental_risk: "",
         registration_date: moment(new Date().getTime()).format('YYYY-MM-DD'),
         contract_period: "",
-        business_type: "",
+        business_type: {
+            select: "",
+            input: "",
+        },
         lockable_base: 10,
         //solicitante
         applicant: {
@@ -122,7 +125,7 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         public_service: Yup.string().required('obligatorio'),
         administration_value: Yup.number().required('obligatorio'),
         lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
-        business_type: Yup.string().required('obligatorio'),
+        //business_type: Yup.string().required('obligatorio'),
         fines: Yup.string().required('obligatorio'),
         boundaries: Yup.string().required('obligatorio'),
         // solo arrrendamiento

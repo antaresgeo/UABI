@@ -19,11 +19,11 @@ const useRoutes = (props = null): IRoute[] => {
         homeRoutes,
         asegurabilidadRoutes,
         notificationRoutes,
+        documentManagementRoutes,
         usersRoutes,
         occupationRoutes,
         InventoryRecordRoutes,
         dispositionRoutes,
-        documentManagementRoutes,
     ]);
 };
 

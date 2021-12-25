@@ -14,6 +14,7 @@ const DetailRealEstate = () => {
 
     useEffect(() => {
         if (id) {
+            dispatch(actions.clearRealEstate())
             dispatch(actions.getRealEstate(id));
             dispatch(actions.getTipologies());
         }

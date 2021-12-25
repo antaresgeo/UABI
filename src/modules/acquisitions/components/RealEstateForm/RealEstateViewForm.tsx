@@ -141,16 +141,18 @@ const RealEstateViewForm: FC<IpolizaFormPros> = ({ realEstate, tipology, invento
                                 <label htmlFor="">Sociedad</label>
                                 <div className="my-3">-</div>
                             </div>
-                            <div className="col-3 ">
-                                <label htmlFor="">Póliza</label>
-                                <div className="my-3">
-                                    {realEstate?.policy_id === null ?
-                                        <div className="my-3">No tiene Póliza</div>
-                                        :
-                                        <a className="btn btn-outline-primary  btn-sm" href="#poliza">ver Póliza</a>
-                                    }
+                            {inventory &&
+                                <div className="col-3 ">
+                                    <label htmlFor="">Póliza</label>
+                                    <div className="my-3">
+                                        {realEstate?.policy_id === null ?
+                                            <div className="my-3">No tiene Póliza</div>
+                                            :
+                                            <a className="btn btn-outline-primary  btn-sm" href="#poliza">ver Póliza</a>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+                            }
                             <div className="col-3">
                                 <label htmlFor="">Fecha de Inspeccion</label>
                                 <div className="my-3">
@@ -161,7 +163,7 @@ const RealEstateViewForm: FC<IpolizaFormPros> = ({ realEstate, tipology, invento
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-3">
+                            <div className={`col-${inventory ? 3 : 6}`}>
                                 <label htmlFor="">fecha finalizacion contrato</label>
                                 <div className="my-3">
                                     21/12/2021

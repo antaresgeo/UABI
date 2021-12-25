@@ -40,7 +40,7 @@ overflow: hidden;
 }
 #page_1_contractLease #id1_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 695px;
@@ -56,7 +56,7 @@ width: 572px;
 /* height: 97px; */
 }
 #page_1_contractLease #p1dimg1 #p1img1 {
-width: 600px;
+width: 572px;
 /* height: 97px; */
 }
 
@@ -97,7 +97,7 @@ overflow: hidden;
 }
 #page_2_contractLease #id2_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -113,7 +113,7 @@ width: 572px;
 /* height: 97px; */
 }
 #page_2_contractLease #p2dimg1 #p2img1 {
-width: 600px;
+width: 572px;
 /* height: 97px; */
 }
 
@@ -154,7 +154,7 @@ overflow: hidden;
 }
 #page_3_contractLease #id3_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -211,7 +211,7 @@ overflow: hidden;
 }
 #page_4_contractLease #id4_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -325,7 +325,7 @@ overflow: hidden;
 }
 #page_6_contractLease #id6_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -382,7 +382,7 @@ overflow: hidden;
 }
 #page_7_contractLease #id7_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -439,7 +439,7 @@ overflow: hidden;
 }
 #page_8_contractLease #id8_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -496,7 +496,7 @@ overflow: hidden;
 }
 #page_9_contractLease #id9_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -553,7 +553,7 @@ overflow: hidden;
 }
 #page_10_contractLease #id10_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -610,7 +610,7 @@ overflow: hidden;
 }
 #page_11_contractLease #id11_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -667,7 +667,7 @@ overflow: hidden;
 }
 #page_12_contractLease #id12_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -724,7 +724,7 @@ overflow: hidden;
 }
 #page_13_contractLease #id13_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -781,7 +781,7 @@ overflow: hidden;
 }
 #page_14_contractLease #id14_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -838,7 +838,7 @@ overflow: hidden;
 }
 #page_15_contractLease #id15_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -895,7 +895,7 @@ overflow: hidden;
 }
 #page_16_contractLease #id16_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -952,7 +952,7 @@ overflow: hidden;
 }
 #page_17_contractLease #id17_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -1009,7 +1009,7 @@ overflow: hidden;
 }
 #page_18_contractLease #id18_2 {
 border: none;
-margin: 41px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
 padding: 0px;
 border: none;
 width: 696px;
@@ -1177,15 +1177,15 @@ color: #ff0000;
 line-height: 23px;
 }
 .ft27_contractLease {
-font: bold 14px "Arial";
+font: bold 15px "Arial";
 line-height: 23px;
 }
 .ft28_contractLease {
-font: italic bold 14px "Arial";
+font: italic 15px "Arial";
 line-height: 23px;
 }
 .ft29_contractLease {
-font: 14px "Arial";
+font: 15px "Arial";
 line-height: 23px;
 }
 .ft30_contractLease {
@@ -1202,7 +1202,7 @@ margin-left: 5px;
 line-height: 23px;
 }
 .ft33_contractLease {
-font: 14px "Arial";
+font: 15px "Arial";
 margin-left: 5px;
 line-height: 23px;
 }
@@ -1211,11 +1211,11 @@ font: 13px "Arial";
 line-height: 23px;
 }
 .ft35_contractLease {
-font: bold 14px "Arial";
+font: bold 15px "Arial";
 line-height: 24px;
 }
 .ft36_contractLease {
-font: 14px "Arial";
+font: 15px "Arial";
 line-height: 24px;
 }
 .ft37_contractLease {
@@ -1224,7 +1224,7 @@ margin-left: 4px;
 line-height: 23px;
 }
 .ft38_contractLease {
-font: 14px "Arial";
+font: 15px "Arial";
 margin-left: 8px;
 line-height: 23px;
 }
@@ -1237,7 +1237,7 @@ font: 13px "Arial";
 line-height: 24px;
 }
 .ft41_contractLease {
-font: italic bold 13px "Arial";
+font: italic 15px "Arial";
 line-height: 24px;
 }
 .ft42_contractLease {
@@ -1287,7 +1287,7 @@ margin-bottom: 0px;
 text-align: center;
 padding-left: 7px;
 margin-top: 13px;
-margin-bottom: 0px;
+margin-bottom: 16px;
 width: 580px;
 }
 .p6_contractLease {
@@ -1312,8 +1312,8 @@ white-space: nowrap;
 }
 .p9_contractLease {
 text-align: right;
-padding-left: 275px;
-padding-right: 81px;
+padding-left: 267px;
+padding-right: 118px;
 margin-top: 0px;
 margin-bottom: 0px;
 }
@@ -1387,7 +1387,7 @@ margin-bottom: 0px;
 .p21_contractLease {
 text-align: justify;
 padding-right: 115px;
-margin-top: 1px;
+margin-top: 8px;
 margin-bottom: 0px;
 }
 .p22_contractLease {
@@ -1495,7 +1495,7 @@ margin-bottom: 0px;
 .p40_contractLease {
 text-align: justify;
 padding-right: 115px;
-margin-top: 0px;
+margin-top: 8px;
 margin-bottom: 0px;
 }
 .p41_contractLease {
@@ -1618,6 +1618,7 @@ margin-bottom: 0px;
 text-align: left;
 margin-top: 37px;
 margin-bottom: 0px;
+padding-right: 120px;
 }
 .p62_contractLease {
 text-align: left;

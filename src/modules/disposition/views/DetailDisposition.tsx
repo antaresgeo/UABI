@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from '../../../utils/ui';
 import { useHistory, useParams } from 'react-router-dom';
 import Detail_disposition from './../components/Detail_disposition';
+import Detail_Lease from '../components/Precontractual/Lease/Detail_Lease';
+import Detail_comodato from '../components/Precontractual/comodato/Detail_comodato';
+import Detail_publicUse from '../components/Precontractual/PublicUse/Detail_publicUse';
 
 interface IProps {
     id: string;

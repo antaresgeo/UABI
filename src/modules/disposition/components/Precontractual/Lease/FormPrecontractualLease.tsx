@@ -122,7 +122,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         <option key="Aforo" value="Aforo">Aforo</option>
                         <option key="Recobro" value="Recobro">Recobro</option>
                         <option key="Contador individualizado" value="Contador individualizado">Contador individualizado</option>
-                        <option key="Prepago" value="Valor de servicio público">Prepago</option>
+                        <option key="Prepago" value="Prepago">Prepago</option>
 
                     </Field>
                     <ErrorMessage name="public_service" />
@@ -399,21 +399,43 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     <ErrorMessage name="coverage" />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="business_type_id" className="form-label">
+                    <label htmlFor="business_type_select_id" className="form-label">
                         Tipo de negocio<span className="text-danger">*</span>
                     </label>
                     <Field
-                        type="text"
-                        className="form-control"
-                        id="business_type_id"
-                        name="business_type"
-                        aria-describedby="emailHelp"
-                        placeholder="Tipo de negocio"
-                        autoComplete="off"
-                        maxLength={200}
-                    />
-                    <ErrorMessage name="business_type" withCount max={200} />
+                        as="select"
+                        className="w-100 form-select form-control"
+                        id="business_type_select_id"
+                        name="business_type.select"
+                        disabled={false}
+                    >
+                        <option key="business_type" value="" hidden>
+                            --Seleccione tipo de negocio--
+                        </option>
+                        <option key="Restaurante" value="Restaurante">Restaurante</option>
+                        <option key="Cafetería" value="Cafetería">Cafetería</option>
+                        <option key="otro" value="otro">otro</option>
+                    </Field>
+                    <ErrorMessage name="business_type.select" />
                 </div>
+                {formik.values.business_type.select === "otro" &&
+                    <div className="col-6">
+                        <label htmlFor="business_type_input_id" className="form-label">
+                            cual tipo de negocio
+                        </label>
+                        <Field
+                            type="text"
+                            className="form-control"
+                            id="business_type_input_id"
+                            name="business_type.input"
+                            aria-describedby="emailHelp"
+                            placeholder="digite el tipo de negocio"
+                            autoComplete="off"
+                            maxLength={200}
+                        />
+                        <ErrorMessage name="business_type.input" withCount max={200} />
+                    </div>
+                }
                 <div className="col-6">
                     <label htmlFor="environmental_risk_id" className="form-label">
                         Riesgos Ambientales<span className="text-danger">*</span>
@@ -464,7 +486,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="destination_realEstate" withCount max={200} />
                 </div>
-                <div className="col-12">
+                <div className={`col-${formik.values.business_type_select === 'otro' ? 6: 12}`}>
                     <label htmlFor="boundaries_id" className="form-label">
                         Descripcion de linderos<span className="text-danger">*</span>
                     </label>

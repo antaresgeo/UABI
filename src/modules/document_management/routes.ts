@@ -10,6 +10,19 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
+            path: '/document-management/electronic_file/view/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Expediente Electrónico', to: '/document-management/electronic_file/list' },
+                    { name: 'Documentos Asociados' },
+                ],
+            },
+            component: Electronic_file,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
             path: '/document-management/master_formats/',
             component: Master_formats,
         },
@@ -18,16 +31,13 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: '/document-management/electronic_file/list',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Expediente Electrónico' },
+                ],
+            },
             component: Electronic_file_list,
         },
-        {
-            exact: true,
-            is_private: true,
-            can_access: true,
-            path: '/document-management/electronic_file/',
-            component: Electronic_file,
-        },
-
     ];
 };
 
