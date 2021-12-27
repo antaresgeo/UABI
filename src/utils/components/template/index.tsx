@@ -7,6 +7,9 @@ import AppHeader from './header';
 import { Link, useHistory } from 'react-router-dom';
 import { Breadcrumb } from '../app_router/custom_types';
 import Menu from 'antd/lib/menu';
+import {useDispatch} from "react-redux";
+import {actions} from "../../../modules/notificacions/redux";
+import notification from "antd/lib/notification";
 
 interface ITemplate {
     breadcrumbs?: Breadcrumb[];
@@ -15,6 +18,7 @@ interface ITemplate {
 }
 
 const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user }) => {
+    const dispatch = useDispatch();
     const { Header, Sider, Content } = Layout;
     const history = useHistory();
     const context = useContext(TemplateContext);
@@ -34,6 +38,26 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
         (user && Object.values(user?.surnames).join(' ')) || ''
     }`;
 
+    const openNotification = (data) => {
+        console.log('new:notification', data);
+        notification.info({
+            message: 'Notification Title',
+            description:
+                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+            placement: 'bottomRight',
+        });
+        const init = async (id) => {
+            await dispatch(actions.get_list_notifications(id));
+        };
+        init(user.id);
+    };
+
+    useEffect(() => {
+        context.socket?.on('new:notification', (data) => {
+            openNotification(data);
+        });
+    }, [user]);
+
     return (
         <>
             <Layout className="w-100 h-100">
@@ -42,7 +66,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                 </Sider>
                 <Layout className="site-layout">
                     <Header className="sabi-header p-0">
-                        <AppHeader collapsible={collapsible} name={name} />
+                        <AppHeader collapsible={collapsible} name={name} user_id={user?.id} />
                     </Header>
                     <Content>
                         <div className={`deck ${context.drawer_menu_collapsed ? 'active' : ''}`} />
@@ -124,6 +148,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                     className=" p-4 session-close"
                     onClick={() => {
                         localStorage.removeItem('_tk_');
+                        localStorage.removeItem('_uk_');
                         context.drawer_close();
                         history.push('/auth/login/');
                     }}

@@ -3,7 +3,7 @@ import { Field, Form, Formik } from 'formik';
 import Dropdown from 'antd/lib/dropdown';
 import Menu from 'antd/lib/menu';
 import { LinkButton } from './link';
-import moment from "moment";
+import moment from 'moment';
 
 interface FilterFormProps {
     filters: { key: string; name: string; type?: string }[];
@@ -16,14 +16,14 @@ const FilterForm: FC<FilterFormProps> = ({ filters, onSubmit /*, disabled*/ }) =
         <Formik
             enableReinitialize
             onSubmit={(_values, form) => {
-                const values: any = {..._values};
+                const values: any = { ..._values };
                 if (values.type === 'date') {
                     const newDate = moment(values.value).format('YYYY/MM/DD');
                     values.value = new Date(newDate).getTime();
                 }
                 delete values.type;
                 form.setSubmitting(true);
-                onSubmit(values, form)
+                onSubmit(values.value ? { ...values } : {}, form)
                     .then(() => {
                         form.setSubmitting(false);
                     })

@@ -4,22 +4,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 import { swal } from '../../../../utils';
+import FilterForm from "../../../../utils/ui/filter_form";
 
 const InsuranceCompanies = () => {
     const dispatch = useDispatch();
     const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
     const loading: boolean = useSelector((store: any) => store.insurability.companies.loading);
     const { total_results } = useSelector((store: any) => store.insurability.companies.pagination);
-    const [query /*, set_query*/] = useState<string>('');
+    const [filters, set_filters] = useState(null);
 
-    const filter = () => {
-        const filters = { page: 1, ...(query ? { q: query } : {}) };
-        dispatch(actions.get_all_companies(filters));
+    const filter = async (_filters, _) => {
+        set_filters(_filters);
+        await dispatch(actions.get_all_companies(_filters));
     };
 
     const change_page = (page, pageSize) => {
-        const filters = { page, pageSize, ...(query ? { q: query } : {}) };
-        dispatch(actions.get_all_companies(filters));
+        dispatch(actions.get_all_companies({ page, pageSize, ...filters }));
     };
 
     const deleteInsuranceCompany = (id) => async () => {
@@ -50,7 +50,7 @@ const InsuranceCompanies = () => {
                 }).then(async (result) => {
                     if (result.isConfirmed) {
                         await dispatch(actions.delete_company(id));
-                        await filter();
+                        await filter({}, null);
                     } else if (result.isDenied) {
                         swal.close();
                     }
@@ -71,7 +71,7 @@ const InsuranceCompanies = () => {
 
             if (result.isConfirmed) {
                 await dispatch(actions.delete_company(id));
-                await filter();
+                await filter({}, null);
             } else if (result.isDenied) {
                 swal.close();
             }
@@ -156,7 +156,7 @@ const InsuranceCompanies = () => {
     ];
 
     useEffect(() => {
-        dispatch(actions.get_all_companies());
+        dispatch(actions.clear_all_companies());
     }, []);
 
     return (
@@ -167,6 +167,13 @@ const InsuranceCompanies = () => {
                         title="Compañias Aseguradoras"
                         extra={<Link to="/insurabilities/company/create/" name="Crear" iconText="+" />}
                     >
+                        <div className="row justify-content-between">
+                            <div className="col-5 d-flex">
+                                <div className="col-6 ">
+                                    <FilterForm filters={[{ key: 'name', name: 'Nombre' }]} onSubmit={filter} />
+                                </div>
+                            </div>
+                        </div>
                         <UiTable
                             columns={table_columns}
                             items={insurance_companies}

@@ -8,7 +8,7 @@ interface IpolizaFormPros {
 
 }
 export const PolizaViewForm: FC<IpolizaFormPros> = ({ policy_id }) => {
-    //const companies = poliza.insurance_companies.map((policy) => policy.name).join(', ');
+    //const companies = poliza?.insurance_companies.map((policy) => policy.name).join(', ');
     const dispatch = useDispatch();
     const poliza: any = useSelector((store: any) => store.insurability.policy.value);
     useEffect(() => {

@@ -2,7 +2,7 @@ import authTypes from './types';
 import service from './service';
 import { service as user_service } from '../../users/redux';
 // import { PasswordResetBody, RequestAccessBody } from '../custom_types';
-import { swal_warning } from '../../../utils';
+import { base64Encode, swal_warning } from '../../../utils';
 
 export type TokenPayload = {
     access: string;
@@ -34,9 +34,11 @@ const bad_login = (dispatch) => (error) => {
 
 const get_user = (token: string) => {
     return (dispatch) => {
-        return user_service.get_user_by_id(null, token).then((user) => {
+        return user_service.get_user_by_id(null, token).then(async (user) => {
             dispatch(newToken({ access: token }));
             dispatch(loginSuccess(user));
+            const user_hash = await base64Encode(JSON.stringify(user));
+            localStorage.setItem('_uk_', user_hash);
             return Promise.resolve(user);
         });
     };

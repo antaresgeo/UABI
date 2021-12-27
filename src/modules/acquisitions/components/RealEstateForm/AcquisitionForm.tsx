@@ -6,6 +6,7 @@ import ErrorMessage from '../../../../utils/ui/error_messge';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 import * as Yup from 'yup';
 import Tooltip from 'antd/lib/tooltip';
+import PersonaM from "../../../../utils/ui/PersonaM";
 
 interface AcquisitionsFromProps {
     innerRef?: any;
@@ -121,17 +122,10 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     </Tooltip>
                                 </label>
                                 <Field
-                                    as="select"
-                                    className="form-select"
-                                    aria-label="origin"
+                                    component={PersonaM}
                                     id="origin_id"
                                     name="origin"
-                                >
-                                    <option value="">-- Seleccione Procedencia --</option>
-                                    <option value={1}>Alexander</option>
-                                    <option value={2}>Sergio</option>
-                                    <option value={3}>Ximena</option>
-                                </Field>
+                                />
                                 <ErrorMessage name="origin" />
                             </div>
                         </div>
