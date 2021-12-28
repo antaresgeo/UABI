@@ -1,20 +1,24 @@
 import { Field } from 'formik';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import Select from './../../../../utils/ui/select';
 
 interface FormProps {
     formik: any;
+    realEstate?: any;
 }
 
-export const FormContract: FC<FormProps> = ({ formik }) => {
+export const FormContract: FC<FormProps> = ({ formik, realEstate }) => {
+    useEffect(() => {
+        formik.setFieldValue('dispose_area', realEstate?.plot_area, false)
+    }, [])
     return (
         <>
             <div className="row">
                 <div className="col">
                     <label htmlFor="decree_number_id" className="form-label">
-                        Número Decreto Municipal
+                        Número Decreto Municipal<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="number"
@@ -27,7 +31,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col">
                     <label htmlFor="decree_date_id" className="form-label">
-                        Fecha Decreto Municipal
+                        Fecha Decreto Municipal<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="date"
@@ -40,7 +44,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col">
                     <label htmlFor="act_number_id" className="form-label">
-                        Número de Acta de posesión
+                        Número de Acta de posesión<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="number"
@@ -53,7 +57,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col">
                     <label htmlFor="minutes_date_id" className="form-label">
-                        Fecha de Acta de posesión
+                        Fecha de Acta de posesión<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="date"
@@ -68,7 +72,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
             <div className="row">
                 <div className="col-3">
                     <label htmlFor="contract_decree_id" className="form-label">
-                        Decreto municipal del contrato
+                        Decreto municipal del contrato<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="select"
@@ -89,7 +93,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="manager_sabi_id" className="form-label">
-                        ¿UABI es la encargada del contrato?
+                        ¿UABI es la encargada del contrato?<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="select"
@@ -109,7 +113,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="dispose_area_id" className="form-label">
-                        área a disponer
+                        área a disponer<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="number"
@@ -124,7 +128,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
             <div className="row">
                 <div className="col-6">
                     <label htmlFor="subscription_date_id" className="form-label">
-                        Fecha de suscripción del contrato
+                        Fecha de suscripción del contrato<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="date"
@@ -137,7 +141,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-6">
                     <label htmlFor="finish_date_id" className="form-label">
-                        Fecha de Terminación del contrato
+                        Fecha de Terminación del contrato<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="date"
@@ -152,7 +156,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
             <div className="row">
                 <div className="form-group col-6">
                     <label htmlFor="object_contract_id" className="form-label">
-                        Objeto del contrato
+                        Objeto del contrato<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="textarea"
@@ -166,7 +170,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="form-group col-6">
                     <label htmlFor="guarantee_id" className="form-label">
-                        Garantias
+                        Garantias<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="textarea"
@@ -174,15 +178,15 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                         name="guarantee"
                         id="guarantee_id"
                         className="form-control"
-                        maxLength={200}
+                        maxLength={2000}
                     />
-                    <ErrorMessage name="guarantee" withCount max={200} />
+                    <ErrorMessage name="guarantee" withCount max={2000} />
                 </div>
             </div>
             <div className="row">
                 <div className="col">
                     <label htmlFor="secretary_name_id" className="form-label">
-                        Nombre Seretario de Suministros y Servicios
+                        Nombre Seretario de Suministros y Servicios<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
@@ -195,7 +199,7 @@ export const FormContract: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col">
                     <label htmlFor="secretary_id_number" className="form-label">
-                        Número documento
+                        Número documento<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="number"

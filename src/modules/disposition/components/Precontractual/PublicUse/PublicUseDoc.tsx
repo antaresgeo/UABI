@@ -123,10 +123,10 @@ const PublicUseDoc = () => {
                             <p className="p14 ft12">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p15 ft13">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
-                            <p className="p16 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p17 ft14">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
+                            <p className="p17 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
                             <p className="p17 ft14">www.medellin.gov.co</p>
-                            <p className="p18 ft13">Medellín - Colombia</p>
+                            <p className="p17 ft14">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
@@ -215,10 +215,10 @@ const PublicUseDoc = () => {
                             <p className="p14 ft12">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p15 ft13">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
-                            <p className="p16 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p17 ft14">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
+                            <p className="p17 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
                             <p className="p17 ft14">www.medellin.gov.co</p>
-                            <p className="p18 ft13">Medellín - Colombia</p>
+                            <p className="p17 ft14">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
@@ -455,10 +455,10 @@ const PublicUseDoc = () => {
                             <p className="p14 ft12">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p15 ft13">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
-                            <p className="p16 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p17 ft14">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
+                            <p className="p17 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
                             <p className="p17 ft14">www.medellin.gov.co</p>
-                            <p className="p18 ft13">Medellín - Colombia</p>
+                            <p className="p17 ft14">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
@@ -556,10 +556,10 @@ const PublicUseDoc = () => {
                             <p className="p14 ft12">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p15 ft13">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
-                            <p className="p16 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p17 ft14">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
+                            <p className="p17 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
                             <p className="p17 ft14">www.medellin.gov.co</p>
-                            <p className="p18 ft13">Medellín - Colombia</p>
+                            <p className="p17 ft14">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
@@ -725,10 +725,10 @@ const PublicUseDoc = () => {
                             <p className="p52 ft12">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p53 ft13">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
-                            <p className="p54 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
-                            <p className="p55 ft14">www.medellin.gov.co</p>
-                            <p className="p56 ft13">Medellín - Colombia</p>
+                            <p className="p17 ft14">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
+                            <p className="p17 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p17 ft14">www.medellin.gov.co</p>
+                            <p className="p17 ft14">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
@@ -813,10 +813,10 @@ const PublicUseDoc = () => {
                             <p className="p14 ft12">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p15 ft13">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
-                            <p className="p16 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p17 ft14">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
+                            <p className="p17 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
                             <p className="p17 ft14">www.medellin.gov.co</p>
-                            <p className="p18 ft13">Medellín - Colombia</p>
+                            <p className="p17 ft14">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>
@@ -926,10 +926,10 @@ const PublicUseDoc = () => {
                             <p className="p14 ft12">
                                 _________________________________________________________________________________________________
                             </p>
-                            <p className="p15 ft13">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
-                            <p className="p16 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
+                            <p className="p17 ft14">Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165</p>
+                            <p className="p17 ft14">Línea Única de Atención a la Ciudadanía 44 44 144</p>
                             <p className="p17 ft14">www.medellin.gov.co</p>
-                            <p className="p18 ft13">Medellín - Colombia</p>
+                            <p className="p17 ft14">Medellín - Colombia</p>
                         </div>
                     </div>
                 </Card>

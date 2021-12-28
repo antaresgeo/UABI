@@ -27,7 +27,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         subscription_date: "",
         finish_date: "",
         object_contract: "",
-        guarantee: "",
+        guarantee: `EL (LA) ARRENDATARIO(A) deberá otorgar garantía única de cumplimiento en favor de Entidades Estatales, de conformidad con lo establecido por el Decreto Nacional 1082 de 2015, la normativa vigente y demás normas que lo modifiquen, adicionen o sustituyan, la cual debe ser aceptada por EL ARRENDADOR y deberá cubrir los siguientes amparos: 1) Seguro de arrendamiento. Con el fin de garantizar las obligaciones que en razón de este contrato asume EL (LA) ARRENDATARIO(A), deberá otorgar una garantía correspondiente al cien por ciento (100%) del valor total del contrato, con una vigencia igual al plazo pactado en el contrato y cuatro (4) meses más. En caso de que sea Centros Comerciales Populares o Cerros Tutelares deberá otorgar garantía única de cumplimiento en favor de Entidades Estatales, la cual debe ser aceptada por EL ARRENDADOR y deberá cubrir los siguientes amparos: 1) Cumplimiento. Con el fin de garantizar las obligaciones que en razón de este contrato asume EL (LA) ARRENDATARIO(A), deberá otorgar una garantía correspondiente al treinta por ciento (30 %) del valor del contrato, con una vigencia igual al plazo pactado y cuatro (4) meses más, para dar cumplimiento a lo estipulado en la Ley 80 de 1993 y decretos reglamentarios. En caso de que sea vivienda urbana, no se exigirán garantías al ARRENDATARIO(A) para la ejecución del contrato de arrendamiento, teniendo en cuenta las condiciones sociales y económicas de los arrendatarios, a quienes les es muy difícil cumplir con los requisitos exigidos por las empresas aseguradoras para la expedición de las garantías.`,
         type_contract: dispositionType,
         secretary: {
             name: "",
@@ -42,7 +42,22 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         });
     };
 
-    const schema = Yup.object().shape({});
+    const schema = Yup.object().shape({
+        decree_number: Yup.number().required('obligatorio'),
+        decree_date: Yup.string().required('obligatorio'),
+        act_number: Yup.number().required('obligatorio'),
+        minutes_date: Yup.string().required('obligatorio'),
+        contract_decree: Yup.string().required('obligatorio'),
+        manager_sabi: Yup.string().required('obligatorio'),
+        dispose_area: Yup.number().required('obligatorio'),
+        subscription_date: Yup.string().required('obligatorio'),
+        finish_date: Yup.string().required('obligatorio'),
+        object_contract: Yup.string().required('obligatorio'),
+        secretary: Yup.object({
+            name: Yup.string().required('obligatorio'),
+            id_number: Yup.number().required('obligatorio'),
+        })
+    });
     return (
         <>
             <div className="col-3-12">
@@ -89,7 +104,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                     return (
                         <Form>
                             <Card title={`Informacion Contrato de ${dispositionType !== "Comodato" && dispositionType !== "arrendamiento" ? "" : dispositionType}`}>
-                                <FormContract formik={formik} />
+                                <FormContract formik={formik} realEstate={realEstate} />
                             </Card>
                         </Form>
                     );

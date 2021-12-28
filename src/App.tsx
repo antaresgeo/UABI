@@ -19,7 +19,7 @@ function App() {
         permits: user?.permits?.map((a) => a.name) || [],
         roles: user?.roles?.map((a) => a.name) || [],
     };
-    const show = token ? !!(token /*&& !!user*/) : true;
+    const show = token ? !!(token && !!user) : true;
 
     useEffect(() => {
         if (token && !user) {

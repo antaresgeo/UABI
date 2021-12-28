@@ -47,7 +47,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
             formik.setFieldValue('patrimonial_value', value_patrimonial, false);
             formik.setFieldValue('accounting_amount', value_patrimonial, false);
         }
-    }, [acquisitions,inventory])
+    }, [acquisitions, inventory])
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(actions.getTipologies());
@@ -359,9 +359,38 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             min={0}
                         />
                         <div className="input-group-prepend">
-                            <span className="input-group-text bg-white border-start-0">
-                                m<sup>2</sup>
-                            </span>
+                            <Field
+                                component={Select}
+                                className="input-group-text bg-white border-start-0"
+                                name="total_area_unit"
+                                defaultValue="m2"
+                                options={[
+                                    {
+                                        id: "m2",
+                                        name: (
+                                            <span>
+                                                m<sup>2</sup>
+                                            </span>
+                                        ),
+                                    },
+                                    {
+                                        id: "yd2",
+                                        name: (
+                                            <span>
+                                                yd<sup>2</sup>
+                                            </span>
+                                        ),
+                                    },
+                                    {
+                                        id: "ft2",
+                                        name: (
+                                            <span>
+                                                ft<sup>2</sup>
+                                            </span>
+                                        ),
+                                    },
+                                ]}
+                            />
                         </div>
                     </div>
 
@@ -550,9 +579,41 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             min={0}
                         />
                         <div className="input-group-prepend">
-                            <span className="input-group-text bg-white border-start-0">
+                            <Field
+                                component={Select}
+                                className="input-group-text bg-white border-start-0"
+                                name="plot_area_unit"
+                                defaultValue="m2"
+                                options={[
+                                    {
+                                        id: "m2",
+                                        name: (
+                                            <span>
+                                                m<sup>2</sup>
+                                            </span>
+                                        ),
+                                    },
+                                    {
+                                        id: "yd2",
+                                        name: (
+                                            <span>
+                                                yd<sup>2</sup>
+                                            </span>
+                                        ),
+                                    },
+                                    {
+                                        id: "ft2",
+                                        name: (
+                                            <span>
+                                                ft<sup>2</sup>
+                                            </span>
+                                        ),
+                                    },
+                                ]}
+                            />
+                            {/* <span className="input-group-text bg-white border-start-0">
                                 m<sup>2</sup>
-                            </span>
+                            </span> */}
                         </div>
                     </div>
                     <ErrorMessage name="plot_area" />
@@ -592,9 +653,42 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             }}
                         />
                         <div className="input-group-prepend">
-                            <span className="input-group-text bg-white border-start-0">
+                            <Field
+                                component={Select}
+                                className="input-group-text bg-white border-start-0"
+                                name="construction_area_unit"
+                                defaultValue="m2"
+                                options={[
+                                    {
+                                        id: "m2",
+                                        name: (
+                                            <span>
+                                                m<sup>2</sup>
+                                            </span>
+                                        ),
+                                    },
+                                    {
+                                        id: "yd2",
+                                        name: (
+                                            <span>
+                                                yd<sup>2</sup>
+                                            </span>
+                                        ),
+                                    },
+                                    {
+                                        id: "ft2",
+                                        name: (
+                                            <span>
+                                                ft<sup>2</sup>
+                                            </span>
+                                        ),
+                                    },
+                                ]}
+                            />
+                            {/* <span className="input-group-text bg-white border-start-0">
                                 m<sup>2</sup>
-                            </span>
+                            </span> */}
+
                         </div>
                     </div>
                     <ErrorMessage name="construction_area" />
