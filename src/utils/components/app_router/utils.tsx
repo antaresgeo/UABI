@@ -15,7 +15,7 @@ export const get_can_access = (can_access: CanAccess, props: any): boolean => {
     if (has_access) {
         // console.log(11)
         if (typeof can_access === 'function') {
-            console.log(12, can_access)
+            // console.log(12, can_access)
             has_access = can_access(props);
         }
     }

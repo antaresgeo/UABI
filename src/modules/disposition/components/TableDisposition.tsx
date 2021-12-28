@@ -15,19 +15,7 @@ export const TableDiszposition: FC<DispositionListProps> = ({ filters /*, init*/
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
     const loading: boolean = useSelector((store: any) => store.acquisitions.realEstates.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.realEstates.pagination);
-    let newrealEstates = [];
 
-    newrealEstates = realEstates.reduce((valor_anterior, valor_actual) => {
-        const codigos = valor_actual.sap_id.split(',');
-        for (let i = 0; i < codigos.length; i++) {
-            const obj = {
-                ...valor_actual,
-            };
-            obj.sap_id = codigos[i];
-            valor_anterior.push(obj);
-        }
-        return valor_anterior;
-    }, []);
     const table_columns = [
         {
             title: 'ID', //TODO: ID del proyecto
@@ -117,10 +105,10 @@ export const TableDiszposition: FC<DispositionListProps> = ({ filters /*, init*/
     return (
         <Table
             columns={table_columns}
-            items={newrealEstates}
-            // with_pagination
-            // count={total_results}
-            // change_page={change_page}
+            items={realEstates}
+            with_pagination
+            count={total_results}
+            change_page={change_page}
             loading={loading}
         />
     );
