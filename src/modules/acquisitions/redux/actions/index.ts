@@ -32,6 +32,9 @@ const getProjects = (filters?: any) =>
 const clearProjects = () =>
     request_dispatch(types.projects, Promise.resolve([]));
 
+const clearProject = () =>
+    request_dispatch(types.projects, Promise.resolve(null));
+
 const createProject = (values) =>
     request_dispatch(types.project, service.createProject(values));
 
@@ -49,6 +52,7 @@ const actions = {
     updateProject,
     deleteProject,
     clearProjects,
+    clearProject,
     getRealEstates,
     getRealEstatesByProject,
     getRealEstateByPolicy,

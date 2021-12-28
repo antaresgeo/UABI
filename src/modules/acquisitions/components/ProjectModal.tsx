@@ -17,7 +17,7 @@ const ProjectModal: FC<LocationModalProps> = ({ /*onSave,*/ disabled, openArea, 
     const open = () => !disabled && set_is_visible(true);
     const close = () => set_is_visible(false);
     const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
-    console.log(realEstates.length);
+    // console.log(realEstates.length);
     useEffect(() => {
         //dispatch(actions.getProject(id));
         if (realEstates?.length === 0) {
