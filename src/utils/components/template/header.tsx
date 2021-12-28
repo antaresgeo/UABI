@@ -5,7 +5,7 @@ import Badge from 'antd/lib/badge';
 import { DropdownNotification } from '../../../modules/notificacions/views/DropdownNotification';
 import Dropdown from 'antd/lib/dropdown';
 
-const Header: FC<{ collapsible: boolean; name: string }> = ({ collapsible, name }) => {
+const Header: FC<{ collapsible: boolean; name: string; user_id: number }> = ({ collapsible, name, user_id }) => {
     const context = useContext(TemplateContext);
     return (
         <div className="bar">
@@ -21,15 +21,7 @@ const Header: FC<{ collapsible: boolean; name: string }> = ({ collapsible, name 
                     <span>
                         Hola, <b>{name}</b>
                     </span>
-                    <Dropdown overlay={<DropdownNotification />}>
-                        <Badge
-                            count={100}
-                            style={{ backgroundColor: 'transparent', color: '#FF8900' }}
-                            offset={[16, 8]}
-                        >
-                            <i className="fa fa-bell" style={{ fontSize: 18, marginLeft: 20, color: '#FF8900' }} />
-                        </Badge>
-                    </Dropdown>
+                    <DropdownNotification user_id={user_id} />
                     <PicRightOutlined
                         onClick={context.drawer_open}
                         style={{ fontSize: 22, marginLeft: 35, color: '#1faeef' }}

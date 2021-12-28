@@ -18,7 +18,7 @@ const DetailNotification = () => {
 
     useEffect(() => {
         dispatch(actions.get_notification_by_id(parseInt(id)));
-    }, []);
+    }, [id]);
 
     const initial_values = {
         title: '',
@@ -34,7 +34,6 @@ const DetailNotification = () => {
                     <Card title="Notificacion">
                         <Formik enableReinitialize initialValues={initial_values} onSubmit={() => {}}>
                             {({ values }) => {
-                                console.log(values);
                                 return (
                                     <Form>
                                         <div className="row">

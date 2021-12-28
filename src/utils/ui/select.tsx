@@ -15,8 +15,8 @@ const Select: FC<SelectProps> = ({ children, field, form, options, className, ex
         options = [];
     }
     const on_change = (value) => {
+        form.setFieldValue(field.name, value, false);
         extra_on_change && extra_on_change(value, field.value);
-        form.setFieldValue(field.name, value);
     };
     const render_options = (items) =>
         items.map((item, i) => {

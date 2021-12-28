@@ -43,7 +43,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
     const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
     useEffect(() => {
-        dispatch(actions.getRealEstates({}))
+        dispatch(actions.getRealEstates({}));
         //dispatch(actions.getRealEstateByPolicy("policies"));
     }, []);
 
@@ -128,8 +128,6 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
         //     .min(0, 'El minimo es 0')
         //     .max(9999999999, 'El maximo 10 es caracteres'),
 
-
-
         // .test({
         //     message: 'Revise los porcentajes',
         //     test: arr => {
@@ -172,7 +170,13 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
     };
 
     return (
-        <Formik enableReinitialize onSubmit={submit} innerRef={innerRef} initialValues={initialValues} validationSchema={schema}>
+        <Formik
+            enableReinitialize
+            onSubmit={submit}
+            innerRef={innerRef}
+            initialValues={initialValues}
+            validationSchema={schema}
+        >
             {({ setFieldValue, values, handleChange, isSubmitting }) => {
                 return (
                     <Form>
@@ -187,33 +191,30 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                         name="real_estates_id"
                                         id="real_estates_id_id"
                                         className="w-100"
-                                        options={newrealEstates.map((realestate) => ({
-                                            id: realestate.id,
-                                            name: realestate.registry_number,
-                                        }))}
+                                        options={[
+                                            { id: 'all', name: 'Todas las matriculas' },
+                                            ...newrealEstates.map((realestate) => ({
+                                                id: realestate.id,
+                                                name: realestate.registry_number,
+                                            })),
+                                        ]}
                                         mode="multiple"
                                         extra_on_change={(ids) => {
-                                            const registryNumberRealEstates = ids.map((id) => {
-                                                const real_estate = realEstates.find((r) => r.id === id);
-                                                return real_estate.registry_number;
-                                            });
-                                            setFieldValue('registry_numbers', registryNumberRealEstates, false);
+                                            if (ids.includes('all')) {
+                                                const registryNumberRealEstates = realEstates.map((r) => {
+                                                    return r.registry_number;
+                                                });
+                                                setFieldValue('real_estates_id', ['all'], false);
+                                                setFieldValue('registry_numbers', registryNumberRealEstates, false);
+                                            } else {
+                                                const registryNumberRealEstates = ids.map((id) => {
+                                                    const real_estate = realEstates.find((r) => r.id === id);
+                                                    return real_estate.registry_number;
+                                                });
+                                                setFieldValue('registry_numbers', registryNumberRealEstates, false);
+                                            }
                                         }}
-                                    // onChange={(e) => {
-                                    //handleChange(e)
-                                    // const realEstate = realEstates.find((r) => {
-                                    //     return e.target.value === r.registry_number
-                                    // })
-                                    // setFieldValue('real_estate_id', realEstate.id, false);
-                                    // }}
-                                    >
-                                        {/* <option key="matricula" value="" disabled>
-                                            --Seleccione el tipo de póliza--
-                                        </option>
-                                        {realEstates.map(real_estate =>
-                                            <option key={realEstate?.id} value={real_estate?.registry_number}>{real_estate?.registry_number}</option>
-                                        )} */}
-                                    </Field>
+                                    />
                                     <ErrorMessage name="real_estates_id" />
                                 </div>
                             )}
@@ -386,11 +387,11 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                                     const insurance_companies_list = [
                                                         values.insurance_companies[0],
                                                     ] || [
-                                                            {
-                                                                id: '',
-                                                                percentage_insured: '',
-                                                            },
-                                                        ];
+                                                        {
+                                                            id: '',
+                                                            percentage_insured: '',
+                                                        },
+                                                    ];
                                                     setFieldValue(
                                                         'insurance_companies',
                                                         insurance_companies_list,

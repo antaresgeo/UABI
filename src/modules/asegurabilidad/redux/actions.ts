@@ -15,8 +15,7 @@ const getPolicies = (filters: {
     page?: number;
     pageSize?: 10 | 20 | 30;
     q?: {};
-}) =>
-    request_dispatch(types.policies, service.getPolicies(filters));
+}) => request_dispatch(types.policies, service.getPolicies(filters));
 
 const clearPolicies = () =>
     request_dispatch(types.policies, Promise.resolve([]));
@@ -35,6 +34,8 @@ const get_all_companies = (filters?) =>
         types.get_all_companies,
         service.get_all_companies(filters)
     );
+const clear_all_companies = (filters?) =>
+    request_dispatch(types.get_all_companies, Promise.resolve([]));
 const create_company = (data: Company) =>
     request_dispatch(types.create_company, service.create_company(data));
 const delete_company = (id) =>
@@ -52,6 +53,8 @@ const get_list_brokers = () =>
     request_dispatch(types.get_list_brokers, service.get_list_brokers());
 const get_all_brokers = (filters?) =>
     request_dispatch(types.get_all_brokers, service.get_all_brokers(filters));
+const clear_all_brokers = () =>
+    request_dispatch(types.get_all_brokers, Promise.resolve([]));
 const create_broker = (data: Broker) =>
     request_dispatch(types.create_broker, service.create_broker(data));
 const delete_broker = (id) =>
@@ -85,6 +88,8 @@ const actions = {
     get_broker_by_id,
     update_broker,
     clear_broker,
+    clear_all_brokers,
+    clear_all_companies
 };
 
 export default actions;

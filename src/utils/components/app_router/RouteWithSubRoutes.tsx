@@ -49,6 +49,8 @@ const Route: FC<RouteWithSubRoutesProps> = ({
     const custom_render = (props: any) => {
         const dr = compute_redirect(defaultRedirect, location);
         if (redirect) {
+            localStorage.removeItem("_tk_")
+            localStorage.removeItem("_uk_")
             return compute_redirect(redirect, location);
         }
         const ops = {
@@ -59,10 +61,12 @@ const Route: FC<RouteWithSubRoutesProps> = ({
         const cp = lazy ? withSuspense(ops, dr)(component) : withSuspense(ops, dr, false)(component);
         if (is_private) {
             if (has_access) {
+                console.log(2)
                 const Template = template;
                 const template_ops = { ...template_props, user: _props.user?.detailsUser };
                 return template ? <Template {...template_ops}>{cp}</Template> : cp;
             } else {
+                console.log(3, has_access)
                 return compute_redirect(privateRedirect, location);
             }
         }

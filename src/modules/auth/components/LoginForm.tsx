@@ -38,7 +38,6 @@ const LoginForm: FC<IloginFormPros> = ({ onSubmit, disabled, alert }) => {
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initialValues} validationSchema={schema}>
             {({ isSubmitting }) => {
-                console.log(isSubmitting);
                 return (
                     <Form>
                         <div className="container-inputs-login usuario-item-login">

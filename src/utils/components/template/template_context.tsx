@@ -1,7 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import 'moment/locale/es';
 import { io, Socket } from 'socket.io-client';
+import notification from 'antd/lib/notification';
 import { BASE_URL } from '../../../config/axios_instances/notifications';
+import {actions} from "../../../modules/notificacions/redux";
+import {useDispatch} from "react-redux";
 
 type KeyPath = [string, string?];
 interface TemplateProps {
@@ -22,6 +25,7 @@ interface TemplateProps {
 export const TemplateContext = React.createContext<TemplateProps>(null);
 
 const TemplateProvider: FC = React.memo(({ children }) => {
+
     const [menu_collapsed, set_menu_collapsed] = useState<boolean>(false);
     const [menu_key_path, set_menu_key_path] = useState<KeyPath>(['p0']);
     const [drawer_collapsed, set_drawer_collapsed] = useState<boolean>(false);
@@ -35,13 +39,9 @@ const TemplateProvider: FC = React.memo(({ children }) => {
         new_socket.on('init', (data) => {
             set_idNode(data.id as string);
         });
-        new_socket.on('new:notification', (data) => {
-            console.log('new:notification', data);
-            // socket.emit('receive:notification', {})
-        });
         set_socket(new_socket);
         return () => {
-            new_socket.close();
+            socket?.close();
             set_socket(null);
         };
     }, [set_socket]);

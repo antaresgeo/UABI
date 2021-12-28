@@ -207,12 +207,9 @@ const RealEstateList: FC<RealEstateListProps> = ({
     };
 
     useEffect(() => {
+        dispatch(actions.clearRealEstate());
         if (project_id) {
             dispatch(actions.getRealEstatesByProject(project_id));
-        } else if (init) {
-            // dispatch(actions.getRealEstates({ with: 'pagination' }));
-            dispatch(actions.clearRealEstate());
-
         }
     }, []);
 
