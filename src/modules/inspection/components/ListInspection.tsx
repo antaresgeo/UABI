@@ -1,8 +1,12 @@
 import React from 'react';
 import { Card, Link, Table as UiTable } from '../../../utils/ui';
 import { formatDate } from '../../../utils';
+import FilterForm from '../../../utils/ui/filter_form';
+import Tag  from 'antd/lib/tag';
+import ModalInspection from './ModalInspection';
 
-const ListInspection = ({ inspections, change_page, total_results, loading }) => {
+const ListInspection = ({ inspections, change_page, total_results, loading, projects, filter }) => {
+
     const table_columns = [
         {
             title: 'ID',
@@ -10,27 +14,36 @@ const ListInspection = ({ inspections, change_page, total_results, loading }) =>
             align: 'center' as 'center',
         },
         {
-            title: 'Bien Inmueble',
+            title: 'Nombre',
             dataIndex: 'name',
             align: 'left' as 'left',
         },
         {
-            title: 'Matrícula',
-            dataIndex: 'registry_number',
+            title: 'Dependencia',
+            dataIndex: 'dependency',
             align: 'left' as 'left',
         },
         {
-            title: 'Dirección',
-            dataIndex: 'address',
+            title: 'Fecha Creación',
+            dataIndex: 'audit_trail',
             align: 'left' as 'left',
-            render: (r) => r?.address,
-        },
 
+            render: (audit_trail) => formatDate(audit_trail?.created_on),
+        },
         {
-            title: 'Fecha de Inspección',
-            dataIndex: 'date',
+            title: 'Creado por',
+            dataIndex: 'audit_trail',
             align: 'left' as 'left',
-            render: (date) => formatDate(date) || '-',
+            render: (audit_trail) => audit_trail?.created_by,
+        },
+        {
+            title: 'Estado',
+            dataIndex: 'status',
+            align: 'center' as 'center',
+            render: (s) => {
+                if (s === 'Activo') return <Tag color="success">{s}</Tag>;
+                return <Tag color="default">{s}</Tag>;
+            },
         },
         {
             title: 'Acciones',
@@ -56,13 +69,16 @@ const ListInspection = ({ inspections, change_page, total_results, loading }) =>
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
+
                         return (
-                            <Link
-                                to={`/inspection/${id}/create/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-plus" aria-hidden="true" />}
-                            />
+                            <ModalInspection project_id={id}  />
+
+                            // <Link
+                            //     to={openModal(id)}
+                            //     name=""
+                            //     avatar={false}
+                            //     icon={<i className="fa fa-plus" aria-hidden="true" />}
+                            // />
                         );
                     },
                 },
@@ -74,9 +90,25 @@ const ListInspection = ({ inspections, change_page, total_results, loading }) =>
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <Card title="Inspección">
+                        <div className="row justify-content-between">
+                            <div className="col-5 d-flex">
+                                <div className="col-6 ">
+                                    <FilterForm
+                                        filters={[
+                                            { key: 'id', name: 'Código' },
+                                            { key: 'name', name: 'Nombre' },
+                                            { key: 'dependency', name: 'Dependencia' },
+                                            { key: 'subdependency', name: 'Subdependencia' },
+                                            { key: 'audit_trail.created_by', name: 'Fecha', type: 'date' },
+                                        ]}
+                                        onSubmit={filter}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                         <UiTable
                             columns={table_columns}
-                            items={inspections}
+                            items={projects}
                             with_pagination
                             change_page={change_page}
                             count={total_results}

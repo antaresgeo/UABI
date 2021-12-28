@@ -23,7 +23,7 @@ const FilterForm: FC<FilterFormProps> = ({ filters, onSubmit /*, disabled*/ }) =
                 }
                 delete values.type;
                 form.setSubmitting(true);
-                onSubmit(values.value ? { ...values } : {}, form)
+                onSubmit(values, form)
                     .then(() => {
                         form.setSubmitting(false);
                     })
@@ -36,15 +36,18 @@ const FilterForm: FC<FilterFormProps> = ({ filters, onSubmit /*, disabled*/ }) =
             }}
         >
             {({ values, submitForm, setFieldValue }) => {
+                let p = "";
+                if( filters.length > 0 ) {
+                    const i = filters.find((f) => f.key === values.key);
+                    p = i?.name || ""
+                }
                 return (
                     <Form>
                         <div className="input-group">
                             <Field
                                 type={values.type}
                                 className="form-control"
-                                placeholder={
-                                    filters && filters.length > 0 ? filters.find((f) => f.key === values.key).name : ''
-                                }
+                                placeholder={p}
                                 name="value"
                             />
                             <span className="input-group-text" onClick={() => submitForm()}>

@@ -203,7 +203,7 @@ const Projects = () => {
         dispatch(actions.clearProjects());
 
     }, []);
-    console.log(projects)
+
     return (
 
         <div className="container-fluid">

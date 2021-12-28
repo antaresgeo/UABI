@@ -192,7 +192,7 @@ export const ListRoles = () => {
                         <div className="row justify-content-between">
                             <div className="col-5 d-flex">
                                 <div className="col-6 ">
-                                    <FilterForm filters={[{ key: 'name', name: 'Nombre' }]} onSubmit={filter} />
+                                    <FilterForm filters={[{ key: 'role_name', name: 'Nombre' }]} onSubmit={filter} />
                                 </div>
                             </div>
                         </div>
