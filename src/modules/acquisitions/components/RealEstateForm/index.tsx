@@ -58,6 +58,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             cbml: '',
         },
         total_area: '',
+        total_area_unit: 'm2',
         total_percentage: '',
         zone: 'Urbano',
         tipology_id: '',
@@ -80,6 +81,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         management_center: '',
         cost_center: '',
         construction_area: '',
+        construction_area_unit: 'm2',
         plot_area: '',
         plot_area_unit: 'm2',
         project: {
