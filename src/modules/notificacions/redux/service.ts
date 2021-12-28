@@ -54,8 +54,8 @@ export const get_all_notifications = async (filters?) => {
             await notification_http.get(URI, {
                 params: {
                     ...filters,
-                    // with: 'pagination',
-                    last: 10
+                    with: 'pagination',
+                    last: 10,
                 },
             });
         res.data.results = format_response(res?.data?.results);
@@ -65,25 +65,17 @@ export const get_all_notifications = async (filters?) => {
     }
 };
 
-export const get_list_notifications = async () => {
+export const get_list_notifications = async (to?) => {
     try {
         const URI = '/notifications/';
         const res: AxiosResponse<ListNotificationsResponse> =
-            await notification_http.get(URI);
-        res.data.results = format_response(res?.data?.results);
-        return res.data;
-    } catch (e) {
-        return Promise.reject('Error');
-    }
-};
-
-export const create_notification = async (data: Notification) => {
-    try {
-        const URI = '/notifications/';
-        const res: AxiosResponse<NotificationResponse> =
-            await notification_http.post(URI, {
-                ...data,
+            await notification_http.get(URI, {
+                params: {
+                    ...(to ? { to } : {}),
+                    last: 10,
+                },
             });
+        res.data.results = format_response(res?.data?.results);
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -98,6 +90,33 @@ export const get_notification_by_id = async (id) => {
                 params: {
                     id,
                 },
+            });
+        return res.data;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
+
+export const create_notification = async (
+    title: string,
+    description: string,
+    action: string,
+    priority: number,
+    from: number,
+    _to?: number,
+    toRole?: number
+) => {
+    try {
+        const URI = '/notifications/';
+        const res: AxiosResponse<NotificationResponse> =
+            await notification_http.post(URI, {
+                title,
+                description,
+                action,
+                priority,
+                _to,
+                ...(_to ? { _to } : {}),
+                ...(toRole ? { toRole } : {}),
             });
         return res.data;
     } catch (e) {

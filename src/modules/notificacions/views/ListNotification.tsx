@@ -2,22 +2,34 @@ import { Card, Link, Table as UiTable } from '../../../utils/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { actions } from '../redux';
+import { formatDate } from '../../../utils';
+import { LinkButton } from '../../../utils/ui/link';
 
 const table_columns = [
     {
         title: 'Titulo',
         dataIndex: 'title',
-        align: 'center' as 'center',
+        align: 'left' as 'left',
     },
     {
         title: 'Descripcion',
         dataIndex: 'description',
-        align: 'center' as 'center',
+        align: 'left' as 'left',
     },
     {
-        title: 'Path',
-        dataIndex: 'path',
+        title: 'Fecha',
+        dataIndex: 'audit_trail',
         align: 'center' as 'center',
+        render: (audit_trail) => formatDate(audit_trail?.created_on),
+    },
+    {
+        title: '',
+        dataIndex: 'action',
+        align: 'center' as 'center',
+        render: (action) => {
+            const url = action.split("http://sabi.eastus.cloudapp.azure.com")[1]
+            return <Link to={url} name="Acceso directo"/>
+        },
     },
     {
         title: 'Ver',
@@ -41,7 +53,7 @@ const ListNotification = () => {
         store.notifications.notifications.value,
         store.notifications.notifications.loading,
         store.notifications.notifications.pagination.total_results,
-        store.auth.user.detailsUser,
+        store.auth.user?.detailsUser,
     ]);
 
     useEffect(() => {

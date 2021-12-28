@@ -156,7 +156,7 @@ const base64encode = (string: string) => {
     const buff = Buffer.from(string, 'utf-8');
 
     // decode buffer as Base64
-    return buff.toString('base64');
+    return btoa(string);
 };
 
 function sha256(str: string) {

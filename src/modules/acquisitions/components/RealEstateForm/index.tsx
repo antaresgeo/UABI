@@ -72,7 +72,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 label: 'Documento de Titulo',
                 type: 4,
             },
-
         ],
         active_type: ['Lote'],
         status: 0,
@@ -91,50 +90,49 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         },
         ...(realEstateData
             ? {
-                ...realEstateData,
-                ...(realEstateData?.tipology_id
-                    ? {
-                        accounting_account: tipologies?.find(
-                            (tipology) => tipology.id === realEstateData?.tipology_id
-                        )?.accounting_account,
-                    }
-                    : {}),
-                ...(realEstateData && realEstateData?.address?.id
-                    ? {
-                        address: realEstateData.address.id,
-                        _address: {
-                            name: realEstateData.address.address,
-                            cbml: realEstateData.address.cbmls.uabi,
-                        },
-                    }
-                    : {}),
-                projects_id: realEstateData?.project?.id || 0,
-            }
+                  ...realEstateData,
+                  ...(realEstateData?.tipology_id
+                      ? {
+                            accounting_account: tipologies?.find(
+                                (tipology) => tipology.id === realEstateData?.tipology_id
+                            )?.accounting_account,
+                        }
+                      : {}),
+                  ...(realEstateData && realEstateData?.address?.id
+                      ? {
+                            address: realEstateData.address.id,
+                            _address: {
+                                name: realEstateData.address.address,
+                                cbml: realEstateData.address.cbmls.uabi,
+                            },
+                        }
+                      : {}),
+                  projects_id: realEstateData?.project?.id || 0,
+              }
             : {
-                ...realEstate,
-                ...(realEstate?.tipology_id
-                    ? {
-                        accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id)
-                            ?.accounting_account,
-                    }
-                    : {}),
-                ...(realEstate && realEstate?.address?.id
-                    ? {
-                        address: realEstate.address.id,
-                        _address: {
-                            name: realEstate.address.address,
-                            cbml: realEstate.address.cbmls.uabi,
-                        },
-                    }
-                    : {}),
-                projects_id: realEstate?.project?.id || 0,
-            }),
+                  ...realEstate,
+                  ...(realEstate?.tipology_id
+                      ? {
+                            accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id)
+                                ?.accounting_account,
+                        }
+                      : {}),
+                  ...(realEstate && realEstate?.address?.id
+                      ? {
+                            address: realEstate.address.id,
+                            _address: {
+                                name: realEstate.address.address,
+                                cbml: realEstate.address.cbmls.uabi,
+                            },
+                        }
+                      : {}),
+                  projects_id: realEstate?.project?.id || 0,
+              }),
     };
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
         initial_values.materials = initial_values.materials.split(',');
     }
-
 
     if (initial_values.supports_documents.length === 0) {
         initial_values.supports_documents = [
@@ -158,12 +156,12 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                     label: 'Documento de Prediación',
                     type: 7,
                 },
-            ]
+            ];
         }
     } else if (initial_values.supports_documents.length >= 2 && inventory) {
-        const doc_avaluo = initial_values.supports_documents.filter(d => d.label === "Documento Avalúo")
-        const doc_prediacion = initial_values.supports_documents.filter(d => d.label === "Documento de Prediación")
-        if(doc_avaluo.length === 0 && doc_prediacion.length === 0 ) {
+        const doc_avaluo = initial_values.supports_documents.filter((d) => d.label === 'Documento Avalúo');
+        const doc_prediacion = initial_values.supports_documents.filter((d) => d.label === 'Documento de Prediación');
+        if (doc_avaluo.length === 0 && doc_prediacion.length === 0) {
             initial_values.supports_documents = [
                 ...initial_values.supports_documents,
                 {
@@ -174,29 +172,25 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                     label: 'Documento de Prediación',
                     type: 7,
                 },
-            ]
-        }else if(doc_avaluo.length === 0) {
+            ];
+        } else if (doc_avaluo.length === 0) {
             initial_values.supports_documents = [
                 ...initial_values.supports_documents,
                 {
                     label: 'Documento Avalúo',
                     type: 6,
                 },
-            ]
-        }else if(doc_prediacion.length === 0) {
+            ];
+        } else if (doc_prediacion.length === 0) {
             initial_values.supports_documents = [
                 ...initial_values.supports_documents,
                 {
                     label: 'Documento de Prediación',
                     type: 7,
                 },
-            ]
+            ];
         }
-
     }
-
-
-
 
     if (!initial_values._address.cbml) {
         initial_values._address.cbml = '';
@@ -222,47 +216,57 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         total_area: Yup.number()
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
-                then: Yup.number().nullable()
+                then: Yup.number()
+                    .nullable()
                     .moreThan(Yup.ref('plot_area'), (plot_area) => {
                         if (plot_area.more !== undefined) {
-                            return 'debe ser mayor a área Lote'
+                            return 'debe ser mayor a área Lote';
                         }
-                    })
+                    }),
             })
             .when('active_type', {
-                is: (active_type) => Array.isArray(active_type) && (active_type.includes('Construccion') || active_type.includes('Construccion para demoler') || active_type.includes('Mejora')),
-                then: Yup.number().nullable()
+                is: (active_type) =>
+                    Array.isArray(active_type) &&
+                    (active_type.includes('Construccion') ||
+                        active_type.includes('Construccion para demoler') ||
+                        active_type.includes('Mejora')),
+                then: Yup.number()
+                    .nullable()
                     .moreThan(Yup.ref('construction_area'), (construction_area) => {
                         if (construction_area.more !== undefined) {
-                            return 'debe ser mayor a área construccion'
+                            return 'debe ser mayor a área construccion';
                         }
-
-                    })
+                    }),
             }),
 
-
-
-        plot_area: Yup.number().nullable()
+        plot_area: Yup.number()
+            .nullable()
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
-                then: Yup.number().nullable()
-                    .lessThan(Yup.ref('total_area'), 'debe ser menor que el área total'),
+                then: Yup.number().nullable().lessThan(Yup.ref('total_area'), 'debe ser menor que el área total'),
             })
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
-                then: Yup.number().required('obligatorio')
+                then: Yup.number().required('obligatorio'),
             }),
-        construction_area: Yup.number().nullable()
+        construction_area: Yup.number()
+            .nullable()
             .when('active_type', {
-                is: (active_type) => Array.isArray(active_type) && (active_type.includes('Construccion') || active_type.includes('Construccion para demoler') || active_type.includes('Mejora')),
-                then: Yup.number().nullable()
-                    .lessThan(Yup.ref('total_area'), 'debe ser menor que el área total')
+                is: (active_type) =>
+                    Array.isArray(active_type) &&
+                    (active_type.includes('Construccion') ||
+                        active_type.includes('Construccion para demoler') ||
+                        active_type.includes('Mejora')),
+                then: Yup.number().nullable().lessThan(Yup.ref('total_area'), 'debe ser menor que el área total'),
             })
             .when('active_type', {
-                is: (active_type) => Array.isArray(active_type) && (active_type.includes('Construccion') || active_type.includes('Construccion para demoler') || active_type.includes('Mejora')),
-                then: Yup.number().nullable()
+                is: (active_type) =>
+                    Array.isArray(active_type) &&
+                    (active_type.includes('Construccion') ||
+                        active_type.includes('Construccion para demoler') ||
+                        active_type.includes('Mejora')),
+                then: Yup.number().nullable(),
             }),
-
 
         total_percentage: Yup.number()
             .required('Campo obligatorio')
@@ -281,15 +285,20 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         values.projects_id = [project_id];
         values.materials = values.materials.join(', ');
         if (realEstate.patrimonial_value !== values.patrimonial_value && inventory) {
-            if (validateDocuments(values.supports_documents, "Documento Avalúo")) {
+            if (validateDocuments(values.supports_documents, 'Documento Avalúo')) {
                 form.setSubmitting(false);
-                return
+                return;
             }
         }
-        if ((realEstate.total_area !== values.total_area || realEstate.plot_area !== values.plot_area || realEstate.construction_area !== values.construction_area) && inventory) {
-            if (validateDocuments(values.supports_documents, "Documento de Prediación")) {
+        if (
+            (realEstate.total_area !== values.total_area ||
+                realEstate.plot_area !== values.plot_area ||
+                realEstate.construction_area !== values.construction_area) &&
+            inventory
+        ) {
+            if (validateDocuments(values.supports_documents, 'Documento de Prediación')) {
                 form.setSubmitting(false);
-                return
+                return;
             }
         }
         onSubmit(values, form, isFinish)
@@ -307,12 +316,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     }, []);
 
     const validateDocuments = (supports_documents, text) => {
-        const doc = supports_documents
-            .filter((d) => d.hasOwnProperty('pdf') && d.pdf)
-            .filter((d) => d.label === text)
-        const doc_create = supports_documents
-            .filter((d) => d.label === text)
-            .filter((d) => d.id)
+        const doc = supports_documents.filter((d) => d.hasOwnProperty('pdf') && d.pdf).filter((d) => d.label === text);
+        const doc_create = supports_documents.filter((d) => d.label === text).filter((d) => d.id);
         if (doc.length === 0 && doc_create.length === 0) {
             swal_warning.fire({
                 title: 'Documentos Requeridos',
@@ -322,7 +327,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         } else {
             return false;
         }
-    }
+    };
 
     const _disabled = disabled || type === 'view';
 
@@ -370,12 +375,16 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 return (
                     <Form className="h-100" autoComplete="off">
                         <div className="h-100 d-flex flex-column">
-                            {type === 'view' &&
+                            {type === 'view' && (
                                 <>
                                     <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
                                         <h5 className="col-11">Bien Inmueble: {realEstate?.name}</h5>
                                         <Link
-                                            to={inventory === true ? `/inventoryrecord/real-estates/edit/${realEstate?.id}/` : `/acquisitions/real-estates/edit/${realEstate?.id}/`}
+                                            to={
+                                                inventory === true
+                                                    ? `/inventoryrecord/real-estates/edit/${realEstate?.id}/`
+                                                    : `/acquisitions/real-estates/edit/${realEstate?.id}/`
+                                            }
                                             name=""
                                             avatar={false}
                                             icon={
@@ -388,16 +397,20 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                         />
                                     </div>
                                 </>
-                            }
+                            )}
                             <div className="flex-fill overflow-auto">
-                                {type === 'view' &&
-                                    <div style={{ padding: "0px 16px" }}>
-
-                                        <RealEstateViewForm realEstate={realEstate} tipology={tipologies.find((tipology) => tipology.id === realEstate?.tipology_id)} inventory={inventory} />
+                                {type === 'view' && (
+                                    <div style={{ padding: '0px 16px' }}>
+                                        <RealEstateViewForm
+                                            realEstate={realEstate}
+                                            tipology={tipologies.find(
+                                                (tipology) => tipology.id === realEstate?.tipology_id
+                                            )}
+                                            inventory={inventory}
+                                        />
                                     </div>
-                                }
+                                )}
                                 <div className="container-fluid">
-
                                     <div className="row justify-content-center">
                                         <div className="col-md-12">
                                             {type === 'create' && <h4 className="ms-4 mb-3">Crear bien inmueble</h4>}
@@ -407,7 +420,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                     <TitleSpan name={name} registry_number={registry_number} />
                                                 </h4>
                                             )}
-                                            {type !== 'view' &&
+                                            {type !== 'view' && (
                                                 <GeneralDataForm
                                                     type={type}
                                                     tipologies={tipologies}
@@ -420,8 +433,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                     onProjectSelectedChange={(id) => update_project(id)}
                                                     acquisitions={formik.values.acquisitions}
                                                 />
-
-                                            }
+                                            )}
                                             {globe !== true && (
                                                 <AdquisitionView
                                                     inventory={inventory}
@@ -436,22 +448,22 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 <Card
                                                     title={
                                                         <>
-                                                            <b>Inmuebles del Proyecto: { }</b>
+                                                            <b>Inmuebles del Proyecto: {}</b>
                                                         </>
                                                     }
                                                 >
                                                     <RealEstateList project_id={projects_id} init={false} />
                                                 </Card>
                                             )}
-                                            {(inventory && realEstate?.policy_id !== null) &&
+                                            {inventory && realEstate?.policy_id !== null && (
                                                 <PolizaViewForm policy_id={realEstate?.policy_id} />
-                                            }
+                                            )}
                                             {type === 'create' && globe !== true && (
                                                 <Card title="Inmuebles del Proyecto">
                                                     <RealEstateList project_id={projects_id} init={false} />
                                                 </Card>
                                             )}
-                                            {(type === 'view' && inventory) && (
+                                            {type === 'view' && inventory && (
                                                 <Card>
                                                     <Map center={[-75.56359, 6.25184]} />
                                                 </Card>
@@ -459,9 +471,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
 
                             <div
                                 className="bg-white d-flex flex-row justify-content-between"

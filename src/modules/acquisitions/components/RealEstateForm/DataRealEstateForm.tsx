@@ -11,7 +11,7 @@ import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import dependencias from '../../dependencias';
 import { useDispatch } from 'react-redux';
 import ModalDivideAreas from '../../../Inventory_record/components/ModalDivideAreas';
-import TooltipField from "../../../../utils/ui/tooltip_field";
+import TooltipField from '../../../../utils/ui/tooltip_field';
 
 interface DataRealEstateFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -43,7 +43,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     useEffect(() => {
         if (!inventory) {
             let value_patrimonial = 0;
-            acquisitions?.map(a => value_patrimonial = a.act_value + Number(a.recognition_value))
+            acquisitions?.map((a) => (value_patrimonial = a.act_value + Number(a.recognition_value)));
             formik.setFieldValue('patrimonial_value', value_patrimonial, false);
             formik.setFieldValue('accounting_amount', value_patrimonial, false);
         }
@@ -325,20 +325,19 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             //TODO: sumas el valor de adquisicion con valor de reconocimiento
                             min={0}
                             max={99999999999999999999}
-                        // onChange={(e, values) => {
-                        //     let anterior = formik.values.patrimonial_value
-                        //     let cambio = 0;
-                        //     cambio = Number(e.target.value)
-                        //     console.log(anterior, cambio)
-                        //     formik.handleChange(e)
-                        //     if(cambio !== 0) {
-                        //         console.log('documeto obligatorio')
-                        //     }
-                        // }}
+                            // onChange={(e, values) => {
+                            //     let anterior = formik.values.patrimonial_value
+                            //     let cambio = 0;
+                            //     cambio = Number(e.target.value)
+                            //     console.log(anterior, cambio)
+                            //     formik.handleChange(e)
+                            //     if(cambio !== 0) {
+                            //         console.log('documeto obligatorio')
+                            //     }
+                            // }}
                         />
                     </div>
                     <ErrorMessage name="patrimonial_value" />
-
                 </div>
                 <div className="col-3">
                     <div className="row">
@@ -347,7 +346,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 Área Total
                             </label>
                         </div>
-
                     </div>
 
                     <div className="input-group">
@@ -556,11 +554,11 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 Área Lote
                             </label>
                         </div>
-                        {inventory &&
-                            <div className="col-3" >
-                                <ModalDivideAreas total_area={formik.values.plot_area} formik={formik} type={"Lote"} />
+                        {inventory && (
+                            <div className="col-3">
+                                <ModalDivideAreas total_area={formik.values.plot_area} formik={formik} type={'Lote'} />
                             </div>
-                        }
+                        )}
                     </div>
 
                     <div className="input-group">
@@ -625,11 +623,15 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 Área Construcción
                             </label>
                         </div>
-                        {inventory &&
-                            <div className="col-3" >
-                                <ModalDivideAreas total_area={formik.values.construction_area} formik={formik} type={"Construcción"} />
+                        {inventory && (
+                            <div className="col-3">
+                                <ModalDivideAreas
+                                    total_area={formik.values.construction_area}
+                                    formik={formik}
+                                    type={'Construcción'}
+                                />
                             </div>
-                        }
+                        )}
                     </div>
                     <div className="input-group">
                         <Field
@@ -693,7 +695,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     </div>
                     <ErrorMessage name="construction_area" />
                 </div>
-
             </div>
 
             {englobe && (
@@ -710,7 +711,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
             <div className="row">
                 <div className="form-group col-12">
                     <label htmlFor="description_id" className="form-label">
-                        Descripción del inmueble  <span className="text-danger">*</span>
+                        Descripción del inmueble <span className="text-danger">*</span>
                         <Tooltip title="Lorem impsu texto descriptivo">
                             <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
                         </Tooltip>
@@ -804,11 +805,10 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         value={extractMonth(formik.values.audit_trail?.created_on)}
                                         disabled
 
-                                    // EL MES
+                                        // EL MES
                                     />
                                     <ErrorMessage />
                                 </div>
-
 
                                 <div className="col-3">
                                     <label htmlFor="counterpart_id" className="form-label">
@@ -993,7 +993,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         </option>
                                     </Field>
                                     <ErrorMessage />
-
                                 </div>
                             </div>
                         </>

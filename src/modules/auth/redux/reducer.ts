@@ -1,15 +1,20 @@
 import authTypes from './types';
 import { TokenPayload } from './actions';
+import { base64Encode, decodeJWT } from '../../../utils';
 
+const user: any = JSON.parse(atob(localStorage.getItem('_uk_')));
 const token: string = localStorage.getItem('_tk_');
 const emptyInitialState = {
     can_access: false,
     isLogout: false,
     user: null,
+    profile: null,
     error: null,
 };
 const initialState = token
-    ? { can_access: true, user: null, error: null }
+    ? user
+        ? { can_access: true, user, error: null }
+        : emptyInitialState
     : emptyInitialState;
 
 const reducer = (state = initialState, action) => {
@@ -41,6 +46,7 @@ const reducer = (state = initialState, action) => {
 
         case authTypes.LOGOUT: {
             localStorage.removeItem('_tk_');
+            localStorage.removeItem('_uk_');
             localStorage.removeItem('_rf_');
             return {
                 ...state,
@@ -54,6 +60,7 @@ const reducer = (state = initialState, action) => {
 
         case authTypes.EXPIRED_TOKEN: {
             localStorage.removeItem('_tk_');
+            localStorage.removeItem('_uk_');
             return {
                 ...state,
                 can_access: false,

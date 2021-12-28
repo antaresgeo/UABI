@@ -136,7 +136,7 @@
 }
 
 .deck {
-    display: block;
+    display: none;
     position: absolute;
     z-index: -1;
     height: 100%;
@@ -144,6 +144,7 @@
     background: transparent;
     transition: background 300ms;
     &.active {
+        display: block;
         z-index: 200;
         background: rgba(205, 218, 229, 0.7);
     }
@@ -283,6 +284,10 @@
     appearance: none;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.anticon svg {
+    font-size: inherit !important;
 }
 
 .ant-select.input-group-text {

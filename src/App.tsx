@@ -12,24 +12,25 @@ function App() {
     const user = useSelector((store: any) => store.auth.user);
     const context = useContext(TemplateContext);
     const dispatch = useDispatch();
-    const token: string = localStorage.getItem('_tk_');
+    // const token: string = localStorage.getItem('_tk_');
+    // const uk: string = localStorage.getItem('_uk_');
     const routes = useRoutes();
     const aux_user = {
         ...user,
         permits: user?.permits?.map((a) => a.name) || [],
         roles: user?.roles?.map((a) => a.name) || [],
     };
-    const show = token ? !!(token && !!user) : true;
+    // const show = token ? !!(token && uk) : true;
 
-    useEffect(() => {
-        if (token && !user) {
-            dispatch(actions.get_user(token));
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (token && !user) {
+    //         dispatch(actions.get_user(token));
+    //     }
+    // }, []);
 
     return (
         <>
-            <Router routes={routes} template={Template} user={aux_user} show={show} test />
+            <Router routes={routes} template={Template} user={aux_user} />
             <PasswordChangeModal
                 update_password={async (password) => {
                     await dispatch(actions.update_password(password));

@@ -16,7 +16,7 @@ interface PersonaModalProps {
 const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, onChange, persona, type }) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
     const form_ref = useRef<any>();
-    const title = modal_name ? modal_name : 'Agregar Adquisición';
+    const title = modal_name ? modal_name : 'Datos basicos de la Persona ';
     const close = () => {
         set_is_visible(false);
     };

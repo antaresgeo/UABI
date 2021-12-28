@@ -14,10 +14,16 @@ const get_all_notifications = (filters?) =>
         service.get_all_notifications(filters)
     );
 
+const get_list_notifications = (id?) =>
+    request_dispatch(
+        types.get_list_notifications,
+        service.get_list_notifications(id)
+    );
+
 const actions = {
     get_notification_by_id,
     get_all_notifications,
-    // example
+    get_list_notifications
 };
 
 export default actions;

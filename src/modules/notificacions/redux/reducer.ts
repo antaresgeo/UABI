@@ -5,6 +5,7 @@ import { Notification } from './service';
 interface State {
     notification: Loadable<Notification>;
     notifications: Pageable<Notification>;
+    bell_notifications: Loadable<any>
 }
 const emptyInitialState: State = {
     notifications: {
@@ -16,6 +17,11 @@ const emptyInitialState: State = {
             previous_page: null,
             total_results: 0,
         },
+        loading: false,
+        loaded: false,
+    },
+    bell_notifications: {
+        value: null,
         loading: false,
         loaded: false,
     },
@@ -37,8 +43,8 @@ const reducer = (state: State = initialState, action: Action): State => {
 export default reducer;
 
 const notificationReducer = (aux_state: State, action: Action): State => {
-    const { notification, notifications } = aux_state;
-    const state = { notification, notifications };
+    const { notification, notifications, bell_notifications } = aux_state;
+    const state = { notification, notifications, bell_notifications };
     switch (action.type) {
         case types.create_notification.default:
         case types.update_notification.default:
@@ -82,7 +88,17 @@ const notificationReducer = (aux_state: State, action: Action): State => {
                 },
             };
         }
-        case types.get_list_notifications.default:
+        case types.get_list_notifications.default: {
+            return {
+                ...state,
+                bell_notifications: {
+                    ...state.bell_notifications,
+                    loading: true,
+                    loaded: false,
+                },
+            };
+        }
+
         case types.get_all_notifications.default: {
             return {
                 ...state,
@@ -111,7 +127,18 @@ const notificationReducer = (aux_state: State, action: Action): State => {
                 },
             };
         }
-        case types.get_list_notifications.fail:
+        case types.get_list_notifications.fail: {
+            return {
+                ...state,
+                bell_notifications: {
+                    ...state.bell_notifications,
+                    value: emptyInitialState.bell_notifications,
+                    loading: false,
+                    loaded: false,
+                },
+            };
+        }
+
         case types.get_all_notifications.fail: {
             return {
                 ...state,
@@ -127,10 +154,9 @@ const notificationReducer = (aux_state: State, action: Action): State => {
         case types.get_list_notifications.success: {
             return {
                 ...state,
-                notifications: {
-                    ...state.notifications,
-                    value: action.payload || [],
-                    pagination: emptyInitialState.notifications.pagination,
+                bell_notifications: {
+                    ...state.bell_notifications,
+                    value: action.payload || null,
                     loading: false,
                     loaded: true,
                 },

@@ -13,11 +13,11 @@ const Users = () => {
         store.users.users.value,
         store.auth.user,
         store.users.users.pagination.total_results,
-        store.users.users.loading
+        store.users.users.loading,
     ]);
     //const { total_results } = useSelector((store: any) => store.users.pagination);
 
-    const [filters, set_filters] = useState<object>(null);
+    const [filters, set_filters] = useState(null);
 
     const filter = async (_filters, _) => {
         set_filters(_filters);
@@ -30,7 +30,7 @@ const Users = () => {
 
     useEffect(() => {
         // dispatch(actions.get_all_users({}));
-        dispatch(actions.clear_get_all_users())
+        dispatch(actions.clear_get_all_users());
     }, []);
 
     const aux_user = {
@@ -60,7 +60,13 @@ const Users = () => {
                                 </div>
                             </div>
                         </div>
-                        <UserList users={users} user={aux_user} change_page={change_page} total={total_results} loading={loading} />
+                        <UserList
+                            users={users}
+                            user={aux_user}
+                            change_page={change_page}
+                            total={total_results}
+                            loading={loading}
+                        />
                     </Card>
                 </div>
             </div>

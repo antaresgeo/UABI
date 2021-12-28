@@ -13,10 +13,13 @@ export const redirect_fn = (can_access: boolean, location: any) => {
 export const get_can_access = (can_access: CanAccess, props: any): boolean => {
     let has_access = !!can_access;
     if (has_access) {
+        console.log(11)
         if (typeof can_access === 'function') {
+            console.log(12, can_access)
             has_access = can_access(props);
         }
     }
+    console.log(has_access)
     return has_access;
 };
 
@@ -45,9 +48,9 @@ export const withSuspense = (props: any, dr: any, suspense: boolean = true): FC<
                 return <WrappedComponent {...props} />;
             }
         }
-        /*
-            else if (render) {}
-         */
+        console.log(1)
+        localStorage.removeItem("_tk_")
+        localStorage.removeItem("_uk_")
         return dr;
     };
 };
