@@ -2,7 +2,8 @@ import authTypes from './types';
 import { TokenPayload } from './actions';
 import { base64Encode, decodeJWT } from '../../../utils';
 
-const user: any = JSON.parse(atob(localStorage.getItem('_uk_')));
+const uk = localStorage.getItem('_uk_');
+const user: any = uk ? JSON.parse(atob(uk)) : null;
 const token: string = localStorage.getItem('_tk_');
 const emptyInitialState = {
     can_access: false,
