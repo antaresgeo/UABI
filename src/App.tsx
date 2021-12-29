@@ -12,21 +12,12 @@ function App() {
     const user = useSelector((store: any) => store.auth.user);
     const context = useContext(TemplateContext);
     const dispatch = useDispatch();
-    // const token: string = localStorage.getItem('_tk_');
-    // const uk: string = localStorage.getItem('_uk_');
     const routes = useRoutes();
     const aux_user = {
         ...user,
         permits: user?.permits?.map((a) => a.name) || [],
         roles: user?.roles?.map((a) => a.name) || [],
     };
-    // const show = token ? !!(token && uk) : true;
-
-    // useEffect(() => {
-    //     if (token && !user) {
-    //         dispatch(actions.get_user(token));
-    //     }
-    // }, []);
 
     return (
         <>

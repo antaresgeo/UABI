@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { formatDate } from '../../../utils';
+import {formatDate, swal_warning} from '../../../utils';
 import { Link, Table } from '../../../utils/ui';
 import { useSelector, useDispatch } from 'react-redux';
 import { swal } from '../../../utils';
@@ -34,7 +34,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
         store.acquisitions.realEstates.pagination.total_results,
     ]);
     const deleteRealEstate = (id) => async () => {
-        const result = await swal.fire({
+        const result = await swal_warning.fire({
             icon: 'warning',
             title: '¿Está seguro?',
             text: '¿Está seguro que quiere inactivar el Bien Inmueble?',
@@ -49,7 +49,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
             await dispatch(actions.getRealEstates({ with: 'pagination' }));
             // const _res: any = await dispatch(actions.deleteProject(id));
 
-            // swal.fire({
+            // swal_warning.fire({
             //     title: "Proyecto Inactivado",
             //     text: message,
             //     icon: "success",

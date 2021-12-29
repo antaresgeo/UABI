@@ -25,7 +25,8 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({
             { name: 'Agua', subscriber: '', accountant: '', status: '' },
             { name: 'Teléfono', subscriber: '', accountant: '', status: '' },
         ],
-        properties: physical_inspection?.properties || [
+        old_properties: physical_inspection?.properties,
+        properties: [
             {
                 name: 'Pintura exterior',
                 status_property: '',

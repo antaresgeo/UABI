@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { formatDate, swal } from '../../../../utils';
+import {formatDate, swal, swal_warning} from '../../../../utils';
 import { Card, Link, Table as UiTable } from '../../../../utils/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux';
@@ -35,7 +35,7 @@ export const ListRoles = () => {
             //res = await dispatch(actions.getRealEstatesByProject(id));
         }
         if (res?.total) {
-            const result = await swal.fire({
+            const result = await swal_warning.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
                 text: `El rol contiene ${res?.total || ''
@@ -47,7 +47,7 @@ export const ListRoles = () => {
             });
 
             if (result.isConfirmed) {
-                swal.fire({
+                swal_warning.fire({
                     icon: 'info',
                     title: '¡Última oportunidad!',
                     text: '¿Está seguro que quiere inactivar el rol?',
@@ -76,7 +76,7 @@ export const ListRoles = () => {
                 swal.close();
             }
         } else {
-            const result = await swal.fire({
+            const result = await swal_warning.fire({
                 icon: 'warning',
                 title: '¿Está seguro?',
                 text: '¿Está seguro que quiere inactivar el rol?',
