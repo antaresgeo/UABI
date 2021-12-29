@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { documents_http, http } from '../../../../config/axios_instances';
-import { swal } from '../../../../utils';
+import {swal, swal_success} from '../../../../utils';
 import { IPaginable } from '../../../../utils/interfaces';
 import {
     IPolicyAttributes,
@@ -29,7 +29,7 @@ export const createPolicy = async (
             URI,
             dataFinal
         );
-        await swal.fire('poliza creada', res.data.message, 'success');
+        await swal_success.fire('poliza creada', res.data.message, 'success');
         return res.data.results;
     } catch (error) {
         console.error(error);
@@ -134,7 +134,7 @@ export const updatePolicy = async (data: any, id: number) => {
                 params: { id },
             }
         );
-        await swal.fire('poliza actualizada', res.data.message, 'success');
+        await swal_success.fire('poliza actualizada', res.data.message, 'success');
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');

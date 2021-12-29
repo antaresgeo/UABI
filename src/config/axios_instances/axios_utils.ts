@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from './index';
-import { swal } from '../../utils';
+import {swal, swal_warning} from '../../utils';
 
 const response_error_interceptor = (error: any) => {
     if (!axios.isCancel(error)) {
@@ -21,7 +21,7 @@ const response_error_interceptor = (error: any) => {
             }
         } else {
             // store.dispatch(auth.actions.logOut());
-            swal.fire({
+            swal_warning.fire({
                 title: 'Warning',
                 text: 'We have detected a problem in your connection',
                 icon: 'warning',
@@ -90,7 +90,7 @@ const onUnauthorized = (original_error: any) => {
 
 // noinspection GrazieInspection
 const onInternalServerError = (original_error: any) => {
-    swal.fire({
+    swal_warning.fire({
         title: 'Warning',
         text: 'An unexpected error has occurred, please notify the system administrator!',
         icon: 'warning',
@@ -103,7 +103,7 @@ const onInternalServerError = (original_error: any) => {
 const onForbidden = (original_error: any) => {
     const { detail } = original_error.response?.data;
     if (detail) {
-        swal.fire({
+        swal_warning.fire({
             title: 'Warning',
             text: detail,
             icon: 'warning',

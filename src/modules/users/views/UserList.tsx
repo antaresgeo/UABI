@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { actions } from '../redux';
-import { formatDate, swal } from '../../../utils';
+import {formatDate, swal, swal_warning} from '../../../utils';
 import { Link, Table } from '../../../utils/ui';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import { guards } from '../routes';
@@ -16,7 +16,7 @@ interface UserListProps {
 const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading }) => {
     const dispatch = useDispatch();
     const deleteUser = (id) => async () => {
-        const result = await swal.fire({
+        const result = await swal_warning.fire({
             icon: 'warning',
             title: '¿Está seguro?',
             text: '¿Está seguro que quiere inactivar este Usuario?',

@@ -173,7 +173,7 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
                                         id="assign_id"
                                         disabled={disabled}
                                         placeholder="Selecciona una Dependencia"
-                                        options={roles.map((rol) => ({ id: rol.id, name: rol.role_name }))}
+                                        options={roles?.map((rol) => ({ id: rol.id, name: rol.role_name })) || []}
                                         showSearch
                                         mode="multiple"
                                         extra_on_change={(values, prev) => {
@@ -220,7 +220,7 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
                                 <div className="col text-end">
                                     {type !== 'view' && (
                                         <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
-                                            {type === "assign"? "Asignar": "Guardar"}
+                                            {type === 'assign' ? 'Asignar' : 'Guardar'}
                                             {isSubmitting && (
                                                 <i
                                                     className="fa fa-circle-notch fa-spin"

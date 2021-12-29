@@ -3,7 +3,7 @@ import { useEffect, useState /*, useState*/ } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
-import { swal } from '../../../../utils';
+import {swal, swal_warning} from '../../../../utils';
 import FilterForm from "../../../../utils/ui/filter_form";
 
 const InsuranceCompanies = () => {
@@ -28,7 +28,7 @@ const InsuranceCompanies = () => {
             // res = await dispatch(actions.getRealEstatesByInsuranceCompany(id));
         }
         if (res && res.length !== 0) {
-            const result = await swal.fire({
+            const result = await swal_warning.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
                 text: `La Compañia contiene ${res?.length || ''} valores asociados.\n\.`,
@@ -39,7 +39,7 @@ const InsuranceCompanies = () => {
             });
 
             if (result.isConfirmed) {
-                swal.fire({
+                swal_warning.fire({
                     icon: 'info',
                     title: '¡Última oportunidad!',
                     text: '¿Está seguro que quiere inactivar la compañia?',
@@ -59,7 +59,7 @@ const InsuranceCompanies = () => {
                 swal.close();
             }
         } else {
-            const result = await swal.fire({
+            const result = await swal_warning.fire({
                 icon: 'warning',
                 title: '¿Está seguro?',
                 text: '¿Está seguro que quiere inactivar la compañia?',

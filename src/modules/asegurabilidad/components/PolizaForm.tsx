@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { actions } from './../../acquisitions/redux';
-import { swal } from '../../../utils';
+import {swal, swal_warning} from '../../../utils';
 import moment from 'moment';
 
 interface InsurabilityFormPros {
@@ -159,7 +159,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
         Array.isArray(values.insurance_companies) &&
             finalValues.insurance_companies.map((valor) => (total = total + valor.percentage_insured));
         if (total > 100) {
-            swal.fire('Revise los porcentajes', '', 'error');
+            swal_warning.fire('Revise los porcentajes', '', 'error');
         } else {
             //console.log(finalValues);
             onSubmit(finalValues, actions).then(() => {

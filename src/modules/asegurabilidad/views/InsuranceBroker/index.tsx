@@ -2,7 +2,7 @@ import { useEffect, useState /*, useState*/ } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
-import { swal } from '../../../../utils';
+import {swal, swal_warning} from '../../../../utils';
 import FilterForm from '../../../../utils/ui/filter_form';
 
 const InsuranceBrokers = () => {
@@ -27,8 +27,7 @@ const InsuranceBrokers = () => {
             // res = await dispatch(actions.getRealEstatesByInsuranceBroker(id));
         }
         if (res && res.length !== 0) {
-            const result = await swal.fire({
-                icon: 'warning',
+            const result = await swal_warning.fire({
                 title: '¡Precaución!',
                 text: `El Corredor de seguros contiene ${res?.length || ''} valores asociados.\n\n`,
                 showDenyButton: true,
@@ -38,7 +37,7 @@ const InsuranceBrokers = () => {
             });
 
             if (result.isConfirmed) {
-                swal.fire({
+                swal_warning.fire({
                     icon: 'info',
                     title: '¡Última oportunidad!',
                     text: '¿Está seguro que quiere inactivar el corredor de seguros?',
@@ -58,8 +57,7 @@ const InsuranceBrokers = () => {
                 swal.close();
             }
         } else {
-            const result = await swal.fire({
-                icon: 'warning',
+            const result = await swal_warning.fire({
                 title: '¿Está seguro?',
                 text: '¿Está seguro que quiere inactivar el corredor de seguros?',
                 showDenyButton: true,

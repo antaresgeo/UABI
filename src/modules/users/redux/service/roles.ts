@@ -5,7 +5,7 @@ import {
     IRolResponse,
 } from '../../../../utils/interfaces/roles';
 import { auth_http } from '../../../../config/axios_instances';
-import { swal } from '../../../../utils';
+import {swal, swal_success, swal_warning} from '../../../../utils';
 import {
     IPermitAttributes,
     IPermitsResponse,
@@ -56,11 +56,11 @@ export const createRole = async (
     try {
         let URI = `/roles`;
         let res: AxiosResponse<IRolResponse> = await auth_http.post(URI, data);
-        await swal.fire('Rol Creado', res.data.message, 'success');
+        await swal_success.fire('Rol Creado', res.data.message, 'success');
         return res.data.results;
     } catch (error) {
         console.error(error);
-        await swal.fire('Error', '', 'error');
+        await swal_warning.fire('Error', '', 'error');
 
         return Promise.reject('Error');
     }
@@ -71,7 +71,7 @@ export const updateRole = async (data: any, id: number) => {
         let res: AxiosResponse<IRolResponse> = await auth_http.put(URI, data, {
             params: { id },
         });
-        await swal.fire('Rol actualizado', res.data.message, 'success');
+        await swal_success.fire('Rol actualizado', res.data.message, 'success');
         return res.data.results;
     } catch (error) {
         console.error(error);
@@ -83,7 +83,7 @@ export const deleteRole = async (id: number) => {
     try {
         let URI = `roles/${id}`;
         let res: AxiosResponse<IRolResponse> = await auth_http.delete(URI);
-        swal.fire({
+        swal_success.fire({
             title: 'Rol Inactivado',
             text: res.data.message,
             icon: 'success',
@@ -94,7 +94,7 @@ export const deleteRole = async (id: number) => {
     } catch (error) {
         console.error(error);
         if (error?.response && error.response?.status === 400) {
-            await swal.fire(
+            await swal_warning.fire(
                 'No se pudo inactivar',
                 error.response?.data?.message || 'Error',
                 'warning'
