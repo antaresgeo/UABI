@@ -97,14 +97,14 @@ const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs
                                 <div className="row">
                                     <div className="col">
                                         <label htmlFor="contractual_id" className="form-label">
-                                            Observaciones
+                                            Diferencias entre el Sistema y la Realidad
                                         </label>
                                         <Field
                                             as="textarea"
                                             className="form-control"
                                             id="contractual_id"
                                             aria-describedby="emailHelp"
-                                            placeholder="Observaciones"
+                                            placeholder="Diferencias"
                                             name="observations"
                                             disabled={disabled}
                                             autoComplete="off"
@@ -120,7 +120,7 @@ const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs
             </Card>
 
             <Card>
-                <Map center={[-75.56359, 6.25184]}  />
+                <Map center={[-75.56359, 6.25184]} />
             </Card>
         </div>
     );

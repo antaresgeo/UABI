@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { http } from '../../../../config/axios_instances';
-import { swal } from '../../../../utils';
+import { swal, swal_success, swal_warning } from '../../../../utils';
 
 import {
     IProjectAttributes,
@@ -59,12 +59,12 @@ export const createProject = async (
             ...aux_values,
         });
 
-        await swal.fire('Proyecto creado', res.data.message, 'success');
+        await swal_success.fire('Proyecto creado', res.data.message, 'success');
 
         return res.data.results;
     } catch (error) {
         console.error(error);
-        await swal.fire('Error', '', 'error');
+        await swal_warning.fire('Error', '', 'error');
 
         return Promise.reject('Error');
     }
@@ -90,7 +90,7 @@ export const deleteProject = async (id: number) => {
             params: { id },
         });
 
-        swal.fire({
+        swal_warning.fire({
             title: 'Proyecto Inactivado',
             text: res.data.message,
             icon: 'success',
@@ -101,7 +101,7 @@ export const deleteProject = async (id: number) => {
         return res.data;
     } catch (error) {
         if (error?.response && error.response?.status === 400) {
-            await swal.fire(
+            await swal_warning.fire(
                 'No se pudo inactivar',
                 error.response?.data?.message || 'Error',
                 'warning'

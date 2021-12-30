@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { getAddressById, insertAddress } from '.';
 import { http } from '../../../../config/axios_instances';
-import { swal } from '../../../../utils';
+import {swal, swal_success, swal_warning} from '../../../../utils';
 import {
     createAcquisitionForRealEstate,
     getAcquisitionForRealEstate,
@@ -285,7 +285,7 @@ export const updateRealEstate = async (data: any, id: number) => {
             }
         );
 
-        swal.fire({
+        swal_success.fire({
             title: 'Bien Inmueble actualizado.',
             text: res.data.message,
             icon: 'success',
@@ -353,7 +353,7 @@ const deleteRealEstate = async (id) => {
             params: { id },
         });
 
-        swal.fire({
+        swal_success.fire({
             title: 'Bien Inmueble Inactivado',
             text: res.data.message,
             icon: 'success',
@@ -364,7 +364,7 @@ const deleteRealEstate = async (id) => {
         return res.data;
     } catch (error) {
         console.error(error);
-        swal.fire({
+        swal_warning.fire({
             title: 'Error al inactivar Bien Inmueble',
             text: error.message,
             icon: 'error',

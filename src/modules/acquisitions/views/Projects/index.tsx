@@ -4,7 +4,7 @@ import { IProjectAttributes /*, IProjectsResponse*/ } from '../../../../utils/in
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
-import { formatDate, swal } from '../../../../utils';
+import {formatDate, swal, swal_warning} from '../../../../utils';
 import Tag from 'antd/lib/tag';
 import FilterForm from './../../../../utils/ui/filter_form';
 
@@ -32,7 +32,7 @@ const Projects = () => {
             res = await dispatch(actions.getRealEstatesByProject(id));
         }
         if (res?.total && res.total !== 0) {
-            const result = await swal.fire({
+            const result = await swal_warning.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
                 text: `El proyecto contiene ${
@@ -45,7 +45,7 @@ const Projects = () => {
             });
 
             if (result.isConfirmed) {
-                swal.fire({
+                swal_warning.fire({
                     icon: 'info',
                     title: '¡Última oportunidad!',
                     text: '¿Está seguro que quiere inactivar el proyecto?',
@@ -72,7 +72,7 @@ const Projects = () => {
                 swal.close();
             }
         } else {
-            const result = await swal.fire({
+            const result = await swal_warning.fire({
                 icon: 'warning',
                 title: '¿Está seguro?',
                 text: '¿Está seguro que quiere inactivar el proyecto?',

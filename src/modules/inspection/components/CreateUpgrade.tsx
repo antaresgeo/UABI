@@ -15,7 +15,7 @@ const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner, innerRef, onSubmit }) =>
             <div className="row ">
                 <div className="col-md-12">
                     <div className="content_box_table">
-                        <div className="title">Datos del poseedor del bien inmueble</div>
+                        <div className="title">Datos del tenedor u ocupante del bien inmueble</div>
                         <div className="table_content">
                             <table className="box-table">
                                 <thead>
@@ -39,7 +39,13 @@ const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner, innerRef, onSubmit }) =>
                     </div>
                 </div>
                 <div className="col-md-12">
-                    <Card title="Actualizar datos del poseedor del bien inmueble">
+                    <Card
+                        title={
+                            <span className="text-capitalize">
+                                Actualizar datos del tenedor u ocupante del bien inmueble
+                            </span>
+                        }
+                    >
                         <UpgradeForm owner={owner} innerRef={innerRef} onSubmit={onSubmit} />
                     </Card>
                 </div>

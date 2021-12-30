@@ -65,7 +65,7 @@ const ListInspection = ({ inspections, change_page, total_results, loading, proj
                 //     },
                 // },
                 {
-                    title: 'Crear',
+                    title: 'Inspecionar',
                     dataIndex: 'id',
                     align: 'center' as 'center',
                     render: (id) => {
