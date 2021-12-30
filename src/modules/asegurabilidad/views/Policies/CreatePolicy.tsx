@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Card } from '../../../../utils/ui';
 import { actions } from '../../redux';
 import { useEffect, useRef } from 'react';
-import { clearRealEstate, getRealEstate } from '../../../acquisitions/redux/actions/realEstates';
+import { clearRealEstates, getRealEstate } from '../../../acquisitions/redux/actions/realEstates';
 import PolizaForm from '../../components/PolizaForm';
 import { IRealEstateAttributes } from '../../../../utils/interfaces';
 
@@ -21,7 +21,7 @@ const CreateInsurability = () => {
     const insurance_brokers: any = useSelector((store: any) => store.insurability.brokers.value);
     //console.log(insurance_brokers)
     useEffect(() => {
-        dispatch(clearRealEstate());
+        dispatch(clearRealEstates());
         dispatch(actions.get_list_companies());
         dispatch(actions.get_all_brokers());
         console.log(id, realEstate);
@@ -31,7 +31,7 @@ const CreateInsurability = () => {
     }, [id]);
 
     useEffect(() => {
-        dispatch(clearRealEstate());
+        dispatch(clearRealEstates());
     }, []);
 
     const createPolicy = async (dataPolicy) => {

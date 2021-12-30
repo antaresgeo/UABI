@@ -1,18 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, MutableRefObject } from 'react';
 import { Formik, Form, Field } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import * as Yup from 'yup';
 import LocationModal from '../../../utils/components/Location/LocationModal';
 import { Broker } from '../redux/service';
+import { FormikProps, FormikValues } from 'formik';
 
 interface InsuranceBrokerFormPros {
     insurance_broker?: Broker;
     onSubmit?: (values: Broker, form?) => Promise<any>;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
+    innerRef?: MutableRefObject<FormikProps<FormikValues>>;
 }
 
-const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, onSubmit, disabled, type }) => {
+const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, onSubmit, disabled, type, innerRef }) => {
     const initial_values = {
         id: '',
         name: '',
@@ -40,7 +42,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
             .catch(() => form.setSubmitting(false));
     };
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
+        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema} innerRef={innerRef}>
             {({ /*values, isValid,*/ isSubmitting, setFieldValue }) => {
                 return (
                     <Form>
@@ -226,8 +228,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                 </div>
                             </div>
                         </div>
-
-                        <div className="row justify-content-end">
+                        {/* <div className="row justify-content-end">
                             <div className="col text-end">
                                 {type !== 'view' && (
                                     <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
@@ -241,7 +242,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                     </button>
                                 )}
                             </div>
-                        </div>
+                        </div> */}
                     </Form>
                 );
             }}

@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 
@@ -11,6 +11,7 @@ import swal from 'sweetalert';
 import { Card } from '../../../../utils/ui';
 import InsuranceBrokerForm from '../../components/InsuranceBrokerForm';
 import { Broker } from '../../redux/service';
+import { FormikProps, FormikValues } from 'formik';
 
 interface IParams {
     id: string;
@@ -23,6 +24,7 @@ interface IProps {
 const EditInsuranceBroker: FC<IProps> = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const form = useRef<FormikProps<FormikValues>>();
 
     const { id } = useParams<IParams>();
     const insurance_broker: any = useSelector((states: any) => states.insurability.broker.value);
@@ -50,6 +52,7 @@ const EditInsuranceBroker: FC<IProps> = () => {
                             <Card title={<h5>{'Información de la empresa'}</h5>}>
                                 <InsuranceBrokerForm
                                     insurance_broker={insurance_broker}
+                                    innerRef={form}
                                     onSubmit={(values) => {
                                         return _updateInsuranceBroker(values);
                                     }}
@@ -73,6 +76,15 @@ const EditInsuranceBroker: FC<IProps> = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form.current?.submitForm();
+                    }}
+                >
+                    Guardar
+                </button>
             </div>
         </div>
     );

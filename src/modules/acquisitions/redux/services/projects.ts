@@ -31,7 +31,6 @@ const getProjects = async (filters): Promise<any | string> => {
         let URI = `/projects/list`;
         let res: AxiosResponse<IProjectsResponse> = await http.get(URI, {
             params: {
-                with: 'pagination',
                 ...filters,
             },
         });
@@ -46,9 +45,15 @@ const getProjects = async (filters): Promise<any | string> => {
 export const createProject = async (
     values
 ): Promise<IProjectAttributes | string> => {
+    console.log(values)
     try {
         const aux_values = { ...values };
         delete aux_values.id;
+        delete aux_values.contracts;
+        delete aux_values.dependency;
+        delete aux_values.subdependency;
+        delete aux_values.cost_center;
+        delete aux_values.management_center;
         let URI = `/projects`;
         let res: AxiosResponse<IProjectResponse> = await http.post(URI, {
             ...aux_values,
@@ -106,12 +111,25 @@ export const deleteProject = async (id: number) => {
     }
 };
 
+
+const getDependencies = async () => {
+    try {
+        let URI = `/dependencies`;
+        let res: AxiosResponse<IProjectsResponse> = await http.get(URI);
+        return res.data.results;
+    } catch (error) {
+        console.error(error);
+        return Promise.reject('Error');
+    }
+};
+
 const services = {
     getProject,
     getProjects,
     createProject,
     updateProject,
     deleteProject,
+    getDependencies,
 };
 
 export default services;

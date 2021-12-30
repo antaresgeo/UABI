@@ -10,6 +10,8 @@ import { IProjectAttributes } from '../../../../utils/interfaces';
 import swal from 'sweetalert';
 import { Card } from '../../../../utils/ui';
 import ProjectForm from '../../components/ProjectForm';
+import {  useRef } from 'react';
+import { FormikProps, FormikValues } from 'formik';
 
 interface IParams {
     id: string;
@@ -22,6 +24,7 @@ interface IProps {
 const DetailProject: FC<IProps> = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const form = useRef<FormikProps<FormikValues>>();
 
     const { id } = useParams<IParams>();
     const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
@@ -48,6 +51,7 @@ const DetailProject: FC<IProps> = () => {
                             </h5>
 
                             <ProjectForm
+                                innerRef={form}
                                 project={project}
                                 onSubmit={(values) => {
                                     return _updateProject(values);
@@ -71,6 +75,15 @@ const DetailProject: FC<IProps> = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form.current?.submitForm();
+                    }}
+                >
+                    Guardar
+                </button>
             </div>
         </div>
     );

@@ -36,7 +36,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
 
     const ver = {
         title: 'Ver',
-        dataIndex: 'id',
+        dataIndex: 'user_id',
         align: 'center' as 'center',
         render: (id) => {
             return (
@@ -52,7 +52,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
 
     const editar = {
         title: 'Editar',
-        dataIndex: 'id',
+        dataIndex: 'user_id',
         align: 'center' as 'center',
         render: (id) => {
             return (
@@ -68,7 +68,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
 
     const eliminar = {
         title: 'Desactivar',
-        dataIndex: 'id',
+        dataIndex: 'user_id',
         align: 'center' as 'center',
         render: (id) => {
             return (
@@ -82,7 +82,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
     const table_columns = [
         {
             title: 'ID',
-            dataIndex: 'id',
+            dataIndex: 'user_id',
             align: 'center' as 'center',
         },
         {

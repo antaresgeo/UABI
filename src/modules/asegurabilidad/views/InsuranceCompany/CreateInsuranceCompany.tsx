@@ -3,13 +3,15 @@ import { useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 import { Card } from '../../../../utils/ui';
 import InsuranceCompanyForm from '../../components/InsuranceCompanyForm';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import swal from 'sweetalert';
 import { Company } from '../../redux/service';
+import { FormikProps, FormikValues } from 'formik';
 
 const CreateInsuranceCompany = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const form = useRef<FormikProps<FormikValues>>();
 
     const createInsuranceCompany = async (data: Company) => {
         const res: any = await dispatch(actions.create_company(data));
@@ -32,6 +34,7 @@ const CreateInsuranceCompany = () => {
                         <div className="col-md-12">
                             <Card title="Información de la empresa">
                                 <InsuranceCompanyForm
+                                    innerRef={form}
                                     onSubmit={(values) => {
                                         return createInsuranceCompany(values);
                                     }}
@@ -55,6 +58,15 @@ const CreateInsuranceCompany = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form.current?.submitForm();
+                    }}
+                >
+                    Guardar
+                </button>
             </div>
         </div>
     );

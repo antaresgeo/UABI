@@ -130,6 +130,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
               }),
     };
 
+    console.log(initial_values)
+
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
         initial_values.materials = initial_values.materials.split(',');
     }
@@ -284,23 +286,24 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         delete values._type;
         values.projects_id = [project_id];
         values.materials = values.materials.join(', ');
-        if (realEstate.patrimonial_value !== values.patrimonial_value && inventory) {
-            if (validateDocuments(values.supports_documents, 'Documento Avalúo')) {
+        if (realEstate?.patrimonial_value !== values?.patrimonial_value && inventory) {
+            if (validateDocuments(values?.supports_documents, 'Documento Avalúo')) {
                 form.setSubmitting(false);
                 return;
             }
         }
         if (
-            (realEstate.total_area !== values.total_area ||
-                realEstate.plot_area !== values.plot_area ||
-                realEstate.construction_area !== values.construction_area) &&
+            (realEstate?.total_area !== values?.total_area ||
+                realEstate?.plot_area !== values?.plot_area ||
+                realEstate?.construction_area !== values?.construction_area) &&
             inventory
         ) {
-            if (validateDocuments(values.supports_documents, 'Documento de Prediación')) {
+            if (validateDocuments(values?.supports_documents, 'Documento de Prediación')) {
                 form.setSubmitting(false);
                 return;
             }
         }
+        form.setSubmitting(true);
         onSubmit(values, form, isFinish)
             .then(() => {
                 form.setSubmitting(false);
