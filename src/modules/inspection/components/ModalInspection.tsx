@@ -28,13 +28,8 @@ const ModalInspection: FC<InspectionModalProps> = ({ /*onSave,*/ disabled, proje
         !disabled && set_is_visible(true);
     };
     const close = () => {
-<<<<<<< HEAD
         dispatch(actions.clearRealEstates())
         set_is_visible(false)
-=======
-        dispatch(actions.clearRealEstate());
-        set_is_visible(false);
->>>>>>> c24af4ceea0334004378756ba54693db6b143489
     };
 
     let data = [];
