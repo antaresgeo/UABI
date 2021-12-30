@@ -1,23 +1,27 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, MutableRefObject } from 'react';
 import { Formik, Form, Field } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import { IProjectAttributes } from '../../../utils/interfaces/';
 import * as Yup from 'yup';
 import Select from '../../../utils/ui/select';
-import dependencias from '../dependencias';
+// import dependencias from '../dependencias';
 import { formatDate } from '../../../utils';
 import { Card } from '../../../utils/ui';
 import { AntRangePicker } from '../../../utils/ui/date_picker';
 import { LinkButton } from '../../../utils/ui/link';
 import { Empty } from 'antd';
+import { FormikProps } from 'formik';
+import { FormikValues } from 'formik';
 
 interface ProjectFormPros {
     project?: IProjectAttributes;
     onSubmit?: (values, form?) => Promise<any>;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
+    innerRef?: MutableRefObject<FormikProps<FormikValues>>;
+    dependencies?: any;
 }
-const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type }) => {
+const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, innerRef, dependencies }) => {
     const [subs, set_subs] = useState<any[]>([]);
 
     const empty_contract = {
@@ -34,6 +38,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
         description: '',
         dependency: '',
         subdependency: '',
+        cost_center_id : "",
         contracts: [],
         ...project,
     };
@@ -68,20 +73,34 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
         return [];
     };
 
-    const dependency_ops = format_list(dependencias);
+
+
 
     useEffect(() => {
         if (project) {
-            const dependency = dependencias.find((d) => d.name === project.dependency);
-            const _subs = format_list(dependency?.subs);
-            set_subs(_subs);
+            //const dependency = dependencies.find((d) => d.dependency === project.dependency);
+            //const _subs = format_list(dependency?.subs);
+            //set_subs(_subs);
         } else {
             set_subs([]);
         }
     }, [project]);
 
+    // const dependency_ops = format_list(dependencias);
+
+    // useEffect(() => {
+    //     if (project) {
+    //         const dependency = dependencias.find((d) => d.name === project.dependency);
+    //         const _subs = format_list(dependency?.subs);
+    //         set_subs(_subs);
+    //     } else {
+    //         set_subs([]);
+    //     }
+    // }, [project]);
+
+
     return (
-        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema}>
+        <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema} innerRef={innerRef}>
             {({ values, isSubmitting, setFieldValue }) => {
                 return (
                     <Form>
@@ -130,16 +149,22 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                         id="dependency_id"
                                         disabled={disabled}
                                         placeholder="Selecciona una Dependencia"
-                                        options={dependency_ops}
+                                        options={dependencies?.map((d) => ({ id: d.dependency, name: d.dependency }))} /* dependency_ops*/
+                                        //options={dependency_ops}
                                         showSearch
                                         extra_on_change={(value) => {
                                             if (value) {
-                                                const dependency = dependencias.find((d) => d.name === value);
-                                                const _subs = format_list(dependency.subs);
-                                                setFieldValue('subdependency', dependency.name);
-                                                setFieldValue('cost_center', dependency.cost_center);
-                                                setFieldValue('management_center', dependency.cost_center);
+                                                const dependency = dependencies.find((d) => d.dependency === value);
+                                                const _subs = dependency.subs;
+                                                //setFieldValue('subdependency', dependency.dependency);
+                                                setFieldValue('cost_center', dependency.management_center);
+                                                setFieldValue('management_center', dependency.management_center);
                                                 set_subs(_subs);
+                                                const subdependency = _subs.find((d) => d.subdependency === dependency.dependency);
+                                                if( subdependency !== undefined) {
+                                                    setFieldValue('subdependency', subdependency.subdependency);
+                                                    setFieldValue('cost_center_id', subdependency.id);
+                                                }
                                             }
                                         }}
                                         filterOption={(input, option) => {
@@ -158,16 +183,18 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                         id="subdependency_id"
                                         disabled={disabled || !values.dependency || subs.length === 0}
                                         placeholder="Selecciona una Sub. Dependencia"
-                                        options={subs}
+                                        options={subs?.map((d) => ({ id: d.subdependency, name: d.subdependency }))}
                                         showSearch
                                         allowClear
                                         extra_on_change={(value) => {
                                             if (value) {
-                                                const dependency = dependencias.find(
-                                                    (d) => d.name === values.dependency
+                                                const dependency = dependencies.find(
+                                                    (d) => d.dependency === values.dependency
                                                 );
-                                                const subdependency = dependency.subs.find((d) => d.name === value);
+                                                const subdependency = dependency.subs.find((d) => d.subdependency === value);
+                                                console.log(subdependency)
                                                 setFieldValue('cost_center', subdependency.cost_center);
+                                                setFieldValue('cost_center_id', subdependency.id);
                                             }
                                         }}
                                         filterOption={(input, option) => {
@@ -278,7 +305,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                     </>
                                 )}
                             </div>
-                            <div className="row justify-content-end">
+                            {/* <div className="row justify-content-end">
                                 <div className="col text-end">
                                     {type !== 'view' && (
                                         <button className="btn btn-primary my-3" disabled={isSubmitting || disabled}>
@@ -292,7 +319,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type })
                                         </button>
                                     )}
                                 </div>
-                            </div>
+                            </div> */}
                         </Card>
                         <Card
                             title="Contratos"

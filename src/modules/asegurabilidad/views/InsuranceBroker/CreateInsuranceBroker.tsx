@@ -3,13 +3,15 @@ import { useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 import { Card } from '../../../../utils/ui';
 import InsuranceBrokerForm from '../../components/InsuranceBrokerForm';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Broker } from '../../redux/service';
 import swal from 'sweetalert';
+import { FormikProps, FormikValues } from 'formik';
 
 const CreateInsuranceBroker = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const form = useRef<FormikProps<FormikValues>>();
 
     useEffect(() => {
         dispatch(actions.clear_broker());
@@ -32,6 +34,7 @@ const CreateInsuranceBroker = () => {
                         <div className="col-md-12">
                             <Card title={<h5>{'Información de la empresa'}</h5>}>
                                 <InsuranceBrokerForm
+                                    innerRef={form}
                                     onSubmit={(values: Broker) => {
                                         return createInsuranceBroker(values);
                                     }}
@@ -55,6 +58,15 @@ const CreateInsuranceBroker = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form.current?.submitForm();
+                    }}
+                >
+                    Guardar
+                </button>
             </div>
         </div>
     );

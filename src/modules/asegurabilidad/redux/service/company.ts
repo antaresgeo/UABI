@@ -62,7 +62,7 @@ export const create_company = async (data: Company) => {
             name: data.name,
             nit: data.nit,
             location_id: data.location_id,
-            phone: data.phone,
+            phone: data.phone + "",
         });
         return res.data;
     } catch (e) {

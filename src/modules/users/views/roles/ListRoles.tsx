@@ -18,6 +18,7 @@ export const ListRoles = () => {
 
     console.log({roles, loading, total_results})
 
+
     const change_page = (page, pageSize) => {
         dispatch(actions.getRolesList({ page, pageSize, with: 'pagination', ...filters }));
     };
@@ -204,9 +205,9 @@ export const ListRoles = () => {
                             columns={table_columns}
                             items={roles}
                             change_page={change_page}
-                            with_pagination
                             count={total_results}
                             loading={loading}
+                            with_pagination
                         />
                     </Card>
                 </div>

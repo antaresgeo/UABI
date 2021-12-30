@@ -57,8 +57,11 @@ export const updateAcquisition = (id, acquisitions: AdquisitionsItf[]) =>
         service.updateAcquisition(id, acquisitions)
     );
 
-export const clearRealEstate = () =>
+export const clearRealEstates = () =>
     request_dispatch(types.realEstates, Promise.resolve([]));
+
+export const clearRealEstate = () =>
+    request_dispatch(types.realEstate, Promise.resolve(null));
 
 export const getTipologies = () =>
     request_dispatch(types.tipologies, service.getTipologies());

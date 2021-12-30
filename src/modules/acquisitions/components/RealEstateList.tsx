@@ -207,7 +207,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
     };
 
     useEffect(() => {
-        dispatch(actions.clearRealEstate());
+        dispatch(actions.clearRealEstates());
         if (project_id) {
             dispatch(actions.getRealEstatesByProject(project_id));
         }

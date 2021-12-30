@@ -72,5 +72,10 @@ const types = Object.freeze({
         success: 'Se consulta endpoint de servicio tipologia [success]',
         fail: 'Se consulta endpoint de servicio tipologia [fail]',
     },
+    dependencies: {
+        default: 'Se consulta endpoint de servicio de dependencias [default]',
+        success: 'Se consulta endpoint de servicio de dependencias [success]',
+        fail: 'Se consulta endpoint de servicio de dependencias [fail]',
+    },
 });
 export default types;
