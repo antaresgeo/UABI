@@ -25,9 +25,13 @@ const DetailProject: FC<IProps> = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const form = useRef<FormikProps<FormikValues>>();
-
+    const dependencies: any = useSelector((states: any) => states.acquisitions.dependencies.value);
     const { id } = useParams<IParams>();
     const project: IProjectAttributes = useSelector((states: any) => states.acquisitions.project.value);
+
+    useEffect(() => {
+        dispatch(actions.getDependencies())
+    }, [])
 
     const _updateProject = async (projectForm) => {
         let res: any;
@@ -51,6 +55,7 @@ const DetailProject: FC<IProps> = () => {
                             </h5>
 
                             <ProjectForm
+                                dependencies={dependencies}
                                 innerRef={form}
                                 project={project}
                                 onSubmit={(values) => {

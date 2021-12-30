@@ -22,6 +22,7 @@ interface RealEstateFormProps {
     inventoryEdit?: boolean;
     globe?: boolean;
     realEstateData?: any;
+    dependencies?: any;
 }
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
@@ -32,6 +33,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     inventoryEdit,
     globe,
     realEstateData,
+    dependencies,
 }) => {
     const dispatch = useDispatch();
     const history = useHistory<any>();
@@ -130,7 +132,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
               }),
     };
 
-    console.log(initial_values)
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
         initial_values.materials = initial_values.materials.split(',');
@@ -427,6 +428,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 <GeneralDataForm
                                                     type={type}
                                                     tipologies={tipologies}
+                                                    dependencies={dependencies}
                                                     disabled={_disabled}
                                                     formik={formik}
                                                     projects={projects}

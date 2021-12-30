@@ -24,7 +24,7 @@ const AcquisitionsView: FC<AcquisitionsFromProps> = ({ type, disabled, acquisiti
                         active_type={formik.values.active_type}
                         onChange={async (aux_values) => {
                             const values = { ...aux_values, origin: aux_values.origin ? parseInt(aux_values.origin) : '' };
-                            const new_acquisitions = [...formik.values.acquisitions, values];
+                            const new_acquisitions = [...(formik.values.acquisitions ? formik.values.acquisitions : []), values];
                             formik.setFieldValue('acquisitions', new_acquisitions, false);
                         }}
                     />

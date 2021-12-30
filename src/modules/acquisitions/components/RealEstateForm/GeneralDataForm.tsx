@@ -14,6 +14,7 @@ interface GeneralDataFormProps {
     inventoryEdit?: boolean;
     acquisitions?: AdquisitionsItf[];
     tipologies?: any[];
+    dependencies?: any;
 }
 
 const GeneralDataForm: FC<GeneralDataFormProps> = ({
@@ -27,6 +28,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
     inventoryEdit,
     onProjectSelectedChange,
     acquisitions,
+    dependencies,
 }) => {
     //console.log(acquisitions)
 
@@ -51,6 +53,7 @@ const GeneralDataForm: FC<GeneralDataFormProps> = ({
             <DataRealEstateForm
                 type={type}
                 tipologies={tipologies}
+                dependencies={dependencies}
                 disabled={disabled}
                 formik={formik}
                 projects={projects}

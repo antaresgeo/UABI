@@ -1,16 +1,22 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { actions } from './../../redux';
 import { Link, Card } from '../../../../utils/ui';
 import RealEstateList from '../../components/RealEstateList';
 import FilterForm from '../../../../utils/ui/filter_form';
+import { guards } from '../../routes';
 
 const RealEstates = () => {
     const dispatch = useDispatch();
 
     //const [query, set_query] = useState<string>('');
     const [filters, set_filters] = useState<object>(null);
-
+    const  user  = useSelector((store: any) => store.auth.user);
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    };
     // const filter = () => {
     //     dispatch(actions.getRealEstates({ page: 1, q: query }));
     // };
@@ -26,7 +32,13 @@ const RealEstates = () => {
                 <div className="col-md-12">
                     <Card
                         title="Bienes Inmuebles"
-                        extra={<Link to="/acquisitions/real-estates/create" name="Crear" iconText="+" />}
+                        extra={
+                            <>
+                                {guards.createRealEstate({ user: aux_user }) && (
+                                    <Link to="/acquisitions/real-estates/create" name="Crear" iconText="+" />
+                                )}
+                            </>
+                        }
                     >
                         <div className="row justify-content-between">
                             <div className="col-5 d-flex">
@@ -44,7 +56,7 @@ const RealEstates = () => {
                                 </div>
                             </div>
                         </div>
-                        <RealEstateList withProject /*filters={{ q: query }}*/ />
+                        <RealEstateList withProject  user={aux_user}/*filters={{ q: query }}*/ />
                     </Card>
                 </div>
             </div>

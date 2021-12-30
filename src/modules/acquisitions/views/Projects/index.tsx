@@ -4,9 +4,10 @@ import { IProjectAttributes /*, IProjectsResponse*/ } from '../../../../utils/in
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
-import {formatDate, swal, swal_warning} from '../../../../utils';
+import { formatDate, swal, swal_warning } from '../../../../utils';
 import Tag from 'antd/lib/tag';
 import FilterForm from './../../../../utils/ui/filter_form';
+import { guards } from '../../routes';
 
 const Projects = () => {
     const dispatch = useDispatch();
@@ -14,6 +15,12 @@ const Projects = () => {
     const loading: boolean = useSelector((states: any) => states.acquisitions.projects.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.projects.pagination);
     const [query, set_query] = useState<string>('');
+    const user = useSelector((store: any) => store.auth.user);
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    };
 
     const filter = async (_filters, _) => {
         await dispatch(actions.getProjects({ page: 1, with: 'pagination', ..._filters }));
@@ -35,9 +42,8 @@ const Projects = () => {
             const result = await swal_warning.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
-                text: `El proyecto contiene ${
-                    res?.total || ''
-                } bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
+                text: `El proyecto contiene ${res?.total || ''
+                    } bienes inmuebles asociados.\n\nSi desea continuar los proyectos quedarán sin proyecto y se les debe asignar uno nuevo.`,
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -99,6 +105,67 @@ const Projects = () => {
             }
         }
     };
+
+    const acciones = {
+        title: 'Acciones',
+        fixed: true,
+        children: [],
+    }
+
+    const ver = {
+        title: 'Ver',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <Link
+                    to={`/acquisitions/projects/${id}/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-eye" aria-hidden="true" />}
+                />
+            );
+        },
+    }
+
+    const editar = {
+        title: 'Editar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            if (id !== 0) {
+                return (
+                    <Link
+                        to={`/acquisitions/projects/edit/${id}/`}
+                        name=""
+                        avatar={false}
+                        icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                    />
+                );
+            } else {
+                return <i className="fa fa-pencil" aria-hidden="true" style={{ color: '#aaa' }} />;
+            }
+        },
+    }
+
+    const eliminar = {
+        title: 'Desactivar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            if (id !== 0) {
+                return (
+                    <div className="text-danger" onClick={deleteProject(id)}>
+                        <i className="fa fa-times-circle" aria-hidden="true" />
+                        {/*<Switch size="small" />*/}
+                    </div>
+                );
+            } else {
+                return <i className="fa fa-times-circle" aria-hidden="true" style={{ color: '#aaa' }} />;
+                // return <Switch size="small" disabled />;
+            }
+        },
+    }
 
     const table_columns = [
         {
@@ -193,10 +260,26 @@ const Projects = () => {
                             // return <Switch size="small" disabled />;
                         }
                     },
-                },
+                }
+
             ],
-        },
+        }
+
     ];
+
+
+
+    // if (guards.detailProject({ user: aux_user })) {
+    //     table_columns[6] = acciones.children[0] = ver;
+    // }
+    // if (guards.editProject({ user: aux_user })) {
+    //     table_columns[6] = acciones.children[0] = editar;
+    // }
+    // if (guards.deleteProject({ user: aux_user })) {
+    //     table_columns[6] = acciones.children[0] = eliminar;
+    // }
+
+
 
     useEffect(() => {
         // dispatch(actions.getProjects());
@@ -211,7 +294,13 @@ const Projects = () => {
                 <div className="col-md-12">
                     <Card
                         title="Proyectos"
-                        extra={<Link to="/acquisitions/projects/create/" name="Crear" iconText="+" />}
+                        extra={
+                            <>
+                                {guards.createProject({ user: aux_user }) && (
+                                    <Link to="/acquisitions/projects/create/" name="Crear" iconText="+" />
+                                )}
+                            </>
+                        }
                     >
                         <div className="row justify-content-between">
                             <div className="col-5 d-flex">

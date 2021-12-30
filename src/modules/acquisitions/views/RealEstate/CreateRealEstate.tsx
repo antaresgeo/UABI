@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux';
 import { useHistory } from 'react-router-dom';
 import RealEstateForm from '../../components/RealEstateForm';
@@ -10,10 +10,12 @@ import { useEffect } from 'react';
 const RealEstate = () => {
     const history: any = useHistory();
     const dispatch = useDispatch();
+    const dependencies: any = useSelector((states: any) => states.acquisitions.dependencies.value);
     // console.log(history.location.state.project_id);
 
     useEffect(() => {
         dispatch(clearRealEstate());
+        dispatch(actions.getDependencies());
     }, []);
 
     const createRealEstate = async (values, form, isFinish) => {
@@ -35,7 +37,7 @@ const RealEstate = () => {
         }
     };
 
-    return <RealEstateForm type="create" onSubmit={createRealEstate} />;
+    return <RealEstateForm type="create" onSubmit={createRealEstate} dependencies={dependencies} />;
 };
 
 export default RealEstate;

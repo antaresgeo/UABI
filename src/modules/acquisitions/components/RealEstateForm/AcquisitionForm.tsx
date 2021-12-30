@@ -42,7 +42,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
         act_number: Yup.string().required('Campo obligatorio'),
         act_value: Yup.number().required('Campo obligatorio'),
         acquired_percentage: Yup.number().required('Campo obligatorio'),
-        origin: Yup.number().required('Campo obligatorio'),
+        //origin: Yup.number().required('Campo obligatorio'),
         entity_type: Yup.string().required('Campo obligatorio'),
         entity_number: Yup.string().required('Campo obligatorio'),
         acquisition_date: Yup.date().required('Campo obligatorio'),

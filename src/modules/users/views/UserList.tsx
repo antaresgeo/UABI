@@ -126,6 +126,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
         table_columns[4].children[1] = editar;
     }
     if (guards.delete({ user })) {
+        console.log(user);
         table_columns[4].children[2] = eliminar;
     }
 

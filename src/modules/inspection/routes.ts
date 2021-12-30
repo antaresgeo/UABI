@@ -7,23 +7,11 @@ import Scheduler from './views/scheduler';
 import { Permit } from '../..';
 
 export const guards =  {
-    createInpection: (props?) => {
-        const user = props.user;
-        if (!user) return false;
-        const { permits } = user;
-        return permits.includes(Permit.CREATE_INSPECTION);
-    },
     ListInspection: (props?) => {
         const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.LIST_INSPECTION);
-    },
-    scheduler: (props?) => {
-        const user = props.user;
-        if (!user) return false;
-        const { permits } = user;
-        return permits.includes(Permit.SCHEDULER);
     },
 }
 const get_routes = (): IRoute[] => {

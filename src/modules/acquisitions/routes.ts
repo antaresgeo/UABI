@@ -26,6 +26,7 @@ export const guards = {
         return permits.includes(Permit.CREATE_PROJECT);
     },
     detailProject: (props?) => {
+        console.log(props)
         const user = props.user;
         if (!user) return false;
         const { permits } = user;
@@ -36,6 +37,12 @@ export const guards = {
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.UPDATE_PROJECT);
+    },
+    deleteProject: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DELETE_PROJECT);
     },
     listProject: (props?) => {
         const user = props.user;
@@ -60,6 +67,12 @@ export const guards = {
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.UPDATE_REALESTATE);
+    },
+    deleteRealEstate: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DELETE_REALESTATE);
     },
     listRealEstate: (props?) => {
         const user = props.user;
