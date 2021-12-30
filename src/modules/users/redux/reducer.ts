@@ -206,11 +206,12 @@ const reducerRol = (aux_state: State = initialState, action: any): any => {
             };
         }
         case types.roles.success: {
+            console.log(action.payload)
             return {
                 ...state,
                 roles: {
                     ...state.roles,
-                    value: action.payload,
+                    value: action.payload?.results || [],
                     pagination: {
                         page: action.payload?.page || 1,
                         count: action.payload?.count || 0,

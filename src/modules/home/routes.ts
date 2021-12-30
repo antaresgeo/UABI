@@ -5,7 +5,7 @@ import { clearObjectNulls } from '../../utils';
 
 export const guards = {
     general: (props?) => {
-        return props.user.detailsUser;
+        return !!props.user.detailsUser;
     },
 };
 
