@@ -38,7 +38,7 @@ const AppRouter: React.FC<IAppRouter> = ({
 
 AppRouter.defaultProps = {
     defaultRedirect: '/',
-    privateRedirect: '/login/',
+    privateRedirect: '/auth/login/',
     lazy: false,
     test: false,
     show: true,

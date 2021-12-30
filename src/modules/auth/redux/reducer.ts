@@ -17,7 +17,7 @@ const initialState = token
         ? { can_access: true, user, error: null }
         : emptyInitialState
     : emptyInitialState;
-
+console.log("initialState", initialState)
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case authTypes.LOGIN: {
@@ -46,6 +46,7 @@ const reducer = (state = initialState, action) => {
         }
 
         case authTypes.LOGOUT: {
+            console.log(1)
             localStorage.removeItem('_tk_');
             localStorage.removeItem('_uk_');
             localStorage.removeItem('_rf_');
@@ -60,6 +61,7 @@ const reducer = (state = initialState, action) => {
         }
 
         case authTypes.EXPIRED_TOKEN: {
+            console.log(3)
             localStorage.removeItem('_tk_');
             localStorage.removeItem('_uk_');
             return {

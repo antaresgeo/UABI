@@ -1,10 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import 'moment/locale/es';
 import { io, Socket } from 'socket.io-client';
-import notification from 'antd/lib/notification';
 import { BASE_URL } from '../../../config/axios_instances/notifications';
-import {actions} from "../../../modules/notificacions/redux";
-import {useDispatch} from "react-redux";
+import { useSelector } from 'react-redux';
 
 type KeyPath = [string, string?];
 interface TemplateProps {
@@ -25,7 +23,6 @@ interface TemplateProps {
 export const TemplateContext = React.createContext<TemplateProps>(null);
 
 const TemplateProvider: FC = React.memo(({ children }) => {
-
     const [menu_collapsed, set_menu_collapsed] = useState<boolean>(false);
     const [menu_key_path, set_menu_key_path] = useState<KeyPath>(['p0']);
     const [drawer_collapsed, set_drawer_collapsed] = useState<boolean>(false);
@@ -33,18 +30,26 @@ const TemplateProvider: FC = React.memo(({ children }) => {
     const [pass_modal, set_pass_modal] = useState<boolean>(false);
     const [idNode, set_idNode] = useState<string>(null);
     const [socket, set_socket] = useState<Socket>(null);
+    const [user] = useSelector((store: any) => [store.auth.user]);
 
     useEffect(() => {
         const new_socket = io(BASE_URL);
-        new_socket.on('init', (data) => {
-            set_idNode(data.id as string);
-        });
-        set_socket(new_socket);
+        if (user?.detailsUser) {
+            new_socket.on('init', (data) => {
+                set_idNode(data.id as string);
+                new_socket.emit('register:user', {
+                    headerAuthorization: `Bearer ${localStorage.getItem('_tk_')}`,
+                    id: user.detailsUser.id,
+                });
+            });
+            set_socket(new_socket);
+        }
+
         return () => {
             socket?.close();
             set_socket(null);
         };
-    }, [set_socket]);
+    }, [user]);
 
     return (
         <TemplateContext.Provider

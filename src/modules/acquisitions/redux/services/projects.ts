@@ -31,7 +31,6 @@ const getProjects = async (filters): Promise<any | string> => {
         let URI = `/projects/list`;
         let res: AxiosResponse<IProjectsResponse> = await http.get(URI, {
             params: {
-                with: 'pagination',
                 ...filters,
             },
         });
