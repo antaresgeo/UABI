@@ -147,6 +147,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                 <div
                     className=" p-4 session-close"
                     onClick={() => {
+                        console.log(2)
                         localStorage.removeItem('_tk_');
                         localStorage.removeItem('_uk_');
                         context.drawer_close();

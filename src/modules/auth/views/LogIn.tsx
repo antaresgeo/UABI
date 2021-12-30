@@ -4,13 +4,16 @@ import logo from './../../../utils/assets/img/escudoAlcaldia.png';
 import { Redirect, useHistory } from 'react-router-dom';
 import LoginForm from './../components/LoginForm';
 import actions from '../redux/actions';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Link from '../../../utils/ui/link';
 import { useState } from 'react';
 
-export default function SignIn() {
+export default function SignIn({location, redirect}) {
+    const can_access = useSelector((store: any) => store.auth.can_access )
+    console.log({can_access, location, redirect})
     const dispatch = useDispatch();
     const history = useHistory();
+
     // const [disabled, setDisabled] = useState(parseInt(localStorage.getItem('attemp')) >= 9);
     const [alert, set_alert] = useState(null);
 
@@ -41,11 +44,9 @@ export default function SignIn() {
             });
     };
 
-    const token: string = localStorage.getItem('_tk_');
-    // console.log(token)
     return (
         <div>
-            {token && <Redirect to="/" />}
+            {redirect(can_access, location)}
             <Grid columns={2} style={{ height: '100vh' }} className="no-margin">
                 <Grid.Row className="no-padding-bottom no-padding-top">
                     <Grid.Column className="no-padding-right no-padding-left">

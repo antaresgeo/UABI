@@ -17,6 +17,7 @@ export const get_can_access = (can_access: CanAccess, props: any): boolean => {
             has_access = can_access(props);
         }
     }
+    console.log(has_access)
     return has_access;
 };
 

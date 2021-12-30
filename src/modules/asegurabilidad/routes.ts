@@ -63,7 +63,6 @@ export const guards = {
         const user = props.user;
         if (!user) return false;
         const { permits } = user;
-        console.log(user);
         return permits.includes(Permit.LIST_INSURANCE_COMPANY);
     },
     createInsuranceBroker: (props?) => {
