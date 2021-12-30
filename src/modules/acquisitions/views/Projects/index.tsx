@@ -218,8 +218,8 @@ const Projects = () => {
                                 <div className="col-6 ">
                                     <FilterForm
                                         filters={[
-                                            { key: 'id', name: 'Código' },
                                             { key: 'name', name: 'Nombre' },
+                                            { key: 'id', name: 'Código' },
                                             { key: 'dependency', name: 'Dependencia' },
                                             { key: 'subdependency', name: 'Subdependencia' },
                                             { key: 'audit_trail.created_by', name: 'Fecha', type: 'date' },

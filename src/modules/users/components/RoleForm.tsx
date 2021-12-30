@@ -173,7 +173,7 @@ const RoleForm: FC<IUserFormPros> = ({ rol, disabled, type, user_roles, user_per
                                         id="assign_id"
                                         disabled={disabled}
                                         placeholder="Selecciona una Dependencia"
-                                        options={roles.map((rol) => ({ id: rol.id, name: rol.role_name }))}
+                                        options={roles?.map((rol) => ({ id: rol.id, name: rol.role_name }))}
                                         showSearch
                                         mode="multiple"
                                         extra_on_change={(values, prev) => {

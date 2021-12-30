@@ -1,18 +1,24 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
-import { Card } from '../../../../utils/ui';
 import ProjectForm from '../../components/ProjectForm';
-import { useEffect } from 'react';
+import {  useEffect, useRef } from 'react';
+import { FormikProps, FormikValues } from 'formik';
 
 const CreateRealEstate = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-
+    const form = useRef<FormikProps<FormikValues>>();
+    const dependencies: any = useSelector((states: any) => states.acquisitions.dependencies.value);
     const createProject = async (values) => {
         const res: any = await dispatch(actions.createProject(values));
         history.push(`/acquisitions/projects/${res.id}`);
+
     };
+
+    useEffect(() => {
+        dispatch(actions.getDependencies())
+    }, [])
 
     return (
         <div className="h-100 d-flex flex-column">
@@ -22,6 +28,8 @@ const CreateRealEstate = () => {
                         <div className="col-md-12">
                             <h5 style={{ fontWeight: 600, marginLeft: 20 }}>Crear Proyecto</h5>
                             <ProjectForm
+                                dependencies={dependencies}
+                                innerRef={form}
                                 onSubmit={(values) => {
                                     return createProject(values);
                                 }}
@@ -44,6 +52,15 @@ const CreateRealEstate = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form.current?.submitForm();
+                    }}
+                >
+                    Guardar
+                </button>
             </div>
         </div>
     );

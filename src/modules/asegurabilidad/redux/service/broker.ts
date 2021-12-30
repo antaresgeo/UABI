@@ -68,8 +68,8 @@ export const create_broker = async (data: Broker) => {
             name: data.name,
             nit: data.nit,
             location_id: data.location_id,
-            phone: data.phone,
-            contact_information: data.contact_information,
+            phone: data.phone + "",
+            contact_information: {...data.contact_information, phone: data.contact_information.phone + "" },
         });
         return res.data;
     } catch (e) {

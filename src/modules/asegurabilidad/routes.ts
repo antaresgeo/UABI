@@ -63,6 +63,7 @@ export const guards = {
         const user = props.user;
         if (!user) return false;
         const { permits } = user;
+        console.log(user);
         return permits.includes(Permit.LIST_INSURANCE_COMPANY);
     },
     createInsuranceBroker: (props?) => {
@@ -172,7 +173,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: guards.detailInsuranceCompany,
+            can_access: guards.listInsuranceCompany,
             path: '/insurabilities/company/',
             template_props: {
                 breadcrumbs: [{ name: 'Compañias Aseguradoras' }],

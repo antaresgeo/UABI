@@ -25,7 +25,7 @@ const ModalInspection: FC<InspectionModalProps> = ({ /*onSave,*/ disabled, proje
         !disabled && set_is_visible(true)
     };
     const close = () => {
-        dispatch(actions.clearRealEstate())
+        dispatch(actions.clearRealEstates())
         set_is_visible(false)
     };
 

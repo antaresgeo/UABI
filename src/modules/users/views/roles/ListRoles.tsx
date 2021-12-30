@@ -14,6 +14,7 @@ export const ListRoles = () => {
     const loading: boolean = useSelector((store: any) => store.users.roles.loading);
     const { total_results } = useSelector((store: any) => store.users.roles.pagination);
 
+
     const change_page = (page, pageSize) => {
         dispatch(actions.getRolesList({ page, pageSize, with: 'pagination', ...filters }));
     };
@@ -200,9 +201,9 @@ export const ListRoles = () => {
                             columns={table_columns}
                             items={roles}
                             change_page={change_page}
-                            with_pagination
                             count={total_results}
                             loading={loading}
+                            with_pagination
                         />
                     </Card>
                 </div>

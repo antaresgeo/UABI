@@ -12,6 +12,7 @@ import {
     createRealEstates,
     updateRealEstate,
     deleteRealEstate,
+    clearRealEstates,
     clearRealEstate,
     createAcquisitionForRealEstate,
     getTipologies,
@@ -44,6 +45,9 @@ const updateProject = (data: any, id) =>
 const deleteProject = (id) =>
     request_dispatch(types.deleteProject, service.deleteProject(id));
 
+const getDependencies = () =>
+    request_dispatch(types.dependencies, service.getDependencies());
+
 const actions = {
     // example
     getProject,
@@ -61,10 +65,12 @@ const actions = {
     createRealEstates,
     updateRealEstate,
     deleteRealEstate,
+    clearRealEstates,
     clearRealEstate,
     createAcquisitionForRealEstate,
     getTipologies,
     getTipology,
     updateAcquisition,
+    getDependencies,
 };
 export default actions;

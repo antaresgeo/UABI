@@ -19,11 +19,11 @@ const Select: FC<SelectProps> = ({ children, field, form, options, className, ex
         extra_on_change && extra_on_change(value, field.value);
     };
     const render_options = (items) =>
-        items.map((item, i) => {
-            const { name, id } = item;
+        items?.map((item, i) => {
+
             return (
-                <Option key={`project_${i}`} value={id} label={name}>
-                    {name}
+                <Option key={`project_${i}`} value={item?.id || ""} label={item?.name || ""}>
+                    {item?.name || ""}
                 </Option>
             );
         });

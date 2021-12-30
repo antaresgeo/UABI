@@ -70,11 +70,11 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
             dependency: Yup.string().when('entity_type', {
                 is: 'P',
                 then: Yup.string().required('Campo obligatorio'),
-            }),
+            }).nullable(),
             subdependency: Yup.string().when('entity_type', {
                 is: 'P',
                 then: Yup.string().required('Campo obligatorio'),
-            }),
+            }).nullable(),
         }),
     });
 
@@ -112,7 +112,8 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
             validationSchema={schema}
             innerRef={innerRef}
         >
-            {({ values, isValid, isSubmitting, setFieldValue, handleChange }) => {
+            {({ values, isValid, isSubmitting, setFieldValue, handleChange, errors }) => {
+                console.log(errors)
                 return (
                     <Form>
                         <div className="row">
