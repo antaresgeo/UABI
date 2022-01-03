@@ -21,6 +21,7 @@ const RealEstate = () => {
     const createRealEstate = async (values, form, isFinish) => {
         try {
             const res: any = await dispatch(actions.createRealEstate(values));
+            console.log('@@',res);
             if (values.acquisitions.length > 0) {
                 await dispatch(actions.createAcquisitionForRealEstate(res.id, values.acquisitions));
             }

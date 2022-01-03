@@ -87,6 +87,16 @@ const loginFail = (payload) => {
     };
 };
 
+const logOut = () => {
+    return (dispatch: Function) => {
+        service.logout().then(() => {
+            dispatch({
+                type: authTypes.LOGOUT,
+            });
+        });
+    };
+};
+
 // const logOut = (): { type: string } => {
 //     service.logout();
 //     return {

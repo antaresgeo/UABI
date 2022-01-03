@@ -276,7 +276,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             .min(0, 'El minimo es 0')
             .max(100, 'El maximo es 100'),
         zone: Yup.string().required('Campo obligatorio'),
-        tipology_id: Yup.string().required('Campo obligatorio'),
+        //tipology_id: Yup.string().required('Campo obligatorio'),
         acquisitions: Yup.array(),
     });
 

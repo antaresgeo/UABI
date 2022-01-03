@@ -48,6 +48,17 @@ const services = {
     //         refresh: localStorage.getItem("_rf_"),
     //     });
     // },
+    logout: async () => {
+        return auth_http
+            .post("/auth/log-out/")
+            .then((response) => {
+                console.log(
+                    `%c LogOut `,
+                    "background: #ffff00; color: #000; padding: 8px; border-radius: 4px;"
+                );
+            })
+            .catch((response) => console.log({ response }));
+    },
     // logout: async () => {
     //     return auth_http
     //         .get("/logout/")
