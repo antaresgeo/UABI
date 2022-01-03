@@ -173,7 +173,9 @@ export const get_user_by_id = async (id?, token?) => {
 
 export const update_user = async (id, data) => {
     if (data.user) {
-        delete data.user.password;
+        if (data.user.password === '') {
+            delete data.user.password;
+        }
     }
     if (data.detailsUser) {
         delete data.detailsUser.id;
@@ -187,12 +189,24 @@ export const update_user = async (id, data) => {
             delete data.detailsUser.subdependency;
         }
     }
+    let pass = false;
+    if (data?.user?.password) {
+        pass = await base64Encode(data.user.password);
+    }
+
+    const body = {
+        ...data,
+        user: {
+            ...data.user,
+            ...(pass ? { password: pass } : { password: '' }),
+        },
+    };
 
     try {
         const URI = '/users/';
         const res: AxiosResponse<UserResponse> = await auth_http.put(
             URI,
-            data,
+            body,
             {
                 params: {
                     id,

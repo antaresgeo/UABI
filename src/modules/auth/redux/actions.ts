@@ -87,12 +87,15 @@ const loginFail = (payload) => {
     };
 };
 
-// const logOut = (): { type: string } => {
-//     service.logout();
-//     return {
-//         type: authTypes.LOGOUT,
-//     };
-// };
+const logOut = () => {
+    return (dispatch: Function) => {
+        service.logout().then(() => {
+            dispatch({
+                type: authTypes.LOGOUT,
+            });
+        });
+    };
+};
 
 // const change_password = (data: PasswordResetBody) => {
 //     return (dispatch) => {
@@ -138,7 +141,7 @@ const actions = {
     newToken,
     get_user,
     // refresh,
-    // logOut,
+    logOut,
     // change_password,
     // recovery_password,
     // get_access,

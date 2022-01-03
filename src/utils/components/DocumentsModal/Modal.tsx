@@ -70,7 +70,6 @@ const DocumentsModal: FC<LocationModalProps> = ({
                             }}
                             onClick={() => {
                                 download_document(doc.id, doc.name);
-                                console.log(doc);
                             }}
                         >
                             {doc.name}

@@ -1,9 +1,7 @@
 import React, { FC, useContext } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined, PicRightOutlined } from '@ant-design/icons';
 import { TemplateContext } from './template_context';
-import Badge from 'antd/lib/badge';
 import { DropdownNotification } from '../../../modules/notificacions/views/DropdownNotification';
-import Dropdown from 'antd/lib/dropdown';
 
 const Header: FC<{ collapsible: boolean; name: string; user_id: number }> = ({ collapsible, name, user_id }) => {
     const context = useContext(TemplateContext);
