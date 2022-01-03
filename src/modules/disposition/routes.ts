@@ -13,12 +13,95 @@ import ComodatoDoc from './components/Precontractual/comodato/ComodatoDoc';
 import ComodatoDocContract from './components/Contractual/comodatoContract/ComodatoDocContract';
 import LeaseDocContract from './components/Contractual/Lease/LeaseDocContract';
 import DetailPrecontractual from './views/Pre-contractual/DetailPrecontractual';
+import { Permit } from '../..';
+
+export const guards = {
+    createContract: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.CREATE_CONTRACT);
+    },
+    detailContract: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DETAIL_CONTRACT);
+    },
+    editContract: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.UPDATE_CONTRACT);
+    },
+    listContract: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.LIST_CONTRACTS);
+    },
+    deleteContract: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DELETE_CONTRACT);
+    },
+    createPrecontract: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.CREATE_PRECONTRACT);
+    },
+    detailPrecontract: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DETAIL_PRECONTRACT);
+    },
+    editPrecontract: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.UPDATE_PRECONTRACT);
+    },
+
+    listDisposition: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.LIST_DISPOSITION);
+    },
+    createDisposition: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.CREATE_DISPOSITION);
+    },
+    detailDisposition: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DETAIL_DISPOSITION);
+    },
+    editDisposition: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.UPDATE_DISPOSITION);
+    },
+    deleteDisposition: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DELETE_DISPOSITION);
+    },
+};
 const get_routes = (): IRoute[] => {
     return [
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.listDisposition,
             path: '/disposition/list/',
             template_props: {
                 breadcrumbs: [{ name: 'Disposición' }],

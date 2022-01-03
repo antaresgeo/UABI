@@ -287,6 +287,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         delete values._type;
         values.projects_id = [project_id];
         values.materials = values.materials.join(', ');
+        form.setSubmitting(true);
         if (realEstate?.patrimonial_value !== values?.patrimonial_value && inventory) {
             if (validateDocuments(values?.supports_documents, 'Documento Avalúo')) {
                 form.setSubmitting(false);
@@ -304,7 +305,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 return;
             }
         }
-        form.setSubmitting(true);
         onSubmit(values, form, isFinish)
             .then(() => {
                 form.setSubmitting(false);

@@ -65,6 +65,11 @@ const RealEstateList: FC<RealEstateListProps> = ({
         }
     };
 
+    const acciones = {
+        title: 'Acciones',
+        fixed: true,
+        children: []
+    }
     const ver = {
         title: 'Ver',
         dataIndex: 'id',
@@ -92,7 +97,11 @@ const RealEstateList: FC<RealEstateListProps> = ({
         render: (id) => {
             return (
                 <Link
-                    to={`/inventoryrecord/real-estates/edit/${id}/`}
+                    to={
+                        register
+                        ? `/inventoryrecord/real-estates/edit/${id}/`
+                        : `/acquisitions/real-estates/edit/${id}/`
+                        }
                     name=""
                     avatar={false}
                     icon={<i className="fa fa-pencil" aria-hidden="true" />}
@@ -114,7 +123,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
         },
     }
 
-    const table_columns = [
+    const table_columns: any = [
         {
             title: 'ID',
             dataIndex: 'id',
@@ -154,7 +163,8 @@ const RealEstateList: FC<RealEstateListProps> = ({
             render: (data) => data.created_by,
         },
         ...(register
-            ? [
+            ?
+            [
                 {
                     title: 'Estado',
                     dataIndex: 'status',
@@ -164,96 +174,24 @@ const RealEstateList: FC<RealEstateListProps> = ({
                         return <Tag color="default">{s}</Tag>;
                     },
                 },
-                {
-                    title: 'Ver',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={
-                                    register
-                                        ? `/inventoryrecord/real-estates/${id}/`
-                                        : `/acquisitions/real-estates/${id}/`
-                                }
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
-                    title: 'Editar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/inventoryrecord/real-estates/edit/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
             ]
-            : [
-                {
-                    title: 'Acciones',
-                    fixed: true,
-                    children: [
-                        {
-                            title: 'Ver',
-                            dataIndex: 'id',
-                            align: 'center' as 'center',
-                            render: (id) => {
-                                return (
-                                    <Link
-                                        to={
-                                            register
-                                                ? `/inventoryrecord/real-estates/${id}/`
-                                                : `/acquisitions/real-estates/${id}/`
-                                        }
-                                        name=""
-                                        avatar={false}
-                                        icon={<i className="fa fa-eye" aria-hidden="true" />}
-                                    />
-                                );
-                            },
-                        },
-                        {
-                            title: 'Editar',
-                            dataIndex: 'id',
-                            align: 'center' as 'center',
-                            render: (id) => {
-                                return (
-                                    <Link
-                                        to={`/acquisitions/real-estates/edit/${id}/`}
-                                        name=""
-                                        avatar={false}
-                                        icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                                    />
-                                );
-                            },
-                        },
-                        {
-                            title: 'Desactivar',
-                            dataIndex: 'id',
-                            align: 'center' as 'center',
-                            render: (id) => {
-                                return (
-                                    <div className="text-danger" onClick={deleteRealEstate(id)}>
-                                        <i className="fa fa-times-circle" aria-hidden="true" />
-                                    </div>
-                                );
-                            },
-                        },
-                    ],
-                },
-            ]),
+            :
+            []
+        ),
     ];
+
+    if (guards.detailRealEstate({ user })) {
+        acciones.children.push(ver)
+    }
+    if (guards.editRealEstate({ user })) {
+        acciones.children.push(editar)
+    }
+    if (guards.deleteRealEstate({ user }) && !register) {
+        acciones.children.push(eliminar)
+    }
+    if (acciones.children.length > 0) {
+        table_columns.push(acciones)
+    }
 
     // if(withProject && register){
     //     if (guards.detailRealEstate({ user })) {

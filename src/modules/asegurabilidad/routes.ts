@@ -59,6 +59,12 @@ export const guards = {
         const { permits } = user;
         return permits.includes(Permit.UPDATE_INSURANCE_COMPANY);
     },
+    deleteInsuranceCompany: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DETAIL_INSURANCE_COMPANY);
+    },
     listInsuranceCompany: (props?) => {
         const user = props.user;
         if (!user) return false;
@@ -82,6 +88,12 @@ export const guards = {
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.UPDATE_INSURANCE_BROKER);
+    },
+    deleteInsuranceBroker: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DELETE_INSURANCE_BROKER);
     },
     listInsuranceBroker: (props?) => {
         const user = props.user;

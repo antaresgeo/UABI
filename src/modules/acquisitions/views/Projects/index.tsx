@@ -108,6 +108,7 @@ const Projects = () => {
 
     const acciones = {
         title: 'Acciones',
+        align: 'center' as 'center',
         fixed: true,
         children: [],
     }
@@ -167,7 +168,7 @@ const Projects = () => {
         },
     }
 
-    const table_columns = [
+    const table_columns: any = [
         {
             title: 'ID',
             dataIndex: 'id',
@@ -205,81 +206,20 @@ const Projects = () => {
                 return <Tag color="default">{s}</Tag>;
             },
         },
-        {
-            title: 'Acciones',
-            fixed: true,
-            children: [
-                {
-                    title: 'Ver',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/acquisitions/projects/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
-                    title: 'Editar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        if (id !== 0) {
-                            return (
-                                <Link
-                                    to={`/acquisitions/projects/edit/${id}/`}
-                                    name=""
-                                    avatar={false}
-                                    icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                                />
-                            );
-                        } else {
-                            return <i className="fa fa-pencil" aria-hidden="true" style={{ color: '#aaa' }} />;
-                        }
-                    },
-                },
-                {
-                    title: 'Desactivar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        if (id !== 0) {
-                            return (
-                                <div className="text-danger" onClick={deleteProject(id)}>
-                                    <i className="fa fa-times-circle" aria-hidden="true" />
-                                    {/*<Switch size="small" />*/}
-                                </div>
-                            );
-                        } else {
-                            return <i className="fa fa-times-circle" aria-hidden="true" style={{ color: '#aaa' }} />;
-                            // return <Switch size="small" disabled />;
-                        }
-                    },
-                }
-
-            ],
-        }
-
     ];
 
-
-
-    // if (guards.detailProject({ user: aux_user })) {
-    //     table_columns[6] = acciones.children[0] = ver;
-    // }
-    // if (guards.editProject({ user: aux_user })) {
-    //     table_columns[6] = acciones.children[0] = editar;
-    // }
-    // if (guards.deleteProject({ user: aux_user })) {
-    //     table_columns[6] = acciones.children[0] = eliminar;
-    // }
-
-
+    if (guards.detailProject({ user })) {
+        acciones.children.push(ver)
+    }
+    if (guards.editProject({ user })) {
+        acciones.children.push(editar)
+    }
+    if (guards.deleteProject({ user })) {
+        acciones.children.push(eliminar)
+    }
+    if (acciones.children.length > 0) {
+        table_columns.push(acciones)
+    }
 
     useEffect(() => {
         // dispatch(actions.getProjects());

@@ -13,13 +13,26 @@ export const guards =  {
         const { permits } = user;
         return permits.includes(Permit.LIST_INSPECTION);
     },
+    detailInspection: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.DETAIL_INSPECTION);
+    },
+    updateInspection: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.UPDATE_INSPECTION);
+    },
+
 }
 const get_routes = (): IRoute[] => {
     return [
         {
             exact: true,
             is_private: true,
-            can_access: true, //guards.ListInspection,
+            can_access: guards.ListInspection,
             path: '/inspection/',
             template_props: {
                 breadcrumbs: [

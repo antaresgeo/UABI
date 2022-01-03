@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { actions } from '../redux';
-import {formatDate, swal, swal_warning} from '../../../utils';
+import { formatDate, swal, swal_warning } from '../../../utils';
 import { Link, Table } from '../../../utils/ui';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import { guards } from '../routes';
+import Tag from 'antd/lib/tag';
 
 interface UserListProps {
     users: IUserAttributes[];
@@ -79,7 +80,14 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
         },
     };
 
-    const table_columns = [
+    const acciones = {
+        title: 'Acciones',
+        align: 'center' as 'center',
+        fixed: true,
+        children: [],
+    }
+
+    const table_columns: any = [
         {
             title: 'ID',
             dataIndex: 'user_id',
@@ -90,9 +98,8 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
             dataIndex: 'names',
             align: 'left' as 'left',
             render: (_, user) => {
-                return `${(user && Object.values(user?.names).join(' ')) || ''} ${
-                    (user && Object.values(user?.surnames).join(' ')) || ''
-                }`;
+                return `${(user && Object.values(user?.names).join(' ')) || ''} ${(user && Object.values(user?.surnames).join(' ')) || ''
+                    }`;
             },
         },
         // {
@@ -113,22 +120,31 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
             render: (_) => _?.created_by,
         },
         {
-            title: 'Acciones',
-            fixed: true,
-            children: [],
+            title: 'Estado',
+            dataIndex: 'status',
+            align: 'center' as 'center',
+            render: (s) => {
+                if (s === 'Activo') return <Tag color="success">{s}</Tag>;
+                return <Tag color="default">{s}</Tag>;
+            },
         },
+
+
     ];
 
     if (guards.detail({ user })) {
-        table_columns[4].children[0] = ver;
+        acciones.children.push(ver)
     }
     if (guards.edit({ user })) {
-        table_columns[4].children[1] = editar;
+        acciones.children.push(editar)
     }
     if (guards.delete({ user })) {
-        console.log(user);
-        table_columns[4].children[2] = eliminar;
+        acciones.children.push(eliminar)
     }
+    if (acciones.children.length > 0) {
+        table_columns.push(acciones)
+    }
+
 
     return <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} loading={loading} />;
 };

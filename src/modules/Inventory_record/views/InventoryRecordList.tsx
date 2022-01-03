@@ -1,15 +1,22 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Card, Link } from '../../../utils/ui';
 import { getRealEstates } from '../../acquisitions/redux/actions/realEstates';
 import RealEstateList from '../../acquisitions/components/RealEstateList';
 import FilterForm from './../../../utils/ui/filter_form';
 import { actions } from '../../acquisitions/redux';
+import { guards } from '../../acquisitions/routes';
 
 const InventoryRecordList = () => {
     const dispatch = useDispatch();
     const [filters, set_filters] = useState<object>(null);
+    const user = useSelector((store: any) => store.auth.user);
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    };
 
     // const change_page = (page, pageSize) => {
     //     dispatch(getRealEstates({ page, pageSize, with: 'pagination', ...filters }));
@@ -30,7 +37,13 @@ const InventoryRecordList = () => {
                 <div className="col-md-12">
                     <Card
                         title="Administrar Bienes Inmuebles"
-                        extra={<Link to="/acquisitions/real-estates/create" name="Crear" iconText="+" />}
+                        extra={
+                            <>
+                                {guards.createRealEstate({ user: aux_user }) && (
+                                    <Link to="/acquisitions/real-estates/create" name="Crear" iconText="+" />
+                                )}
+                            </>
+                        }
                     >
                         <div className="row justify-content-between">
                             <div className="col-5 d-flex">
@@ -49,7 +62,7 @@ const InventoryRecordList = () => {
                             </div>
                         </div>
 
-                        <RealEstateList withProject register /*change_page={change_page}*/ />
+                        <RealEstateList withProject register user={aux_user}/*change_page={change_page}*/ />
                     </Card>
                 </div>
             </div>

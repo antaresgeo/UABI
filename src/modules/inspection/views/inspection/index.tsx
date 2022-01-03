@@ -10,6 +10,12 @@ const Inspectios = () => {
     const loading: boolean = useSelector((states: any) => states.acquisitions.projects.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.projects.pagination);
     const [query, set_query] = useState<string>('');
+    const user = useSelector((store: any) => store.auth.user);
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    };
 
     // const loading: boolean = useSelector((store: any) => store.inspection.inspections.loading);
     // const { total_results } = useSelector((store: any) => store.inspection.inspections.pagination);
@@ -56,6 +62,7 @@ const Inspectios = () => {
             change_page={change_page}
             loading={loading}
             total_results={total_results}
+            user={aux_user}
         />
     );
 };

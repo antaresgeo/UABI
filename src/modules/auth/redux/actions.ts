@@ -148,7 +148,7 @@ const actions = {
     newToken,
     get_user,
     // refresh,
-    // logOut,
+    logOut,
     // change_password,
     // recovery_password,
     // get_access,

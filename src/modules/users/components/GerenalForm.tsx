@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import dependencias from '../../acquisitions/dependencias';
 import Select from '../../../utils/ui/select';
+import { useSelector } from 'react-redux';
 
 interface IUserFormPros {
     user?: IUserAttributes;
@@ -18,7 +19,8 @@ interface IUserFormPros {
 const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerRef }) => {
     // const history = useHistory();
     const [subs, set_subs] = useState<any[]>([]);
-
+    const roles = useSelector((store: any) => store.auth.user.roles);
+    const is_admin =  !!roles.find((r) => r.name === 'Administrador');
     const initial_values = {
         user: {
             id_number: '',
@@ -37,6 +39,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
             str_location: '',
             cellphone_number: '',
             phone_number: '',
+            phone_number_ext: '',
             gender: '',
             dependency: '',
             subdependency: '',
@@ -67,14 +70,18 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
             cellphone_number: Yup.number().required('Campo obligatorio'),
             phone_number: Yup.number().required('Campo obligatorio'),
             gender: Yup.string().required('Campo obligatorio'),
-            dependency: Yup.string().when('entity_type', {
-                is: 'P',
-                then: Yup.string().required('Campo obligatorio'),
-            }).nullable(),
-            subdependency: Yup.string().when('entity_type', {
-                is: 'P',
-                then: Yup.string().required('Campo obligatorio'),
-            }).nullable(),
+            dependency: Yup.string()
+                .when('entity_type', {
+                    is: 'P',
+                    then: Yup.string().required('Campo obligatorio'),
+                })
+                .nullable(),
+            subdependency: Yup.string()
+                .when('entity_type', {
+                    is: 'P',
+                    then: Yup.string().required('Campo obligatorio'),
+                })
+                .nullable(),
         }),
     });
 
@@ -113,7 +120,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
             innerRef={innerRef}
         >
             {({ values, isValid, isSubmitting, setFieldValue, handleChange, errors }) => {
-                console.log(errors)
+                console.log(errors);
                 return (
                     <Form>
                         <div className="row">
@@ -326,7 +333,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
                                 />
                                 <ErrorMessage name="user.id_number" withCount max={20} />
                             </div>
-                            <div className={`col-${type === 'create' ? 3 : 6}`}>
+                            <div className={`col-${type === 'create' || is_admin ? 3 : 6}`}>
                                 <label htmlFor="username" className="form-label">
                                     Correo Electronico <span className="text-danger">*</span>
                                 </label>
@@ -342,22 +349,23 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
                                 />
                                 <ErrorMessage name="detailsUser.email" />
                             </div>
-                            {type === 'create' && (
-                                <div className="col-3">
-                                    <label htmlFor="username" className="form-label">
-                                        Contraseña
-                                    </label>
-                                    <Field
-                                        type="password"
-                                        className="form-control"
-                                        id="password_id"
-                                        name="user.password"
-                                        autoComplete="off"
-                                        disabled={disabled}
-                                    />
-                                    <ErrorMessage name="user.password" />
-                                </div>
-                            )}
+                            {type === 'create' ||
+                                is_admin && (
+                                    <div className="col-3">
+                                        <label htmlFor="username" className="form-label">
+                                            Contraseña
+                                        </label>
+                                        <Field
+                                            type="password"
+                                            className="form-control"
+                                            id="password_id"
+                                            name="user.password"
+                                            autoComplete="off"
+                                            disabled={disabled}
+                                        />
+                                        <ErrorMessage name="user.password" />
+                                    </div>
+                                )}
                         </div>
                         <div className="row">
                             <div className="col-3">
