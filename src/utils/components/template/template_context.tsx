@@ -20,6 +20,7 @@ interface TemplateProps {
     idNode: string;
     socket: Socket;
 }
+
 export const TemplateContext = React.createContext<TemplateProps>(null);
 
 const TemplateProvider: FC = React.memo(({ children }) => {

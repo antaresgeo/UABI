@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { actions } from '../redux';
-import {formatDate, swal, swal_warning} from '../../../utils';
+import { formatDate, swal, swal_warning } from '../../../utils';
 import { Link, Table } from '../../../utils/ui';
 import { IUserAttributes } from '../../../utils/interfaces/users';
 import { guards } from '../routes';
+import Tag from 'antd/lib/tag';
 
 interface UserListProps {
     users: IUserAttributes[];
@@ -113,6 +114,15 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
             render: (_) => _?.created_by,
         },
         {
+            title: 'Estado',
+            dataIndex: 'status',
+            align: 'center' as 'center',
+            render: (s) => {
+                if (s === 'Activo') return <Tag color="success">{s}</Tag>;
+                return <Tag color="default">{s}</Tag>;
+            },
+        },
+        {
             title: 'Acciones',
             fixed: true,
             children: [],
@@ -120,13 +130,13 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
     ];
 
     if (guards.detail({ user })) {
-        table_columns[4].children[0] = ver;
+        table_columns[5].children[0] = ver;
     }
     if (guards.edit({ user })) {
-        table_columns[4].children[1] = editar;
+        table_columns[5].children[1] = editar;
     }
     if (guards.delete({ user })) {
-        table_columns[4].children[2] = eliminar;
+        table_columns[5].children[2] = eliminar;
     }
 
     return <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} loading={loading} />;

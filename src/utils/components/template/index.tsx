@@ -9,6 +9,7 @@ import { Breadcrumb } from '../app_router/custom_types';
 import Menu from 'antd/lib/menu';
 import {useDispatch} from "react-redux";
 import {actions} from "../../../modules/notificacions/redux";
+import {actions as auth_actions} from "../../../modules/auth/redux"
 import notification from "antd/lib/notification";
 
 interface ITemplate {
@@ -56,11 +57,15 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
         context.socket?.on('new:notification', (data) => {
             openNotification(data);
         });
+        context.socket?.on('session:close', (data) => {
+            //TODO: mensaje modal warnirg sakarlo al dar click
+        });
     }, [user]);
 
     return (
         <>
             <Layout className="w-100 h-100">
+
                 <Sider {...sider_ops}>
                     <AppSider width={sider_ops.width} />
                 </Sider>
@@ -105,6 +110,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                         letterSpacing: '-0.4px',
                     }}
                 >
+
                     <div className="d-flex align-start flex-column">
                         <span style={{ fontWeight: 'bold', fontSize: 22 }}>{name}</span>
                         {user && (
@@ -145,11 +151,9 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                     </Menu>
                 </div>
                 <div
-                    className=" p-4 session-close"
-                    onClick={() => {
-                        console.log(2)
-                        localStorage.removeItem('_tk_');
-                        localStorage.removeItem('_uk_');
+                    className="p-4 session-close"
+                    onClick={async () => {
+                        await dispatch(auth_actions.logOut())
                         context.drawer_close();
                         history.push('/auth/login/');
                     }}
