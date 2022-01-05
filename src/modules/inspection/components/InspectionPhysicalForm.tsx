@@ -65,7 +65,7 @@ const InspectionPhysicalForm: FC<InspectionPhysicalFormProps> = ({ properties, o
 
                         <div className="col-6">
                             <label htmlFor="enclosure_obligations_id" className="form-label">
-                                Observacionesiones anteriores de {property.name}
+                                Observaciones anteriores de {property.name}
                             </label>
                             <Field
                                 as="textarea"
@@ -80,7 +80,7 @@ const InspectionPhysicalForm: FC<InspectionPhysicalFormProps> = ({ properties, o
                         </div>
                         <div className="col-6">
                             <label htmlFor="enclosure_obligations_id" className="form-label">
-                                Observacionesiones {property.name}
+                                Observaciones {property.name}
                             </label>
                             <Field
                                 as="textarea"
