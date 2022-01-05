@@ -1,5 +1,5 @@
 import Card from '../components/Card';
-
+import DocumentPdf from "../../../utils/components/document_pdf";
 const Home = () => {
     return (
         <>
@@ -52,7 +52,9 @@ const Home = () => {
                             <Card name="Consultas" links={[]} />
                             <Card name="Informes y Logs" links={[]} />
                         </div>
+                        {/*<DocumentPdf/>*/}
                     </div>
+
                 </section>
             </div>
         </>

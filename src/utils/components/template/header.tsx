@@ -24,7 +24,6 @@ const Header: FC<{ collapsible: boolean; name: string; user_id: number }> = ({ c
                         onClick={context.drawer_open}
                         style={{ fontSize: 22, marginLeft: 35, color: '#1faeef' }}
                     />
-                    {/*<button onClick={context.drawer_open}>Open</button>*/}
                 </span>
             </div>
         </div>

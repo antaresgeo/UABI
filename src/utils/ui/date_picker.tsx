@@ -1,9 +1,9 @@
-import React, { FC, ReactElement } from "react";
-import { FieldProps } from "formik";
-import DatePicker from "antd/lib/date-picker";
-import Select from "antd/lib/select";
+import React, { FC, ReactElement } from 'react';
+import { FieldProps } from 'formik';
+import DatePicker from 'antd/lib/date-picker';
+import Select from 'antd/lib/select';
 
-import moment, { Moment } from "moment";
+import moment, { Moment } from 'moment';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -17,15 +17,18 @@ interface Props extends FieldProps {
 }
 
 export const AntRangePicker = ({ field, form, className, extraOnChange, ...props }: Props) => {
-    const format = "";
+    const format = 'YYYY/MM/DD';
     const onChange = (dates, strings) => {
         form.setFieldValue(
             field.name,
             dates
-                ? { start_date: dates[0].format(format), end_date: dates[1].format(format) }
+                ? {
+                      start_date: new Date(dates[0].format(format)).getTime(),
+                      end_date: new Date(dates[1].format(format)).getTime(),
+                  }
                 : {
-                      start_date: "",
-                      end_date: "",
+                      start_date: '',
+                      end_date: '',
                   },
             false
         );
@@ -34,22 +37,22 @@ export const AntRangePicker = ({ field, form, className, extraOnChange, ...props
     const defaultValues = field.value
         ? {
               value: [
-                  field.value.start_date && field.value.start_date !== ""
+                  field.value.start_date && field.value.start_date !== ''
                       ? moment(field.value.start_date, format)
                       : null,
-                  field.value.end_date && field.value.end_date !== "" ? moment(field.value.end_date, format) : null,
+                  field.value.end_date && field.value.end_date !== '' ? moment(field.value.end_date, format) : null,
               ],
           }
         : {};
 
     props = { ...props, ...defaultValues };
     return (
-        <div style={{ color: "#555" }}>
+        <div style={{ color: '#555' }}>
             <RangePicker
                 {...props}
-                className={["w-100", className].join(" ")}
+                className={['w-100', className].join(' ')}
                 onChange={onChange}
-                placeholder={["Desde", "Hasta"]}
+                placeholder={['Desde', 'Hasta']}
             />
         </div>
     );
@@ -70,7 +73,7 @@ export const AntSelect: FC<SelectProps> = ({ form, field, options, className }):
         form.setFieldValue(field.name, value, false);
     };
     const op = options.map((o) => ({ label: o.name, value: o.id }));
-    return <DSelect onChange={on_change} className={["w-100", className].join(" ")} value={field.value} options={op} />;
+    return <DSelect onChange={on_change} className={['w-100', className].join(' ')} value={field.value} options={op} />;
 };
 
 interface DSelectProps {
