@@ -49,7 +49,6 @@ export const createProject = async (
     try {
         const aux_values = { ...values };
         delete aux_values.id;
-        delete aux_values.contracts;
         delete aux_values.dependency;
         delete aux_values.subdependency;
         delete aux_values.cost_center;

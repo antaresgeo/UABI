@@ -353,7 +353,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                                 Numero de Contrato
                                             </label>
                                             <Field
-                                                type="text"
+                                                type="number"
                                                 className="form-control"
                                                 id="contract_number_id"
                                                 aria-describedby="nombre del projecto"
