@@ -204,10 +204,10 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                                             <option value="" hidden>
                                                 --Tipo de Documento--
                                             </option>
-                                            <option value={1}>Cédula de Ciudadanía</option>
-                                            <option value={2}>Tarjeta de identidad</option>
-                                            <option value={3}>Cédula de Extranjería</option>
-                                            <option value={4}>NIT</option>
+                                            <option value="CC">Cédula de Ciudadanía</option>
+                                            <option value="TI">Tarjeta de identidad</option>
+                                            <option value="CE">Cédula de Extranjería</option>
+                                            <option value="NIT">NIT</option>
                                         </Field>
                                         <ErrorMessage name="id_type" />
                                     </div>
