@@ -23,8 +23,8 @@ export const AntRangePicker = ({ field, form, className, extraOnChange, ...props
             field.name,
             dates
                 ? {
-                      start_date: new Date(dates[0].format(format)).getTime(),
-                      end_date: new Date(dates[1].format(format)).getTime(),
+                      start_date: dates[0].format(format),
+                      end_date: dates[1].format(format),
                   }
                 : {
                       start_date: '',
