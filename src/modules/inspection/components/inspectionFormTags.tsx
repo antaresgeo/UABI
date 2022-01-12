@@ -11,11 +11,12 @@ import { Inspection } from '../custom_types';
 import { FormikProps, FormikValues } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTipology } from './../../acquisitions/redux/actions/realEstates';
+import { swal_success } from '../../../utils';
+import { create_notification } from '../../notificacions/redux/service';
 
 interface InspectionFormTagsProps {
     inspection: Inspection;
     real_estate: any;
-
 }
 const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_estate }) => {
     const history = useHistory();
@@ -135,7 +136,19 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                     },
                 };
                 set_data(final_data);
-                delete final_data.image;
+                // delete final_data.image;
+                swal_success.fire('Inspeccion realizada exitosamente', '', 'success').then(() => {
+                    history.push('/inspection/');
+                    create_notification(
+                        'Es necesario mantenimiento',
+                        `es necesario mantenimiento para el bien inmueble ${real_estate?.name}`,
+                        `/acquisitions/real-estates/${real_estate?.id}/`,
+                        2,
+                        null,
+                        null,
+                        "Administrador"
+                    );
+                });
                 console.log({ final_data });
             },
         },
@@ -227,7 +240,13 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                             <PhotographicRecordForm innerRef={steps[4].ref} onSubmit={steps[4].onSave} />
                         </TabPane>
                         <TabPane tab="Generar informe" key="6" disabled={parseInt(activeKey) < 6}>
-                            <Report obs={obs} innerRef={steps[5].ref} onSubmit={steps[5].onSave} data={data} real_estate={real_estate} />
+                            <Report
+                                obs={obs}
+                                innerRef={steps[5].ref}
+                                onSubmit={steps[5].onSave}
+                                data={data}
+                                real_estate={real_estate}
+                            />
                         </TabPane>
                     </Tabs>
                 </div>
