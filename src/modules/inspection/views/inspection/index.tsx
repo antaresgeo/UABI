@@ -6,10 +6,10 @@ import actions from './../../../acquisitions/redux/actions/index';
 const Inspectios = () => {
     const dispatch = useDispatch();
     const inspections: any = useSelector((store: any) => store.inspection.inspections.value);
-    const projects: any = useSelector((store: any) =>  store.acquisitions.projects.value)
+    const projects: any = useSelector((store: any) => store.acquisitions.projects.value);
     const loading: boolean = useSelector((states: any) => states.acquisitions.projects.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.projects.pagination);
-    const [query, set_query] = useState<string>('');
+    const [query, set_query] = useState<any>({});
     const user = useSelector((store: any) => store.auth.user);
     const aux_user = {
         ...user,
@@ -19,7 +19,6 @@ const Inspectios = () => {
 
     // const loading: boolean = useSelector((store: any) => store.inspection.inspections.loading);
     // const { total_results } = useSelector((store: any) => store.inspection.inspections.pagination);
-
 
     // const [query, set_query] = useState<string>('');
     // const filter = () => {
@@ -33,17 +32,16 @@ const Inspectios = () => {
     // };
 
     const filter = async (_filters, _) => {
-        await dispatch(actions.getProjects({ page: 1, with: 'pagination', ..._filters }));
+        await dispatch(actions.getProjects({ page: 1, with: 'pagination', only: 'active', ..._filters }));
+        set_query(_filters);
     };
     // const filter = () => {
     //     dispatch(actions.getProjects({ page: 1, q: query }));
     // };
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.getProjects({ page, pageSize, q: query }));
+        dispatch(actions.getProjects({ page, pageSize, with: 'pagination', only: 'active', ...query }));
     };
-
-
 
     // useEffect(() => {
     //     dispatch(actions.get_all_inspections());
@@ -51,7 +49,6 @@ const Inspectios = () => {
 
     useEffect(() => {
         dispatch(actions.clearProjects());
-
     }, []);
 
     return (

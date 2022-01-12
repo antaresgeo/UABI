@@ -71,7 +71,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                 </Sider>
                 <Layout className="site-layout">
                     <Header className="sabi-header p-0">
-                        <AppHeader collapsible={collapsible} name={name} user_id={user?.id} />
+                        <AppHeader collapsible={collapsible} name={name} user_id={user?.user_id} />
                     </Header>
                     <Content>
                         <div className={`deck ${context.drawer_menu_collapsed ? 'active' : ''}`} />

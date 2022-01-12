@@ -48,6 +48,7 @@ const format_response = (data) => {
 };
 
 export const get_all_notifications = async (filters?) => {
+    console.log(filters)
     try {
         const URI = '/notifications/';
         const res: AxiosResponse<AllNotificationsResponse> =
@@ -55,10 +56,10 @@ export const get_all_notifications = async (filters?) => {
                 params: {
                     ...filters,
                     with: 'pagination',
-                    last: 10,
                 },
             });
         res.data.results = format_response(res?.data?.results);
+        console.log(filters)
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -102,9 +103,9 @@ export const create_notification = async (
     description: string,
     action: string,
     priority: number,
-    from: number,
-    _to?: number,
-    toRole?: number
+    from?: number,
+    to?: number,
+    toRole?: string
 ) => {
     try {
         const URI = '/notifications/';
@@ -114,8 +115,7 @@ export const create_notification = async (
                 description,
                 action,
                 priority,
-                _to,
-                ...(_to ? { _to } : {}),
+                ...(to ? { to } : {}),
                 ...(toRole ? { toRole } : {}),
             });
         return res.data;

@@ -27,8 +27,7 @@ const table_columns = [
         dataIndex: 'action',
         align: 'center' as 'center',
         render: (action) => {
-            const url = action.split("http://sabi.eastus.cloudapp.azure.com")[1]
-            return <Link to={url} name="Acceso directo"/>
+            return <Link to={action} name="Acceso directo"/>
         },
     },
     {
@@ -57,7 +56,8 @@ const ListNotification = () => {
     ]);
 
     useEffect(() => {
-        dispatch(actions.get_all_notifications({ ...(user ? { to: user.id } : {}) }));
+        const to = user.user_id;
+        dispatch(actions.get_all_notifications({ ...(user ? { to } : {}) }));
     }, []);
 
     return (
