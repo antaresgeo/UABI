@@ -25,7 +25,10 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         contract_period: '',
         patrimonial_value: realEstate.patrimonial_value,
         prediation_date: "",
-        business_type: "",
+        business_type: {
+            select: "",
+            input: "",
+        },
         lockable_base: 10,
         //solicitante
         applicant: {
@@ -207,7 +210,7 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         }),
         prediation_date: Yup.string().required('obligatorio'),
         environmental_risk: Yup.string().required('obligatorio'),
-        business_type: Yup.string().required('obligatorio'),
+        // business_type: Yup.string().required('obligatorio'),
         lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
         contract_period: Yup.string().required('obligatorio'),
 

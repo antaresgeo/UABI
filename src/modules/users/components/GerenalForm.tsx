@@ -17,6 +17,7 @@ interface IUserFormPros {
 }
 
 const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerRef }) => {
+    console.log('tipo',type)
     // const history = useHistory();
     const [subs, set_subs] = useState<any[]>([]);
     const roles = useSelector((store: any) => store.auth.user.roles);
@@ -349,8 +350,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
                                 />
                                 <ErrorMessage name="detailsUser.email" />
                             </div>
-                            {type === 'create' ||
-                                is_admin && (
+                            {(type === 'create' || is_admin) && (
                                     <div className="col-3">
                                         <label htmlFor="username" className="form-label">
                                             Contraseña

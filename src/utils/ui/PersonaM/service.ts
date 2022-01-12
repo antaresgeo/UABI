@@ -1,8 +1,13 @@
 
+import { clearObjectNulls } from '../..';
 import { http } from '../../../config/axios_instances';
 
+
+
 const format_persona = (results: any) => {
-    return {
+
+    return clearObjectNulls( {
+
         ...results,
         documentType: results.document_type,
         documentNumber: results.document_number,
@@ -10,7 +15,7 @@ const format_persona = (results: any) => {
         surnames: { firstSurname: results.first_surname, lastSurname: results.last_surname },
         phoneNumber: results.phone_number,
         phoneNumber_ext: results.phone_number_ext,
-    }
+    })
 }
 
 export const getPersonalInformation = async (type, id_number) => {
