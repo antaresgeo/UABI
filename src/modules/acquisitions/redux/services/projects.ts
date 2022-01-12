@@ -7,6 +7,7 @@ import {
     IProjectResponse,
     IProjectsResponse,
 } from '../../../../utils/interfaces';
+import moment from "moment";
 
 // REAL ESTATES
 // Services: GET
@@ -18,7 +19,16 @@ export const getProject = async (
         let res: AxiosResponse<IProjectResponse> = await http.get(URI, {
             params: { id },
         });
-
+        res.data.results.contracts = res.data.results.contracts.map(c => {
+            console.log("contracts", c);
+            return {
+                ...c,
+                validity: {
+                    start_date: moment(parseInt(c.vigency_start)).format('YYYY/MM/DD'),
+                    end_date: moment(parseInt(c.vigency_end)).format('YYYY/MM/DD')
+                }
+            }
+        })
         return res.data.results;
     } catch (error) {
         console.error(error);
@@ -45,7 +55,7 @@ const getProjects = async (filters): Promise<any | string> => {
 export const createProject = async (
     values
 ): Promise<IProjectAttributes | string> => {
-    console.log(values)
+
     try {
         const aux_values = { ...values };
         delete aux_values.id;
@@ -53,6 +63,10 @@ export const createProject = async (
         delete aux_values.subdependency;
         delete aux_values.cost_center;
         delete aux_values.management_center;
+        delete aux_values.vigency_end;
+        delete aux_values.vigency_start;
+
+
         let URI = `/projects`;
         let res: AxiosResponse<IProjectResponse> = await http.post(URI, {
             ...aux_values,

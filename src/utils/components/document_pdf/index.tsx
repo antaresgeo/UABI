@@ -53,9 +53,9 @@ const DocumentPdf: FC<DocumentPdfProps> = ({ header, footer, title, children, sh
 
 DocumentPdf.defaultProps = {
     header: {
-        code: 'Cód. FO-ADMI-126',
-        version: 'Versión. 4',
-        title: { prefix: 'Formato', name: 'FO-ADMI Informe de Inspección de Bien Inmueble' },
+        code: 'Cód.',
+        version: 'Versión.',
+        title: { prefix: 'Formato', name: 'FO-ADMI' },
     },
     footer: {
         address: ' Centro Administrativo Municipal – CAM – Calle 44 No. 52 – 165',
@@ -130,8 +130,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         top: -86,
         left: 150,
+        marginHorizontal: 20,
         color: '#009999',
-        width: 305,
+        width: 264,
     },
     footer: {
         position: 'absolute',

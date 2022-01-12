@@ -2,7 +2,7 @@ import { Field } from 'formik';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import { FC } from 'react';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
-import PersonaM from './../../../../utils/ui/PersonaM';
+import Index from '../../../../utils/ui/PersonaM';
 
 interface FormProps {
     formik: any;
@@ -177,7 +177,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                                 Información Representante<span className="text-danger">*</span>
                             </label>
                             <Field
-                                component={PersonaM}
+                                component={Index}
                                 name="detailsRepresentative"
                             />
                             <ErrorMessage name="detailsRepresentative" />
@@ -191,7 +191,7 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                                 Información Solicitante<span className="text-danger">*</span>
                             </label>
                             <Field
-                                component={PersonaM}
+                                component={Index}
                                 name="detailsApplicant"
                             />
                             <ErrorMessage name="detailsApplicant" />

@@ -28,8 +28,8 @@ const ModalInspection: FC<InspectionModalProps> = ({ /*onSave,*/ disabled, proje
         !disabled && set_is_visible(true);
     };
     const close = () => {
-        dispatch(actions.clearRealEstates())
-        set_is_visible(false)
+        dispatch(actions.clearRealEstates());
+        set_is_visible(false);
     };
 
     let data = [];
@@ -55,17 +55,35 @@ const ModalInspection: FC<InspectionModalProps> = ({ /*onSave,*/ disabled, proje
             dataIndex: '',
         },
         {
-            title: 'Fecha de Inspección',
+            title: 'Fecha de ultima Inspección',
             dataIndex: '-',
+        },
+        {
+            title: '',
+            dataIndex: 'id',
+            render: (id) => (
+                <button
+                    type="button"
+                    className="btn btn-sm btn-primary"
+                    onClick={() => {
+                        close();
+                        history.push({
+                            pathname: `/inspection/${id}/create/`,
+                        });
+                    }}
+                >
+                    inspeccionar
+                </button>
+            ),
         },
     ];
 
-    const rowSelection = {
-        onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
-            console.log(`id: ${selectedRowKeys}`, 'realEstates: ', selectedRows);
-            set_selectedRE(selectedRows);
-        },
-    };
+    // const rowSelection = {
+    //     onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
+    //         console.log(`id: ${selectedRowKeys}`, 'realEstates: ', selectedRows);
+    //         set_selectedRE(selectedRows);
+    //     },
+    // };
 
     return (
         <>
@@ -84,38 +102,34 @@ const ModalInspection: FC<InspectionModalProps> = ({ /*onSave,*/ disabled, proje
             />
 
             <Modal
-                footer={[
-                    <button
-                        type="submit"
-                        key="1"
-                        className="btn btn-primary"
-                        disabled={selectedRE.length === 0}
-                        onClick={() => {
-                            if (selectedRE.length > 0) {
-                                close();
-                                history.push({
-                                    pathname: `/inspection/${selectedRE[0].id}/create/`,
-                                    state: { real_estates: selectedRE },
-                                });
-                            }
-                        }}
-                    >
-                        siguiente
-                    </button>,
-                ]}
+                footer={
+                    [
+                        // <button
+                        //     type="submit"
+                        //     key="1"
+                        //     className="btn btn-primary"
+                        //     disabled={selectedRE.length === 0}
+                        //     onClick={() => {
+                        //         if (selectedRE.length > 0) {
+                        //             close();
+                        //             history.push({
+                        //                 pathname: `/inspection/${selectedRE[0].id}/create/`,
+                        //                 state: { real_estates: selectedRE },
+                        //             });
+                        //         }
+                        //     }}
+                        // >
+                        //     siguiente
+                        // </button>,
+                    ]
+                }
                 title={`Bienes Inmuebles del proyecto: ${project?.name}`}
                 centered
                 visible={is_visible}
                 width={700}
                 onCancel={close}
             >
-                <Table
-                    rowSelection={{
-                        ...rowSelection,
-                    }}
-                    columns={columns}
-                    dataSource={data}
-                />
+                <Table columns={columns} dataSource={data} />
             </Modal>
         </>
     );

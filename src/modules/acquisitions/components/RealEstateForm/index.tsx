@@ -130,8 +130,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
               }),
     };
 
-    console.log(initial_values)
-
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
         initial_values.materials = initial_values.materials.split(',');
     }

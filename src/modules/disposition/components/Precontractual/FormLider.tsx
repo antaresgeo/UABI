@@ -2,7 +2,7 @@ import { Field } from 'formik';
 import { FC } from 'react';
 import ErrorMessage from '../../../../utils/ui/error_messge'
 import LocationModal from '../../../../utils/components/Location/LocationModal';
-import PersonaM from './../../../../utils/ui/PersonaM';
+import Index from '../../../../utils/ui/PersonaM';
 
 interface FormProps {
     lease?: boolean;
@@ -59,7 +59,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         Información Lider<span className="text-danger">*</span>
                     </label>
                     <Field
-                        component={PersonaM}
+                        component={Index}
                         name="detailsLeader"
                     />
                     <ErrorMessage name="detailsLeader" />

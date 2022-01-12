@@ -37,7 +37,7 @@ const get_user = (token: string) => {
         return user_service.get_user_by_id(null, token).then(async (user) => {
             dispatch(newToken({ access: token }));
             dispatch(loginSuccess(user));
-            const user_hash = await base64Encode(JSON.stringify(user));
+            const user_hash = btoa(JSON.stringify(user));
             localStorage.setItem('_uk_', user_hash);
             return Promise.resolve(user);
         });

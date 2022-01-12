@@ -7,12 +7,21 @@ import Map from '../../../utils/components/template/map';
 
 interface BasicInformationProps {
     inspection: any;
+    real_estate: any;
     obs?: string;
     disabled?: boolean;
     innerRef: any;
     onSubmit: (values) => void;
 }
-const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs, innerRef, onSubmit }) => {
+const BasicInformation: FC<BasicInformationProps> = ({
+    inspection,
+    disabled,
+    obs,
+    innerRef,
+    onSubmit,
+    real_estate,
+}) => {
+    console.log(real_estate);
     return (
         <div className="container-fluid">
             <div className="col-12">
@@ -28,45 +37,65 @@ const BasicInformation: FC<BasicInformationProps> = ({ inspection, disabled, obs
                             <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                                 <div className="col-2">
                                     <label htmlFor="">Codigo CBML</label>
-                                    <div className="my-3">{inspection?.id || '-'}</div>
+                                    <div className="my-3">{real_estate?.address?.cbmls?.uabi ?? '-'}</div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Título de adquisición</label>
-                                    <div className="my-3">{inspection?.name || '-'}</div>
+                                    <div className="my-3">
+                                        {real_estate?.acquisitions?.reduce(
+                                            (res, acq) => `${res ? `${res},` : ''} ${acq.acquisition_type}`,
+                                            ''
+                                        ) ?? '-'}
+                                    </div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Fecha del título de adquisición</label>
-                                    <div className="my-3">{inspection?.nit || '-'}</div>
+                                    <div className="my-3">
+                                        {real_estate?.acquisitions?.reduce(
+                                            (res, acq) => `${res ? `${res},` : ''} ${acq.acquisition_date}`,
+                                            ''
+                                        ) ?? '-'}
+                                    </div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Tipo de entidad</label>
-                                    <div className="my-3">{inspection?.phone || '-'}</div>
+                                    <div className="my-3">
+                                        {real_estate?.acquisitions?.reduce(
+                                            (res, acq) => `${res ? `${res},` : ''} ${acq.entity_type}`,
+                                            ''
+                                        ) ?? '-'}
+                                    </div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">No entidad que emite el títulomento</label>
-                                    <div className="my-3">{inspection?.state || '-'}</div>
+                                    <div className="my-3">
+                                        {real_estate?.acquisitions?.reduce(
+                                            (res, acq) => `${res ? `${res},` : ''} ${acq.entity_number}`,
+                                            ''
+                                        ) ?? '-'}
+                                    </div>
                                 </div>
                             </div>
                             <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                                 <div className="col-2">
                                     <label htmlFor="">Avalúo del BI</label>
-                                    <div className="my-3">{inspection?.city || '-'}</div>
+                                    <div className="my-3">{real_estate?.patrimonial_value ?? '-'}</div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Dirección del BI</label>
-                                    <div className="my-3">{inspection?.address || '-'}</div>
+                                    <div className="my-3">{real_estate?.address.address ?? '-'}</div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Tipo de inmueble</label>
-                                    <div className="my-3">{inspection?.contact_information?.name || '-'}</div>
+                                    <div className="my-3">{real_estate?.active_type.join(', ') ?? '-'}</div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Categoría del BI</label>
-                                    <div className="my-3">{inspection?.contact_information?.name || '-'}</div>
+                                    <div className="my-3">{real_estate?.destination_type ?? '-'}</div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Nombre del BI</label>
-                                    <div className="my-3">{inspection?.contact_information?.name || '-'}</div>
+                                    <div className="my-3">{real_estate?.name ?? '-'}</div>
                                 </div>
                             </div>
                         </div>
