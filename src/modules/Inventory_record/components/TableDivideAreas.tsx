@@ -215,12 +215,13 @@ export class TableDivideAreas extends React.Component<any, EditableTableState> {
                             const codePlot = codigos.filter((cod) => cod.charAt(cod.length - 1) === 'L');
                             const codeConstruction = codigos.filter((cod) => cod.charAt(cod.length - 1) === 'J');
                             const materials = this.props.formik.values.materials.join(",")
+                            console.log(codeConstruction)
                             for (let i = 0; i < this.props.numberAreas; i++) {
                                 if (this.props.type === "Lote") {
                                     newRealEstates.push({
                                         ...this.props.formik.values,
                                         plot_area: Number(this.state.dataSource[i].area),
-                                        sap_id: `${codePlot[0]}-${i + 1},${codeConstruction[0]}`,
+                                        sap_id: codeConstruction.length === 0 ? `${codePlot[0]}-${i + 1}` : `${codePlot[0]}-${i + 1},${codeConstruction[0]}` ,
                                         materials,
                                         projects_id: [this.props.formik.values.projects_id],
                                         type: 'divide_areas'
@@ -229,7 +230,7 @@ export class TableDivideAreas extends React.Component<any, EditableTableState> {
                                     newRealEstates.push({
                                         ...this.props.formik.values,
                                         construction_area: Number(this.state.dataSource[i].area),
-                                        sap_id: `${codePlot[0]},${codeConstruction[0]}-${i + 1}`,
+                                        sap_id: codePlot.length === 0 ? `${codeConstruction[0]}-${i + 1}` : `${codePlot[0]},${codeConstruction[0]}-${i + 1}` ,
                                         materials,
                                         projects_id: [this.props.formik.values.projects_id],
                                         type: 'divide_areas'

@@ -1,8 +1,9 @@
 import React, { FC, useState, useRef } from 'react';
 import Modal from 'antd/lib/modal/Modal';
 import { Field, Formik, Form, FieldProps } from 'formik';
-import ErrorMessage from './error_messge';
+import ErrorMessage from '../error_messge';
 import * as Yup from 'yup';
+import {getPersonalInformation, newPersonalInformation, updatePersonalInformation} from './service';
 
 interface PersonaModalProps {
     type: 'create' | 'edit';
@@ -24,32 +25,30 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
     const open = () => {
         !disabled && set_is_visible(true);
     };
-
     const initial_values = {
-        id_type: '',
-        id_number: '',
+        id: '',
+        documentType: '',
+        documentNumber: '',
         names: { firstName: '', lastName: '' },
         surnames: { firstSurname: '', lastSurname: '' },
         email: '',
-        phone_number: '',
-        phone_number_ext: '',
+        phoneNumber: '',
+        phoneNumber_ext: '',
         gender: '',
         ...persona,
     };
     const schema = Yup.object().shape({
-        id_type: Yup.number().required('obligatorio'),
-        id_number: Yup.number().required('obligatorio'),
+        documentType: Yup.string().required('obligatorio'),
+        documentNumber: Yup.number().required('obligatorio'),
         names: Yup.object({
-            firstName: Yup.string().required('obligatorio')
+            firstName: Yup.string().required('obligatorio'),
         }),
         surnames: Yup.object({
-            firstSurname: Yup.string().required('obligatorio')
+            firstSurname: Yup.string().required('obligatorio'),
         }),
         email: Yup.string().email().required('obligatorio'),
-        phone_number: Yup.number().required('obligatorio'),
+        phoneNumber: Yup.number().required('obligatorio'),
         gender: Yup.string().required('obligatorio'),
-
-
     });
 
     return (
@@ -61,8 +60,9 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                     className="form-control"
                     value={
                         persona
-                            ? `${(persona && Object.values(persona?.names).join(' ')) || ''} ${(persona && Object.values(persona?.surnames).join(' ')) || ''
-                            }`
+                            ? `${(persona && Object.values(persona?.names ?? {}).join(' ')) || ''} ${
+                                  (persona && Object.values(persona?.surnames ?? {}).join(' ')) || ''
+                              }`
                             : ''
                     }
                 />
@@ -74,7 +74,7 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                 title={title}
                 centered
                 visible={is_visible}
-                width={800}
+                width={1000}
                 onCancel={close}
                 footer={[
                     <button
@@ -111,17 +111,99 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                     }}
                     initialValues={initial_values}
                 >
-                    {({ values, isValid, isSubmitting, setFieldValue, handleChange }) => {
-                        const length_valid = (length) => (e) => {
-                            e.preventDefault();
-                            const { value } = e.target;
-                            const regex = new RegExp(/^[+]?\d{0,${length}}$/, 'gi');
-                            if (regex.test(value.toString())) {
-                                handleChange(e);
-                            }
+                    {({ values, handleChange, setFieldValue }) => {
+                        const getPersona = (type, documentNumber) => {
+                            getPersonalInformation(type, documentNumber).then((res: any) => {
+                                setFieldValue('names.firstName', res.first_name ?? '', false);
+                                setFieldValue('names.lastName', res.last_name ?? '', false);
+                                setFieldValue('surnames.firstSurname', res.first_surname ?? '', false);
+                                setFieldValue('surnames.lastSurname', res.last_surname ?? '', false);
+                                setFieldValue('email', res.email ?? '', false);
+                                setFieldValue('phoneNumber', res.phone_number ?? '', false);
+                                setFieldValue('phoneNumber_ext', res.phone_number_ext ?? '', false);
+                                setFieldValue('gender', res.gender ?? '', false);
+                                setFieldValue('id', res.id ?? '', false);
+                            });
                         };
                         return (
                             <Form>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <label htmlFor="id" className="form-label">
+                                            Tipo de Documento
+                                        </label>
+                                        <Field
+                                            as="select"
+                                            className="form-select"
+                                            id="documentType"
+                                            name="documentType"
+                                            autoComplete="off"
+                                            disabled={disabled}
+                                            onChange={(ev) => {
+                                                ev.preventDefault();
+                                                handleChange(ev);
+                                                const id_t = ev.target.value;
+                                                const id_n = values.documentNumber;
+                                                if (id_n && id_t) {
+                                                    getPersona(id_t, id_n);
+                                                }
+                                            }}
+                                        >
+                                            <option value="" hidden>
+                                                --Tipo de Documento--
+                                            </option>
+                                            <option value="CC">Cédula de Ciudadanía</option>
+                                            <option value="TI">Tarjeta de identidad</option>
+                                            <option value="CE">Cédula de Extranjería</option>
+                                            <option value="NIT">NIT</option>
+                                        </Field>
+                                        <ErrorMessage name="documentType" />
+                                    </div>
+                                    <div className="col-3">
+                                        <label htmlFor="username" className="form-label">
+                                            Número de documento
+                                        </label>
+                                        <Field
+                                            type="number"
+                                            className="form-control"
+                                            id="documentNumber"
+                                            placeholder="Número de documento"
+                                            name="documentNumber"
+                                            autoComplete="off"
+                                            disabled={disabled}
+                                            onBlur={(ev) => {
+                                                const id_n = ev.target.value;
+                                                const id_t = values.documentType;
+                                                if (id_n && id_t) {
+                                                    getPersona(id_t, id_n);
+                                                }
+                                            }}
+                                        />
+                                        <ErrorMessage name="documentNumber" />
+                                    </div>
+                                    <div className="col-3">
+                                        <label htmlFor="username" className="form-label">
+                                            Genero
+                                        </label>
+                                        <Field
+                                            as="select"
+                                            className="form-select"
+                                            id="gender"
+                                            name="gender"
+                                            autoComplete="off"
+                                            disabled={disabled}
+                                        >
+                                            <option value="" hidden>
+                                                --Genero--
+                                            </option>
+                                            <option value="F">Femenino</option>
+                                            <option value="M">Masculino</option>
+                                            <option value="O">Intersexual</option>
+                                            <option value="O">No Deseo Responder</option>
+                                        </Field>
+                                        <ErrorMessage name="gender" />
+                                    </div>
+                                </div>
                                 <div className="row">
                                     <div className="col-3">
                                         <label htmlFor="first_name_id" className="form-label">
@@ -190,67 +272,6 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                                 </div>
                                 <div className="row">
                                     <div className="col-6">
-                                        <label htmlFor="id" className="form-label">
-                                            Tipo de Documento
-                                        </label>
-                                        <Field
-                                            as="select"
-                                            className="form-select"
-                                            id="id_type"
-                                            name="id_type"
-                                            autoComplete="off"
-                                            disabled={disabled}
-                                        >
-                                            <option value="" hidden>
-                                                --Tipo de Documento--
-                                            </option>
-                                            <option value="CC">Cédula de Ciudadanía</option>
-                                            <option value="TI">Tarjeta de identidad</option>
-                                            <option value="CE">Cédula de Extranjería</option>
-                                            <option value="NIT">NIT</option>
-                                        </Field>
-                                        <ErrorMessage name="id_type" />
-                                    </div>
-                                    <div className="col-3">
-                                        <label htmlFor="username" className="form-label">
-                                            Número de documento
-                                        </label>
-                                        <Field
-                                            type="number"
-                                            className="form-control"
-                                            id="id_number"
-                                            placeholder="Número de documento"
-                                            name="id_number"
-                                            autoComplete="off"
-                                            disabled={disabled}
-                                        />
-                                        <ErrorMessage name="id_number" />
-                                    </div>
-                                    <div className="col-3">
-                                        <label htmlFor="username" className="form-label">
-                                            Genero
-                                        </label>
-                                        <Field
-                                            as="select"
-                                            className="form-select"
-                                            id="gender"
-                                            name="gender"
-                                            autoComplete="off"
-                                            disabled={disabled}
-                                        >
-                                            <option value="" hidden>
-                                                --Genero--
-                                            </option>
-                                            <option value="f">Femenino</option>
-                                            <option value="m">Masculino</option>
-                                            <option value="o">Intersexual</option>
-                                            <option value="o">No Deseo Responder</option>
-                                        </Field>
-                                        <ErrorMessage name="gender" />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-6">
                                         <div className="row">
                                             <label htmlFor="username" className="form-label">
                                                 Teléfono
@@ -259,25 +280,25 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                                                 <Field
                                                     type="number"
                                                     className="form-control"
-                                                    id="phone_number"
-                                                    name="phone_number"
+                                                    id="phoneNumber"
+                                                    name="phoneNumber"
                                                     placeholder="Teléfono"
                                                     autoComplete="off"
                                                     disabled={disabled}
                                                 />
-                                                <ErrorMessage name="phone_number" />
+                                                <ErrorMessage name="phoneNumber" />
                                             </div>
                                             <div className="col-4">
                                                 <Field
                                                     type="number"
                                                     className="form-control"
-                                                    id="phone_number_ext"
-                                                    name="phone_number_ext"
+                                                    id="phoneNumber_ext"
+                                                    name="phoneNumber_ext"
                                                     placeholder="Ext"
                                                     autoComplete="off"
                                                     disabled={disabled}
                                                 />
-                                                <ErrorMessage name="phone_number_ext" />
+                                                <ErrorMessage name="phoneNumber_ext" />
                                             </div>
                                         </div>
                                     </div>
@@ -297,7 +318,6 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                                         />
                                         <ErrorMessage name="email" />
                                     </div>
-
                                 </div>
                             </Form>
                         );
@@ -314,7 +334,16 @@ interface PersonaMProps extends FieldProps {
 
 const PersonaM: FC<PersonaMProps> = ({ field, form, type, ...props }) => {
     const on_change = async (value) => {
-        form.setFieldValue(field.name, value, false);
+        if(value.hasOwnProperty("id") && value.id){
+            updatePersonalInformation(value).then(res => {
+                form.setFieldValue(field.name, res, false);
+            })
+        }else {
+            newPersonalInformation(value).then(res => {
+                form.setFieldValue(field.name, res, false);
+            })
+        }
+
     };
     return (
         <PersonaModal

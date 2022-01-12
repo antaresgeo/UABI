@@ -17,7 +17,7 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
     };
 
 
-    console.log(initialValues)
+    // console.log(initialValues)
 
     const submit = (values /*, actions*/) => {
         console.log(values);

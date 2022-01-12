@@ -2,14 +2,19 @@ import React, { FC } from 'react';
 import { Field, Form, Formik } from 'formik';
 import { Card } from '../../../utils/ui';
 import ErrorMessage from '../../../utils/ui/error_messge';
+import { PDFViewer } from '@react-pdf/renderer';
+import InpectionDoc from './InpectionDoc';
+import { AnySchema } from 'yup';
 
 interface ReportProps {
     disabled?: boolean;
     obs?: string;
     innerRef: any;
     onSubmit: (values) => void;
+    data?: any;
+    real_estate: any;
 }
-const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit }) => {
+const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit, data, real_estate }) => {
     return (
         <div className="container-fluid">
             <Card
@@ -35,6 +40,7 @@ const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit }) => {
                             {() => {
                                 return (
                                     <Form>
+
                                         <div className="row">
                                             <div className="col">
                                                 <label>
@@ -47,7 +53,7 @@ const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit }) => {
                                         <div className="row">
                                             <div className="col">
                                                 <label htmlFor="contractual_id" className="form-label">
-                                                    Observaciones
+                                                    Acciones especiales según los hallazgos
                                                 </label>
                                                 <Field
                                                     as="textarea"
@@ -55,12 +61,12 @@ const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit }) => {
                                                     id="contractual_id"
                                                     aria-describedby="emailHelp"
                                                     placeholder="Observaciones"
-                                                    name="observations"
+                                                    name="special_actions"
                                                     disabled={disabled}
                                                     autoComplete="off"
                                                     maxLength={250}
                                                 />
-                                                <ErrorMessage name="observations" withCount max={250} />
+                                                <ErrorMessage name="special_actions" withCount max={250} />
                                             </div>
                                         </div>
                                     </Form>
@@ -69,7 +75,10 @@ const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit }) => {
                         </Formik>
                     </div>
                     <div className="col-8 h-100">
-                        <embed
+                        <PDFViewer className="w-100 mt-5" showToolbar={false}>
+                            <InpectionDoc data={data} real_estate={real_estate} />
+                        </PDFViewer>
+                        {/* <embed
                             type="application/pdf"
                             src="/InformedeinspecciondebieninmuebleV4.pdf"
                             style={{
@@ -78,7 +87,7 @@ const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit }) => {
                                 border: '1px solid #525659',
                                 backgroundColor: '#525659',
                             }}
-                        />
+                        /> */}
                     </div>
                 </div>
             </Card>

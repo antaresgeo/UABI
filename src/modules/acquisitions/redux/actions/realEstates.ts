@@ -68,3 +68,5 @@ export const getTipologies = () =>
 
 export const getTipology = (id) =>
     request_dispatch(types.tipology, service.getTipology(id));
+
+

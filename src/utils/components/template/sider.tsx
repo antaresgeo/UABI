@@ -28,7 +28,6 @@ const Sider: FC<{ width: number }> = ({ width }) => {
         roles: user?.roles.map((a) => a.name) || [],
     };
 
-    console.log(aux_user)
 
     const menu_selected: any = location.state?.menu || [];
     let menu_config: any = [

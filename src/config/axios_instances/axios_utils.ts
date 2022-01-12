@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from './index';
-import {swal, swal_warning} from '../../utils';
+import { swal, swal_warning } from '../../utils';
+import { actions } from '../../modules/auth/redux';
+import store, { AppDispatch } from '../store';
 
 const response_error_interceptor = (error: any) => {
     if (!axios.isCancel(error)) {
@@ -61,9 +63,14 @@ const response_error_interceptor = (error: any) => {
 const onUnauthorized = (original_error: any) => {
     let original_config = original_error.config;
     if (!original_config._retry) {
+        return new Promise((resolve, reject) => {
+            const { logOut /*, newToken*/ } = actions;
+            const dispatch: any = store.dispatch;
+            dispatch(logOut());
+        });
         // original_config = validate_refresh(original_config);
         // return new Promise((resolve, reject) => {
-        //     const { logOut, newToken } = auth.actions;
+        //     const { logOut/*, newToken*/ } = actions;
         //     const { tokenRefresh } = auth.service;
         //     const dispatch: AppDispatch = store.dispatch;
         //     tokenRefresh()

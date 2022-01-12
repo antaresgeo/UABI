@@ -124,7 +124,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true,
+            can_access: guards.detailDisposition,
             path: '/disposition/:id/',
             template_props: {
                 breadcrumbs: [

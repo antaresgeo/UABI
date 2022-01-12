@@ -208,13 +208,13 @@ const Projects = () => {
         },
     ];
 
-    if (guards.detailProject({ user })) {
+    if (guards.detailProject({ user: aux_user })) {
         acciones.children.push(ver)
     }
-    if (guards.editProject({ user })) {
+    if (guards.editProject({ user: aux_user })) {
         acciones.children.push(editar)
     }
-    if (guards.deleteProject({ user })) {
+    if (guards.deleteProject({ user: aux_user })) {
         acciones.children.push(eliminar)
     }
     if (acciones.children.length > 0) {

@@ -21,6 +21,9 @@ const get_contract = (id) =>
 const update_contract = (id, data: any) =>
     request_dispatch(types.update_contract, service.update_contract(id, data));
 
+const delete_contract = (id) =>
+    request_dispatch(types.update_contract, service.delete_contract(id));
+
 /*----------------Pre-Contracts---------------------*/
 const create_precontract = (data: any, type) =>
     request_dispatch(types.create_precontractual, service.create_precontract(data, type));
@@ -40,5 +43,6 @@ const actions = {
     create_precontract,
     get_precontract,
     update_precontract,
+    delete_contract,
 };
 export default actions;

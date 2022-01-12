@@ -54,7 +54,7 @@ const AcquisitionModal: FC<AcquisitionModalProps> = ({
                 title={title}
                 centered
                 visible={is_visible}
-                width={800}
+                width={1000}
                 onCancel={close}
                 footer={[
                     <button
@@ -90,6 +90,7 @@ const AcquisitionModal: FC<AcquisitionModalProps> = ({
                     acquisition={acquisition}
                     active_type={active_type}
                     onChange={(v, f) => {
+                        console.log(v)
                         return onChange(v, f).then(() => {
                             close();
                         });

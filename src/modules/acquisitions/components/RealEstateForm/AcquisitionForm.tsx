@@ -5,7 +5,7 @@ import { Formik, Form, Field } from 'formik';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 import * as Yup from 'yup';
-import Tooltip from 'antd/lib/tooltip';
+import TooltipField from "../../../../utils/ui/tooltip_field";
 import PersonaM from "../../../../utils/ui/PersonaM";
 
 interface AcquisitionsFromProps {
@@ -42,7 +42,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
         act_number: Yup.string().required('Campo obligatorio'),
         act_value: Yup.number().required('Campo obligatorio'),
         acquired_percentage: Yup.number().required('Campo obligatorio'),
-        //origin: Yup.number().required('Campo obligatorio'),
+        origin: Yup.object().required('Campo obligatorio'),
         entity_type: Yup.string().required('Campo obligatorio'),
         entity_number: Yup.string().required('Campo obligatorio'),
         acquisition_date: Yup.date().required('Campo obligatorio'),
@@ -54,6 +54,8 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
         onChange(values, form).then(() => {
             form.setSubmitting(false);
             form.resetForm();
+        }).catch(() => {
+            form.setSubmitting(false);
         });
     };
 
@@ -117,10 +119,8 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             <div className="col-3">
                                 <label htmlFor="origin_id" className="form-label">
                                     Procedencia  <span className="text-danger">*</span>
-                                    <Tooltip title="Lorem impsu texto descriptivo">
-                                        <i className="fa fa-info-circle text-muted ms-2" style={{ fontSize: 14 }} />
-                                    </Tooltip>
                                 </label>
+                                <TooltipField text="Lorem impsu texto descriptivo" />
                                 <Field
                                     component={PersonaM}
                                     id="origin_id"

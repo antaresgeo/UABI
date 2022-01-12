@@ -166,7 +166,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         id="dependency_id"
                         disabled={disabled || dependencies?.length === 0 || project?.id !== 0}
                         placeholder="Selecciona una Dependencia"
-                        options={dependencies.map(d => ({id: d.dependency, name: d.dependency}) )}
+                        options={dependencies?.map(d => ({id: d.dependency, name: d.dependency}) )}
                         showSearch
                         extra_on_change={(value) => {
                             if (value) {
@@ -817,7 +817,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         Contrapartida
                                     </label>
                                     <Field
-                                        type="text"
+                                        type="number"
                                         className="form-control"
                                         id="counterpart_id"
                                         name="counterpart"
@@ -900,17 +900,17 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     <ErrorMessage />
                                 </div>
                                 <div className="col-3">
-                                    <label htmlFor="useful_life_years_id" className="form-label">
+                                    <label htmlFor="years_useful_life_id" className="form-label">
                                         Vida util años
                                     </label>
                                     <Field
                                         //disabled
-                                        name="useful_life_years"
-                                        id="useful_life_years_id"
+                                        name="years_useful_life"
+                                        id="years_useful_life_id"
                                         type="number"
                                         className="form-control"
                                     />
-                                    <ErrorMessage name="useful_life_years" />
+                                    <ErrorMessage name="years_useful_life" />
                                 </div>
 
                                 <div className="col-3">

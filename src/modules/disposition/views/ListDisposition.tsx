@@ -1,10 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Card } from '../../../utils/ui';
 import { TableDiszposition } from '../components/TableDisposition';
 import FilterForm from './../../../utils/ui/filter_form';
 
 export const ListDisposition = () => {
     // const [filters, set_filters] = useState<object>(null);
+    const user = useSelector((store: any) =>  store.auth.user);
 
     const filter = async (_filters, _) => {
         // set_filters(_filters);
@@ -14,6 +16,12 @@ export const ListDisposition = () => {
     // const change_page = (page, pageSize) => {
     //     dispatch(actions.get_all_users({ page, pageSize, ...filters }));
     // };
+
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    };
 
     return (
         <div className="container-fluid">
@@ -40,7 +48,7 @@ export const ListDisposition = () => {
                                 </div>
                             </div>
                         </div>
-                        <TableDiszposition />
+                        <TableDiszposition user={aux_user} />
                     </Card>
                 </div>
             </div>

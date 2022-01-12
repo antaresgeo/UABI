@@ -5,6 +5,7 @@ export interface IProjectAttributes {
     name: string;
     description: string;
     dependency: string;
+    contracts: any[];
     audit_trail?: IAuditTrail;
     status?: number;
 }

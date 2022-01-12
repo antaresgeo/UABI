@@ -21,7 +21,7 @@ export const EditDisposition = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation<IParams>();
-    console.log(location)
+    // console.log(location)
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const [dispositionType, setDispositionType] = useState('');
     // console.log('realEstate', realEstate);

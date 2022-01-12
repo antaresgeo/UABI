@@ -4,6 +4,7 @@ import {
     create_contract,
     get_contract,
     update_contract,
+    delete_contract,
 } from './contracts';
 
 import {
@@ -18,6 +19,7 @@ const services = {
     create_contract,
     get_contract,
     update_contract,
+    delete_contract,
     create_precontract,
     get_precontract,
     update_precontract,

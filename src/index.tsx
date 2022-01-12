@@ -26,6 +26,7 @@ declare global {
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: Function;
     }
 }
+
 export enum Role {
     ADMINISTRATOR = 'Administrador',
     SUPERVISOR = 'Supervisor',
@@ -99,21 +100,7 @@ export enum Permit {
     UPDATE_INSPECTION = 'actualizar_Inspeccion',
 }
 
-if (!window.__sabi) {
-    window.__sabi = {
-        cancel_mapper: {},
-        is_in_refresh: false,
-        retry_pending: [],
-        date_format: 'YYYY-MM-DD',
-        number_formatter: new Intl.NumberFormat('es-CO', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        }),
-    };
-}
-
 // borrar esto cuando se termine la autenticacion
-
 if (!window.__sabi) {
     window.__sabi = {
         cancel_mapper: {},
