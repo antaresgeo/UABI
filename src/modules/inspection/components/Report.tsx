@@ -8,8 +8,9 @@ interface ReportProps {
     obs?: string;
     innerRef: any;
     onSubmit: (values) => void;
+    data: any;
 }
-const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit }) => {
+const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit, data }) => {
     return (
         <div className="container-fluid">
             <Card

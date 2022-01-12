@@ -13,6 +13,7 @@ const format_acquisitions = (
         a.acquisition_date = new Date(
             moment(a.acquisition_date).format('YYYY/MM/DD')
         ).getTime();
+        a.origin = a.origin.id;
         delete a.audit_trail;
         delete a.status;
         delete a.title_type_document_id;

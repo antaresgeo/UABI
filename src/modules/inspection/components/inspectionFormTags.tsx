@@ -12,8 +12,9 @@ import { FormikProps, FormikValues } from 'formik';
 
 interface InspectionFormTagsProps {
     inspection: Inspection;
+    real_estate: any
 }
-const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
+const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_estate }) => {
     const history = useHistory();
     const { TabPane } = Tabs;
     const limit = 6;
@@ -132,6 +133,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
                         },
                     },
                 };
+                set_data(final_data);
                 delete final_data.image;
                 console.log({ final_data });
             },
@@ -192,6 +194,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
                         <TabPane tab="Información básica BI" key="1">
                             <BasicInformation
                                 inspection={null}
+                                real_estate={real_estate}
                                 obs={obs}
                                 innerRef={steps[0].ref}
                                 onSubmit={steps[0].onSave}
@@ -223,7 +226,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection }) => {
                             <PhotographicRecordForm innerRef={steps[4].ref} onSubmit={steps[4].onSave} />
                         </TabPane>
                         <TabPane tab="Generar informe" key="6" disabled={parseInt(activeKey) < 6}>
-                            <Report obs={obs} innerRef={steps[5].ref} onSubmit={steps[5].onSave} />
+                            <Report obs={obs} innerRef={steps[5].ref} onSubmit={steps[5].onSave} data={data} />
                         </TabPane>
                     </Tabs>
                 </div>

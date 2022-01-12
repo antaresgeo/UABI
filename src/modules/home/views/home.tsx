@@ -18,53 +18,53 @@ const Home = () => {
             <div className="content-cards">
                 <section id="cards">
                     <div className="container">
-                        {/*<div className="row justify-content-center">*/}
-                        {/*    <Card name="Administrativo" links={[{ name: 'Asignación de Roles y Permisos' }]} />*/}
-                        {/*    <Card*/}
-                        {/*        name="Adquisición"*/}
-                        {/*        links={[*/}
-                        {/*            { name: 'Proyectos', to: '/acquisitions/projects/' },*/}
-                        {/*            { name: 'Bienes inmuebles', to: '/acquisitions/real-estates/' },*/}
-                        {/*            { name: 'Registro de BI', to: '/acquisitions/real-estates/create/' },*/}
-                        {/*        ]}*/}
-                        {/*    />*/}
-                        {/*    <Card*/}
-                        {/*        name="Asegurabilidad"*/}
-                        {/*        links={[*/}
-                        {/*            { name: 'Registrar póliza', to: '/insurabilities/policy/' },*/}
-                        {/*            { name: 'Gestionar corredor de seguros', to: '/insurabilities/company/' },*/}
-                        {/*            { name: 'Gestionar compañía aseguradora', to: '/insurabilities/broker/' },*/}
-                        {/*        ]}*/}
-                        {/*    />*/}
-                        {/*</div>*/}
-                        {/*<div className="row justify-content-center mt-3">*/}
-                        {/*    <Card name="Inspección" links={[{ name: 'Gestionar inspección', to: '/inspection/' }]} />*/}
-                        {/*    <Card*/}
-                        {/*        name="Disposición"*/}
-                        {/*        links={[*/}
-                        {/*            { name: 'Gestionar Disposición', to: '/disposition/list/' },*/}
-                        {/*            { name: 'Gestionar Contratos', to: '/dispositions/contract/list' },*/}
-                        {/*        ]}*/}
-                        {/*    />*/}
-                        {/*    <Card name="Supervisión" links={[]} />*/}
-                        {/*</div>*/}
-                        {/*<div className="row justify-content-center mt-3">*/}
-                        {/*    <Card name="Mantenimiento" links={[]} />*/}
-                        {/*    <Card name="Consultas" links={[]} />*/}
-                        {/*    <Card name="Informes y Logs" links={[]} />*/}
-                        {/*</div>*/}
-                        <DocumentPdf
-                            showToolbar={true}
-                            title="Informe de Disposicion de Bien Inmueble"
-                            header={{
-                                code: 'Cód. FO-ADMI-136',
-                                version: 'Versión. 1',
-                                title: { prefix: 'Formato', name: 'FO-ADMI Informe de Disposicion de Bien Inmueble' },
-                            }}
+                        <div className="row justify-content-center">
+                            <Card name="Administrativo" links={[{ name: 'Asignación de Roles y Permisos' }]} />
+                            <Card
+                                name="Adquisición"
+                                links={[
+                                    { name: 'Proyectos', to: '/acquisitions/projects/' },
+                                    { name: 'Bienes inmuebles', to: '/acquisitions/real-estates/' },
+                                    { name: 'Registro de BI', to: '/acquisitions/real-estates/create/' },
+                                ]}
+                            />
+                            <Card
+                                name="Asegurabilidad"
+                                links={[
+                                    { name: 'Registrar póliza', to: '/insurabilities/policy/' },
+                                    { name: 'Gestionar corredor de seguros', to: '/insurabilities/company/' },
+                                    { name: 'Gestionar compañía aseguradora', to: '/insurabilities/broker/' },
+                                ]}
+                            />
+                        </div>
+                        <div className="row justify-content-center mt-3">
+                            <Card name="Inspección" links={[{ name: 'Gestionar inspección', to: '/inspection/' }]} />
+                            <Card
+                                name="Disposición"
+                                links={[
+                                    { name: 'Gestionar Disposición', to: '/disposition/list/' },
+                                    { name: 'Gestionar Contratos', to: '/dispositions/contract/list' },
+                                ]}
+                            />
+                            <Card name="Supervisión" links={[]} />
+                        </div>
+                        <div className="row justify-content-center mt-3">
+                            <Card name="Mantenimiento" links={[]} />
+                            <Card name="Consultas" links={[]} />
+                            <Card name="Informes y Logs" links={[]} />
+                        </div>
+                        {/*<DocumentPdf*/}
+                        {/*    showToolbar*/}
+                        {/*    title="Informe de Disposicion de Bien Inmueble"*/}
+                        {/*    header={{*/}
+                        {/*        code: 'Cód. FO-ADMI-136',*/}
+                        {/*        version: 'Versión. 1',*/}
+                        {/*        title: { prefix: 'Formato', name: 'FO-ADMI Informe de Disposicion de Bien Inmueble' },*/}
+                        {/*    }}*/}
 
-                        >
-                            <Quixote />
-                        </DocumentPdf>
+                        {/*>*/}
+                        {/*    <Quixote />*/}
+                        {/*</DocumentPdf>*/}
                     </div>
                 </section>
             </div>
