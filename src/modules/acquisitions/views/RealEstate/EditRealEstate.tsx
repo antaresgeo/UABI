@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 import RealEstateForm from '../../components/RealEstateForm';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface IProps {
     id: string;
@@ -12,10 +12,12 @@ const DetailProjects = () => {
     const { id } = useParams<IProps>();
     const history: any = useHistory();
     const dispatch = useDispatch();
+    const dependencies: any = useSelector((states: any) => states.acquisitions.dependencies.value);
 
     useEffect(() => {
         if (id) {
             dispatch(actions.getRealEstate(id));
+            dispatch(actions.getDependencies());
         }
     }, [id]);
 
@@ -24,6 +26,7 @@ const DetailProjects = () => {
             type="edit"
             inventoryEdit={true}
             inventory={false}
+            dependencies={dependencies}
             onSubmit={async (values, form, isFinish) => {
                 const { acquisitions } = values;
                 try {

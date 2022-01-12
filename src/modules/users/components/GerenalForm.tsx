@@ -345,7 +345,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
                                     name="detailsUser.email"
                                     autoComplete="off"
                                     disabled={disabled}
-                                    maxLength={20}
+                                    maxLength={100}
                                 />
                                 <ErrorMessage name="detailsUser.email" />
                             </div>

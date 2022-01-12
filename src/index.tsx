@@ -80,10 +80,24 @@ export enum Permit {
     LIST_REALESTATE = 'listar_BienesInmuebles',
     ASSIGN_ROLEPERMIT = 'asignar_RolesPermisos',
     DETAIL_REGISTROSAUDITORIA = 'detalles_RegistrosAuditoria',
-    LIST_INSPECTION = 'listar_inpeccion',
-    CREATE_INSPECTION = 'crear_inpeccion',
-    SCHEDULER = 'calendario'
-
+    LIST_CONTRACTS = 'listar_Contratos',
+    CREATE_CONTRACT = 'crear_Contratos',
+    DETAIL_CONTRACT = 'detalles_Contratos',
+    UPDATE_CONTRACT = 'actualizar_Contratos',
+    DELETE_CONTRACT = 'inactivar_Contratos',
+    ACTIVATE_CONTRACT = 'activar_Contratos',
+    CREATE_PRECONTRACT = 'crear_EtapaPrecontractual',
+    DETAIL_PRECONTRACT = 'visualizar_EtapaPrecontractual',
+    UPDATE_PRECONTRACT = 'actualizar_EtapaPrecontractual',
+    LIST_DISPOSITION = 'listar_Disposicion',
+    CREATE_DISPOSITION = 'crear_Disposicion',
+    DETAIL_DISPOSITION = 'detalles_Disposicion',
+    UPDATE_DISPOSITION = 'actualizar_Disposicion',
+    DELETE_DISPOSITION = 'inactivar_Disposicion',
+    ACTIVATE_DISPOSITION = 'activar_Disposicion',
+    LIST_INSPECTION = 'listar_Inspecciones',
+    DETAIL_INSPECTION = 'detalles_Inspeccion',
+    UPDATE_INSPECTION = 'actualizar_Inspeccion',
 }
 
 // borrar esto cuando se termine la autenticacion

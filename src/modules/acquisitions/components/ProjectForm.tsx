@@ -78,9 +78,11 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
 
     useEffect(() => {
         if (project) {
-            //const dependency = dependencies.find((d) => d.dependency === project.dependency);
-            //const _subs = format_list(dependency?.subs);
-            //set_subs(_subs);
+            const dependency = dependencies.find((d) => d.dependency === project.dependency);
+            const _subs = dependency?.subs;
+            if(_subs !== undefined) {
+                set_subs(_subs);
+            }
         } else {
             set_subs([]);
         }

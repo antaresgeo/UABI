@@ -3,6 +3,14 @@ import tmpImg from '../../assets/img/medellin.png';
 import Menu from 'antd/lib/menu';
 import { TemplateContext } from './template_context';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { guards as guardsAsegurability } from '../../../modules/asegurabilidad/routes';
+import { guards as guardsUsers } from '../../../modules/users/routes';
+import { guards as guardsAcquisitions } from '../../../modules/acquisitions/routes';
+import { guards as guardsInpection } from '../../../modules/inspection/routes';
+import { guards as guardsDisposition } from '../../../modules/disposition/routes';
+
+
 
 const Sider: FC<{ width: number }> = ({ width }) => {
     const { SubMenu } = Menu;
@@ -12,8 +20,16 @@ const Sider: FC<{ width: number }> = ({ width }) => {
     const goTo = (to) => (ev) => {
         history.push({ pathname: to, state: { menu: ev.keyPath } });
     };
-    const menu_selected: any = location.state?.menu || [];
 
+    const user = useSelector((store: any) => store.auth.user);
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    };
+
+
+    const menu_selected: any = location.state?.menu || [];
     let menu_config: any = [
         {
             path: '/',
@@ -22,69 +38,146 @@ const Sider: FC<{ width: number }> = ({ width }) => {
         {
             name: 'Usuarios',
             children: [
-                {
-                    path: '/users/',
-                    name: 'Usuarios',
-                },
-                {
-                    path: '/roles/',
-                    name: 'Roles y permisos',
-                },
+                ...(guardsUsers.list({ user: aux_user }) ?
+                    [
+                        {
+                            path: '/users/',
+                            name: 'Usuarios',
+                        },
+                    ]
+                    :
+                    []
+                ),
+                ...(guardsUsers.listRole({ user: aux_user }) ?
+                    [
+                        {
+                            path: '/roles/',
+                            name: 'Roles y permisos',
+                        }
+                    ]
+                    :
+                    []
+                ),
             ],
         },
         {
             name: 'Adquisición',
             children: [
-                {
-                    path: '/acquisitions/projects/',
-                    name: 'Proyectos',
-                },
-                {
-                    path: '/acquisitions/real-estates/',
-                    name: 'Bienes Inmuebles',
-                },
-                {
-                    path: '/acquisitions/real-estates/create/',
-                    name: 'Registro de BI',
-                },
+                ...(guardsAcquisitions.listProject({ user: aux_user }) ?
+                    [
+                        {
+                            path: '/acquisitions/projects/',
+                            name: 'Proyectos',
+                        },
+                    ]
+                    :
+                    []
+                ),
+                ...(guardsAcquisitions.listRealEstate({ user: aux_user }) ?
+                    [
+                        {
+                            path: '/acquisitions/real-estates/',
+                            name: 'Bienes Inmuebles',
+                        },
+                    ]
+                    :
+                    []
+                ),
+                ...(guardsAcquisitions.createRealEstate({ user: aux_user }) ?
+                    [
+                        {
+                            path: '/acquisitions/real-estates/create/',
+                            name: 'Registro de BI',
+                        },
+                    ]
+                    :
+                    []
+                ),
             ],
         },
         {
             path: '/InventoryRecordList',
             name: 'Administración de inventario',
+            ...(!aux_user.roles.includes('UABI') ?
+                {
+                    children: []
+                }
+                :
+                []
+            ),
+
         },
         {
             name: 'Asegurabilidad',
             children: [
-                {
-                    path: '/insurabilities/policy/',
-                    name: 'Polizas de Seguro',
-                },
-                {
-                    path: '/insurabilities/company/',
-                    name: 'Compañias Aseguradoras',
-                },
-                {
-                    path: '/insurabilities/broker/',
-                    name: 'Corredores de Seguros',
-                },
+                ...(guardsAsegurability.listPolicy({ user: aux_user }) ?
+                    [
+                        {
+                            path: '/insurabilities/policy/',
+                            name: 'Polizas de Seguro',
+                        },
+                    ]
+                    :
+                    []
+
+                ),
+                ...(guardsAsegurability.listInsuranceCompany({ user: aux_user }) ?
+                    [
+                        {
+                            path: '/insurabilities/company/',
+                            name: 'Compañias Aseguradoras',
+                        },
+                    ]
+                    :
+                    []
+                ),
+                ...(guardsAsegurability.listInsuranceBroker({ user: aux_user }) ?
+                    [
+                        {
+                            path: '/insurabilities/broker/',
+                            name: 'Corredores de Seguros',
+                        },
+                    ]
+                    :
+                    []
+                ),
             ],
         },
         {
             name: 'Inspección',
             path: '/inspection/',
+            ...(!guardsInpection.ListInspection({ user: aux_user }) ?
+                {
+                    children: [],
+                }
+                :
+                []
+
+            ),
         },
         {
             name: 'Disposición',
             children: [
-                {
-                    path: '/disposition/list/',
-                    name: 'Disposición',
-                },
-                {
-                    path: '/dispositions/contract/list',
-                    name: 'Contratos',
-                },
+                ...(guardsDisposition.listDisposition({ user: aux_user }) ?
+                    [
+                        {
+                            path: '/disposition/list/',
+                            name: 'Disposición',
+                        },
+                    ]
+                    :
+                    []
+                ),
+                ...(guardsDisposition.listContract({ user: aux_user }) ?
+                    [
+                        {
+                            path: '/dispositions/contract/list',
+                            name: 'Contratos',
+                        },
+                    ]
+                    :
+                    []
+                ),
             ],
         },
         {
@@ -122,6 +215,9 @@ const Sider: FC<{ width: number }> = ({ width }) => {
         },
     ];
 
+
+
+
     menu_config = menu_config.map((m, i) => {
         return {
             ...m,
@@ -129,10 +225,10 @@ const Sider: FC<{ width: number }> = ({ width }) => {
             is_disabled: m.children?.length === 0 || false,
             ...(m.children
                 ? {
-                      children: m.children.map((s, j) => {
-                          return { ...s, key: `s${i}-${j}`, is_disabled: false };
-                      }),
-                  }
+                    children: m.children.map((s, j) => {
+                        return { ...s, key: `s${i}-${j}`, is_disabled: false };
+                    }),
+                }
                 : {}),
             key: `p${i}`,
         };

@@ -17,7 +17,7 @@ const initialState = token
         ? { can_access: true, user, error: null }
         : emptyInitialState
     : emptyInitialState;
-console.log("initialState", initialState)
+// console.log("initialState", initialState)
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case authTypes.LOGIN: {

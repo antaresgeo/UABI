@@ -25,12 +25,14 @@ interface DataRealEstateFormProps {
     inventoryEdit?: boolean;
     acquisitions?: any[];
     tipologies?: any[];
+    dependencies?: any;
 }
 
 export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     type,
     disabled,
     tipologies,
+    dependencies,
     formik,
     projects,
     project,
@@ -162,17 +164,17 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         component={Select}
                         name="dependency"
                         id="dependency_id"
-                        disabled={disabled || dependency_ops.length === 0 || project?.id !== 0}
+                        disabled={disabled || dependencies?.length === 0 || project?.id !== 0}
                         placeholder="Selecciona una Dependencia"
-                        options={dependency_ops}
+                        options={dependencies?.map(d => ({id: d.dependency, name: d.dependency}) )}
                         showSearch
                         extra_on_change={(value) => {
                             if (value) {
-                                const dependency = dependencias.find((d) => d.name === value);
-                                const _subs = format_list(dependency.subs);
-                                formik.setFieldValue('subdependency', dependency.name);
-                                formik.setFieldValue('cost_center', dependency.cost_center);
-                                formik.setFieldValue('management_center', dependency.cost_center);
+                                const dependency = dependencies.find((d) => d.dependency === value);
+                                const _subs = dependency.subs;
+                                formik.setFieldValue('subdependency', dependency.dependency);
+                                formik.setFieldValue('cost_center', dependency.management_center);
+                                formik.setFieldValue('management_center', dependency.management_center);
                                 set_subs(_subs);
                             }
                         }}
@@ -192,13 +194,13 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         id="subdependency_id"
                         disabled={disabled || !formik.values.dependency || subs.length === 0 || project?.id !== 0}
                         placeholder="Selecciona una Sub. Dependencia"
-                        options={subs}
+                        options={subs.map(s => ({id: s.subdependency, name: s.subdependency}))}
                         showSearch
                         allowClear
                         extra_on_change={(value) => {
                             if (value) {
-                                const dependency = dependencias.find((d) => d.name === formik.values.dependency);
-                                const subdependency = dependency.subs.find((d) => d.name === value);
+                                const dependency = dependencies.find((d) => d.dependency === formik.values.dependency);
+                                const subdependency = dependency.subs.find((d) => d.subdependency === value);
                                 formik.setFieldValue('cost_center', subdependency.cost_center);
                             }
                         }}
@@ -815,7 +817,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         Contrapartida
                                     </label>
                                     <Field
-                                        type="text"
+                                        type="number"
                                         className="form-control"
                                         id="counterpart_id"
                                         name="counterpart"
@@ -898,17 +900,17 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     <ErrorMessage />
                                 </div>
                                 <div className="col-3">
-                                    <label htmlFor="useful_life_years_id" className="form-label">
+                                    <label htmlFor="years_useful_life_id" className="form-label">
                                         Vida util años
                                     </label>
                                     <Field
                                         //disabled
-                                        name="useful_life_years"
-                                        id="useful_life_years_id"
+                                        name="years_useful_life"
+                                        id="years_useful_life_id"
                                         type="number"
                                         className="form-control"
                                     />
-                                    <ErrorMessage name="useful_life_years" />
+                                    <ErrorMessage name="years_useful_life" />
                                 </div>
 
                                 <div className="col-3">

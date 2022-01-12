@@ -103,3 +103,25 @@ export const update_contract = async (id, data: Company) => {
         return Promise.reject('Error');
     }
 };
+export const delete_contract = async (id, ) => {
+    try {
+        // const URI = '/insurance-companies/';
+        // const res: AxiosResponse<CompanyResponse> = await http.put(
+        //     URI,
+        //     {
+        //         name: data.name,
+        //         nit: data.nit,
+        //         location_id: data.location_id,
+        //         phone: data.phone,
+        //     },
+        //     {
+        //         params: {
+        //             id,
+        //         },
+        //     }
+        // );
+        // return res.data;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};

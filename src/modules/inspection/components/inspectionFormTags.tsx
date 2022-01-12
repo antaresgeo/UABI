@@ -9,13 +9,17 @@ import Report from './Report';
 import BasicInformation from './BasicInformation';
 import { Inspection } from '../custom_types';
 import { FormikProps, FormikValues } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTipology } from './../../acquisitions/redux/actions/realEstates';
 
 interface InspectionFormTagsProps {
     inspection: Inspection;
-    real_estate: any
+    real_estate: any;
+
 }
 const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_estate }) => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const { TabPane } = Tabs;
     const limit = 6;
     const [data, set_data] = useState(null);
@@ -29,12 +33,9 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 set_data((data) => {
                     return {
                         ...data,
-                        physical_inspection: {
-                            ...data?.physical_inspection,
-                            observations: {
-                                ...data?.physical_inspection?.observations,
-                                observation: values.observations,
-                            },
+                        observations: {
+                            ...data?.physical_inspection?.observations,
+                            observation: values.observations,
                         },
                     };
                 });
@@ -226,7 +227,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                             <PhotographicRecordForm innerRef={steps[4].ref} onSubmit={steps[4].onSave} />
                         </TabPane>
                         <TabPane tab="Generar informe" key="6" disabled={parseInt(activeKey) < 6}>
-                            <Report obs={obs} innerRef={steps[5].ref} onSubmit={steps[5].onSave} data={data} />
+                            <Report obs={obs} innerRef={steps[5].ref} onSubmit={steps[5].onSave} data={data} real_estate={real_estate} />
                         </TabPane>
                     </Tabs>
                 </div>

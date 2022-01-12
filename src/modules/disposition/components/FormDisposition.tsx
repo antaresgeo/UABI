@@ -10,7 +10,6 @@ interface DispositionFormPros {
 export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, realEstate }) => {
     const dispatch = useDispatch();
     const tipology: any = useSelector((store: any) => store.acquisitions.tipology.value);
-    console.log(realEstate)
     useEffect(() => {
         dispatch(actions.getTipology(realEstate?.tipology_id));
     }, []);

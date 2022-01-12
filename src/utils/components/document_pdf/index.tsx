@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 import imgbs64 from '../../../utils/assets/img/header.png';
 import { Page, Text, View, Document, StyleSheet, PDFViewer, Image, Font, Link } from '@react-pdf/renderer';
 
@@ -7,48 +7,54 @@ interface DocumentPdfProps {
     header?: { code: string; version: string; title: { prefix: string; name: string } };
     footer?: { address: string; phone: string; web: { name: string; url: string }; city: string };
     showToolbar?: boolean;
+    showViewer?: boolean;
 }
-const DocumentPdf: FC<DocumentPdfProps> = ({ header, footer, title, children, showToolbar }) => {
-    return (
-        <PDFViewer className="w-100 mt-5" style={{ height: 600 }} showToolbar={showToolbar}>
-            <Document title={title}>
-                <Page size="LETTER" style={styles.body} wrap>
-                    <View style={styles.top} fixed>
-                        <Image style={styles.image} source={imgbs64} />
-                        <Text style={styles.header_t1}>{header?.code}</Text>
-                        <Text style={styles.header_t2}>{header?.version}</Text>
-                        <Text style={styles.header_t3}>{header?.title.prefix}</Text>
-                        <Text style={{ ...styles.header_t4, ...styles.title }}>{header?.title.name}</Text>
-                    </View>
-                    <View>{children}</View>
-                    <View
-                        style={styles.footer}
-                        render={({ pageNumber, totalPages }: any) => {
-                            return (
-                                <View>
-                                    <Text style={{ ...styles.text, ...styles.align_right }}>
-                                        {pageNumber && totalPages && `Página ${pageNumber} de ${totalPages}`}
-                                    </Text>
-                                    <Text style={{ ...styles.text, ...styles.align_right }}>
-                                        ______________________________________________________________________________________________________________________
-                                    </Text>
-                                    <Text style={{ ...styles.text, ...styles.align_right }}>{footer?.address}</Text>
-                                    <Text style={{ ...styles.text, ...styles.align_right }}>{footer?.phone}</Text>
-                                    <Link src={footer?.web.url}>
-                                        <Text style={{ ...styles.text, ...styles.align_right, ...styles.link }}>
-                                            {footer?.web.name}
-                                        </Text>
-                                    </Link>
-                                    <Text style={{ ...styles.text, ...styles.align_right }}>{footer?.city}</Text>
-                                </View>
-                            );
-                        }}
-                        fixed
-                    />
-                </Page>
-            </Document>
-        </PDFViewer>
-    );
+const DocumentPdf: FC<DocumentPdfProps> = ({ header, footer, title, children, showToolbar, showViewer }) => {
+    const doc = <Document title={title}>
+        <Page size="LETTER" style={styles.body} wrap>
+            <View style={styles.top} fixed>
+                <Image style={styles.image} source={imgbs64} />
+                <Text style={styles.header_t1}>{header?.code}</Text>
+                <Text style={styles.header_t2}>{header?.version}</Text>
+                <Text style={styles.header_t3}>{header?.title.prefix}</Text>
+                <Text style={{ ...styles.header_t4, ...styles.title }}>{header?.title.name}</Text>
+            </View>
+            <View>{children}</View>
+            <View
+                style={styles.footer}
+                render={({ pageNumber, totalPages }: any) => {
+                    return (
+                        <View>
+                            <Text style={{ ...styles.text, ...styles.align_right }}>
+                                {pageNumber && totalPages && `Página ${pageNumber} de ${totalPages}`}
+                            </Text>
+                            <Text style={{ ...styles.text, ...styles.align_right }}>
+                                ______________________________________________________________________________________________________________________
+                            </Text>
+                            <Text style={{ ...styles.text, ...styles.align_right }}>{footer?.address}</Text>
+                            <Text style={{ ...styles.text, ...styles.align_right }}>{footer?.phone}</Text>
+                            <Link src={footer?.web.url}>
+                                <Text style={{ ...styles.text, ...styles.align_right, ...styles.link }}>
+                                    {footer?.web.name}
+                                </Text>
+                            </Link>
+                            <Text style={{ ...styles.text, ...styles.align_right }}>{footer?.city}</Text>
+                        </View>
+                    );
+                }}
+                fixed
+            />
+        </Page>
+    </Document>
+    if(showViewer) {
+        return (
+            <PDFViewer className="w-100 mt-5" style={{ height: 600 }} showToolbar={showToolbar}>
+                {doc}
+            </PDFViewer>
+        );
+    }else {
+        return doc;
+    }
 };
 
 DocumentPdf.defaultProps = {
@@ -67,6 +73,7 @@ DocumentPdf.defaultProps = {
         city: 'Medellín - Colombia',
     },
     showToolbar: false,
+    showViewer: false,
 };
 
 export default DocumentPdf;

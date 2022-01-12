@@ -97,6 +97,13 @@ const logOut = () => {
     };
 };
 
+// const logOut = (): { type: string } => {
+//     service.logout();
+//     return {
+//         type: authTypes.LOGOUT,
+//     };
+// };
+
 // const change_password = (data: PasswordResetBody) => {
 //     return (dispatch) => {
 //         return service.change_password(data).then((response) => {

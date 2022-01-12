@@ -59,6 +59,17 @@ const services = {
             })
             .catch((response) => console.log({ response }));
     },
+    // logout: async () => {
+    //     return auth_http
+    //         .get("/logout/")
+    //         .then((response) => {
+    //             console.log(
+    //                 `%c LogOut `,
+    //                 "background: #ffff00; color: #000; padding: 8px; border-radius: 4px;"
+    //             );
+    //         })
+    //         .catch((response) => console.log({ response }));
+    // },
 
     // get_access: async (data: RequestAccessBody) => {
     //     return auth_http.post("/accounts/request-access/", data);

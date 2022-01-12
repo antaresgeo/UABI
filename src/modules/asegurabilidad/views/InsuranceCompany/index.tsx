@@ -5,6 +5,7 @@ import { actions } from '../../redux';
 import { Link, Card, Table as UiTable } from '../../../../utils/ui';
 import {swal, swal_warning} from '../../../../utils';
 import FilterForm from "../../../../utils/ui/filter_form";
+import { guards } from '../../routes';
 
 const InsuranceCompanies = () => {
     const dispatch = useDispatch();
@@ -12,7 +13,12 @@ const InsuranceCompanies = () => {
     const loading: boolean = useSelector((store: any) => store.insurability.companies.loading);
     const { total_results } = useSelector((store: any) => store.insurability.companies.pagination);
     const [filters, set_filters] = useState(null);
-
+    const user = useSelector((store: any) => store.auth.user);
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    };
     const filter = async (_filters, _) => {
         set_filters(_filters);
         await dispatch(actions.get_all_companies(_filters));
@@ -78,7 +84,58 @@ const InsuranceCompanies = () => {
         }
     };
 
-    const table_columns = [
+    const acciones = {
+        title: 'Acciones',
+        fixed: true,
+        children: [],
+    }
+
+    const ver = {
+        title: 'Ver',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <Link
+                    to={`/insurabilities/company/${id}/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-eye" aria-hidden="true" />}
+                />
+            );
+        },
+    }
+
+    const editar = {
+        title: 'Editar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <Link
+                    to={`/insurabilities/company/edit/${id}/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                />
+            );
+        },
+    }
+
+    const eliminar = {
+        title: 'Desactivar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <div className="text-danger" onClick={deleteInsuranceCompany(id)}>
+                    <i className="fa fa-times-circle" aria-hidden="true" />
+                </div>
+            );
+        },
+    }
+
+    const table_columns: any = [
         {
             title: 'ID',
             dataIndex: 'id',
@@ -105,55 +162,20 @@ const InsuranceCompanies = () => {
             align: 'left' as 'left',
             render: (audit_trail) => audit_trail?.created_by,
         },
-        {
-            title: 'Acciones',
-            fixed: true,
-            children: [
-                {
-                    title: 'Ver',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/insurabilities/company/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
-                    title: 'Editar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/insurabilities/company/edit/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
-                    title: 'Desactivar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <div className="text-danger" onClick={deleteInsuranceCompany(id)}>
-                                <i className="fa fa-times-circle" aria-hidden="true" />
-                            </div>
-                        );
-                    },
-                },
-            ],
-        },
     ];
+
+    if (guards.detailInsuranceCompany({ user: aux_user })) {
+        acciones.children.push(ver)
+    }
+    if (guards.editInsuranceCompany({ user: aux_user })) {
+        acciones.children.push(editar)
+    }
+    if (guards.deleteInsuranceCompany({ user: aux_user })) {
+        acciones.children.push(eliminar)
+    }
+    if (acciones.children.length > 0) {
+        table_columns.push(acciones)
+    }
 
     useEffect(() => {
         dispatch(actions.clear_all_companies());

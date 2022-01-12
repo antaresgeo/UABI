@@ -22,6 +22,7 @@ interface RealEstateFormProps {
     inventoryEdit?: boolean;
     globe?: boolean;
     realEstateData?: any;
+    dependencies?: any;
 }
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
@@ -32,6 +33,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     inventoryEdit,
     globe,
     realEstateData,
+    dependencies,
 }) => {
     const dispatch = useDispatch();
     const history = useHistory<any>();
@@ -218,11 +220,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
                 then: Yup.number()
                     .nullable()
-                    .moreThan(Yup.ref('plot_area'), (plot_area) => {
-                        if (plot_area.more !== undefined) {
-                            return 'debe ser mayor a área Lote';
-                        }
-                    }),
+                    .min(Yup.ref('plot_area'), 'debe ser mayor a área Lote'),
             })
             .when('active_type', {
                 is: (active_type) =>
@@ -232,18 +230,14 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                         active_type.includes('Mejora')),
                 then: Yup.number()
                     .nullable()
-                    .moreThan(Yup.ref('construction_area'), (construction_area) => {
-                        if (construction_area.more !== undefined) {
-                            return 'debe ser mayor a área construccion';
-                        }
-                    }),
+                    .min(Yup.ref('construction_area'),'debe ser mayor a área construccion'),
             }),
 
         plot_area: Yup.number()
             .nullable()
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
-                then: Yup.number().nullable().lessThan(Yup.ref('total_area'), 'debe ser menor que el área total'),
+                then: Yup.number().nullable().max(Yup.ref('total_area'), 'debe ser menor que el área total'),
             })
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
@@ -257,7 +251,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                     (active_type.includes('Construccion') ||
                         active_type.includes('Construccion para demoler') ||
                         active_type.includes('Mejora')),
-                then: Yup.number().nullable().lessThan(Yup.ref('total_area'), 'debe ser menor que el área total'),
+                then: Yup.number().nullable().max(Yup.ref('total_area'), 'debe ser menor que el área total'),
             })
             .when('active_type', {
                 is: (active_type) =>
@@ -273,7 +267,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             .min(0, 'El minimo es 0')
             .max(100, 'El maximo es 100'),
         zone: Yup.string().required('Campo obligatorio'),
-        tipology_id: Yup.string().required('Campo obligatorio'),
+        //tipology_id: Yup.string().required('Campo obligatorio'),
         acquisitions: Yup.array(),
     });
 
@@ -425,6 +419,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 <GeneralDataForm
                                                     type={type}
                                                     tipologies={tipologies}
+                                                    dependencies={dependencies}
                                                     disabled={_disabled}
                                                     formik={formik}
                                                     projects={projects}

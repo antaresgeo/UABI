@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
-import {formatDate, swal, swal_warning} from '../../../../utils';
+import { formatDate, swal, swal_warning } from '../../../../utils';
 import { Card, Link, Table as UiTable } from '../../../../utils/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux';
 import { IRoleSelectAttributes } from '../../../../utils/interfaces/roles';
 import FilterForm from '../../../../utils/ui/filter_form';
+import { guards } from '../../routes';
 
 export const ListRoles = () => {
     const dispatch = useDispatch();
+
+    const user = useSelector((store: any) => store.auth.user);
     const [roles, loading, total_results] = useSelector((store: any) => {
         return [
             store.users.roles.value,
@@ -16,7 +19,13 @@ export const ListRoles = () => {
         ];
     });
 
-    console.log({roles, loading, total_results})
+
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    };
+    // console.log({roles, loading, total_results})
 
 
     const change_page = (page, pageSize) => {
@@ -111,7 +120,64 @@ export const ListRoles = () => {
         }
     };
 
-    const table_columns = [
+    const ver = {
+        title: 'Ver',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <Link
+                    to={`/roles/${id}/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-eye" aria-hidden="true" />}
+                />
+            );
+        },
+    }
+
+    const editar = {
+        title: 'Editar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <Link
+                    to={`/roles/edit/${id}/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                />
+            );
+        },
+    }
+
+    const eliminar = {
+        title: 'Inactivar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            if (id !== 0) {
+                return (
+                    <div className="text-danger" onClick={deleteRol(id)}>
+                        <i className="fa fa-times-circle" aria-hidden="true" />
+                        {/*<Switch size="small" />*/}
+                    </div>
+                );
+            } else {
+                return <i className="fa fa-times-circle" aria-hidden="true" />;
+            }
+        },
+    }
+
+    const acciones = {
+        title: 'Acciones',
+        align: 'center' as 'center',
+        fixed: true,
+        children: [],
+    }
+
+    const table_columns: any = [
         {
             title: 'ID',
             dataIndex: 'id',
@@ -134,66 +200,36 @@ export const ListRoles = () => {
             align: 'center' as 'center',
             render: (data) => data?.created_by,
         },
-        {
-            title: 'Acciones',
-            fixed: true,
-            children: [
-                {
-                    title: 'Ver',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/roles/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
-                    title: 'Editar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/roles/edit/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
-                    title: 'Inactivar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        if (id !== 0) {
-                            return (
-                                <div className="text-danger" onClick={deleteRol(id)}>
-                                    <i className="fa fa-times-circle" aria-hidden="true" />
-                                    {/*<Switch size="small" />*/}
-                                </div>
-                            );
-                        } else {
-                            return <i className="fa fa-times-circle" aria-hidden="true" />;
-                        }
-                    },
-                },
-            ],
-        },
+
     ];
+
+    if (guards.detailRole({ user: aux_user })) {
+        acciones.children.push(ver)
+    }
+
+    if (guards.editRole({ user: aux_user })) {
+        acciones.children.push(editar)
+    }
+    if (guards.deleteRole({ user: aux_user })) {
+        acciones.children.push(eliminar)
+    }
+    if (acciones.children.length > 0) {
+        table_columns.push(acciones)
+    }
 
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
                 <div className="col-md-12">
-                    <Card title="Registro de roles" extra={<Link to="/roles/create/" name="Crear" iconText="+" />}>
+                    <Card
+                        title="Registro de roles"
+                        extra={
+                            <>
+                                {guards.create({ user: aux_user }) && (
+                                    <Link to="/roles/create/" name="Crear" iconText="+" />
+                                )}
+                            </>
+                        }>
                         <div className="row justify-content-between">
                             <div className="col-5 d-flex">
                                 <div className="col-6 ">

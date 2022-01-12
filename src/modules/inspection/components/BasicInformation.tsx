@@ -83,11 +83,11 @@ const BasicInformation: FC<BasicInformationProps> = ({
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Dirección del BI</label>
-                                    <div className="my-3">{real_estate?.address.address ?? '-'}</div>
+                                    <div className="my-3">{real_estate?.address?.address ?? '-'}</div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Tipo de inmueble</label>
-                                    <div className="my-3">{real_estate?.active_type.join(', ') ?? '-'}</div>
+                                    <div className="my-3">{real_estate?.active_type?.join(', ') ?? '-'}</div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Categoría del BI</label>

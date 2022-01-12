@@ -17,7 +17,7 @@ interface FormPros {
 }
 
 const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, values_form}) => {
-    console.log(realEstate)
+
     let initialValues = {
         environmental_risk: "",
         registration_date:  moment(new Date().getTime()).format('YYYY-MM-DD'),

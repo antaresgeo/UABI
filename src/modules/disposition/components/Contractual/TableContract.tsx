@@ -1,8 +1,87 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { swal_warning, swal } from '../../../../utils';
 import { Link, Table } from '../../../../utils/ui';
+import { actions } from '../../redux';
+import { guards } from '../../routes';
+import { useDispatch } from 'react-redux';
 
-export const TableContract = () => {
-    const table_columns = [
+interface ContractProps {
+    user?: any;
+}
+
+export const TableContract: FC<ContractProps> = ({ user }) => {
+    const dispatch = useDispatch();
+    const deleteContract = (id) => async () => {
+        const result = await swal_warning.fire({
+            icon: 'warning',
+            title: '¿Está seguro?',
+            text: '¿Está seguro que quiere inactivar este Usuario?',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Continuar',
+            denyButtonText: `Cancelar`,
+        });
+
+        if (result.isConfirmed) {
+            await dispatch(actions.delete_contract(id));
+            await dispatch(actions.get_all_contracts({}));
+        } else if (result.isDenied) {
+            swal.close();
+        }
+    };
+
+    const ver = {
+        title: 'Ver',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (/*id*/) => {
+            return (
+                <Link
+                    to={`/disposition/contract/:id/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-eye" aria-hidden="true" />}
+                />
+            );
+        },
+    }
+    const eliminar = {
+        title: 'Inactivar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (/*id*/) => {
+            return (
+                <Link
+                    to={``}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-plus" aria-hidden="true" />}
+                />
+            );
+        },
+    }
+
+    const editar = {
+        title: 'Editar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <div className="text-danger" onClick={deleteContract(id)}>
+                    <i className="fa fa-times-circle" aria-hidden="true" />
+                </div>
+            );
+        },
+
+    }
+
+    const acciones = {
+        title: 'Acciones',
+        fixed: true,
+        children: [],
+    }
+
+    const table_columns: any = [
         {
             title: 'ID',
             dataIndex: '',
@@ -43,51 +122,29 @@ export const TableContract = () => {
             dataIndex: '',
             align: 'left' as 'left',
         },
-        {
-            title: 'Acciones',
-            fixed: true,
-            children: [
-                {
-                    title: 'Ver',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (/*id*/) => {
-                        return (
-                            <Link
-                                to={`/disposition/contract/:id/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
-                    title: 'Editar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (/*id*/) => {
-                        return (
-                            <Link
-                                to={`/disposition/contract/edit/:id/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-            ],
-        },
     ];
+
+    if (guards.detailContract({ user })) {
+        acciones.children.push(ver)
+    }
+    if (guards.editContract({ user })) {
+        acciones.children.push(editar)
+    }
+    if (guards.deleteContract({ user })) {
+        acciones.children.push(eliminar)
+    }
+    if (acciones.children.length > 0) {
+        table_columns.push(acciones)
+    }
+
     return (
         <Table
             columns={table_columns}
             items={[]}
             with_pagination
-            //count={total_results}
-            //change_page={change_page}
-            //loading={loading}
+        //count={total_results}
+        //change_page={change_page}
+        //loading={loading}
         />
     );
 };

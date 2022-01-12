@@ -7,31 +7,32 @@ import Scheduler from './views/scheduler';
 import { Permit } from '../..';
 
 export const guards =  {
-    createInpection: (props?) => {
-        const user = props.user;
-        if (!user) return false;
-        const { permits } = user;
-        return permits.includes(Permit.CREATE_INSPECTION);
-    },
     ListInspection: (props?) => {
         const user = props.user;
         if (!user) return false;
         const { permits } = user;
         return permits.includes(Permit.LIST_INSPECTION);
     },
-    scheduler: (props?) => {
+    detailInspection: (props?) => {
         const user = props.user;
         if (!user) return false;
         const { permits } = user;
-        return permits.includes(Permit.SCHEDULER);
+        return permits.includes(Permit.DETAIL_INSPECTION);
     },
+    updateInspection: (props?) => {
+        const user = props.user;
+        if (!user) return false;
+        const { permits } = user;
+        return permits.includes(Permit.UPDATE_INSPECTION);
+    },
+
 }
 const get_routes = (): IRoute[] => {
     return [
         {
             exact: true,
             is_private: true,
-            can_access: true, //guards.ListInspection,
+            can_access: guards.ListInspection,
             path: '/inspection/',
             template_props: {
                 breadcrumbs: [

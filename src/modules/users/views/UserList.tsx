@@ -80,7 +80,14 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
         },
     };
 
-    const table_columns = [
+    const acciones = {
+        title: 'Acciones',
+        align: 'center' as 'center',
+        fixed: true,
+        children: [],
+    }
+
+    const table_columns: any = [
         {
             title: 'ID',
             dataIndex: 'user_id',
@@ -91,9 +98,8 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
             dataIndex: 'names',
             align: 'left' as 'left',
             render: (_, user) => {
-                return `${(user && Object.values(user?.names).join(' ')) || ''} ${
-                    (user && Object.values(user?.surnames).join(' ')) || ''
-                }`;
+                return `${(user && Object.values(user?.names).join(' ')) || ''} ${(user && Object.values(user?.surnames).join(' ')) || ''
+                    }`;
             },
         },
         // {
@@ -122,22 +128,23 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
                 return <Tag color="default">{s}</Tag>;
             },
         },
-        {
-            title: 'Acciones',
-            fixed: true,
-            children: [],
-        },
+
+
     ];
 
     if (guards.detail({ user })) {
-        table_columns[5].children[0] = ver;
+        acciones.children.push(ver)
     }
     if (guards.edit({ user })) {
-        table_columns[5].children[1] = editar;
+        acciones.children.push(editar)
     }
     if (guards.delete({ user })) {
-        table_columns[5].children[2] = eliminar;
+        acciones.children.push(eliminar)
     }
+    if (acciones.children.length > 0) {
+        table_columns.push(acciones)
+    }
+
 
     return <Table columns={table_columns} items={users} with_pagination count={total} change_page={change_page} loading={loading} />;
 };

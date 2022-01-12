@@ -3,20 +3,60 @@ import { Link, Table } from '../../../utils/ui';
 import { IRealEstateAttributes } from '../../../utils/interfaces';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../acquisitions/redux';
+import { guards } from '../routes';
 
 interface DispositionListProps {
     filters?: any;
     init?: boolean;
+    user?: any;
 }
 
-export const TableDiszposition: FC<DispositionListProps> = ({ filters /*, init*/ }) => {
+export const TableDiszposition: FC<DispositionListProps> = ({ filters, user /*, init*/ }) => {
     const dispatch = useDispatch();
 
     const realEstates: IRealEstateAttributes[] = useSelector((store: any) => store.acquisitions.realEstates.value);
     const loading: boolean = useSelector((store: any) => store.acquisitions.realEstates.loading);
     const { total_results } = useSelector((store: any) => store.acquisitions.realEstates.pagination);
 
-    const table_columns = [
+    const ver ={
+        title: 'Ver',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <Link
+                    to={`/disposition/${id}`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-eye" aria-hidden="true" />}
+                />
+            );
+        },
+    }
+
+    const editar ={
+        title: 'Editar',
+        dataIndex: 'id',
+        align: 'center' as 'center',
+        render: (id) => {
+            return (
+                <Link
+                    to={`/disposition/edit/${id}/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-pencil" aria-hidden="true" />}
+                />
+            );
+        },
+    }
+
+    const acciones = {
+        title: 'Acciones',
+        fixed: true,
+        children: [],
+    }
+
+    const table_columns: any = [
         {
             title: 'ID', //TODO: ID del proyecto
             dataIndex: 'project',
@@ -56,43 +96,17 @@ export const TableDiszposition: FC<DispositionListProps> = ({ filters /*, init*/
             dataIndex: 'sap_id',
             align: 'left' as 'left',
         },
-        {
-            title: 'Acciones',
-            fixed: true,
-            children: [
-                {
-                    title: 'Ver',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/disposition/${id}`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-eye" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-                {
-                    title: 'Editar',
-                    dataIndex: 'id',
-                    align: 'center' as 'center',
-                    render: (id) => {
-                        return (
-                            <Link
-                                to={`/disposition/edit/${id}/`}
-                                name=""
-                                avatar={false}
-                                icon={<i className="fa fa-pencil" aria-hidden="true" />}
-                            />
-                        );
-                    },
-                },
-            ],
-        },
     ];
+
+    if (guards.detailDisposition({ user })) {
+        acciones.children.push(ver)
+    }
+    if (guards.editDisposition({ user })) {
+        acciones.children.push(editar)
+    }
+    if (acciones.children.length > 0) {
+        table_columns.push(acciones)
+    }
 
     const change_page = (page, pageSize) => {
         dispatch(actions.getRealEstates({ page, pageSize, with: 'pagination', ...filters }));
@@ -101,6 +115,7 @@ export const TableDiszposition: FC<DispositionListProps> = ({ filters /*, init*/
     useEffect(() => {
         dispatch(actions.getRealEstates({ with: 'pagination' })); //TODO: mirar filtro de poliza
     }, []);
+
 
     return (
         <Table
