@@ -1,6 +1,6 @@
 import { useParams, useHistory } from 'react-router-dom';
 import { IPolicyAttributes } from '../../../../utils/interfaces';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import PolizaForm from '../../components/PolizaForm';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,7 @@ const EditPolicy = () => {
     const { id } = useParams<IParams>();
     const history = useHistory();
     const dispatch = useDispatch();
+    const form_ref = useRef<any>();
     const policy: IPolicyAttributes = useSelector((store: any) => store.insurability.policy.value);
     const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
     const insurance_brokers: any = useSelector((store: any) => store.insurability.brokers.value);
@@ -44,6 +45,7 @@ const EditPolicy = () => {
                                     companies={insurance_companies}
                                     brokers={insurance_brokers}
                                     realEstatesPolicy={realEstatesPolicy}
+                                    innerRef={form_ref}
                                     onSubmit={(values) => {
                                         return _updatePolicy(values);
                                     }}
@@ -67,6 +69,22 @@ const EditPolicy = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => {
+                        form_ref.current.submitForm();
+                    }}
+                    disabled={form_ref.current?.isSubmitting}
+                >
+                    Guardar
+                    {form_ref.current?.isSubmitting && (
+                        <i
+                            className="fa fa-circle-notch fa-spin"
+                            style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                        />
+                    )}
+                </button>
             </div>
         </div>
     );

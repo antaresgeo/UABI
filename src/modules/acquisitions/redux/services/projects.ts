@@ -20,7 +20,7 @@ export const getProject = async (
             params: { id },
         });
         res.data.results.contracts = res.data.results.contracts.map(c => {
-            console.log("contracts", c);
+            // console.log("contracts", c);
             return {
                 ...c,
                 validity: {
@@ -67,6 +67,21 @@ export const createProject = async (
         delete aux_values.vigency_start;
 
 
+        let contratos = [];
+        aux_values.contracts.map(c => {
+            const contract = {
+                ...c,
+                validity: {
+                    end_date: new Date(moment(c.validity.end_date).format('YYYY/MM/DD')).getTime(),
+                    start_date: new Date(moment(c.validity.start_date).format('YYYY/MM/DD')).getTime()
+                }
+            }
+            contratos.push(contract)
+        })
+
+        aux_values.contracts = contratos
+
+
         let URI = `/projects`;
         let res: AxiosResponse<IProjectResponse> = await http.post(URI, {
             ...aux_values,
@@ -85,6 +100,30 @@ export const createProject = async (
 
 // Services: PUT
 export const updateProject = async (data: any, id: number) => {
+    let contratos = [];
+    data.contracts.map(c => {
+        if (typeof c.validity.end_date === "string") {
+            console.log('entro')
+            const contract = {
+                ...c,
+                validity: {
+                    end_date: new Date(moment(c.validity.end_date).format('YYYY/MM/DD')).getTime(),
+                    start_date: new Date(moment(c.validity.start_date).format('YYYY/MM/DD')).getTime()
+                }
+            }
+            contratos.push(contract)
+        } else {
+            const contract = {...c}
+            contratos.push(contract)
+        }
+    })
+
+    data.contracts = contratos
+
+    console.log(data)
+
+
+
     try {
         let URI = `/projects`;
         return await http.put(URI, data, {

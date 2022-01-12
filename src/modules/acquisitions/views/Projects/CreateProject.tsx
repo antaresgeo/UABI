@@ -11,6 +11,7 @@ const CreateRealEstate = () => {
     const form = useRef<FormikProps<FormikValues>>();
     const dependencies: any = useSelector((states: any) => states.acquisitions.dependencies.value);
     const createProject = async (values) => {
+
         const res: any = await dispatch(actions.createProject(values));
         history.push(`/acquisitions/projects/${res.id}`);
 

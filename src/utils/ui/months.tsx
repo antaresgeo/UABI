@@ -1,6 +1,6 @@
 const months = (num) => {
     switch (num) {
-        case '1':
+        case '01':
             return 'enero';
         case '2':
             return 'febrero';

@@ -30,7 +30,7 @@ const CreateUser = () => {
                         <div className="col-md-12">
                             <Card title="información Usuario">
                                 <GeneralForm
-                                    type="create"
+                                    type='create'
                                     innerRef={form}
                                     onSubmit={(values) => {
                                         return createUser(values);

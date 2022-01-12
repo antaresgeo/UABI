@@ -346,21 +346,44 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     </>
                 )}
                 <div className="col-6">
-                    <label htmlFor="business_type_id" className="form-label">
+                    <label htmlFor="business_type_select_id" className="form-label">
                         Tipo de negocio<span className="text-danger">*</span>
                     </label>
                     <Field
-                        type="text"
-                        className="form-control"
-                        id="business_type_id"
-                        name="business_type"
-                        aria-describedby="emailHelp"
-                        placeholder="Tipo de negocio"
-                        autoComplete="off"
-                        maxLength={200}
-                    />
-                    <ErrorMessage name="business_type" withCount max={200} />
+                        as="select"
+                        className="w-100 form-select form-control"
+                        id="business_type_select_id"
+                        name="business_type.select"
+                        disabled={false}
+                    >
+                        <option key="business_type" value="" hidden>
+                            --Seleccione tipo de negocio--
+                        </option>
+                        <option key="teatro" value="teatro">teatro</option>
+                        <option key="museo" value="museo">museo</option>
+                        <option key="entidad cultural" value="entidad cultural">entidad cultural</option>
+                        <option key="otro" value="otro">otro</option>
+                    </Field>
+                    <ErrorMessage name="business_type.select" />
                 </div>
+                {formik.values.business_type.select === "otro" &&
+                    <div className="col-6">
+                        <label htmlFor="business_type_input_id" className="form-label">
+                            cual tipo de negocio
+                        </label>
+                        <Field
+                            type="text"
+                            className="form-control"
+                            id="business_type_input_id"
+                            name="business_type.input"
+                            aria-describedby="emailHelp"
+                            placeholder="digite el tipo de negocio"
+                            autoComplete="off"
+                            maxLength={200}
+                        />
+                        <ErrorMessage name="business_type.input" withCount max={200} />
+                    </div>
+                }
                 <div className="col-6">
                     <label htmlFor="destination_realEstate_id" className="form-label">
                         Destinación de bien Inmueble<span className="text-danger">*</span>

@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
-import { Document, Page, Image, StyleSheet, Text } from '@react-pdf/renderer';
-import imgbs64 from '../../../../../utils/assets/img/header.png';
+import { StyleSheet, Text } from '@react-pdf/renderer';
 import writtenNumber from 'written-number'
 import months from './../../../../../utils/ui/months';
 import moment from 'moment';
 import Html from 'react-pdf-html';
+import DocumentPdf from './../../../../../utils/components/document_pdf/index';
 
 const styles = StyleSheet.create({
     body: {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     sub_text: {
         marginRight: 10,
         marginLeft: 10,
-        fontSize: 13,
+        fontSize: 11,
         textAlign: 'justify',
         fontFamily: 'Helvetica'
     },
@@ -42,15 +42,6 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 12,
         margin: 10,
-        textAlign: 'center',
-        color: 'grey',
-    },
-    pageNumber: {
-        position: 'absolute',
-        fontSize: 12,
-        bottom: 30,
-        left: 0,
-        right: 0,
         textAlign: 'center',
         color: 'grey',
     },
@@ -304,7 +295,15 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
     `;
 
     return (
-        <>
+        <DocumentPdf
+            showToolbar={false}
+            title="Estudio Previo para arrendamiento de Bien Inmueble"
+            header={{
+                code: 'Cód. FO-ADMI-137 ',
+                version: 'Versión. 1',
+                title: { prefix: 'Formato', name: 'FO-ADMI Estudio Previo para arrendamiento de Bien Inmueble' },
+            }}
+        >
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>1. Identificación del Ingreso </Text>
                 el valor del presente contrato ingresará a la posición
@@ -334,11 +333,11 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>Solicitante: </Text>
                 {values?.applicant.type_society === "Persona Natural" ?
-                    `${values.detailsApplicant.names.firstName} ${values.detailsApplicant.names.lastName} ${values.detailsApplicant.surnames.firstSurname} ${values.detailsApplicant.surnames.lastSurname}`
+                    `${values.detailsApplicant.names.firstName} ${values.detailsApplicant.names.lastName ?? ""} ${values.detailsApplicant.surnames.firstSurname} ${values.detailsApplicant.surnames.lastSurname ?? ""}`
                     :
                     `${values.applicant.company_name}`
                 }
-                {values?.applicant.type_society === "Persona Natural" ? ` C.C.: ${values.detailsApplicant.id_number}` : ` NIT: ${values.applicant.id_number}`}
+                {values?.applicant.type_society === "Persona Natural" ? ` C.C.: ${values.detailsApplicant.document_number}` : ` NIT: ${values.applicant.document_number}`}
             </Text>
             <Text style={styles.subtitle}>1. Justificación de la contratación.</Text>
             <Text style={styles.text}>
@@ -579,12 +578,12 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
                 Medellín, Antioquia, {`${date[2]} de ${months(date[1])} de ${date[0]}`}
             </Text>
             <Text style={styles.text}></Text>
-            <Text style={styles.sub_text}>{`${values?.detailsLeader.names.firstName} ${values?.detailsLeader.names.lastName} ${values?.detailsLeader.surnames.firstSurname} ${values?.detailsLeader.surnames.lastSurname}  `}</Text>
+            <Text style={styles.sub_text}>{`${values?.detailsLeader.names.firstName} ${values?.detailsLeader.names.lastName ?? ""} ${values?.detailsLeader.surnames.firstSurname} ${values?.detailsLeader.surnames.lastSurname ?? ""}  `}</Text>
             <Text style={styles.sub_text}>Líder de Programa</Text>
             <Text style={styles.sub_text}>Unidad Administración de Bienes Inmuebles</Text>
             <Text style={styles.sub_text}>Subsecretaría de Gestión de Bienes</Text>
             <Html>{table_lider}</Html>
-        </>
+        </DocumentPdf>
     )
 }
 
