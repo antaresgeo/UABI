@@ -17,8 +17,10 @@ import { create_notification } from '../../notificacions/redux/service';
 interface InspectionFormTagsProps {
     inspection: Inspection;
     real_estate: any;
+    user: any;
+
 }
-const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_estate }) => {
+const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_estate, user }) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const { TabPane } = Tabs;
@@ -240,13 +242,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                             <PhotographicRecordForm innerRef={steps[4].ref} onSubmit={steps[4].onSave} />
                         </TabPane>
                         <TabPane tab="Generar informe" key="6" disabled={parseInt(activeKey) < 6}>
-                            <Report
-                                obs={obs}
-                                innerRef={steps[5].ref}
-                                onSubmit={steps[5].onSave}
-                                data={data}
-                                real_estate={real_estate}
-                            />
+                            <Report obs={obs} innerRef={steps[5].ref} onSubmit={steps[5].onSave} data={data} real_estate={real_estate} user={user} />
                         </TabPane>
                     </Tabs>
                 </div>

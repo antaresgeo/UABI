@@ -13,8 +13,9 @@ interface ReportProps {
     onSubmit: (values) => void;
     data?: any;
     real_estate: any;
+    user: any;
 }
-const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit, data, real_estate }) => {
+const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit, data, real_estate, user }) => {
     return (
         <div className="container-fluid">
             <Card
@@ -37,7 +38,7 @@ const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit, data, real
                                 observations: obs || '',
                             }}
                         >
-                            {() => {
+                            {(formik) => {
                                 return (
                                     <Form>
 
@@ -75,13 +76,17 @@ const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit, data, real
                         </Formik>
                     </div>
                     <div className="col-8 h-100">
-                        <PDFViewer className="w-100" showToolbar={false} style={{
-                            height: '100%',
-                            width: '100%',
-                            border: '1px solid #525659',
-                            backgroundColor: '#525659',
-                        }}>
-                            <InpectionDoc data={data} real_estate={real_estate} />
+                        <PDFViewer
+                            className="w-100"
+                            showToolbar={false}
+                            style={{
+                                height: '100%',
+                                width: '100%',
+                                border: '1px solid #525659',
+                                backgroundColor: '#525659',
+                            }}
+                        >
+                            <InpectionDoc data={data} real_estate={real_estate} user={user} innerRef={innerRef} />
                         </PDFViewer>
                     </div>
                 </div>

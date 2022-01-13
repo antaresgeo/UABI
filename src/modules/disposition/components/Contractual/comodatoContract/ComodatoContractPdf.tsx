@@ -31,9 +31,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica'
     },
     header: {
-        fontSize: 12,
-        margin: 10,
+        marginTop: -15,
+        marginBottom: 10,
+        fontSize: 8,
         textAlign: 'center',
+        fontFamily: 'Helvetica',
         color: 'grey',
     },
     underlined: {
@@ -210,13 +212,15 @@ const ComodatoContractPdf = ({ values_contract, comodato, realEstate }) => {
     return (
         <DocumentPdf
             showToolbar={false}
-            title="Estudio Previo para arrendamiento de Bien Inmueble"
+            title="Contrato de Comodato Bien Inmueble"
             header={{
-                code: 'Cód. FO-ADMI-137 ',
-                version: 'Versión. 1',
-                title: { prefix: 'Formato', name: 'FO-ADMI Estudio Previo para arrendamiento de Bien Inmueble' },
+                code: 'Cód. FO-ADMI-125',
+                version: 'Versión. 3',
+                title: { prefix: 'Formato', name: 'FO-ADMI Minuta Contrato de Comodato Bien Inmueble' },
             }}
         >
+            <Text style={styles.header} fixed>CONTRATO DE COMODATO N° (DIGITAR SÓLO NÚMERO DE CONTRATO – SIN FECHA)  </Text>
+            <Text style={styles.title}>CONTRATO DE COMODATO N° (DIGITAR SÓLO NÚMERO DE CONTRATO – SIN FECHA)  </Text>
             <Html>{table_principal}</Html>
             <Text style={styles.sub_text}>
                 Entre los suscritos a saber,

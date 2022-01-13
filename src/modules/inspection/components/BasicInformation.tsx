@@ -21,7 +21,6 @@ const BasicInformation: FC<BasicInformationProps> = ({
     onSubmit,
     real_estate,
 }) => {
-    console.log(real_estate);
     return (
         <div className="container-fluid">
             <div className="col-12">

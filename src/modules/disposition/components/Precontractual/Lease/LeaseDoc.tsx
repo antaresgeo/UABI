@@ -37,7 +37,7 @@ const LeaseDoc = () => {
                 <div className="flex-fill" />
                 <PDFDownloadLink
                     document={<LeasePdf values={values} realEstate={realEstate} />}
-                    fileName="EstudioPrevioArrendamiento.pdf"
+                    fileName="EstudioPrevioparaarrendamientodeBienInmueble.pdf"
                 >
                     <button
                         type="button"

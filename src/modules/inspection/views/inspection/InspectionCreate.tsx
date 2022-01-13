@@ -19,6 +19,12 @@ const InspectionCreate: FC<PruebaProps> = () => {
     const inspection: any = useSelector((store: any) => store.inspection.inspection.value);
     const real_estate: any = useSelector((store: any) =>  store.acquisitions.realEstate.value)
     const Tipology: any = useSelector((store: any) =>  store.acquisitions.tipology.value)
+    const user = useSelector((store: any) => store.auth.user );
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    };
     useEffect(() => {
         dispatch(actions.get_inspection_by_real_estate_id(real_estate_id));
         dispatch(getRealEstate(real_estate_id));
@@ -36,7 +42,7 @@ const InspectionCreate: FC<PruebaProps> = () => {
         ...real_estate,
         tipology: Tipology
     }
-    return <InspectionFormTags inspection={inspection} real_estate={realEstate} />;
+    return <InspectionFormTags inspection={inspection} real_estate={realEstate} user={aux_user} />;
 };
 
 export default InspectionCreate;

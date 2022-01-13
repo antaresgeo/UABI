@@ -16,7 +16,7 @@ const ComodatoDocContract = () => {
     console.log(values_contract, realEstate, dispositionType);
     const comodato = {
         //info general
-        business_type: "tipo negocio",
+        business_type: { select: 'teatro', input: '' },
         contract_period: 12,
         environmental_risk: "riesgos",
         registration_date: "2021-12-15",
@@ -146,7 +146,7 @@ const ComodatoDocContract = () => {
                 <div className="flex-fill" />
                 <PDFDownloadLink
                     document={<ComodatoContractPdf values_contract={values_contract} comodato={comodato} realEstate={realEstate}></ComodatoContractPdf>}
-                    fileName="ContratoComodato.pdf"
+                    fileName="ContratodeComodatoBienInmueble.pdf"
                 >
                 <button
                     type="button"

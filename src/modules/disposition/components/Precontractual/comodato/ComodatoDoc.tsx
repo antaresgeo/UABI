@@ -39,7 +39,7 @@ const ComodatoDoc = () => {
                 <div className="flex-fill" />
                 <PDFDownloadLink
                     document={<ComodatoPdf values={values} realEstate={realEstate} />}
-                    fileName="EstudioPrevioComodato.pdf"
+                    fileName="EstudioPrevioparacomodatodeBienInmueble.pdf"
                 >
                 <button
                     type="button"
