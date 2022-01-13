@@ -1,11 +1,9 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 import DocumentPdf from './../../../utils/components/document_pdf/index';
 import { StyleSheet, Text } from '@react-pdf/renderer';
 import Html from 'react-pdf-html';
 import writtenNumber from 'written-number'
-import { useSelector, useDispatch } from 'react-redux';
-import {  } from 'react-redux';
-import { actions } from '../../acquisitions/redux';
+import moment from 'moment';
 
 
 const styles = StyleSheet.create({
@@ -57,10 +55,12 @@ const styles = StyleSheet.create({
 interface Idata {
     data: any;
     real_estate: any;
+    user: any;
+    innerRef: any;
 }
 
-const InpectionDoc: FC<Idata> = ({data, real_estate}) => {
-
+const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
+    console.log(real_estate)
 
     const data_realEstate = `
         <style>
@@ -91,12 +91,12 @@ const InpectionDoc: FC<Idata> = ({data, real_estate}) => {
                 <tr>
                     <td>ESCRITURA/FECHA/NOTARÍA:</td>
                     <td>${real_estate.acquisitions.map(ac => {
-                        return `${ac.act_value} /${ac.acquisition_date}/ ${ac.entity_number}`
+                        return `<tr>${ac.title_type_document_id ?? "-"} / ${moment(new Date(ac.acquisition_date).getTime()).format('DD-MM-YYYY')} / ${ac.entity_type}: ${ac.entity_number}</tr>`
                     })}</td>
                 </tr>
                 <tr>
                     <td>AVALÚO DEL INMUEBLE:</td>
-                    <td>${writtenNumber(real_estate.patrimonial_value, { lang: 'es' } )},${real_estate.patrimonial_value} </td>
+                    <td>${writtenNumber(real_estate.patrimonial_value, { lang: 'es' })}, ${real_estate.patrimonial_value} </td>
                 </tr>
                 <tr>
                     <td>DIRECCIÓN DEL INMUEBLE:</td>
@@ -164,29 +164,27 @@ const InpectionDoc: FC<Idata> = ({data, real_estate}) => {
                     <td>Energía</td>
                     <td>${data.public_services[0].subscriber}</td>
                     <td>${data.public_services[0].accountant}</td>
-                    <td>${data.public_services[0].status}</td>
+                    <td>${data.public_services[0].status === 1 ? 'Aplica' : data.public_services[0].status === "2" ? 'Inactivo' : 'No Aplica'}</td>
                 </tr>
                 <tr>
                     <td>Gas</td>
                     <td>${data.public_services[1].subscriber}</td>
                     <td>${data.public_services[1].accountant}</td>
-                    <td>${data.public_services[1].status}</td>
+                    <td>${data.public_services[1].status === 1 ? 'Aplica' : data.public_services[1].status === "2" ? 'Inactivo' : 'No Aplica'}</td>
                 </tr>
                 <tr>
                     <td>Agua</td>
                     <td>${data.public_services[2].subscriber}</td>
                     <td>${data.public_services[2].accountant}</td>
-                    <td>${data.public_services[2].status}</td>
+                    <td>${data.public_services[2].status === 1 ? 'Aplica' : data.public_services[2].status === "2" ? 'Inactivo' : 'No Aplica'}</td>
                 </tr>
                 <tr>
                     <td>Teléfono</td>
                     <td>${data?.public_services[3]?.subscriber}</td>
                     <td>${data?.public_services[3]?.accountant}</td>
-                    <td>${data?.public_services[3]?.status}</td>
+                    <td>${data.public_services[3]?.status === 1 ? 'Aplica' : data.public_services[0].status === "2" ? 'Inactivo' : 'No Aplica'}</td>
                 </tr>
-                <tr>
-                    <td class="footer">Observaciones: ${data?.physical_inspection?.observations?.observation}</td>
-                </tr>
+
             </tbody>
         </table>
     `
@@ -230,8 +228,8 @@ const InpectionDoc: FC<Idata> = ({data, real_estate}) => {
                     <td>${data.properties[20].observation}</td>
                 </tr>
                 <tr>
-                    <td>Fachada/td>
-                    <<td>${data.properties[21].status_property}</td>
+                    <td>Fachada</td>
+                    <td>${data.properties[21].status_property}</td>
                     <td>${data.properties[21].observation}</td>
                 </tr>
                 <tr>
@@ -397,23 +395,23 @@ const InpectionDoc: FC<Idata> = ({data, real_estate}) => {
             <tbody>
                 <tr>
                     <td>Nombres y apellidos:</td>
-                    <td>${data.owner.names_surnames}</td>
+                    <td>${data.owner.names_surnames ?? ""}</td>
                 </tr>
                 <tr>
                     <td>Cédula de ciudadanía:</td>
-                    <td>${data.owner.document_number}</td>
+                    <td>${data.owner.document_number ?? ""}</td>
                 </tr>
                 <tr>
                     <td>Dirección:</td>
-                    <td>(Digite la dirección)</td>
+                    <td>${real_estate.address.address}</td>
                 </tr>
                 <tr>
                     <td>Teléfono contacto: </td>
-                    <td>${data.owner.phone_number}</td>
+                    <td>${data.owner.phone_number ?? ""}</td>
                 </tr>
                 <tr>
                     <td>Correo electrónico:</td>
-                    <td>${data.owner.email}</td>
+                    <td>${data.owner.email ?? ""}</td>
                 </tr>
             </tbody>
         </table>
@@ -431,7 +429,7 @@ const InpectionDoc: FC<Idata> = ({data, real_estate}) => {
             }}
         >
             <Text style={styles.title}>Informe de inspección N° (Digite el número del informe que corresponde a este bien durante la vigencia)</Text>
-            <Text style={styles.title}>Fecha: (Digite dd/mm/aaaa)</Text>
+            <Text style={styles.title}>Fecha: {moment(new Date().getTime()).format('DD/MM/YYYY')}</Text>
             <Text style={styles.subtitle}>1. DATOS BÁSICOS DEL INMUEBLE:</Text>
             <Html>{data_realEstate}</Html>
             <Text style={styles.text}>
@@ -471,11 +469,11 @@ const InpectionDoc: FC<Idata> = ({data, real_estate}) => {
             <Html>{physical_aspects}</Html>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>3.2. Resultados inspección física: </Text>
-                (Deje constancia de los requerimientos, Arandas o comunicados informando situaciones como deterioros, daños, hurtos, seguridad perjuicios a terceros, entre otros, encontrados en la estructura física del inmueble, a otras dependencias de acuerdo a su competencia, para que tomen las medidas del caso. Ejemplo, Se remite solicitud de mantenimiento mediante aranda N° 1234, Se envía oficio con radicado 2018100212 a la Secretaría de Salud para atender hallazgo sanitario, Se envía oficio con radicado N° a la Secretaría de Infraestructura Física para hacer análisis y proceder con la reparación del daño encontrado en el muro referenciado en el informe. etc).
+                {data.physical_inspection.observations.observation}
             </Text>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>3.3. Diferencias de información del inmueble en SAP vs verificación en campo: </Text>
-                (Deje constancia de las diferencias evidenciadas en la visita de campo con respecto a lo que figura en SAP. Ejem: Dirección en SAP no coincide a la visitada, la encontrada es CR 32C 48 - 36).
+                {data.observations.observation}
             </Text>
             <Text style={styles.subtitle}>3.4. Registros fotográficos de la inspección:</Text>
             <Html>{Photographic_records}</Html>
@@ -484,13 +482,15 @@ const InpectionDoc: FC<Idata> = ({data, real_estate}) => {
                 complete solo esta parte de la información si el bien está invadido o en poder de un tercero no autorizado en el Municipio de Medellín para su tenencia.
             </Text>
             <Html>{holder_data}</Html>
-            <Text style={styles.text}>
-                Observación: (Si no se puede conseguir los datos del ocupante, deje claramente que fue imposible que se le suministraran la información, que por lo tanto el ocupante o tenedor real del inmueble no se pudo determinar, por el contrario si consigue los datos elimine este texto)
-            </Text>
+            {data.owner.document_number === null && data.owner.document_type === null && data.owner.email === null && data.owner.names_surnames === null && data.owner.phone_number === null &&
+                <Text style={styles.text}>
+                    Observación: fue imposible que se me suministrara la información, por lo tanto el ocupante o tenedor real del inmueble no se puede determinar.
+                </Text>
+            }
             <Text style={styles.text}>Atentamente,</Text>
-            <Text style={styles.sub_text}>(Digite nombre completo del inspector)</Text>
+            <Text style={styles.sub_text}>{user.detailsUser.names.firstName} {user.detailsUser.names.lastName ?? ""} {user.detailsUser.surnames.firstSurname} {user.detailsUser.surnames.lastSurname ?? ""}</Text>
             <Text style={styles.sub_text}>Inspector del Bien Inmueble</Text>
-            <Text style={styles.sub_text}>(Digite el nombre de la Secretaría o Departamento Administrativo)</Text>
+            <Text style={styles.sub_text}>{real_estate.dependency}  </Text>
 
 
 

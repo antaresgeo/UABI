@@ -326,11 +326,11 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
     return (
         <DocumentPdf
             showToolbar={false}
-            title="Estudio Previo para arrendamiento de Bien Inmueble"
+            title="Estudio Previo para comodato de Bien Inmueble"
             header={{
-                code: 'Cód. FO-ADMI-137 ',
-                version: 'Versión. 1',
-                title: { prefix: 'Formato', name: 'FO-ADMI Estudio Previo para arrendamiento de Bien Inmueble' },
+                code: 'Cód. FO-ADMI-138',
+                version: 'Versión. 4',
+                title: { prefix: 'Formato', name: 'FO-ADMI Estudio Previo para comodato de Bien Inmueble' },
             }}
 
         >

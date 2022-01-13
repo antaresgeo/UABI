@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: 11,
-        margin: 12,
+        margin: 11,
         fontFamily: 'Helvetica-Bold',
     },
     text: {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     sub_text: {
         marginRight: 10,
         marginLeft: 10,
-        fontSize: 13,
+        fontSize: 11,
         textAlign: 'justify',
         fontFamily: 'Helvetica'
     },
@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
         color: 'red',
     },
     underlined: {
-        fontSize: 12,
+        fontSize: 11,
         margin: 10,
         fontFamily: 'Helvetica-Bold',
         textDecoration: 'underline'
     },
     italic: {
-        fontSize: 12,
+        fontSize: 11,
         margin: 10,
         fontFamily: 'Helvetica-Oblique',
     },
@@ -113,7 +113,7 @@ const LeaseContractPdf: FC<Idata> = ({ values_contract, arrendamiento, realEstat
                 border-right: 1px solid #000;
                 padding-left: 3px;
                 padding-right: 3px;
-                font-size: 12px;
+                font-size: 11px;
                 font-family: Helvetica;
                 text-align: left;
             }
@@ -151,11 +151,16 @@ const LeaseContractPdf: FC<Idata> = ({ values_contract, arrendamiento, realEstat
             }
             .p40 {
                 text-align: left;
-                font-size: 12px;
+                font-size: 11px;
                 padding-left: 3px;
                 padding-right: 3px;
                 margin-top: 10px;
                 margin-bottom: 0px;
+            }
+            .cuadrado {
+                font-size: 11px;
+                position: relative;
+                bottom: 5px;
             }
 
         </style>
@@ -229,7 +234,7 @@ const LeaseContractPdf: FC<Idata> = ({ values_contract, arrendamiento, realEstat
                 </tr>
                 <tr>
                     <td class="p40">ÁREA A ENTREGAR:</td>
-                    <td class="p40">Digite el área del inmueble que va a entregar en arrendamiento m<span className="ft11_contractLease">2</span></td>
+                    <td class="p40">${values_contract.dispose_area} m<span class="cuadrado">2</span></td>
                 </tr>
                 <tr>
                     <td class="p40">DIRECCIÓN DEL INMUEBLE:</td>
