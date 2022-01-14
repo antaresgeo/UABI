@@ -129,6 +129,7 @@ export const getList = async (
 
 const services = {
     getList,
+
 };
 
 export default services;
