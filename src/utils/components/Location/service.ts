@@ -49,6 +49,25 @@ export const getList = async (
     }
 };
 
+
+export const getAdressById = async (id) => {
+    try {
+        let URI = `/addresses/`;
+        let res: AxiosResponse<IAddressResponse> = await location_http.get(
+            URI,
+            {
+                params: {
+                    id: id
+                },
+            }
+        );
+        return res.data.results;
+    } catch (error) {
+        console.error(error);
+        return Promise.reject('Error');
+    }
+};
+
 // export const getIdFromLocation = async ({
 //     city,
 //     state,
@@ -129,6 +148,7 @@ export const getList = async (
 
 const services = {
     getList,
+    getAdressById,
 };
 
 export default services;

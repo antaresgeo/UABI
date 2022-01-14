@@ -13,31 +13,31 @@ const Master_formatsList = () => {
         {
             id: '2',
             module: 'Disposición',
-            name: "Estudio Previo Arrendamiento",
+            name: "Estudio Previo para arrendamiento de Bien Inmueble",
             filename: "EstudioPrevioArrendamiento"
         },
         {
             id: '3',
             module: 'Disposición',
-            name: "Estudio Previo Comodato",
+            name: "Estudio Previo para comodato de Bien Inmueble",
             filename: "EstudioPrevioComodato"
         },
         {
             id: '4',
             module: 'Disposición',
-            name: "Estudio Previo Uso Público",
+            name: "Estudio Previo para Administración del Espacio Público de Bien Inmueble",
             filename: "EstudioPrevioUsoPublico"
         },
         {
             id: '5',
             module: 'Disposición',
-            name: "Contrato Arrendamiento",
+            name: "Contrato de Arrendamiento Bien Inmueble",
             filename: "ContratodeArrendamiento"
         },
         {
             id: '6',
             module: 'Disposición',
-            name: "Contrato Comodato",
+            name: "Contrato de Comodato Bien Inmueble",
             filename: "ContratodeComodato"
         },
 

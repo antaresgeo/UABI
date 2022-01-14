@@ -69,7 +69,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
         }
         return valor_anterior;
     }, []);
-    console.log(newrealEstates);
+    // console.log(newrealEstates);
 
     const matriculas = [];
     const ids_real = [];

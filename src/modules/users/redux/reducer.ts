@@ -206,7 +206,7 @@ const reducerRol = (aux_state: State = initialState, action: any): any => {
             };
         }
         case types.roles.success: {
-            console.log(action.payload)
+            // console.log(action.payload)
             return {
                 ...state,
                 roles: {

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { actions } from '../../redux';
 
@@ -12,6 +12,7 @@ import { Card } from '../../../../utils/ui';
 import InsuranceCompanyForm from '../../components/InsuranceCompanyForm';
 import { Company } from '../../redux/service';
 import { FormikProps, FormikValues } from 'formik';
+import { getAdressById } from '../../../../utils/components/Location/service';
 
 interface IParams {
     id: string;
@@ -25,6 +26,7 @@ const EditInsuranceCompany: FC<IProps> = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const form = useRef<FormikProps<FormikValues>>();
+    const [location, setLocation] = useState(null)
 
     const { id } = useParams<IParams>();
     const insurance_company: any = useSelector((store: any) => store.insurability.company.value);
@@ -39,6 +41,16 @@ const EditInsuranceCompany: FC<IProps> = () => {
         dispatch(actions.get_company_by_id(id));
     }, []);
 
+    useEffect(() => {
+        (async () => {
+            if(insurance_company) {
+                const res: any = await getAdressById(insurance_company.location_id);
+                setLocation(res);
+            }
+        })();
+    }, [insurance_company]);
+    // console.log(location);
+
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -52,6 +64,7 @@ const EditInsuranceCompany: FC<IProps> = () => {
                                 <InsuranceCompanyForm
                                     innerRef={form}
                                     insurance_company={insurance_company}
+                                    location={location}
                                     onSubmit={(values) => {
                                         return _updateInsuranceCompany(values);
                                     }}

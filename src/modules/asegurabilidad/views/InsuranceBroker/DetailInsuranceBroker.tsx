@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../redux';
 import InsuranceBrokerDetail from '../../components/InsuranceBrokerDetail';
+import { getAdressById } from '../../../../utils/components/Location/service';
 
 interface IParams {
     id: string;
@@ -12,12 +13,22 @@ const DetailInsuranceBroker = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
     const history = useHistory();
+    const [location, setLocation] = useState(null);
 
     const insurance_broker: any = useSelector((states: any) => states.insurability.broker.value);
 
     useEffect(() => {
         dispatch(actions.get_broker_by_id(id));
     }, []);
+
+    useEffect(() => {
+        (async () => {
+            if(insurance_broker) {
+                const res: any = await getAdressById(insurance_broker.location_id);
+                setLocation(res);
+            }
+        })();
+    }, [insurance_broker]);
 
     return (
         <div className="h-100 d-flex flex-column">
@@ -28,7 +39,7 @@ const DetailInsuranceBroker = () => {
                             <h5>Corredora de seguros</h5>
                         </div>
                         <div className="col-md-12">
-                            <InsuranceBrokerDetail broker={insurance_broker} />
+                            <InsuranceBrokerDetail broker={insurance_broker} location={location} />
                         </div>
                     </div>
                 </div>

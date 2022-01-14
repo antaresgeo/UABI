@@ -10,14 +10,16 @@ import { useSelector } from 'react-redux';
 
 interface IUserFormPros {
     user?: IUserAttributes;
+    address?: string;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
     onSubmit: (values, actions?) => Promise<any>;
     innerRef?: MutableRefObject<FormikProps<FormikValues>>;
 }
 
-const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerRef }) => {
-    console.log('tipo',type)
+const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, address, innerRef }) => {
+
+
     // const history = useHistory();
     const [subs, set_subs] = useState<any[]>([]);
     const roles = useSelector((store: any) => store.auth.user.roles);
@@ -37,7 +39,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
             surnames: { firstSurname: '', lastSurname: '' },
             email: '',
             location: '',
-            str_location: '',
+            str_location: address ?? '',
             cellphone_number: '',
             phone_number: '',
             phone_number_ext: '',
@@ -121,7 +123,6 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
             innerRef={innerRef}
         >
             {({ values, isValid, isSubmitting, setFieldValue, handleChange, errors }) => {
-                console.log(errors);
                 return (
                     <Form>
                         <div className="row">
@@ -186,7 +187,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
                                                     const dependency = dependencias.find((d) => d.name === value);
                                                     const _subs = format_list(dependency.subs);
                                                     setFieldValue('detailsUser.subdependency', dependency.name);
-                                                    console.log(_subs);
+                                                    // console.log(_subs);
                                                     set_subs(_subs);
                                                 }
                                             }}
@@ -451,6 +452,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerR
                                         type="text"
                                         className="form-control"
                                         disabled
+
                                     />
 
                                     <div className="input-group-prepend">

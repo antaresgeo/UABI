@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import {FC, useEffect, useRef} from 'react';
+import {FC, useEffect, useRef, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions, service } from '../redux';
 import { Card } from '../../../utils/ui';
@@ -8,6 +8,7 @@ import GeneralForm from './../components/GerenalForm';
 import RoleForm from './../components/RoleForm';
 import { swal_success } from '../../../utils';
 import {FormikProps, FormikValues} from "formik";
+import { getAdressById } from '../../../utils/components/Location/service';
 
 interface IParams {
     id: string;
@@ -29,13 +30,27 @@ const EditUser: FC<IProps> = () => {
         if (userForm) {
             res = await dispatch(actions.update_user(id, userForm));
             await swal_success.fire({ title: 'Usuario actualizado', text: res.message, icon: 'success' });
-            history.push(`/users/${user.results.id}`);
+            history.push(`/users/${res.results.user.id}`);
         }
     };
 
     useEffect(() => {
         dispatch(actions.get_user_by_id(parseInt(id)));
     }, []);
+
+    const [adress, setAdress] = useState("")
+    const localizacion = async (id) => {
+        const list: any = await getAdressById(id);
+        setAdress(list?.address);
+    }
+
+    useEffect(() => {
+        if(user && adress === "") {
+            console.log('dispara busqueda')
+            localizacion(user?.detailsUser?.location)
+        }
+    }, [user])
+
 
     return (
         <div className="h-100 d-flex flex-column">
@@ -48,6 +63,7 @@ const EditUser: FC<IProps> = () => {
                                     type="edit"
                                     innerRef={form}
                                     user={user?.detailsUser}
+                                    address={adress}
                                     onSubmit={(values) => {
                                         return _updateUser(values);
                                     }}

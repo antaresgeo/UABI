@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
 import { formatDate } from '../../../utils';
+import { Company } from '../redux/service/company';
 
 interface InsuranceCompanyDetailProps {
-    company: any;
+    company: Company;
+    location: any
 }
-const InsuranceCompanyDetail: FC<InsuranceCompanyDetailProps> = ({ company }) => {
+const InsuranceCompanyDetail: FC<InsuranceCompanyDetailProps> = ({ company, location }) => {
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -37,15 +39,15 @@ const InsuranceCompanyDetail: FC<InsuranceCompanyDetailProps> = ({ company }) =>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Departamento</label>
-                                <div className="my-3">{company?.state || '-'}</div>
+                                <div className="my-3">{location?.location?.state ?? ''}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Ciudad</label>
-                                <div className="my-3">{company?.city || '-'}</div>
+                                <div className="my-3">{location?.location?.city ?? ''}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Dirección</label>
-                                <div className="my-3">{company?.address || '-'}</div>
+                                <div className="my-3">{location?.address ?? ''}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor=""> Fecha de creación</label>

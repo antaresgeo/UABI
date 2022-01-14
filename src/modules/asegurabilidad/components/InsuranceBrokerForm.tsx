@@ -8,22 +8,23 @@ import { FormikProps, FormikValues } from 'formik';
 
 interface InsuranceBrokerFormPros {
     insurance_broker?: Broker;
+    location?: any;
     onSubmit?: (values: Broker, form?) => Promise<any>;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
     innerRef?: MutableRefObject<FormikProps<FormikValues>>;
 }
 
-const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, onSubmit, disabled, type, innerRef }) => {
+const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, onSubmit, disabled, type, innerRef, location }) => {
     const initial_values = {
         id: '',
         name: '',
         nit: '',
         phone: '',
         location_id: '',
-        state: '',
-        city: '',
-        address: '',
+        state: location?.location?.state ?? '',
+        city: location?.location?.city ?? '',
+        address: location?.address ?? '',
         contact_information: { name: '', email: '', phone: '' },
         ...insurance_broker,
     };

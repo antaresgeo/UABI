@@ -42,7 +42,7 @@ const PublicUseDoc = () => {
                     <div className="flex-fill" />
                     <PDFDownloadLink
                         document={<PubilcUsePdf values={values} realEstate={realEstate} />}
-                        fileName="EstudioPrevioUsoPublico.pdf"
+                        fileName="EstudioPrevioparaEspacioPúblicodeBienInmueble.pdf"
                     >
                         <button
                             type="button"

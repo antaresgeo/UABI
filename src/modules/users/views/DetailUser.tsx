@@ -2,12 +2,10 @@ import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { actions, service } from '../redux';
 import { useDispatch, useSelector } from 'react-redux';
-import { IUserAttributes } from '../../../utils/interfaces/users';
 import { useHistory } from 'react-router-dom';
 import { Card, Link } from '../../../utils/ui';
 import UserViewForm from './../components/UserViewForm';
 import RoleForm from '../components/RoleForm';
-import { log } from 'util';
 import { FormikProps, FormikValues } from 'formik';
 
 interface IParams {
@@ -28,47 +26,7 @@ const DetailUser = () => {
         dispatch(actions.get_user_by_id(parseInt(id)));
     }, []);
 
-    // const getUser = async (dataPolicy) => {
-    //     const action = actions.get_user_by_id(1);
-    //     await dispatch(action);
-    // };
-
     return (
-        // <div className="h-100 d-flex flex-column">
-        //     <div className="flex-fill overflow-auto">
-        //         <div className="container-fluid">
-        //             <div className="row justify-content-center">
-        //                 <div className="col-md-12">
-        //                     <Card title="información Usuario">
-        //                         <GeneralForm
-        //                             type="view"
-        //                             user={user}
-        //                             disabled
-        //                             onSubmit={(values) => {
-        //                                 return getUser(values);
-        //                             }}
-        //                         />
-        //                     </Card>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        //     <div
-        //         className="bg-white d-flex flex-row justify-content-between"
-        //         style={{ padding: 16, borderTop: '1px solid #ccc' }}
-        //     >
-        //         <button
-        //             type="button"
-        //             className="btn btn-outline-primary"
-        //             onClick={() => {
-        //                 history.goBack();
-        //             }}
-        //         >
-        //             Atras
-        //         </button>
-        //         <div className="flex-fill" />
-        //     </div>
-        // </div>
 
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">

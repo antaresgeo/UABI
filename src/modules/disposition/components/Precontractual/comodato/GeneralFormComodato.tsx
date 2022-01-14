@@ -17,9 +17,139 @@ interface FormPros {
     values_form?: any;
 }
 
+interface Applicant {
+    company_name: string;
+    email: string;
+    id_number: number;
+    id_type: number;
+    phone_number: number;
+    type_society: string;
+}
+
+interface Location {
+    address: string;
+    id: number | string;
+}
+
+interface DetailsPerson {
+    documentNumber: number;
+    documentType: string;
+    document_number: number;
+    document_type: string;
+    email: string;
+    first_name?: string;
+    first_surname?: string;
+    gender: string;
+    id: number;
+    last_name?: String;
+    last_surname?: string
+    names: { firstName: string, lastName?: string }
+    phoneNumber: number
+    phone_number: number
+    status?: number
+    status_info?: { id: number, status_name: string }
+    surnames?: { firstSurname: 'Nova', lastSurname?: string }
+
+}
+
+interface Comodato {
+    environmental_risk: string;
+    registration_date: string;
+    contract_period: number;
+    prediation_date: string;
+    business_type: {
+        input?: string;
+        select: string;
+    }
+    lockable_base: number;
+    applicant: Applicant;
+    location_applicant: Location;
+    detailsRepresentative: DetailsPerson;
+    representative: {
+        type_society: string;
+    };
+    regulatory_risk: {
+        degree_occurrence: string;
+        impact_degree: string;
+        responsable: string;
+        mitigation_mechanism: string;
+    };
+    operational_risk: {
+        degree_occurrence: string;
+        impact_degree: string;
+        responsable: string;
+        mitigation_mechanism: string;
+    };
+
+    loan_value: number;
+    loan_typology: string;
+    competitive_process: string;
+    competitive_process_value: "",
+    activities: string;
+    horizontal_property: string;
+    destination_realEstate: string;
+    peacesafe: string;
+    social_event: string;
+    public_service: string;
+    value_public_service: "",
+    capacity_specification: "",
+    economic_exploitation: string;
+    type_economic_exploitation: "";
+    action_field: string;
+    resolution: string;
+    dependence: string,
+    commercial_appraisal: number,
+    obligations: [
+
+    ],
+    prohibitions: [
+
+    ],
+    //obligaciones
+    value_locative_repairs: string | number;
+    value_repairs_damages: string | number;
+    value_domiciliary_public: string | number;
+    surveillance_value: string | number;
+    cleaning_value: string | number;
+    conservation_value: string | number;
+    administration_value: string | number;
+    network_value: string | number;
+    value_economic_obligations: string | number;
+    //lider  a cargo
+    detailsLeader: DetailsPerson;
+    leader: {
+        type_society: string;
+        post: string;
+        dependence: string;
+        secretary: string;
+    },
+    location_leader: Location;
+    elaborated: {
+        name: string;
+        post: string;
+        email: string;
+    },
+    revised: {
+        name: string;
+        post: string;
+        email: string;
+    },
+    approved: {
+        name: string;
+        post: string;
+        email: string;
+    },
+    //beneficiario
+    population: string;
+    benefited_sector: string;
+    location: {
+        commune: string;
+        neighborhood: string;
+    },
+}
 export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_form }) => {
 
-    let initialValues = {
+    let initialValues: Comodato = {
         environmental_risk: '',
         registration_date: moment(new Date().getTime()).format('YYYY-MM-DD'),
         contract_period: '',
@@ -231,16 +361,16 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         applicant: Yup.object({
             type_society: Yup.string().required('obligatorio'),
             company_name: Yup.string().required('obligatorio'),
-            id_number:  Yup.number().required('obligatorio'),
-            phone_number:  Yup.number().required('obligatorio'),
-            email:  Yup.string().email().required('obligatorio'),
+            id_number: Yup.number().required('obligatorio'),
+            phone_number: Yup.number().required('obligatorio'),
+            email: Yup.string().email().required('obligatorio'),
         }),
         location_applicant: Yup.object({
             address: Yup.string().required('obligatorio')
         }),
 
         //lider a cargo
-        leader:Yup.object({
+        leader: Yup.object({
             type_society: Yup.string().required('obligatorio'),
             post: Yup.string().required('obligatorio'),
             dependence: Yup.string().required('obligatorio'),

@@ -1,8 +1,23 @@
 import React from 'react'
 import { Card } from '../../../utils/ui';
 import ElectronicFielList from '../components/ElectronicFielList';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from './../../acquisitions/redux/actions/index';
+import FilterForm from './../../../utils/ui/filter_form';
 
 const Electronic_file_list= () => {
+    const dispatch = useDispatch();
+    const  user  = useSelector((store: any) => store.auth.user);
+    const aux_user = {
+        ...user,
+        permits: user?.permits.map((a) => a.name) || [],
+        roles: user?.roles.map((a) => a.name) || [],
+    };
+
+
+    const filter = async (_filters, _) => {
+        await dispatch(actions.getRealEstates({ page: 1, with: 'pagination', ..._filters }));
+    };
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
@@ -10,35 +25,22 @@ const Electronic_file_list= () => {
                     <Card
                         title="Expediente Electrónico"
                     >
-                        <form>
-                            <div className="row justify-content-between">
-                                <div className="col-5 d-flex">
-                                    <div className="col-6 ">
-                                        <div className="input-group">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="Matricula"
-                                                aria-label="Matricula"
-                                                aria-describedby="button-addon2"
-                                                // value={query}
-                                                onChange={(e) => {
-                                                    // set_query(e.target.value);
-                                                }}
-                                            />
-                                            <span className="input-group-text" /*onClick={filter}*/ >
-                                                <span>
-                                                    <i className="fa fa-search" aria-hidden="true" />
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    {/*<div style={{ fontSize: 16, color: "#1FAEEF" }} onClick={filter}>*/}
-                                    {/*    <i className="fa fa-filter" aria-hidden="true" />*/}
-                                    {/*</div>*/}
+                        <div className="row justify-content-between">
+                            <div className="col-5 d-flex">
+                                <div className="col-6 ">
+                                    <FilterForm
+                                        filters={[
+                                            { key: 'registry_number', name: 'Matrícula' },
+                                            { key: 'project', name: 'Proyecto' },
+                                            { key: 'name', name: 'Nombre' },
+                                            { key: 'CBML', name: 'CBML' },
+                                            { key: 'sap_id', name: 'Activo fijo' },
+                                        ]}
+                                        onSubmit={filter}
+                                    />
                                 </div>
                             </div>
-                        </form>
+                        </div>
                         <ElectronicFielList />
                     </Card>
                 </div>

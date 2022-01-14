@@ -59,7 +59,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             name: '',
             cbml: '',
         },
-        total_area: '',
+        total_area: 0,
         total_area_unit: 'm2',
         total_percentage: '',
         zone: 'Urbano',
@@ -82,9 +82,9 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         subdependency: '',
         management_center: '',
         cost_center: '',
-        construction_area: '',
+        construction_area: "",
         construction_area_unit: 'm2',
-        plot_area: '',
+        plot_area: 0,
         plot_area_unit: 'm2',
         project: {
             id: 0,
@@ -231,7 +231,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 then: Yup.number()
                     .nullable()
                     .min(Yup.ref('construction_area'),'debe ser mayor a área construccion'),
-            }),
+            })
+            .required('obligatorio'),
 
         plot_area: Yup.number()
             .nullable()

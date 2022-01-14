@@ -9,6 +9,7 @@ interface AcquisitionListProps {
 }
 
 const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disabled }) => {
+    console.log(acquisitions)
     const acquisition_columns = [
         {
             title: 'Tipo de Adquisición',
@@ -32,13 +33,13 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disable
                       align: 'center' as 'center',
                       dataIndex: 'title_type',
                   },
+                //   {
+                //       title: 'Tipo de activo',
+                //       align: 'center' as 'center',
+                //       dataIndex: 'active_type',
+                //   },
                   {
-                      title: 'Tipo de activo',
-                      align: 'center' as 'center',
-                      dataIndex: 'active_type',
-                  },
-                  {
-                      title: 'Vendedor',
+                      title: 'Procedencia',
                       align: 'center' as 'center',
                       dataIndex: 'seller',
                   },
@@ -63,18 +64,18 @@ const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disable
                       dataIndex: 'entity_number',
                   },
                   {
-                      title: 'Dirección',
+                      title: 'Ciudad',
                       align: 'center' as 'center',
-                      dataIndex: 'address',
+                      dataIndex: 'city',
                   },
-                  {
-                      title: 'Ver',
-                      dataIndex: 'id',
-                      align: 'center' as 'center',
-                      render: () => {
-                          return <i className="fa fa-eye text-muted" aria-hidden="true" />;
-                      },
-                  },
+                //   {
+                //       title: 'Ver',
+                //       dataIndex: 'id',
+                //       align: 'center' as 'center',
+                //       render: () => {
+                //           return <i className="fa fa-eye text-muted" aria-hidden="true" />;
+                //       },
+                //   },
               ]
             : []),
         ...(type === 'edit'
