@@ -2,7 +2,7 @@ import authTypes from './types';
 import { TokenPayload } from './actions';
 
 const buffer = localStorage.getItem('_uk_');
-const uk = atob(buffer).replaceAll("Ã±", "ñ");
+const uk = buffer && atob(buffer).replaceAll("Ã±", "ñ");
 const user: any = uk ? JSON.parse(uk) : null;
 const token: string = localStorage.getItem('_tk_');
 const emptyInitialState = {
