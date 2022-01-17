@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
 import { formatDate } from '../../../utils';
+import { Broker } from '../redux/service';
 
 interface InsuranceBrokerDetailProps {
-    broker: any;
+    broker: Broker;
+    location?: any;
 }
-const InsuranceBrokerDetail: FC<InsuranceBrokerDetailProps> = ({ broker }) => {
+const InsuranceBrokerDetail: FC<InsuranceBrokerDetailProps> = ({ broker, location }) => {
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -37,15 +39,15 @@ const InsuranceBrokerDetail: FC<InsuranceBrokerDetailProps> = ({ broker }) => {
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Departamento</label>
-                                <div className="my-3">{broker?.state || '-'}</div>
+                                <div className="my-3">{location?.location?.state ?? ''}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Ciudad</label>
-                                <div className="my-3">{broker?.city || '-'}</div>
+                                <div className="my-3">{location?.location?.city ?? ''}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Dirección</label>
-                                <div className="my-3">{broker?.address || '-'}</div>
+                                <div className="my-3">{location?.address ?? ''}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Nombre de contacto</label>

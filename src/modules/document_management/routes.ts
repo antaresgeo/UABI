@@ -10,7 +10,7 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/document-management/electronic_file/view/',
+            path: '/document-management/electronic_file/view/:id/',
             template_props: {
                 breadcrumbs: [
                     { name: 'Expediente Electrónico', to: '/document-management/electronic_file/list' },
@@ -24,6 +24,11 @@ const get_routes = (): IRoute[] => {
             is_private: true,
             can_access: true,
             path: '/document-management/master_formats/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Master de Formatos' },
+                ],
+            },
             component: Master_formats,
         },
         {

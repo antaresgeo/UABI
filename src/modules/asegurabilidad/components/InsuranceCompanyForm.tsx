@@ -20,24 +20,27 @@ export interface IInsuranceCompanyAttributes {
     };
 }
 
+
 interface InsuranceCompanyFormPros {
     insurance_company?: Company;
     onSubmit?: (values: Company, form?) => Promise<any>;
     disabled?: boolean;
     innerRef?: MutableRefObject<FormikProps<FormikValues>>;
     type?: 'view' | 'create' | 'edit';
+    location?: any;
 }
 
-const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company, onSubmit, disabled, type, innerRef }) => {
+const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company, onSubmit, disabled, type, innerRef, location }) => {
+
     const initial_values = {
         id: '',
         name: '',
         nit: '',
         phone: '',
         location_id: '',
-        state: '',
-        city: '',
-        address: '',
+        state: location?.location?.state ?? '',
+        city: location?.location?.city ?? '',
+        address: location?.address ?? '',
         ...insurance_company,
     };
 

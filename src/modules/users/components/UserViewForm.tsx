@@ -1,9 +1,23 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { getAdressById } from '../../../utils/components/Location/service';
 interface IUserFormPros {
     user: any;
     roles: any[];
 }
 const UserViewForm: FC<IUserFormPros> = ({ user, roles }) => {
+    const [adress, setAdress] = useState("")
+    const localizacion = async (id) => {
+        const list: any = await getAdressById(id);
+        setAdress(list?.address);
+    }
+
+    useEffect(() => {
+        if(user) {
+            localizacion(user?.location)
+        }
+    }, [user])
+
+
     let genero = '';
     let type_doc = '';
     let type_society = '';
@@ -69,7 +83,7 @@ const UserViewForm: FC<IUserFormPros> = ({ user, roles }) => {
         default:
             break;
     }
-    console.log(roles);
+
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -138,7 +152,7 @@ const UserViewForm: FC<IUserFormPros> = ({ user, roles }) => {
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="">Dirección</label>
-                                <div className="my-3">{user?.location}</div>
+                                <div className="my-3">{adress}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Roles</label>

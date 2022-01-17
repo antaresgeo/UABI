@@ -44,6 +44,8 @@ const DetailProject: FC<IProps> = () => {
         dispatch(actions.getProject(id));
     }, []);
 
+    // console.log(dependencies)
+
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">

@@ -103,7 +103,7 @@ export const updateProject = async (data: any, id: number) => {
     let contratos = [];
     data.contracts.map(c => {
         if (typeof c.validity.end_date === "string") {
-            console.log('entro')
+            // console.log('entro')
             const contract = {
                 ...c,
                 validity: {

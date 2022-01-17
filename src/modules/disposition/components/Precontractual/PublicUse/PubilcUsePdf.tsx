@@ -205,9 +205,9 @@ const PubilcUsePdf: FC<Idata> = ({ values, realEstate }) => {
     return (
         <DocumentPdf
             showToolbar={false}
-            title="Estudio Previo para arrendamiento de Bien Inmueble"
+            title="Estudio Previo para Administración del Espacio Público de Bien Inmueble"
             header={{
-                code: 'Cód. FO-ADMI-137 ',
+                code: 'Cód. FO-ADMI-194',
                 version: 'Versión. 1',
                 title: { prefix: 'Formato', name: 'FO-ADMI Estudio Previo para Administración del Espacio Público de Bien Inmueble' },
             }}

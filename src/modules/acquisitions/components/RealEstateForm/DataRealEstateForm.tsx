@@ -75,12 +75,12 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
             aux_data = [...data_now].filter((x) => x !== new_value);
         }
         if (!aux_data.includes(active_type[2]) && !aux_data.includes(active_type[3])) {
-            formik.setFieldValue('construction_area', '', false);
+            formik.setFieldValue('construction_area', 0, false);
             const value1 = parseFloat(formik.values.plot_area || 0);
             //formik.setFieldValue('total_area', value1, false);
         }
         if (!aux_data.includes(active_type[0])) {
-            formik.setFieldValue('plot_area', '', false);
+            formik.setFieldValue('plot_area', 0, false);
             const value1 = parseFloat(formik.values.construction_area || 0);
             //formik.setFieldValue('total_area', value1, false);
         }

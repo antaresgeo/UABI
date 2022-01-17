@@ -8,8 +8,6 @@ import { guards } from '../../routes';
 
 const RealEstates = () => {
     const dispatch = useDispatch();
-
-    //const [query, set_query] = useState<string>('');
     const [filters, set_filters] = useState<object>(null);
     const  user  = useSelector((store: any) => store.auth.user);
     const aux_user = {
@@ -17,9 +15,7 @@ const RealEstates = () => {
         permits: user?.permits.map((a) => a.name) || [],
         roles: user?.roles.map((a) => a.name) || [],
     };
-    // const filter = () => {
-    //     dispatch(actions.getRealEstates({ page: 1, q: query }));
-    // };
+
 
     const filter = async (_filters, _) => {
         set_filters(_filters);
