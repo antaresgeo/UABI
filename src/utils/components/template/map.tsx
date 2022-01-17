@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import MapView from '@arcgis/core/views/MapView';
 import  _Map from '@arcgis/core/Map';
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 interface MapProps {
     center?: [number, number];
     zoom?: number;
@@ -14,7 +15,7 @@ const Map: FC<MapProps> = ({ center, zoom }) => {
             ref.current = true;
         } else {
             const _map = new _Map({
-                basemap: 'arcgis-navigation', // Basemap layer service
+                basemap: 'hybrid', // Basemap layer service
             });
             const _view = new MapView({
                 map: _map,
@@ -22,6 +23,10 @@ const Map: FC<MapProps> = ({ center, zoom }) => {
                 zoom, // Zoom level
                 container: 'viewDiv', // Div element
             });
+            const layer = new FeatureLayer({
+                url: "https://www.medellin.gov.co/mapas/rest/services/ServiciosSuministros_y_Servicios/BienesInmuebles/MapServer/1/query?where=CBML%3D10130340011&f=geojson"
+            });
+            _map.add(layer)
             set_view(_view);
         }
     }, [ref.current]);
@@ -29,7 +34,7 @@ const Map: FC<MapProps> = ({ center, zoom }) => {
 };
 
 Map.defaultProps = {
-    center: [-75.56359, 6.25184],
+    center: [-75.570934, 6.262476],
     zoom: 13,
 };
 
