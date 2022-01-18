@@ -72,7 +72,18 @@ export const get_all_users = async (filters?) => {
                 ...filters,
             },
         });
+        const promesas = await Promise.all(
+            res.data.results.map((r: any) => {
+                const id = r.user_id;
+                return get_user_by_id(id);
+            })
+        )
+        res.data.results = res.data.results.map((r: any,i) => {
+            return {...r, extra: promesas[i]}
+        })
+        console.log(res)
         return res.data;
+
     } catch (e) {
         return Promise.reject('Error');
     }
@@ -89,32 +100,7 @@ export const get_list_users = async () => {
 };
 
 export const create_user = async (_data) => {
-    const data = Object.assign({}, _data);
-    if (data.detailsUser) {
-        delete data.detailsUser.id;
-        delete data.detailsUser.politics;
-        delete data.detailsUser.notification;
-        delete data.detailsUser.status;
-        delete data.detailsUser.audit_trail;
-        delete data.detailsUser.str_location;
-        if (data.detailsUser.entity_type !== 'P') {
-            delete data.detailsUser.dependency;
-            delete data.detailsUser.subdependency;
-        }
-    }
-    let pass = false;
-    if (data?.user?.password) {
-        pass = await base64Encode(data.user.password);
-    }
-
-    const body = {
-        ...data,
-        user: {
-            ...data.user,
-            ...(pass ? { password: pass } : { password: '' }),
-        },
-    };
-
+    const body = await finalData(_data)
     try {
         const URI = '/users/';
         const res: AxiosResponse<UserResponse> = await auth_http.post(
@@ -171,17 +157,20 @@ export const get_user_by_id = async (id?, token?) => {
     }
 };
 
-export const update_user = async (id, data) => {
+const finalData = async (_data) => {
     let pass = false;
+    const data = Object.assign({}, _data);
+
 
     if (data.user) {
         if (data?.user?.password) {
             pass = await base64Encode(data.user.password);
         }
         // if (data.user.password === '') {
-            delete data.user.password;
+        delete data.user.password;
         // }
     }
+
     if (data.detailsUser) {
         delete data.detailsUser.id;
         delete data.detailsUser.politics;
@@ -189,20 +178,31 @@ export const update_user = async (id, data) => {
         delete data.detailsUser.status;
         delete data.detailsUser.audit_trail;
         delete data.detailsUser.str_location;
+        delete data.detailsUser.id_number;
+        // data.detailsUser.id_number = data.user.id_number+"";
         if (data.detailsUser.entity_type !== 'P') {
             delete data.detailsUser.dependency;
             delete data.detailsUser.subdependency;
         }
     }
 
-
     const body = {
         ...data,
         user: {
             ...data.user,
-            // ...(pass ? { password: pass } : { password: '' }),
+            ...(pass ? { password: pass } : { password: '' }),
         },
     };
+    console.log(body)
+    return body;
+}
+
+export const update_user = async (id, data) => {
+    const body: any = await finalData(data);
+    const pass = body.password;
+    delete body.password;
+
+    console.log(body);
 
     try {
         const URI = '/users/';
@@ -219,7 +219,7 @@ export const update_user = async (id, data) => {
         if (pass) {
             const password: AxiosResponse<UserResponse> = await auth_http.put(
                 '/users/password',
-                {password : pass},
+                { password: pass },
                 {
                     params: {
                         id,

@@ -48,7 +48,7 @@ export const get_all_contracts = async (filters?) => {
 
 export const get_list_contracts = async () => {
     try {
-        const URI = '';
+        const URI = '/contracts';
         const res: AxiosResponse<ListCompaniesResponse> = await http.get(URI);
         return res.data;
     } catch (e) {

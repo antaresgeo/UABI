@@ -9,7 +9,8 @@ export const ListContracts = () => {
     const dispatch = useDispatch();
     const user = useSelector((store: any) => store.auth.user );
     const filter = async (_filters, _) => {
-        await dispatch(actions.get_all_contracts({ page: 1, with: 'pagination', ..._filters }));
+        // await dispatch(actions.get_all_contracts({ page: 1, with: 'pagination', ..._filters }));
+        await dispatch(actions.get_list_contracts());
     };
 
     const aux_user = {

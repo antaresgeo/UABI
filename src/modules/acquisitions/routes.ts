@@ -26,7 +26,6 @@ export const guards = {
         return permits.includes(Permit.CREATE_PROJECT);
     },
     detailProject: (props?) => {
-        console.log(props)
         const user = props.user;
         if (!user) return false;
         const { permits } = user;
