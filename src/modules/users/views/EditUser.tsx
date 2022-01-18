@@ -30,9 +30,7 @@ const EditUser: FC<IProps> = () => {
         if (userForm) {
             res = await dispatch(actions.update_user(id, userForm));
             await swal_success.fire({ title: 'Usuario actualizado', text: res.message, icon: 'success' });
-            console.log(res.results.user_id)
             history.push(`/users/${res.results.user_id}/`);
-            console.log(res)
         }
     };
 
@@ -48,7 +46,6 @@ const EditUser: FC<IProps> = () => {
 
     useEffect(() => {
         if(user && adress === "") {
-            console.log('dispara busqueda')
             localizacion(user?.detailsUser?.location)
         }
     }, [user])

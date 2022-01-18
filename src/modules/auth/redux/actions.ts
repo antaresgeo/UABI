@@ -20,14 +20,10 @@ const nice_login = (dispatch) => (response) => {
 const bad_login = (dispatch) => (error) => {
     dispatch(loginFail(error));
     if (error?.response?.status === 400) {
-        const { message, attemp } = error.response.data;
-        const intententos = 9 - attemp;
-        if (intententos <= 0) {
-            return Promise.reject([null, null, true]);
-        } else {
-            localStorage.setItem('attemp', attemp);
-            return Promise.reject([message, intententos]);
-        }
+        const { message /*attemp*/ } = error.response.data;
+        // localStorage.setItem('attemp', attemp);
+        const intententos = false;
+        return Promise.reject([message, intententos]);
     }
     return Promise.reject([null, null, null]);
 };
