@@ -469,7 +469,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             )}
                                             {type === 'view' && inventory && (
                                                 <Card>
-                                                    <Map center={[-75.56359, 6.25184]} />
+                                                    <Map />
                                                 </Card>
                                             )}
                                         </div>

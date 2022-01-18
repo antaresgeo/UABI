@@ -50,7 +50,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
         const init = async (id) => {
             await dispatch(actions.get_list_notifications(id));
         };
-        init(user.id);
+        init(user.user_id);
     };
 
     useEffect(() => {
@@ -142,7 +142,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                             style={{ borderBottom: '0.5px solid #00000029' }}
                             key="2"
                             onClick={() => {
-                                history.push(`/users/edit/${user.id}/`);
+                                history.push(`/users/edit/${user.user_id}/`);
                                 context.drawer_close();
                             }}
                         >

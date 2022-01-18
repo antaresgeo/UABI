@@ -4,13 +4,12 @@ import logo from './../../../utils/assets/img/escudoAlcaldia.png';
 import { Redirect, useHistory } from 'react-router-dom';
 import LoginForm from './../components/LoginForm';
 import actions from '../redux/actions';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from '../../../utils/ui/link';
 import { useState } from 'react';
 
-export default function SignIn({location, redirect}) {
-    const can_access = useSelector((store: any) => store.auth.can_access )
-    console.log({can_access, location, redirect})
+export default function SignIn({ location, redirect }) {
+    const can_access = useSelector((store: any) => store.auth.can_access);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -30,17 +29,19 @@ export default function SignIn({location, redirect}) {
                 history.push('/');
             })
             .catch((e) => {
-                const [message, intententos, block] = e;
-                if (message && intententos) {
-                    const val = (
-                        <>
-                            <span>{message}</span>
-                            <br />
-                            <span>{intententos >= 3 ? `Intentos restantes ${intententos}` : ''}</span>
-                        </>
-                    );
-                    set_alert(val);
-                }
+                const [message, intententos] = e;
+                const val = (
+                    <>
+                        {message && <span>{message}</span>}
+                        {intententos && (
+                            <>
+                                <br />
+                                <span>{intententos >= 3 ? `Intentos restantes ${intententos}` : ''}</span>
+                            </>
+                        )}
+                    </>
+                );
+                set_alert(val);
             });
     };
 

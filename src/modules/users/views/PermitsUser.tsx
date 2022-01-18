@@ -41,7 +41,7 @@ const PermitsUser = () => {
         //let res: any;
         //res = await dispatch(actions.updateUser({ userForm }, id));
         //await swal('Usuario actualizado', res.data.message, 'success');
-        //history.push(`/users/${user.id}`);
+        //history.push(`/users/${user.user_id}`);
     };
 
     useEffect(() => {

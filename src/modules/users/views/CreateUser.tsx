@@ -19,7 +19,7 @@ const CreateUser = () => {
     const createUser = async (values) => {
         const res: any = await dispatch(actions.create_user(values));
         await swal_success.fire({ title: 'Usuario Creado', text: res.message, icon: 'success' });
-        history.push(`/users/${res.results.user.id}`);
+        history.push(`/users/${res.results.user_id}`);
     };
 
     return (
