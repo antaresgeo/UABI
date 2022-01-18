@@ -30,7 +30,9 @@ const EditUser: FC<IProps> = () => {
         if (userForm) {
             res = await dispatch(actions.update_user(id, userForm));
             await swal_success.fire({ title: 'Usuario actualizado', text: res.message, icon: 'success' });
-            history.push(`/users/${res.results.user.id}`);
+            console.log(res.results.user_id)
+            history.push(`/users/${res.results.user_id}/`);
+            console.log(res)
         }
     };
 

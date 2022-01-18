@@ -8,6 +8,7 @@ import RealEstateList from '../../components/RealEstateList';
 import ProjectModal from './../../components/ProjectModal';
 import { AreasModal } from '../../components/en_des_globe/AreasModal';
 import ProjectDetail from '../../components/ProjectDetail';
+import ContractDetail from '../../components/ContractDetail';
 
 interface IParams {
     id: string;
@@ -37,6 +38,9 @@ const DetailProject = () => {
                                 <>Proyecto: {project?.name}</>
                             </h5>
                             <ProjectDetail project={project} />
+                            {project?.contracts.length > 0 &&
+                                <ContractDetail contracts={project?.contracts} />
+                            }
                             <Card
                                 title="Bienes Inmuebles del Proyecto"
                                 extra={

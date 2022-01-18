@@ -101,6 +101,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         return [];
     };
     const dependency_ops = format_list(dependencias);
+    // console.log(project)
     return (
         <>
             <div className="row">
@@ -110,7 +111,12 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     </label>
                     <Field
                         disabled={disabled}
-                        options={projects}
+                        options={
+                            projects.map((project) => ({
+                                id: `${project.id}`,
+                                name: project.name,
+                            }))
+                        }
                         name="projects_id"
                         component={Select}
                         id="project_id_id"
@@ -166,16 +172,26 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         id="dependency_id"
                         disabled={disabled || dependencies?.length === 0 || project?.id !== 0}
                         placeholder="Selecciona una Dependencia"
-                        options={dependencies?.map(d => ({id: d.dependency, name: d.dependency}) )}
+                        options={dependencies?.map(d => ({ id: d.dependency, name: d.dependency }))}
                         showSearch
                         extra_on_change={(value) => {
                             if (value) {
+                                // const dependency = dependencies.find((d) => d.dependency === value);
+                                // const _subs = dependency.subs;
+                                // formik.setFieldValue('subdependency', dependency.dependency);
+                                // formik.setFieldValue('cost_center', dependency.management_center);
+                                // formik.setFieldValue('management_center', dependency.management_center);
+                                // set_subs(_subs);
                                 const dependency = dependencies.find((d) => d.dependency === value);
                                 const _subs = dependency.subs;
-                                formik.setFieldValue('subdependency', dependency.dependency);
                                 formik.setFieldValue('cost_center', dependency.management_center);
                                 formik.setFieldValue('management_center', dependency.management_center);
                                 set_subs(_subs);
+                                const subdependency = _subs.find((d) => d.subdependency === dependency.dependency);
+                                if (subdependency !== undefined) {
+                                    formik.setFieldValue('subdependency', subdependency.subdependency);
+                                    formik.setFieldValue('cost_center_id', subdependency.id);
+                                }
                             }
                         }}
                         filterOption={(input, option) => {
@@ -194,14 +210,21 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         id="subdependency_id"
                         disabled={disabled || !formik.values.dependency || subs.length === 0 || project?.id !== 0}
                         placeholder="Selecciona una Sub. Dependencia"
-                        options={subs.map(s => ({id: s.subdependency, name: s.subdependency}))}
+                        options={subs.map(s => ({ id: s.subdependency, name: s.subdependency }))}
                         showSearch
                         allowClear
                         extra_on_change={(value) => {
                             if (value) {
-                                const dependency = dependencies.find((d) => d.dependency === formik.values.dependency);
+                                // const dependency = dependencies.find((d) => d.dependency === formik.values.dependency);
+                                // const subdependency = dependency.subs.find((d) => d.subdependency === value);
+                                // formik.setFieldValue('cost_center', subdependency.cost_center);
+                                const dependency = dependencies.find(
+                                    (d) => d.dependency === formik.values.dependency
+                                );
                                 const subdependency = dependency.subs.find((d) => d.subdependency === value);
+                                console.log(subdependency)
                                 formik.setFieldValue('cost_center', subdependency.cost_center);
+                                formik.setFieldValue('cost_center_id', subdependency.id);
                             }
                         }}
                         filterOption={(input, option) => {
@@ -327,16 +350,16 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             //TODO: sumas el valor de adquisicion con valor de reconocimiento
                             min={0}
                             max={99999999999999999999}
-                            // onChange={(e, values) => {
-                            //     let anterior = formik.values.patrimonial_value
-                            //     let cambio = 0;
-                            //     cambio = Number(e.target.value)
-                            //     console.log(anterior, cambio)
-                            //     formik.handleChange(e)
-                            //     if(cambio !== 0) {
-                            //         console.log('documeto obligatorio')
-                            //     }
-                            // }}
+                        // onChange={(e, values) => {
+                        //     let anterior = formik.values.patrimonial_value
+                        //     let cambio = 0;
+                        //     cambio = Number(e.target.value)
+                        //     console.log(anterior, cambio)
+                        //     formik.handleChange(e)
+                        //     if(cambio !== 0) {
+                        //         console.log('documeto obligatorio')
+                        //     }
+                        // }}
                         />
                     </div>
                     <ErrorMessage name="patrimonial_value" />
@@ -807,7 +830,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         value={extractMonth(formik.values.audit_trail?.created_on)}
                                         disabled
 
-                                        // EL MES
+                                    // EL MES
                                     />
                                     <ErrorMessage />
                                 </div>

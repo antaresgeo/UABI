@@ -28,7 +28,6 @@ const Sider: FC<{ width: number }> = ({ width }) => {
         roles: user?.roles.map((a) => a.name) || [],
     };
 
-
     const menu_selected: any = location.state?.menu || [];
     let menu_config: any = [
         {
@@ -98,12 +97,14 @@ const Sider: FC<{ width: number }> = ({ width }) => {
         {
             path: '/InventoryRecordList',
             name: 'Administración de inventario',
-            ...(!aux_user.roles.includes('UABI') ?
+            ...((aux_user.roles.includes('UABI') || aux_user.roles.includes('Administrador')) ?
+                []
+                :
                 {
                     children: []
                 }
-                :
-                []
+
+
             ),
 
         },

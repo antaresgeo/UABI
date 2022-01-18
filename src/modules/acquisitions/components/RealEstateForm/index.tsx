@@ -47,7 +47,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         id: '',
         sap_id: '',
         destination_type: '',
-        accounting_account: 0,
+        accounting_account: '',
         registry_number: '',
         registry_number_document_id: '',
         name: '',
@@ -87,7 +87,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         plot_area: 0,
         plot_area_unit: 'm2',
         project: {
-            id: 0,
+            id: "0",
             name: 'Sin Projecto',
         },
         ...(realEstateData
@@ -109,7 +109,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                             },
                         }
                       : {}),
-                  projects_id: realEstateData?.project?.id || 0,
+                  projects_id: `${realEstateData?.project?.id}` || "0",
               }
             : {
                   ...realEstate,
@@ -128,9 +128,13 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                             },
                         }
                       : {}),
-                  projects_id: realEstate?.project?.id || 0,
+                  projects_id: realEstate?.project?.id && `${realEstate?.project?.id}` || "0",
               }),
     };
+
+    console.log('inicial', initial_values)
+
+
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
         initial_values.materials = initial_values.materials.split(',');
@@ -300,7 +304,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         onSubmit(values, form, isFinish)
             .then(() => {
                 form.setSubmitting(false);
-                form.setFieldValue('projects_id', project_id || '');
+                form.setFieldValue('projects_id', `${project_id}` || '');
             })
             .catch(() => {
                 form.setSubmitting(false);
@@ -335,7 +339,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                     if (Number.isInteger(id)) {
                         formik.setFieldValue('_project', {}, false);
                         service.getProject(id + '').then((_project: any) => {
-                            formik.setFieldValue('projects_id', _project.id, false);
+                            formik.setFieldValue('projects_id', `${_project.id}`, false);
                             formik.setFieldValue('dependency', _project.dependency, false);
                             formik.setFieldValue('subdependency', _project.subdependency, false);
                             formik.setFieldValue('management_center', _project.management_center, false);
@@ -343,7 +347,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                             formik.setFieldValue(
                                 'project',
                                 {
-                                    id: _project.id,
+                                    id: `${_project.id}`,
                                     name: _project.name,
                                 },
                                 false
@@ -352,11 +356,14 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                         });
                     }
                 };
+                 console.log(formik.values.dependency)
                 if (formik.values._project === undefined) {
                     if (history.location?.state && history.location?.state?.project_id !== null) {
                         update_project(history.location.state.project_id);
+                        console.log('ok')
                     } else {
-                        update_project(projects_id);
+                        console.log('fail',projects_id)
+                        update_project(Number(projects_id));
                     }
                 }
                 const TitleSpan = ({ name, registry_number }) => {
@@ -367,7 +374,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                         </>
                     );
                 };
-
+                // console.log(formik.values._project)
                 return (
                     <Form className="h-100" autoComplete="off">
                         <div className="h-100 d-flex flex-column">

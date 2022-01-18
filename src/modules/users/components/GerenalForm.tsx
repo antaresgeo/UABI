@@ -122,7 +122,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, addres
             validationSchema={schema}
             innerRef={innerRef}
         >
-            {({ values, isValid, isSubmitting, setFieldValue, handleChange, errors }) => {
+            {({ values, isValid, isSubmitting, setFieldValue, handleChange, errors,  }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -500,7 +500,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, addres
                                 </div>
                             </div>
                         )}
-                        {!innerRef && (
+                        {/* {!innerRef && (
                             <div className="row justify-content-end">
                                 <div className="col text-end">
                                     {type !== 'view' && (
@@ -520,7 +520,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, addres
                                     )}
                                 </div>
                             </div>
-                        )}
+                        )} */}
                     </Form>
                 );
             }}

@@ -100,7 +100,6 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
             ? { insurance_broker_id: `${policy?.insurance_broker?.nit} - ${policy?.insurance_broker?.name}` }
             : {}), //TODO: cambiar nit por id
     };
-
     //console.log('valores iniciales',initialValues)
     if (initialValues.vigency_start) {
         const tmpDate = new Date(Number(initialValues.vigency_start));

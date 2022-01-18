@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { getAddressById, insertAddress } from '.';
 import { http } from '../../../../config/axios_instances';
-import {swal, swal_success, swal_warning} from '../../../../utils';
+import { swal, swal_success, swal_warning } from '../../../../utils';
 import {
     createAcquisitionForRealEstate,
     getAcquisitionForRealEstate,
@@ -141,26 +141,31 @@ const finalData = (data, docs_ids?) => {
     } else {
         delete aux_data.type
     }
-    if(aux_data.construction_area === "") {
+    if (aux_data.construction_area === "") {
         aux_data.construction_area = null
     }
-    if(aux_data.plot_area === "") {
+    if (aux_data.plot_area === "") {
         aux_data.plot_area = 0
     }
+    if (aux_data.cost_center_id) {
+        aux_data.cost_center_id = Number(aux_data.cost_center_id)
+    }
+    aux_data.projects_id[0] = Number(aux_data.projects_id[0]);
     delete aux_data.active_code;
     delete aux_data.fixed_assets;
     delete aux_data._address;
     delete aux_data.dependency_id;
+    delete aux_data.supports_documents;
+    // if (aux_data.project?.id !== "0") {
+    delete aux_data.dependency;
+    delete aux_data.subdependency;
+    delete aux_data.cost_center;
+    delete aux_data.management_center;
+    // }
     delete aux_data.project;
     delete aux_data._project;
-    delete aux_data.supports_documents;
-    if (aux_data.project?.id !== 0) {
-        delete aux_data.dependency;
-        delete aux_data.subdependency;
-        delete aux_data.cost_center;
-        delete aux_data.management_center;
-    }
     return aux_data;
+
 };
 // Services: POST
 export const createRealEstate = async (

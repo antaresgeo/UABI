@@ -6,6 +6,7 @@ import { reducer as notificationReducer } from './../modules/notificacions/redux
 import { reducer as userReducer } from './../modules/users/redux';
 import { reducer as inspectionReducer } from './../modules/inspection/redux';
 import { reducer as authReducer } from './../modules/auth/redux';
+import { reducer as generalListReducer } from './../modules/general_list/redux';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -18,6 +19,7 @@ const store = createStore(
         users: userReducer,
         inspection: inspectionReducer,
         auth: authReducer,
+        generalList: generalListReducer,
     }),
     composeEnhancer(applyMiddleware(thunk))
 );
