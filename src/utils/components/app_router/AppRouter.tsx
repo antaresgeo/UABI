@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { HashRouter, Switch } from 'react-router-dom';
 import Route from './RouteWithSubRoutes';
 import { IAppRouter } from './custom_types';
 
@@ -14,7 +14,7 @@ const AppRouter: React.FC<IAppRouter> = ({
     show,
 }) => {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Switch>
                 {routes.map((route, i) => {
                     if (route.routes) route.exact = false;
@@ -32,7 +32,7 @@ const AppRouter: React.FC<IAppRouter> = ({
                     );
                 })}
             </Switch>
-        </BrowserRouter>
+        </HashRouter>
     );
 };
 
