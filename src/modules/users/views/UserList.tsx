@@ -69,7 +69,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
 
     const eliminar = {
         title: 'Desactivar',
-        dataIndex: 'user_id',
+        dataIndex: 'id',
         align: 'center' as 'center',
         render: (id) => {
             return (
@@ -101,6 +101,11 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
                 return `${(user && Object.values(user?.names).join(' ')) || ''} ${(user && Object.values(user?.surnames).join(' ')) || ''
                     }`;
             },
+        },
+        {
+            title: 'Nombre',
+            dataIndex: 'names',
+            align: 'left' as 'left',
         },
         {
             title: 'rol',

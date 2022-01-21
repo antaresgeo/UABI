@@ -18,7 +18,6 @@ interface InspectionFormTagsProps {
     inspection: Inspection;
     real_estate: any;
     user: any;
-
 }
 const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_estate, user }) => {
     const history = useHistory();
@@ -141,15 +140,13 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 // delete final_data.image;
                 swal_success.fire('Inspeccion realizada exitosamente', '', 'success').then(() => {
                     history.push('/inspection/');
-                    create_notification(
-                        'Es necesario mantenimiento',
-                        `es necesario mantenimiento para el bien inmueble ${real_estate?.name}`,
-                        `/acquisitions/real-estates/${real_estate?.id}/`,
-                        2,
-                        null,
-                        null,
-                        "Administrador"
-                    );
+                    // create_notification({
+                    //     title: 'Es necesario mantenimiento',
+                    //     description: `es necesario mantenimiento para el bien inmueble ${real_estate?.name}`,
+                    //     action: `/acquisitions/real-estates/${real_estate?.id}/`,
+                    //     priority: 2,
+                    //     toRole: 1,
+                    // });
                 });
                 console.log({ final_data });
             },
@@ -242,7 +239,14 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                             <PhotographicRecordForm innerRef={steps[4].ref} onSubmit={steps[4].onSave} />
                         </TabPane>
                         <TabPane tab="Generar informe" key="6" disabled={parseInt(activeKey) < 6}>
-                            <Report obs={obs} innerRef={steps[5].ref} onSubmit={steps[5].onSave} data={data} real_estate={real_estate} user={user} />
+                            <Report
+                                obs={obs}
+                                innerRef={steps[5].ref}
+                                onSubmit={steps[5].onSave}
+                                data={data}
+                                real_estate={real_estate}
+                                user={user}
+                            />
                         </TabPane>
                     </Tabs>
                 </div>

@@ -90,11 +90,16 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
             }}
         >
             {({ values, isValid, isSubmitting, setFieldValue, handleChange }) => {
+                console.log(values);
                 const has_country = values.country !== '';
                 let has_states = values.state !== '';
                 let has_city = values.city !== '';
                 let has_commune = values.commune !== '';
                 // let has_neighborhood = values.neighborhood !== '';
+                const is_colombia = has_country && values.country === 1;
+                const is_antioquia = has_states && values.state === 1;
+                const is_medellin = has_city && values.city === 1;
+
 
                 const comune = commune.find((c: any) => c.id === values.commune);
                 const _neighborhood = neighborhood.find((c: any) => c.id === values.neighborhood);
@@ -156,7 +161,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                 </label>
                                 <Field
                                     name="state"
-                                    disabled={!has_country}
+                                    disabled={!has_country || !is_colombia}
                                     component={Select}
                                     options={states}
                                     placeholder="--departamento--"
@@ -183,7 +188,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                 </label>
                                 <Field
                                     name="city"
-                                    disabled={!has_states}
+                                    disabled={!has_states || !is_antioquia}
                                     component={Select}
                                     placeholder={`--${zone && zone === 'Rural' ? 'municipio' : 'ciudad'}--`}
                                     options={cities}
@@ -212,7 +217,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                     </label>
                                     <Field
                                         name="commune"
-                                        disabled={!has_city}
+                                        disabled={!has_city || !is_medellin}
                                         component={Select}
                                         placeholder={`--${zone && zone === 'Rural' ? 'corregimiento' : 'comuna'}--`}
                                         options={commune.map((a) => ({
@@ -242,7 +247,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                     </label>
                                     <Field
                                         name="neighborhood"
-                                        disabled={!has_commune}
+                                        disabled={!has_commune || !is_medellin}
                                         component={Select}
                                         placeholder={`--${zone && zone === 'Rural' ? 'vereda' : 'barrio'}--`}
                                         options={neighborhood.map((a) => ({

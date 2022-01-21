@@ -48,7 +48,7 @@ const format_response = (data) => {
 };
 
 export const get_all_notifications = async (filters?) => {
-    console.log(filters)
+    console.log(filters);
     try {
         const URI = '/notifications/';
         const res: AxiosResponse<AllNotificationsResponse> =
@@ -59,7 +59,7 @@ export const get_all_notifications = async (filters?) => {
                 },
             });
         res.data.results = format_response(res?.data?.results);
-        console.log(filters)
+        console.log(filters);
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -98,15 +98,19 @@ export const get_notification_by_id = async (id) => {
     }
 };
 
-export const create_notification = async (
-    title: string,
-    description: string,
-    action: string,
-    priority: number,
-    from?: number,
-    to?: number,
-    toRole?: string
-) => {
+export interface _Notification {
+    title: string;
+    description: string;
+    action: string;
+    priority: number;
+    toRole?: number;
+    _from?: number;
+    _to?: number;
+}
+
+export const create_notification = async (notification: _Notification) => {
+    const { title, description, action, priority, _from, _to, toRole } =
+        notification;
     try {
         const URI = '/notifications/';
         const res: AxiosResponse<NotificationResponse> =
@@ -115,7 +119,8 @@ export const create_notification = async (
                 description,
                 action,
                 priority,
-                ...(to ? { to } : {}),
+                ...(_from ? { from: _from } : {}),
+                ...(_to ? { to: _to } : {}),
                 ...(toRole ? { toRole } : {}),
             });
         return res.data;
@@ -123,6 +128,17 @@ export const create_notification = async (
         return Promise.reject('Error');
     }
 };
+/*
+const x = "Nombre del Bien Inmueble";
+const x_id = 57;
+create_notification({
+    title: 'Bien Inmueble Creado',
+    description: `se creo el bien inmueble ${x}`,
+    action: `/acquisitions/real-estates/${x_id}/`,
+    priority: 2,
+    toRole: 4
+});
+*/
 
 export const update_notification = async (id, data) => {
     try {

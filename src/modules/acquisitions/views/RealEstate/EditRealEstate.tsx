@@ -39,6 +39,7 @@ const DetailProjects = () => {
                     } else {
                         if (res.project.id) return dispatch(actions.getRealEstatesByProject(res.project.id));
                     }
+
                 } catch (e) {
                     return Promise.reject();
                 }
