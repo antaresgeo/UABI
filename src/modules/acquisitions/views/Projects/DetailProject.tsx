@@ -25,7 +25,7 @@ const DetailProject = () => {
     const [action, setAction] = useState();
     useEffect(() => {
         dispatch(actions.getProject(id));
-        dispatch(actions.getRealEstatesByProject(id));
+        dispatch(actions.getRealEstatesByProject(id, {}));
     }, []);
 
     return (

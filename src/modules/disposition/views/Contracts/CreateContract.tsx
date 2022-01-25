@@ -1,5 +1,6 @@
 import { FC, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { create_notification } from '../../../notificacions/redux/service';
 import { GeneralDataContract } from './../../components/Contractual/GeneralDataContract';
 
 interface FormPros {
@@ -12,11 +13,18 @@ const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_cont
     const form_ref = useRef<any>();
     const history = useHistory();
     const submit_contract = async (values_contract) => {
-        console.log("vaules contrato",values_contract)
-        if(values_contract.type_contract === "Comodato" ) {
+        console.log("vaules contrato", values_contract)
+        // await create_notification({
+        //     title: 'Creación de un Contrato',
+        //     description: `se ha creado un contrato de ${tipo_contrato} con número ${numero_de_contrato} y fecha de terminación ${fecha_terminacion}`,
+        //     action: `/disposition/contract/${id}/`,
+        //     priority: 2,
+        //     toRole: 5
+        // });
+        if (values_contract.type_contract === "Comodato") {
             history.push({ pathname: "/document/comodato/contract", state: { values_contract, realEstate, dispositionType } })
 
-        }else if(values_contract.type_contract === "arrendamiento" ) {
+        } else if (values_contract.type_contract === "arrendamiento") {
             history.push({ pathname: "/document/lease/contract", state: { values_contract, realEstate, dispositionType } })
         }
     }

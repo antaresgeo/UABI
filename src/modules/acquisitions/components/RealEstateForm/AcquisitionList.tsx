@@ -9,7 +9,7 @@ interface AcquisitionListProps {
 }
 
 const AcquisitionList: FC<AcquisitionListProps> = ({ acquisitions, type, disabled }) => {
-    console.log(acquisitions)
+    // console.log(acquisitions)
     const acquisition_columns = [
         {
             title: 'Tipo de Adquisición',

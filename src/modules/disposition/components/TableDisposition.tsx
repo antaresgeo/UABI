@@ -113,7 +113,8 @@ export const TableDiszposition: FC<DispositionListProps> = ({ filters, user /*, 
     };
 
     useEffect(() => {
-        dispatch(actions.getRealEstates({ with: 'pagination' })); //TODO: mirar filtro de poliza
+        dispatch(actions.clearRealEstates())
+        // dispatch(actions.getRealEstates({ with: 'pagination' }));
     }, []);
 
 

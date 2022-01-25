@@ -22,6 +22,7 @@ export const TableAreas = () => {
     const [realEstatesEdit, setRealEstatesEdit] = useState([]);
     const { valueArea, numberRealEstates, data, action, realEstates, arrayRealEstates } = location.state;
     const arrayEditRealEsates = [];
+    // console.log(data, realEstates )
     useEffect(() => {
         if (data && realEstates) {
             data.map((bienInmueble) => {
@@ -40,7 +41,7 @@ export const TableAreas = () => {
                 return editables.indexOf(item) === index;
             });
             const real_estates_edit = result.map((realEstate) => {
-                const editRealEstate = arrayEditRealEsates.filter((r) => r.id === realEstate.id);
+                const editRealEstate = arrayEditRealEsates.filter((r) => r.id === realEstate?.id);
                 let areaCons = 0;
                 let arealote = 0;
                 if (editRealEstate !== undefined) {
@@ -53,7 +54,7 @@ export const TableAreas = () => {
                     });
                     const real = {
                         ...realEstate,
-                        construction_area: areaCons === 0 ? realEstate.construction_area : areaCons,
+                        construction_area: areaCons === 0 ? realEstate?.construction_area : areaCons,
                         plot_area: arealote === 0 ? realEstate.plot_area : arealote,
                     };
                     return {

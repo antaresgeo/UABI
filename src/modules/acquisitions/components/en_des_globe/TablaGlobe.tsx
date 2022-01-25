@@ -20,6 +20,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     const dispatch = useDispatch();
 
     const realEstates: any = useSelector((states: any) => states.acquisitions.realEstates.value);
+
     const [data, setData] = useState(null);
     const [numberRealEstates, setNumberRealEstates] = useState(1);
     const [disabled, setDisabled] = useState(true);
@@ -29,10 +30,13 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     const [selectRowKeys, setSelectRowKeys] = useState([]);
     const [form] = Form.useForm();
 
+
     useEffect(() => {
         dispatch(actions.getProjects());
-        dispatch(actions.getRealEstatesByProject(Number(id)));
+        dispatch(actions.getRealEstatesByProject(Number(id), {}));
+
     }, []);
+
 
     let newrealEstates = [];
     // const codes = realEstates.map(realEstate => realEstate.sap_id.split(",")).map(codigo => codigo?.filter(cod => cod.charAt(cod.length - 1) !== 'J'))
@@ -244,7 +248,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                 dataSource={data}
                 columns={mergedColumns}
                 rowClassName="editable-row"
-                pagination={false}
+                // pagination={false}
             />
             <div className="col-6 my-3">
                 <label htmlFor="number_real_estates" className="form-label">
