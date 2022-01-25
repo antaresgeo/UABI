@@ -184,6 +184,7 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({
         ],
         observations: obs || '',
     };
+
     return (
         <div className="container-fluid">
             <div className="row">

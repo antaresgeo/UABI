@@ -38,7 +38,7 @@ const DetailProject = () => {
                                 <>Proyecto: {project?.name}</>
                             </h5>
                             <ProjectDetail project={project} />
-                            {project?.contracts.length > 0 &&
+                            {project?.contracts?.length > 0 &&
                                 <ContractDetail contracts={project?.contracts} />
                             }
                             <Card

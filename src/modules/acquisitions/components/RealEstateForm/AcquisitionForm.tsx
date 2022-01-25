@@ -105,7 +105,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                         Certificado tradición y libertad
                                     </option>
                                     <option value="Acta de liquidación">Acta de liquidación</option>
-                                    <option value="Acta de liquidación">Resolucion</option>
+                                    <option value="Resolucion">Resolucion</option>
                                 </Field>
                                 <ErrorMessage name="title_type" />
                             </div>

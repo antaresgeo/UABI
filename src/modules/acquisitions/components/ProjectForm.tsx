@@ -345,8 +345,8 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                 />
                             }
                         >
-                            {values.contracts.length > 0 &&
-                                values.contracts.map((contract, i) => (
+                            {values.contracts?.length > 0 &&
+                                values.contracts?.map((contract, i) => (
                                     <div className="row">
                                         <div className="col-3">
                                             <label htmlFor="contract_number_id" className="form-label">
@@ -406,7 +406,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                                 name=""
                                                 icon={<i className="fa fa-times" aria-hidden="true" />}
                                                 onClick={() => {
-                                                    const contracts_list = values.contracts.filter((v, j) => j !== i);
+                                                    const contracts_list = values.contracts?.filter((v, j) => j !== i);
                                                     setFieldValue('contracts', contracts_list, false);
                                                 }}
                                             />
@@ -414,7 +414,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                     </div>
                                 ))}
 
-                            {values.contracts.length === 0 && (
+                            {values.contracts?.length === 0 && (
                                 <div className="row">
                                     <div className="col-12">
                                         <Empty

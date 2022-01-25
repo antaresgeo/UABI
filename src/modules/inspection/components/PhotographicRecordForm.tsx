@@ -36,14 +36,24 @@ const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ innerRef, onS
                                         <label htmlFor="form-select" className="form-label">
                                             Fachada
                                         </label>
-                                        <Field name="documento1" component={DocumentModal} btn_label="Adjuntar" />
+                                        <Field
+                                            name="documento1"
+                                            component={DocumentModal}
+                                            btn_label="Adjuntar"
+                                            file_type="img"
+                                        />
                                         <ErrorMessage name="documento1" />
                                     </div>
                                     <div className="col-6">
                                         <label htmlFor="form-select" className="form-label">
                                             Generales
                                         </label>
-                                        <Field name="documento2" component={DocumentModal} btn_label="Adjuntar" />
+                                        <Field
+                                            name="documento2"
+                                            component={DocumentModal}
+                                            btn_label="Adjuntar"
+                                            file_type="img"
+                                        />
                                         <ErrorMessage name="documento2" />
                                     </div>
                                 </div>
@@ -54,14 +64,24 @@ const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ innerRef, onS
                                         <label htmlFor="form-select" className="form-label">
                                             Pintura exterior
                                         </label>
-                                        <Field name="documento3" component={DocumentModal} btn_label="Adjuntar" />
+                                        <Field
+                                            name="documento3"
+                                            component={DocumentModal}
+                                            btn_label="Adjuntar"
+                                            file_type="img"
+                                        />
                                         <ErrorMessage name="documento2" />
                                     </div>
                                     <div className="col-6">
                                         <label htmlFor="form-select" className="form-label">
                                             Cubierta o techo
                                         </label>
-                                        <Field name="documento3" component={DocumentModal} btn_label="Adjuntar" />
+                                        <Field
+                                            name="documento3"
+                                            component={DocumentModal}
+                                            btn_label="Adjuntar"
+                                            file_type="img"
+                                        />
                                         <ErrorMessage name="documento2" />
                                     </div>
                                 </div>
@@ -70,7 +90,12 @@ const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ innerRef, onS
                                         <label htmlFor="form-select" className="form-label">
                                             Lavamanoss
                                         </label>
-                                        <Field name="documento3" component={DocumentModal} btn_label="Adjuntar" />
+                                        <Field
+                                            name="documento3"
+                                            component={DocumentModal}
+                                            btn_label="Adjuntar"
+                                            file_type="img"
+                                        />
                                         <ErrorMessage name="documento2" />
                                     </div>
                                 </div>

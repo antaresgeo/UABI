@@ -12,6 +12,7 @@ interface LocationModalProps {
     btn_class?: string;
     btn_label?: string;
     onDelete?: (doc) => void;
+    file_type: 'pdf' | 'img';
     onChange: (data) => void;
     doc?: any;
 }
@@ -23,6 +24,7 @@ const DocumentsModal: FC<LocationModalProps> = ({
     disabled,
     btn_class,
     btn_label,
+    file_type,
     onDelete,
     onChange,
 }) => {
@@ -104,6 +106,7 @@ const DocumentsModal: FC<LocationModalProps> = ({
                 <Form
                     name={doc_name}
                     innerRef={form_ref}
+                    file_type={file_type}
                     onSubmit={(values) => {
                         on_change(
                             {

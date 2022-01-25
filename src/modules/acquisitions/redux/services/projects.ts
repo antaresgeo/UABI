@@ -19,7 +19,7 @@ export const getProject = async (
         let res: AxiosResponse<IProjectResponse> = await http.get(URI, {
             params: { id },
         });
-        res.data.results.contracts = res.data.results.contracts.map(c => {
+        res.data.results.contracts = res.data.results.contracts?.map(c => {
             // console.log("contracts", c);
             return {
                 ...c,
@@ -68,7 +68,7 @@ export const createProject = async (
 
 
         let contratos = [];
-        aux_values.contracts.map(c => {
+        aux_values.contracts?.map(c => {
             const contract = {
                 ...c,
                 validity: {
@@ -101,7 +101,7 @@ export const createProject = async (
 // Services: PUT
 export const updateProject = async (data: any, id: number) => {
     let contratos = [];
-    data.contracts.map(c => {
+    data.contracts?.map(c => {
         if (typeof c.validity.end_date === "string") {
             // console.log('entro')
             const contract = {
