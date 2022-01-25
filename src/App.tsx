@@ -7,6 +7,7 @@ import actions from './modules/auth/redux/actions';
 import PasswordChangeModal from './modules/auth/views/pass_change_modal';
 import { TemplateContext } from './utils/components/template/template_context';
 import { Redirect } from 'react-router-dom';
+import PercentageModal from './modules/acquisitions/components/percentage_Modal';
 
 function App() {
     const user = useSelector((store: any) => store.auth.user);
@@ -29,6 +30,11 @@ function App() {
                 open={context.pass_modal}
                 toggle={context.toggle_pass_modal}
             />
+            <PercentageModal
+                open={context.percentege}
+                toggle={context.toggle_percentage_modal}
+            />
+
         </>
     );
 }

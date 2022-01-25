@@ -1,8 +1,14 @@
-import React from 'react'
-import { Card } from '../../../utils/ui'
+import React, { useState } from 'react'
+import { Card, Link } from '../../../utils/ui'
+import { LinkButton } from '../../../utils/ui/link'
 import Master_formatsList from '../components/Master_formatsList'
 
 const Master_formats = () => {
+    const [docName, setDocName] = useState(null)
+    const documento = (e) => {
+        console.log(e.target.files);
+        setDocName(e.target.files[0].name ?? null)
+    }
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -11,6 +17,28 @@ const Master_formats = () => {
                         <div className="col-md-12">
                             <Card
                                 title="Máster de Formatos"
+                                extra={
+
+                                    <>
+                                        <LinkButton
+                                            name={'Agregar Formato'}
+                                            iconText="+"
+                                            avatar
+                                            onClick={() => {
+                                                const input = document.getElementById("subir_doc");
+                                                input.click();
+                                                input.addEventListener("change", documento)
+                                            }}
+                                        />
+                                        <input
+                                            type="file"
+                                            id="subir_doc"
+                                            style={{ display: 'none' }}
+                                            name="documento"
+                                        />
+                                        {/* <Link to="/insurabilities/policy/create/" name="Crear" iconText="+" /> */}
+                                    </>
+                                }
                             >
                                 <Master_formatsList />
                             </Card>

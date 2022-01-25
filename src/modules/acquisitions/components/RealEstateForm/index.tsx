@@ -35,6 +35,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     realEstateData,
     dependencies,
 }) => {
+    // console.log(dependencies)
     const dispatch = useDispatch();
     const history = useHistory<any>();
     const [tipologies, realEstate, projects] = useSelector((store: any) => [
@@ -90,49 +91,57 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             id: "0",
             name: 'Sin Projecto',
         },
+        ...(inventory && {
+            social_investment_type: "",
+            disposition_type: "",
+            social_program: "",
+        }
+        ),
+
+
         ...(realEstateData
             ? {
-                  ...realEstateData,
-                  ...(realEstateData?.tipology_id
-                      ? {
-                            accounting_account: tipologies?.find(
-                                (tipology) => tipology.id === realEstateData?.tipology_id
-                            )?.accounting_account,
-                        }
-                      : {}),
-                  ...(realEstateData && realEstateData?.address?.id
-                      ? {
-                            address: realEstateData.address.id,
-                            _address: {
-                                name: realEstateData.address.address,
-                                cbml: realEstateData.address.cbmls.uabi,
-                            },
-                        }
-                      : {}),
-                  projects_id: `${realEstateData?.project?.id}` || "0",
-              }
+                ...realEstateData,
+                ...(realEstateData?.tipology_id
+                    ? {
+                        accounting_account: tipologies?.find(
+                            (tipology) => tipology.id === realEstateData?.tipology_id
+                        )?.accounting_account,
+                    }
+                    : {}),
+                ...(realEstateData && realEstateData?.address?.id
+                    ? {
+                        address: realEstateData.address.id,
+                        _address: {
+                            name: realEstateData.address.address,
+                            cbml: realEstateData.address.cbmls.uabi,
+                        },
+                    }
+                    : {}),
+                projects_id: `${realEstateData?.project?.id}` || "0",
+            }
             : {
-                  ...realEstate,
-                  ...(realEstate?.tipology_id
-                      ? {
-                            accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id)
-                                ?.accounting_account,
-                        }
-                      : {}),
-                  ...(realEstate && realEstate?.address?.id
-                      ? {
-                            address: realEstate.address.id,
-                            _address: {
-                                name: realEstate.address.address,
-                                cbml: realEstate.address.cbmls.uabi,
-                            },
-                        }
-                      : {}),
-                  projects_id: realEstate?.project?.id && `${realEstate?.project?.id}` || "0",
-              }),
+                ...realEstate,
+                ...(realEstate?.tipology_id
+                    ? {
+                        accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id)
+                            ?.accounting_account,
+                    }
+                    : {}),
+                ...(realEstate && realEstate?.address?.id
+                    ? {
+                        address: realEstate.address.id,
+                        _address: {
+                            name: realEstate.address.address,
+                            cbml: realEstate.address.cbmls.uabi,
+                        },
+                    }
+                    : {}),
+                projects_id: (realEstate?.project?.id && `${realEstate?.project?.id}`) || "0",
+            }),
     };
 
-    console.log('inicial', initial_values)
+    // console.log('inicial', initial_values)
 
 
 
@@ -211,7 +220,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         patrimonial_value: Yup.number()
             // .required('Campo obligatorio')
             .min(0, 'El minimo es 0')
-            .max(99999999999999999999, 'El maximo 20 es caracteres'),
+            .max(99999999999999999999, 'El maximo es 20 caracteres'),
         reconstruction_value: Yup.number()
             .required('Campo obligatorio')
             .min(0, 'El minimo es 0')
@@ -234,7 +243,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                         active_type.includes('Mejora')),
                 then: Yup.number()
                     .nullable()
-                    .min(Yup.ref('construction_area'),'debe ser mayor a área construccion'),
+                    .min(Yup.ref('construction_area'), 'debe ser mayor a área construccion'),
             })
             .required('obligatorio'),
 
@@ -274,6 +283,22 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         zone: Yup.string().required('Campo obligatorio'),
         //tipology_id: Yup.string().required('Campo obligatorio'),
         acquisitions: Yup.array(),
+        ...(inventory ?
+            {
+                social_investment_type: Yup.string().when('disposition_type', {
+                    is: "Inversión Social",
+                    then: Yup.string().required('obligatorio')
+                }),
+                social_program: Yup.string().when('disposition_type', {
+                    is: "Inversión Social",
+                    then: Yup.string().required('obligatorio').max(50, 'El maximo es 20 caracteres')
+                }),
+            }
+            :
+            {}
+
+        ),
+
     });
 
     const submit = (aux_values, form) => {
@@ -356,13 +381,12 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                         });
                     }
                 };
-                 console.log(formik.values.dependency)
                 if (formik.values._project === undefined) {
-                    if (history.location?.state && history.location?.state?.project_id !== null) {
-                        update_project(history.location.state.project_id);
-                        console.log('ok')
+                    if (history.location?.state && history.location?.state?.realEstateData.project_id !== undefined) {
+                        // console.log('ok',history.location.state)
+                        update_project(history.location.state.realEstateData.project_id);
                     } else {
-                        console.log('fail',projects_id)
+                        // console.log('fail',projects_id)
                         update_project(Number(projects_id));
                     }
                 }
@@ -452,7 +476,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 <Card
                                                     title={
                                                         <>
-                                                            <b>Inmuebles del Proyecto: {}</b>
+                                                            <b>Inmuebles del Proyecto: { }</b>
                                                         </>
                                                     }
                                                 >
@@ -481,16 +505,21 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                 className="bg-white d-flex flex-row justify-content-between"
                                 style={{ padding: 16, borderTop: '1px solid #ccc' }}
                             >
-                                <button
-                                    type="button"
-                                    className="btn btn-outline-primary"
-                                    onClick={() => {
-                                        history.goBack();
-                                    }}
-                                >
-                                    Atras
-                                </button>
-                                <div className="flex-fill" />
+                                {globe === false && (
+                                    <>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary"
+                                            onClick={() => {
+                                                history.goBack();
+                                            }}
+                                        >
+                                            Atras
+                                        </button>
+
+                                        <div className="flex-fill" />
+                                    </>
+                                )}
                                 {type !== 'view' && globe !== true && (
                                     <>
                                         <button
@@ -533,7 +562,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                         )}
                                     </>
                                 )}
-                                {inventory !== undefined && !inventory && (
+                                {inventory !== undefined && !inventory && /*type !== ''*/ (
                                     <button
                                         type="button"
                                         className="btn btn-primary"
@@ -547,6 +576,15 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                 )}
                                 {globe === true && (
                                     <>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary"
+                                            onClick={() => {
+                                                history.goBack();
+                                            }}
+                                        >
+                                            Atras
+                                        </button>
                                         <div className="flex-fill" />
                                         <button
                                             type="button"

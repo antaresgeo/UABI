@@ -99,9 +99,9 @@ const RealEstateList: FC<RealEstateListProps> = ({
                 <Link
                     to={
                         register
-                        ? `/inventoryrecord/real-estates/edit/${id}/`
-                        : `/acquisitions/real-estates/edit/${id}/`
-                        }
+                            ? `/inventoryrecord/real-estates/edit/${id}/`
+                            : `/acquisitions/real-estates/edit/${id}/`
+                    }
                     name=""
                     avatar={false}
                     icon={<i className="fa fa-pencil" aria-hidden="true" />}
@@ -232,15 +232,24 @@ const RealEstateList: FC<RealEstateListProps> = ({
 
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.getRealEstates({ page, pageSize, with: 'pagination', ...filters }));
+        if(project_id) {
+            dispatch(actions.getRealEstatesByProject(project_id, { page, pageSize, with: 'pagination', ...filters }));
+
+        }else {
+            dispatch(actions.getRealEstates({ page, pageSize, with: 'pagination', ...filters }));
+        }
     };
 
     useEffect(() => {
         dispatch(actions.clearRealEstates());
-        if (project_id) {
-            dispatch(actions.getRealEstatesByProject(project_id));
-        }
     }, []);
+
+    useEffect(() => {
+        if (project_id) {
+            dispatch(actions.clearRealEstates());
+            dispatch(actions.getRealEstatesByProject(project_id, {}));
+        }
+    }, [project_id])
 
     return (
         <Table

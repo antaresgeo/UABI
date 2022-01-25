@@ -1,5 +1,5 @@
 import { Field } from 'formik';
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useContext } from 'react';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import { IProjectAttributes } from '../../../../utils/interfaces';
 import Select from '../../../../utils/ui/select';
@@ -12,6 +12,8 @@ import dependencias from '../../dependencias';
 import { useDispatch } from 'react-redux';
 import ModalDivideAreas from '../../../Inventory_record/components/ModalDivideAreas';
 import TooltipField from '../../../../utils/ui/tooltip_field';
+import { LinkButton } from '../../../../utils/ui/link';
+import { TemplateContext } from '../../../../utils/components/template/template_context';
 
 interface DataRealEstateFormProps {
     type?: 'view' | 'edit' | 'create';
@@ -42,6 +44,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     acquisitions,
     onProjectSelectedChange,
 }) => {
+    const context = useContext(TemplateContext);
     useEffect(() => {
         if (!inventory) {
             let value_patrimonial = 0;
@@ -801,7 +804,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     {inventory && (
                         <>
                             <div className="row">
-                                <div className="col-6">
+                                <div className="col-3">
                                     <label htmlFor="accounting_amount_id" className="form-label">
                                         Importe Contabilidad
                                     </label>
@@ -818,7 +821,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     </div>
                                     <ErrorMessage />
                                 </div>
-                                <div className="col-6">
+                                <div className="col-3">
                                     <label htmlFor="periodo_contable_id" className="form-label">
                                         Periodo contable
                                     </label>
@@ -834,7 +837,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     />
                                     <ErrorMessage />
                                 </div>
-
                                 <div className="col-3">
                                     <label htmlFor="counterpart_id" className="form-label">
                                         Contrapartida
@@ -860,6 +862,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     />
                                     <ErrorMessage />
                                 </div>
+                            </div>
+                            <div className="row">
                                 <div className="col-3">
                                     <label htmlFor="exploitation_value_id" className="form-label">
                                         Valor Aprovechamiento
@@ -900,12 +904,55 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     </div>
                                     <ErrorMessage />
                                 </div>
+                                <div className="col-3">
+                                    <label htmlFor="years_useful_life_id" className="form-label">
+                                        Vida util años
+                                    </label>
+                                    <Field
+                                        //disabled
+                                        name="years_useful_life"
+                                        id="years_useful_life_id"
+                                        type="number"
+                                        className="form-control"
+                                    />
+                                    <ErrorMessage name="years_useful_life" />
+                                </div>
+                                <div className="col-3">
+                                    <label htmlFor="useful_life_periods_id" className="form-label">
+                                        Vida util Períodos
+                                    </label>
+                                    <Field
+                                        //disabled
+                                        name="useful_life_periods"
+                                        id="useful_life_periods_id"
+                                        type="number"
+                                        className="form-control"
+                                    />
+                                    <ErrorMessage name="useful_life_periods" />
+                                </div>
                             </div>
                             <div className="row">
-                                <div className="col-3">
-                                    <label htmlFor="canyon_value_id" className="form-label">
-                                        Valor del Canon
-                                    </label>
+                                <div className="col-6">
+                                    <div className="row">
+                                        <div className="col-8">
+                                            <label htmlFor="canyon_value_id" className="form-label">
+                                                Valor del Canon
+                                            </label>
+                                        </div>
+                                        {(inventory && (formik.values.disposition_type === "Inversión Social" || formik.values.disposition_type === "Inversión")) && (
+                                            <div className="col-4">
+                                                <LinkButton
+                                                    name="Aplicar Porcentaje"
+                                                    icon={<i className="fa fa-plus-circle" aria-hidden="true" />}
+                                                    onClick={ () => {
+                                                        context.set_canon_type(formik.values.disposition_type === "Inversión Social" ? "inversion_social" : formik.values.disposition_type === "Inversión" ? "inversion" : null)
+                                                        context.toggle_percentage_modal();
+                                                    }}
+                                                >
+                                                </LinkButton>
+                                            </div>
+                                        )}
+                                    </div>
                                     <div className="input-group w-100">
                                         <div className="input-group-prepend">
                                             <span className="input-group-text bg-white border-end-0">$</span>
@@ -922,40 +969,13 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     </div>
                                     <ErrorMessage />
                                 </div>
-                                <div className="col-3">
-                                    <label htmlFor="years_useful_life_id" className="form-label">
-                                        Vida util años
-                                    </label>
-                                    <Field
-                                        //disabled
-                                        name="years_useful_life"
-                                        id="years_useful_life_id"
-                                        type="number"
-                                        className="form-control"
-                                    />
-                                    <ErrorMessage name="years_useful_life" />
-                                </div>
-
-                                <div className="col-3">
-                                    <label htmlFor="useful_life_periods_id" className="form-label">
-                                        Vida util Períodos
-                                    </label>
-                                    <Field
-                                        //disabled
-                                        name="useful_life_periods"
-                                        id="useful_life_periods_id"
-                                        type="number"
-                                        className="form-control"
-                                    />
-                                    <ErrorMessage name="useful_life_periods" />
-                                </div>
-                                <div className="col-3">
+                                <div className="col-6">
                                     <label htmlFor="disposition_type_id" className="form-label">
                                         Tipo Disposición
                                     </label>
                                     <Field
                                         as="select"
-                                        className="form-control"
+                                        className="form-select"
                                         id="disposition_type_id"
                                         name="disposition_type"
                                         disabled={inventoryEdit}
@@ -1017,9 +1037,52 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                             sin Asignar
                                         </option>
                                     </Field>
-                                    <ErrorMessage />
+                                    <ErrorMessage name="disposition_type" />
                                 </div>
                             </div>
+                            {formik.values.disposition_type === "Inversión Social" &&
+                                <div className="row">
+                                    <div className="form-group col-6">
+                                        <label htmlFor="social_investment_type_id" className="form-label">
+                                            Tipo Inversión Social <span className="text-danger">*</span>
+                                        </label>
+                                        <Field
+                                            disabled={disabled}
+                                            name="social_investment_type"
+                                            as="select"
+                                            className="form-select"
+                                            id="social_investment_type_id"
+                                        >
+                                            <option value="" hidden>
+                                                -- Tipo de Inversión Social --
+                                            </option>
+                                            <option key="Locales Comerciales" value="Locales Comerciales">
+                                                Locales Comerciales
+                                            </option>
+                                            <option key="Vivienda Social" value="Vivienda Social">
+                                                Vivienda Social
+                                            </option>
+                                        </Field>
+
+                                        <ErrorMessage name="social_investment_type" />
+                                    </div>
+                                    <div className="col-6">
+                                        <label htmlFor="social_program_id" className="form-label">
+                                            Programa Social <span className="text-danger">*</span>
+                                        </label>
+                                        <Field
+                                            type="text"
+                                            className="form-control"
+                                            id="social_program_id"
+                                            name="social_program"
+                                            disabled={inventoryEdit}
+                                            maxLength={50}
+                                        />
+                                        <ErrorMessage name="social_program" withCount max={50} />
+                                    </div>
+                                </div>
+                            }
+
                         </>
                     )}
                     <div className="row">

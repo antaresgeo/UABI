@@ -64,14 +64,14 @@ const ProjectModal: FC<LocationModalProps> = ({ /*onSave,*/ disabled, openArea, 
                             }
                         }}
                     >
-                        ------
+                        Finalizar Proyecto
                     </button>,
                     ...(realEstates?.length > 1
                         ? [
                               <button
                                   type="submit"
                                   className="btn btn-outline-primary "
-                                  key="1"
+                                  key="2"
                                   style={{ marginLeft: '30px' }}
                                   onClick={() => {
                                       openArea('englobar');
@@ -85,7 +85,7 @@ const ProjectModal: FC<LocationModalProps> = ({ /*onSave,*/ disabled, openArea, 
                               <button
                                   type="submit"
                                   className="btn btn-outline-primary "
-                                  key="1"
+                                  key="3"
                                   disabled
                                   style={{ marginLeft: '30px' }}
                                   onClick={() => {
@@ -99,7 +99,7 @@ const ProjectModal: FC<LocationModalProps> = ({ /*onSave,*/ disabled, openArea, 
                     <button
                         type="submit"
                         style={{ marginLeft: '30px', marginRight: '110px' }}
-                        key="2"
+                        key="4"
                         className="btn btn-outline-primary"
                         onClick={() => {
                             openArea('desenglobar');
