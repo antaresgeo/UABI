@@ -6,14 +6,15 @@ import Alert from 'antd/lib/alert';
 
 interface DocumentsFormProps {
     name?: string;
+    file_type: 'pdf' | 'img';
     innerRef: any;
     onSubmit: (values) => Promise<any>;
 }
 
-const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, onSubmit }) => {
+const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, file_type, onSubmit }) => {
     const has_name = !!name;
-    const [no_is_pdf, set_no_is_pdf] = useState(false);
-    const [disable_upload, set_disable_upload] = useState(false);
+    const [is_correct_type, set_is_correct_type] = useState(true);
+    // const [disable_upload, set_disable_upload] = useState(false);
     const initial_values = {
         name: name || '',
         pdf: null,
@@ -35,21 +36,20 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, onSubmit }) => 
         <Formik initialValues={initial_values} onSubmit={submit} innerRef={innerRef}>
             {({ values, setFieldValue }) => {
                 const upload_props = {
-                    accept: '.pdf',
+                    accept: file_type === 'pdf' ? '.pdf' : file_type === 'img' ? 'image/*' : '.pdf',
                     maxCount: 1,
                     onChange: ({ file, fileList }) => {
-                        console.log(file)
-                        if (file.type === 'application/pdf') {
-                            set_no_is_pdf(false);
+                        if (validate_file_type(file, file_type)) {
+                            set_is_correct_type(true);
                             if (values.name === '') {
                                 setFieldValue('name', file.name.split('.')[0]);
                             }
-                            setFieldValue('pdf', file);
+                            setFieldValue(file_type, file);
                             setFieldValue('fileList', fileList);
                         } else {
-                            set_no_is_pdf(true);
+                            set_is_correct_type(false);
                         }
-                        set_disable_upload(false)
+                        // set_disable_upload(false);
                     },
                     beforeUpload: () => {
                         return false;
@@ -61,12 +61,11 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, onSubmit }) => 
                         <button
                             type="button"
                             className="btn btn-primary"
-                            onClick={() => {
-                                set_disable_upload(true)
-                            }}
-                            disabled={disable_upload}
+                            // onClick={() => {
+                            //     set_disable_upload(true)
+                            // }}
                         >
-                            Seleccionar PDF
+                            Seleccionar {file_type === 'pdf' ? 'PDF' : file_type === 'img' ? 'Imagen' : 'PDF'}
                         </button>
                     );
                 };
@@ -78,8 +77,14 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, onSubmit }) => 
                                     <Button />
                                 </Upload>
                                 <span className="d-block" style={{ height: 20 }} />
-                                {no_is_pdf && (
-                                    <Alert message="el archivo seleccionado no es un pdf" type="error" closable />
+                                {!is_correct_type && (
+                                    <Alert
+                                        message={`el archivo seleccionado no es ${
+                                            file_type === 'pdf' ? 'un PDF' : file_type === 'img' ? 'una Imagen' : 'PDF'
+                                        }`}
+                                        type="error"
+                                        closable
+                                    />
                                 )}
                             </div>
                             <div className="form-group col-12">
@@ -95,6 +100,31 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, onSubmit }) => 
             }}
         </Formik>
     );
+};
+
+const validate_pdf = (file) => {
+    return validate_file_type(file, 'pdf');
+};
+const validate_img = (file) => {
+    return validate_file_type(file, 'img');
+};
+
+const validate_file_type = (file: File, type: 'pdf' | 'img') => {
+    const file_type = file.type.split('/').pop().toLowerCase();
+    switch (type) {
+        case 'pdf':
+            return file_type === 'pdf';
+        case 'img':
+            return (
+                file_type === 'jpeg' ||
+                file_type === 'jpg' ||
+                file_type === 'png' ||
+                file_type === 'bmp' ||
+                file_type === 'gif'
+            );
+        default:
+            return false;
+    }
 };
 
 export default DocumentsForm;

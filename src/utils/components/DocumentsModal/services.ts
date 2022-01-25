@@ -54,7 +54,7 @@ export const create_document = async ({
 
 export const get_documents_by_ids = async (ids) => {
     try {
-        let URI_documents = '/docs/';
+        let URI_documents = '/docs/real-estates/';
         let res: any = await documents_http.get(URI_documents, {
             params: {
                 ids,

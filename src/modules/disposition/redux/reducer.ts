@@ -120,7 +120,7 @@ const contractReducer = (aux_state: State, action: any) => {
                 companies: {
                     ...state.contracts,
                     value: action.payload || [],
-                    pagination: emptyInitialState.contracts.pagination,
+                    pagination: emptyInitialState.contracts?.pagination,
                     loading: false,
                     loaded: true,
                 },
@@ -132,8 +132,8 @@ const contractReducer = (aux_state: State, action: any) => {
                 ...state,
                 contracts: {
                     ...state.contracts,
-                    value: emptyInitialState.contracts.value,
-                    pagination: emptyInitialState.contracts.pagination,
+                    value: emptyInitialState.contracts?.value,
+                    pagination: emptyInitialState.contracts?.pagination,
                     loading: false,
                     loaded: false,
                 },
