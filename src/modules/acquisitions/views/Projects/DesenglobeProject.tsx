@@ -17,7 +17,7 @@ const DesenglobeProject = () => {
     useEffect(() => {
         dispatch(actions.getProjects());
         if (project_id) {
-            dispatch(actions.getRealEstatesByProject(history.location.state?.project_id));
+            dispatch(actions.getRealEstatesByProject(history.location.state?.project_id, {}));
         }
     }, []);
     const createRealEstate = async (values, form, isFinish) => {
@@ -30,7 +30,7 @@ const DesenglobeProject = () => {
                 history.push(`/acquisitions/real-estates/`);
             } else {
                 if (res) {
-                    return await dispatch(actions.getRealEstatesByProject(res.project_id));
+                    return await dispatch(actions.getRealEstatesByProject(res.project_id, {}));
                 }
             }
             return Promise.resolve();

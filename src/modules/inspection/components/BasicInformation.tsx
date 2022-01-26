@@ -4,6 +4,7 @@ import { Field, Form, Formik } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import { ModalNotificar } from '../../disposition/components/ModalNotificar';
 import Map from '../../../utils/components/template/map';
+import writtenNumber from 'written-number';
 
 interface BasicInformationProps {
     inspection: any;
@@ -78,7 +79,7 @@ const BasicInformation: FC<BasicInformationProps> = ({
                             <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                                 <div className="col-2">
                                     <label htmlFor="">Avalúo del BI</label>
-                                    <div className="my-3">{real_estate?.patrimonial_value ?? '-'}</div>
+                                    <div className="my-3">{writtenNumber(real_estate?.patrimonial_value, { lang: 'es' }) ?? '-'}</div>
                                 </div>
                                 <div className="col-2">
                                     <label htmlFor="">Dirección del BI</label>
@@ -97,6 +98,18 @@ const BasicInformation: FC<BasicInformationProps> = ({
                                     <div className="my-3">{real_estate?.name ?? '-'}</div>
                                 </div>
                             </div>
+                            {real_estate?.contrat &&
+                                <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
+                                    <div className="col-2">
+                                        <label htmlFor="">Número de contrato </label>
+                                        <div className="my-3">{real_estate?.contrat ?? '-'}</div>
+                                    </div>
+                                    <div className="col-2">
+                                        <label htmlFor="">Vigencia del contrato</label>
+                                        <div className="my-3">{real_estate?.contract?.number ?? '-'}</div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

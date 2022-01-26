@@ -3,14 +3,17 @@ import { useSelector } from 'react-redux';
 import { Card } from '../../../utils/ui';
 import { TableDiszposition } from '../components/TableDisposition';
 import FilterForm from './../../../utils/ui/filter_form';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../acquisitions/redux';
 
 export const ListDisposition = () => {
     // const [filters, set_filters] = useState<object>(null);
     const user = useSelector((store: any) =>  store.auth.user);
+    const dispatch = useDispatch();
 
     const filter = async (_filters, _) => {
         // set_filters(_filters);
-        //await dispatch(actions.get_all_users({ page: 1, ..._filters }));
+        await dispatch(actions.getRealEstates({ page: 1, with: 'pagination', ..._filters }));
     };
 
     // const change_page = (page, pageSize) => {

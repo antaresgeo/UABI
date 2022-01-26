@@ -7,18 +7,19 @@ import AppHeader from './header';
 import { Link, useHistory } from 'react-router-dom';
 import { Breadcrumb } from '../app_router/custom_types';
 import Menu from 'antd/lib/menu';
-import {useDispatch} from "react-redux";
-import {actions} from "../../../modules/notificacions/redux";
-import {actions as auth_actions} from "../../../modules/auth/redux"
+import { useDispatch } from "react-redux";
+import { actions } from "../../../modules/notificacions/redux";
+import { actions as auth_actions } from "../../../modules/auth/redux"
 import notification from "antd/lib/notification";
 
 interface ITemplate {
     breadcrumbs?: Breadcrumb[];
     show_breadcrumbs?: boolean;
     user: any;
+    roles_user?: any
 }
 
-const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user }) => {
+const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user, roles_user }) => {
     const dispatch = useDispatch();
     const { Header, Sider, Content } = Layout;
     const history = useHistory();
@@ -29,15 +30,14 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
         style: { backgroundColor: 'white' },
         ...(collapsible
             ? {
-                  trigger: null,
-                  collapsible,
-                  collapsed: context.menu_collapsed,
-              }
+                trigger: null,
+                collapsible,
+                collapsed: context.menu_collapsed,
+            }
             : {}),
     };
-    const name = `${(user && Object.values(user?.names).join(' ')) || ''} ${
-        (user && Object.values(user?.surnames).join(' ')) || ''
-    }`;
+    const name = `${(user && Object.values(user?.names).join(' ')) || ''} ${(user && Object.values(user?.surnames).join(' ')) || ''
+        }`;
 
     const openNotification = (data) => {
         console.log('new:notification', data);
@@ -148,6 +148,20 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                         >
                             Editar usuario
                         </Menu.Item>
+                        {roles_user.includes('Administrador') /*|| roles_user.includes('Administrador')*/ &&
+                            <Menu.Item
+                                style={{ borderBottom: '0.5px solid #00000029' }}
+                                key="3"
+                                onClick={() => {
+                                    context.set_canon_type(null);
+                                    context.toggle_percentage_modal();
+                                    context.drawer_close();
+                                }}
+                            >
+                                Aumento porcentual de canon
+                            </Menu.Item>
+
+                        }
                     </Menu>
                 </div>
                 <div

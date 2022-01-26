@@ -73,16 +73,16 @@ export const get_all_users = async (filters?) => {
                 // role: 1
             },
         });
-        const promesas = await Promise.all(
-            res.data.results.map((r: any) => {
-                const id = r.user_id;
-                return get_user_by_id(id);
-            })
-        )
-        res.data.results = res.data.results.map((r: any,i) => {
-            return {...r, extra: promesas[i]}
-        })
-        console.log(res)
+        // const promesas = await Promise.all(
+        //     res.data.results.map((r: any) => {
+        //         const id = r.user_id;
+        //         return get_user_by_id(id);
+        //     })
+        // )
+        // res.data.results = res.data.results.map((r: any,i) => {
+        //     return {...r, extra: promesas[i]}
+        // })
+        // console.log(res)
         return res.data;
 
     } catch (e) {
@@ -200,8 +200,8 @@ const finalData = async (_data) => {
 
 export const update_user = async (id, data) => {
     const body: any = await finalData(data);
-    const pass = body.password;
-    delete body.password;
+    const pass = body.user.password;
+    delete body.user.password;
 
     console.log(body);
 

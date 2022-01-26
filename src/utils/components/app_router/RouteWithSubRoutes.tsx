@@ -62,7 +62,7 @@ const Route: FC<RouteWithSubRoutesProps> = ({
             const has_access = get_can_access(can_access, _props);
             if (has_access) {
                 const Template = template;
-                const template_ops = { ...template_props, user: _props.user?.detailsUser };
+                const template_ops = { ...template_props, user: _props.user?.detailsUser, roles_user: _props.user?.roles };
                 return template ? <Template {...template_ops}>{cp}</Template> : cp;
             } else {
                 return compute_redirect(privateRedirect, location);

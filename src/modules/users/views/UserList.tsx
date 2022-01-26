@@ -107,13 +107,18 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
             dataIndex: 'names',
             align: 'left' as 'left',
         },
+        // {
+        //     title: 'rol',
+        //     dataIndex: 'extra',
+        //     align: 'center' as 'center',
+        //     render: (extra) => {
+        //         return extra?.roles?.map(r => r.name).join(", ")
+        //     },
+        // },
         {
-            title: 'rol',
-            dataIndex: 'extra',
+            title: 'cc',
+            dataIndex: 'id_number',
             align: 'center' as 'center',
-            render: (extra) => {
-                return extra?.roles?.map(r => r.name).join(", ")
-            },
         },
         {
             title: 'Fecha Creación',

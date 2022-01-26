@@ -40,14 +40,15 @@ const getRealEstates = async (filters?) => {
 };
 
 export const getRealEstatesByProject = async (
-    id: number
+    id: number,
+    filters?
 ): Promise<IPaginable<IRealEstateAttributes> | string> => {
     if (Number.isInteger(id)) {
         try {
             let URI = `/real-estates/project/`;
             let res: AxiosResponse<IPaginable<IRealEstateAttributes>> =
                 await http.get(URI, {
-                    params: { id },
+                    params: { id, ...filters },
                 });
             return res.data;
         } catch (error) {
