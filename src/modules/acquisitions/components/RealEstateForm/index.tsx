@@ -121,24 +121,24 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                 projects_id: `${realEstateData?.project?.id}` || "0",
             }
             : {
-                ...realEstate,
-                ...(realEstate?.tipology_id
-                    ? {
-                        accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id)
-                            ?.accounting_account,
-                    }
-                    : {}),
-                ...(realEstate && realEstate?.address?.id
-                    ? {
-                        address: realEstate.address.id,
-                        _address: {
-                            name: realEstate.address.address,
-                            cbml: realEstate.address.cbmls.uabi,
-                        },
-                    }
-                    : {}),
-                projects_id: (realEstate?.project?.id && `${realEstate?.project?.id}`) || "0",
-            }),
+                  ...realEstate,
+                  ...(realEstate?.tipology_id
+                      ? {
+                            accounting_account: tipologies.find((tipology) => tipology.id === realEstate?.tipology_id)
+                                ?.accounting_account,
+                        }
+                      : {}),
+                  ...(realEstate && realEstate?.address?.id
+                      ? {
+                            address: realEstate?.address?.id || "",
+                            _address: {
+                                name: realEstate?.address?.address || "",
+                                cbml: realEstate?.address?.cbmls?.uabi || "",
+                            },
+                        }
+                      : {}),
+                  projects_id: realEstate?.project?.id && `${realEstate?.project?.id}` || "0",
+              }),
     };
 
     // console.log('inicial', initial_values)

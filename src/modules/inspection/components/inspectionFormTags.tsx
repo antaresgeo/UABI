@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import { Tabs } from 'antd';
 import CreateOccupation from './CreateOccupation';
 import CreateInspectionPhysical from './CreateInspectionPhysical';
@@ -21,7 +21,7 @@ interface InspectionFormTagsProps {
 }
 const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_estate, user }) => {
     const history = useHistory();
-    const dispatch = useDispatch();
+    console.log(history.location.hash)
     const { TabPane } = Tabs;
     const limit = 6;
     const [data, set_data] = useState(null);

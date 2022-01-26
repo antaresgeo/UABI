@@ -70,6 +70,7 @@ export const get_all_users = async (filters?) => {
             params: {
                 with: 'pagination',
                 ...filters,
+                // role: 1
             },
         });
         // const promesas = await Promise.all(

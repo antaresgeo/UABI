@@ -44,9 +44,11 @@ const TemplateProvider: FC = React.memo(({ children }) => {
         if (user?.detailsUser) {
             new_socket.on('init', (data) => {
                 set_idNode(data.id as string);
+                console.log("data", data)
+                console.log("connect to service socket success", data.id);
                 new_socket.emit('register:user', {
                     headerAuthorization: `Bearer ${localStorage.getItem('_tk_')}`,
-                    id: user.detailsUser.id,
+                    id: user.detailsUser.user_id,
                 });
             });
             set_socket(new_socket);
