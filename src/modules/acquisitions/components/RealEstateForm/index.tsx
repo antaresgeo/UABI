@@ -83,43 +83,41 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         subdependency: '',
         management_center: '',
         cost_center: '',
-        construction_area: "",
+        construction_area: '',
         construction_area_unit: 'm2',
         plot_area: 0,
         plot_area_unit: 'm2',
         project: {
-            id: "0",
+            id: '0',
             name: 'Sin Projecto',
         },
         ...(inventory && {
-            social_investment_type: "",
-            disposition_type: "",
-            social_program: "",
-        }
-        ),
-
+            social_investment_type: '',
+            disposition_type: '',
+            social_program: '',
+        }),
 
         ...(realEstateData
             ? {
-                ...realEstateData,
-                ...(realEstateData?.tipology_id
-                    ? {
-                        accounting_account: tipologies?.find(
-                            (tipology) => tipology.id === realEstateData?.tipology_id
-                        )?.accounting_account,
-                    }
-                    : {}),
-                ...(realEstateData && realEstateData?.address?.id
-                    ? {
-                        address: realEstateData.address.id,
-                        _address: {
-                            name: realEstateData.address.address,
-                            cbml: realEstateData.address.cbmls.uabi,
-                        },
-                    }
-                    : {}),
-                projects_id: `${realEstateData?.project?.id}` || "0",
-            }
+                  ...realEstateData,
+                  ...(realEstateData?.tipology_id
+                      ? {
+                            accounting_account: tipologies?.find(
+                                (tipology) => tipology.id === realEstateData?.tipology_id
+                            )?.accounting_account,
+                        }
+                      : {}),
+                  ...(realEstateData && realEstateData?.address?.id
+                      ? {
+                            address: realEstateData.address.id,
+                            _address: {
+                                name: realEstateData.address.address,
+                                cbml: realEstateData.address.cbmls.uabi,
+                            },
+                        }
+                      : {}),
+                  projects_id: `${realEstateData?.project?.id}` || '0',
+              }
             : {
                   ...realEstate,
                   ...(realEstate?.tipology_id
@@ -130,20 +128,18 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                       : {}),
                   ...(realEstate && realEstate?.address?.id
                       ? {
-                            address: realEstate?.address?.id || "",
+                            address: realEstate?.address?.id || '',
                             _address: {
-                                name: realEstate?.address?.address || "",
-                                cbml: realEstate?.address?.cbmls?.uabi || "",
+                                name: realEstate?.address?.address || '',
+                                cbml: realEstate?.address?.cbmls?.uabi || '',
                             },
                         }
                       : {}),
-                  projects_id: realEstate?.project?.id && `${realEstate?.project?.id}` || "0",
+                  projects_id: (realEstate?.project?.id && `${realEstate?.project?.id}`) || '0',
               }),
     };
 
     // console.log('inicial', initial_values)
-
-
 
     if (!Array.isArray(initial_values.materials) && typeof initial_values.materials === 'string') {
         initial_values.materials = initial_values.materials.split(',');
@@ -231,9 +227,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         total_area: Yup.number()
             .when('active_type', {
                 is: (active_type) => Array.isArray(active_type) && active_type.includes('Lote'),
-                then: Yup.number()
-                    .nullable()
-                    .min(Yup.ref('plot_area'), 'debe ser mayor a área Lote'),
+                then: Yup.number().nullable().min(Yup.ref('plot_area'), 'debe ser mayor a área Lote'),
             })
             .when('active_type', {
                 is: (active_type) =>
@@ -241,9 +235,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                     (active_type.includes('Construccion') ||
                         active_type.includes('Construccion para demoler') ||
                         active_type.includes('Mejora')),
-                then: Yup.number()
-                    .nullable()
-                    .min(Yup.ref('construction_area'), 'debe ser mayor a área construccion'),
+                then: Yup.number().nullable().min(Yup.ref('construction_area'), 'debe ser mayor a área construccion'),
             })
             .required('obligatorio'),
 
@@ -283,22 +275,18 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         zone: Yup.string().required('Campo obligatorio'),
         //tipology_id: Yup.string().required('Campo obligatorio'),
         acquisitions: Yup.array(),
-        ...(inventory ?
-            {
-                social_investment_type: Yup.string().when('disposition_type', {
-                    is: "Inversión Social",
-                    then: Yup.string().required('obligatorio')
-                }),
-                social_program: Yup.string().when('disposition_type', {
-                    is: "Inversión Social",
-                    then: Yup.string().required('obligatorio').max(50, 'El maximo es 20 caracteres')
-                }),
-            }
-            :
-            {}
-
-        ),
-
+        ...(inventory
+            ? {
+                  social_investment_type: Yup.string().when('disposition_type', {
+                      is: 'Inversión Social',
+                      then: Yup.string().required('obligatorio'),
+                  }),
+                  social_program: Yup.string().when('disposition_type', {
+                      is: 'Inversión Social',
+                      then: Yup.string().required('obligatorio').max(50, 'El maximo es 20 caracteres'),
+                  }),
+              }
+            : {}),
     });
 
     const submit = (aux_values, form) => {
@@ -476,7 +464,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 <Card
                                                     title={
                                                         <>
-                                                            <b>Inmuebles del Proyecto: { }</b>
+                                                            <b>Inmuebles del Proyecto: {}</b>
                                                         </>
                                                     }
                                                 >
@@ -531,14 +519,13 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             }}
                                             disabled={formik.isSubmitting}
                                         >
-                                            Guardar
+                                            Guardar y Finalizar
                                             {formik.isSubmitting && (
                                                 <i
                                                     className="fa fa-circle-notch fa-spin"
                                                     style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
                                                 />
-                                            )}{' '}
-                                            y Finalizar
+                                            )}
                                         </button>
                                         {type === 'create' && (
                                             <button
@@ -550,28 +537,34 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                 }}
                                                 disabled={formik.isSubmitting}
                                             >
-                                                Guardar{' '}
+                                                Guardar y Crear otro
                                                 {formik.isSubmitting && (
                                                     <i
                                                         className="fa fa-circle-notch fa-spin"
                                                         style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
                                                     />
-                                                )}{' '}
-                                                y Crear otro
+                                                )}
                                             </button>
                                         )}
                                     </>
                                 )}
-                                {inventory !== undefined && !inventory && /*type !== ''*/ (
-                                    <button
+                                {inventory !== undefined && !inventory && (
+                                    /*type !== ''*/ <button
                                         type="button"
                                         className="btn btn-primary"
                                         onClick={() => {
-                                            formik.setFieldValue('_type', 'normal');
+                                            formik.setFieldValue('_type', 'finish');
                                             formik.submitForm();
                                         }}
+                                        disabled={formik.isSubmitting}
                                     >
                                         Confirmar y finalizar
+                                        {formik.isSubmitting && (
+                                            <i
+                                                className="fa fa-circle-notch fa-spin"
+                                                style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
+                                            />
+                                        )}
                                     </button>
                                 )}
                                 {globe === true && (

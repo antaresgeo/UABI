@@ -58,7 +58,11 @@ export const upload_documents = (docs) => {
         });
     }
     return Promise.all(promises).then((res) => {
+        if(res.every(d => Array.isArray(d))){
+            res = res.map(d=> d[0])
+        }
         const no_action_docs = docs.filter((d) => d.action === 'none');
-        return [...no_action_docs, ...res].map((d) => d.id).join(',');
+        const res_docs = [...no_action_docs, ...res]
+        return res_docs.map((d) => d.id).join(',');
     });
 };

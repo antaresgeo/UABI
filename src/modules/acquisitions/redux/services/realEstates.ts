@@ -182,6 +182,7 @@ export const createRealEstate = async (
             aux_data
         );
         const docs_ids = await upload_documents(docs);
+        console.log(docs_ids)
         await http.put(
             URI,
             { supports_documents: docs_ids || '' },
@@ -282,7 +283,9 @@ export const updateRealEstate = async (data: any, id: number) => {
                 params: { id },
             }
         );
+
         const docs_ids = await upload_documents(docs);
+
         await http.put(
             URI,
             { supports_documents: docs_ids || '' },
@@ -304,7 +307,7 @@ export const updateRealEstate = async (data: any, id: number) => {
         );
         return res.data.results;
     } catch (error) {
-        console.error('error', { ...error });
+        console.error(error);
         return Promise.reject('Error');
     }
 };
