@@ -123,8 +123,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                       ? {
                             address: realEstate.address.id,
                             _address: {
-                                name: realEstate.address.address,
-                                cbml: realEstate.address.cbmls.uabi,
+                                name: realEstate.address?.address,
+                                cbml: realEstate.address?.cbmls?.uabi,
                             },
                         }
                       : {}),

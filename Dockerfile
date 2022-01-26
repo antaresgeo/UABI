@@ -7,5 +7,7 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=builder /app/build .
+RUN rm /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/nginx/nginx.conf /etc/nginx/conf.d
 EXPOSE 80
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]

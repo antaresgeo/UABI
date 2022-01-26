@@ -4,14 +4,5 @@ services:
         build: .
         ports:
             - 3000:3000
-        # environment:
-        #     - PORT=3000
-        #     - REACT_APP_PAGE_HOST=http://127.0.0.1:4000/
-        #     - REACT_APP_URI_SERVICE_SABI=http://127.0.0.1:3434
-        #     - REACT_APP_API_SABI_VERSION=/v1
-        #     - REACT_APP_URI_SERVICE_LOCATION=http://127.0.0.1:3535
-        #     - REACT_APP_API_LOCATION_VERSION=/v1
-        #     - REACT_APP_URI_SERVICE_AUTH=https://www.medellin.gov.co
-        #     - REACT_APP_API_AUTH_VERSION=/test
 volumes:
     data:

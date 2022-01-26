@@ -12,7 +12,13 @@ const nice_login = (dispatch) => (response) => {
     if (response?.data) {
         localStorage.removeItem('attemp');
         const { results } = response.data;
-        return dispatch(get_user(results));
+        const { detailsUser, token, permits, roles } = results;
+        const user = {
+            detailsUser,
+            permits,
+            roles,
+        };
+        return dispatch(register_user(token, user));
     }
     return Promise.reject(response);
 };
@@ -28,17 +34,27 @@ const bad_login = (dispatch) => (error) => {
     return Promise.reject([null, null, null]);
 };
 
-const get_user = (token: string) => {
+const register_user = (token: string, user) => {
     return (dispatch) => {
-        return user_service.get_user_by_id(null, token).then(async (user) => {
-            dispatch(newToken({ access: token }));
-            dispatch(loginSuccess(user));
-            const user_hash = btoa(JSON.stringify(user));
-            localStorage.setItem('_uk_', user_hash);
-            return Promise.resolve(user);
-        });
+        dispatch(newToken({ access: token }));
+        dispatch(loginSuccess(user));
+        const user_hash = btoa(JSON.stringify(user));
+        localStorage.setItem('_uk_', user_hash);
+        return Promise.resolve(user);
     };
 };
+
+// const get_user = (token: string) => {
+//     return (dispatch) => {
+//         return user_service.get_user_by_id(null, token).then(async (user) => {
+//             dispatch(newToken({ access: token }));
+//             dispatch(loginSuccess(user));
+//             const user_hash = btoa(JSON.stringify(user));
+//             localStorage.setItem('_uk_', user_hash);
+//             return Promise.resolve(user);
+//         });
+//     };
+// };
 
 const login = (idNumber: string, pass: string) => {
     return (dispatch: Function) => {
@@ -142,7 +158,7 @@ const update_password = (password: string, is_new_user = false) => {
 const actions = {
     login,
     newToken,
-    get_user,
+    // get_user,
     // refresh,
     logOut,
     // change_password,
