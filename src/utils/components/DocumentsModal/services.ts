@@ -41,7 +41,7 @@ export const create_document = async ({
         formData.append('pdf', pdf);
         name && formData.append('name', name);
         type && formData.append('type', type);
-        const URI = `/docs/upload/`;
+        const URI = `/docs/upload/?type=pdf&from=sabi`;
         const res: AxiosResponse<CreateDocumentResponse> =
             await documents_http.post(URI, formData, {
                 headers: { 'content-type': 'multipart/form-data' },
