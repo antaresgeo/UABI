@@ -31,15 +31,16 @@ const DetailProjects = () => {
                 const { acquisitions } = values;
                 try {
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));
-                    if (acquisitions.length > 0) {
-                        await dispatch(actions.updateAcquisition(res.id, acquisitions));
+                    if(res){
+                        if (acquisitions.length > 0) {
+                            await dispatch(actions.updateAcquisition(res.id, acquisitions));
+                        }
+                        if (isFinish) {
+                            history.push('/acquisitions/real-estates/');
+                        } else {
+                            if (res.project.id) return dispatch(actions.getRealEstatesByProject(res.project.id));
+                        }
                     }
-                    if (isFinish) {
-                        history.push('/acquisitions/real-estates/');
-                    } else {
-                        if (res.project.id) return dispatch(actions.getRealEstatesByProject(res.project.id));
-                    }
-
                 } catch (e) {
                     return Promise.reject();
                 }

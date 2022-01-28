@@ -64,3 +64,65 @@ export interface Inspection {
     physical_inspection: PhysicalInspection;
     owner: Owner;
 }
+
+
+export interface InspectionRequest {
+    physical_inspection: Physicalinspection;
+    observations: _Observations;
+    ocupation: _Ocupation;
+    public_services: Publicservice[];
+    properties: Property[];
+    owner: _Owner;
+    photographic_register: Photographicregister;
+}
+
+export interface Photographicregister {
+    fachada: string;
+    generals: any[];
+}
+
+export interface _Owner {
+    document_number?: any;
+    document_type?: any;
+    email?: any;
+    names_surnames?: any;
+    phone_number?: any;
+    id: number;
+}
+
+export interface Property {
+    name: string;
+    status_property: string;
+    observation: string;
+    accountant: string;
+    status: string;
+}
+
+export interface Publicservice {
+    id: number;
+    name: string;
+    subscriber: string;
+    accountant: string;
+    physical_inspection_id: number;
+    status: number;
+    audit_trail: any;
+}
+
+
+
+export interface _Ocupation {
+    tenure: string;
+    use: string;
+    ownership: string;
+    contractual: string;
+}
+
+export interface Physicalinspection {
+    observations: _Observations;
+    photographic_record: string;
+    inspection_date: number;
+}
+
+export interface _Observations {
+    observation: string;
+}

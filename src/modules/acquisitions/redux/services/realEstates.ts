@@ -95,12 +95,12 @@ const get_docucments_whit_service = async (docs) => {
                     doc.type === 3
                         ? 'Documento de Matricula'
                         : doc.type === 4
-                            ? 'Documento de Titulo'
-                            : doc.type === 6
-                                ? 'Documento Avalúo'
-                                : doc.type === 7
-                                    ? 'Documento de Prediación'
-                                    : 'Anexo'
+                        ? 'Documento de Titulo'
+                        : doc.type === 6
+                        ? 'Documento Avalúo'
+                        : doc.type === 7
+                        ? 'Documento de Prediación'
+                        : 'Anexo',
             }));
         }
         return [];
@@ -127,16 +127,16 @@ const finalData = (data, docs_ids?) => {
     if (!aux_data.type) {
         delete aux_data.sap_id;
     } else {
-        delete aux_data.type
+        delete aux_data.type;
     }
-    if (aux_data.construction_area === "") {
-        aux_data.construction_area = null
+    if (aux_data.construction_area === '') {
+        aux_data.construction_area = null;
     }
-    if (aux_data.plot_area === "") {
-        aux_data.plot_area = 0
+    if (aux_data.plot_area === '') {
+        aux_data.plot_area = 0;
     }
     if (aux_data.cost_center_id) {
-        aux_data.cost_center_id = Number(aux_data.cost_center_id)
+        aux_data.cost_center_id = Number(aux_data.cost_center_id);
     }
     aux_data.projects_id[0] = Number(aux_data.projects_id[0]);
     delete aux_data.active_code;
@@ -153,7 +153,6 @@ const finalData = (data, docs_ids?) => {
     delete aux_data.project;
     delete aux_data._project;
     return aux_data;
-
 };
 // Services: POST
 export const createRealEstate = async (
@@ -162,22 +161,24 @@ export const createRealEstate = async (
     try {
         let URI = `/real-estates`;
         const docs: any = await compute_docs(data.supports_documents);
-        console.log(docs)
-        const aux_data = finalData(data);
-        let res: AxiosResponse<IRealEstateResponse> = await http.post(
-            URI,
-            aux_data
-        );
-        const docs_ids = await upload_documents(docs);
-        console.log(docs_ids)
-        await http.put(
-            URI,
-            { supports_documents: docs_ids || '' },
-            {
-                params: { id: res.data.results.id },
-            }
-        );
-        return res.data.results;
+        if (docs) {
+            console.log(docs);
+            const aux_data = finalData(data);
+            let res: AxiosResponse<IRealEstateResponse> = await http.post(
+                URI,
+                aux_data
+            );
+            const docs_ids = await upload_documents(docs);
+            console.log(docs_ids);
+            await http.put(
+                URI,
+                { supports_documents: docs_ids || '' },
+                {
+                    params: { id: res.data.results.id },
+                }
+            );
+            return res.data.results;
+        }
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');
@@ -186,23 +187,23 @@ export const createRealEstate = async (
 
 //TODO: Crear realEstates englobe - desenglobe
 export const createRealEstates = async (data: any, action) => {
-    console.log('crear', data)
+    console.log('crear', data);
     let realEstates = [];
     const docs = await Promise.all(
         data.map(async (d) => {
             return await compute_docs(d.supports_documents);
         })
-    )
-    data.map(d => realEstates.push(finalData(d)));
-    realEstates.map(dr => {
-        if (dr.plot_area === "") {
-            dr.plot_area = 0
+    );
+    data.map((d) => realEstates.push(finalData(d)));
+    realEstates.map((dr) => {
+        if (dr.plot_area === '') {
+            dr.plot_area = 0;
         }
         delete dr.value;
-        delete dr.key
-        delete dr.project_id
-    })
-    const data_final = { realEstates }
+        delete dr.key;
+        delete dr.project_id;
+    });
+    const data_final = { realEstates };
 
     try {
         let URI = `/real-estates`;
@@ -218,9 +219,8 @@ export const createRealEstates = async (data: any, action) => {
             docs.map(async (d) => {
                 return await upload_documents(d);
             })
-        )
+        );
         console.log(docs_ids);
-
 
         // res.data.results.map(result => {
 
@@ -233,17 +233,11 @@ export const createRealEstates = async (data: any, action) => {
         //     }
         // );
 
-
-
         return res.data.results;
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');
     }
-
-
-
-
 };
 
 export const updateRealEstates = async (data: any) => {
@@ -262,37 +256,38 @@ export const updateRealEstate = async (data: any, id: number) => {
     try {
         let URI = `/real-estates`;
         const docs: any = await compute_docs(data.supports_documents);
-        const body = finalData(data);
-        let res: AxiosResponse<IRealEstateResponse> = await http.put(
-            URI,
-            body,
-            {
-                params: { id },
-            }
-        );
-
-        const docs_ids = await upload_documents(docs);
-
-        await http.put(
-            URI,
-            { supports_documents: docs_ids || '' },
-            {
-                params: { id },
-            }
-        );
-
-        swal_success.fire({
-            title: 'Bien Inmueble actualizado.',
-            text: res.data.message,
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 1500,
-        });
-
-        res.data.results.supports_documents = await get_docucments_whit_service(
-            res.data.results.supports_documents
-        );
-        return res.data.results;
+        if (docs) {
+            const body = finalData(data);
+            let res: AxiosResponse<IRealEstateResponse> = await http.put(
+                URI,
+                body,
+                {
+                    params: { id },
+                }
+            );
+            const docs_ids = await upload_documents(docs);
+            await http.put(
+                URI,
+                { supports_documents: docs_ids || '' },
+                {
+                    params: { id },
+                }
+            );
+            swal_success.fire({
+                title: 'Bien Inmueble actualizado.',
+                text: res.data.message,
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            res.data.results.supports_documents =
+                await get_docucments_whit_service(
+                    res.data.results.supports_documents
+                );
+            return res.data.results;
+        }else{
+            return Promise.resolve(false)
+        }
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');

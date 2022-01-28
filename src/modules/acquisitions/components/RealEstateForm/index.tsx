@@ -327,6 +327,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     };
 
     useEffect(() => {
+        console.log(1);
         dispatch(actions.getProjects());
     }, []);
 
