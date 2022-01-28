@@ -200,7 +200,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                             } else {
                                                 const registryNumberRealEstates = ids.map((id) => {
                                                     const real_estate = realEstates.find((r) => r.id === id);
-                                                    return real_estate.registry_number;
+                                                    return real_estate?.registry_number || -1;
                                                 });
                                                 setFieldValue('registry_numbers', registryNumberRealEstates, false);
                                             }

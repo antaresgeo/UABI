@@ -43,7 +43,7 @@ export const compute_docs = async (supports_documents) => {
         }
     } else {
         if (doc_required_message(supports_documents)) {
-            return Promise.reject();
+            return Promise.resolve(false);
         } else {
             return supports_documents.map((d) => ({ ...d, action: 'none' }));
         }

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Tabs } from 'antd';
 import CreateOccupation from './CreateOccupation';
 import CreateInspectionPhysical from './CreateInspectionPhysical';
@@ -7,24 +7,56 @@ import CreateUpgrade from './CreateUpgrade';
 import PhotographicRecordForm from './PhotographicRecordForm';
 import Report from './Report';
 import BasicInformation from './BasicInformation';
-import { Inspection } from '../custom_types';
+import { Inspection, InspectionRequest } from '../custom_types';
 import { FormikProps, FormikValues } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { getTipology } from './../../acquisitions/redux/actions/realEstates';
 import { swal_success } from '../../../utils';
-import { create_notification } from '../../notificacions/redux/service';
 
 interface InspectionFormTagsProps {
     inspection: Inspection;
     real_estate: any;
     user: any;
 }
+
 const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_estate, user }) => {
-    const history = useHistory();
-    console.log(history.location.hash)
     const { TabPane } = Tabs;
+    const history = useHistory<any>();
+    const active_key: string = history.location.state?.active_key || '1';
+    let data: InspectionRequest = history.location.state?.inspection_request;
+    if (!data) {
+        data = {
+            physical_inspection: {
+                observations: {
+                    observation: '',
+                },
+                photographic_record: '',
+                inspection_date: null,
+            },
+            observations: {
+                observation: '',
+            },
+            ocupation: {
+                tenure: '',
+                use: '',
+                ownership: '',
+                contractual: '',
+            },
+            public_services: [],
+            properties: [],
+            owner: {
+                document_number: null,
+                document_type: null,
+                email: null,
+                names_surnames: null,
+                phone_number: null,
+                id: 50,
+            },
+            photographic_register: {
+                fachada: 'xxx',
+                generals: [],
+            },
+        };
+    }
     const limit = 6;
-    const [data, set_data] = useState(null);
     const steps = [
         {
             ref: useRef<FormikProps<FormikValues>>(),
@@ -32,15 +64,14 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 steps[0].ref.current?.submitForm();
             },
             onSave: (values) => {
-                set_data((data) => {
-                    return {
-                        ...data,
-                        observations: {
-                            ...data?.physical_inspection?.observations,
-                            observation: values.observations,
-                        },
-                    };
-                });
+                data = {
+                    ...data,
+                    observations: {
+                        ...data?.physical_inspection?.observations,
+                        observation: values.observations,
+                    },
+                };
+
                 // console.log('step 1', values);
             },
         },
@@ -50,15 +81,13 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 steps[1].ref.current?.submitForm();
             },
             onSave: (values) => {
-                set_data((data) => {
-                    return {
-                        ...data,
-                        ocupation: {
-                            ...data?.ocupation,
-                            ...values,
-                        },
-                    };
-                });
+                data = {
+                    ...data,
+                    ocupation: {
+                        ...data?.ocupation,
+                        ...values,
+                    },
+                };
                 // console.log('step 2', values);
             },
         },
@@ -68,22 +97,20 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 steps[2].ref.current?.submitForm();
             },
             onSave: (values) => {
-                set_data((data) => {
-                    return {
-                        ...data,
-                        physical_inspection: {
-                            ...data?.physical_inspection,
-                            photographic_record: '',
-                            inspection_date: 1638366517333,
-                            observations: {
-                                ...data?.physical_inspection?.observations,
-                                observation: values.observations,
-                            },
+                data = {
+                    ...data,
+                    physical_inspection: {
+                        ...data?.physical_inspection,
+                        photographic_record: '',
+                        inspection_date: 1638366517333,
+                        observations: {
+                            ...data?.physical_inspection?.observations,
+                            observation: values.observations,
                         },
-                        public_services: [...values?.public_services],
-                        properties: [...values?.properties],
-                    };
-                });
+                    },
+                    public_services: [...values?.public_services],
+                    properties: [...values?.properties],
+                };
                 // console.log('step 3', values);
             },
         },
@@ -93,15 +120,14 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 steps[3].ref.current?.submitForm();
             },
             onSave: (values) => {
-                set_data((data) => {
-                    return {
-                        ...data,
-                        owner: {
-                            ...data?.owner,
-                            ...values,
-                        },
-                    };
-                });
+                data = {
+                    ...data,
+                    owner: {
+                        ...data?.owner,
+                        ...values,
+                    },
+                };
+
                 // console.log('step 4', values);
             },
         },
@@ -111,12 +137,11 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 steps[4].ref.current?.submitForm();
             },
             onSave: (values) => {
-                set_data((data) => {
-                    return {
-                        ...data,
-                        image: Object.values(values),
-                    };
-                });
+                data = {
+                    ...data,
+                    // image: Object.values(values),
+                };
+
                 // console.log('step 5', values);
             },
         },
@@ -126,7 +151,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 steps[5].ref.current?.submitForm();
             },
             onSave: (values) => {
-                const final_data = {
+                data = {
                     ...data,
                     physical_inspection: {
                         ...data?.physical_inspection,
@@ -136,7 +161,6 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                         },
                     },
                 };
-                set_data(final_data);
                 // delete final_data.image;
                 swal_success.fire('Inspeccion realizada exitosamente', '', 'success').then(() => {
                     history.push('/inspection/');
@@ -148,16 +172,15 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                     //     toRole: 1,
                     // });
                 });
-                console.log({ final_data });
+                console.log({ final_data: data });
             },
         },
     ];
 
-    const [activeKey, set_activeKey] = useState<string>('1');
-    const show_next = parseInt(activeKey) < limit;
+    const show_next = parseInt(active_key) < limit;
 
     const next_tab = () => {
-        const key = parseInt(activeKey);
+        const key = parseInt(active_key);
         const next = key + 1;
         if (next <= limit) {
             callback(`${next}`);
@@ -165,7 +188,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
     };
 
     const prev_tab = () => {
-        const key = parseInt(activeKey);
+        const key = parseInt(active_key);
         const prev = key - 1;
         if (prev > 0) {
             callback(`${prev}`);
@@ -173,26 +196,25 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
     };
 
     function callback(key) {
-        const save: any = steps[parseInt(activeKey) - 1]?.save;
+        const save: any = steps[parseInt(active_key) - 1]?.save;
         save && save();
-        set_activeKey(key);
+        history.push(history.location.pathname, { active_key: key, inspection_request: data });
+        // set_activeKey(key);
     }
 
     const obs = data?.physical_inspection?.observations?.observation;
 
     useEffect(() => {
-        set_data((data) => {
-            return {
-                ...data,
-                physical_inspection: {
-                    ...data?.physical_inspection,
-                    observations: {
-                        ...data?.physical_inspection?.observations,
-                        observation: inspection?.physical_inspection?.observations?.observation,
-                    },
+        data = {
+            ...data,
+            physical_inspection: {
+                ...data?.physical_inspection,
+                observations: {
+                    ...data?.physical_inspection?.observations,
+                    observation: inspection?.physical_inspection?.observations?.observation,
                 },
-            };
-        });
+            },
+        };
     }, [inspection]);
 
     return (
@@ -203,7 +225,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                         <h5>Crear nueva Inspección</h5>
                     </div>
 
-                    <Tabs activeKey={activeKey} className="w-100 h-100" onChange={callback}>
+                    <Tabs activeKey={active_key} className="w-100 h-100" onChange={callback}>
                         <TabPane tab="Información básica BI" key="1">
                             <BasicInformation
                                 inspection={null}
@@ -213,14 +235,14 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                                 onSubmit={steps[0].onSave}
                             />
                         </TabPane>
-                        <TabPane tab="Ocupación" key="2" disabled={parseInt(activeKey) < 2}>
+                        <TabPane tab="Ocupación" key="2" disabled={parseInt(active_key) < 2}>
                             <CreateOccupation
                                 ocupation={inspection?.ocupation}
                                 innerRef={steps[1].ref}
                                 onSubmit={steps[1].onSave}
                             />
                         </TabPane>
-                        <TabPane tab="Inspección física" key="3" disabled={parseInt(activeKey) < 3}>
+                        <TabPane tab="Inspección física" key="3" disabled={parseInt(active_key) < 3}>
                             <CreateInspectionPhysical
                                 physical_inspection={inspection?.physical_inspection}
                                 innerRef={steps[2].ref}
@@ -228,17 +250,17 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                                 obs={obs}
                             />
                         </TabPane>
-                        <TabPane tab="Actualización" key="4" disabled={parseInt(activeKey) < 4}>
+                        <TabPane tab="Actualización" key="4" disabled={parseInt(active_key) < 4}>
                             <CreateUpgrade
                                 owner={inspection?.owner}
                                 innerRef={steps[3].ref}
                                 onSubmit={steps[3].onSave}
                             />
                         </TabPane>
-                        <TabPane tab="Registro fotográfico" key="5" disabled={parseInt(activeKey) < 5}>
+                        <TabPane tab="Registro fotográfico" key="5" disabled={parseInt(active_key) < 5}>
                             <PhotographicRecordForm innerRef={steps[4].ref} onSubmit={steps[4].onSave} />
                         </TabPane>
-                        <TabPane tab="Generar informe" key="6" disabled={parseInt(activeKey) < 6}>
+                        <TabPane tab="Generar informe" key="6" disabled={parseInt(active_key) < 6}>
                             <Report
                                 obs={obs}
                                 innerRef={steps[5].ref}
@@ -259,7 +281,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => {
-                        if (activeKey === '1') {
+                        if (active_key === '1') {
                             history.goBack();
                         } else {
                             prev_tab();

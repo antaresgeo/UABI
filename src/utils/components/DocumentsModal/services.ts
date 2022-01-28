@@ -68,9 +68,11 @@ export const get_documents_by_ids = async (ids) => {
 
 export const download_document = async (doc_id, name) => {
     try {
-        let URI = `/docs/download/${doc_id}`;
-        let res: any = await download(name, documents_http.get(URI));
-        console.log(res);
+        if (doc_id) {
+            let URI = `/docs/download/${doc_id}`;
+            let res: any = await download(name, documents_http.get(URI));
+            console.log(res);
+        }
     } catch (e) {
         return Promise.reject('Error download_document');
     }
@@ -79,18 +81,20 @@ export const download_document = async (doc_id, name) => {
 const download = async (filename, service) => {
     return service.then((response) => {
         if (response) {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.target = '_blank';
-            link.setAttribute(
-                'download',
-                `${filename}_${formatDate(new Date())}.pdf`
-            );
-            document.body.appendChild(link);
-            link.click();
+            createDownload(filename, new Blob([response.data]));
         }
     });
+};
+
+export const createDownload = (filename: string, file: File | Blob) => {
+    const url = window.URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = '_blank';
+    const [name, _type] = filename.split('.');
+    link.setAttribute('download', `${name}_${formatDate(new Date())}.${_type}`);
+    document.body.appendChild(link);
+    link.click();
 };
 
 export const get_all_documents = async (): Promise<Document[] | string> => {
@@ -104,7 +108,9 @@ export const get_all_documents = async (): Promise<Document[] | string> => {
     }
 };
 
-export const get_all_documents_by_bi = async (re_id): Promise<Document[] | string> => {
+export const get_all_documents_by_bi = async (
+    re_id
+): Promise<Document[] | string> => {
     try {
         const URI = `/docs/`;
         const res: AxiosResponse<GetAllDocumentsResponse> =

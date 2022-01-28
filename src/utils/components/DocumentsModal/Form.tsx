@@ -17,13 +17,14 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, file_type, onSu
     // const [disable_upload, set_disable_upload] = useState(false);
     const initial_values = {
         name: name || '',
-        pdf: null,
+        file: null,
         fileList: [],
     };
     const submit = (values, form) => {
         const res_values = { ...values };
         delete res_values.fileList;
-        res_values.name = res_values.name + '.pdf';
+        const [, original_type] = res_values.file.name.split('.');
+        res_values.name = res_values.name + '.' + original_type;
         form.setSubmitting(true);
         onSubmit(res_values)
             .then(() => {
@@ -36,7 +37,7 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, file_type, onSu
         <Formik initialValues={initial_values} onSubmit={submit} innerRef={innerRef}>
             {({ values, setFieldValue }) => {
                 const upload_props = {
-                    accept: file_type === 'pdf' ? '.pdf' : file_type === 'img' ? 'image/*' : '.pdf',
+                    accept: file_type === 'pdf' ? '.pdf' : file_type === 'img' ? 'image/*' : '*',
                     maxCount: 1,
                     onChange: ({ file, fileList }) => {
                         if (validate_file_type(file, file_type)) {
@@ -44,7 +45,7 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, file_type, onSu
                             if (values.name === '') {
                                 setFieldValue('name', file.name.split('.')[0]);
                             }
-                            setFieldValue(file_type, file);
+                            setFieldValue('file', file);
                             setFieldValue('fileList', fileList);
                         } else {
                             set_is_correct_type(false);
@@ -65,7 +66,7 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, file_type, onSu
                             //     set_disable_upload(true)
                             // }}
                         >
-                            Seleccionar {file_type === 'pdf' ? 'PDF' : file_type === 'img' ? 'Imagen' : 'PDF'}
+                            Seleccionar {file_type === 'pdf' ? 'PDF' : file_type === 'img' ? 'Imagen' : 'Archivo'}
                         </button>
                     );
                 };
@@ -80,7 +81,11 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, file_type, onSu
                                 {!is_correct_type && (
                                     <Alert
                                         message={`el archivo seleccionado no es ${
-                                            file_type === 'pdf' ? 'un PDF' : file_type === 'img' ? 'una Imagen' : 'PDF'
+                                            file_type === 'pdf'
+                                                ? 'un PDF'
+                                                : file_type === 'img'
+                                                ? 'una Imagen'
+                                                : 'Archivo'
                                         }`}
                                         type="error"
                                         closable

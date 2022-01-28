@@ -3,7 +3,8 @@ import Modal from 'antd/lib/modal/Modal';
 import Form from './Form';
 import { FormikProps, FormikValues } from 'formik';
 import Tag from 'antd/lib/tag';
-import { delete_document, download_document } from './services';
+import { createDownload, delete_document, download_document } from './services';
+import Image from 'antd/lib/image';
 
 interface LocationModalProps {
     doc_name?: string;
@@ -29,9 +30,15 @@ const DocumentsModal: FC<LocationModalProps> = ({
     onChange,
 }) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
-    const title = modal_name ? modal_name : 'Agregar Documento';
+    const title = modal_name
+        ? modal_name
+        : `Agregar ${file_type === 'pdf' ? 'Documento' : file_type === 'img' ? 'Imagen' : 'Documento'}`;
     const form_ref = useRef<FormikProps<FormikValues>>();
-
+    const file = file_type === 'pdf' ? doc?.pdf : doc?.img || null;
+    let file_url = null;
+    if (file) {
+        file_url = window.URL.createObjectURL(file);
+    }
     const close = () => {
         set_is_visible(false);
         form_ref.current?.resetForm();
@@ -44,7 +51,7 @@ const DocumentsModal: FC<LocationModalProps> = ({
     const is_submitting = form_ref.current?.isSubmitting;
 
     const on_change = (new_doc, _delete = false, prev_doc = null) => {
-        if (doc.hasOwnProperty('id') && doc.id) {
+        if (doc?.hasOwnProperty('id') && doc?.id) {
             delete_document(doc.id).then(() => {
                 onChange(new_doc);
                 _delete && onDelete && onDelete(new_doc);
@@ -71,7 +78,11 @@ const DocumentsModal: FC<LocationModalProps> = ({
                                 );
                             }}
                             onClick={() => {
-                                download_document(doc.id, doc.name);
+                                if (doc.id) {
+                                    download_document(doc.id, doc.name);
+                                } else {
+                                    createDownload(doc.name, file);
+                                }
                             }}
                         >
                             {doc.name}
@@ -82,7 +93,7 @@ const DocumentsModal: FC<LocationModalProps> = ({
                     {btn_label ? btn_label : title}
                 </span>
             </div>
-
+            {file_type === 'img' && file && <Image width={100} src={file_url} />}
             <Modal
                 title={title}
                 centered
@@ -108,15 +119,16 @@ const DocumentsModal: FC<LocationModalProps> = ({
                     innerRef={form_ref}
                     file_type={file_type}
                     onSubmit={(values) => {
-                        on_change(
-                            {
-                                label: doc.label,
-                                type: doc.type,
-                                ...values,
-                            },
-                            false,
-                            doc
-                        );
+                        console.log(values);
+                        const data = {
+                            label: doc?.label || '',
+                            type: doc?.type || -1,
+                            ...(file_type === 'pdf' ? { pdf: values.file } : {}),
+                            ...(file_type === 'img' ? { img: values.file } : {}),
+                            ...values,
+                        };
+                        delete data.file;
+                        on_change(data, false, doc);
                         close();
                         return Promise.resolve();
                     }}

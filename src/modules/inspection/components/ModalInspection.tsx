@@ -19,7 +19,6 @@ const ModalInspection: FC<InspectionModalProps> = ({ /*onSave,*/ disabled, proje
     const dispatch = useDispatch();
     const history = useHistory();
     const [is_visible, set_is_visible] = useState<boolean>(false);
-    const [selectedRE, set_selectedRE] = useState([]);
     const open = () => {
         if (Number.isInteger(project_id)) {
             dispatch(actions.getRealEstatesByProject(project_id));
@@ -32,15 +31,14 @@ const ModalInspection: FC<InspectionModalProps> = ({ /*onSave,*/ disabled, proje
         set_is_visible(false);
     };
 
-    let data = [];
-    realEstates.map((r) => {
-        data.push({ ...r, key: r.id });
+    const data = realEstates.map((r, i ) => {
+        return { ...r, key: `${r.id}_${i}` };
     });
 
     const columns = [
         {
             title: 'ID',
-            dataIndex: 'key',
+            dataIndex: 'id',
         },
         {
             title: 'Bien Inmueble',
