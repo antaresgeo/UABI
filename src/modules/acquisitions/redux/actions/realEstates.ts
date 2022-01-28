@@ -22,8 +22,6 @@ export const getRealEstatesByProject = (id, filters?) => {
     );
 };
 
-export const getRealEstateByPolicy = (without: string) =>
-    request_dispatch(types.realEstate, service.getRealEstatesBypolicy(without));
 
 export const getRealEstate = (id: string) =>
     request_dispatch(types.realEstate, service.getRealEstate(id));

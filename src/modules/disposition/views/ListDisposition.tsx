@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Card } from '../../../utils/ui';
 import { TableDiszposition } from '../components/TableDisposition';
@@ -7,12 +7,12 @@ import { useDispatch } from 'react-redux';
 import { actions } from '../../acquisitions/redux';
 
 export const ListDisposition = () => {
-    // const [filters, set_filters] = useState<object>(null);
+    const [filters, set_filters] = useState<object>(null);
     const user = useSelector((store: any) =>  store.auth.user);
     const dispatch = useDispatch();
 
     const filter = async (_filters, _) => {
-        // set_filters(_filters);
+        set_filters(_filters);
         await dispatch(actions.getRealEstates({ page: 1, with: 'pagination', ..._filters }));
     };
 
@@ -39,19 +39,19 @@ export const ListDisposition = () => {
                                 <div className="col-6 ">
                                     <FilterForm
                                         filters={[
-                                            { key: '', name: 'Proyecto' },
+                                            { key: 'name', name: 'Proyecto' },
                                             { key: 'register_number', name: 'Matrícula' },
                                             { key: 'name', name: 'Nombre' },
                                             { key: 'address', name: 'Dirección' },
                                             { key: 'CBML', name: 'CBML' },
-                                            { key: '', name: 'Activo fijo' },
+                                            { key: 'sap_id', name: 'Activo fijo' },
                                         ]}
                                         onSubmit={filter}
                                     />
                                 </div>
                             </div>
                         </div>
-                        <TableDiszposition user={aux_user} />
+                        <TableDiszposition user={aux_user} filters={filters} />
                     </Card>
                 </div>
             </div>

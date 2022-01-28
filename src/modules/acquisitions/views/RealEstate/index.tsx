@@ -22,6 +22,7 @@ const RealEstates = () => {
         await dispatch(actions.getRealEstates({ page: 1, with: 'pagination', ..._filters }));
     };
 
+
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
@@ -52,7 +53,7 @@ const RealEstates = () => {
                                 </div>
                             </div>
                         </div>
-                        <RealEstateList withProject  user={aux_user}/*filters={{ q: query }}*/ />
+                        <RealEstateList withProject  user={aux_user} filters={filters} />
                     </Card>
                 </div>
             </div>

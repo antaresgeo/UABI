@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { documents_http, http } from '../../../../config/axios_instances';
-import {swal, swal_success} from '../../../../utils';
+import { swal_success} from '../../../../utils';
 import { IPaginable } from '../../../../utils/interfaces';
 import {
     IPolicyAttributes,
@@ -8,6 +8,7 @@ import {
 } from '../../../../utils/interfaces';
 import { compute_doc_policy } from '../../views/Policies/poliza.utils';
 import { create_document } from '../../../../utils/components/DocumentsModal/services';
+import { IRealEstateAttributes } from '../../../../utils/interfaces/components.interfaces';
 
 // Services: POST
 export const createPolicy = async (
@@ -18,13 +19,14 @@ export const createPolicy = async (
         let URI = `/insurabilities`;
         const doc: any = await compute_doc_policy(data.insurance_document);
         const create_doc: any = await create_document(doc);
+        console.log('doc', create_doc);
         delete data.insurance_document;
         delete data.registry_numbers;
         const dataFinal = {
             ...data,
-            insurance_document_id: create_doc.id,
+            insurance_document_id: create_doc[0].id,
         };
-        console.log('final', dataFinal);
+
         let res: AxiosResponse<IPolicyResponse> = await http.post(
             URI,
             dataFinal
@@ -78,12 +80,49 @@ export const getPolicy = async (
     }
 };
 
-const getDocument = async (ids) => {
+const getDocument = async (id) => {
     try {
-        let URI = `/docs/${ids}`;
-        let res: AxiosResponse<IPolicyResponse> = await documents_http.get(URI);
+        let URI = `/docs`;
+        let res: AxiosResponse<IPolicyResponse> = await documents_http.get(URI,{
+            params: { id }
+        });
         return res.data.results;
     } catch (error) {
+        return Promise.reject('Error');
+    }
+};
+
+export const getRealEstateEdit = async (
+    id: string
+): Promise<IRealEstateAttributes | string> => {
+    try {
+        let URI = `/real-estates`;
+        let res: AxiosResponse = await http.get(URI, {
+            params: { id },
+        });
+        console.log(res.data.results)
+        return res.data.results;
+    } catch (error) {
+        console.error(error);
+        return Promise.reject('Error');
+    }
+};
+
+export const getRealEstatesWithoutPolicy = async (
+    without: string,
+    id_bis: []
+): Promise<IRealEstateAttributes | string> => {
+    console.log('ids del bi',id_bis)
+
+    const key = "registry_number";
+    try {
+        let URI = `/real-estates/list/`;
+        let res: AxiosResponse = await http.get(URI, {
+            params: { without, key, edit: id_bis },
+        });
+        return res.data.results;
+    } catch (error) {
+        console.error(error);
         return Promise.reject('Error');
     }
 };

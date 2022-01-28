@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { Card } from '../../../../utils/ui';
 import { actions } from '../../redux';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { clearRealEstates, getRealEstate } from '../../../acquisitions/redux/actions/realEstates';
 import PolizaForm from '../../components/PolizaForm';
 import { IRealEstateAttributes } from '../../../../utils/interfaces';
@@ -15,6 +15,7 @@ const CreateInsurability = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const form_ref = useRef<any>();
+    const [realEstates, setRealEstates] = useState([]);
 
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const insurance_companies: any = useSelector((store: any) => store.insurability.companies.value);
@@ -34,11 +35,20 @@ const CreateInsurability = () => {
         dispatch(clearRealEstates());
     }, []);
 
+    useEffect(() => {
+            realEstatesWithoutPolicy();
+    }, []);
+
+    const realEstatesWithoutPolicy = async  () => {
+        const res: any = await dispatch(actions.getRealEstatesWithoutPolicy("policy", []));
+        setRealEstates(res);
+    }
+
     const createPolicy = async (dataPolicy) => {
         //console.log(dataPolicy)
-        await dispatch(actions.createPolicy(dataPolicy));
+        const res: any = await dispatch(actions.createPolicy(dataPolicy));
         //await swal("Message", response.message, "success");
-        // history.push(`/insurabilities/`);
+        history.push(`/insurabilities/policy/${res.id}/`);
     };
     return (
         <div className="h-100 d-flex flex-column">
@@ -52,6 +62,7 @@ const CreateInsurability = () => {
                                     type="create"
                                     companies={insurance_companies}
                                     brokers={insurance_brokers}
+                                    realEstates={realEstates}
                                     innerRef={form_ref}
                                     onSubmit={createPolicy}
                                 />

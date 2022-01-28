@@ -54,7 +54,7 @@ const DetailProject = () => {
                                     />
                                 }
                             >
-                                <RealEstateList project_id={parseInt(project?.id + '') || undefined} init={false} />
+                                <RealEstateList project_id={parseInt(project?.id + '') || undefined} init={false} filters={{key: "default"}} />
                             </Card>
                         </div>
                     </div>
