@@ -22,7 +22,7 @@ interface TemplateProps {
     toggle_percentage_modal: () => void;
     idNode: string;
     socket: Socket;
-    set_canon_type: (type: "inversion" | "inversion_social" | null) => void;
+    set_canon_type: (type: 'inversion' | 'inversion_social' | null) => void;
 }
 
 export const TemplateContext = React.createContext<TemplateProps>(null);
@@ -43,13 +43,16 @@ const TemplateProvider: FC = React.memo(({ children }) => {
         const new_socket = io(BASE_URL);
         if (user?.detailsUser) {
             new_socket.on('init', (data) => {
-                set_idNode(data.id as string);
-                console.log("data", data)
-                console.log("connect to service socket success", data.id);
                 new_socket.emit('register:user', {
                     headerAuthorization: `Bearer ${localStorage.getItem('_tk_')}`,
                     id: user.detailsUser.user_id,
                 });
+                new_socket.on('session:close', (data) => {
+                    console.log('session:close', data);
+                    //TODO: mensaje modal warnirg sakarlo al dar click
+                });
+                set_idNode(data.id as string);
+                console.log('connect to service socket success', data.id);
             });
             set_socket(new_socket);
         }
@@ -79,7 +82,7 @@ const TemplateProvider: FC = React.memo(({ children }) => {
                 drawer_close: () => set_drawer_collapsed(false),
                 toggle_pass_modal: () => set_pass_modal((collapsed) => !collapsed),
                 toggle_percentage_modal: () => setpercentege((collapsed) => !collapsed),
-                set_canon_type: (type: "inversion" | "inversion_social" | null) => {
+                set_canon_type: (type: 'inversion' | 'inversion_social' | null) => {
                     setCanon_type(type);
                 },
             }}

@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { FC } from "react"
+import {FC, useContext} from "react"
+import {TemplateContext} from "../../../utils/components/template/template_context";
 
 interface IUserFormPros {
     notification: any;
 }
 
 const Detail_notification: FC<IUserFormPros> = ({ notification }) => {
-    console.log(notification)
+    const context = useContext(TemplateContext);
+    context.socket?.emit("receive:notification", {id: notification.id})
     return (
         <div className="col-3-12">
             <div className="content_box_table">
