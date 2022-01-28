@@ -232,6 +232,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
 
 
     const change_page = (page, pageSize) => {
+        // console.log(filters)
         if(project_id) {
             dispatch(actions.getRealEstatesByProject(project_id, { page, pageSize, with: 'pagination', ...filters }));
 

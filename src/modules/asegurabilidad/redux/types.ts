@@ -21,6 +21,13 @@ const types = Object.freeze({
             'Se consulta endpoint de servicio polizas por bien inmueble [success]',
         fail: 'Se consulta endpoint de servicio polizas por bien inmueble [fail]',
     },
+    RealEstateWithoutPolicy: {
+        default:
+            'Se consulta endpoint de servicio bienes inmuebles sin poliza [default]',
+        success:
+            'Se consulta endpoint de servicio bienes inmuebles sin poliza [success]',
+        fail: 'Se consulta endpoint de servicio bienes inmuebles sin poliza [fail]',
+    },
 
     get_broker: {
         default:

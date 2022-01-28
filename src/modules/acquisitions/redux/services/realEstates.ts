@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { getAddressById, insertAddress } from '.';
 import { http } from '../../../../config/axios_instances';
-import { swal, swal_success, swal_warning } from '../../../../utils';
+import { swal_success, swal_warning } from '../../../../utils';
 import {
     createAcquisitionForRealEstate,
     getAcquisitionForRealEstate,
@@ -78,20 +78,7 @@ export const getRealEstate = async (
     }
 };
 
-export const getRealEstatesBypolicy = async (
-    without: string
-): Promise<IRealEstateAttributes | string> => {
-    try {
-        let URI = `/real-estates`;
-        let res: AxiosResponse = await http.get(URI, {
-            params: { without },
-        });
-        return res.data.results;
-    } catch (error) {
-        console.error(error);
-        return Promise.reject('Error');
-    }
-};
+
 
 const get_docucments_whit_service = async (docs) => {
     try {
@@ -410,7 +397,6 @@ const getTipology = async (id) => {
 const services = {
     getRealEstates,
     getRealEstatesByProject,
-    getRealEstatesBypolicy,
     getRealEstate,
     createRealEstate,
     createRealEstates,

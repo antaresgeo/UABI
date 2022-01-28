@@ -2,18 +2,13 @@
 import { Formik, Form, Field } from 'formik';
 // import { actions } from "./../redux";
 import { FC } from 'react';
-import { IRealEstateAttributes } from '../../../utils/interfaces';
 import * as Yup from 'yup';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import Select from '../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
 import { LinkButton } from '../../../utils/ui/link';
 import DocumentModal from './../../../utils/components/DocumentsModal/index';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { actions } from './../../acquisitions/redux';
-import {swal, swal_warning} from '../../../utils';
+import {swal_warning} from '../../../utils';
 import moment from 'moment';
 
 interface InsurabilityFormPros {
@@ -26,6 +21,7 @@ interface InsurabilityFormPros {
     type_assurance?: 'Normal';
     innerRef?: any;
     onSubmit: (values, actions?) => Promise<any>;
+    realEstates?: any;
 }
 
 const PolizaForm: FC<InsurabilityFormPros> = ({
@@ -37,44 +33,40 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
     type,
     innerRef,
     onSubmit,
+    realEstates
 }) => {
     //console.log(realEstatesPolicy);
-    const dispatch = useDispatch();
-    const realEstates: IRealEstateAttributes[] = useSelector((states: any) => states.acquisitions.realEstates.value);
 
-    useEffect(() => {
-        dispatch(actions.getRealEstates({}));
-        //dispatch(actions.getRealEstateByPolicy("policies"));
-    }, []);
+
+
 
     let newrealEstates = [];
-    newrealEstates = realEstates.reduce((valor_anterior, valor_actual) => {
-        const codigos = valor_actual.sap_id.split(',');
-        const codes = codigos.filter((cod) => cod.charAt(cod.length - 1) === 'n');
-        let obj_type = {};
-        let obj_code = {};
-        if (valor_actual.destination_type === 'PÚBLICO') {
-            obj_type = {
-                ...valor_actual,
-            };
-            valor_anterior.push(obj_type);
-        }
-        for (let i = 0; i < codes.length; i++) {
-            if (valor_actual.destination_type !== 'PÚBLICO') {
-                obj_code = {
-                    ...valor_actual,
-                };
-                valor_anterior.push(obj_code);
-            }
-        }
-        return valor_anterior;
-    }, []);
+    newrealEstates = realEstates;
+    // newrealEstates = realEstates.reduce((valor_anterior, valor_actual) => {
+    //     const codigos = valor_actual.sap_id.split(',');
+    //     const codes = codigos.filter((cod) => cod.charAt(cod.length - 1) === 'n');
+    //     let obj_type = {};
+    //     let obj_code = {};
+    //     if (valor_actual.destination_type === 'PÚBLICO') {
+    //         obj_type = {
+    //             ...valor_actual,
+    //         };
+    //         valor_anterior.push(obj_type);
+    //     }
+    //     for (let i = 0; i < codes.length; i++) {
+    //         if (valor_actual.destination_type !== 'PÚBLICO') {
+    //             obj_code = {
+    //                 ...valor_actual,
+    //             };
+    //             valor_anterior.push(obj_code);
+    //         }
+    //     }
+    //     return valor_anterior;
+    // }, []);
     // console.log(newrealEstates);
 
-    const matriculas = [];
-    const ids_real = [];
     const initialValues = {
-        registry_numbers: realEstatesPolicy ? realEstatesPolicy.map((r) => r.registry_number) : [],
+        registry_numbers: realEstatesPolicy ? realEstatesPolicy.map((r) => `${r.registry_number} - ${r.name}`) : [],
         //policy_number: "",
         policy_type: '',
         vigency_start: '',
@@ -194,7 +186,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                             { id: 'all', name: 'Todas las matriculas' },
                                             ...newrealEstates.map((realestate) => ({
                                                 id: realestate.id,
-                                                name: realestate.registry_number,
+                                                name: `${realestate.registry_number} - ${realestate.name}`
                                             })),
                                         ]}
                                         mode="multiple"

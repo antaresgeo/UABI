@@ -11,12 +11,12 @@ interface IParams {
     valueArea?: any;
     data: any;
     realEstates: any;
+
 }
 
 interface RealEstateModalProps {
     disabled?: boolean;
     realEstateData?: any;
-    index?: any;
     arrayRealEstates?: any;
     onSubmit: (values, actions?) => Promise<any>;
 }
@@ -25,6 +25,7 @@ const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealEstates,
     const location = useLocation<IParams>();
     const history: any = useHistory();
     const dispatch = useDispatch();
+    console.log(location.state);
     const { index, realEstateData, DataRealEstate, valueArea, data, realEstates } = location.state;
     const dependencies: any = useSelector((states: any) => states.acquisitions.dependencies.value);
     useEffect(() => {
@@ -40,7 +41,7 @@ const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealEstates,
         history.push({ pathname: `/englobar/realEstates/`, state: { arrayRealEstates, valueArea, data, realEstates } });
     };
 
-    return <RealEstateForm type="create" onSubmit={createRealEstate} globe={true} realEstateData={realEstateData} dependencies={dependencies} />;
+    return <RealEstateForm type="create" onSubmit={createRealEstate} globe={true} realEstateData={realEstateData} dependencies={dependencies}  />;
 };
 
 export default RealEstateGlobe;

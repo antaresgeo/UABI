@@ -62,7 +62,7 @@ const InventoryRecordList = () => {
                             </div>
                         </div>
 
-                        <RealEstateList withProject register user={aux_user}/*change_page={change_page}*/ />
+                        <RealEstateList withProject register user={aux_user} filters={filters}/*change_page={change_page}*/ />
                     </Card>
                 </div>
             </div>

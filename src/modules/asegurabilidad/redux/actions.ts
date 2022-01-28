@@ -26,6 +26,8 @@ const updatePolicy = (data: any, id) =>
 const realEstatesPolicy = (id: number) =>
     request_dispatch(types.policiesRealEstate, service.realEstatesPolicy(id));
 
+const getRealEstatesWithoutPolicy = (without: string, id_bis: [] ) =>
+    request_dispatch(types.RealEstateWithoutPolicy, service.getRealEstatesWithoutPolicy(without, id_bis));
 /*----------------Companies---------------------*/
 const get_list_companies = () =>
     request_dispatch(types.get_list_companies, service.get_list_companies());
@@ -73,6 +75,7 @@ const actions = {
     getPolicies,
     updatePolicy,
     realEstatesPolicy,
+    getRealEstatesWithoutPolicy,
     clearPolicies,
     get_list_companies,
     get_all_companies,

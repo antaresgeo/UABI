@@ -117,8 +117,13 @@ export const updateProject = async (data: any, id: number) => {
             contratos.push(contract)
         }
     })
+    delete data.dependency;
+    delete data.subdependency;
+    delete data.management_center;
+    delete data.cost_center;
 
     data.contracts = contratos
+    data.cost_center_id = Number(data.cost_center_id)
 
     console.log(data)
 

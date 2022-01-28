@@ -23,6 +23,7 @@ interface RealEstateFormProps {
     globe?: boolean;
     realEstateData?: any;
     dependencies?: any;
+    getout?: () => {}
 }
 
 const RealEstateForm: FC<RealEstateFormProps> = ({
@@ -34,6 +35,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
     globe,
     realEstateData,
     dependencies,
+    getout
 }) => {
     // console.log(dependencies)
     const dispatch = useDispatch();
@@ -468,7 +470,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                                         </>
                                                     }
                                                 >
-                                                    <RealEstateList project_id={projects_id} init={false} />
+                                                    <RealEstateList project_id={projects_id} init={false} filters={{key: "default"}} />
                                                 </Card>
                                             )}
                                             {inventory && realEstate?.policy_id !== null && (
@@ -476,7 +478,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             )}
                                             {type === 'create' && globe !== true && (
                                                 <Card title="Inmuebles del Proyecto">
-                                                    <RealEstateList project_id={projects_id} init={false} />
+                                                    <RealEstateList project_id={projects_id} init={false} filters={{key: "default"}} />
                                                 </Card>
                                             )}
                                             {type === 'view' && inventory && (
@@ -493,21 +495,20 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                 className="bg-white d-flex flex-row justify-content-between"
                                 style={{ padding: 16, borderTop: '1px solid #ccc' }}
                             >
-                                {globe === false && (
-                                    <>
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary"
-                                            onClick={() => {
-                                                history.goBack();
-                                            }}
-                                        >
-                                            Atras
-                                        </button>
 
-                                        <div className="flex-fill" />
-                                    </>
-                                )}
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-primary"
+                                    onClick={() => {
+                                        history.goBack();
+
+                                    }}
+                                >
+                                    Atras
+                                </button>
+
+                                <div className="flex-fill" />
+
                                 {type !== 'view' && globe !== true && (
                                     <>
                                         <button
@@ -569,15 +570,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                 )}
                                 {globe === true && (
                                     <>
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary"
-                                            onClick={() => {
-                                                history.goBack();
-                                            }}
-                                        >
-                                            Atras
-                                        </button>
                                         <div className="flex-fill" />
                                         <button
                                             type="button"

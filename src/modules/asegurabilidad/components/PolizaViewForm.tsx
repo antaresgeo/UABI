@@ -14,6 +14,7 @@ export const PolizaViewForm: FC<IpolizaFormPros> = ({ policy_id }) => {
     useEffect(() => {
         dispatch(actions.getPolicy(policy_id));
     }, [policy_id])
+    console.log(poliza)
     const tmpDateStart = new Date(parseInt(poliza?.vigency_start));
     const newDateStart = moment(tmpDateStart).format('MM/DD/YYYY');
     const tmpDateEnd = new Date(parseInt(poliza?.vigency_end));

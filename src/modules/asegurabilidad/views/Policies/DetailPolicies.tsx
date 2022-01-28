@@ -47,7 +47,7 @@ const DetailInsurability = () => {
                             <div className="col-md-12">
                                 <PolizaViewForm  policy_id={id}/>
                                 <Card title="Bienes Inmuebles de la póliza">
-                                    <RealEstateList realEstateFilter={realEstatesPolicy} />
+                                    <RealEstateList realEstateFilter={realEstatesPolicy} filters={{key: "default"}}/>
                                 </Card>
                             </div>
                         </div>
