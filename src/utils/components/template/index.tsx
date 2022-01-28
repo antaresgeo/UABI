@@ -40,27 +40,28 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
         }`;
 
     const openNotification = (data) => {
-        console.log('new:notification', data);
+        console.log('received new:notification', data);
         notification.info({
-            message: 'Notification Title',
-            description:
-                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+            message: data.subject,
+            description: data.description,
             placement: 'bottomRight',
         });
         const init = async (id) => {
             await dispatch(actions.get_list_notifications(id));
         };
-        init(user.user_id);
+        init(user.user_id).then(() => {
+            context.socket?.emit("receive:notification", {id: data.id})
+        });
     };
 
     useEffect(() => {
-        context.socket?.on('new:notification', (data) => {
-            openNotification(data);
-        });
-        context.socket?.on('session:close', (data) => {
-            //TODO: mensaje modal warnirg sakarlo al dar click
-        });
-    }, [user]);
+        if(user && context.idNode){
+            context.socket?.off('new:notification');
+            context.socket?.on('new:notification', (data) => {
+                openNotification(data);
+            });
+        }
+    }, [user, context.idNode]);
 
     return (
         <>
