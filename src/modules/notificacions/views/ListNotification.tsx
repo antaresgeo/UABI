@@ -8,7 +8,7 @@ import { LinkButton } from '../../../utils/ui/link';
 const table_columns = [
     {
         title: 'Titulo',
-        dataIndex: 'title',
+        dataIndex: 'subject',
         align: 'left' as 'left',
     },
     {

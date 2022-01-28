@@ -42,7 +42,7 @@ export const DropdownNotification = ({ user_id }) => {
                         {items?.length > 0 &&
                             items.map((item) => (
                                 <Menu.Item key={item.id} icon={<MailOutlined />}>
-                                    <div className="text-center">{item.title}</div>
+                                    <div className="text-center">{item.subject}</div>
                                 </Menu.Item>
                             ))}
                         {items?.length === 0 && (

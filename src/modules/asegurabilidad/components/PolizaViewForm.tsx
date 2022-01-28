@@ -44,11 +44,11 @@ export const PolizaViewForm: FC<IpolizaFormPros> = ({ policy_id }) => {
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Fecha de Inicio</label>
-                                <div className="my-3">{newDateStart}</div>
+                                <div className="my-3">{newDateStart === "Fecha inválida" ? "-" : newDateStart}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Fecha de Finalización</label>
-                                <div className="my-3">{newDateEnd}</div>
+                                <div className="my-3">{newDateEnd === "Fecha inválida" ? "-" : newDateEnd}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Corredor de Seguros</label>
