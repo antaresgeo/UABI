@@ -21,7 +21,7 @@ const Detail_notification: FC<IUserFormPros> = ({ notification }) => {
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-6">
                                 <label htmlFor="">Título</label>
-                                <div className="my-3">{notification?.title}</div>
+                                <div className="my-3">{notification?.subject}</div>
                             </div>
                             <div className="col-6">
                                 <label htmlFor="">Enlace</label>
