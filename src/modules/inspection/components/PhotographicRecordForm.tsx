@@ -58,48 +58,48 @@ const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ innerRef, onS
                                     </div>
                                 </div>
                             </Card>
-                            <Card title="Evidencia de inspección física">
-                                <div className="row">
-                                    <div className="col-6">
-                                        <label htmlFor="form-select" className="form-label">
-                                            Pintura exterior
-                                        </label>
-                                        <Field
-                                            name="documento3"
-                                            component={DocumentModal}
-                                            btn_label="Adjuntar"
-                                            file_type="img"
-                                        />
-                                        <ErrorMessage name="documento2" />
-                                    </div>
-                                    <div className="col-6">
-                                        <label htmlFor="form-select" className="form-label">
-                                            Cubierta o techo
-                                        </label>
-                                        <Field
-                                            name="documento3"
-                                            component={DocumentModal}
-                                            btn_label="Adjuntar"
-                                            file_type="img"
-                                        />
-                                        <ErrorMessage name="documento2" />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-12">
-                                        <label htmlFor="form-select" className="form-label">
-                                            Lavamanoss
-                                        </label>
-                                        <Field
-                                            name="documento3"
-                                            component={DocumentModal}
-                                            btn_label="Adjuntar"
-                                            file_type="img"
-                                        />
-                                        <ErrorMessage name="documento2" />
-                                    </div>
-                                </div>
-                            </Card>
+                            {/*<Card title="Evidencia de inspección física">*/}
+                            {/*    <div className="row">*/}
+                            {/*        <div className="col-6">*/}
+                            {/*            <label htmlFor="form-select" className="form-label">*/}
+                            {/*                Pintura exterior*/}
+                            {/*            </label>*/}
+                            {/*            <Field*/}
+                            {/*                name="documento3"*/}
+                            {/*                component={DocumentModal}*/}
+                            {/*                btn_label="Adjuntar"*/}
+                            {/*                file_type="img"*/}
+                            {/*            />*/}
+                            {/*            <ErrorMessage name="documento2" />*/}
+                            {/*        </div>*/}
+                            {/*        <div className="col-6">*/}
+                            {/*            <label htmlFor="form-select" className="form-label">*/}
+                            {/*                Cubierta o techo*/}
+                            {/*            </label>*/}
+                            {/*            <Field*/}
+                            {/*                name="documento3"*/}
+                            {/*                component={DocumentModal}*/}
+                            {/*                btn_label="Adjuntar"*/}
+                            {/*                file_type="img"*/}
+                            {/*            />*/}
+                            {/*            <ErrorMessage name="documento2" />*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="row">*/}
+                            {/*        <div className="col-12">*/}
+                            {/*            <label htmlFor="form-select" className="form-label">*/}
+                            {/*                Lavamanoss*/}
+                            {/*            </label>*/}
+                            {/*            <Field*/}
+                            {/*                name="documento3"*/}
+                            {/*                component={DocumentModal}*/}
+                            {/*                btn_label="Adjuntar"*/}
+                            {/*                file_type="img"*/}
+                            {/*            />*/}
+                            {/*            <ErrorMessage name="documento2" />*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</Card>*/}
                         </Form>
                     );
                 }}

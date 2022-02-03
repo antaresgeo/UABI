@@ -18,8 +18,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
     const [countries, setCountries] = useState<ICountryAddressAttributes[]>([]);
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
-    const [commune, setCommune] = useState([]);
-    const [neighborhood, setNeighborhood] = useState([]);
+    const [communisses, setCommunisses] = useState([]);
+    const [neighborhoods, setNeighborhoods] = useState([]);
 
     const initialValues: any = {
         country: 1,
@@ -69,7 +69,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
             setCountries(res[0]);
             setStates(res[1]);
             setCities(res[2]);
-            setCommune(res[3]);
+            setCommunisses(res[3]);
         })();
     }, []);
 
@@ -79,9 +79,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
             enableReinitialize
             innerRef={innerRef}
             initialValues={initialValues}
-            validationSchema={view === 'general' && schema}
+            validationSchema={(view === 'general' || view === "user") && schema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
-                console.log(values);
                 modalClose &&
                     modalClose(values, () => {
                         setSubmitting(false);
@@ -90,35 +89,37 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
             }}
         >
             {({ values, isValid, isSubmitting, setFieldValue, handleChange }) => {
-                console.log(values);
                 const has_country = values.country !== '';
-                let has_states = values.state !== '';
+                let has_state = values.state !== '';
                 let has_city = values.city !== '';
                 let has_commune = values.commune !== '';
-                // let has_neighborhood = values.neighborhood !== '';
-                const is_colombia = has_country && values.country === 1;
-                const is_antioquia = has_states && values.state === 1;
-                const is_medellin = has_city && values.city === 1;
+                const has_countries = countries.length > 0;
+                const has_states = states.length > 0;
+                const has_cities = cities.length > 0;
+                const has_communisses = communisses.length > 0;
+                const has_neighborhoods = neighborhoods.length > 0;
 
 
-                const comune = commune.find((c: any) => c.id === values.commune);
-                const _neighborhood = neighborhood.find((c: any) => c.id === values.neighborhood);
+                const comune = communisses.find((c: any) => c.id === values.commune);
+                const _neighborhood = neighborhoods.find((c: any) => c.id === values.neighborhood);
                 const cb = `${comune ? `${comune.code}`.padStart(2, '0') : ''}${
                     _neighborhood ? `${_neighborhood.code}`.padStart(2, '0') : ''
                 }`;
 
-                if (values.country === 1 && values.country_name === '' && countries.length > 0) {
+                if (values.country === 1 && values.country_name === '' && has_countries) {
                     const country: any = countries.find((c: any) => c.id === 1);
                     setFieldValue('country_name', country?.name, false);
                 }
-                if (values.state === 1 && values.state_name === '' && states.length > 0) {
+                if (values.state === 1 && values.state_name === '' && has_states) {
                     const state: any = states.find((c: any) => c.id === 1);
                     setFieldValue('state_name', state?.name, false);
                 }
-                if (values.city === 1 && values.city_name === '' && cities.length > 0) {
+                if (values.city === 1 && values.city_name === '' && has_cities) {
                     const city = cities.find((c: any) => c.id === 1);
                     setFieldValue('city_name', city?.name, false);
                 }
+
+
                 const number_validate = (limit?: number) => (e) => {
                     e.preventDefault();
                     const regex = new RegExp(`^[+]?\\d${limit ? `{0,${limit}}` : '*'}$`);
@@ -161,7 +162,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                 </label>
                                 <Field
                                     name="state"
-                                    disabled={!has_country || !is_colombia}
+                                    disabled={!has_country || !has_countries}
                                     component={Select}
                                     options={states}
                                     placeholder="--departamento--"
@@ -188,13 +189,13 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                 </label>
                                 <Field
                                     name="city"
-                                    disabled={!has_states || !is_antioquia}
+                                    disabled={!has_state || !has_states}
                                     component={Select}
                                     placeholder={`--${zone && zone === 'Rural' ? 'municipio' : 'ciudad'}--`}
                                     options={cities}
                                     extra_on_change={async (value) => {
                                         const list = await getList('communes', { father: value });
-                                        setCommune(list);
+                                        setCommunisses(list);
                                         setFieldValue('commune', '');
                                         setFieldValue('neighborhood', '');
                                         const city_r: any = cities.find((c) => c.id === value);
@@ -217,10 +218,10 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                     </label>
                                     <Field
                                         name="commune"
-                                        disabled={!has_city || !is_medellin}
+                                        disabled={!has_city || !has_communisses}
                                         component={Select}
                                         placeholder={`--${zone && zone === 'Rural' ? 'corregimiento' : 'comuna'}--`}
-                                        options={commune.map((a) => ({
+                                        options={communisses.map((a) => ({
                                             id: a.id,
                                             name: `${`${a.code}`.padStart(2, '0')} - ${a.name}`,
                                         }))}
@@ -228,9 +229,9 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                             const list = await getList('neighborhoods', {
                                                 father: value,
                                             });
-                                            setNeighborhood(list);
+                                            setNeighborhoods(list);
                                             setFieldValue('neighborhood', '');
-                                            const commune_r: any = commune.find((c) => c.id === value);
+                                            const commune_r: any = communisses.find((c) => c.id === value);
                                             setFieldValue('commune_name', commune_r?.name, false);
                                         }}
                                         showSearch
@@ -247,15 +248,15 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                     </label>
                                     <Field
                                         name="neighborhood"
-                                        disabled={!has_commune || !is_medellin}
+                                        disabled={!has_commune || !has_neighborhoods}
                                         component={Select}
                                         placeholder={`--${zone && zone === 'Rural' ? 'vereda' : 'barrio'}--`}
-                                        options={neighborhood.map((a) => ({
+                                        options={neighborhoods.map((a) => ({
                                             id: a.id,
                                             name: `${`${a.code}`.padStart(2, '0')} - ${a.name}`,
                                         }))}
                                         extra_on_change={async (value) => {
-                                            const neighborhood_r: any = neighborhood.find((c) => c.id === value);
+                                            const neighborhood_r: any = neighborhoods.find((c) => c.id === value);
                                             setFieldValue('neighborhood_name', neighborhood_r?.name, false);
                                         }}
                                         showSearch
@@ -536,7 +537,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                         )}
                         <hr style={{ margin: 0 }} />
                         <div className="d-flex justify-content-end mt-2">
-                            <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isValid}>
+                            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
                                 Consultar
                                 {isSubmitting && (
                                     <i
