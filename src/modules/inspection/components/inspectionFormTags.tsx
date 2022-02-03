@@ -7,7 +7,7 @@ import CreateUpgrade from './CreateUpgrade';
 import PhotographicRecordForm from './PhotographicRecordForm';
 import Report from './Report';
 import BasicInformation from './BasicInformation';
-import { Inspection, InspectionRequest } from '../custom_types';
+import { Inspection, InspectionRequest, NewInspection } from '../custom_types';
 import { FormikProps, FormikValues } from 'formik';
 import { swal_success } from '../../../utils';
 
@@ -16,23 +16,23 @@ interface InspectionFormTagsProps {
     real_estate: any;
     user: any;
 }
+interface HistoryParams {
+    inspection_request: NewInspection;
+    active_key: string;
+}
 
 const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_estate, user }) => {
     const { TabPane } = Tabs;
-    const history = useHistory<any>();
-    const active_key: string = history.location.state?.active_key || '1';
-    let data: InspectionRequest = history.location.state?.inspection_request;
+    const history = useHistory<HistoryParams>();
+    const active_key = history.location.state?.active_key || '1';
+    let data: NewInspection = history.location.state?.inspection_request;
     if (!data) {
         data = {
-            physical_inspection: {
-                observations: {
-                    observation: '',
-                },
-                photographic_record: '',
-                inspection_date: null,
-            },
-            observations: {
-                observation: '',
+            basic_information: {
+                differences: '',
+                isAnEspecialCase: false,
+                special_actions: '',
+                report_pdf_id: '',
             },
             ocupation: {
                 tenure: '',
@@ -40,19 +40,37 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 ownership: '',
                 contractual: '',
             },
-            public_services: [],
-            properties: [],
-            owner: {
-                document_number: null,
-                document_type: null,
-                email: null,
-                names_surnames: null,
-                phone_number: null,
-                id: 50,
+            physical_inspection: {
+                observations: '',
+                public_services: [
+                    {
+                        name: '',
+                        subscriber: 0,
+                        accountant: 0,
+                        status: 0,
+                    },
+                ],
+                properties: [
+                    {
+                        name: '',
+                        status_property: '',
+                        observation: '',
+                        photographic_evidence: '',
+                    },
+                ],
             },
-            photographic_register: {
-                fachada: 'xxx',
-                generals: [],
+            occupant: {
+                names: '',
+                surnames: '',
+                document_type: '',
+                document_number: 0,
+                phone_number: 0,
+                phone_number_ext: 0,
+                email: '',
+            },
+            photografic_register: {
+                facade: '',
+                general: [''],
             },
         };
     }
@@ -66,13 +84,11 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
             onSave: (values) => {
                 data = {
                     ...data,
-                    observations: {
-                        ...data?.physical_inspection?.observations,
-                        observation: values.observations,
+                    basic_information: {
+                        ...data?.basic_information,
+                        differences: values.observations,
                     },
                 };
-
-                // console.log('step 1', values);
             },
         },
         {
@@ -88,7 +104,6 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                         ...values,
                     },
                 };
-                // console.log('step 2', values);
             },
         },
         {
@@ -100,18 +115,12 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 data = {
                     ...data,
                     physical_inspection: {
-                        ...data?.physical_inspection,
-                        photographic_record: '',
-                        inspection_date: 1638366517333,
-                        observations: {
-                            ...data?.physical_inspection?.observations,
-                            observation: values.observations,
-                        },
-                    },
-                    public_services: [...values?.public_services],
-                    properties: [...values?.properties],
+                        ...data.physical_inspection,
+                        public_services: [...values.public_services],
+                        properties: [...values?.properties],
+                        observations: values.observations,
+                    }
                 };
-                // console.log('step 3', values);
             },
         },
         {
@@ -120,14 +129,15 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                 steps[3].ref.current?.submitForm();
             },
             onSave: (values) => {
+                console.log(values);
                 data = {
                     ...data,
-                    owner: {
-                        ...data?.owner,
-                        ...values,
-                    },
+                    // owner: {
+                    //     ...data?.owner,
+                    //     ...values,
+                    // },
                 };
-
+                console.log(data);
                 // console.log('step 4', values);
             },
         },
@@ -153,13 +163,13 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
             onSave: (values) => {
                 data = {
                     ...data,
-                    physical_inspection: {
-                        ...data?.physical_inspection,
-                        observations: {
-                            ...data?.physical_inspection?.observations,
-                            observation: values.observations,
-                        },
-                    },
+                    // physical_inspection: {
+                    //     ...data?.physical_inspection,
+                    //     observations: {
+                    //         ...data?.physical_inspection?.observations,
+                    //         observation: values.observations,
+                    //     },
+                    // },
                 };
                 // delete final_data.image;
                 swal_success.fire('Inspeccion realizada exitosamente', '', 'success').then(() => {
@@ -202,18 +212,18 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
         // set_activeKey(key);
     }
 
-    const obs = data?.physical_inspection?.observations?.observation;
+    const obs = null; //data?.physical_inspection?.observations?.observation;
 
     useEffect(() => {
         data = {
             ...data,
-            physical_inspection: {
-                ...data?.physical_inspection,
-                observations: {
-                    ...data?.physical_inspection?.observations,
-                    observation: inspection?.physical_inspection?.observations?.observation,
-                },
-            },
+            // physical_inspection: {
+            //     ...data?.physical_inspection,
+            //     observations: {
+            //         ...data?.physical_inspection?.observations,
+            //         observation: inspection?.physical_inspection?.observations?.observation,
+            //     },
+            // },
         };
     }, [inspection]);
 
