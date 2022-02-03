@@ -38,28 +38,29 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     }, []);
 
 
-    let newrealEstates = [];
+    // let newrealEstates = [];
+    console.log(realEstates)
     // const codes = realEstates.map(realEstate => realEstate.sap_id.split(",")).map(codigo => codigo?.filter(cod => cod.charAt(cod.length - 1) !== 'J'))
     //console.log('bienes',realEstates)
-    newrealEstates = realEstates.reduce((valor_anterior, valor_actual) => {
-        const codigos = valor_actual.sap_id.split(',');
-        const codes = codigos.filter((cod) => cod.charAt(cod.length - 1) !== 'J');
-        for (let i = 0; i < codes.length; i++) {
-            const obj = {
-                ...valor_actual,
-            };
-            obj.sap_id = codes[i];
-            valor_anterior.push(obj);
-        }
-        return valor_anterior;
-    }, []);
+    // newrealEstates = realEstates.reduce((valor_anterior, valor_actual) => {
+    //     const codigos = valor_actual.sap_id.split(',');
+    //     const codes = codigos.filter((cod) => cod.charAt(cod.length - 1) !== 'J');
+    //     for (let i = 0; i < codes.length; i++) {
+    //         const obj = {
+    //             ...valor_actual,
+    //         };
+    //         obj.sap_id = codes[i];
+    //         valor_anterior.push(obj);
+    //     }
+    //     return valor_anterior;
+    // }, []);
 
     useEffect(() => {
         const dataTable = [];
-        newrealEstates.forEach((realEstate) => {
-            if (realEstate.sap_id.charAt(realEstate.sap_id.length - 1) === 'L') {
+        realEstates.forEach((realEstate) => {
+            if (realEstate.active_code.charAt(realEstate.active_code.length - 1) === 'L') {
                 dataTable.push({
-                    key: realEstate.sap_id,
+                    key: realEstate.active_code,
                     name: realEstate.name,
                     total_area: realEstate.plot_area,
                     intact_area: realEstate.plot_area,
@@ -69,7 +70,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                 });
             } else {
                 dataTable.push({
-                    key: realEstate.sap_id,
+                    key: realEstate.active_code,
                     name: realEstate.name,
                     total_area: realEstate.construction_area,
                     intact_area: realEstate.construction_area,

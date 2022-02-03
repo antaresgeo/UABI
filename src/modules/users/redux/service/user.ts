@@ -183,9 +183,13 @@ const finalData = async (_data) => {
         delete data.detailsUser.id_number;
         delete data.detailsUser.dependency;
         delete data.detailsUser.subdependency;
+        delete data.detailsUser.dependencies;
+        if(typeof data.detailsUser.location !== 'number' ) {
+            data.detailsUser.location = data.detailsUser.location.id
+        }
         // data.detailsUser.id_number = data.user.id_number+"";
         if (data.detailsUser.entity_type !== 'P') {
-            delete data.detailsUser.cost_center_id;
+            data.detailsUser.cost_center_id = null
         }
     }
 
@@ -201,11 +205,12 @@ const finalData = async (_data) => {
 }
 
 export const update_user = async (id, data) => {
+
+
     const body: any = await finalData(data);
     const pass = body.user.password;
     delete body.user.password;
 
-    console.log(body);
 
     try {
         const URI = '/users/';

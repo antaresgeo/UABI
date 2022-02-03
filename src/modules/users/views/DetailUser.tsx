@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { actions, service } from '../redux';
+import { actions, } from '../redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Card, Link } from '../../../utils/ui';
+import { Link } from '../../../utils/ui';
 import UserViewForm from './../components/UserViewForm';
-import RoleForm from '../components/RoleForm';
 import { FormikProps, FormikValues } from 'formik';
+import AssignRolePermitsView from '../components/AssignRolePermitsView';
 
 interface IParams {
     id: string;
@@ -49,8 +49,9 @@ const DetailUser = () => {
                     <div className="container-fluid">
                         <div className="row justify-content-center">
                             <div className="col-md-12">
-                                <UserViewForm user={user} roles={roles} />
-                                <Card title="Asignar permisos al Usuario">
+                                <UserViewForm user={user} />
+                                <AssignRolePermitsView  permits={permits} roles={roles}/>
+                                {/* <Card title="Asignar permisos al Usuario">
                                     <RoleForm
                                         type="assign"
                                         innerRef={form}
@@ -62,7 +63,7 @@ const DetailUser = () => {
                                             history.goBack();
                                         }}
                                     />
-                                </Card>
+                                </Card> */}
                             </div>
                         </div>
                     </div>

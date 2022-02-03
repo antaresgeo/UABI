@@ -19,7 +19,9 @@ interface IUserFormPros {
 }
 
 const DataformRole: FC<IUserFormPros> = ({ disabled, type_rol, user_roles, user_permits, rol, formik}) => {
+    // console.log(user_permits)
     const permitsAll: IPermitAttributes[] = useSelector((store: any) => store.users.permits.value);
+
     const roles: any[] = useSelector((store: any) => store.users.roles.value);
     const dispatch = useDispatch();
     const [targetKeys, setTargetKeys] = useState([]);
@@ -57,15 +59,22 @@ const DataformRole: FC<IUserFormPros> = ({ disabled, type_rol, user_roles, user_
     }, [targetKeys]);
 
 
+
+
     useEffect(() => {
         let allPermits = [];
-        let permitUser = [];
         if (permitsAll?.length > 0) {
             allPermits = permitsAll?.map((per: any) => ({
                 key: per.id,
                 title: per.permit_name,
             }));
         }
+        setMockData(allPermits);
+    }, [permitsAll]);
+
+
+    useEffect(() => {
+        let permitUser = [];
         if (user_permits?.length > 0) {
             permitUser = user_permits?.map((per: any) => ({
                 key: per.id,
@@ -73,9 +82,9 @@ const DataformRole: FC<IUserFormPros> = ({ disabled, type_rol, user_roles, user_
             }));
         }
         const initialTargetKeys = permitUser.map((item) => item.key);
-        setMockData(allPermits);
         setTargetKeys(initialTargetKeys);
-    }, [permitsAll, user_permits]);
+    }, [user_permits]);
+
 
     const get_permits_rol_ids_list = (rol_ids) => {
         return Promise.all(rol_ids.map((id) => dispatch(actions.getRole(id)))).then((res) => {
@@ -85,12 +94,14 @@ const DataformRole: FC<IUserFormPros> = ({ disabled, type_rol, user_roles, user_
     };
 
     const update_permits_rol = (rol_ids) => {
+
         return get_permits_rol_ids_list(rol_ids).then((ids: number[]) => {
             if (mockData.length > 0) {
                 const data = mockData.map((permit) => {
                     permit.disabled = ids.includes(permit.key);
                     return permit;
                 });
+                // debugger;
                 set_permits_rol_ids(ids);
                 setMockData(data);
             }
