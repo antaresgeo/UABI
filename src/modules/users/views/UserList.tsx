@@ -116,7 +116,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
         //     },
         // },
         {
-            title: 'cc',
+            title: 'C.C',
             dataIndex: 'id_number',
             align: 'center' as 'center',
         },

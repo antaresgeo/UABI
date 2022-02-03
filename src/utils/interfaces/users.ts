@@ -11,17 +11,19 @@ export interface IUserAttributes {
     surname: string;
     second_surname: string;
     email: string;
-    location: string;
+    location: any;
     cellphone_number?: string;
     phone_number: string;
     gender: string;
     id_rol?: number;
     permits?: [{ id_permit: string; name_permit: number }];
-    dependency: string;
+    dependency?: string;
     subdependency: string;
     audit_trail?: IAuditTrail;
     status?: number;
 }
+
+
 
 export interface IUsersResponse {
     results: IUserAttributes[];

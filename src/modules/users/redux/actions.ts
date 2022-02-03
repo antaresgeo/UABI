@@ -7,12 +7,7 @@ const getRole = (id: number) => {
     return request_dispatch(types.rol, service.getRole(id));
 };
 
-const getRolesList = (filters: {
-    with?: string;
-    page?: number;
-    pageSize?: 10 | 20 | 30;
-    q?: string;
-}) => request_dispatch(types.roles, service.getRolesList(filters));
+const getRolesList = (filters) => request_dispatch(types.roles, service.getRolesList(filters));
 
 const clearRolesList = () => request_dispatch(types.roles, Promise.resolve([]));
 
