@@ -37,18 +37,20 @@ const ComodatoDoc = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
-                <PDFDownloadLink
+                {/* <PDFDownloadLink
                     document={<ComodatoPdf values={values} realEstate={realEstate} />}
                     fileName="EstudioPrevioparacomodatodeBienInmueble.pdf"
-                >
+                > */}
                 <button
                     type="button"
                     className="btn btn-outline-primary"
-                    onClick={() => { }}
+                    onClick={() => {
+                        console.log('datos a enviar',values)
+                    }}
                 >
                     guardar y descargar
                 </button>
-                </PDFDownloadLink>
+                {/* </PDFDownloadLink> */}
             </div>
         </div>
     );

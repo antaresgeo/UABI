@@ -25,6 +25,7 @@ export const getRole = async (id: number): Promise<IRolAttributes | number> => {
 };
 
 export const getRolesList = async (filters?): Promise<any> => {
+    console.log(filters)
     try {
         let URI = `/roles/`;
         let res: AxiosResponse<IRolesResponse> = await auth_http.get(URI, {
@@ -32,6 +33,7 @@ export const getRolesList = async (filters?): Promise<any> => {
                 ...filters,
             },
         });
+
         return res.data;
     } catch (error) {
         console.error(error);
@@ -83,13 +85,14 @@ export const deleteRole = async (id: number) => {
     try {
         let URI = `roles/${id}`;
         let res: AxiosResponse<IRolResponse> = await auth_http.delete(URI);
-        swal_success.fire({
+        await swal_success.fire({
             title: 'Rol Inactivado',
             text: res.data.message,
             icon: 'success',
             showConfirmButton: false,
             timer: 1500,
         });
+        console.log('eiminado')
         return res.data;
     } catch (error) {
         console.error(error);

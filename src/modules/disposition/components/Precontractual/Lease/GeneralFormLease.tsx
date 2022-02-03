@@ -30,12 +30,14 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         lockable_base: 10,
         //solicitante
         applicant: {
-            type_society: "",
-            id_type: "",
-            id_number: "",
+            person_type: "",
+            document_type: "",
+            document_number: "",
             company_name: "",
-            email: "",
-            phone_number: "",
+            company_email: "",
+            company_phone_number: "",
+            company_phone_number_ext: "",
+            legal_representative_person_type: "Persona Natural",
         },
         detailsApplicant: "",
         location_applicant: {
@@ -43,9 +45,7 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
             id: "",
         },
         detailsRepresentative: "",
-        representative: {
-            type_society: "Persona Natural",
-        },
+
 
         //analisis de riegos
         regulatory_risk: {
@@ -85,7 +85,7 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         //lider y personas a cargo
         detailsLeader: "",
         leader: {
-            type_society: "Persona Natural",
+            person_type: "Persona Natural",
             post: "Líder de Programa",
             dependence: realEstate?.dependency,
             secretary: realEstate?.subdependency,
@@ -95,17 +95,26 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
             id: "",
         },
         elaborated: {
-            name: "",
+            first_name: "",
+            last_name: "",
+            first_surname: "",
+            last_surname: "",
             post: "",
             email: "",
         },
         revised: {
-            name: "",
+            first_name: "",
+            last_name: "",
+            first_surname: "",
+            last_surname: "",
             post: "",
             email: "",
         },
         approved: {
-            name: "",
+            first_name: "",
+            last_name: "",
+            first_surname: "",
+            last_surname: "",
             post: "",
             email: "",
         },
@@ -140,25 +149,25 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
 
         // Solicitante
         applicant: Yup.object({
-            type_society: Yup.string().required('obligatorio'),
-            company_name: Yup.string().when('type_society', {
+            person_type: Yup.string().required('obligatorio'),
+            company_name: Yup.string().when('person_type', {
                 is: "Persona Juridica",
                 then: Yup.string().required('obligatorio')
             }),
-            id_number: Yup.number().when('type_society', {
+            document_number: Yup.number().when('person_type', {
                 is: "Persona Juridica",
                 then: Yup.number().required('obligatorio')
             }),
-            phone_number: Yup.number().when('type_society', {
+            company_phone_number: Yup.number().when('person_type', {
                 is: "Persona Juridica",
                 then: Yup.number().required('obligatorio')
             }),
-            email: Yup.string().email().when('type_society', {
+            company_email: Yup.string().email().when('person_type', {
                 is: "Persona Juridica",
                 then: Yup.string().email().required('obligatorio')
             }),
         }),
-        detailsApplicant: Yup.object().when('applicant.type_society', {
+        detailsApplicant: Yup.object().when('applicant.person_type', {
             is: "Persona Natural",
             then: Yup.object().required('obligatorio'),
         }),
@@ -166,7 +175,7 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
             address: Yup.string().required('obligatorio')
         }),
         //representante
-        detailsRepresentative: Yup.object().when('applicant.type_society', {
+        detailsRepresentative: Yup.object().when('applicant.person_type', {
             is: "Persona Juridica",
             then: Yup.object().required('obligatorio'),
         }),
@@ -177,18 +186,21 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         //     address: Yup.string().required('obligatorio')
         // }),
         elaborated: Yup.object({
-            name: Yup.string().required('obligatorio'),
+            first_name: Yup.string().required('obligatorio'),
+            first_surname: Yup.string().required('obligatorio'),
             post: Yup.string().required('obligatorio'),
             email: Yup.string().required('obligatorio')
 
         }),
         revised: Yup.object({
-            name: Yup.string().required('obligatorio'),
+            first_name: Yup.string().required('obligatorio'),
+            first_surname: Yup.string().required('obligatorio'),
             post: Yup.string().required('obligatorio'),
             email: Yup.string().required('obligatorio')
         }),
         approved: Yup.object({
-            name: Yup.string().required('obligatorio'),
+            first_name: Yup.string().required('obligatorio'),
+            first_surname: Yup.string().required('obligatorio'),
             post: Yup.string().required('obligatorio'),
             email: Yup.string().required('obligatorio')
         }),

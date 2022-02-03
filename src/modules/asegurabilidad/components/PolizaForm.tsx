@@ -37,9 +37,6 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
 }) => {
     //console.log(realEstatesPolicy);
 
-
-
-
     let newrealEstates = [];
     newrealEstates = realEstates;
     // newrealEstates = realEstates.reduce((valor_anterior, valor_actual) => {
