@@ -8,7 +8,7 @@ import { IUserAttributes } from '../../../utils/interfaces/users';
 import { useSelector } from 'react-redux';
 
 interface IUserFormPros {
-    user?: IUserAttributes;
+    // user?: IUserAttributes;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
     formik: any;
@@ -376,7 +376,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                                 disabled={disabled}
                                 onSave={async (values) => {
                                     formik.setFieldValue('detailsUser.str_location', values.address);
-                                    formik.setFieldValue('detailsUser.location', `${values.id}`);
+                                    formik.setFieldValue('detailsUser.location', values.id );
                                 }}
                             />
                         </div>

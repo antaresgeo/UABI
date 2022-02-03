@@ -1,11 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions as actionsUser, } from '../redux';
 import { swal_success } from '../../../utils';
 import { FormikProps, FormikValues } from "formik";
-import { getAdressById } from '../../../utils/components/Location/service';
 import FormUserprueba from '../components/FormUserprueba';
 import actions from './../../acquisitions/redux/actions/index';
 
@@ -29,11 +28,12 @@ const EditUser: FC<IProps> = () => {
         store.users.user.value?.permits,
     ]);
     const _updateUser = async (userForm) => {
-        if(userForm.user.id_number+ "" === user.detailsUser.id_number) {
-            userForm.user.id_number = ""
+        if (user?.id_number === `${userForm?.user?.id_number}`) {
+            userForm.user.id_number = "";
         }
-        let res: any;
+
         if (userForm) {
+            let res: any;
             res = await dispatch(actionsUser.update_user(id, userForm));
             await swal_success.fire({ title: 'Usuario actualizado', text: res.message, icon: 'success' });
             history.push(`/users/${res.results.detailsUser.user_id}/`);
@@ -45,17 +45,7 @@ const EditUser: FC<IProps> = () => {
         dispatch(actions.getDependencies())
     }, []);
 
-    const [adress, setAdress] = useState("")
-    // const localizacion = async (id) => {
-    //     const list: any = await getAdressById(id);
-    //     setAdress(list?.address);
-    // }
 
-    // useEffect(() => {
-    //     if (user && adress === "") {
-    //         localizacion(user?.detailsUser?.location)
-    //     }
-    // }, [user])
 
 
     return (

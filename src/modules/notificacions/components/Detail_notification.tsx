@@ -8,7 +8,7 @@ interface IUserFormPros {
 
 const Detail_notification: FC<IUserFormPros> = ({ notification }) => {
     const context = useContext(TemplateContext);
-    context.socket?.emit("receive:notification", {id: notification.id})
+    context.socket?.emit("receive:notification", {id: notification?.id})
     return (
         <div className="col-3-12">
             <div className="content_box_table">

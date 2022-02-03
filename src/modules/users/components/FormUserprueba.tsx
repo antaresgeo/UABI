@@ -9,10 +9,9 @@ import DataformRole from './DataformRole';
 
 
 interface IUserFormPros {
-    user?: IUserAttributes;
+    user?: any;
     user_roles?: any[];
     user_permits?: any[];
-    address?: string;
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
     type_rol?: 'assign'
@@ -21,7 +20,7 @@ interface IUserFormPros {
     innerRef?: MutableRefObject<FormikProps<FormikValues>>;
 }
 
-const FormUserprueba: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, address, innerRef, type_rol, dependencies, user_roles, user_permits }) => {
+const FormUserprueba: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerRef, type_rol, dependencies, user_roles, user_permits }) => {
 
 
     const initial_values = {
@@ -39,13 +38,13 @@ const FormUserprueba: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, add
             surnames: { firstSurname: '', lastSurname: '' },
             email: '',
             location: '',
-            str_location: address ?? '',
+            str_location:  user?.location?.address || "",
             cellphone_number: '',
             phone_number: '',
             phone_number_ext: '',
             gender: '',
-            dependency: '',
-            subdependency: '',
+            dependency: user?.dependencies?.dependency?.dependency || '',
+            subdependency: user?.dependencies?.subdependency?.subdependency || '',
             cost_center_id: '',
             ...user,
         },
@@ -64,7 +63,7 @@ const FormUserprueba: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, add
                 .min(8, 'minimo 8 caracteres'),
         }),
         detailsUser: Yup.object().shape({
-            location: Yup.string().required('Campo obligatorio'),
+            // location: Yup.object().required('Campo obligatorio'),
             society_type: Yup.string().required('Campo obligatorio'),
             entity_type: Yup.string().required('Campo obligatorio'),
             id_type: Yup.string().required('Campo obligatorio'),
@@ -118,7 +117,7 @@ const FormUserprueba: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, add
                             title="Información Usuario"
                         >
                             <Dataformuser
-                                user={user}
+                                // user={user}
                                 disabled={disabled}
                                 type={type}
                                 formik={formik}

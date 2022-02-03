@@ -1,21 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
-import { getAdressById } from '../../../utils/components/Location/service';
+import React, { FC } from 'react';
 interface IUserFormPros {
     user: any;
-    roles: any[];
-}
-const UserViewForm: FC<IUserFormPros> = ({ user, roles }) => {
-    const [adress, setAdress] = useState("")
-    const localizacion = async (id) => {
-        const list: any = await getAdressById(id);
-        setAdress(list?.address);
-    }
 
-    useEffect(() => {
-        if(user) {
-            localizacion(user?.location)
-        }
-    }, [user])
+}
+const UserViewForm: FC<IUserFormPros> = ({ user }) => {
+
 
 
     let genero = '';
@@ -152,21 +141,9 @@ const UserViewForm: FC<IUserFormPros> = ({ user, roles }) => {
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="">Dirección</label>
-                                <div className="my-3">{adress}</div>
+                                <div className="my-3">{user?.location?.address}</div>
                             </div>
-                            <div className="col-3">
-                                <label htmlFor="">Roles</label>
-                                <div className="my3">
-                                    {roles && roles.length > 0 && (
-                                        <ul>
-                                            {roles.map((rol, i) => (
-                                                <li key={i}>{rol.name}</li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                    {roles && roles.length === 0 && <span>Sin Roles Asignados</span>}
-                                </div>
-                            </div>
+
                             {user?.entity_type === 'P' && (
                                 <>
                                     <div className="col-3">

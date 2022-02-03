@@ -250,7 +250,7 @@ export const TableAreas = () => {
                         } else {
                             CreateRealEstate(DataRealEstate);
                             //console.log('desde tabla', DataRealEstate)
-                            //console.log('bienes inmuebles a editar', real_estates_edit);
+                            console.log('bienes inmuebles a editar', realEstatesEdit);
 
                         }
                     }}
