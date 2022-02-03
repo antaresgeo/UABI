@@ -18,14 +18,14 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             <hr />
             <div className="row">
                 <div className="col-3">
-                    <label htmlFor="leader.type_society" className="form-label">
+                    <label htmlFor="leader.person_type" className="form-label">
                         Tipo de persona
                     </label>
                     <Field
                         as="select"
                         className="form-select"
-                        id="leader.type_society"
-                        name="leader.type_society"
+                        id="leader.person_type"
+                        name="leader.person_type"
                         autoComplete="off"
                         disabled
 
@@ -36,7 +36,7 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         <option value="Persona Natural">Persona Natural</option>
                         <option value="Persona Juridica">Persona Juridica</option>
                     </Field>
-                    <ErrorMessage name="leader.type_society" />
+                    <ErrorMessage name="leader.person_type" />
                 </div>
                 <div className="col-3">
                     <label htmlFor="leader.post" className="form-label">
@@ -129,20 +129,65 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             </div>
             <hr />
             <div className="row">
-                <div className="col-12">
-                    <label htmlFor="elaborated.name" className="form-label">
-                        Nombre<span className="text-danger">*</span>
+                <div className="col-3">
+                    <label htmlFor="elaborated.first_name" className="form-label">
+                        primer Nombre<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="elaborated.name"
-                        name="elaborated.name"
+                        id="elaborated.first_name"
+                        name="elaborated.first_name"
                         placeholder="Nombre del que lo elaboró"
                         autoComplete="off"
                         maxLength={20}
                     />
-                    <ErrorMessage name="elaborated.name" />
+                    <ErrorMessage name="elaborated.first_name" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="elaborated.last_name" className="form-label">
+                        Segundo Nombre<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="elaborated.last_name"
+                        name="elaborated.last_name"
+                        placeholder="Nombre del que lo elaboró"
+                        autoComplete="off"
+                        maxLength={20}
+                    />
+                    <ErrorMessage name="elaborated.last_name" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="elaborated.first_surname" className="form-label">
+                        Primer Apellido<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="elaborated.first_surname"
+                        name="elaborated.first_surname"
+                        placeholder="Nombre del que lo elaboró"
+                        autoComplete="off"
+                        maxLength={20}
+                    />
+                    <ErrorMessage name="elaborated.first_surname" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="elaborated.last_surname" className="form-label">
+                        Segundo Apellido<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="elaborated.last_surname"
+                        name="elaborated.last_surname"
+                        placeholder="Nombre del que lo elaboró"
+                        autoComplete="off"
+                        maxLength={20}
+                    />
+                    <ErrorMessage name="elaborated.last_surname" />
                 </div>
             </div>
             <div className="row">
@@ -181,20 +226,65 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             </div>
             <hr />
             <div className="row">
-                <div className="col-12">
-                    <label htmlFor="revised.name" className="form-label">
-                        Nombre<span className="text-danger">*</span>
+                <div className="col-3">
+                    <label htmlFor="revised.first_name" className="form-label">
+                        Primer Nombre<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="revised.name"
-                        name="revised.name"
+                        id="revised.first_name"
+                        name="revised.first_name"
                         placeholder="Nombre del que lo revisó"
                         autoComplete="off"
                         maxLength={20}
                     />
-                    <ErrorMessage name="revised.name" />
+                    <ErrorMessage name="revised.first_name" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="revised.last_name" className="form-label">
+                        Segundo Nombre<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="revised.last_name"
+                        name="revised.last_name"
+                        placeholder="Nombre del que lo revisó"
+                        autoComplete="off"
+                        maxLength={20}
+                    />
+                    <ErrorMessage name="revised.last_name" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="revised.first_surname" className="form-label">
+                        Primer Apellido<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="revised.first_surname"
+                        name="revised.first_surname"
+                        placeholder="Nombre del que lo revisó"
+                        autoComplete="off"
+                        maxLength={20}
+                    />
+                    <ErrorMessage name="revised.first_surname" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="revised.last_surname" className="form-label">
+                        Segundo Apellido<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="revised.last_surname"
+                        name="revised.last_surname"
+                        placeholder="Nombre del que lo revisó"
+                        autoComplete="off"
+                        maxLength={20}
+                    />
+                    <ErrorMessage name="revised.last_surname" />
                 </div>
             </div>
             <div className="row">
@@ -234,20 +324,65 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             </div>
             <hr />
             <div className="row">
-                <div className="col-12">
-                    <label htmlFor="approved.name" className="form-label">
-                        Nombre<span className="text-danger">*</span>
+                <div className="col-3">
+                    <label htmlFor="approved.first_name" className="form-label">
+                        Primer Nombre<span className="text-danger">*</span>
                     </label>
                     <Field
                         type="text"
                         className="form-control"
-                        id="approved.name"
-                        name="approved.name"
+                        id="approved.first_name"
+                        name="approved.first_name"
                         placeholder="Nombre del que lo aprobó"
                         autoComplete="off"
                         maxLength={20}
                     />
-                    <ErrorMessage name="approved.name" />
+                    <ErrorMessage name="approved.first_name" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="approved.last_name" className="form-label">
+                        Segundo Nombre<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="approved.last_name"
+                        name="approved.last_name"
+                        placeholder="Nombre del que lo aprobó"
+                        autoComplete="off"
+                        maxLength={20}
+                    />
+                    <ErrorMessage name="approved.last_name" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="approved.first_surname" className="form-label">
+                        Primer Apellido<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="approved.first_surname"
+                        name="approved.first_surname"
+                        placeholder="Nombre del que lo aprobó"
+                        autoComplete="off"
+                        maxLength={20}
+                    />
+                    <ErrorMessage name="approved.first_surname" />
+                </div>
+                <div className="col-3">
+                    <label htmlFor="approved.last_surname" className="form-label">
+                        Segundo Apellido<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        type="text"
+                        className="form-control"
+                        id="approved.last_surname"
+                        name="approved.last_surname"
+                        placeholder="Nombre del que lo aprobó"
+                        autoComplete="off"
+                        maxLength={20}
+                    />
+                    <ErrorMessage name="approved.last_surname" />
                 </div>
             </div>
             <div className="row">

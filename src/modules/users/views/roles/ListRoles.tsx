@@ -29,7 +29,7 @@ export const ListRoles = () => {
 
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.getRolesList({ page, pageSize, with: 'pagination', ...filters }));
+        dispatch(actions.getRolesList({ page, pageSize, with: 'pagination', only: 'active', ...filters }));
     };
 
     useEffect(() => {
@@ -40,13 +40,13 @@ export const ListRoles = () => {
 
     const filter = async (_filters, _) => {
         set_filters(_filters);
-        await dispatch(actions.getRolesList({ page: 1, with: 'pagination', ..._filters }));
+        await dispatch(actions.getRolesList({ page: 1, with: 'pagination', only: 'active', ..._filters }));
     };
 
     const deleteRol = (id) => async () => {
         let res: any;
         if (id !== '' && id !== undefined) {
-            //res = await dispatch(actions.getRealEstatesByProject(id));
+            // res = await dispatch(actions.getRealEstatesByProject(id));
         }
         if (res?.total) {
             const result = await swal_warning.fire({
@@ -103,7 +103,10 @@ export const ListRoles = () => {
             if (result.isConfirmed) {
                 console.log('inactivar rol sin usuarios');
                 await dispatch(actions.deleteRole(id));
-                await dispatch(actions.getRoles());
+                console.log('rol antes')
+                await dispatch(actions.getRolesList({key: 'role_name',value: "", page: 1, with: 'pagination', only: 'active', }));
+                // await dispatch(actions.getRoles());
+                console.log('rol despues')
 
                 // const _res: any = await dispatch(actions.deleteProject(id));
 

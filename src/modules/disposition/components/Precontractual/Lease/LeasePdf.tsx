@@ -71,7 +71,7 @@ interface Idata {
 
 const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
     let date = values?.registration_date.split("-")
-    let valueServPublic = 0
+    let valueServPublic = 0;
     switch (values?.public_service) {
         case "Recobro":
             valueServPublic = values?.recovery_value;
@@ -184,9 +184,9 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
             </thead>
             <tbody>
                 <tr class="middle_frame">
-                    <td class="right_frame">${values?.elaborated.name}</td>
-                    <td class="right_frame">${values?.revised.name}</td>
-                    <td class="right_frame">${values?.approved.name}</td>
+                    <td class="right_frame">${values?.elaborated.first_name} ${values?.elaborated.last_name} ${values?.elaborated.first_surname} ${values.elaborated.last_surname}</td>
+                    <td class="right_frame">${values?.revised.first_name} ${values?.revised.last_name} ${values?.revised.first_surname} ${values.revised.last_surname}</td>
+                    <td class="right_frame">${values?.approved.first_name} ${values?.approved.last_name} ${values?.approved.first_surname} ${values.approved.last_surname}</td>
                 </tr>
                 <tr class="frame_down">
                     <td class="right_frame">${values?.elaborated.post}</td>
@@ -320,8 +320,8 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
                 pesos mensuales, más el IVA del 19%, más los costos de aforo y
                 administración cuando apliquen,
                 para un total mensual de <Text style={styles.subtitle} >
-                    {writtenNumber((values?.canon_value + values?.IVA + values?.administration_value + valueServPublic), { lang: 'es' })} PESOS M/L
-                    {` ($${values?.canon_value + values?.IVA + values?.administration_value + valueServPublic})`}
+                    {writtenNumber((values?.canon_value + Number(values?.IVA) + values?.administration_value + valueServPublic), { lang: 'es' })} PESOS M/L
+                    {` ($${ (parseFloat(values?.canon_value + Number(values?.IVA) + values?.administration_value + valueServPublic)).toFixed(2)})`}
                 </Text>. Este canon de arrendamiento deberá ser cancelado por el arrendatario hasta
                 completar un año de ejecución del contrato, en los sitios y por los
                 canales indicados en la factura de cobro que le enviará EL ARRENDADOR,
@@ -332,12 +332,12 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
             </Text>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>Solicitante: </Text>
-                {values?.applicant.type_society === "Persona Natural" ?
+                {values?.applicant.person_type === "Persona Natural" ?
                     `${values.detailsApplicant.names.firstName} ${values.detailsApplicant.names.lastName ?? ""} ${values.detailsApplicant.surnames.firstSurname} ${values.detailsApplicant.surnames.lastSurname ?? ""}`
                     :
                     `${values.applicant.company_name}`
                 }
-                {values?.applicant.type_society === "Persona Natural" ? ` C.C.: ${values.detailsApplicant.document_number}` : ` NIT: ${values.applicant.document_number}`}
+                {values?.applicant.person_type === "Persona Natural" ? ` C.C.: ${values.detailsApplicant.document_number}` : ` NIT: ${values.applicant.document_number}`}
             </Text>
             <Text style={styles.subtitle}>1. Justificación de la contratación.</Text>
             <Text style={styles.text}>
@@ -351,7 +351,7 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
             <Text style={styles.text}>
                 El inmueble con matrícula <Text style={styles.subtitle}>{realEstate?.registry_number}</Text>, CBML
                 <Text style={styles.subtitle}>{` ${realEstate?.address?.cbmls?.sap.cb}${realEstate?.address?.cbmls?.sap.ml}`}</Text>, activo fijo
-                <Text style={styles.subtitle}>{` ${realEstate?.sap_id}`}</Text>, ubicado en la dirección
+                <Text style={styles.subtitle}>{` ${realEstate?.active_code}`}</Text>, ubicado en la dirección
                 <Text style={styles.subtitle}>{` ${realEstate?.address?.address}`}</Text>, cuyo tipo es
                 <Text style={styles.subtitle}> {values?.business_type?.select === "otro" ? values?.business_type?.input : values?.business_type?.select}. </Text>
                 Según la factibilidad del bien, en cuanto lo técnico, físico, estado de
@@ -373,7 +373,7 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
                 Municipio de Medellín identificado con matrícula
                 <Text style={styles.subtitle}> {realEstate?.registry_number}</Text>, CBML
                 <Text style={styles.subtitle}> {realEstate?.address?.cbmls?.uabi}</Text>, activo fijo
-                <Text style={styles.subtitle}> {realEstate?.sap_id}</Text>, ubicado en la dirección
+                <Text style={styles.subtitle}> {realEstate?.active_code}</Text>, ubicado en la dirección
                 <Text style={styles.subtitle}> {realEstate?.address?.address}</Text>, cuyo tipo es
                 <Text style={styles.subtitle}> {values?.business_type?.select === "otro" ? values?.business_type?.input : values?.business_type?.select}</Text>, escritura N°
                 <Text style={styles.subtitle}>

@@ -1,25 +1,29 @@
-import { actions } from '../redux';
-import { useDispatch } from 'react-redux';
-import { Card } from '../../../utils/ui';
+import { actions as actionsUser } from '../redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import GeneralForm from './../components/GerenalForm';
 import { swal_success } from '../../../utils';
 import { useEffect, useRef } from 'react';
 import { FormikProps, FormikValues } from 'formik';
+import FormUserprueba from '../components/FormUserprueba';
+import actions   from './../../acquisitions/redux/actions/index';
 
 const CreateUser = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const form = useRef<FormikProps<FormikValues>>();
+    const dependencies: any = useSelector((states: any) => states.acquisitions.dependencies.value);
 
     useEffect(() => {
-        dispatch(actions.clear_user());
+        dispatch(actionsUser.clear_user());
+        dispatch(actions.getDependencies())
+
     }, []);
 
     const createUser = async (values) => {
-        const res: any = await dispatch(actions.create_user(values));
+        console.log(values)
+        const res: any = await dispatch(actionsUser.create_user(values));
         await swal_success.fire({ title: 'Usuario Creado', text: res.message, icon: 'success' });
-        history.push(`/users/${res.results.user_id}`);
+        history.push(`/users/${res.results.detailsUser.user_id}`);
     };
 
     return (
@@ -28,7 +32,17 @@ const CreateUser = () => {
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-md-12">
-                            <Card title="información Usuario">
+                            <FormUserprueba
+                                type='create'
+                                type_rol='assign'
+                                dependencies={dependencies}
+                                innerRef={form}
+                                onSubmit={(values) => {
+                                    return createUser(values);
+                                }}
+
+                            />
+                            {/* <Card title="información Usuario">
                                 <GeneralForm
                                     type='create'
                                     innerRef={form}
@@ -36,7 +50,7 @@ const CreateUser = () => {
                                         return createUser(values);
                                     }}
                                 />
-                            </Card>
+                            </Card> */}
                         </div>
                     </div>
                 </div>
