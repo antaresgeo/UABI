@@ -5,9 +5,7 @@ import { http } from '../../../config/axios_instances';
 
 
 const format_persona = (results: any) => {
-
     return clearObjectNulls( {
-
         ...results,
         documentType: results.document_type,
         documentNumber: results.document_number,

@@ -50,6 +50,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
     });
 
     const submit = (values, form) => {
+        console.log(values)
         form.setSubmitting(true);
         onChange(values, form).then(() => {
             form.setSubmitting(false);
