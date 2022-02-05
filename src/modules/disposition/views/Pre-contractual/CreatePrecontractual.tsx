@@ -23,6 +23,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
     }
 
     const on_submit_publicuse = async (values) => {
+        console.log('enviar valor', values)
         history.push({ pathname: "/document/use-public/", state: { values, realEstate, dispositionType } })
     }
 
