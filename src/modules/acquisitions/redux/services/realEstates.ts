@@ -95,12 +95,12 @@ const get_docucments_whit_service = async (docs) => {
                     doc.type === 3
                         ? 'Documento de Matricula'
                         : doc.type === 4
-                        ? 'Documento de Titulo'
-                        : doc.type === 6
-                        ? 'Documento Avalúo'
-                        : doc.type === 7
-                        ? 'Documento de Prediación'
-                        : 'Anexo',
+                            ? 'Documento de Titulo'
+                            : doc.type === 6
+                                ? 'Documento Avalúo'
+                                : doc.type === 7
+                                    ? 'Documento de Prediación'
+                                    : 'Anexo',
             }));
         }
         return [];
@@ -111,9 +111,9 @@ const get_docucments_whit_service = async (docs) => {
 const finalData = (data, docs_ids?) => {
     const aux_data = {
         ...data,
-        ...(Array.isArray(data.active_type)
-            ? { active_type: data.active_type.join(', ') }
-            : {}),
+        // ...(Array.isArray(data.active_type)
+        //     ? { active_type: data.active_type.join(', ') }
+        //     : {}),
     };
     delete aux_data.id;
     delete aux_data.status;
@@ -139,6 +139,9 @@ const finalData = (data, docs_ids?) => {
         aux_data.cost_center_id = Number(aux_data.cost_center_id);
     }
     aux_data.projects_id[0] = Number(aux_data.projects_id[0]);
+    if(aux_data.patrimonial_value === "") {
+        aux_data.patrimonial_value = 0;
+    }
     delete aux_data.active_code;
     delete aux_data.fixed_assets;
     delete aux_data._address;
@@ -158,12 +161,15 @@ const finalData = (data, docs_ids?) => {
 export const createRealEstate = async (
     data: any
 ): Promise<IRealEstateAttributes | string> => {
+    console.log('servicio antes', data)
+    const aux_data = finalData(data);
+    console.log('servicio despues', aux_data)
     try {
         let URI = `/real-estates`;
         const docs: any = await compute_docs(data.supports_documents);
         if (docs) {
             console.log(docs);
-            const aux_data = finalData(data);
+
             let res: AxiosResponse<IRealEstateResponse> = await http.post(
                 URI,
                 aux_data
@@ -285,7 +291,7 @@ export const updateRealEstate = async (data: any, id: number) => {
                     res.data.results.supports_documents
                 );
             return res.data.results;
-        }else{
+        } else {
             return Promise.resolve(false)
         }
     } catch (error) {

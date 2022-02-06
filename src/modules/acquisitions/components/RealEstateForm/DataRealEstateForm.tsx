@@ -8,7 +8,7 @@ import { actions } from '../../redux';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 import { extractMonth, formatDate } from '../../../../utils';
 import DocumentModal from '../../../../utils/components/DocumentsModal/index';
-import dependencias from '../../dependencias';
+
 import { useDispatch } from 'react-redux';
 import ModalDivideAreas from '../../../Inventory_record/components/ModalDivideAreas';
 import TooltipField from '../../../../utils/ui/tooltip_field';
@@ -79,31 +79,31 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         }
         if (!aux_data.includes(active_type[2]) && !aux_data.includes(active_type[3])) {
             formik.setFieldValue('construction_area', 0, false);
-            const value1 = parseFloat(formik.values.plot_area || 0);
+            // const value1 = parseFloat(formik.values.plot_area || 0);
             //formik.setFieldValue('total_area', value1, false);
         }
         if (!aux_data.includes(active_type[0])) {
             formik.setFieldValue('plot_area', 0, false);
-            const value1 = parseFloat(formik.values.construction_area || 0);
+            // const value1 = parseFloat(formik.values.construction_area || 0);
             //formik.setFieldValue('total_area', value1, false);
         }
         setFieldValue('active_type', aux_data, false);
     };
 
-    const format_list = (list) => {
-        if (list && Array.isArray(list)) {
-            let aux_list = [...list];
-            aux_list = aux_list.map((d: any) => ({
-                name: d.name,
-                id: d.name,
-            }));
-            if (aux_list.length > 0) {
-                return aux_list;
-            }
-        }
-        return [];
-    };
-    const dependency_ops = format_list(dependencias);
+    // const format_list = (list) => {
+    //     if (list && Array.isArray(list)) {
+    //         let aux_list = [...list];
+    //         aux_list = aux_list.map((d: any) => ({
+    //             name: d.name,
+    //             id: d.name,
+    //         }));
+    //         if (aux_list.length > 0) {
+    //             return aux_list;
+    //         }
+    //     }
+    //     return [];
+    // };
+
     // console.log(project)
     return (
         <>
@@ -123,7 +123,9 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                         name="projects_id"
                         component={Select}
                         id="project_id_id"
-                        extra_on_change={onProjectSelectedChange}
+                        extra_on_change={(id) => {
+                            onProjectSelectedChange(id)
+                        }}
                     />
                     <ErrorMessage name="projects_id" />
                 </div>
@@ -169,6 +171,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <label htmlFor="dependency_id" className="form-label">
                         Dependecia
                     </label>
+                    {/* {console.log()} */}
                     <Field
                         component={Select}
                         name="dependency"
@@ -350,19 +353,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             type="number"
                             className="form-control text-end"
                             style={{ borderLeft: 'none' }}
-                            //TODO: sumas el valor de adquisicion con valor de reconocimiento
                             min={0}
                             max={99999999999999999999}
-                        // onChange={(e, values) => {
-                        //     let anterior = formik.values.patrimonial_value
-                        //     let cambio = 0;
-                        //     cambio = Number(e.target.value)
-                        //     console.log(anterior, cambio)
-                        //     formik.handleChange(e)
-                        //     if(cambio !== 0) {
-                        //         console.log('documeto obligatorio')
-                        //     }
-                        // }}
                         />
                     </div>
                     <ErrorMessage name="patrimonial_value" />
@@ -598,8 +590,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             disabled={!formik.values.active_type?.includes('Lote')}
                             onChange={(e) => {
                                 formik.handleChange(e);
-                                const value1 = parseFloat(e.target.value || 0);
-                                const value2 = parseFloat(formik.values.construction_area || 0);
+                                // const value1 = parseFloat(e.target.value || 0);
+                                // const value2 = parseFloat(formik.values.construction_area || 0);
                                 //formik.setFieldValue('total_area', value1 + value2, false);
                             }}
                             min={0}
@@ -677,8 +669,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             }
                             onChange={(e) => {
                                 formik.handleChange(e);
-                                const value2 = parseFloat(e.target.value || 0);
-                                const value1 = parseFloat(formik.values.plot_area || 0);
+                                // const value2 = parseFloat(e.target.value || 0);
+                                // const value1 = parseFloat(formik.values.plot_area || 0);
                                 //formik.setFieldValue('total_area', value1 + value2, false);
                             }}
                         />

@@ -187,6 +187,7 @@ const finalData = async (_data) => {
         if(typeof data.detailsUser.location !== 'number' ) {
             data.detailsUser.location = data.detailsUser.location.id
         }
+        data.detailsUser.location = `${data.detailsUser.location}`
         // data.detailsUser.id_number = data.user.id_number+"";
         if (data.detailsUser.entity_type !== 'P') {
             data.detailsUser.cost_center_id = null

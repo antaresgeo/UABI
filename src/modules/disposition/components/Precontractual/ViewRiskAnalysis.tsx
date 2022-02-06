@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-const ViewRiskAnalysis = () => {
+interface FormPros {
+    operational_risk?: any;
+    regulatory_risk?: any;
+}
+
+const ViewRiskAnalysis: FC<FormPros> = ({operational_risk, regulatory_risk }) => {
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -15,16 +20,15 @@ const ViewRiskAnalysis = () => {
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Grado de ocurrencia</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{regulatory_risk?.degree_occurrence}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Grado de impacto</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{regulatory_risk?.impact_degree}</div>
                             </div>
                             <div className="col-6">
                                 <label htmlFor="">Responsable</label>
-                                <div className="my-3">
-                                </div>
+                                <div className="my-3">{regulatory_risk?.responsible}</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
@@ -32,11 +36,7 @@ const ViewRiskAnalysis = () => {
                                 <label htmlFor="">Mecanismo de mitigación</label>
                                 <div className="my-3" style={{ height: '60px', overflowX: 'auto' }}>
                                     <div style={{ width: '1000px' }}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus neque a ex
-                                        porta aliquet. Nunc malesuada auctor risus, ut condimentum mauris scelerisque
-                                        non. Aliquam erat volutpat. Nullam quis blandit elit. In non tincidunt eros, sed
-                                        pretium erat. Curabitur sollicitudin ex in odio pellentesque fringilla. Nulla
-                                        vehicula,
+                                        {regulatory_risk?.mitigation_mechanism}
                                     </div>
                                 </div>
                             </div>
@@ -47,16 +47,15 @@ const ViewRiskAnalysis = () => {
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Grado de ocurrencia</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{operational_risk?.degree_occurrence}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Grado de impacto</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{operational_risk?.impact_degree}</div>
                             </div>
                             <div className="col-6">
                                 <label htmlFor="">Responsable</label>
-                                <div className="my-3">
-                                </div>
+                                <div className="my-3">{operational_risk?.responsible}</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
@@ -64,11 +63,7 @@ const ViewRiskAnalysis = () => {
                                 <label htmlFor="">Mecanismo de mitigación</label>
                                 <div className="my-3" style={{ height: '60px', overflowX: 'auto' }}>
                                     <div style={{ width: '1000px' }}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus neque a ex
-                                        porta aliquet. Nunc malesuada auctor risus, ut condimentum mauris scelerisque
-                                        non. Aliquam erat volutpat. Nullam quis blandit elit. In non tincidunt eros, sed
-                                        pretium erat. Curabitur sollicitudin ex in odio pellentesque fringilla. Nulla
-                                        vehicula,
+                                        {operational_risk?.mitigation_mechanism}
                                     </div>
                                 </div>
                             </div>

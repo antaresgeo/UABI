@@ -80,17 +80,17 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                     <ErrorMessage name="regulatory_risk.impact_degree" />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="regulatory_risk.responsable" className="form-label">
+                    <label htmlFor="regulatory_risk.responsible" className="form-label">
                         Responsable
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="regulatory_risk.responsable"
-                        name="regulatory_risk.responsable"
+                        id="regulatory_risk.responsible"
+                        name="regulatory_risk.responsible"
                         disabled={false}
                     >
-                        <option key="regulatory_responsable_id" value="" disabled>
+                        <option key="regulatory_responsible_id" value="" disabled>
                             -- Seleccionar --
                         </option>
                         <option key="Contratista" value="Contratista">
@@ -100,7 +100,7 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                             municipio
                         </option>
                     </Field>
-                    <ErrorMessage name="regulatory_risk.responsable" />
+                    <ErrorMessage name="regulatory_risk.responsible" />
                 </div>
             </div>
             <div className="row">
@@ -190,17 +190,17 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                     <ErrorMessage name="operational_risk.impact_degree" />
                 </div>
                 <div className="col-6">
-                    <label htmlFor="operational_risk.responsable" className="form-label">
+                    <label htmlFor="operational_risk.responsible" className="form-label">
                         Responsable
                     </label>
                     <Field
                         as="select"
                         className="w-100 form-select form-control"
-                        id="operational_risk.responsable"
-                        name="operational_risk.responsable"
+                        id="operational_risk.responsible"
+                        name="operational_risk.responsible"
                         disabled={false}
                     >
-                        <option key="operative_responsable" value="" disabled>
+                        <option key="operative_responsible" value="" disabled>
                             --Seleccionar--
                         </option>
                         <option key="Contratista" value="Contratista">
@@ -210,7 +210,7 @@ export const FormRiskAnalysis: FC<FormProps> = () => {
                             municipio
                         </option>
                     </Field>
-                    <ErrorMessage name="operational_risk.responsable" />
+                    <ErrorMessage name="operational_risk.responsible" />
                 </div>
             </div>
 

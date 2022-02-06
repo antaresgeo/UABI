@@ -30,8 +30,8 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                 break;
         }
         formik.setFieldValue(
-            'total',
-            parseInt(formik.values.subtotal + Number(formik.values.administration_value) + valueServPublic),
+            'contract_value',
+            parseInt(formik.values.monthly_total + Number(formik.values.administration_value) + valueServPublic),
             false
         );
 
@@ -46,7 +46,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
     return (
         <>
             <div className="row">
-                <div className="col-3">
+                <div className="col-6">
                     <label htmlFor="registration_date_id" className="form-label mt-3 mt-lg-0">
                         Fecha de Registro estudio previo
                     </label>
@@ -60,20 +60,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     />
                     <ErrorMessage name="registration_date" />
                 </div>
-                <div className="col-3">
-                    <label htmlFor="consecutive_number_id" className="form-label">
-                        Número Consecutivo
-                    </label>
-                    <Field
-                        type="text"
-                        id="consecutive_number_id"
-                        name="consecutive_number"
-                        className="form-control"
-                        disabled
 
-                    />
-                    <ErrorMessage name="consecutive_number" />
-                </div>
                 <div className="col-3">
                     <label htmlFor="canon_value_id" className="form-label">
                         Valor del canon
@@ -95,12 +82,12 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                     <Field
                         type="number"
                         id="IVA_id"
-                        name="IVA"
+                        name="iva"
                         className="form-control"
                         disabled
 
                     />
-                    <ErrorMessage name="IVA" />
+                    <ErrorMessage name="iva" />
                 </div>
 
             </div>
@@ -250,7 +237,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         <Field
                             disabled
                             id="subtotal_id"
-                            name="subtotal"
+                            name="monthly_total"
                             type="number"
                             className="form-control border-start-0 text-end"
                             min={0}
@@ -258,7 +245,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         />
                     </div>
 
-                    <ErrorMessage name="subtotal" />
+                    <ErrorMessage name="monthly_total" />
                 </div>
                 <div className="col-3">
                     <label htmlFor="total_id" className="form-label">
@@ -271,14 +258,14 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         <Field
                             disabled
                             id="total_id"
-                            name="total"
+                            name="contract_value"
                             type="number"
                             className="form-control border-start-0 text-end"
                             min={0}
                             max={9999999999}
                         />
                     </div>
-                    <ErrorMessage name="total" />
+                    <ErrorMessage name="contract_value" />
                 </div>
 
                 <div className="col-3">

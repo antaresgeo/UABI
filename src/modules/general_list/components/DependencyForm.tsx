@@ -28,7 +28,7 @@ const DependencyForm: FC<DependencyFormPros> = ({ dependency, onSubmit, disabled
         ...dependency,
     };
 
-    console.log(initial_values)
+
 
     const schema = Yup.object().shape({
         dependency: Yup.string().required('Campo obligatorio'),

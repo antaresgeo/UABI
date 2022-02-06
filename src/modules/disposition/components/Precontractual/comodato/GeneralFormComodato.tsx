@@ -149,7 +149,7 @@ interface Comodato {
 }
 export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_form }) => {
 
-    let initialValues: Comodato = {
+    let initialValues = {
         environmental_risk: '',
         registration_date: moment(new Date().getTime()).format('YYYY-MM-DD'),
         contract_period: '',
@@ -161,30 +161,9 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         },
         lockable_base: 10,
         //solicitante
-        applicant: {
-            type_society: "Persona Juridica",
-            id_type: 4,
-            id_number: "",
-            company_name: "",
-            email: "",
-            phone_number: "",
-        },
-        location_applicant: {
-            address: "",
-            id: "",
-        },
-        detailsRepresentative: {
-            id_type: '',
-            id_number: '',
-            names: { firstName: '', lastName: '' },
-            surnames: { firstSurname: '', lastSurname: '' },
-            email: '',
-            phone_number: '',
-            gender: '',
-        },
-        representative: {
-            type_society: "Persona Natural",
-        },
+        applicant: "",
+
+        representative: "",
         //analisis de riegos
         regulatory_risk: {
             degree_occurrence: "MEDIO",
@@ -217,12 +196,8 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         resolution: "",
         dependence: "",
         commercial_appraisal: "",
-        obligations: [
-
-        ],
-        prohibitions: [
-
-        ],
+        obligations: [],
+        prohibitions: [],
         //obligaciones
         value_locative_repairs: "",
         value_repairs_damages: "",
@@ -233,41 +208,13 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         administration_value: "",
         network_value: "",
         value_economic_obligations: "",
+
         //lider  a cargo
-        detailsLeader: {
-            id_type: '',
-            id_number: '',
-            names: { firstName: '', lastName: '' },
-            surnames: { firstSurname: '', lastSurname: '' },
-            email: '',
-            phone_number: '',
-            gender: '',
-        },
-        leader: {
-            type_society: "Persona Natural",
-            post: "",
-            dependence: realEstate?.dependency,
-            secretary: realEstate?.subdependency,
-        },
-        location_leader: {
-            address: "",
-            id: "",
-        },
-        elaborated: {
-            name: "",
-            post: "",
-            email: "",
-        },
-        revised: {
-            name: "",
-            post: "",
-            email: "",
-        },
-        approved: {
-            name: "",
-            post: "",
-            email: "",
-        },
+        leader: "",
+        elaborated: "",
+        revised: "",
+        approved: "",
+
         //beneficiario
         population: '',
         benefited_sector: '',
@@ -275,6 +222,9 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
             commune: '',
             neighborhood: '',
         },
+
+        dependency: realEstate?.dependency,
+        secretary: realEstate?.subdependency,
 
         ...values_form,
     }
@@ -379,21 +329,21 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
 
 
         //personas
-        elaborated: Yup.object({
-            name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            email: Yup.string().required('obligatorio')
-        }),
-        revised: Yup.object({
-            name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            email: Yup.string().required('obligatorio')
-        }),
-        approved: Yup.object({
-            name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            email: Yup.string().required('obligatorio')
-        }),
+        // elaborated: Yup.object({
+        //     name: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     email: Yup.string().required('obligatorio')
+        // }),
+        // revised: Yup.object({
+        //     name: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     email: Yup.string().required('obligatorio')
+        // }),
+        // approved: Yup.object({
+        //     name: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     email: Yup.string().required('obligatorio')
+        // }),
 
 
     });
