@@ -28,29 +28,10 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
         business_type: "",
         boundaries: "",
         //solicitante
-        applicant: {
-            type_society: "Persona Juridica",
-            id_type: 4,
-            id_number: "",
-            company_name: "",
-            email: "",
-            phone_number: "",
-        },
+        applicant: "",
         location_applicant: {
             address: "",
             id: "",
-        },
-        detailsRepresentative: {
-            id_type: '',
-            id_number: '',
-            names: { firstName: '', lastName: '' },
-            surnames: { firstSurname: '', lastSurname: '' },
-            email: '',
-            phone_number: '',
-            gender: '',
-        },
-        representative: {
-            type_society: "Persona Natural",
         },
 
         //analisis de riegos
@@ -74,40 +55,18 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
         cadastral_value: "",
 
         //lider y personas a cargo
-        detailsLeader: {
-            id_type: '',
-            id_number: '',
-            names: { firstName: '', lastName: '' },
-            surnames: { firstSurname: '', lastSurname: '' },
-            email: '',
-            phone_number: '',
-            gender: '',
-        },
-        leader: {
-            type_society: "Persona Natural",
-            post: "",
-            dependence: realEstate?.dependency,
-            secretary: realEstate?.subdependency,
-        },
+        leader: "",
         location_leader: {
             address: "",
             id: "",
         },
-        elaborated: {
-            name: "",
-            post: "",
-            email: "",
-        },
-        revised: {
-            name: "",
-            post: "",
-            email: "",
-        },
-        approved: {
-            name: "",
-            post: "",
-            email: "",
-        },
+        elaborated: "",
+        revised: "",
+        approved: "",
+
+        //info del bi
+        dependence: realEstate?.dependency,
+        secretary: realEstate?.subdependency,
         ...values_form,
     }
     const submit = (values, actions) => {
@@ -118,55 +77,59 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
     };
 
     const schema = Yup.object().shape({
-        cadastral_value: Yup.string().required('obligatorio'),
-        prediation_number: Yup.number().required('obligatorio'),
-        prediation_date: Yup.string().required('obligatorio'),
-        destination_realEstate: Yup.string().required('obligatorio'),
-        contract_period: Yup.string().required('obligatorio'),
-        contract_value: Yup.string().required('obligatorio'),
-        environmental_risk: Yup.string().required('obligatorio'),
-        lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
-        business_type: Yup.string().required('obligatorio'),
-        registration_date: Yup.string().required('obligatorio'),
-        boundaries: Yup.string().required('obligatorio'),
+        // cadastral_value: Yup.string().required('obligatorio'),
+        // prediation_number: Yup.number().required('obligatorio'),
+        // prediation_date: Yup.string().required('obligatorio'),
+        // destination_realEstate: Yup.string().required('obligatorio'),
+        // contract_period: Yup.string().required('obligatorio'),
+        // contract_value: Yup.string().required('obligatorio'),
+        // environmental_risk: Yup.string().required('obligatorio'),
+        // lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
+        // business_type: Yup.string().required('obligatorio'),
+        // registration_date: Yup.string().required('obligatorio'),
+        // boundaries: Yup.string().required('obligatorio'),
 
-        // Solicitante
-        applicant: Yup.object({
-            type_society: Yup.string().required('obligatorio'),
-            company_name: Yup.string().required('obligatorio'),
-            id_number:  Yup.number().required('obligatorio'),
-            phone_number:  Yup.number().required('obligatorio'),
-            email:  Yup.string().email().required('obligatorio'),
-        }),
-        // location_applicant: Yup.object({
-        //     address: Yup.string().required('obligatorio')
+        // // Solicitante
+        // applicant: Yup.object({
+        //     type_society: Yup.string().required('obligatorio'),
+        //     company_name: Yup.string().required('obligatorio'),
+        //     id_number:  Yup.number().required('obligatorio'),
+        //     phone_number:  Yup.number().required('obligatorio'),
+        //     email:  Yup.string().email().required('obligatorio'),
+        // }),
+        // // location_applicant: Yup.object({
+        // //     address: Yup.string().required('obligatorio')
+        // // }),
+
+
+        // //lider a cargo
+        // leader:Yup.object({
+        //     type_society: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     dependence: Yup.string().required('obligatorio'),
+        //     secretary: Yup.string().required('obligatorio'),
         // }),
 
+        // //personas
+        // elaborated: Yup.object({
+        //     first_name: Yup.string().required('obligatorio'),
+        //     first_surname: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     email: Yup.string().required('obligatorio')
 
-        //lider a cargo
-        leader:Yup.object({
-            type_society: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            dependence: Yup.string().required('obligatorio'),
-            secretary: Yup.string().required('obligatorio'),
-        }),
-
-        //personas
-        elaborated: Yup.object({
-            name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            email: Yup.string().required('obligatorio')
-        }),
-        revised: Yup.object({
-            name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            email: Yup.string().required('obligatorio')
-        }),
-        approved: Yup.object({
-            name: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            email: Yup.string().required('obligatorio')
-        }),
+        // }),
+        // revised: Yup.object({
+        //     first_name: Yup.string().required('obligatorio'),
+        //     first_surname: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     email: Yup.string().required('obligatorio')
+        // }),
+        // approved: Yup.object({
+        //     first_name: Yup.string().required('obligatorio'),
+        //     first_surname: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     email: Yup.string().required('obligatorio')
+        // }),
 
     });
     return (

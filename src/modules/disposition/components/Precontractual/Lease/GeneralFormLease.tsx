@@ -29,50 +29,34 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         },
         lockable_base: 10,
         //solicitante
-        applicant: {
-            person_type: "",
-            document_type: "",
-            document_number: "",
-            company_name: "",
-            company_email: "",
-            company_phone_number: "",
-            company_phone_number_ext: "",
-            legal_representative_person_type: "Persona Natural",
-        },
-        detailsApplicant: "",
-        location_applicant: {
-            address: "",
-            id: "",
-        },
-        detailsRepresentative: "",
-
+        applicant: "",
+        representative: "",
 
         //analisis de riegos
         regulatory_risk: {
             degree_occurrence: "MEDIO",
             impact_degree: "MEDIO",
-            responsable: "Contratista",
+            responsible: "Contratista",
             mitigation_mechanism: "Ejercer un control y vigilancia estrictos al contrato por parte del supervisor.",
         },
         operational_risk: {
             degree_occurrence: "MEDIO",
             impact_degree: "MEDIO",
-            responsable: "Contratista",
+            responsible: "Contratista",
             mitigation_mechanism: "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual",
         },
 
         //Arrendamiento
-        consecutive_number: "36000000", //TODO: preguntar a Diego valor ?
         canon_value: realEstate?.canyon_value,
-        IVA: (realEstate.canyon_value * 0.19).toFixed(2),
+        iva: (realEstate.canyon_value * 0.19).toFixed(2),
         public_service: "",
         value_aforo: "",
         recovery_value: "",
         counter_value: "",
         administration_value: "",
         vigilance_value: "",
-        subtotal: parseInt(realEstate?.canyon_value + (realEstate.canyon_value * 0.19)) ,
-        total: 0,
+        monthly_total: parseInt(realEstate?.canyon_value + (realEstate.canyon_value * 0.19)),
+        contract_value: 0,
         prediation_number: "",
         prediation_date: "",
         coverage: "",
@@ -83,41 +67,12 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         boundaries: "",
 
         //lider y personas a cargo
-        detailsLeader: "",
-        leader: {
-            person_type: "Persona Natural",
-            post: "Líder de Programa",
-            dependence: realEstate?.dependency,
-            secretary: realEstate?.subdependency,
-        },
-        location_leader: {
-            address: "",
-            id: "",
-        },
-        elaborated: {
-            first_name: "",
-            last_name: "",
-            first_surname: "",
-            last_surname: "",
-            post: "",
-            email: "",
-        },
-        revised: {
-            first_name: "",
-            last_name: "",
-            first_surname: "",
-            last_surname: "",
-            post: "",
-            email: "",
-        },
-        approved: {
-            first_name: "",
-            last_name: "",
-            first_surname: "",
-            last_surname: "",
-            post: "",
-            email: "",
-        },
+        leader: "",
+        elaborated: "",
+        revised: "",
+        approved: "",
+        dependency: realEstate?.dependency,
+        secretary: realEstate?.subdependency,
         ...values_form,
     }
 
@@ -130,80 +85,80 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
     };
 
     const schema = Yup.object().shape({
-        //general
-        public_service: Yup.string().required('obligatorio'),
-        administration_value: Yup.number().required('obligatorio'),
-        lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
-        //business_type: Yup.string().required('obligatorio'),
-        fines: Yup.string().required('obligatorio'),
-        boundaries: Yup.string().required('obligatorio'),
-        // solo arrrendamiento
-        prediation_number: Yup.string().required('obligatorio'),
-        prediation_date: Yup.string().required('obligatorio'),
-        destination_realEstate: Yup.string().required('obligatorio'),
-        contract_period: Yup.number().required('obligatorio'),
-        appraisal_number: Yup.number().required('obligatorio'),
-        appraisal_date: Yup.string().required('obligatorio'),
-        environmental_risk: Yup.string().required('obligatorio'),
+        // //general
+        // public_service: Yup.string().required('obligatorio'),
+        // administration_value: Yup.number().required('obligatorio'),
+        // lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
+        // //business_type: Yup.string().required('obligatorio'),
+        // fines: Yup.string().required('obligatorio'),
+        // boundaries: Yup.string().required('obligatorio'),
+        // // solo arrrendamiento
+        // prediation_number: Yup.string().required('obligatorio'),
+        // prediation_date: Yup.string().required('obligatorio'),
+        // destination_realEstate: Yup.string().required('obligatorio'),
+        // contract_period: Yup.number().required('obligatorio'),
+        // appraisal_number: Yup.number().required('obligatorio'),
+        // appraisal_date: Yup.string().required('obligatorio'),
+        // environmental_risk: Yup.string().required('obligatorio'),
 
 
-        // Solicitante
-        applicant: Yup.object({
-            person_type: Yup.string().required('obligatorio'),
-            company_name: Yup.string().when('person_type', {
-                is: "Persona Juridica",
-                then: Yup.string().required('obligatorio')
-            }),
-            document_number: Yup.number().when('person_type', {
-                is: "Persona Juridica",
-                then: Yup.number().required('obligatorio')
-            }),
-            company_phone_number: Yup.number().when('person_type', {
-                is: "Persona Juridica",
-                then: Yup.number().required('obligatorio')
-            }),
-            company_email: Yup.string().email().when('person_type', {
-                is: "Persona Juridica",
-                then: Yup.string().email().required('obligatorio')
-            }),
-        }),
-        detailsApplicant: Yup.object().when('applicant.person_type', {
-            is: "Persona Natural",
-            then: Yup.object().required('obligatorio'),
-        }),
-        location_applicant: Yup.object({
-            address: Yup.string().required('obligatorio')
-        }),
-        //representante
-        detailsRepresentative: Yup.object().when('applicant.person_type', {
-            is: "Persona Juridica",
-            then: Yup.object().required('obligatorio'),
-        }),
-
-        //lider y personas a cargo
-        detailsLeader: Yup.object().required('obligatorio'),
-        // location_leader: Yup.object({
+        // // Solicitante
+        // applicant: Yup.object({
+        //     person_type: Yup.string().required('obligatorio'),
+        //     company_name: Yup.string().when('person_type', {
+        //         is: "Persona Juridica",
+        //         then: Yup.string().required('obligatorio')
+        //     }),
+        //     document_number: Yup.number().when('person_type', {
+        //         is: "Persona Juridica",
+        //         then: Yup.number().required('obligatorio')
+        //     }),
+        //     company_phone_number: Yup.number().when('person_type', {
+        //         is: "Persona Juridica",
+        //         then: Yup.number().required('obligatorio')
+        //     }),
+        //     company_email: Yup.string().email().when('person_type', {
+        //         is: "Persona Juridica",
+        //         then: Yup.string().email().required('obligatorio')
+        //     }),
+        // }),
+        // detailsApplicant: Yup.object().when('applicant.person_type', {
+        //     is: "Persona Natural",
+        //     then: Yup.object().required('obligatorio'),
+        // }),
+        // location_applicant: Yup.object({
         //     address: Yup.string().required('obligatorio')
         // }),
-        elaborated: Yup.object({
-            first_name: Yup.string().required('obligatorio'),
-            first_surname: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            email: Yup.string().required('obligatorio')
+        // //representante
+        // detailsRepresentative: Yup.object().when('applicant.person_type', {
+        //     is: "Persona Juridica",
+        //     then: Yup.object().required('obligatorio'),
+        // }),
 
-        }),
-        revised: Yup.object({
-            first_name: Yup.string().required('obligatorio'),
-            first_surname: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            email: Yup.string().required('obligatorio')
-        }),
-        approved: Yup.object({
-            first_name: Yup.string().required('obligatorio'),
-            first_surname: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            email: Yup.string().required('obligatorio')
-        }),
+        // //lider y personas a cargo
+        // detailsLeader: Yup.object().required('obligatorio'),
+        // // location_leader: Yup.object({
+        // //     address: Yup.string().required('obligatorio')
+        // // }),
+        // elaborated: Yup.object({
+        //     first_name: Yup.string().required('obligatorio'),
+        //     first_surname: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     email: Yup.string().required('obligatorio')
+
+        // }),
+        // revised: Yup.object({
+        //     first_name: Yup.string().required('obligatorio'),
+        //     first_surname: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     email: Yup.string().required('obligatorio')
+        // }),
+        // approved: Yup.object({
+        //     first_name: Yup.string().required('obligatorio'),
+        //     first_surname: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     email: Yup.string().required('obligatorio')
+        // }),
 
 
 

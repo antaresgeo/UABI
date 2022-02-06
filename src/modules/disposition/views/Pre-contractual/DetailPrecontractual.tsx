@@ -1,15 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from '../../../../utils/ui';
-import Detail_Lease from '../../components/Precontractual/Lease/Detail_Lease';
+import DetailLease from '../../components/Precontractual/Lease/Detail_Lease';
 import ViewPerson from './../../components/Precontractual/ViewPerson';
 import ViewRiskAnalysis from './../../components/Precontractual/ViewRiskAnalysis';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Detail_comodato from '../../components/Precontractual/comodato/Detail_comodato';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from '../../redux';
+
+// interface IParams {
+//     active_code: string;
+// }
 
 const DetailPrecontractual = () => {
     const history = useHistory();
-    const dispositionType= "arrendamiento"
-    const realEstate= {}
+    const dispositionType = "arrendamiento"
+    const realEstate = {}
+    const dispatch = useDispatch();
+    const active_code = "AM0003L"
+    // const { active_code } = useParams<IParams>();
+
+    const precontractual: any = useSelector((state: any) => {
+        return state.disposition.precontractual.value
+    });
+
+    useEffect(() => {
+        dispatch(actions.get_precontract(active_code));
+    }, [dispatch, active_code]);
+
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -18,7 +36,7 @@ const DetailPrecontractual = () => {
                         <h5 className="col-11">Etapa Precontractual</h5>
                         <Link
                             to={
-                                { pathname: "/disposition/create/", state: { dispositionType,  realEstate,  } }
+                                { pathname: "/disposition/create/", state: { dispositionType, realEstate, } }
                             }
                             name=""
                             avatar={false}
@@ -36,14 +54,21 @@ const DetailPrecontractual = () => {
                         <div className="row justify-content-center">
                             <div className="col-md-12">
                                 {dispositionType === 'arrendamiento' &&
-                                    <Detail_Lease />
+                                    <DetailLease
+                                        precontractual={precontractual}
+                                    />
                                 }
                                 {/* {dispositionType === 'Comodato' &&
                                     <Detail_comodato />
                                 } */}
-                                <ViewPerson title='Información del Solicitante'/>
-                                <ViewRiskAnalysis />
-                                <ViewPerson title='Información del Lider a Cargo'/>
+                                {console.log(precontractual)}
+
+                                <ViewPerson title='Información del Solicitante' person={precontractual?.applicant} />
+                                <ViewRiskAnalysis
+                                    operational_risk={precontractual?.operational_risk}
+                                    regulatory_risk={precontractual?.regulatory_risk}
+                                />
+                                <ViewPerson title='Información del Lider a Cargo' person={precontractual?.leader} />
                             </div>
                         </div>
                     </div>

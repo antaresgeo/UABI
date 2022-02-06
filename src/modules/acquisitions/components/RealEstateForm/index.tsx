@@ -352,7 +352,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
             {(formik) => {
                 const { name, registry_number, projects_id } = formik.values;
                 const update_project = (id) => {
-                    if (Number.isInteger(id)) {
+                    if (/*Number.isInteger(id)*/ typeof Number(id) === "number") {
                         formik.setFieldValue('_project', {}, false);
                         service.getProject(id + '').then((_project: any) => {
                             formik.setFieldValue('projects_id', `${_project.id}`, false);
@@ -360,6 +360,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                             formik.setFieldValue('subdependency', _project.subdependency, false);
                             formik.setFieldValue('management_center', _project.management_center, false);
                             formik.setFieldValue('cost_center', _project.cost_center, false);
+                            formik.setFieldValue('cost_center_id', _project.cost_center_id, false);
                             formik.setFieldValue(
                                 'project',
                                 {
@@ -371,6 +372,8 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                             formik.setFieldValue('_project', _project, false);
                         });
                     }
+
+                    console.log(formik.values)
                 };
                 if (formik.values._project === undefined) {
                     if (history.location?.state && history.location?.state?.realEstateData.project_id !== undefined) {

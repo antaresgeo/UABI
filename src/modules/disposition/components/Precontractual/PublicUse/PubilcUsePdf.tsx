@@ -142,19 +142,23 @@ const PubilcUsePdf: FC<Idata> = ({ values, realEstate }) => {
             </thead>
             <tbody>
                 <tr class="middle_frame">
-                    <td class="right_frame">${values?.elaborated.name}</td>
-                    <td class="right_frame">${values?.revised.name}</td>
-                    <td class="right_frame">${values?.approved.name}</td>
+                    <td class="right_frame">${values?.elaborated.first_name} ${values?.elaborated.last_name || ""} ${values?.elaborated.first_surname} ${values?.elaborated.last_surname || ""}</td>
+                    <td class="right_frame">${values?.revised.first_name} ${values?.revised.last_name || ""} ${values?.revised.first_surname} ${values?.revised.last_surname || ""}</td>
+                    <td class="right_frame">${values?.approved.first_name} ${values?.approved.last_name || ""} ${values?.approved.first_surname} ${values?.approved.last_surname || ""}</td>
                 </tr>
                 <tr class="frame_down">
-                    <td class="right_frame">${values?.elaborated.post}</td>
-                    <td class="right_frame">${values?.revised.post}</td>
-                    <td class="right_frame">${values?.approved.post}</td>
+                    <td class="right_frame"></td>
+                    <td class="right_frame"></td>
+                    <td class="right_frame"></td>
                 </tr>
             </tbody>
         </table>
 
     `;
+    // TODO: poner cuando el modal este completo
+    //     ${values?.elaborated.post}
+    // ${values?.revised.post}
+    // ${values?.approved.post}
 
     const table_risk = `
         <style>
@@ -632,7 +636,7 @@ const PubilcUsePdf: FC<Idata> = ({ values, realEstate }) => {
             <Text style={styles.text}></Text>
 
             <Text style={styles.sub_text}>
-                {values?.detailsLeader.names.firstName} {values?.detailsLeader.names.lastName} {values?.detailsLeader.surnames.firstSurname} {values?.detailsLeader.surnames.lastSurname}
+                {values?.leader.firstName} {values?.leader.lastName || ""} {values?.leader.firstSurname} {values?.leader.lastSurname || ""}
             </Text>
             <Text style={styles.sub_text}>
                 {values?.leader.post}
