@@ -5,11 +5,12 @@ import ErrorMessage from '../../../utils/ui/error_messge';
 import { ModalNotificar } from '../../disposition/components/ModalNotificar';
 import Map from '../../../utils/components/template/map';
 import writtenNumber from 'written-number';
+import {NewInspection} from "../custom_types";
+import {PersonalInformationForm} from "../../../utils/ui/PersonaM";
 
 interface BasicInformationProps {
-    inspection: any;
+    inspection: NewInspection;
     real_estate: any;
-    obs?: string;
     disabled?: boolean;
     innerRef: any;
     onSubmit: (values) => void;
@@ -17,7 +18,6 @@ interface BasicInformationProps {
 const BasicInformation: FC<BasicInformationProps> = ({
     inspection,
     disabled,
-    obs,
     innerRef,
     onSubmit,
     real_estate,
@@ -121,6 +121,7 @@ const BasicInformation: FC<BasicInformationProps> = ({
                     </div>,
                 ]}
             >
+
                 <Formik
                     innerRef={innerRef}
                     enableReinitialize
@@ -129,7 +130,7 @@ const BasicInformation: FC<BasicInformationProps> = ({
                         form.setSubmitting(false);
                     }}
                     initialValues={{
-                        observations: obs || '',
+                        observations: inspection?.basic_information.differences || '',
                     }}
                 >
                     {() => {

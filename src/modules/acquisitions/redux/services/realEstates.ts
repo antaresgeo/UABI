@@ -66,7 +66,7 @@ export const getRealEstate = async (
         let res: AxiosResponse = await http.get(URI, {
             params: { id },
         });
-        res.data.results.active_type = res.data.results.active_type.split(', ');
+        // res.data.results.active_type = res.data.results.active_type.split(', ');
         res.data.results.acquisitions = await getAcquisitionForRealEstate(id);
         res.data.results.supports_documents = await get_docucments_whit_service(
             res.data.results.supports_documents

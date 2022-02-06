@@ -1,10 +1,10 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 import DocumentPdf from './../../../utils/components/document_pdf/index';
 import { StyleSheet, Text } from '@react-pdf/renderer';
 import Html from 'react-pdf-html';
-import writtenNumber from 'written-number'
+import writtenNumber from 'written-number';
 import moment from 'moment';
-
+import { NewInspection } from '../custom_types';
 
 const styles = StyleSheet.create({
     title: {
@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontSize: 11,
         textAlign: 'justify',
-        fontFamily: 'Helvetica'
+        fontFamily: 'Helvetica',
     },
     underlined: {
         fontSize: 11,
         margin: 10,
         fontFamily: 'Helvetica-Bold',
-        textDecoration: 'underline'
+        textDecoration: 'underline',
     },
     italic: {
         fontSize: 11,
@@ -53,14 +53,28 @@ const styles = StyleSheet.create({
 });
 
 interface Idata {
-    data: any;
+    data: NewInspection;
     real_estate: any;
     user: any;
     innerRef: any;
 }
 
 const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
-    console.log(real_estate)
+    // console.log(real_estate);
+    const _occupation = data.occupation;
+    const _public_services = data.physical_inspection.public_services;
+    const _properties = data.physical_inspection.properties;
+
+    const get_physical_aspects_tr = (property) => {
+        if (property) {
+            return `<tr>
+                    <td>${property?.name}</td>
+                    <td>${property?.status_property}</td>
+                    <td>${property?.observation}</td>
+                </tr>`;
+        }
+        return '';
+    };
 
     const data_realEstate = `
         <style>
@@ -86,21 +100,25 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                 </tr>
                 <tr>
                     <td>C B M L:</td>
-                    <td>${real_estate.address.cbmls.uabi}</td>
+                    <td>${real_estate?.address?.cbmls?.uabi}</td>
                 </tr>
                 <tr>
                     <td>ESCRITURA/FECHA/NOTARÍA:</td>
-                    <td>${real_estate.acquisitions.map(ac => {
-                        return `<tr>${ac.title_type_document_id ?? "-"} / ${moment(new Date(ac.acquisition_date).getTime()).format('DD-MM-YYYY')} / ${ac.entity_type}: ${ac.entity_number}</tr>`
+                    <td>${real_estate.acquisitions?.map((ac) => {
+                        return `<tr>${ac.title_type_document_id ?? '-'} / ${moment(
+                            new Date(ac.acquisition_date).getTime()
+                        ).format('DD-MM-YYYY')} / ${ac.entity_type}: ${ac.entity_number}</tr>`;
                     })}</td>
                 </tr>
                 <tr>
                     <td>AVALÚO DEL INMUEBLE:</td>
-                    <td>${writtenNumber(real_estate.patrimonial_value, { lang: 'es' })}, ${real_estate.patrimonial_value} </td>
+                    <td>${writtenNumber(real_estate.patrimonial_value, { lang: 'es' })}, ${
+        real_estate.patrimonial_value
+    } </td>
                 </tr>
                 <tr>
                     <td>DIRECCIÓN DEL INMUEBLE:</td>
-                    <td>${real_estate.address.address}</td>
+                    <td>${real_estate?.address?.address}</td>
                 </tr>
                 <tr>
                     <td>TIPO DE INMUEBLE:</td>
@@ -112,11 +130,11 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                 </tr>
                 <tr>
                     <td>DESTINACIÓN DEL INMUEBLE:</td>
-                    <td>${real_estate.tipology.tipology}</td>
+                    <td>${real_estate?.tipology?.tipology}</td>
                 </tr>
             </tbody>
         </table>
-    `
+    `;
     const public_services = `
         <style>
             table {
@@ -162,35 +180,57 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
             <tbody>
                 <tr>
                     <td>Energía</td>
-                    <td>${data.public_services[0].subscriber}</td>
-                    <td>${data.public_services[0].accountant}</td>
-                    <td>${data.public_services[0].status === 1 ? 'Aplica' : data.public_services[0].status === "2" ? 'Inactivo' : 'No Aplica'}</td>
+                    <td>${_public_services[0]?.subscriber}</td>
+                    <td>${_public_services[0]?.accountant}</td>
+                    <td>${
+                        _public_services[0]?.status === 1
+                            ? 'Aplica'
+                            : _public_services[0]?.status === 2
+                            ? 'Inactivo'
+                            : 'No Aplica'
+                    }</td>
                 </tr>
                 <tr>
                     <td>Gas</td>
-                    <td>${data.public_services[1].subscriber}</td>
-                    <td>${data.public_services[1].accountant}</td>
-                    <td>${data.public_services[1].status === 1 ? 'Aplica' : data.public_services[1].status === "2" ? 'Inactivo' : 'No Aplica'}</td>
+                    <td>${_public_services[1]?.subscriber}</td>
+                    <td>${_public_services[1]?.accountant}</td>
+                    <td>${
+                        _public_services[1]?.status === 1
+                            ? 'Aplica'
+                            : _public_services[1]?.status === 2
+                            ? 'Inactivo'
+                            : 'No Aplica'
+                    }</td>
                 </tr>
                 <tr>
                     <td>Agua</td>
-                    <td>${data.public_services[2].subscriber}</td>
-                    <td>${data.public_services[2].accountant}</td>
-                    <td>${data.public_services[2].status === 1 ? 'Aplica' : data.public_services[2].status === "2" ? 'Inactivo' : 'No Aplica'}</td>
+                    <td>${_public_services[2]?.subscriber}</td>
+                    <td>${_public_services[2]?.accountant}</td>
+                    <td>${
+                        _public_services[2]?.status === 1
+                            ? 'Aplica'
+                            : _public_services[2]?.status === 2
+                            ? 'Inactivo'
+                            : 'No Aplica'
+                    }</td>
                 </tr>
                 <tr>
                     <td>Teléfono</td>
-                    <td>${data?.public_services[3]?.subscriber}</td>
-                    <td>${data?.public_services[3]?.accountant}</td>
-                    <td>${data.public_services[3]?.status === 1 ? 'Aplica' : data.public_services[0].status === "2" ? 'Inactivo' : 'No Aplica'}</td>
+                    <td>${_public_services[3]?.subscriber}</td>
+                    <td>${_public_services[3]?.accountant}</td>
+                    <td>${
+                        _public_services[3]?.status === 1
+                            ? 'Aplica'
+                            : _public_services[0]?.status === 2
+                            ? 'Inactivo'
+                            : 'No Aplica'
+                    }</td>
                 </tr>
 
             </tbody>
         </table>
-    `
-
-    const physical_aspects =
-        `
+    `;
+    const physical_aspects = `
         <style>
             table {
                 margin: 10px;
@@ -222,120 +262,32 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Cerramiento (malla, muro, reja, etc.)</td>
-                    <td>${data.properties[20].status_property}</td>
-                    <td>${data.properties[20].observation}</td>
-                </tr>
-                <tr>
-                    <td>Fachada</td>
-                    <td>${data.properties[21].status_property}</td>
-                    <td>${data.properties[21].observation}</td>
-                </tr>
-                <tr>
-                    <td>Pintura exterior</td>
-                    <td>${data.properties[0].status_property}</td>
-                    <td>${data.properties[0].observation}</td>
-                </tr>
-                <tr>
-                    <td>Cubierta o techo</td>
-                    <td>${data.properties[1].status_property}</td>
-                    <td>${data.properties[1].observation}</td>
-                </tr>
-                <tr>
-                    <td>Pisos</td>
-                    <td>${data.properties[2].status_property}</td>
-                    <td>${data.properties[2].observation}</td>
-                </tr>
-                <tr>
-                    <td>Enchapes (baños y/o cocina)</td>
-                    <td>${data.properties[3].status_property}</td>
-                    <td>${data.properties[3].observation}</td>
-                </tr>
-                <tr>
-                    <td>Pintura interior</td>
-                    <td>${data.properties[4].status_property}</td>
-                    <td>${data.properties[4].observation}</td>
-                </tr>
-                <tr>
-                    <td>Ventanas (vidrio, madera)</td>
-                    <td>${data.properties[5].status_property}</td>
-                    <td>${data.properties[5].observation}</td>
-                </tr>
-                <tr>
-                    <td>Puerta principal</td>
-                    <td>${data.properties[6].status_property}</td>
-                    <td>${data.properties[6].observation}</td>
-                </tr>
-                <tr>
-                    <td>Cerraduras puerta</td>
-                    <td>${data.properties[7].status_property}</td>
-                    <td>${data.properties[7].observation}</td>
-                </tr>
-                <tr>
-                    <td>Puertas interiores</td>
-                    <td>${data.properties[8].status_property}</td>
-                    <td>${data.properties[8].observation}</td>
-                </tr>
-                <tr>
-                    <td>Cerraduras puertas interiores</td>
-                    <td>${data.properties[9].status_property}</td>
-                    <td>${data.properties[9].observation}</td>
-                </tr>
-                <tr>
-                    <td>Rejas de seguridad</td>
-                    <td>${data.properties[10].status_property}</td>
-                    <td>${data.properties[10].observation}</td>
-                </tr>
-                <tr>
-                    <td>Paredes</td>
-                    <td>${data.properties[11].status_property}</td>
-                    <td>${data.properties[11].observation}</td>
-                </tr>
-                <tr>
-                    <td>Escaleras</td>
-                    <td>${data.properties[12].status_property}</td>
-                    <td>${data.properties[12].observation}</td>
-                </tr>
-                <tr>
-                    <td>Aparatos sanitarios</td>
-                    <td>${data.properties[13].status_property}</td>
-                    <td>${data.properties[13].observation}</td>
-                </tr>
-                <tr>
-                    <td>Orinales</td>
-                    <td>${data.properties[14].status_property}</td>
-                    <td>${data.properties[14].observation}</td>
-                </tr>
-                <tr>
-                    <td>Grifería y abastos</td>
-                    <td>${data.properties[15].status_property}</td>
-                    <td>${data.properties[15].observation}</td>
-                </tr>
-                <tr>
-                    <td>Lavamanos</td>
-                    <td>${data.properties[16].status_property}</td>
-                    <td>${data.properties[16].observation}</td>
-                </tr>
-                <tr>
-                    <td>Rejilla desagüe</td>
-                    <td>${data.properties[17].status_property}</td>
-                    <td>${data.properties[17].observation}</td>
-                </tr>
-                <tr>
-                    <td>Sistema eléctrico</td>
-                    <td>${data.properties[18].status_property}</td>
-                    <td>${data.properties[18].observation}</td>
-                </tr>
-                <tr>
-                    <td>Acometidas eléctricas</td>
-                    <td>${data.properties[19].status_property}</td>
-                    <td>${data.properties[19].observation}</td>
-                </tr>
+                ${get_physical_aspects_tr(_properties[20])}
+                ${get_physical_aspects_tr(_properties[21])}
+                ${get_physical_aspects_tr(_properties[0])}
+                ${get_physical_aspects_tr(_properties[1])}
+                ${get_physical_aspects_tr(_properties[2])}
+                ${get_physical_aspects_tr(_properties[3])}
+                ${get_physical_aspects_tr(_properties[4])}
+                ${get_physical_aspects_tr(_properties[5])}
+                ${get_physical_aspects_tr(_properties[6])}
+                ${get_physical_aspects_tr(_properties[7])}
+                ${get_physical_aspects_tr(_properties[8])}
+                ${get_physical_aspects_tr(_properties[9])}
+                ${get_physical_aspects_tr(_properties[10])}
+                ${get_physical_aspects_tr(_properties[11])}
+                ${get_physical_aspects_tr(_properties[12])}
+                ${get_physical_aspects_tr(_properties[13])}
+                ${get_physical_aspects_tr(_properties[14])}
+                ${get_physical_aspects_tr(_properties[15])}
+                ${get_physical_aspects_tr(_properties[16])}
+                ${get_physical_aspects_tr(_properties[17])}
+                ${get_physical_aspects_tr(_properties[18])}
+                ${get_physical_aspects_tr(_properties[19])}
             </tbody>
         </table>
-    `
-    const Photographic_records = `
+    `;
+    const photographic_records = `
         <style>
             table {
                 margin: 10px;
@@ -395,28 +347,27 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
             <tbody>
                 <tr>
                     <td>Nombres y apellidos:</td>
-                    <td>${data.owner.names_surnames ?? ""}</td>
+                    <td>${data.occupant.names ?? ''}</td>
                 </tr>
                 <tr>
                     <td>Cédula de ciudadanía:</td>
-                    <td>${data.owner.document_number ?? ""}</td>
+                    <td>${data.occupant.document_number ?? ''}</td>
                 </tr>
                 <tr>
                     <td>Dirección:</td>
-                    <td>${real_estate.address.address}</td>
+                    <td>${real_estate?.address?.address}</td>
                 </tr>
                 <tr>
                     <td>Teléfono contacto: </td>
-                    <td>${data.owner.phone_number ?? ""}</td>
+                    <td>${data.occupant.phone_number ?? ''}</td>
                 </tr>
                 <tr>
                     <td>Correo electrónico:</td>
-                    <td>${data.owner.email ?? ""}</td>
+                    <td>${data.occupant.email ?? ''}</td>
                 </tr>
             </tbody>
         </table>
     `;
-
 
     return (
         <DocumentPdf
@@ -428,40 +379,42 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                 title: { prefix: 'Formato', name: 'FO-ADMI Informe de Inspección de Bien Inmueble' },
             }}
         >
-            <Text style={styles.title}>Informe de inspección N° (Digite el número del informe que corresponde a este bien durante la vigencia)</Text>
+            <Text style={styles.title}>
+                Informe de inspección N° (Digite el número del informe que corresponde a este bien durante la vigencia)
+            </Text>
             <Text style={styles.title}>Fecha: {moment(new Date().getTime()).format('DD/MM/YYYY')}</Text>
             <Text style={styles.subtitle}>1. DATOS BÁSICOS DEL INMUEBLE:</Text>
             <Html>{data_realEstate}</Html>
             <Text style={styles.text}>
-                Con el objeto de inspeccionar la tenencia y estado físico de los bienes propiedad del Municipio de Medellín y
-                de acuerdo a la normatividad vigente que regula la materia, se ha realizado visita de inspección al inmueble
-                descrito anteriormente, con el fin de verificar estado físico y de ocupación o disposición, en la cual se han
-                observado los siguientes aspectos:
+                Con el objeto de inspeccionar la tenencia y estado físico de los bienes propiedad del Municipio de
+                Medellín y de acuerdo a la normatividad vigente que regula la materia, se ha realizado visita de
+                inspección al inmueble descrito anteriormente, con el fin de verificar estado físico y de ocupación o
+                disposición, en la cual se han observado los siguientes aspectos:
             </Text>
             <Text style={styles.subtitle}>2. INFORME TÉCNICO DE OCUPACIÓN DEL INMUEBLE:</Text>
             <Text style={styles.text_2}>
                 <Text style={styles.subtitle}>2.1. Estado actual de tenencia del bien: </Text>
-                {data.ocupation.tenure}
+                {_occupation.tenure}
             </Text>
             <Text style={styles.text_2}>
                 <Text style={styles.subtitle}>2.2. Estado actual del uso del bien: </Text>
-                {data.ocupation.use}
+                {_occupation.use}
             </Text>
             <Text style={styles.text_2}>
                 <Text style={styles.subtitle}>2.3. Estado de titularidad del inmueble: </Text>
-                {data.ocupation.ownership}
+                {_occupation.ownership}
             </Text>
             <Text style={styles.text_2}>
                 <Text style={styles.subtitle}>2.4. Estado contractual del bien: </Text>
-                {data.ocupation.contractual}
+                {_occupation.contractual}
             </Text>
             <Text style={styles.text_2}>
                 <Text style={styles.subtitle}>2.5. Acciones especiales según los hallazgos: </Text>
-                (Deje constancia de las acciones a seguir dependiendo de los hallazgos encontrados en la inspección. Ejemplo, Se envía informe con documentos anexos que prueban la titularidad de bien al componente jurídico para que inicie ante la inspección correspondiente la restitución del bien).
+                (Deje constancia de las acciones a seguir dependiendo de los hallazgos encontrados en la inspección.
+                Ejemplo, Se envía informe con documentos anexos que prueban la titularidad de bien al componente
+                jurídico para que inicie ante la inspección correspondiente la restitución del bien).
             </Text>
-            <Text style={styles.subtitle}>
-                3. INFORME DE INSPECCIÓN FÍSICA DEL INMUEBLE:
-            </Text>
+            <Text style={styles.subtitle}>3. INFORME DE INSPECCIÓN FÍSICA DEL INMUEBLE:</Text>
             <Html>{public_services}</Html>
             <Text style={styles.subtitle} break>
                 3.1. Verificación de aspectos físicos más relevantes del bien:
@@ -469,35 +422,41 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
             <Html>{physical_aspects}</Html>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>3.2. Resultados inspección física: </Text>
-                {data.physical_inspection.observations.observation}
+                {data.physical_inspection.observations}
             </Text>
             <Text style={styles.text}>
-                <Text style={styles.subtitle}>3.3. Diferencias de información del inmueble en SAP vs verificación en campo: </Text>
-                {data.observations.observation}
+                <Text style={styles.subtitle}>
+                    3.3. Diferencias de información del inmueble en SAP vs verificación en campo:{' '}
+                </Text>
+                {data.basic_information.differences}
             </Text>
             <Text style={styles.subtitle}>3.4. Registros fotográficos de la inspección:</Text>
-            <Html>{Photographic_records}</Html>
+            <Html>{photographic_records}</Html>
             <Text style={styles.subtitle}>4. ACTUALIZACIÓN DE DATOS DEL TENEDOR U OCUPANTE</Text>
             <Text style={styles.text}>
-                complete solo esta parte de la información si el bien está invadido o en poder de un tercero no autorizado en el Municipio de Medellín para su tenencia.
+                complete solo esta parte de la información si el bien está invadido o en poder de un tercero no
+                autorizado en el Municipio de Medellín para su tenencia.
             </Text>
             <Html>{holder_data}</Html>
-            {data.owner.document_number === null && data.owner.document_type === null && data.owner.email === null && data.owner.names_surnames === null && data.owner.phone_number === null &&
-                <Text style={styles.text}>
-                    Observación: fue imposible que se me suministrara la información, por lo tanto el ocupante o tenedor real del inmueble no se puede determinar.
-                </Text>
-            }
+            {data.occupant.document_number === null &&
+                data.occupant.document_type === null &&
+                data.occupant.email === null &&
+                data.occupant.names === null &&
+                data.occupant.phone_number === null && (
+                    <Text style={styles.text}>
+                        Observación: fue imposible que se me suministrara la información, por lo tanto el ocupante o
+                        tenedor real del inmueble no se puede determinar.
+                    </Text>
+                )}
             <Text style={styles.text}>Atentamente,</Text>
-            <Text style={styles.sub_text}>{user.detailsUser.names.firstName} {user.detailsUser.names.lastName ?? ""} {user.detailsUser.surnames.firstSurname} {user.detailsUser.surnames.lastSurname ?? ""}</Text>
+            <Text style={styles.sub_text}>
+                {user.detailsUser.names.firstName} {user.detailsUser.names.lastName ?? ''}{' '}
+                {user.detailsUser.surnames.firstSurname} {user.detailsUser.surnames.lastSurname ?? ''}
+            </Text>
             <Text style={styles.sub_text}>Inspector del Bien Inmueble</Text>
-            <Text style={styles.sub_text}>{real_estate.dependency}  </Text>
-
-
-
-
-
+            <Text style={styles.sub_text}>{real_estate.dependency} </Text>
         </DocumentPdf>
-    )
-}
+    );
+};
 
-export default InpectionDoc
+export default InpectionDoc;

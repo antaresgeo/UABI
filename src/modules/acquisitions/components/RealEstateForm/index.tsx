@@ -373,7 +373,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                     }
                 };
                 if (formik.values._project === undefined) {
-                    if (history.location?.state && history.location?.state?.realEstateData.project_id !== undefined) {
+                    if (history.location?.state && history.location?.state?.realEstateData?.project_id !== undefined) {
                         // console.log('ok',history.location.state)
                         update_project(history.location.state.realEstateData.project_id);
                     } else {

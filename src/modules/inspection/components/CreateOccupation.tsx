@@ -2,15 +2,15 @@ import { Card } from '../../../utils/ui';
 // import { useHistory } from 'react-router-dom';
 import OccupationForm from './OccupationForm';
 import React, { FC } from 'react';
-import { Ocupation } from '../custom_types';
+import {IOccupation} from "../custom_types";
 
 interface CreateOccupationProps {
-    ocupation: Ocupation;
+    occupation: IOccupation;
     innerRef: any;
     onSubmit: (values) => void;
 }
 
-const CreateOccupation: FC<CreateOccupationProps> = ({ ocupation, innerRef, onSubmit }) => {
+const CreateOccupation: FC<CreateOccupationProps> = ({ occupation, innerRef, onSubmit }) => {
     // const history = useHistory();
     return (
         <div className="container-fluid">
@@ -29,7 +29,7 @@ const CreateOccupation: FC<CreateOccupationProps> = ({ ocupation, innerRef, onSu
                             </div>
                         }
                     >
-                        <OccupationForm old={ocupation} innerRef={innerRef} onSubmit={onSubmit} />
+                        <OccupationForm old={occupation} innerRef={innerRef} onSubmit={onSubmit} />
                     </Card>
                 </div>
             </div>

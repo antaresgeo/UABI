@@ -2,9 +2,10 @@ import React, { FC } from 'react';
 import { Card } from '../../../utils/ui';
 // import { useHistory } from 'react-router-dom';
 import UpgradeForm from './UpgradeForm';
-import { Owner } from '../custom_types';
+import { IOccupant } from '../custom_types';
+import {PersonalInformationForm} from "../../../utils/ui/PersonaM";
 interface CreateUpgradeProps {
-    owner: Owner;
+    owner: IOccupant;
     innerRef: any;
     onSubmit: (values) => void;
 }
@@ -28,7 +29,7 @@ const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner, innerRef, onSubmit }) =>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{owner?.names_surnames || '-'}</td>
+                                        <td>{owner?.names || '-'}</td>
                                         <td>{owner?.document_number || '-'}</td>
                                         <td>{owner?.phone_number || '-'}</td>
                                         <td>{owner?.email || '-'}</td>
@@ -46,7 +47,15 @@ const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner, innerRef, onSubmit }) =>
                             </span>
                         }
                     >
-                        <UpgradeForm owner={owner} innerRef={innerRef} onSubmit={onSubmit} />
+                        <PersonalInformationForm
+                            withNit={true}
+                            persona={owner}
+                            form_ref={innerRef}
+                            disabled={false}
+                            onChange={(values, form) => {
+                                return onSubmit(values)
+                            }}
+                        />
                     </Card>
                 </div>
             </div>

@@ -4,27 +4,25 @@ import InspectionPhysicalForm from './InspectionPhysicalForm';
 import TableInspectionPhysycal from './TableInspectionPhysycal';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import { Field, Form, Formik } from 'formik';
-import { PhysicalInspection } from '../custom_types';
+import { IPhysicalinspection } from '../custom_types';
+import {values} from "lodash";
 interface CreateInspectionPhysicalProps {
-    physical_inspection: PhysicalInspection;
+    physical_inspection: IPhysicalinspection;
     innerRef: any;
     onSubmit: (values) => void;
-    obs?: string;
 }
-const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({
-    physical_inspection,
-    obs,
-    innerRef,
-    onSubmit,
-}) => {
+const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({ physical_inspection, innerRef, onSubmit }) => {
     // const history = useHistory();
     const inicial_values = {
-        public_services: physical_inspection?.public_services || [
-            { name: 'Energia', subscriber: '', accountant: '', status: '' },
-            { name: 'Gas', subscriber: '', accountant: '', status: '' },
-            { name: 'Agua', subscriber: '', accountant: '', status: '' },
-            { name: 'Teléfono', subscriber: '', accountant: '', status: '' },
-        ],
+        public_services:
+            physical_inspection?.public_services.length > 0
+                ? physical_inspection?.public_services
+                : [
+                      { name: 'Energia', subscriber: 0, accountant: 0, status: '' },
+                      { name: 'Gas', subscriber: 0, accountant: 0, status: '' },
+                      { name: 'Agua', subscriber: 0, accountant: 0, status: '' },
+                      { name: 'Teléfono', subscriber: 0, accountant: 0, status: '' },
+                  ],
         old_properties: physical_inspection?.properties,
         properties: [
             {
@@ -182,14 +180,14 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({
                 status: '',
             },
         ],
-        observations: obs || '',
+        observations: physical_inspection?.observations || '',
     };
 
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-12">
-                    <TableInspectionPhysycal />
+
                     <Formik
                         enableReinitialize
                         onSubmit={(values, form) => {
@@ -202,6 +200,7 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({
                         {(formik) => {
                             return (
                                 <Form>
+                                    <TableInspectionPhysycal obs={formik.values.observations}/>
                                     <Card title="Servicios Publicos">
                                         {formik.values.public_services.map((service, i) => (
                                             <div className="row" key={i}>
@@ -280,7 +279,7 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({
                                         <InspectionPhysicalForm
                                             formik={formik}
                                             properties={physical_inspection?.properties}
-                                            obs={physical_inspection?.observations?.observation}
+                                            obs={physical_inspection?.observations}
                                         />
                                     </Card>
                                 </Form>

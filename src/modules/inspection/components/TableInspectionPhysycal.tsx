@@ -1,4 +1,4 @@
-const TableInspectionPhysycal = () => {
+const TableInspectionPhysycal = ({obs}) => {
     return (
         <div className="content_box_table">
             <div className="title">Inspección fisica anterior del Bien inmueble</div>
@@ -6,14 +6,12 @@ const TableInspectionPhysycal = () => {
                 <table className="box-table">
                     <thead>
                         <tr>
-                            <th>Descripción</th>
                             <th>Observaciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>prueba</td>
-                            <td>prueba</td>
+                            <td>{obs || '-'}</td>
                         </tr>
                     </tbody>
                 </table>
