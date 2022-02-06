@@ -28,8 +28,8 @@ const delete_contract = (id) =>
 const create_precontract = (data: any, type) =>
     request_dispatch(types.create_precontractual, service.create_precontract(data, type));
 
-const get_precontract = (id) =>
-    request_dispatch(types.get_precontractual, service.get_precontract(id));
+const get_precontract = (active_code) =>
+    request_dispatch(types.get_precontractual, service.get_precontract(active_code));
 
 const update_precontract = (id, data: any) =>
     request_dispatch(types.update_precontractual, service.update_precontract(id, data));

@@ -45,25 +45,19 @@ const LeaseDoc = () => {
                         type="button"
                         className="btn btn-outline-primary"
                         onClick={() => {
-                            let value_public_service = 0
+                            // let value_public_service = 0
                             // console.log(values)
                             const final_values = {
                                 ...values,
                                 applicant: {
-                                    ...values.applicant,
-                                    person_id: values.detailsApplicant.id,
-                                    location_id: values.location_applicant.id,
-                                    legal_representative_id: values.detailsRepresentative.id ?? ""
-
+                                    id: values.applicant.id
                                 },
                                 business_type: values.business_type.select === "otro" ? values.business_type.input : values.business_type.select,
                                 prediation_date: new Date(values.prediation_date).getTime(),
                                 registration_date: new Date(values.registration_date).getTime(),
                                 appraisal_date: new Date(values.appraisal_date).getTime(),
                                 leader: {
-                                    person_type: values.leader.person_type,
-                                    person_id: values.detailsLeader.id,
-                                    location_id: values.location_leader.id,
+                                    id: values.leader.id
                                 },
                                 operational_risk: {
                                     ...values.operational_risk,
@@ -73,15 +67,28 @@ const LeaseDoc = () => {
                                     ...values.regulatory_risk,
                                     type: "regulatory"
                                 },
+                                iva: Number(values.iva),
+                                approved: {
+                                    id: values.approved.id
+                                },
+                                revised: {
+                                    id: values.revised.id
+                                },
+                                elaborated: {
+                                    id: values.elaborated.id
+                                },
+                                representative: {
+                                    id: values.representative.id
+                                },
+                                active_code: "AM0003L"
+
                             }
-                            delete final_values.detailsApplicant;
-                            delete final_values.location_applicant;
-                            delete final_values.detailsLeader;
-                            delete final_values.location_leader;
-                            delete final_values.detailsRepresentative;
-                            delete final_values.consecutive_number; // eliminar del formulario
                             delete final_values.canon_value;
-                            console.log(final_values)
+                            delete final_values.dependence;
+                            delete final_values.secretary;
+                            dispatch(actions.create_precontract(final_values, dispositionType))
+                            console.log('valores',final_values)
+                            history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
 
                             // if (values.public_service === "Recobro") {
                             //     value_public_service = values.recovery_value;
@@ -96,8 +103,6 @@ const LeaseDoc = () => {
                             //     ...values,
                             //     value_public_service
                             // }
-                            // dispatch(actions.create_precontract(values_final, dispositionType))
-                            //history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
                         }}
                     >
                         guardar y descargar

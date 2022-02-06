@@ -184,14 +184,14 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
             </thead>
             <tbody>
                 <tr class="middle_frame">
-                    <td class="right_frame">${values?.elaborated.first_name} ${values?.elaborated.last_name} ${values?.elaborated.first_surname} ${values.elaborated.last_surname}</td>
-                    <td class="right_frame">${values?.revised.first_name} ${values?.revised.last_name} ${values?.revised.first_surname} ${values.revised.last_surname}</td>
-                    <td class="right_frame">${values?.approved.first_name} ${values?.approved.last_name} ${values?.approved.first_surname} ${values.approved.last_surname}</td>
+                    <td class="right_frame">${values?.elaborated.first_name ?? ""} ${values?.elaborated.last_name ?? ""} ${values?.elaborated.first_surname ?? ""} ${values.elaborated.last_surname ?? ""}</td>
+                    <td class="right_frame">${values?.revised.first_name ?? ""} ${values?.revised.last_name ?? ""} ${values?.revised.first_surname ?? ""} ${values.revised.last_surname ?? ""}</td>
+                    <td class="right_frame">${values?.approved.first_name ?? ""} ${values?.approved.last_name ?? ""} ${values?.approved.first_surname ?? ""} ${values.approved.last_surname ?? ""}</td>
                 </tr>
                 <tr class="frame_down">
-                    <td class="right_frame">${values?.elaborated.post}</td>
-                    <td class="right_frame">${values?.revised.post}</td>
-                    <td class="right_frame">${values?.approved.post}</td>
+                    <td class="right_frame">${values?.elaborated.post ?? ""}</td>
+                    <td class="right_frame">${values?.revised.post ?? ""}</td>
+                    <td class="right_frame">${values?.approved.post ?? ""}</td>
                 </tr>
             </tbody>
         </table>
@@ -272,7 +272,7 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
             <tbody>
                 <tr>
                     <td>$${realEstate?.canyon_value}</td>
-                    <td>$${values.IVA}</td>
+                    <td>$${values.iva}</td>
                     <td>$
                         ${values?.public_service === "Recobro" ? ` ${values?.recovery_value}`
             :
@@ -286,9 +286,9 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
         }
                     </td>
                     <td>$${values.administration_value}</td>
-                    <td>$${values.subtotal}</td>
+                    <td>$${values.monthly_total}</td>
                     <td>${values.contract_period}</td>
-                    <td>$${values.total}</td>
+                    <td>$${values.contract_value}</td>
                 </tr>
             </tbody>
         </table>
@@ -320,8 +320,8 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
                 pesos mensuales, más el IVA del 19%, más los costos de aforo y
                 administración cuando apliquen,
                 para un total mensual de <Text style={styles.subtitle} >
-                    {writtenNumber((values?.canon_value + Number(values?.IVA) + values?.administration_value + valueServPublic), { lang: 'es' })} PESOS M/L
-                    {` ($${ (parseFloat(values?.canon_value + Number(values?.IVA) + values?.administration_value + valueServPublic)).toFixed(2)})`}
+                    {writtenNumber((values?.canon_value + Number(values?.iva) + values?.administration_value + valueServPublic), { lang: 'es' })} PESOS M/L
+                    {` ($${ (parseFloat(values?.canon_value + Number(values?.iva) + values?.administration_value + valueServPublic)).toFixed(2)})`}
                 </Text>. Este canon de arrendamiento deberá ser cancelado por el arrendatario hasta
                 completar un año de ejecución del contrato, en los sitios y por los
                 canales indicados en la factura de cobro que le enviará EL ARRENDADOR,
@@ -332,12 +332,12 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
             </Text>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>Solicitante: </Text>
-                {values?.applicant.person_type === "Persona Natural" ?
-                    `${values.detailsApplicant.names.firstName} ${values.detailsApplicant.names.lastName ?? ""} ${values.detailsApplicant.surnames.firstSurname} ${values.detailsApplicant.surnames.lastSurname ?? ""}`
+                {values?.applicant.document_type === "CC" ?
+                    `${values.applicant.first_name ?? ""} ${values.applicant.last_name ?? ""} ${values.applicant.first_surname ?? ""} ${values.applicant.last_surname ?? ""}`
                     :
                     `${values.applicant.company_name}`
                 }
-                {values?.applicant.person_type === "Persona Natural" ? ` C.C.: ${values.detailsApplicant.document_number}` : ` NIT: ${values.applicant.document_number}`}
+                {values?.applicant.document_type === "CC" ? ` C.C.: ${values.applicant.document_number}` : ` NIT: ${values.applicant.document_number}`}
             </Text>
             <Text style={styles.subtitle}>1. Justificación de la contratación.</Text>
             <Text style={styles.text}>
@@ -578,7 +578,7 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
                 Medellín, Antioquia, {`${date[2]} de ${months(date[1])} de ${date[0]}`}
             </Text>
             <Text style={styles.text}></Text>
-            <Text style={styles.sub_text}>{`${values?.detailsLeader.names.firstName} ${values?.detailsLeader.names.lastName ?? ""} ${values?.detailsLeader.surnames.firstSurname} ${values?.detailsLeader.surnames.lastSurname ?? ""}  `}</Text>
+            <Text style={styles.sub_text}>{`${values?.leader?.first_name} ${values?.leader?.last_name ?? ""} ${values?.leader?.first_surname ?? ""} ${values?.leader?.last_surname ?? ""}  `}</Text>
             <Text style={styles.sub_text}>Líder de Programa</Text>
             <Text style={styles.sub_text}>Unidad Administración de Bienes Inmuebles</Text>
             <Text style={styles.sub_text}>Subsecretaría de Gestión de Bienes</Text>

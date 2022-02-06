@@ -139,6 +139,9 @@ const finalData = (data, docs_ids?) => {
         aux_data.cost_center_id = Number(aux_data.cost_center_id);
     }
     aux_data.projects_id[0] = Number(aux_data.projects_id[0]);
+    if(aux_data.patrimonial_value === "") {
+        aux_data.patrimonial_value = 0;
+    }
     delete aux_data.active_code;
     delete aux_data.fixed_assets;
     delete aux_data._address;

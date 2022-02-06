@@ -147,6 +147,7 @@ const contractReducer = (aux_state: State, action: any) => {
 };
 
 const precontractualtReducer = (aux_state: State, action: any) => {
+
     const { precontractual } = aux_state;
     const state = { precontractual };
     switch (action.type) {
@@ -155,7 +156,7 @@ const precontractualtReducer = (aux_state: State, action: any) => {
         case types.get_precontractual.default: {
             return {
                 ...state,
-                contract: {
+                precontractual: {
                     ...state.precontractual,
                     loading: true,
                     loaded: false,
@@ -167,7 +168,7 @@ const precontractualtReducer = (aux_state: State, action: any) => {
         case types.get_precontractual.success: {
             return {
                 ...state,
-                company: {
+                precontractual: {
                     ...state.precontractual,
                     value: action.payload.results,
                     loading: false,
@@ -180,9 +181,9 @@ const precontractualtReducer = (aux_state: State, action: any) => {
         case types.get_precontractual.fail: {
             return {
                 ...state,
-                contract: {
+                precontractual: {
                     ...state.precontractual,
-                    value: emptyInitialState.contract.value,
+                    value: emptyInitialState.precontractual.value,
                     loading: false,
                     loaded: false,
                 },

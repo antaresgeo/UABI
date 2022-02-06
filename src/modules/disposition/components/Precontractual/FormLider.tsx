@@ -18,43 +18,6 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
             <hr />
             <div className="row">
                 <div className="col-6">
-                    <label htmlFor="leader" className="form-label">
-                        Información Lider<span className="text-danger">*</span>
-                    </label>
-                    <Field
-                        component={Index}
-                        name="leader"
-                    />
-                    <ErrorMessage name="leader" />
-                </div>
-                <div className="form-group col-6">
-                    <label htmlFor="location_leader" className="form-label">
-                        Dirección<span className="text-danger">*</span>
-                    </label>
-                    <div className="input-group">
-                        <Field
-                            name="location_leader.address"
-                            id="location_leader"
-                            type="text"
-                            className="form-control"
-                            disabled
-                            value={formik?.values?.location_leader?.address}
-                        />
-                        <div className="input-group-prepend">
-                            <LocationModal
-                                view="user"
-                                onSave={async (values) => {
-                                    formik.setFieldValue('location_leader.address', values.address);
-                                    formik.setFieldValue('location_leader.id', `${values.id}`);
-                                }}
-                            />
-                        </div>
-                    </div>
-                    <ErrorMessage name="location_leader.address" />
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-6">
                     <label htmlFor="dependence_id" className="form-label">
                         dependencia
                     </label>
@@ -62,13 +25,13 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         type="text"
                         className="form-control"
                         id="dependence_id"
-                        name="dependence"
+                        name="dependency"
                         placeholder=""
                         autoComplete="off"
                         maxLength={201}
                         disabled
                     />
-                    <ErrorMessage name="dependence" />
+                    <ErrorMessage name="dependency" />
                 </div>
                 <div className="col-6">
                     <label htmlFor="secretary_id" className="form-label">
@@ -87,9 +50,18 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                     <ErrorMessage name="secretary" />
                 </div>
             </div>
-            <hr />
             <div className="row">
-                <div className="col-3">
+                <div className="col-6">
+                    <label htmlFor="leader" className="form-label">
+                        Información Lider<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        component={Index}
+                        name="leader"
+                    />
+                    <ErrorMessage name="leader" />
+                </div>
+                <div className="col-6">
                     <label htmlFor="elaborated" className="form-label">
                         Elaboró<span className="text-danger">*</span>
                     </label>
@@ -99,7 +71,9 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                     />
                     <ErrorMessage name="elaborated" />
                 </div>
-                <div className="col-3">
+            </div>
+            <div className="row">
+                <div className="col-6">
                     <label htmlFor="revised" className="form-label">
                         Revisó<span className="text-danger">*</span>
                     </label>

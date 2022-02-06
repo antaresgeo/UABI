@@ -30,18 +30,19 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         lockable_base: 10,
         //solicitante
         applicant: "",
+        representative: "",
 
         //analisis de riegos
         regulatory_risk: {
             degree_occurrence: "MEDIO",
             impact_degree: "MEDIO",
-            responsable: "Contratista",
+            responsible: "Contratista",
             mitigation_mechanism: "Ejercer un control y vigilancia estrictos al contrato por parte del supervisor.",
         },
         operational_risk: {
             degree_occurrence: "MEDIO",
             impact_degree: "MEDIO",
-            responsable: "Contratista",
+            responsible: "Contratista",
             mitigation_mechanism: "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual",
         },
 
@@ -70,7 +71,7 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         elaborated: "",
         revised: "",
         approved: "",
-        dependence: realEstate?.dependency,
+        dependency: realEstate?.dependency,
         secretary: realEstate?.subdependency,
         ...values_form,
     }
