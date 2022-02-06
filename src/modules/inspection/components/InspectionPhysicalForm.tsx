@@ -1,10 +1,11 @@
 import { Field } from 'formik';
 import React, { FC } from 'react';
 import ErrorMessage from '../../../utils/ui/error_messge';
-import { Properties } from '../custom_types';
 import DocumentModal from '../../../utils/components/DocumentsModal';
+import { IProperty } from '../custom_types';
+
 interface InspectionPhysicalFormProps {
-    properties: Properties[];
+    properties: IProperty[];
     obs: string;
     formik: any;
 }

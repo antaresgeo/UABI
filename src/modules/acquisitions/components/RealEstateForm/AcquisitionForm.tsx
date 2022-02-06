@@ -126,6 +126,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     component={PersonaM}
                                     id="origin_id"
                                     name="origin"
+                                    withNit={true}
                                 />
                                 <ErrorMessage name="origin" />
                             </div>

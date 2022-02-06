@@ -1,9 +1,9 @@
 import { Field, Form, Formik } from 'formik';
 import { FC } from 'react';
-import { Owner } from '../custom_types';
+import { IOccupant } from '../custom_types';
 import ErrorMessage from '../../../utils/ui/error_messge';
 interface UpgradeFormProps {
-    owner: Owner;
+    owner: IOccupant;
     innerRef: any;
     onSubmit: (values) => void;
 }

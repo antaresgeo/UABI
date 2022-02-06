@@ -12,53 +12,6 @@ interface IParams {
     real_estate_id: string;
 }
 
-const mask = {
-    basic_information: {
-        differences: '',
-        isAnEspecialCase: false,
-        special_actions: '',
-        report_pdf_id: '',
-    },
-    ocupation: {
-        tenure: '',
-        use: '',
-        ownership: '',
-        contractual: '',
-    },
-    physical_inspection: {
-        observations: '',
-        public_services: [
-            {
-                name: '',
-                subscriber: 0,
-                accountant: 0,
-                status: 0,
-            },
-        ],
-        properties: [
-            {
-                name: '',
-                status_property: '',
-                observation: '',
-                photographic_evidence: '',
-            },
-        ],
-    },
-    occupant: {
-        names: '',
-        surnames: '',
-        document_type: '',
-        document_number: 0,
-        phone_number: 0,
-        phone_number_ext: 0,
-        email: '',
-    },
-    photografic_register: {
-        facade: '',
-        general: [''],
-    },
-};
-
 const InspectionCreate: FC<PruebaProps> = () => {
     const dispatch = useDispatch();
     const { real_estate_id } = useParams<IParams>();
