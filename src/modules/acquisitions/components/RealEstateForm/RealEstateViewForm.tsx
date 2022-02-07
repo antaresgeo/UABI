@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import moment from 'moment';
 import { extractMonth } from '../../../../utils';
-import { array } from 'yup';
 
 interface IpolizaFormPros {
     realEstate: any;

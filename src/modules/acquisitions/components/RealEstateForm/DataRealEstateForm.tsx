@@ -60,8 +60,10 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     const [subs, set_subs] = useState<any[]>([]);
     const active_type = ['Lote', 'Mejora', 'Construccion', 'Construccion para demoler', 'Mejora para demoler'];
     const onChangeActiveType = (active_types, setFieldValue) => (e) => {
+
         const data_now = [...active_types];
         const new_value = e.target.value;
+        console.log(new_value)
         const key = 'Lote';
         let aux_data: any[];
         if (!data_now.includes(new_value)) {
@@ -79,13 +81,10 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         }
         if (!aux_data.includes(active_type[2]) && !aux_data.includes(active_type[3])) {
             formik.setFieldValue('construction_area', 0, false);
-            // const value1 = parseFloat(formik.values.plot_area || 0);
-            //formik.setFieldValue('total_area', value1, false);
+
         }
         if (!aux_data.includes(active_type[0])) {
             formik.setFieldValue('plot_area', 0, false);
-            // const value1 = parseFloat(formik.values.construction_area || 0);
-            //formik.setFieldValue('total_area', value1, false);
         }
         setFieldValue('active_type', aux_data, false);
     };
@@ -104,7 +103,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     //     return [];
     // };
 
-    // console.log(project)
     return (
         <>
             <div className="row">
@@ -546,7 +544,6 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <label className="form-label">
                         Tipo de activo <span className="text-danger">*</span>
                     </label>
-                    {/* {console.log(formik.values.active_type)} */}
                     <div style={{ height: '33.5px', lineHeight: '33.5px' }}>
                         {active_type.map((item, i) => {
                             return (

@@ -1,10 +1,10 @@
-import React, {FC, useState, useRef, Fragment} from 'react';
+import React, { FC, useState, useRef, Fragment } from 'react';
 import Modal from 'antd/lib/modal/Modal';
 import { Field, Formik, Form, FieldProps } from 'formik';
 import ErrorMessage from '../error_messge';
 import * as Yup from 'yup';
 import { getPersonalInformation, newPersonalInformation, updatePersonalInformation } from './service';
-import LocationModal from "../../components/Location/LocationModal";
+import LocationModal from '../../components/Location/LocationModal';
 
 interface PersonaModalProps {
     type: 'create' | 'edit';
@@ -17,7 +17,16 @@ interface PersonaModalProps {
     disposition: boolean;
 }
 
-const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, onChange, persona, type, withNit, disposition }) => {
+const PersonaModal: FC<PersonaModalProps> = ({
+    modal_name,
+    disabled,
+    btn_label,
+    onChange,
+    persona,
+    type,
+    withNit,
+    disposition,
+}) => {
     const [is_visible, set_is_visible] = useState<boolean>(false);
     const form_ref = useRef<any>();
     const title = modal_name ? modal_name : 'Datos basicos de la Persona ';
@@ -38,9 +47,11 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                     className="form-control"
                     value={
                         persona
-                            ? `${(persona && Object.values(persona?.names ?? {}).join(' ')) || ''} ${
-                                  (persona && Object.values(persona?.surnames ?? {}).join(' ')) || ''
-                              }`
+                            ? persona.documentType === 'NIT'
+                                ? persona.company_name
+                                : `${(persona && Object.values(persona?.names ?? {}).join(' ')) || ''} ${
+                                      (persona && Object.values(persona?.surnames ?? {}).join(' ')) || ''
+                                  }`
                             : ''
                     }
                 />
@@ -85,6 +96,7 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
                     withNit={withNit}
                     onChange={(values, form) => {
                         return onChange(values, form).then(() => {
+                            form.resetForm();
                             close();
                         });
                     }}
@@ -94,7 +106,15 @@ const PersonaModal: FC<PersonaModalProps> = ({ modal_name, disabled, btn_label, 
     );
 };
 
-export const PersonalInformationForm = ({ persona, form_ref, disabled, onChange, withNit= false, disposition = false }) => {
+export const PersonalInformationForm = ({
+    persona,
+    form_ref,
+    disabled,
+    onChange,
+    withNit = false,
+    disposition = false,
+}) => {
+    console.log('PersonalInformationForm', persona);
     const initial_values = {
         id: '',
         documentType: '',
@@ -108,18 +128,42 @@ export const PersonalInformationForm = ({ persona, form_ref, disabled, onChange,
         gender: '',
         ...persona,
     };
+
+    const validate_nit = (...args) => {
+        console.log(...args);
+        // const r  = dt !== 'NIT'
+        // console.log({dt, r})
+        // return r
+    };
     const schema = Yup.object().shape({
         documentType: Yup.string().required('obligatorio'),
         documentNumber: Yup.number().required('obligatorio'),
+        company_name: Yup.string().when('documentType', {
+            is: 'NIT',
+            then: Yup.string().required('obligatorio'),
+        }),
         names: Yup.object({
-            firstName: Yup.string().required('obligatorio'),
+            firstName: Yup.string(),
+        }).when('documentType', {
+            is: 'NIT',
+            otherwise: Yup.object({
+                firstName: Yup.string().required('obligatorio'),
+            }),
         }),
         surnames: Yup.object({
-            firstSurname: Yup.string().required('obligatorio'),
+            firstSurname: Yup.string(),
+        }).when('documentType', {
+            is: 'NIT',
+            otherwise: Yup.object({
+                firstSurname: Yup.string().required('obligatorio'),
+            }),
         }),
         email: Yup.string().email().required('obligatorio'),
         phoneNumber: Yup.number().required('obligatorio'),
-        gender: Yup.string().required('obligatorio'),
+        gender: Yup.string().when('documentType', {
+            is: 'NIT',
+            otherwise: Yup.string().required('obligatorio'),
+        }),
     });
     return (
         <Formik
@@ -133,7 +177,7 @@ export const PersonalInformationForm = ({ persona, form_ref, disabled, onChange,
                 });
             }}
         >
-            {({ values, handleChange, setFieldValue }) => {
+            {({ values, handleChange, setFieldValue, errors }) => {
                 const getPersona = (type, documentNumber) => {
                     getPersonalInformation(type, documentNumber).then((res: any) => {
                         setFieldValue('names.firstName', res.first_name ?? '', false);
@@ -147,6 +191,8 @@ export const PersonalInformationForm = ({ persona, form_ref, disabled, onChange,
                         setFieldValue('id', res.id ?? '', false);
                     });
                 };
+
+                console.log(errors);
                 return (
                     <Form>
                         <div className="row">
@@ -163,6 +209,7 @@ export const PersonalInformationForm = ({ persona, form_ref, disabled, onChange,
                                     disabled={disabled}
                                     onChange={(ev) => {
                                         ev.preventDefault();
+                                        setFieldValue('id', '', false);
                                         handleChange(ev);
                                         const id_t = ev.target.value;
                                         const id_n = values.documentNumber;
@@ -181,7 +228,7 @@ export const PersonalInformationForm = ({ persona, form_ref, disabled, onChange,
                                 </Field>
                                 <ErrorMessage name="documentType" />
                             </div>
-                            <div className={`col-${values.documentType === 'NIT' ?6: 3}`}>
+                            <div className={`col-${values.documentType === 'NIT' ? 6 : 3}`}>
                                 <label htmlFor="username" className="form-label">
                                     Número {values.documentType === 'NIT' ? 'de Nit' : 'de documento'}
                                 </label>
@@ -194,6 +241,11 @@ export const PersonalInformationForm = ({ persona, form_ref, disabled, onChange,
                                     autoComplete="off"
                                     disabled={disabled}
                                     min={0}
+                                    onChange={(ev) => {
+                                        ev.preventDefault();
+                                        setFieldValue('id', '', false);
+                                        handleChange(ev);
+                                    }}
                                     onBlur={(ev) => {
                                         const id_n = ev.target.value;
                                         const id_t = values.documentType;
@@ -316,7 +368,6 @@ export const PersonalInformationForm = ({ persona, form_ref, disabled, onChange,
                                     </div>
                                 </Fragment>
                             )}
-
                         </div>
                         <div className="row">
                             <div className="col-6">
@@ -369,58 +420,59 @@ export const PersonalInformationForm = ({ persona, form_ref, disabled, onChange,
                                 <ErrorMessage name="email" />
                             </div>
                         </div>
-                        {disposition && !withNit  && <div className="row">
-                            <div className="col-6">
-                                <label htmlFor="post_id" className="form-label">
-                                    Cargo
-                                </label>
-                                <Field
-                                    type="text"
-                                    className="form-control"
-                                    id="post_id"
-                                    name="post"
-                                    placeholder="Cargo"
-                                    autoComplete="off"
-                                    disabled={disabled}
-                                    min={0}
-                                />
-                                <ErrorMessage name="post"/>
-                            </div>
-                            <div className="col-6">
-                                <label htmlFor="location_id" className="form-label">
-                                   Direccion
-                                </label>
-                                <div className="input-group">
+                        {disposition && !withNit && (
+                            <div className="row">
+                                <div className="col-6">
+                                    <label htmlFor="post_id" className="form-label">
+                                        Cargo
+                                    </label>
                                     <Field
-                                        name="location"
-                                        id="location_id"
                                         type="text"
                                         className="form-control"
-                                        disabled
-                                        // value={`${formik.values.location.commune}, ${formik.values.location.neighborhood}`}
+                                        id="post_id"
+                                        name="post"
+                                        placeholder="Cargo"
+                                        autoComplete="off"
+                                        disabled={disabled}
+                                        min={0}
                                     />
-                                    <div className="input-group-prepend">
-                                        <LocationModal
-                                            view="user"
-                                            onSave={async (values: any) => {
-                                                console.log('valores modal', values);
-                                                // formik.setFieldValue('location.commune', `${values.commune_name}`, false);
-                                                // formik.setFieldValue('location.neighborhood', `${values.neighborhood_name}`, false);
-                                                return Promise.resolve();
-                                            }}
-                                        />
-                                    </div>
+                                    <ErrorMessage name="post" />
                                 </div>
-                                <ErrorMessage name="location" />
+                                <div className="col-6">
+                                    <label htmlFor="location_id" className="form-label">
+                                        Direccion
+                                    </label>
+                                    <div className="input-group">
+                                        <Field
+                                            name="location"
+                                            id="location_id"
+                                            type="text"
+                                            className="form-control"
+                                            disabled
+                                            // value={`${formik.values.location.commune}, ${formik.values.location.neighborhood}`}
+                                        />
+                                        <div className="input-group-prepend">
+                                            <LocationModal
+                                                view="user"
+                                                onSave={async (values: any) => {
+                                                    console.log('valores modal', values);
+                                                    // formik.setFieldValue('location.commune', `${values.commune_name}`, false);
+                                                    // formik.setFieldValue('location.neighborhood', `${values.neighborhood_name}`, false);
+                                                    return Promise.resolve();
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    <ErrorMessage name="location" />
+                                </div>
                             </div>
-                        </div>}
+                        )}
                     </Form>
                 );
             }}
         </Formik>
     );
 };
-
 
 interface PersonaMProps extends FieldProps {
     type: 'create' | 'edit';
@@ -456,5 +508,5 @@ const PersonaM: FC<PersonaMProps> = ({ field, form, type, disposition, withNit, 
 PersonaM.defaultProps = {
     disposition: false,
     withNit: false,
-}
+};
 export default PersonaM;

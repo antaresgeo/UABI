@@ -1,15 +1,18 @@
 import { Field, Form, Formik } from 'formik';
 import { FC } from 'react';
 import ErrorMessage from '../../../utils/ui/error_messge';
+import {IOccupation} from "../custom_types";
 
 interface OccupationFormPros {
     disabled?: boolean;
     type?: 'view' | 'create' | 'edit';
-    old?: any;
+    old?: IOccupation;
+    new_?: IOccupation;
     innerRef: any;
     onSubmit: (values) => void;
 }
-const OccupationForm: FC<OccupationFormPros> = ({ disabled, old, innerRef, onSubmit }) => {
+const OccupationForm: FC<OccupationFormPros> = ({ disabled, old, new_, innerRef, onSubmit }) => {
+    const is_clear = new_.use === '' && new_.tenure === '' && new_.ownership === '' && new_.contractual === '';
     const initialValues = {
         old: {
             tenure: '',
@@ -23,6 +26,7 @@ const OccupationForm: FC<OccupationFormPros> = ({ disabled, old, innerRef, onSub
             use: '',
             ownership: '',
             contractual: '',
+            ...(!is_clear? new_: old)
         },
     };
     const submit = (values, actions) => {

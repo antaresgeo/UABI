@@ -38,6 +38,7 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                         <TabPane tab="Información básica BI" key="1">
                             <BasicInformation
                                 inspection={inspection}
+                                obs={new_inspection.basic_information.differences}
                                 real_estate={real_estate}
                                 innerRef={steps[0].ref}
                                 onSubmit={steps[0].onSave}
@@ -45,29 +46,33 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
                         </TabPane>
                         <TabPane tab="Ocupación" key="2" disabled={max < 2}>
                             <CreateOccupation
-                                occupation={inspection?.occupation}
+                                inspection={inspection}
+                                occupation={new_inspection?.occupation}
                                 innerRef={steps[1].ref}
                                 onSubmit={steps[1].onSave}
                             />
                         </TabPane>
                         <TabPane tab="Inspección física" key="3" disabled={max < 3}>
                             <CreateInspectionPhysical
-                                physical_inspection={inspection?.physical_inspection}
+                                inspection={inspection}
+                                physical_inspection={new_inspection?.physical_inspection}
                                 innerRef={steps[2].ref}
                                 onSubmit={steps[2].onSave}
                             />
                         </TabPane>
                         <TabPane tab="Registro fotográfico" key="4" disabled={max < 4}>
                             <PhotographicRecordForm
+                                inspection={inspection}
                                 records={new_inspection.physical_inspection.properties.filter((p) => !!p.image)}
-                                photografic_register={inspection?.photografic_register}
+                                photografic_register={new_inspection?.photografic_register}
                                 innerRef={steps[3].ref}
                                 onSubmit={steps[3].onSave}
                             />
                         </TabPane>
                         <TabPane tab="Actualización" key="5" disabled={max < 5}>
                             <CreateUpgrade
-                                owner={inspection?.occupant}
+                                inspection={inspection}
+                                owner={new_inspection?.occupant}
                                 innerRef={steps[4].ref}
                                 onSubmit={steps[4].onSave}
                             />
@@ -112,58 +117,56 @@ const useInit = (
 ): [string, NewInspection, any[], number, boolean, () => void, () => void, () => void, (key: string) => void] => {
     const history = useHistory<HistoryParams>();
     const active_key = history.location.state?.active_key || '1';
-    let new_inspection: NewInspection = history.location.state?.new_inspection;
+    const ls = history.location.state;
+    const clerar_inspection = {
+        basic_information: {
+            differences: '',
+            isAnEspecialCase: false,
+            special_actions: '',
+            report_pdf_id: '',
+        },
+        occupation: {
+            tenure: '',
+            use: '',
+            ownership: '',
+            contractual: '',
+        },
+        physical_inspection: {
+            observations: '',
+            public_services: [
+                { name: 'Energia', subscriber: 0, accountant: 0, status: 0 },
+                { name: 'Gas', subscriber: 0, accountant: 0, status: 0 },
+                { name: 'Agua', subscriber: 0, accountant: 0, status: 0 },
+                { name: 'Teléfono', subscriber: 0, accountant: 0, status: 0 },
+            ],
+            properties: [
+                {
+                    name: '',
+                    status_property: '',
+                    observation: '',
+                    photographic_evidence: '',
+                },
+            ],
+        },
+        occupant: {
+            names: '',
+            surnames: '',
+            document_type: '',
+            document_number: 0,
+            phone_number: 0,
+            phone_number_ext: 0,
+            email: '',
+        },
+        photografic_register: {
+            facade: '',
+            general: [''],
+        },
+    };
+    const [new_inspection, set_new_inspection] = useState(ls?.new_inspection ? ls?.new_inspection : clerar_inspection);
     const [max, set_max] = useState<number>(history.location.state?.max || 1);
     const [is_saving, set_is_saving] = useState<boolean>(false);
     const [go_next, set_go_next] = useState<string>(null);
-    if (!new_inspection) {
-        new_inspection = {
-            basic_information: {
-                differences: '',
-                isAnEspecialCase: false,
-                special_actions: '',
-                report_pdf_id: '',
-            },
-            occupation: {
-                tenure: '',
-                use: '',
-                ownership: '',
-                contractual: '',
-            },
-            physical_inspection: {
-                observations: '',
-                public_services: [
-                    {
-                        name: '',
-                        subscriber: 0,
-                        accountant: 0,
-                        status: 0,
-                    },
-                ],
-                properties: [
-                    {
-                        name: '',
-                        status_property: '',
-                        observation: '',
-                        photographic_evidence: '',
-                    },
-                ],
-            },
-            occupant: {
-                names: '',
-                surnames: '',
-                document_type: '',
-                document_number: 0,
-                phone_number: 0,
-                phone_number_ext: 0,
-                email: '',
-            },
-            photografic_register: {
-                facade: '',
-                general: [''],
-            },
-        };
-    }
+
     const steps = [
         {
             ref: useRef<FormikProps<FormikValues>>(),
@@ -174,13 +177,13 @@ const useInit = (
             },
             onSave: async (values) => {
                 set_is_saving(false);
-                new_inspection = {
-                    ...new_inspection,
+                set_new_inspection((data) => ({
+                    ...data,
                     basic_information: {
                         ...new_inspection?.basic_information,
                         differences: values.observations,
                     },
-                };
+                }));
                 console.log(1, 'guardado');
             },
         },
@@ -192,13 +195,13 @@ const useInit = (
                 await steps[1].ref.current?.submitForm();
             },
             onSave: async (values) => {
-                new_inspection = {
-                    ...new_inspection,
+                set_new_inspection((data) => ({
+                    ...data,
                     occupation: {
                         ...new_inspection?.occupation,
                         ...values,
                     },
-                };
+                }));
                 console.log(2, 'guardado');
                 set_is_saving(false);
             },
@@ -211,15 +214,15 @@ const useInit = (
                 await steps[2].ref.current?.submitForm();
             },
             onSave: async (values) => {
-                new_inspection = {
-                    ...new_inspection,
+                set_new_inspection((data) => ({
+                    ...data,
                     physical_inspection: {
                         ...new_inspection.physical_inspection,
                         public_services: [...values.public_services],
                         properties: [...values?.properties],
                         observations: values.observations,
                     },
-                };
+                }));
                 console.log(3, 'guardado');
                 set_is_saving(false);
             },
@@ -232,10 +235,9 @@ const useInit = (
                 await steps[3].ref.current?.submitForm();
             },
             onSave: async (values) => {
-                new_inspection = {
-                    ...new_inspection,
-                    // image: Object.values(values),
-                };
+                set_new_inspection((data) => ({
+                    ...data,
+                }));
                 console.log(4, 'guardado');
                 set_is_saving(false);
             },
@@ -248,13 +250,12 @@ const useInit = (
                 await steps[4].ref.current?.submitForm();
             },
             onSave: async (values) => {
-
-                new_inspection = {
-                    ...new_inspection,
+                set_new_inspection((data) => ({
+                    ...data,
                     occupant: {
                         ...values,
                     },
-                };
+                }));
                 console.log(5, 'guardado');
                 set_is_saving(false);
             },
@@ -268,30 +269,24 @@ const useInit = (
                 await steps[5].ref.current?.submitForm();
             },
             onSave: async (values) => {
-                new_inspection = {
-                    ...new_inspection,
-                    // physical_inspection: {
-                    //     ...data?.physical_inspection,
-                    //     observations: {
-                    //         ...data?.physical_inspection?.observations,
-                    //         observation: values.observations,
-                    //     },
-                    // },
-                };
+                set_new_inspection((data) => ({
+                    ...data,
+                }));
+
                 console.log(6, 'guardado');
                 set_is_saving(false);
-                // delete final_data.image;
-                swal_success.fire('Inspeccion realizada exitosamente', '', 'success').then(() => {
-                    // history.push('/inspection/');
-                    // create_notification({
-                    //     title: 'Es necesario mantenimiento',
-                    //     description: `es necesario mantenimiento para el bien inmueble ${real_estate?.name}`,
-                    //     action: `/acquisitions/real-estates/${real_estate?.id}/`,
-                    //     priority: 2,
-                    //     toRole: 1,
-                    // });
-                });
-                console.log({ final_data: new_inspection });
+                // // delete final_data.image;
+                // swal_success.fire('Inspeccion realizada exitosamente', '', 'success').then(() => {
+                //     // history.push('/inspection/');
+                //     // create_notification({
+                //     //     title: 'Es necesario mantenimiento',
+                //     //     description: `es necesario mantenimiento para el bien inmueble ${real_estate?.name}`,
+                //     //     action: `/acquisitions/real-estates/${real_estate?.id}/`,
+                //     //     priority: 2,
+                //     //     toRole: 1,
+                //     // });
+                // });
+                // console.log({ final_data: new_inspection });
             },
         },
     ];
@@ -314,11 +309,12 @@ const useInit = (
 
     const callback = (key: string) => {
         const int_key = parseInt(active_key);
-        console.group('guardando', int_key);
+        console.groupCollapsed('guardando', int_key);
         const save = steps[int_key - 1]?.save;
-        save && save();
-        console.groupEnd();
-        set_go_next(key);
+        save &&
+            save().then(() => {
+                set_go_next(key);
+            });
     };
 
     const goBack = () => {
@@ -334,7 +330,6 @@ const useInit = (
     };
 
     useEffect(() => {
-        console.log({ go_next, is_saving });
         if (!is_saving && go_next) {
             const key = parseInt(go_next);
             if (key > max) {
@@ -342,15 +337,22 @@ const useInit = (
             }
             history.push(history.location.pathname, { active_key: go_next, new_inspection, max });
             set_go_next(null);
+            console.groupEnd();
         }
     }, [is_saving, go_next]);
 
+    // useEffect(() => {
+    //     if(!Object.is(old_inspection, clerar_inspection)){
+    //         set_new_inspection((data) => ({
+    //             ...data,
+    //             ...old_inspection,
+    //         }));
+    //     }
+    // }, [old_inspection]);
+
     useEffect(() => {
-        new_inspection = {
-            ...new_inspection,
-            ...old_inspection,
-        };
-    }, [old_inspection]);
+        console.log('new', new_inspection);
+    }, [new_inspection]);
 
     return [active_key, new_inspection, steps, max, show_next, next_tab, goBack, execute_save, callback];
 };
