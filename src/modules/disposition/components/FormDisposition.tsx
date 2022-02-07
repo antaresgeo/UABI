@@ -70,7 +70,7 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Código Activo Sap</label>
-                                <div className="my-3">{realEstate?.sap_id}</div>
+                                <div className="my-3">{realEstate?.active_code}</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>

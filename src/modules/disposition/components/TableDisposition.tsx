@@ -93,7 +93,7 @@ export const TableDiszposition: FC<DispositionListProps> = ({ filters, user /*, 
         },
         {
             title: 'Activo Fijo',
-            dataIndex: 'sap_id',
+            dataIndex: 'active_code',
             align: 'left' as 'left',
         },
     ];

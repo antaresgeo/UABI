@@ -181,14 +181,14 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
             </thead>
             <tbody>
                 <tr class="middle_frame">
-                    <td class="right_frame">${values?.elaborated.name}</td>
-                    <td class="right_frame">${values?.revised.name}</td>
-                    <td class="right_frame">${values?.approved.name}</td>
+                    <td class="right_frame">${values?.elaborated.first_name ?? ""} ${values?.elaborated.last_name ?? ""} ${values?.elaborated.first_surname ?? ""} ${values.elaborated.last_surname ?? ""}</td>
+                    <td class="right_frame">${values?.revised.first_name ?? ""} ${values?.revised.last_name ?? ""} ${values?.revised.first_surname ?? ""} ${values.revised.last_surname ?? ""}</td>
+                    <td class="right_frame">${values?.approved.first_name ?? ""} ${values?.approved.last_name ?? ""} ${values?.approved.first_surname ?? ""} ${values.approved.last_surname ?? ""}</td>
                 </tr>
                 <tr class="frame_down">
-                    <td class="right_frame">${values?.elaborated.post}</td>
-                    <td class="right_frame">${values?.revised.post}</td>
-                    <td class="right_frame">${values?.approved.post}</td>
+                    <td class="right_frame">${values?.elaborated.post ?? ""}</td>
+                    <td class="right_frame">${values?.revised.post ?? ""}</td>
+                    <td class="right_frame">${values?.approved.post ?? ""}</td>
                 </tr>
             </tbody>
         </table>
@@ -225,16 +225,16 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
                     <td>REGULATORIO</td>
                     <td>${values?.regulatory_risk.degree_occurrence}</td>
                     <td>${values?.regulatory_risk.impact_degree}</td>
-                    <td>${values?.regulatory_risk.responsable === "Contratista" ? "X" : ""}</td>
-                    <td>${values?.regulatory_risk.responsable === "municipio" ? "X" : ""}</td>
+                    <td>${values?.regulatory_risk.responsible === "Contratista" ? "X" : ""}</td>
+                    <td>${values?.regulatory_risk.responsible === "municipio" ? "X" : ""}</td>
                     <td>${values?.regulatory_risk.mitigation_mechanism}</td>
                 </tr>
                 <tr>
                     <td>OPERATIVOS: Incumplimiento del contratista de las obligaciones y prohibiciones contraídas en virtud del contrato.</td>
                     <td>${values?.operational_risk.degree_occurrence}</td>
                     <td>${values?.operational_risk.impact_degree}</td>
-                    <td>${values?.operational_risk.responsable === "Contratista" ? "X" : ""}</td>
-                    <td>${values?.operational_risk.responsable === "municipio" ? "X" : ""}</td>
+                    <td>${values?.operational_risk.responsible === "Contratista" ? "X" : ""}</td>
+                    <td>${values?.operational_risk.responsible === "municipio" ? "X" : ""}</td>
                     <td>${values?.operational_risk.mitigation_mechanism}</td>
                 </tr>
             </tbody>
@@ -348,7 +348,7 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
             </Text>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>3. Solicitante:</Text>
-                <Text style={styles.subtitle}>{` ${values?.applicant.company_name} NIT: ${values?.applicant.id_number}`}</Text>
+                <Text style={styles.subtitle}>{` ${values?.applicant?.company_name} NIT: ${values?.applicant?.id_number}`}</Text>
             </Text>
             <Text style={styles.subtitle}>
                 4. Justificación de la contratación.
@@ -428,7 +428,7 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
             </Text>
             <Text style={styles.text}>
                 Con la entrega del bien inmueble en comodato
-                <Text style={styles.subtitle}> {realEstate?.dependency}</Text>, contribuye
+                <Text style={styles.subtitle}> {realEstate?.dependency?.dependency}</Text>, contribuye
                 <Text style={styles.subtitle}> {values?.dependence}</Text>
             </Text>
             <Text style={styles.subtitle}>
@@ -655,7 +655,7 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
                 En aplicación de la normatividad vigente, en cuanto a los aspectos que regulan la
                 selección del contratista con el cual se llevará a cabo contrato de comodato, se indica
                 por parte de la
-                <Text style={styles.subtitle}> {realEstate?.dependency} </Text>
+                <Text style={styles.subtitle}> {realEstate?.dependency?.dependency} </Text>
                 lo siguiente:
             </Text>
             <Text style={styles.text}>
@@ -886,11 +886,11 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
             </Text>
             <Text style={styles.text}></Text>
             <Text style={styles.sub_text}>
-                {values?.detailsLeader.names.firstName} {values?.detailsLeader.names.lastName} {values?.detailsLeader.surnames.firstSurname} {values?.detailsLeader.surnames.lastSurname}
+                {`${values?.leader?.first_name} ${values?.leader?.last_name ?? ""} ${values?.leader?.first_surname ?? ""} ${values?.leader?.last_surname ?? ""}  `}
             </Text>
-            <Text style={styles.sub_text}>{values?.leader.post}</Text>
-            <Text style={styles.sub_text}>{values?.leader.dependence}</Text>
-            <Text style={styles.sub_text}>{values?.leader.secretary}</Text>
+            <Text style={styles.sub_text}>{values?.leader?.post}</Text>
+            <Text style={styles.sub_text}>{values?.leader?.dependence}</Text>
+            <Text style={styles.sub_text}>{values?.leader?.secretary}</Text>
             <Text style={styles.text}></Text>
             <Html>{table_lider}</Html>
         </DocumentPdf >

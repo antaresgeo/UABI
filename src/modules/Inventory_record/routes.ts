@@ -10,7 +10,7 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/inventoryrecordlist',
+            path: '/inventory-record-list',
             template_props: {
                 breadcrumbs: [{ name: 'Administración de inventario' }],
             },
@@ -20,12 +20,12 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/inventoryrecord/real-estates/:id/',
+            path: '/inventory-record/real-estates/:id/',
             template_props: {
                 breadcrumbs: [
                     {
                         name: 'Administración de inventario',
-                        to: '/inventoryrecordlist',
+                        to: '/inventory-record-list',
                     },
                     { name: 'Ver bien inmueble' },
                 ],
@@ -36,12 +36,12 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/inventoryrecord/real-estates/edit/:id/',
+            path: '/inventory-record/real-estates/edit/:id/',
             template_props: {
                 breadcrumbs: [
                     {
                         name: 'Administración de inventario',
-                        to: '/inventoryrecordlist',
+                        to: '/inventory-record-list',
                     },
                     { name: 'Editar bien inmueble' },
                 ],

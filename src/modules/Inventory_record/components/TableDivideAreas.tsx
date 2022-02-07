@@ -72,26 +72,27 @@ export class TableDivideAreas extends React.Component<any, EditableTableState> {
     };
 
     divideAreas = async (newRealEstates) => {
-        let realestateCreate = newRealEstates.filter((r, i) => i !== 0)
-        try {
-            const result = await Promise.all(
-                realestateCreate.map(async (d,) => {
-                    return await this.props.dispatch(actions.createRealEstate(d))
-                })
-            )
-            if (result) {
-                await this.props.dispatch(actions.updateRealEstate(newRealEstates[0], newRealEstates[0].id))
-            }
-            this.props.setShowTable(false);
-            this.props.setNumberAreas(2)
-            this.setState({ dataSource: [] })
-            this.props.close()
-            return Promise.resolve();
+        console.log(newRealEstates)
+        // let realestateCreate = newRealEstates.filter((r, i) => i !== 0)
+        // try {
+        //     const result = await Promise.all(
+        //         realestateCreate.map(async (d,) => {
+        //             return await this.props.dispatch(actions.createRealEstate(d))
+        //         })
+        //     )
+        //     if (result) {
+        //         await this.props.dispatch(actions.updateRealEstate(newRealEstates[0], newRealEstates[0].id))
+        //     }
+        //     this.props.setShowTable(false);
+        //     this.props.setNumberAreas(2)
+        //     this.setState({ dataSource: [] })
+        //     this.props.close()
+        //     return Promise.resolve();
 
-        } catch (error) {
-            return Promise.reject();
+        // } catch (error) {
+        //     return Promise.reject();
 
-        }
+        // }
 
     }
 
@@ -210,18 +211,20 @@ export class TableDivideAreas extends React.Component<any, EditableTableState> {
                         key="1"
                         disabled={this.total() !== this.props.total_area ? true : false}
                         onClick={() => {
+
                             let newRealEstates = []
-                            const codigos = this.props.formik.values.sap_id.split(',');
+                            const codigos = this.props.formik.values.active_code.split(',');
+                            // const codigos = "GC0005L, GC0005MJ".split(',');
                             const codePlot = codigos.filter((cod) => cod.charAt(cod.length - 1) === 'L');
                             const codeConstruction = codigos.filter((cod) => cod.charAt(cod.length - 1) === 'J');
                             const materials = this.props.formik.values.materials.join(",")
-                            console.log(codeConstruction)
+                            console.log(this.props.formik.values)
                             for (let i = 0; i < this.props.numberAreas; i++) {
                                 if (this.props.type === "Lote") {
                                     newRealEstates.push({
                                         ...this.props.formik.values,
                                         plot_area: Number(this.state.dataSource[i].area),
-                                        sap_id: codeConstruction.length === 0 ? `${codePlot[0]}-${i + 1}` : `${codePlot[0]}-${i + 1},${codeConstruction[0]}` ,
+                                        active_code: `${codePlot[0]}-${i + 1}` ,
                                         materials,
                                         projects_id: [this.props.formik.values.projects_id],
                                         type: 'divide_areas'
@@ -230,7 +233,7 @@ export class TableDivideAreas extends React.Component<any, EditableTableState> {
                                     newRealEstates.push({
                                         ...this.props.formik.values,
                                         construction_area: Number(this.state.dataSource[i].area),
-                                        sap_id: codePlot.length === 0 ? `${codeConstruction[0]}-${i + 1}` : `${codePlot[0]},${codeConstruction[0]}-${i + 1}` ,
+                                        active_code: `${codeConstruction[0]}-${i + 1}` ,
                                         materials,
                                         projects_id: [this.props.formik.values.projects_id],
                                         type: 'divide_areas'

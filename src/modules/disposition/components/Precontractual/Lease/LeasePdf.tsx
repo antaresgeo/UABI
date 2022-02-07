@@ -228,16 +228,16 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
                     <td>REGULATORIO</td>
                     <td>${values?.regulatory_risk.degree_occurrence}</td>
                     <td>${values?.regulatory_risk.impact_degree}</td>
-                    <td>${values?.regulatory_risk.responsable === "Contratista" ? "X" : ""}</td>
-                    <td>${values?.regulatory_risk.responsable === "municipio" ? "X" : ""}</td>
+                    <td>${values?.regulatory_risk.responsible === "Contratista" ? "X" : ""}</td>
+                    <td>${values?.regulatory_risk.responsible === "municipio" ? "X" : ""}</td>
                     <td>${values?.regulatory_risk.mitigation_mechanism}</td>
                 </tr>
                 <tr>
                     <td>OPERATIVOS: Incumplimiento del contratista de las obligaciones y prohibiciones contraídas en virtud del contrato.</td>
                     <td>${values?.operational_risk.degree_occurrence}</td>
                     <td>${values?.operational_risk.impact_degree}</td>
-                    <td>${values?.operational_risk.responsable === "Contratista" ? "X" : ""}</td>
-                    <td>${values?.operational_risk.responsable === "municipio" ? "X" : ""}</td>
+                    <td>${values?.operational_risk.responsible === "Contratista" ? "X" : ""}</td>
+                    <td>${values?.operational_risk.responsible === "municipio" ? "X" : ""}</td>
                     <td>${values?.operational_risk.mitigation_mechanism}</td>
                 </tr>
             </tbody>

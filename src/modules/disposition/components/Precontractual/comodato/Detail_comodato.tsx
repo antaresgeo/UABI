@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-const Detail_comodato = () => {
+interface IPros {
+    precontractual: any;
+
+}
+
+const DetailComodato: FC<IPros> = ({ precontractual }) => {
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -175,4 +180,4 @@ const Detail_comodato = () => {
     )
 }
 
-export default Detail_comodato
+export default DetailComodato

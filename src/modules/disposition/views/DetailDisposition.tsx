@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from '../../../utils/ui';
 import { useHistory, useParams } from 'react-router-dom';
-import Detail_disposition from './../components/Detail_disposition';
-import Detail_Lease from '../components/Precontractual/Lease/Detail_Lease';
-import Detail_comodato from '../components/Precontractual/comodato/Detail_comodato';
-import Detail_publicUse from '../components/Precontractual/PublicUse/Detail_publicUse';
+import ViewDetailDisposition from './../components/Detail_disposition';
+import actions from './../../acquisitions/redux/actions/index';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface IProps {
     id: string;
@@ -12,6 +11,13 @@ interface IProps {
 export const DetailDisposition = () => {
     const { id } = useParams<IProps>();
     const history = useHistory();
+    const dispatch = useDispatch();
+    const  realEstate = useSelector((store: any) => store.acquisitions.realEstate.value)
+    useEffect(() => {
+        if (id) {
+            dispatch(actions.getRealEstate(id));
+        }
+    }, [dispatch, id]);
     return (
         <>
             <div className="h-100 d-flex flex-column">
@@ -36,7 +42,9 @@ export const DetailDisposition = () => {
                         <div className="container-fluid">
                             <div className="row justify-content-center">
                                 <div className="col-md-12">
-                                    <Detail_disposition />
+                                    <ViewDetailDisposition
+                                        realEstate={realEstate}
+                                    />
                                 </div>
                             </div>
                         </div>
