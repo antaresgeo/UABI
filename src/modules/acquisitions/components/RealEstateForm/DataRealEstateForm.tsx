@@ -301,13 +301,13 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     </label>
                     <Field
                         disabled
-                        name="sap_id"
-                        id="sap_id_id"
+                        name="active_code"
+                        id="active_code_id"
                         type="text"
                         className="form-control"
                         autoComplete="off"
                     />
-                    <ErrorMessage name="sap_id" />
+                    <ErrorMessage name="active_code" />
                 </div>
                 <div className="form-group col-3">
                     <label htmlFor="destination_type_id" className="form-label">

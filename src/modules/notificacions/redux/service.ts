@@ -99,7 +99,7 @@ export const get_notification_by_id = async (id) => {
 };
 
 export interface _Notification {
-    title: string;
+    subject: string;
     description: string;
     action: string;
     priority: number;
@@ -109,13 +109,13 @@ export interface _Notification {
 }
 
 export const create_notification = async (notification: _Notification) => {
-    const { title, description, action, priority, _from, _to, toRole } =
+    const { subject, description, action, priority, _from, _to, toRole } =
         notification;
     try {
         const URI = '/notifications/';
         const res: AxiosResponse<NotificationResponse> =
             await notification_http.post(URI, {
-                title,
+                subject,
                 description,
                 action,
                 priority,

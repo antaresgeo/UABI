@@ -3,11 +3,12 @@ import { useHistory } from 'react-router-dom';
 
 interface DispositionFormPros {
     //dispositionType: string;
-    //realEstate: any;
+    realEstate: any;
 }
 
-const Detail_disposition: FC<DispositionFormPros> = () => {
+const ViewDetailDisposition: FC<DispositionFormPros> = ({realEstate}) => {
     const history = useHistory();
+    console.log(realEstate);
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -21,15 +22,15 @@ const Detail_disposition: FC<DispositionFormPros> = () => {
                                 <label style={{ color: '#8d8c8c' }} htmlFor="">
                                     ID
                                 </label>
-                                <div className="my-3" />
+                                <div className="my-3" >{realEstate.id}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Nombre del Inmuebles</label>
-                                <div className="my-3" />
+                                <div className="my-3" >{realEstate.name}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Matrícula</label>
-                                <div className="my-3" />
+                                <div className="my-3" >{realEstate.registry_number}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Disposición</label>
@@ -75,17 +76,17 @@ const Detail_disposition: FC<DispositionFormPros> = () => {
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">CBML</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{realEstate?.address?.cbmls?.uabi}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Dirección</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{realEstate?.address?.address}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Etapa Precontractual</label>
                                 <div className=" my-3">
                                     <button type="button" className="btn btn-outline-primary  btn-sm"
-                                            onClick={() => history.push('/dispositions/precontractual/view')}
+                                            onClick={() => history.push(`/dispositions/precontractual/view/${realEstate.active_code}`)}
                                     >
                                         ver estudio Previo
                                     </button>
@@ -121,4 +122,4 @@ const Detail_disposition: FC<DispositionFormPros> = () => {
     );
 };
 
-export default Detail_disposition;
+export default ViewDetailDisposition;

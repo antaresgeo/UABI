@@ -4,21 +4,19 @@ import DetailLease from '../../components/Precontractual/Lease/Detail_Lease';
 import ViewPerson from './../../components/Precontractual/ViewPerson';
 import ViewRiskAnalysis from './../../components/Precontractual/ViewRiskAnalysis';
 import { useHistory, useParams } from 'react-router-dom';
-import Detail_comodato from '../../components/Precontractual/comodato/Detail_comodato';
+import DetailComodato from '../../components/Precontractual/comodato/Detail_comodato';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux';
 
-// interface IParams {
-//     active_code: string;
-// }
+interface IParams {
+    active_code: string;
+}
 
 const DetailPrecontractual = () => {
     const history = useHistory();
-    const dispositionType = "arrendamiento"
     const realEstate = {}
     const dispatch = useDispatch();
-    const active_code = "AM0003L"
-    // const { active_code } = useParams<IParams>();
+    const { active_code } = useParams<IParams>();
 
     const precontractual: any = useSelector((state: any) => {
         return state.disposition.precontractual.value
@@ -36,7 +34,7 @@ const DetailPrecontractual = () => {
                         <h5 className="col-11">Etapa Precontractual</h5>
                         <Link
                             to={
-                                { pathname: "/disposition/create/", state: { dispositionType, realEstate, } }
+                                "" /*{ pathname: "/disposition/create/", state: { precontractual.type_disposition, realEstate, } }*/
                             }
                             name=""
                             avatar={false}
@@ -53,14 +51,16 @@ const DetailPrecontractual = () => {
                     <div className="container-fluid">
                         <div className="row justify-content-center">
                             <div className="col-md-12">
-                                {dispositionType === 'arrendamiento' &&
+                                {precontractual.type_disposition === 'Arrendamiento' &&
                                     <DetailLease
                                         precontractual={precontractual}
                                     />
                                 }
-                                {/* {dispositionType === 'Comodato' &&
-                                    <Detail_comodato />
-                                } */}
+                                {precontractual.type_disposition === 'Comodato' &&
+                                    <DetailComodato
+                                        precontractual={precontractual}
+                                    />
+                                }
                                 {console.log(precontractual)}
 
                                 <ViewPerson title='Información del Solicitante' person={precontractual?.applicant} />

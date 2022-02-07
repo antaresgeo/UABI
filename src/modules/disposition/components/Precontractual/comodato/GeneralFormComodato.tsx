@@ -168,13 +168,13 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         regulatory_risk: {
             degree_occurrence: "MEDIO",
             impact_degree: "MEDIO",
-            responsable: "Contratista",
+            responsible: "Contratista",
             mitigation_mechanism: "Ejercer un control y vigilancia estrictos al contrato por parte del supervisor.",
         },
         operational_risk: {
             degree_occurrence: "MEDIO",
             impact_degree: "MEDIO",
-            responsable: "Contratista",
+            responsible: "Contratista",
             mitigation_mechanism: "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual",
         },
         //comodato
@@ -219,11 +219,12 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         population: '',
         benefited_sector: '',
         location: {
+            beneficiary_location_id: "",
             commune: '',
             neighborhood: '',
         },
 
-        dependency: realEstate?.dependency,
+        dependency: realEstate?.dependency?.dependency,
         secretary: realEstate?.subdependency,
 
         ...values_form,
@@ -308,24 +309,24 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         dependence: Yup.string().required('obligatorio'),
         registration_date: Yup.string().required('obligatorio'),
         // Solicitante
-        applicant: Yup.object({
-            type_society: Yup.string().required('obligatorio'),
-            company_name: Yup.string().required('obligatorio'),
-            id_number: Yup.number().required('obligatorio'),
-            phone_number: Yup.number().required('obligatorio'),
-            email: Yup.string().email().required('obligatorio'),
-        }),
-        location_applicant: Yup.object({
-            address: Yup.string().required('obligatorio')
-        }),
+        // applicant: Yup.object({
+        //     type_society: Yup.string().required('obligatorio'),
+        //     company_name: Yup.string().required('obligatorio'),
+        //     id_number: Yup.number().required('obligatorio'),
+        //     phone_number: Yup.number().required('obligatorio'),
+        //     email: Yup.string().email().required('obligatorio'),
+        // }),
+        // location_applicant: Yup.object({
+        //     address: Yup.string().required('obligatorio')
+        // }),
 
         //lider a cargo
-        leader: Yup.object({
-            type_society: Yup.string().required('obligatorio'),
-            post: Yup.string().required('obligatorio'),
-            dependence: Yup.string().required('obligatorio'),
-            secretary: Yup.string().required('obligatorio'),
-        }),
+        // leader: Yup.object({
+        //     type_society: Yup.string().required('obligatorio'),
+        //     post: Yup.string().required('obligatorio'),
+        //     dependence: Yup.string().required('obligatorio'),
+        //     secretary: Yup.string().required('obligatorio'),
+        // }),
 
 
         //personas

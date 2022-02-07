@@ -79,7 +79,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
                 <Link
                     to={
                         register
-                            ? `/inventoryrecord/real-estates/${id}/`
+                            ? `/inventory-record/real-estates/${id}/`
                             : `/acquisitions/real-estates/${id}/`
                     }
                     name=""
@@ -99,7 +99,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
                 <Link
                     to={
                         register
-                            ? `/inventoryrecord/real-estates/edit/${id}/`
+                            ? `/inventory-record/real-estates/edit/${id}/`
                             : `/acquisitions/real-estates/edit/${id}/`
                     }
                     name=""

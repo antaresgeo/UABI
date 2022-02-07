@@ -41,21 +41,21 @@ const RealEstateViewForm: FC<IpolizaFormPros> = ({ realEstate, tipology, invento
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Dependencia</label>
-                                <div className="my-3">{realEstate?.dependency}</div>
+                                <div className="my-3">{realEstate?.dependency?.dependency}</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Subdependencia</label>
-                                <div className="my-3">{realEstate?.subdependency}</div>
+                                <div className="my-3">{realEstate?.cost_center?.subdependency}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Centro Gestor</label>
-                                <div className="my-3">{realEstate?.management_center}</div>
+                                <div className="my-3">{realEstate?.dependency?.management_center}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Centro de costos</label>
-                                <div className="my-3">{realEstate?.cost_center}</div>
+                                <div className="my-3">{realEstate?.cost_center?.cost_center}</div>
                             </div>
 
                             <div className="col-3">

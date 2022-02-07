@@ -34,21 +34,21 @@ const RealEstate = () => {
                 }
             }
 
-            // await create_notification({
-            //     title: 'Creación de un activo fijo',
-            //     description: `se ha creado un bien inmueble con matrícula ${res.results.registry_number} asignado al proyecto ${res.results.project.name}`,
-            //     action: `/acquisitions/real-estates/${res.results.id}/`,
-            //     priority: 2,
-            //     toRole: 3
-            // });
+            await create_notification({
+                subject: 'Creación de un activo fijo',
+                description: `se ha creado un bien inmueble con matrícula ${res.results.registry_number} asignado al proyecto ${res.results.project.name}`,
+                action: `/acquisitions/real-estates/${res.results.id}/`,
+                priority: 2,
+                toRole: 3
+            });
 
-            // await create_notification({
-            //     title: 'Creación de un activo fijo',
-            //     description: `se ha creado un bien inmueble con matrícula ${res.results.registry_number} asignado al proyecto ${res.results.project.name}`,
-            //     action: `/acquisitions/real-estates/${res.results.id}/`,
-            //     priority: 2,
-            //     toRole: 5
-            // });
+            await create_notification({
+                subject: 'Creación de un activo fijo',
+                description: `se ha creado un bien inmueble con matrícula ${res.results.registry_number} asignado al proyecto ${res.results.project.name}`,
+                action: `/acquisitions/real-estates/${res.results.id}/`,
+                priority: 2,
+                toRole: 5
+            });
             return Promise.resolve(false);
         } catch (e) {
             return Promise.reject();

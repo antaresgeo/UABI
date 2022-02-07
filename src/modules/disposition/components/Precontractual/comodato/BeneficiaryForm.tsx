@@ -59,6 +59,7 @@ const BeneficiaryForm: FC<FormProps> = ({ formik }) => {
                                     console.log('valores modal', values);
                                     formik.setFieldValue('location.commune', `${values.commune_name}`, false);
                                     formik.setFieldValue('location.neighborhood', `${values.neighborhood_name}`, false);
+                                    formik.setFieldValue('location.beneficiary_location_id', `${values.id}`, false);
                                     return Promise.resolve();
                                 }}
                             />
