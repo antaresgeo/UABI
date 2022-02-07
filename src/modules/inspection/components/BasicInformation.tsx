@@ -9,6 +9,7 @@ import {NewInspection} from "../custom_types";
 import {PersonalInformationForm} from "../../../utils/ui/PersonaM";
 
 interface BasicInformationProps {
+    obs: string
     inspection: NewInspection;
     real_estate: any;
     disabled?: boolean;
@@ -16,6 +17,7 @@ interface BasicInformationProps {
     onSubmit: (values) => void;
 }
 const BasicInformation: FC<BasicInformationProps> = ({
+    obs,
     inspection,
     disabled,
     innerRef,
@@ -130,7 +132,7 @@ const BasicInformation: FC<BasicInformationProps> = ({
                         form.setSubmitting(false);
                     }}
                     initialValues={{
-                        observations: inspection?.basic_information.differences || '',
+                        observations: obs || inspection?.basic_information.differences || '',
                     }}
                 >
                     {() => {

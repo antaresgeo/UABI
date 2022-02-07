@@ -21,8 +21,6 @@ interface IUserFormPros {
 }
 
 const FormUserprueba: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, innerRef, type_rol, dependencies, user_roles, user_permits }) => {
-
-
     const initial_values = {
         user: {
             id_number: '',
@@ -63,7 +61,7 @@ const FormUserprueba: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, inn
                 .min(8, 'minimo 8 caracteres'),
         }),
         detailsUser: Yup.object().shape({
-            // location: Yup.object().required('Campo obligatorio'),
+            location: Yup.object().required('Campo obligatorio'),
             society_type: Yup.string().required('Campo obligatorio'),
             entity_type: Yup.string().required('Campo obligatorio'),
             id_type: Yup.string().required('Campo obligatorio'),

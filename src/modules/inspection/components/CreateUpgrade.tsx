@@ -2,14 +2,16 @@ import React, { FC } from 'react';
 import { Card } from '../../../utils/ui';
 // import { useHistory } from 'react-router-dom';
 import UpgradeForm from './UpgradeForm';
-import { IOccupant } from '../custom_types';
+import {IOccupant, NewInspection} from '../custom_types';
 import {PersonalInformationForm} from "../../../utils/ui/PersonaM";
 interface CreateUpgradeProps {
+    inspection: NewInspection;
     owner: IOccupant;
     innerRef: any;
     onSubmit: (values) => void;
 }
 const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner, innerRef, onSubmit }) => {
+    console.log("PersonalInformationForm", owner)
     // const history = useHistory();
     return (
         <div className="container-fluid">

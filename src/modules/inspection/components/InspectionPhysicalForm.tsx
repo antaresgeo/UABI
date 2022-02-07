@@ -5,17 +5,15 @@ import DocumentModal from '../../../utils/components/DocumentsModal';
 import { IProperty } from '../custom_types';
 
 interface InspectionPhysicalFormProps {
-    properties: IProperty[];
-    obs: string;
     formik: any;
 }
-const InspectionPhysicalForm: FC<InspectionPhysicalFormProps> = ({ properties, obs, formik }) => {
+const InspectionPhysicalForm: FC<InspectionPhysicalFormProps> = ({ formik }) => {
     return (
         <>
             {formik.values.properties.map((property, i) => {
                 const p = formik.values.properties[i];
                 const show_upload = p.status_property === 'Malo' || p.status_property === 'Regular';
-                const old_p = properties?.find((op) => op.name === p.name);
+                const old_p = formik.values.old_properties?.find((op) => op.name === p.name);
                 return (
                     <div className="row border-1" key={`properties_${i}`}>
                         <div className={`form-group col${show_upload ? '-3' : '-6'}`}>

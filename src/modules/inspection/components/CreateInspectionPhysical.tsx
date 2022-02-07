@@ -4,26 +4,34 @@ import InspectionPhysicalForm from './InspectionPhysicalForm';
 import TableInspectionPhysycal from './TableInspectionPhysycal';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import { Field, Form, Formik } from 'formik';
-import { IPhysicalinspection } from '../custom_types';
-import {values} from "lodash";
+import { IPhysicalinspection, NewInspection } from '../custom_types';
+import { values } from 'lodash';
 interface CreateInspectionPhysicalProps {
+    inspection: NewInspection;
     physical_inspection: IPhysicalinspection;
     innerRef: any;
     onSubmit: (values) => void;
 }
-const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({ physical_inspection, innerRef, onSubmit }) => {
-    // const history = useHistory();
-    const inicial_values = {
-        public_services:
-            physical_inspection?.public_services.length > 0
-                ? physical_inspection?.public_services
-                : [
-                      { name: 'Energia', subscriber: 0, accountant: 0, status: '' },
-                      { name: 'Gas', subscriber: 0, accountant: 0, status: '' },
-                      { name: 'Agua', subscriber: 0, accountant: 0, status: '' },
-                      { name: 'Teléfono', subscriber: 0, accountant: 0, status: '' },
-                  ],
-        old_properties: physical_inspection?.properties,
+const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({
+    inspection,
+    physical_inspection,
+    innerRef,
+    onSubmit,
+}) => {
+    const has_public_services = (public_services) => {
+        public_services = public_services || [];
+        return (
+            public_services.length > 0 &&
+            public_services.every((ps) => ps.name && ps.subscriber && ps.accountant && ps.status)
+        );
+    };
+    const initial_values = {
+        public_services: has_public_services(physical_inspection?.public_services)
+            ? physical_inspection?.public_services
+            : has_public_services(inspection?.physical_inspection.public_services)
+            ? inspection?.physical_inspection.public_services
+            : physical_inspection.public_services,
+        old_properties: inspection?.physical_inspection?.properties,
         properties: [
             {
                 name: 'Pintura exterior',
@@ -180,27 +188,26 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({ physical_
                 status: '',
             },
         ],
-        observations: physical_inspection?.observations || '',
+        observations: inspection?.physical_inspection?.observations || physical_inspection?.observations || '',
     };
 
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-12">
-
                     <Formik
                         enableReinitialize
                         onSubmit={(values, form) => {
                             onSubmit(values);
                             form.setSubmitting(false);
                         }}
-                        initialValues={inicial_values}
+                        initialValues={initial_values}
                         innerRef={innerRef}
                     >
                         {(formik) => {
                             return (
                                 <Form>
-                                    <TableInspectionPhysycal obs={formik.values.observations}/>
+                                    <TableInspectionPhysycal obs={formik.values.observations} />
                                     <Card title="Servicios Publicos">
                                         {formik.values.public_services.map((service, i) => (
                                             <div className="row" key={i}>
@@ -276,11 +283,7 @@ const CreateInspectionPhysical: FC<CreateInspectionPhysicalProps> = ({ physical_
                                             </>
                                         }
                                     >
-                                        <InspectionPhysicalForm
-                                            formik={formik}
-                                            properties={physical_inspection?.properties}
-                                            obs={physical_inspection?.observations}
-                                        />
+                                        <InspectionPhysicalForm formik={formik} />
                                     </Card>
                                 </Form>
                             );

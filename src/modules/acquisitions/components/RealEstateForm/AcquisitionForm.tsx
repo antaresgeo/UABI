@@ -5,8 +5,9 @@ import { Formik, Form, Field } from 'formik';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import LocationModal from '../../../../utils/components/Location/LocationModal';
 import * as Yup from 'yup';
-import TooltipField from "../../../../utils/ui/tooltip_field";
-import PersonaM from "../../../../utils/ui/PersonaM";
+import TooltipField from '../../../../utils/ui/tooltip_field';
+import PersonaM from '../../../../utils/ui/PersonaM';
+import moment from 'moment';
 
 interface AcquisitionsFromProps {
     innerRef?: any;
@@ -50,14 +51,16 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
     });
 
     const submit = (values, form) => {
-        console.log(values)
+        console.log(values);
         form.setSubmitting(true);
-        onChange(values, form).then(() => {
-            form.setSubmitting(false);
-            form.resetForm();
-        }).catch(() => {
-            form.setSubmitting(false);
-        });
+        onChange(values, form)
+            .then(() => {
+                form.setSubmitting(false);
+                form.resetForm();
+            })
+            .catch(() => {
+                form.setSubmitting(false);
+            });
     };
 
     return (
@@ -74,7 +77,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="acquisition_type_id" className="form-label">
-                                    Tipo de Adquisición  <span className="text-danger">*</span>
+                                    Tipo de Adquisición <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     as="select"
@@ -97,7 +100,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="title_type_id" className="form-label">
-                                    Tipo de Título  <span className="text-danger">*</span>
+                                    Tipo de Título <span className="text-danger">*</span>
                                 </label>
                                 <Field as="select" className="form-select" name="title_type" id="title_type_id">
                                     <option value="">-- Seleccione Tipo de Título --</option>
@@ -112,29 +115,24 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="act_number_id" className="form-label">
-                                    N° acto administrativo  <span className="text-danger">*</span>
+                                    N° acto administrativo <span className="text-danger">*</span>
                                 </label>
                                 <Field type="text" className="form-control" id="act_number_id" name="act_number" />
                                 <ErrorMessage name="act_number" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="origin_id" className="form-label">
-                                    Procedencia  <span className="text-danger">*</span>
+                                    Procedencia <span className="text-danger">*</span>
                                 </label>
                                 <TooltipField text="Lorem impsu texto descriptivo" />
-                                <Field
-                                    component={PersonaM}
-                                    id="origin_id"
-                                    name="origin"
-                                    withNit={true}
-                                />
+                                <Field component={PersonaM} id="origin_id" name="origin" withNit={true} />
                                 <ErrorMessage name="origin" />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="entity_type_id" className="form-label">
-                                    Tipo de Entidad  <span className="text-danger">*</span>
+                                    Tipo de Entidad <span className="text-danger">*</span>
                                 </label>
                                 <Field as="select" className="form-select" id="entity_type_id" name="entity_type">
                                     <option value="">-- Seleccione Tipo de Entidad --</option>
@@ -144,7 +142,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="entity_number_id" className="form-label">
-                                    N° de entidad  <span className="text-danger">*</span>
+                                    N° de entidad <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="text"
@@ -157,7 +155,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="acquired_percentage_id" className="form-label">
-                                    Porcentaje Adquirido  <span className="text-danger">*</span>
+                                    Porcentaje Adquirido <span className="text-danger">*</span>
                                 </label>
                                 <div className="input-group">
                                     <Field
@@ -174,7 +172,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="area_id" className="form-label">
-                                    Área  <span className="text-danger">*</span>
+                                    Área <span className="text-danger">*</span>
                                 </label>
                                 <div className="input-group">
                                     <Field
@@ -196,7 +194,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                         <div className="row">
                             <div className="col-3">
                                 <label htmlFor="acquisition_value_id" className="form-label">
-                                    Valor de adquisición  <span className="text-danger">*</span>
+                                    Valor de adquisición <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="number"
@@ -220,20 +218,21 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                             <div className="col-3">
                                 <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">
-                                    Fecha de Adquisición  <span className="text-danger">*</span>
+                                    Fecha de Adquisición <span className="text-danger">*</span>
                                 </label>
                                 <Field
                                     type="date"
                                     id="vigency_start"
                                     name="acquisition_date"
                                     className="form-control"
+                                    max={moment(new Date()).format('YYYY-MM-DD')}
                                     disabled={disabled}
                                 />
                                 <ErrorMessage name="acquisition_date" />
                             </div>
                             <div className="col-3">
                                 <label htmlFor="address_id" className="form-label">
-                                    Ciudad  <span className="text-danger">*</span>
+                                    Ciudad <span className="text-danger">*</span>
                                 </label>
                                 <div className="input-group">
                                     <Field name="city" id="address_id" type="text" className="form-control" disabled />

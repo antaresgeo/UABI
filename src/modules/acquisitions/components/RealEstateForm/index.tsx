@@ -137,6 +137,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                     }
                     : {}),
                 projects_id: (realEstate?.project?.id && `${realEstate?.project?.id}`) || '0',
+                dependency: realEstate?.dependency.dependency || ''
             }),
     };
 
@@ -319,7 +320,11 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         onSubmit(values, form, isFinish)
             .then(() => {
                 form.setSubmitting(false);
-                form.setFieldValue('projects_id', `${project_id}` || '');
+                if(!isFinish){
+                    form.resetForm()
+                    form.setFieldValue('projects_id', `${project_id}` || '');
+                }
+
             })
             .catch(() => {
                 form.setSubmitting(false);

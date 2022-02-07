@@ -3,34 +3,30 @@ import { Field, Form, Formik } from 'formik';
 import { Card } from '../../../utils/ui';
 import DocumentModal from '../../../utils/components/DocumentsModal';
 import ErrorMessage from '../../../utils/ui/error_messge';
-import {IPhotograficregister} from "../custom_types";
+import {IPhotograficregister, NewInspection} from "../custom_types";
 import Image from "antd/lib/image";
 
 interface PhotographicRecordFormProps {
+    inspection: NewInspection;
     records: any[];
     photografic_register: IPhotograficregister;
     innerRef: any;
     onSubmit: (values) => void;
 }
 
-const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ records, photografic_register, innerRef, onSubmit }) => {
-    console.log(records)
+const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ records,  photografic_register, innerRef, onSubmit }) => {
     return (
         <div className="container-fluid">
             <Formik
                 innerRef={innerRef}
                 enableReinitialize
                 onSubmit={(values, form) => {
-                    console.log("ok")
                     onSubmit(values);
                     form.setSubmitting(false);
                 }}
                 initialValues={{
-                    documento1: '',
-                    documento2: '',
-                    documento3: '',
-                    documento4: '',
-                    documento5: '',
+                    facade: photografic_register.facade || null,
+                    general: photografic_register.general || [],
                 }}
             >
                 {() => {
@@ -80,44 +76,6 @@ const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ records, phot
                                         }
                                         return null
                                     })}
-                            {/*        <div className="col-6">*/}
-                            {/*            <label htmlFor="form-select" className="form-label">*/}
-                            {/*                Pintura exterior*/}
-                            {/*            </label>*/}
-                            {/*            <Field*/}
-                            {/*                name="documento3"*/}
-                            {/*                component={DocumentModal}*/}
-                            {/*                btn_label="Adjuntar"*/}
-                            {/*                file_type="img"*/}
-                            {/*            />*/}
-                            {/*            <ErrorMessage name="documento2" />*/}
-                            {/*        </div>*/}
-                            {/*        <div className="col-6">*/}
-                            {/*            <label htmlFor="form-select" className="form-label">*/}
-                            {/*                Cubierta o techo*/}
-                            {/*            </label>*/}
-                            {/*            <Field*/}
-                            {/*                name="documento3"*/}
-                            {/*                component={DocumentModal}*/}
-                            {/*                btn_label="Adjuntar"*/}
-                            {/*                file_type="img"*/}
-                            {/*            />*/}
-                            {/*            <ErrorMessage name="documento2" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="row">*/}
-                            {/*        <div className="col-12">*/}
-                            {/*            <label htmlFor="form-select" className="form-label">*/}
-                            {/*                Lavamanoss*/}
-                            {/*            </label>*/}
-                            {/*            <Field*/}
-                            {/*                name="documento3"*/}
-                            {/*                component={DocumentModal}*/}
-                            {/*                btn_label="Adjuntar"*/}
-                            {/*                file_type="img"*/}
-                            {/*            />*/}
-                            {/*            <ErrorMessage name="documento2" />*/}
-                            {/*        </div>*/}
                                 </div>
                             </Card>
                         </Form>
