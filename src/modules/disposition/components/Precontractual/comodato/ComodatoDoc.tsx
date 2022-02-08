@@ -62,8 +62,9 @@ const ComodatoDoc = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={async () => {
+                        console.log(values.registration_date)
 
-                        const final_values = {
+                        let final_values = {
                             ...values,
                             applicant: {
                                 id: values.applicant.id
@@ -110,6 +111,12 @@ const ComodatoDoc = () => {
                         let res: any;
                         if (final_values.edit === true) {
                             delete final_values.edit;
+                            final_values = {
+                                ...final_values,
+                                beneficiary_location_id: {
+                                    id: final_values.beneficiary_location_id
+                                }
+                            }
                             res = await dispatch(actions.update_precontract(realEstate?.active_code, final_values))
 
                         } else {

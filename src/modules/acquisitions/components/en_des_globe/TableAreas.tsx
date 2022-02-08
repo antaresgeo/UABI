@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 import { swal_warning } from '../../../../utils';
 import { useDispatch } from 'react-redux';
 import { actions } from '../../redux';
+import { updateRealEstates } from '../../redux/services/realEstates';
+import { swal_success } from '../../../../utils/index';
 
 interface IParams {
     valueArea: string;
@@ -169,6 +171,7 @@ export const TableAreas = () => {
     const CreateRealEstate = async (DataRealEstate) => {
         const result = await dispatch(actions.createRealEstates(DataRealEstate, "many"))
         console.log(result);
+        return result
         //history.push(`/acquisitions/real-estates/`);
         //return Promise.resolve();
 
@@ -228,7 +231,7 @@ export const TableAreas = () => {
                 <button
                     type="button"
                     className="btn btn-outline-primary me-3"
-                    onClick={() => {
+                    onClick={async () => {
                         // console.log('data', data)
                         // console.log('antes',realEstates)
                         // console.log('editar',realEstatesEdit)
@@ -248,7 +251,23 @@ export const TableAreas = () => {
                                 text: 'se deben completar los datos de todos los bienes Inmuebles',
                             });
                         } else {
-                            CreateRealEstate(DataRealEstate);
+                            const res: any = await CreateRealEstate(DataRealEstate);
+                            console.log(res)
+                            if (res) {
+                                console.log('editar')
+                                const resUpdate: any = await updateRealEstates(realEstatesEdit);
+                                console.log(resUpdate)
+                                swal_success.fire({
+                                    title: `action realizado satisfactoriamente`,
+                                    text: res.data.message,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                });
+
+
+                            }
+                            history.push(`/acquisitions/real-estates/`);
                             //console.log('desde tabla', DataRealEstate)
                             console.log('bienes inmuebles a editar', realEstatesEdit);
 

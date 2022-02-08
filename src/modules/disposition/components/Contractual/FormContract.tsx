@@ -4,6 +4,7 @@ import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import ErrorMessage from '../../../../utils/ui/error_messge';
 import Select from './../../../../utils/ui/select';
 import moment from "moment";
+import Index from '../../../../utils/ui/PersonaM';
 
 interface FormProps {
     formik: any;
@@ -40,7 +41,7 @@ export const FormContract: FC<FormProps> = ({ formik, realEstate }) => {
                         name="decree_date"
                         className="form-control"
                         disabled={false}
-                        max={ moment(new Date()).format('YYYY-MM-DD')}
+                        max={moment(new Date()).format('YYYY-MM-DD')}
                     />
                     <ErrorMessage name="decree_date" />
                 </div>
@@ -139,7 +140,7 @@ export const FormContract: FC<FormProps> = ({ formik, realEstate }) => {
                         name="subscription_date"
                         className="form-control"
                         disabled={false}
-                        max={ moment(new Date()).format('YYYY-MM-DD')}
+                        max={moment(new Date()).format('YYYY-MM-DD')}
                     />
                     <ErrorMessage name="subscription_date" />
                 </div>
@@ -153,7 +154,7 @@ export const FormContract: FC<FormProps> = ({ formik, realEstate }) => {
                         name="finish_date"
                         className="form-control"
                         disabled={false}
-                        min={ moment(formik.values.subscription_date).format('YYYY-MM-DD')}
+                        min={moment(formik.values.subscription_date).format('YYYY-MM-DD')}
                     />
                     <ErrorMessage name="finish_date" />
                 </div>
@@ -190,6 +191,16 @@ export const FormContract: FC<FormProps> = ({ formik, realEstate }) => {
             </div>
             <div className="row">
                 <div className="col">
+                    <label htmlFor="secretary" className="form-label">
+                        Información Del Secretario<span className="text-danger">*</span>
+                    </label>
+                    <Field
+                        component={Index}
+                        name="secretary"
+                    />
+                    <ErrorMessage name="secretary" />
+                </div>
+                {/* <div className="col">
                     <label htmlFor="secretary_name_id" className="form-label">
                         Nombre Seretario de Suministros y Servicios<span className="text-danger">*</span>
                     </label>
@@ -215,7 +226,7 @@ export const FormContract: FC<FormProps> = ({ formik, realEstate }) => {
                         disabled={false}
                     />
                     <ErrorMessage name="secretary.id_number" />
-                </div>
+                </div> */}
             </div>
         </>
     );

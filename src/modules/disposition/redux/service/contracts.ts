@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { http } from '../../../../config/axios_instances';
+import moment from 'moment';
 
 export interface AllCompaniesResponse {
     message: string;
@@ -73,32 +74,48 @@ export const create_contract = async (data: Company) => {
 
 export const get_contract = async (id) => {
     try {
-        // const URI = ``;
-        // const res: AxiosResponse<CompanyResponse> = await http.get(URI);
-        // return res.data;
+        const URI = `contracts`;
+        const res: AxiosResponse<any> = await http.get(URI,
+            {
+                params: {id}
+            }
+            );
+        console.log(res.data)
+        return res.data;
     } catch (e) {
         return Promise.reject('Error');
     }
 };
 
-export const update_contract = async (id, data: Company) => {
+const final_data = (data) => {
+    const aux_data = {
+        ...data,
+    }
+    aux_data.decree_date =  new Date(moment(aux_data.decree_date).format('YYYY/MM/DD')).getTime();
+    aux_data.finish_date =  new Date(moment(aux_data.finish_date).format('YYYY/MM/DD')).getTime();
+    aux_data.minutes_date =  new Date(moment(aux_data.minutes_date).format('YYYY/MM/DD')).getTime();
+    aux_data.subscription_date =  new Date(moment(aux_data.subscription_date).format('YYYY/MM/DD')).getTime();
+    aux_data.secretary = {
+        id: aux_data.secretary.id
+    }
+    return aux_data;
+
+}
+
+export const update_contract = async (id, data) => {
+    const aux_data = final_data(data)
     try {
-        // const URI = '/insurance-companies/';
-        // const res: AxiosResponse<CompanyResponse> = await http.put(
-        //     URI,
-        //     {
-        //         name: data.name,
-        //         nit: data.nit,
-        //         location_id: data.location_id,
-        //         phone: data.phone,
-        //     },
-        //     {
-        //         params: {
-        //             id,
-        //         },
-        //     }
-        // );
-        // return res.data;
+        const URI = '/contracts';
+        const res: AxiosResponse<any> = await http.put(
+            URI,
+            aux_data,
+            {
+                params: {
+                    id,
+                },
+            }
+        );
+        return res.data;
     } catch (e) {
         return Promise.reject('Error');
     }

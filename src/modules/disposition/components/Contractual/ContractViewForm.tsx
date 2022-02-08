@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-const ContractViewForm = () => {
+interface FormPros {
+    values_contract?: any;
+}
+
+const ContractViewForm : FC<FormPros> = ({ values_contract }) => {
     return (
         <div className="col-3-12">
             <div className="content_box_table">
