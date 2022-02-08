@@ -139,7 +139,7 @@ const finalData = (data, docs_ids?) => {
         aux_data.cost_center_id = Number(aux_data.cost_center_id);
     }
     aux_data.projects_id[0] = Number(aux_data.projects_id[0]);
-    if(aux_data.patrimonial_value === "") {
+    if (aux_data.patrimonial_value === "") {
         aux_data.patrimonial_value = 0;
     }
     delete aux_data.active_code;
@@ -192,7 +192,7 @@ export const createRealEstate = async (
 };
 
 //TODO: Crear realEstates englobe - desenglobe
-export const createRealEstates = async (data: any, action) => {
+export const createRealEstates = async (data: any, quantity) => {
     console.log('crear', data);
     let realEstates = [];
     const docs = await Promise.all(
@@ -213,20 +213,53 @@ export const createRealEstates = async (data: any, action) => {
 
     try {
         let URI = `/real-estates`;
-        let res: AxiosResponse<IRealEstateResponse> = await http.post(
+        let res: AxiosResponse<any> = await http.post(
             URI,
             data_final,
             {
-                params: { action },
+                params: { quantity },
             }
         );
+
+
 
         const docs_ids = await Promise.all(
             docs.map(async (d) => {
                 return await upload_documents(d);
             })
         );
+
         console.log(docs_ids);
+        console.log(res.data.results)
+
+        const project = res.data.results.project;
+
+        delete res.data.results.project;
+
+        const results = Object.values(res.data.results);
+
+        const assing_doc = results.map((r: any, i) => {
+            return http.put(
+                URI,
+                { supports_documents: docs_ids[i] || '' },
+                {
+                    params: { id: r.id },
+                }
+            );
+
+        })
+
+        console.log('asi',assing_doc)
+        console.log(URI)
+
+
+        await Promise.all(
+            assing_doc
+        ).then((res) => {
+            console.log(res);
+        })
+
+
 
         // res.data.results.map(result => {
 

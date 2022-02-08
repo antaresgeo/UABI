@@ -1,6 +1,6 @@
 import { Field } from 'formik';
 import ErrorMessage from '../../../../../utils/ui/error_messge'
-import Tooltip from 'antd/lib/tooltip';
+// import Tooltip from 'antd/lib/tooltip';
 import { FC, useState } from 'react';
 import { LinkButton } from '../../../../../utils/ui/link';
 import moment from 'moment';
@@ -391,15 +391,15 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                     <Field
                         as="textarea"
                         className="form-control"
-                        id="destination_realEstate_id"
-                        name="destination_realEstate"
+                        id="destination_realestate_id"
+                        name="destination_realestate"
                         aria-describedby="emailHelp"
                         placeholder="Destinación"
                         autoComplete="off"
                         style={{ height: '33px' }}
                         maxLength={200}
                     />
-                    <ErrorMessage name="destination_realEstate" withCount max={200} />
+                    <ErrorMessage name="destination_realestate" withCount max={200} />
                 </div>
                 <div className="col-6">
                     <label htmlFor="peacesafe_id" className="form-label">
@@ -532,7 +532,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                             const obligations_list = [
                                 ...formik.values.obligations,
                                 {
-                                    id: idDisposition,
+                                    key: idDisposition,
                                     obligation: '',
                                 },
                             ];
@@ -589,7 +589,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                             const prohibitions_list = [
                                 ...formik.values.prohibitions,
                                 {
-                                    id: idProhibition,
+                                    key: idProhibition,
                                     prohibition: '',
                                 },
                             ];

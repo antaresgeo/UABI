@@ -11,6 +11,7 @@ import {
     create_precontract,
     get_precontract,
     update_precontract,
+    inactivate_precontract,
 } from './precontracts';
 
 const services = {
@@ -23,6 +24,7 @@ const services = {
     create_precontract,
     get_precontract,
     update_precontract,
+    inactivate_precontract,
 };
 
 export default services;

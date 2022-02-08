@@ -137,7 +137,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                     }
                     : {}),
                 projects_id: (realEstate?.project?.id && `${realEstate?.project?.id}`) || '0',
-                dependency: realEstate?.dependency.dependency || ''
+                dependency: realEstate?.dependency?.dependency || ''
             }),
     };
 

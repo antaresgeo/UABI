@@ -6,9 +6,8 @@ interface DispositionFormPros {
     realEstate: any;
 }
 
-const ViewDetailDisposition: FC<DispositionFormPros> = ({realEstate}) => {
+const ViewDetailDisposition: FC<DispositionFormPros> = ({ realEstate }) => {
     const history = useHistory();
-    console.log(realEstate);
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -22,15 +21,15 @@ const ViewDetailDisposition: FC<DispositionFormPros> = ({realEstate}) => {
                                 <label style={{ color: '#8d8c8c' }} htmlFor="">
                                     ID
                                 </label>
-                                <div className="my-3" >{realEstate.id}</div>
+                                <div className="my-3" >{realEstate?.id}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Nombre del Inmuebles</label>
-                                <div className="my-3" >{realEstate.name}</div>
+                                <div className="my-3" >{realEstate?.name}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Matrícula</label>
-                                <div className="my-3" >{realEstate.registry_number}</div>
+                                <div className="my-3" >{realEstate?.registry_number}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Disposición</label>
@@ -86,7 +85,10 @@ const ViewDetailDisposition: FC<DispositionFormPros> = ({realEstate}) => {
                                 <label htmlFor="">Etapa Precontractual</label>
                                 <div className=" my-3">
                                     <button type="button" className="btn btn-outline-primary  btn-sm"
-                                            onClick={() => history.push(`/dispositions/precontractual/view/${realEstate.active_code}`)}
+                                        onClick={() =>
+                                            history.push({ pathname: `/dispositions/precontractual/view/${realEstate?.active_code}`, state: { realEstate } })
+
+                                        }
                                     >
                                         ver estudio Previo
                                     </button>
@@ -102,15 +104,11 @@ const ViewDetailDisposition: FC<DispositionFormPros> = ({realEstate}) => {
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                        <div className="col-12 movimiento">
+                            <div className="col-12 movimiento">
                                 <label htmlFor="">Descripción del inmueble</label>
                                 <div className="my-3" style={{ height: '60px', overflowX: 'auto' }}>
                                     <div style={{ width: '1000px' }}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus neque a ex
-                                        porta aliquet. Nunc malesuada auctor risus, ut condimentum mauris scelerisque
-                                        non. Aliquam erat volutpat. Nullam quis blandit elit. In non tincidunt eros, sed
-                                        pretium erat. Curabitur sollicitudin ex in odio pellentesque fringilla. Nulla
-                                        vehicula,
+                                        {realEstate?.description}
                                     </div>
                                 </div>
                             </div>

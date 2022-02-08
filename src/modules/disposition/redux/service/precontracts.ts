@@ -56,6 +56,7 @@ export const create_precontract = async (data: any, type) => {
 };
 
 export const get_precontract = async (active_code) => {
+
     try {
         let URI = `/disposition`;
         let res: AxiosResponse<any> = await http.get(URI, {
@@ -67,9 +68,32 @@ export const get_precontract = async (active_code) => {
     }
 };
 
-export const update_precontract = async (id, data: any) => {
-    try {
+export const inactivate_precontract = async (active_code) => {
 
+    try {
+        let URI = `/disposition`;
+        let res: AxiosResponse<any> = await http.delete(URI, {
+            params: { active_code },
+        });
+        return res.data;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
+
+export const update_precontract = async (active_code, data: any) => {
+    const final_data = {
+        ...data,
+        beneficiary_location_id: data.beneficiary_location_id.id
+    }
+    try {
+        let URI = `/disposition`;
+        let res: AxiosResponse<any> = await http.put(URI,
+            final_data,
+            { params: { active_code }, }
+        );
+
+        return res.data;
     } catch (e) {
         return Promise.reject('Error');
     }

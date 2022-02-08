@@ -3,27 +3,35 @@ import { Link } from '../../../../utils/ui';
 import DetailLease from '../../components/Precontractual/Lease/Detail_Lease';
 import ViewPerson from './../../components/Precontractual/ViewPerson';
 import ViewRiskAnalysis from './../../components/Precontractual/ViewRiskAnalysis';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import DetailComodato from '../../components/Precontractual/comodato/Detail_comodato';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../redux';
+import { actions as actionsDisposition } from '../../redux';
 
 interface IParams {
     active_code: string;
 }
 
+interface ILocations {
+    realEstate?: any;
+}
+
 const DetailPrecontractual = () => {
+    const location = useLocation<ILocations>();
+    const { realEstate } = location.state;
     const history = useHistory();
-    const realEstate = {}
     const dispatch = useDispatch();
     const { active_code } = useParams<IParams>();
+
 
     const precontractual: any = useSelector((state: any) => {
         return state.disposition.precontractual.value
     });
 
+    const dispositionType = precontractual?.type_disposition;
+
     useEffect(() => {
-        dispatch(actions.get_precontract(active_code));
+        dispatch(actionsDisposition.get_precontract(active_code));
     }, [dispatch, active_code]);
 
     return (
@@ -34,7 +42,7 @@ const DetailPrecontractual = () => {
                         <h5 className="col-11">Etapa Precontractual</h5>
                         <Link
                             to={
-                                "" /*{ pathname: "/disposition/create/", state: { precontractual.type_disposition, realEstate, } }*/
+                                { pathname: "/disposition/create/",state: { dispositionType, realEstate, precontractual } }
                             }
                             name=""
                             avatar={false}
@@ -51,17 +59,16 @@ const DetailPrecontractual = () => {
                     <div className="container-fluid">
                         <div className="row justify-content-center">
                             <div className="col-md-12">
-                                {precontractual.type_disposition === 'Arrendamiento' &&
+                                {precontractual?.type_disposition === 'Arrendamiento' &&
                                     <DetailLease
                                         precontractual={precontractual}
                                     />
                                 }
-                                {precontractual.type_disposition === 'Comodato' &&
+                                {precontractual?.type_disposition === 'Comodato' &&
                                     <DetailComodato
                                         precontractual={precontractual}
                                     />
                                 }
-                                {console.log(precontractual)}
 
                                 <ViewPerson title='Información del Solicitante' person={precontractual?.applicant} />
                                 <ViewRiskAnalysis
