@@ -14,12 +14,13 @@ const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_cont
     const history = useHistory();
     const submit_contract = async (values_contract) => {
         console.log("vaules contrato", values_contract)
+        //TODO: descomentar notificacion contratos
         // await create_notification({
-        //     title: 'Creación de un Contrato',
+        //     subject: 'Creación de un Contrato',
         //     description: `se ha creado un contrato de ${tipo_contrato} con número ${numero_de_contrato} y fecha de terminación ${fecha_terminacion}`,
         //     action: `/disposition/contract/${id}/`,
         //     priority: 2,
-        //     toRole: 5
+        //     toRole: "5"
         // });
         if (values_contract.type_contract === "Comodato") {
             history.push({ pathname: "/document/comodato/contract", state: { values_contract, realEstate, dispositionType } })
