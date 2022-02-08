@@ -56,29 +56,40 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
     // }, []);
 
     useEffect(() => {
-        const dataTable = [];
-        realEstates.forEach((realEstate) => {
-            if (realEstate.active_code.charAt(realEstate.active_code.length - 1) === 'L') {
-                dataTable.push({
-                    key: realEstate.active_code,
-                    name: realEstate.name,
-                    total_area: realEstate.plot_area,
-                    intact_area: realEstate.plot_area,
-                    use_area: 0,
-                    type: 'lote',
-                    id: realEstate.id,
-                });
-            } else {
-                dataTable.push({
-                    key: realEstate.active_code,
-                    name: realEstate.name,
-                    total_area: realEstate.construction_area,
-                    intact_area: realEstate.construction_area,
-                    use_area: 0,
-                    type: 'constrution',
-                    id: realEstate.id,
-                });
+        // const dataTable = [];
+        const dataTable = realEstates.map((realEstate) => {
+            const object = {
+                key: realEstate.active_code,
+                name: realEstate.name,
+                total_area: realEstate.construction_area ? realEstate.construction_area : realEstate.plot_area,
+                intact_area: realEstate.construction_area ? realEstate.construction_area : realEstate.plot_area,
+                use_area: 0,
+                type: realEstate.construction_area ?  'constrution' : 'lote',
+                id: realEstate.id,
             }
+            return object;
+            // if (realEstate?.active_code?.charAt(realEstate?.active_code?.length - 1) === 'J') {
+            //     dataTable.push({
+            //         key: realEstate.active_code,
+            //         name: realEstate.name,
+            //         total_area: realEstate.construction_area,
+            //         intact_area: realEstate.construction_area,
+            //         use_area: 0,
+            //         type: 'constrution',
+            //         id: realEstate.id,
+            //     });
+
+            // } else {
+            //     dataTable.push({
+            //         key: realEstate.active_code,
+            //         name: realEstate.name,
+            //         total_area: realEstate.plot_area,
+            //         intact_area: realEstate.plot_area,
+            //         use_area: 0,
+            //         type: 'lote',
+            //         id: realEstate.id,
+            //     });
+            // }
         });
         setData(dataTable);
     }, []);
@@ -249,7 +260,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                 dataSource={data}
                 columns={mergedColumns}
                 rowClassName="editable-row"
-                // pagination={false}
+            // pagination={false}
             />
             <div className="col-6 my-3">
                 <label htmlFor="number_real_estates" className="form-label">

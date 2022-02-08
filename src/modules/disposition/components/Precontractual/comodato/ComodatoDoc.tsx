@@ -37,7 +37,7 @@ const ComodatoDoc = () => {
     return (
         <div className="h-100 d-flex flex-column">
             <PDFViewer style={{ width: '100%', height: "90%" }} showToolbar={false}>
-                <ComodatoPdf  values={values} realEstate={realEstate}/>
+                <ComodatoPdf values={values} realEstate={realEstate} />
             </PDFViewer>
             <div
                 className="bg-white d-flex flex-row justify-content-between"
@@ -61,7 +61,7 @@ const ComodatoDoc = () => {
                 <button
                     type="button"
                     className="btn btn-outline-primary"
-                    onClick={ async () => {
+                    onClick={async () => {
 
                         const final_values = {
                             ...values,
@@ -106,12 +106,19 @@ const ComodatoDoc = () => {
                         delete final_values.location;
                         delete final_values.dependency;
                         delete final_values.secretary;
-                        console.log('datos a enviar',final_values)
+                        console.log('final',final_values)
+                        let res: any;
+                        if (final_values.edit === true) {
+                            delete final_values.edit;
+                            res = await dispatch(actions.update_precontract(realEstate?.active_code, final_values))
 
-                        const res: any = await dispatch(actions.create_precontract(final_values, "Comodato"))
-                            console.log('valores',values)
-                            history.push({ pathname: `/dispositions/precontractual/view/${realEstate.active_code}`})
+                        } else {
+                            delete final_values.edit;
+                            res = await dispatch(actions.create_precontract(final_values, "Comodato"))
+                        }
+                        console.log(res)
 
+                        history.push({ pathname: `/dispositions/precontractual/view/${realEstate.active_code}`, state: {  realEstate } })
                     }}
                 >
                     guardar y descargar

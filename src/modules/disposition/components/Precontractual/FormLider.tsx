@@ -10,6 +10,7 @@ interface FormProps {
 }
 
 const FormLider: FC<FormProps> = ({ lease, formik }) => {
+
     return (
         <>
             <div className="div" style={{ fontWeight: 'bold', fontSize: '15px' }}>

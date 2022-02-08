@@ -1,7 +1,10 @@
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Select from '../../../utils/ui/select';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import actions from './../redux/actions';
+
 
 interface DispositionFormPros {
     realEstate: any;
@@ -10,10 +13,29 @@ interface DispositionFormPros {
 
 export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTypeDispositionChange }) => {
 
+    const dispatch = useDispatch();
+    const precontractual: any = useSelector((state: any) => {
+        return state.disposition.precontractual.value
+    });
+    const [isDisabled, setIsDisabled] = useState(false);
+
+    useEffect(() => {
+        dispatch(actions.get_precontract(realEstate?.active_code));
+    }, [dispatch, realEstate]);
+
+    useEffect(() => {
+        if(precontractual) {
+            onTypeDispositionChange(precontractual?.type_disposition)
+            setIsDisabled(true)
+
+        }
+    }, [onTypeDispositionChange, precontractual]);
+
+
     let initialValues = {
         destination_type: realEstate?.destination_type,
         disposition_type: realEstate?.disposition_type === null ? "" : realEstate?.disposition_type,
-        availability: "",
+        availability: precontractual ? precontractual?.type_disposition : "",
     };
 
 
@@ -38,13 +60,13 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
 
     }else if (initialValues.destination_type === "FISCAL" && initialValues.disposition_type === "Inversión") {
             dispositions = [
-                "arrendamiento",
-                "ventas"
+                "Arrendamiento",
+                "Ventas"
             ]
 
     }else if (initialValues.destination_type === "FISCAL" && initialValues.disposition_type === "Inversión Social") {
         dispositions = [
-            "arrendamiento"
+            "Arrendamiento"
         ]
     }else if(initialValues.destination_type === "PÚBLICO" && initialValues.disposition_type === "Administración") {
         dispositions = [
@@ -108,6 +130,7 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
                             name="availability"
                             id="availability_id"
                             className="w-100"
+                            disabled={isDisabled}
                             options={dispositions.map(real => ({ id: real, name: real }))}
                             extra_on_change={onTypeDispositionChange}
                         />

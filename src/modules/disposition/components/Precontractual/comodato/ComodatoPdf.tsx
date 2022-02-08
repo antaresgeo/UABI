@@ -75,15 +75,15 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
     let contract_value = 0;
     if (values?.resolution === "si") {
         contract_value =
-            (values?.Value_economic_obligations +
-                values?.network_value +
-                values?.administration_value +
-                values?.conservation_value +
-                values?.cleaning_value +
-                values?.surveillance_value +
-                values?.value_domiciliary_public +
-                values?.value_repairs_damages +
-                values?.value_locative_repairs)
+            (Number(values?.value_economic_obligations) +
+                Number(values?.network_value) +
+                Number(values?.administration_value) +
+                Number(values?.conservation_value) +
+                Number(values?.cleaning_value) +
+                Number(values?.surveillance_value) +
+                Number(values?.value_domiciliary_public) +
+                Number(values?.value_repairs_damages) +
+                Number(values?.value_locative_repairs))
     } else {
         contract_value = values?.commercial_appraisal;
     }
@@ -312,7 +312,7 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
                     <td>
                         Valor de todos aquellos gastos y obligaciones económicas o no que se requiera cuantificar, de manera tal que se garantice su cumplimiento o para que, ante una eventual afectación de la póliza de cumplimiento, el porcentaje del valor exigido tenga la suficiencia necesaria para que su incumplimiento quede cubierto
                     </td>
-                    <td>$${values?.Value_economic_obligations}</td>
+                    <td>$${values?.value_economic_obligations}</td>
                 </tr>
                 <tr>
                     <td>
@@ -348,7 +348,7 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
             </Text>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>3. Solicitante:</Text>
-                <Text style={styles.subtitle}>{` ${values?.applicant?.company_name} NIT: ${values?.applicant?.id_number}`}</Text>
+                <Text style={styles.subtitle}>{` ${values?.applicant?.company_name || ""} NIT: ${values?.applicant?.document_number}`}</Text>
             </Text>
             <Text style={styles.subtitle}>
                 4. Justificación de la contratación.
@@ -387,7 +387,7 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
                 verifique que no existe más de una entidad sin ánimo de lucro para el desarrollo del
                 programa o actividad de interés público, no se requiere adelantar proceso competitivo.
                 Así las cosas, como se indicó antes y para el caso concreto, se identificó que
-                <Text style={styles.subtitle}>{` ${values?.applicant.company_name}, `}</Text>
+                <Text style={styles.subtitle}>{` ${values?.applicant?.company_name || ""}, `}</Text>
                 de acuerdo con la circunscripción territorial, los proyectos y actividades a ejecutar
                 con la comunidad inscrita en la organización y la demás población beneficiaria de su
                 radio de acción, se pudo establecer que es la única entidad como organización de base,
@@ -405,7 +405,7 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
                 con el uso y puesta a disposición de la comunidad del inmueble con matrícula
                 <Text style={styles.subtitle}> {realEstate?.registry_number}</Text>, CBML
                 <Text style={styles.subtitle}> {realEstate?.address?.cbmls?.uabi}</Text>, activo fijo
-                <Text style={styles.subtitle}> {realEstate?.sap_id}</Text>, ubicado en la dirección
+                <Text style={styles.subtitle}> {realEstate?.active_code}</Text>, ubicado en la dirección
                 <Text style={styles.subtitle}> {realEstate?.address?.address}</Text>, cuyo tipo es
                 <Text style={styles.subtitle}> {values?.business_type?.select === "otro" ? values?.business_type?.input : values?.business_type?.select}</Text>
             </Text>

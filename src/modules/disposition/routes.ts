@@ -187,7 +187,7 @@ const get_routes = (): IRoute[] => {
             exact: true,
             is_private: true,
             can_access: true,
-            path: '/dispositions/precontractual/view',
+            path: '/dispositions/precontractual/view/:active_code',
             template_props: {
                 breadcrumbs: [{ name: 'Estudio Previo' }],
             },

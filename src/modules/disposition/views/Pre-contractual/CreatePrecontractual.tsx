@@ -9,9 +9,11 @@ interface FormPros {
     realEstate?: any;
     values_form?: any;
     stage?: string;
+    precontractual?: any
 }
 
-const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, values_form, stage }) => {
+const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, values_form, stage, precontractual }) => {
+    // console.log('tiene estudio previo',precontractual)
     const form_ref = useRef<any>();
     const history = useHistory();
     const on_submit_lease = async (values) => {
@@ -43,7 +45,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                                     values_form={values_form}
                                 />
                             )}
-                            {dispositionType === 'arrendamiento' && (
+                            {dispositionType === 'Arrendamiento' && (
                                 <GeneralFormLease
                                     realEstate={realEstate}
                                     innerRef={form_ref}
