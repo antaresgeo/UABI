@@ -63,7 +63,6 @@ const PhotographicRecordForm: FC<PhotographicRecordFormProps> = ({ records,  pho
                             <Card title="Evidencia de inspección física">
                                 <div className="row">
                                     {records.map((record, i) => {
-                                        console.log(record)
                                         let file_url = null;
                                         if (record.image?.img) {
                                             file_url = window.URL.createObjectURL(record.image.img);

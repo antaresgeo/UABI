@@ -465,7 +465,7 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
             </Text>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}> 7. Destinación</Text>: debe destinarse el inmueble para:
-                <Text style={styles.subtitle}> {values?.destination_realEstate}</Text>
+                <Text style={styles.subtitle}> {values?.destination_realestate}</Text>
             </Text>
             <Text style={styles.subtitle}>
                 8. Especificaciones:

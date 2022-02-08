@@ -291,7 +291,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         name="prediation_date"
                         placeholder="Fecha Final"
                         className="form-control"
-                        max={moment(new Date().getTime()).format('YYYY-MM-DD')}
+                        max={moment(new Date()).format('YYYY-MM-DD')}
                     // disabled={true}
                     />
                     <ErrorMessage name="prediation_date" />
@@ -319,6 +319,7 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         name="appraisal_date"
                         placeholder=""
                         className="form-control"
+                        max={ moment(new Date()).format('YYYY-MM-DD')}
                     // disabled={true}
                     />
                     <ErrorMessage name="appraisal_date" />
@@ -464,14 +465,14 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
                         as="textarea"
                         className="form-control"
                         id="destination_realEstate_id"
-                        name="destination_realEstate"
+                        name="destination_realestate"
                         aria-describedby="emailHelp"
                         placeholder="Destinación"
                         autoComplete="off"
                         style={{ height: '33px' }}
                         maxLength={200}
                     />
-                    <ErrorMessage name="destination_realEstate" withCount max={200} />
+                    <ErrorMessage name="destination_realestate" withCount max={200} />
                 </div>
                 <div className={`col-${formik.values.business_type_select === 'otro' ? 6: 12}`}>
                     <label htmlFor="boundaries_id" className="form-label">

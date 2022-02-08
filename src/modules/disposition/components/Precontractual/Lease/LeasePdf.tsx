@@ -392,7 +392,7 @@ const LeasePdf: FC<Idata> = ({ values, realEstate }) => {
             </Text>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>3. Destinación</Text>: debe
-                destinarse el inmueble para: <Text style={styles.subtitle}>{values?.destination_realEstate}</Text>
+                destinarse el inmueble para: <Text style={styles.subtitle}>{values?.destination_realestate}</Text>
             </Text>
             <Text style={styles.subtitle}>
                 4. Especificaciones:

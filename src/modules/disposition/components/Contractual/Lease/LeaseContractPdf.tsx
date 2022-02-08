@@ -357,7 +357,7 @@ const LeaseContractPdf: FC<Idata> = ({ values_contract, arrendamiento, realEstat
                 con radicado del informe de Prediación:
                 <Text style={styles.subtitle}> {arrendamiento.prediation_number} y fecha {arrendamiento.prediation_date}. TERCERA: DESTINACIÓN. </Text>
                 EL (LA) ARRENDATARIO(A) podrá hacer uso del inmueble objeto del presente
-                contrato, única y exclusivamente para <Text style={styles.subtitle}> {arrendamiento?.destination_realEstate} CUARTA: PLAZO (${arrendamiento?.contract_period}) ${writtenNumber(arrendamiento?.contract_period, { lang: 'es' })} </Text>
+                contrato, única y exclusivamente para <Text style={styles.subtitle}> {arrendamiento?.destination_realestate} CUARTA: PLAZO (${arrendamiento?.contract_period}) ${writtenNumber(arrendamiento?.contract_period, { lang: 'es' })} </Text>
                 meses a partir de la fecha de suscripción del acta de
                 inicio:<Text style={styles.subtitle}> {moment(values_contract.start_date).format('DD/MM/YYYY')}, </Text>
                 previa aprobación de la póliza de arrendamiento o póliza de

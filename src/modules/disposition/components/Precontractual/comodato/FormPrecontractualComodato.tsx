@@ -185,7 +185,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         name="prediation_date"
                         placeholder=""
                         className="form-control"
-                        max={ moment(new Date().getTime()).format('YYYY-MM-DD')}
+                        max={ moment(new Date()).format('YYYY-MM-DD')}
                     />
                     <ErrorMessage name="prediation_date" />
                 </div>

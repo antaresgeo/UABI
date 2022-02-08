@@ -53,7 +53,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                                     values_form={values_form}
                                 />
                             )}
-                            {(dispositionType !== "arrendamiento" && dispositionType !== "Comodato") &&
+                            {(dispositionType !== "Arrendamiento" && dispositionType !== "Comodato") &&
                                 <GeneralFormPublicUse
                                     realEstate={realEstate}
                                     innerRef={form_ref}

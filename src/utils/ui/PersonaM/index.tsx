@@ -5,6 +5,7 @@ import ErrorMessage from '../error_messge';
 import * as Yup from 'yup';
 import { getPersonalInformation, newPersonalInformation, updatePersonalInformation } from './service';
 import LocationModal from '../../components/Location/LocationModal';
+import { compute_persona_name } from '../../index';
 
 interface PersonaModalProps {
     type: 'create' | 'edit';
@@ -49,9 +50,7 @@ const PersonaModal: FC<PersonaModalProps> = ({
                         persona
                             ? persona.documentType === 'NIT'
                                 ? persona.company_name
-                                : `${(persona && Object.values(persona?.names ?? {}).join(' ')) || ''} ${
-                                      (persona && Object.values(persona?.surnames ?? {}).join(' ')) || ''
-                                  }`
+                                : compute_persona_name(persona)
                             : ''
                     }
                 />
@@ -114,7 +113,6 @@ export const PersonalInformationForm = ({
     withNit = false,
     disposition = false,
 }) => {
-    console.log('PersonalInformationForm', persona);
     const initial_values = {
         id: '',
         documentType: '',
@@ -129,12 +127,6 @@ export const PersonalInformationForm = ({
         ...persona,
     };
 
-    const validate_nit = (...args) => {
-        console.log(...args);
-        // const r  = dt !== 'NIT'
-        // console.log({dt, r})
-        // return r
-    };
     const schema = Yup.object().shape({
         documentType: Yup.string().required('obligatorio'),
         documentNumber: Yup.number().required('obligatorio'),
@@ -177,7 +169,7 @@ export const PersonalInformationForm = ({
                 });
             }}
         >
-            {({ values, handleChange, setFieldValue, errors }) => {
+            {({ values, handleChange, setFieldValue }) => {
                 const getPersona = (type, documentNumber) => {
                     getPersonalInformation(type, documentNumber).then((res: any) => {
                         setFieldValue('names.firstName', res.first_name ?? '', false);
@@ -191,8 +183,6 @@ export const PersonalInformationForm = ({
                         setFieldValue('id', res.id ?? '', false);
                     });
                 };
-
-                console.log(errors);
                 return (
                     <Form>
                         <div className="row">

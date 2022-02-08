@@ -269,7 +269,7 @@ const ComodatoContractPdf = ({ values_contract, comodato, realEstate }) => {
                 <Text style={styles.subtitle}> {moment(comodato.prediation_date).format('DD/MM/YYYY')} </Text>
                 <Text style={styles.subtitle}>. TERCERA: DESTINACIÓN. </Text>En el
                 presente contrato de comodato debe destinarse el inmueble para:
-                <Text style={styles.subtitle}> {comodato.destination_realEstate}. </Text>
+                <Text style={styles.subtitle}> {comodato.destination_realestate}. </Text>
                 <Text style={styles.subtitle}>CUARTA: PROHIBICIONES DEL COMODATARIO. </Text>
                 Le queda expresamente prohibido al
                 <Text style={styles.subtitle}> COMODATARIO </Text>realizar en el inmueble

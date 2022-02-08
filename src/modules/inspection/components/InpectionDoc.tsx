@@ -1,10 +1,13 @@
 import React, { FC } from 'react';
 import DocumentPdf from './../../../utils/components/document_pdf/index';
-import { StyleSheet, Text } from '@react-pdf/renderer';
+import { StyleSheet, Text, Image } from '@react-pdf/renderer';
 import Html from 'react-pdf-html';
 import writtenNumber from 'written-number';
 import moment from 'moment';
-import { NewInspection } from '../custom_types';
+import { IProperty, NewInspection } from '../custom_types';
+import { compute_persona_name } from '../../../utils';
+import { chunk } from 'lodash';
+import imgbs64 from '../../../utils/assets/img/header.png';
 
 const styles = StyleSheet.create({
     title: {
@@ -60,7 +63,6 @@ interface Idata {
 }
 
 const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
-    // console.log(real_estate);
     const _occupation = data.occupation;
     const _public_services = data.physical_inspection.public_services;
     const _properties = data.physical_inspection.properties;
@@ -135,6 +137,7 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
             </tbody>
         </table>
     `;
+
     const public_services = `
         <style>
             table {
@@ -183,9 +186,9 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                     <td>${_public_services[0]?.subscriber}</td>
                     <td>${_public_services[0]?.accountant}</td>
                     <td>${
-                        _public_services[0]?.status === 1
+                        parseInt(`${_public_services[0]?.status}`) === 1
                             ? 'Aplica'
-                            : _public_services[0]?.status === 2
+                            : parseInt(`${_public_services[0]?.status}`) === 2
                             ? 'Inactivo'
                             : 'No Aplica'
                     }</td>
@@ -195,9 +198,9 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                     <td>${_public_services[1]?.subscriber}</td>
                     <td>${_public_services[1]?.accountant}</td>
                     <td>${
-                        _public_services[1]?.status === 1
+                        parseInt(`${_public_services[1]?.status}`) === 1
                             ? 'Aplica'
-                            : _public_services[1]?.status === 2
+                            : parseInt(`${_public_services[1]?.status}`) === 2
                             ? 'Inactivo'
                             : 'No Aplica'
                     }</td>
@@ -207,9 +210,9 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                     <td>${_public_services[2]?.subscriber}</td>
                     <td>${_public_services[2]?.accountant}</td>
                     <td>${
-                        _public_services[2]?.status === 1
+                        parseInt(`${_public_services[2]?.status}`) === 1
                             ? 'Aplica'
-                            : _public_services[2]?.status === 2
+                            : parseInt(`${_public_services[2]?.status}`) === 2
                             ? 'Inactivo'
                             : 'No Aplica'
                     }</td>
@@ -219,9 +222,9 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                     <td>${_public_services[3]?.subscriber}</td>
                     <td>${_public_services[3]?.accountant}</td>
                     <td>${
-                        _public_services[3]?.status === 1
+                        parseInt(`${_public_services[3]?.status}`) === 1
                             ? 'Aplica'
-                            : _public_services[0]?.status === 2
+                            : parseInt(`${_public_services[3]?.status}`) === 2
                             ? 'Inactivo'
                             : 'No Aplica'
                     }</td>
@@ -287,6 +290,19 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
             </tbody>
         </table>
     `;
+
+    let records = chunk(
+        data.physical_inspection.properties.filter((p) => !!p.image),
+        2
+    );
+    const get_image = (image) => {
+        let file_url = null;
+        if (image?.img) {
+            file_url = window.URL.createObjectURL(image.img);
+        }
+        return file_url ? `<img src="${file_url}" />` : '( )';
+    };
+
     const photographic_records = `
         <style>
             table {
@@ -296,39 +312,33 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
             td {
                 text-align: left;
                 font-size: 11px;
-                padding-left: 3px;
-                padding-right: 3px;
+            }
+            img {
+                width: 250px;
+                height: 150px;
             }
         </style>
         <table>
             <tbody>
-                <tr>
-                    <td>Descripción: (Digite una breve descripción)</td>
-                    <td>Descripción: (Digite una breve descripción)</td>
-                </tr>
-                <tr>
-                    <td>( )</td>
-                    <td>( )</td>
-                </tr>
-                <tr>
-                    <td>Descripción: (Digite una breve descripción)</td>
-                    <td>Descripción: (Digite una breve descripción)</td>
-                </tr>
-                <tr>
-                    <td>( )</td>
-                    <td>( )</td>
-                </tr>
-                <tr>
-                    <td>Descripción: (Digite una breve descripción)</td>
-                    <td>Descripción: (Digite una breve descripción)</td>
-                </tr>
-                <tr>
-                    <td>( )</td>
-                    <td>( )</td>
-                </tr>
+                ${records
+                    .map((rs: IProperty[]) => {
+                        const r1 = rs[0];
+                        const r2 = rs[1];
+                        return `<tr>
+                            <td>Descripción: ${r1?.name || '()'}</td>
+                            <td>Descripción: ${r2?.name || '()'}</td>
+                        </tr>
+                        <tr>
+                            <td>${get_image(r1?.image)}</td>
+                            <td>${get_image(r2?.image)}</td>
+                        </tr>`;
+                    })
+                    .join(' ')}
             </tbody>
         </table>
     `;
+
+    const occupant: any = data.occupant;
     const holder_data = `
         <style>
             table {
@@ -347,11 +357,11 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
             <tbody>
                 <tr>
                     <td>Nombres y apellidos:</td>
-                    <td>${data.occupant.names ?? ''}</td>
+                    <td>${compute_persona_name(occupant)}</td>
                 </tr>
                 <tr>
                     <td>Cédula de ciudadanía:</td>
-                    <td>${data.occupant.document_number ?? ''}</td>
+                    <td>${occupant?.documentNumber ?? ''}</td>
                 </tr>
                 <tr>
                     <td>Dirección:</td>
@@ -359,11 +369,13 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                 </tr>
                 <tr>
                     <td>Teléfono contacto: </td>
-                    <td>${data.occupant.phone_number ?? ''}</td>
+                    <td>${occupant?.phoneNumber ?? ''} ${
+        occupant?.phoneNumber_ext ? `ext ${occupant?.phoneNumber_ext}` : ''
+    }</td>
                 </tr>
                 <tr>
                     <td>Correo electrónico:</td>
-                    <td>${data.occupant.email ?? ''}</td>
+                    <td>${occupant.email ?? ''}</td>
                 </tr>
             </tbody>
         </table>
@@ -382,7 +394,7 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
             <Text style={styles.title}>
                 Informe de inspección N° (Digite el número del informe que corresponde a este bien durante la vigencia)
             </Text>
-            <Text style={styles.title}>Fecha: {moment(new Date().getTime()).format('DD/MM/YYYY')}</Text>
+            <Text style={styles.title}>Fecha: {moment(new Date()).format('DD/MM/YYYY')}</Text>
             <Text style={styles.subtitle}>1. DATOS BÁSICOS DEL INMUEBLE:</Text>
             <Html>{data_realEstate}</Html>
             <Text style={styles.text}>
@@ -410,15 +422,19 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
             </Text>
             <Text style={styles.text_2}>
                 <Text style={styles.subtitle}>2.5. Acciones especiales según los hallazgos: </Text>
-                (Deje constancia de las acciones a seguir dependiendo de los hallazgos encontrados en la inspección.
-                Ejemplo, Se envía informe con documentos anexos que prueban la titularidad de bien al componente
-                jurídico para que inicie ante la inspección correspondiente la restitución del bien).
+                {data.basic_information.special_actions || (
+                    <Text style={styles.text_2}>
+                        (Deje constancia de las acciones a seguir dependiendo de los hallazgos encontrados en la
+                        inspección. Ejemplo, Se envía informe con documentos anexos que prueban la titularidad de bien
+                        al componente jurídico para que inicie ante la inspección correspondiente la restitución del
+                        bien){' '}
+                    </Text>
+                )}
+                .
             </Text>
             <Text style={styles.subtitle}>3. INFORME DE INSPECCIÓN FÍSICA DEL INMUEBLE:</Text>
             <Html>{public_services}</Html>
-            <Text style={styles.subtitle} break>
-                3.1. Verificación de aspectos físicos más relevantes del bien:
-            </Text>
+            <Text style={styles.subtitle}>3.1. Verificación de aspectos físicos más relevantes del bien:</Text>
             <Html>{physical_aspects}</Html>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>3.2. Resultados inspección física: </Text>
@@ -430,7 +446,9 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                 </Text>
                 {data.basic_information.differences}
             </Text>
-            <Text style={styles.subtitle}>3.4. Registros fotográficos de la inspección:</Text>
+            <Text style={styles.subtitle} break>
+                3.4. Registros fotográficos de la inspección:
+            </Text>
             <Html>{photographic_records}</Html>
             <Text style={styles.subtitle}>4. ACTUALIZACIÓN DE DATOS DEL TENEDOR U OCUPANTE</Text>
             <Text style={styles.text}>
@@ -449,12 +467,9 @@ const InpectionDoc: FC<Idata> = ({ data, real_estate, user, innerRef }) => {
                     </Text>
                 )}
             <Text style={styles.text}>Atentamente,</Text>
-            <Text style={styles.sub_text}>
-                {user.detailsUser.names.firstName} {user.detailsUser.names.lastName ?? ''}{' '}
-                {user.detailsUser.surnames.firstSurname} {user.detailsUser.surnames.lastSurname ?? ''}
-            </Text>
+            <Text style={styles.sub_text}>{compute_persona_name(user.detailsUser)}</Text>
             <Text style={styles.sub_text}>Inspector del Bien Inmueble</Text>
-            <Text style={styles.sub_text}>{real_estate.dependency} </Text>
+            <Text style={styles.sub_text}>{real_estate?.dependency?.dependecy} </Text>
         </DocumentPdf>
     );
 };

@@ -4,14 +4,15 @@ import { Card } from '../../../utils/ui';
 import UpgradeForm from './UpgradeForm';
 import {IOccupant, NewInspection} from '../custom_types';
 import {PersonalInformationForm} from "../../../utils/ui/PersonaM";
+import {compute_persona_name} from "../../../utils";
 interface CreateUpgradeProps {
     inspection: NewInspection;
-    owner: IOccupant;
+    owner: any;
     innerRef: any;
     onSubmit: (values) => void;
 }
 const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner, innerRef, onSubmit }) => {
-    console.log("PersonalInformationForm", owner)
+    // console.log("PersonalInformationForm", owner)
     // const history = useHistory();
     return (
         <div className="container-fluid">
@@ -31,9 +32,9 @@ const CreateUpgrade: FC<CreateUpgradeProps> = ({ owner, innerRef, onSubmit }) =>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{owner?.names || '-'}</td>
-                                        <td>{owner?.document_number || '-'}</td>
-                                        <td>{owner?.phone_number || '-'}</td>
+                                        <td>{compute_persona_name(owner) || '-'}</td>
+                                        <td>{owner?.documentNumber || '-'}</td>
+                                        <td>{owner?.phoneNumber || '-'}</td>
                                         <td>{owner?.email || '-'}</td>
                                     </tr>
                                 </tbody>

@@ -353,7 +353,7 @@ const PubilcUsePdf: FC<Idata> = ({ values, realEstate }) => {
                 <Text style={styles.subtitle}>Descripción de Linderos: </Text>{values?.boundaries}.
             </Text>
             <Text style={styles.subtitle}>
-                3. Destinación: debe destinarse el inmueble para: <Text style={styles.text}>{values?.destination_realEstate}</Text>
+                3. Destinación: debe destinarse el inmueble para: <Text style={styles.text}>{values?.destination_realestate}</Text>
             </Text>
             <Text style={styles.subtitle}>
                 4. Especificaciones:

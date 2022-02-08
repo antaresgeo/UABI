@@ -264,6 +264,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                     name="vigency_start"
                                     className="form-control"
                                     disabled={disabled}
+                                    max={moment(new Date()).format("YYYY-MM-DD")}
                                 />
                                 <ErrorMessage name="vigency_start" />
                             </div>
@@ -278,6 +279,8 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                     name="vigency_end"
                                     placeholder="Fecha Final"
                                     className="form-control"
+                                    min={moment(values.vigency_start).format("YYYY-MM-DD")}
+                                    max={moment(new Date()).format("YYYY-MM-DD")}
                                     disabled={disabled}
                                 />
                                 <ErrorMessage name="vigency_end" />

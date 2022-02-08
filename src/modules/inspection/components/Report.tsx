@@ -35,13 +35,13 @@ const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit, data, real
                             }}
                             initialValues={{
                                 is_special_case: false,
-                                observations: obs || '',
+                                special_actions: obs || '',
+                                finish: false,
                             }}
                         >
                             {(formik) => {
                                 return (
                                     <Form>
-
                                         <div className="row">
                                             <div className="col">
                                                 <label>
@@ -68,6 +68,20 @@ const Report: FC<ReportProps> = ({ disabled, obs, innerRef, onSubmit, data, real
                                                     maxLength={250}
                                                 />
                                                 <ErrorMessage name="special_actions" withCount max={250} />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-primary"
+                                                    onClick={() => {
+                                                        formik.setFieldValue('finish', false, false);
+                                                        formik.submitForm();
+                                                    }}
+                                                >
+                                                    Recargar vista previa
+                                                </button>
                                             </div>
                                         </div>
                                     </Form>

@@ -55,7 +55,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                         name="prediation_date"
                         placeholder=""
                         className="form-control"
-                        max={ moment(new Date().getTime()).format('YYYY-MM-DD')}
+                        max={ moment(new Date()).format('YYYY-MM-DD')}
                     // disabled={true}
                     />
                     <ErrorMessage name="prediation_date" />
@@ -178,13 +178,13 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                         type="text"
                         className="form-control"
                         id="destination_realEstate_id"
-                        name="destination_realEstate"
+                        name="destination_realestate"
                         aria-describedby="emailHelp"
                         placeholder="Actividades"
                         autoComplete="off"
                         maxLength={200}
                     />
-                    <ErrorMessage name="destination_realEstate" withCount max={200} />
+                    <ErrorMessage name="destination_realestate" withCount max={200} />
                 </div>
                 <div className="col-12">
                     <label htmlFor="boundaries_id" className="form-label">
