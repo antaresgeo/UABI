@@ -80,7 +80,8 @@ const LeaseDoc = () => {
                                 representative: {
                                     id: values.representative.id
                                 },
-                                active_code: "AM0003L"
+                                active_code: "AM0003L",
+                                type_disposition: "Arrendamiento"
 
                             }
                             delete final_values.canon_value;

@@ -6,9 +6,10 @@ import { FormUser } from './../FormUser';
 import { FormRiskAnalysis } from '../FormRiskAnalysis';
 import FormPrecontractualLease from './FormPrecontractualLease';
 import * as Yup from 'yup';
-import { FC, } from 'react';
+import { FC, useEffect, useState } from 'react';
 import moment from 'moment';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from '../../../redux';
 
 interface FormPros {
     innerRef?: any;
@@ -18,66 +19,117 @@ interface FormPros {
 }
 
 export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_form }) => {
+    const [edit, setEdit] = useState(false);
+    const dispatch = useDispatch();
+    const precontractual: any = useSelector((state: any) => {
+        return state.disposition.precontractual?.value;
+    });
+    console.log('aaa', edit);
+
+    useEffect(() => {
+        if (precontractual) {
+            setEdit(true);
+        }
+    }, [precontractual]);
+
+    useEffect(() => {
+        dispatch(actions.get_precontract(realEstate?.active_code));
+    }, [dispatch, realEstate]);
 
     let initialValues = {
-        environmental_risk: "",
+        environmental_risk: '',
         registration_date: moment(new Date()).format('YYYY-MM-DD'),
-        contract_period: "",
+        contract_period: '',
         business_type: {
-            select: "",
-            input: "",
+            select: '',
+            input: '',
         },
         lockable_base: 10,
         //solicitante
-        applicant: "",
-        representative: "",
+        applicant: '',
+        representative: '',
 
         //analisis de riegos
         regulatory_risk: {
-            degree_occurrence: "MEDIO",
-            impact_degree: "MEDIO",
-            responsible: "Contratista",
-            mitigation_mechanism: "Ejercer un control y vigilancia estrictos al contrato por parte del supervisor.",
+            degree_occurrence: 'MEDIO',
+            impact_degree: 'MEDIO',
+            responsible: 'Contratista',
+            mitigation_mechanism: 'Ejercer un control y vigilancia estrictos al contrato por parte del supervisor.',
         },
         operational_risk: {
-            degree_occurrence: "MEDIO",
-            impact_degree: "MEDIO",
-            responsible: "Contratista",
-            mitigation_mechanism: "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual",
+            degree_occurrence: 'MEDIO',
+            impact_degree: 'MEDIO',
+            responsible: 'Contratista',
+            mitigation_mechanism:
+                'Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual',
         },
 
         //Arrendamiento
         canon_value: realEstate?.canyon_value,
         iva: (realEstate.canyon_value * 0.19).toFixed(2),
-        public_service: "",
-        value_aforo: "",
-        recovery_value: "",
-        counter_value: "",
-        administration_value: "",
-        vigilance_value: "",
-        monthly_total: parseInt(realEstate?.canyon_value + (realEstate.canyon_value * 0.19)),
+        public_service: '',
+        value_aforo: '',
+        recovery_value: '',
+        counter_value: '',
+        administration_value: '',
+        vigilance_value: '',
+        monthly_total: parseInt(realEstate?.canyon_value + realEstate.canyon_value * 0.19),
         contract_value: 0,
-        prediation_number: "",
-        prediation_date: "",
-        coverage: "",
-        fines: "",
-        destination_realestate: "",
-        appraisal_number: "",
-        appraisal_date: "",
-        boundaries: "",
+        prediation_number: '',
+        prediation_date: '',
+        coverage: '',
+        fines: '',
+        destination_realestate: '',
+        appraisal_number: '',
+        appraisal_date: '',
+        boundaries: '',
 
         //lider y personas a cargo
-        leader: "",
-        elaborated: "",
-        revised: "",
-        approved: "",
-        dependency: realEstate?.dependency?.dependency || "",
-        secretary: realEstate?.cost_center?.subdependency || "",
+        leader: '',
+        elaborated: '',
+        revised: '',
+        approved: '',
+        dependency: realEstate?.dependency?.dependency || '',
+        secretary: realEstate?.cost_center?.subdependency || '',
+        ...{
+            ...precontractual,
+            prediation_date: moment(new Date(Number(precontractual?.prediation_date))).format('YYYY-MM-DD'),
+            registration_date: moment(new Date(Number(precontractual?.registration_date))).format('YYYY-MM-DD'),
+            business_type: {
+                select:
+                    precontractual?.business_type === 'teatro'
+                        ? precontractual?.business_type
+                        : precontractual?.business_type === 'museo'
+                            ? precontractual?.business_type
+                            : precontractual?.business_type === 'otro'
+                                ? precontractual?.business_type
+                                : '',
+                input:
+                    precontractual?.business_type !== 'teatro'
+                        ? precontractual?.business_type
+                        : precontractual?.business_type !== 'museo'
+                            ? precontractual?.business_type
+                            : precontractual?.business_type !== 'otro'
+                                ? precontractual?.business_type
+                                : '',
+            }
+        },
         ...values_form,
-    }
+    };
 
+    // if (precontractual) {
+    //     initialValues.prediation_date = moment(new Date(Number(initialValues?.prediation_date))).format('YYYY-MM-DD');
+    //     initialValues.registration_date = moment(new Date(Number(initialValues?.registration_date))).format(
+    //         'YYYY-MM-DD'
+    //     );
+    //     initialValues.
+    // }
 
     const submit = (values, actions) => {
+        values = {
+            ...values,
+            edit,
+        };
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
             actions.resetForm();
@@ -100,8 +152,6 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         // appraisal_number: Yup.number().required('obligatorio'),
         // appraisal_date: Yup.string().required('obligatorio'),
         // environmental_risk: Yup.string().required('obligatorio'),
-
-
         // // Solicitante
         // applicant: Yup.object({
         //     person_type: Yup.string().required('obligatorio'),
@@ -134,7 +184,6 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         //     is: "Persona Juridica",
         //     then: Yup.object().required('obligatorio'),
         // }),
-
         // //lider y personas a cargo
         // detailsLeader: Yup.object().required('obligatorio'),
         // // location_leader: Yup.object({
@@ -145,7 +194,6 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         //     first_surname: Yup.string().required('obligatorio'),
         //     post: Yup.string().required('obligatorio'),
         //     email: Yup.string().required('obligatorio')
-
         // }),
         // revised: Yup.object({
         //     first_name: Yup.string().required('obligatorio'),
@@ -159,9 +207,6 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         //     post: Yup.string().required('obligatorio'),
         //     email: Yup.string().required('obligatorio')
         // }),
-
-
-
     });
 
     return (
@@ -173,25 +218,22 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
             validationSchema={schema}
         >
             {(formik) => {
-                return <Form>
-                    <Card
-                        title="Estudio previo para Arrendamiento"
-                        extra={
-                            <ModalNotificar />
-                        }
-                    >
-                        <FormPrecontractualLease formik={formik} />
-                    </Card>
-                    <Card title="Información del solicitante">
-                        <FormUser formik={formik} />
-                    </Card>
-                    <Card>
-                        <FormRiskAnalysis formik={formik} />
-                    </Card>
-                    <Card >
-                        <FormLider lease={true} formik={formik} />
-                    </Card>
-                </Form>
+                return (
+                    <Form>
+                        <Card title="Estudio previo para Arrendamiento" extra={<ModalNotificar />}>
+                            <FormPrecontractualLease formik={formik} />
+                        </Card>
+                        <Card title="Información del solicitante">
+                            <FormUser formik={formik} />
+                        </Card>
+                        <Card>
+                            <FormRiskAnalysis formik={formik} />
+                        </Card>
+                        <Card>
+                            <FormLider lease={true} formik={formik} />
+                        </Card>
+                    </Form>
+                );
             }}
         </Formik>
     );
