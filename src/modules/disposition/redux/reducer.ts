@@ -170,7 +170,7 @@ const precontractualtReducer = (aux_state: State, action: any) => {
                 ...state,
                 precontractual: {
                     ...state.precontractual,
-                    value: action.payload.results,
+                    value: action.payload?.results || null,
                     loading: false,
                     loaded: true,
                 },

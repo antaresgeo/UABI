@@ -251,7 +251,7 @@ const Projects = () => {
                                             { key: 'id', name: 'Código' },
                                             { key: 'dependency', name: 'Dependencia' },
                                             { key: 'subdependency', name: 'Subdependencia' },
-                                            { key: 'audit_trail.created_on', name: 'Fecha', type: 'date' },
+                                            { key: 'created_on', name: 'Fecha', type: 'date' },
                                         ]}
                                         onSubmit={filter}
                                     />
