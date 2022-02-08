@@ -54,10 +54,10 @@ const ComodatoDoc = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
-                {/* <PDFDownloadLink
+                <PDFDownloadLink
                     document={<ComodatoPdf values={values} realEstate={realEstate} />}
                     fileName="EstudioPrevioparacomodatodeBienInmueble.pdf"
-                > */}
+                >
                 <button
                     type="button"
                     className="btn btn-outline-primary"
@@ -96,11 +96,10 @@ const ComodatoDoc = () => {
                                 id: values.representative.id
                             },
                             active_code: realEstate?.active_code,
-                            beneficiary_location_id: {
-                                id: 20 //TODO: CAMBIAR A VALOR REAL
-                            },
+
                             contract_value: contract_value,
-                            type_disposition: "Comodato"
+                            type_disposition: "Comodato",
+                            beneficiary_location_id: values.beneficiary_location_id.id
 
                         }
                         delete final_values.canon_value;
@@ -130,7 +129,7 @@ const ComodatoDoc = () => {
                 >
                     guardar y descargar
                 </button>
-                {/* </PDFDownloadLink> */}
+                </PDFDownloadLink>
             </div>
         </div>
     );
