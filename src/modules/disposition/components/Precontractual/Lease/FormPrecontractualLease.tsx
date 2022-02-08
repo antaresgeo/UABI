@@ -14,13 +14,13 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
     useEffect(() => {
         switch (formik.values.public_service) {
             case "Recobro":
-                valueServPublic = formik.values?.recovery_value;
+                valueServPublic =Number(formik.values?.recovery_value);
                 break;
             case "Aforo":
-                valueServPublic = formik.values?.value_aforo;
+                valueServPublic = Number(formik.values?.value_aforo);
                 break;
             case "Contador individualizado":
-                valueServPublic = formik.values?.counter_value;
+                valueServPublic = Number(formik.values?.counter_value);
                 break;
             case "Prepago":
                 valueServPublic = 0;
@@ -29,9 +29,12 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
             default:
                 break;
         }
+        console.log(parseInt(formik.values.monthly_total + Number(formik.values.administration_value) +Number(valueServPublic)))
+        console.log(parseInt(formik.values.monthly_total))
+        console.log(parseInt(formik.values.administration_value))
         formik.setFieldValue(
             'contract_value',
-            parseInt(formik.values.monthly_total + Number(formik.values.administration_value) + valueServPublic),
+            parseInt(formik.values.monthly_total + Number(formik.values.administration_value) +Number(valueServPublic)),
             false
         );
 

@@ -19,6 +19,7 @@ interface FormPros {
 }
 
 export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_form }) => {
+    console.log(realEstate)
     const [edit, setEdit] = useState(false);
     const dispatch = useDispatch();
     const precontractual: any = useSelector((state: any) => {

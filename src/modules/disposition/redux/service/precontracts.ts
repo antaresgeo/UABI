@@ -84,7 +84,6 @@ export const inactivate_precontract = async (active_code) => {
 export const update_precontract = async (active_code, data: any) => {
     const final_data = {
         ...data,
-        beneficiary_location_id: data.beneficiary_location_id.id
     }
     try {
         let URI = `/disposition`;
