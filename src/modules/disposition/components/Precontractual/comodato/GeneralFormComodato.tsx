@@ -12,6 +12,7 @@ import BeneficiaryForm from './BeneficiaryForm';
 import moment from 'moment';
 import actions from './../../../redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
+import { swal_success } from '../../../../../utils/index';
 
 interface FormPros {
     innerRef?: any;
@@ -27,9 +28,10 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
     const precontractual: any = useSelector((state: any) => {
         return state.disposition.precontractual.value
     });
+    console.log('aaa', edit)
 
     useEffect(() => {
-        if (precontractual !== null) {
+        if (precontractual) {
             setEdit(true);
         }
     }, [precontractual]);
@@ -126,8 +128,13 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         dependency: realEstate?.dependency?.dependency,
         secretary: realEstate?.cost_center?.subdependency,
         ...precontractual,
+
         ...values_form,
     }
+
+
+
+
     const submit = (values, actions) => {
         values = {
             ...values,
@@ -140,21 +147,29 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         });
     };
 
-    initialValues.prediation_date = moment(new Date(Number(initialValues?.prediation_date))).format('YYYY-MM-DD');
-    initialValues.registration_date = moment(new Date(Number(initialValues?.registration_date))).format('YYYY-MM-DD');
-    initialValues.business_type = {
-        select:
-            initialValues.business_type === 'teatro' ? initialValues.business_type :
-                initialValues.business_type === 'museo' ? initialValues.business_type :
-                    initialValues.business_type === 'otro' ? initialValues.business_type :
-                        "",
-        input:
-            initialValues.business_type !== 'teatro' ? initialValues.business_type :
-                initialValues.business_type !== 'museo' ? initialValues.business_type :
-                    initialValues.business_type !== 'otro' ? initialValues.business_type :
-                        "",
+
+    if (precontractual) {
+        initialValues.prediation_date = moment(new Date(Number(initialValues?.prediation_date))).format('YYYY-MM-DD');
+        initialValues.registration_date = moment(new Date(Number(initialValues?.registration_date))).format('YYYY-MM-DD');
+        initialValues.business_type = {
+            select:
+                initialValues.business_type === 'teatro' ? initialValues.business_type :
+                    initialValues.business_type === 'museo' ? initialValues.business_type :
+                        initialValues.business_type === 'otro' ? initialValues.business_type :
+                            "",
+            input:
+                initialValues.business_type !== 'teatro' ? initialValues.business_type :
+                    initialValues.business_type !== 'museo' ? initialValues.business_type :
+                        initialValues.business_type !== 'otro' ? initialValues.business_type :
+                            "",
+
+        }
 
     }
+
+
+
+
 
     const schema = Yup.object().shape({
         //obligaciones
@@ -288,9 +303,16 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                                     <button
                                         type="button"
                                         className='btn btn-primary'
-                                        style={{marginLeft: '5px'}}
+                                        style={{ marginLeft: '5px' }}
                                         onClick={async () => {
                                             await dispatch(actions.inactivate_precontract(precontractual?.active_code));
+                                            swal_success.fire({
+                                                title: `estudio Previo inactivado`,
+                                                text: "puede iniciar un nuevo proceso precontractual",
+                                                icon: 'success',
+                                                showConfirmButton: false,
+                                                timer: 1500,
+                                            });
                                         }}
 
                                     >

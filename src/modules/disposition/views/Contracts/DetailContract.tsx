@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from '../../../../utils/ui';
 import ContractViewForm from '../../components/Contractual/ContractViewForm';
+import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from './../../redux/actions';
+
+interface IParams {
+    id: string;
+}
 
 const DetailContract = () => {
+    const { id } = useParams<IParams>();
+    // const id = 10;
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    const contract: any = useSelector((store: any) => store.disposition.contract.value);
+
+    useEffect(() => {
+        dispatch(actions.get_contract(id));
+    }, []);
+
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -26,7 +44,10 @@ const DetailContract = () => {
                         <div className="row justify-content-center">
                             <div className="col-md-12">
                                 {/* <UserViewForm user={user} /> */}
-                                <ContractViewForm />
+                                <ContractViewForm
+                                values_contract={contract}
+
+                                />
                             </div>
                         </div>
                     </div>

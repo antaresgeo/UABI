@@ -64,7 +64,7 @@ const contractReducer = (aux_state: State, action: any) => {
         case types.get_contract.success: {
             return {
                 ...state,
-                company: {
+                contract: {
                     ...state.contract,
                     value: action.payload.results,
                     loading: false,
@@ -117,7 +117,7 @@ const contractReducer = (aux_state: State, action: any) => {
         case types.get_list_contracts.success: {
             return {
                 ...state,
-                companies: {
+                contracts: {
                     ...state.contracts,
                     value: action.payload || [],
                     pagination: emptyInitialState.contracts?.pagination,

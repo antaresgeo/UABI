@@ -124,11 +124,15 @@ const finalData = (data, docs_ids?) => {
     delete aux_data.registry_number_document_id;
     delete aux_data.accounting_account;
     delete aux_data.tipology;
+    console.log(aux_data.type)
     if (!aux_data.type) {
         delete aux_data.sap_id;
+        delete aux_data.active_code;
     } else {
         delete aux_data.type;
     }
+
+
     if (aux_data.construction_area === '') {
         aux_data.construction_area = null;
     }
@@ -138,11 +142,13 @@ const finalData = (data, docs_ids?) => {
     if (aux_data.cost_center_id) {
         aux_data.cost_center_id = Number(aux_data.cost_center_id);
     }
-    aux_data.projects_id[0] = Number(aux_data.projects_id[0]);
+    if(aux_data.projects_id) {
+        aux_data.projects_id[0] = Number(aux_data.projects_id[0]);
+    }
     if (aux_data.patrimonial_value === "") {
         aux_data.patrimonial_value = 0;
     }
-    delete aux_data.active_code;
+
     delete aux_data.fixed_assets;
     delete aux_data._address;
     delete aux_data.dependency_id;
@@ -229,8 +235,6 @@ export const createRealEstates = async (data: any, quantity) => {
             })
         );
 
-        console.log(docs_ids);
-        console.log(res.data.results)
 
         const project = res.data.results.project;
 
@@ -248,9 +252,6 @@ export const createRealEstates = async (data: any, quantity) => {
             );
 
         })
-
-        console.log('asi',assing_doc)
-        console.log(URI)
 
 
         await Promise.all(
@@ -279,11 +280,36 @@ export const createRealEstates = async (data: any, quantity) => {
     }
 };
 
+//TODO: Editar BIs englobe
 export const updateRealEstates = async (data: any) => {
+    data = data.map(d => {
+        return {
+            ...d,
+            projects_id: [d.project.id],
+            active_type: d.active_type.split(', '),
+            materials: d.materials.join(),
+        }
+    })
     try {
         console.log('bienes inmuebles a actualizar', data);
-        // let URI = `/real-estates`;
-        //servicio
+        let URI = `/real-estates`;
+        const res: any = await Promise.all(
+            data.map((r: any, i) => {
+                console.log(r)
+                const body = finalData(r);
+                return http.put(
+                    URI,
+                    body,
+                    {
+                        params: { id: r.id },
+                    }
+                );
+
+            })
+        )
+
+        return res.data.results;
+
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');

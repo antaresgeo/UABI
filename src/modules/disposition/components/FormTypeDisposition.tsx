@@ -18,7 +18,7 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
         return state.disposition.precontractual.value
     });
     const [isDisabled, setIsDisabled] = useState(false);
-
+    console.log(precontractual)
     useEffect(() => {
         dispatch(actions.get_precontract(realEstate?.active_code));
     }, [dispatch, realEstate]);
