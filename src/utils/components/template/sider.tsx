@@ -181,19 +181,19 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                 ),
             ],
         },
-        {
-            name: 'Gestión Documental',
-            children: [
-                {
-                    path: '/document-management/master_formats/',
-                    name: 'Máster de Formatos',
-                },
-                {
-                    path: '/document-management/electronic_file/list',
-                    name: 'Expediente Electrónico',
-                },
-            ],
-        },
+        // {
+        //     name: 'Gestión Documental',
+        //     children: [
+        //         {
+        //             path: '/document-management/master_formats/',
+        //             name: 'Máster de Formatos',
+        //         },
+        //         {
+        //             path: '/document-management/electronic_file/list',
+        //             name: 'Expediente Electrónico',
+        //         },
+        //     ],
+        // },
         {
             name: 'Supervisión',
             children: [],
