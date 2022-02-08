@@ -239,14 +239,17 @@ export const base64Encode = async (string: string) => {
     return tmp;
 };
 
-export const download_doc = (url, name, type="docx") => {
+export const download_doc = (url, name, type = 'docx') => {
     const link = document.createElement('a');
     link.href = url;
     link.target = '_blank';
-    link.setAttribute(
-        'download',
-        `${name}.${type}`
-    );
+    link.setAttribute('download', `${name}.${type}`);
     document.body.appendChild(link);
     link.click();
-}
+};
+
+export const compute_persona_name = (persona) => {
+    return `${
+        (persona && Object.values(persona?.names ?? {}).join(' ')) || ''
+    } ${(persona && Object.values(persona?.surnames ?? {}).join(' ')) || ''}`;
+};

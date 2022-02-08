@@ -19,7 +19,7 @@ const LeaseDocContract = () => {
         boundaries: "descripcion de linderos",
         business_type: { select: 'otro', input: 'casino' },
         contract_period: 12,
-        destination_realEstate: "destinacion del bien inmueble",
+        destination_realestate: "destinacion del bien inmueble",
         environmental_risk: "riesgos",
         lockable_base: 10,
         registration_date: "2021-12-15",

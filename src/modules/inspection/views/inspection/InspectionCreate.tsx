@@ -30,7 +30,7 @@ const InspectionCreate: FC<PruebaProps> = () => {
     }, []);
     useEffect(() => {
         if (real_estate && !Tipology) {
-            console.log('bi', real_estate);
+            // console.log('bi', real_estate);
             dispatch(getTipology(real_estate?.tipology_id));
         }
     }, [real_estate]);

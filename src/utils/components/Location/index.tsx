@@ -164,7 +164,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                     name="state"
                                     disabled={!has_country || !has_countries}
                                     component={Select}
-                                    options={states}
+                                    options={[states[0]]}
                                     placeholder="--departamento--"
                                     extra_on_change={async (value) => {
                                         const list = await getList('cities', { father: value });
@@ -192,7 +192,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                     disabled={!has_state || !has_states}
                                     component={Select}
                                     placeholder={`--${zone && zone === 'Rural' ? 'municipio' : 'ciudad'}--`}
-                                    options={cities}
+                                    options={[cities[0]]}
                                     extra_on_change={async (value) => {
                                         const list = await getList('communes', { father: value });
                                         setCommunisses(list);

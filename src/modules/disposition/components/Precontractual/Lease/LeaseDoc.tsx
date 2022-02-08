@@ -86,7 +86,8 @@ const LeaseDoc = () => {
                             delete final_values.canon_value;
                             delete final_values.dependence;
                             delete final_values.secretary;
-                            dispatch(actions.create_precontract(final_values, dispositionType))
+                            delete final_values.destination_realEstate;
+                            dispatch(actions.create_precontract(final_values, 'Arrendamiento'))
                             console.log('valores',final_values)
                             history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
 

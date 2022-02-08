@@ -20,7 +20,7 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
 
     let initialValues = {
         environmental_risk: "",
-        registration_date:  moment(new Date().getTime()).format('YYYY-MM-DD'),
+        registration_date:  moment(new Date()).format('YYYY-MM-DD'),
         contract_period: "",
         prediation_number: "",
         prediation_date: "",
@@ -48,7 +48,7 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
             mitigation_mechanism: "Realizar visitas trimestrales al bien inmueble objeto del contrato y seguimiento mensual a los pagos de cánones, servicios públicos y administración cuando aplique, por parte del supervisor para realizar seguimiento y evaluación al desarrollo del objeto contractual",
         },
         //uso publico
-        destination_realEstate: "",
+        destination_realestate: "",
         contract_value: "",
         obligations: [],
         prohibitions: [],
@@ -80,7 +80,7 @@ const GeneralFormPublicUse: FC<FormPros> = ({onSubmit, innerRef, realEstate, val
         // cadastral_value: Yup.string().required('obligatorio'),
         // prediation_number: Yup.number().required('obligatorio'),
         // prediation_date: Yup.string().required('obligatorio'),
-        // destination_realEstate: Yup.string().required('obligatorio'),
+        // destination_realestate: Yup.string().required('obligatorio'),
         // contract_period: Yup.string().required('obligatorio'),
         // contract_value: Yup.string().required('obligatorio'),
         // environmental_risk: Yup.string().required('obligatorio'),

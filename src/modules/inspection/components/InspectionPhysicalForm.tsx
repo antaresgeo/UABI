@@ -10,9 +10,10 @@ interface InspectionPhysicalFormProps {
 const InspectionPhysicalForm: FC<InspectionPhysicalFormProps> = ({ formik }) => {
     return (
         <>
-            {formik.values.properties.map((property, i) => {
+            {formik.values.properties?.map((property, i) => {
                 const p = formik.values.properties[i];
-                const show_upload = p.status_property === 'Malo' || p.status_property === 'Regular';
+                console.log(p, p.status_property)
+                const show_upload = p.status_property === "2" || p.status_property === "3";
                 const old_p = formik.values.old_properties?.find((op) => op.name === p.name);
                 return (
                     <div className="row border-1" key={`properties_${i}`}>
@@ -39,14 +40,15 @@ const InspectionPhysicalForm: FC<InspectionPhysicalFormProps> = ({ formik }) => 
                                 id="enclosure_id"
                                 as="select"
                                 className="form-select"
+
                             >
                                 <option value="" hidden>
                                     -- Seleccione estado --
                                 </option>
-                                <option value="Bueno">Bueno</option>
-                                <option value="Regular">Regular</option>
-                                <option value="Malo">Malo</option>
-                                <option value="No aplica">No aplica</option>
+                                <option value={1}>Bueno</option>
+                                <option value={2}>Regular</option>
+                                <option value={3}>Malo</option>
+                                <option value={0}>No aplica</option>
                             </Field>
                             <ErrorMessage name={`properties[${i}].status_property`} />
                         </div>

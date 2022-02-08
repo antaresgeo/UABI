@@ -20,7 +20,7 @@ const ComodatoDocContract = () => {
         contract_period: 12,
         environmental_risk: "riesgos",
         registration_date: "2021-12-15",
-        destination_realEstate: "destinacion",
+        destination_realestate: "destinacion",
         lockable_base: 10,
         prediation_date: "2021-12-30",
         boundaries: "descripcion de linderos",

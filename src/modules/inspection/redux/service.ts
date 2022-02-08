@@ -3,6 +3,7 @@
 
 import { AxiosResponse } from 'axios';
 import { http } from '../../../config/axios_instances';
+import {NewInspection} from "../custom_types";
 
 export interface AllInspectionsResponse {
     message: string;
@@ -64,11 +65,24 @@ export const get_list_inspections = async () => {
     }
 };
 
-export const create_inspection = async (data: Inspection) => {
+export const create_inspection = async (id, data: NewInspection) => {
+
+    const body = {
+        ...data,
+        ocupant: data.occupant,
+        ocupation: data.occupation,
+        photografic_register: {
+            facade: "x",
+            general: []
+        }
+    }
+    delete body.occupation;
     try {
         const URI = '/inspections/';
         const res: AxiosResponse<InspectionResponse> = await http.post(URI, {
-            // TODO: campos de la inspeccion
+            ...body,
+        }, {
+            params: { id }
         });
         return res.data;
     } catch (e) {
@@ -117,6 +131,7 @@ export const delete_inspection = async (id) => {
         return Promise.reject('Error');
     }
 };
+
 
 const services = {
     get_all_inspections,

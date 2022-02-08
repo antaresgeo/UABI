@@ -50,7 +50,7 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
 
     let initialValues = {
         environmental_risk: '',
-        registration_date: moment(new Date().getTime()).format('YYYY-MM-DD'),
+        registration_date: moment(new Date()).format('YYYY-MM-DD'),
         contract_period: '',
         patrimonial_value: realEstate.patrimonial_value,
         prediation_date: "",
@@ -216,7 +216,7 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         // contract_period: Yup.string().required('obligatorio'),
 
         // loan_typology: Yup.string().required('obligatorio'),
-        // destination_realEstate: Yup.string().required('obligatorio'),
+        // destination_realestate: Yup.string().required('obligatorio'),
         // peacesafe: Yup.string().required('obligatorio'),
         // social_event: Yup.string().required('obligatorio'),
         // economic_exploitation: Yup.string().required('obligatorio'),

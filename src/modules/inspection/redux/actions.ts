@@ -13,8 +13,8 @@ const get_all_inspections = (filters?) =>
         types.get_all_inspections,
         service.get_all_inspections(filters)
     );
-const create_inspection = (data: Broker) =>
-    request_dispatch(types.create_inspection, service.create_inspection(data));
+const create_inspection = (id, data) =>
+    request_dispatch(types.create_inspection, service.create_inspection(id, data));
 const delete_inspection = (id) =>
     request_dispatch(types.delete_inspection, service.delete_inspection(id));
 const get_inspection_by_real_estate_id = (id) =>

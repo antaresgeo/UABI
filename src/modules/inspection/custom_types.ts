@@ -13,8 +13,8 @@ export interface NewInspection {
   }
 
   export interface IOccupant {
-    names: string;
-    surnames: string;
+    names: any;
+    surnames: any;
     document_type: string;
     document_number: number;
     phone_number: number;

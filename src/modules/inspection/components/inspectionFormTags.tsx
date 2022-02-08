@@ -10,6 +10,8 @@ import BasicInformation from './BasicInformation';
 import { NewInspection } from '../custom_types';
 import { FormikProps, FormikValues } from 'formik';
 import { swal_success } from '../../../utils';
+import { create_notification } from '../../notificacions/redux/service';
+import { create_inspection } from '../redux/service';
 
 interface InspectionFormTagsProps {
     inspection: NewInspection;
@@ -25,7 +27,7 @@ interface HistoryParams {
 const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_estate, user }) => {
     const { TabPane } = Tabs;
     let [active_key, new_inspection, steps, max, show_next, next_tab, goBack, execute_save, callback] =
-        useInit(inspection);
+        useInit(inspection, real_estate);
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -113,7 +115,8 @@ const InspectionFormTags: FC<InspectionFormTagsProps> = ({ inspection, real_esta
 };
 
 const useInit = (
-    old_inspection: NewInspection
+    old_inspection: NewInspection,
+    real_estate: any
 ): [string, NewInspection, any[], number, boolean, () => void, () => void, () => void, (key: string) => void] => {
     const history = useHistory<HistoryParams>();
     const active_key = history.location.state?.active_key || '1';
@@ -250,12 +253,19 @@ const useInit = (
                 await steps[4].ref.current?.submitForm();
             },
             onSave: async (values) => {
-                set_new_inspection((data) => ({
-                    ...data,
-                    occupant: {
-                        ...values,
-                    },
-                }));
+                set_new_inspection((data) => {
+                    const res = {
+                        ...data,
+                        occupant: {
+                            ...data.occupant,
+                            ...values,
+                            document_type: values.documentType,
+
+
+                        },
+                    };
+                    return res;
+                });
                 console.log(5, 'guardado');
                 set_is_saving(false);
             },
@@ -263,30 +273,43 @@ const useInit = (
 
         {
             ref: useRef<FormikProps<FormikValues>>(),
-            save: async () => {
+            save: async (is_finish = false) => {
                 console.log(6);
                 set_is_saving(true);
+                if (is_finish) {
+                    steps[5].ref.current?.setFieldValue('finish', true, false);
+                }
                 await steps[5].ref.current?.submitForm();
             },
             onSave: async (values) => {
-                set_new_inspection((data) => ({
-                    ...data,
-                }));
-
+                console.log(values);
+                const new_data = {
+                    ...new_inspection,
+                    basic_information: {
+                        ...new_inspection.basic_information,
+                        isAnEspecialCase: values.is_special_case,
+                        special_actions: values.special_actions,
+                    },
+                };
+                console.log(new_data);
+                set_new_inspection(new_data);
                 console.log(6, 'guardado');
                 set_is_saving(false);
-                // // delete final_data.image;
-                // swal_success.fire('Inspeccion realizada exitosamente', '', 'success').then(() => {
-                //     // history.push('/inspection/');
-                //     // create_notification({
-                //     //     title: 'Es necesario mantenimiento',
-                //     //     description: `es necesario mantenimiento para el bien inmueble ${real_estate?.name}`,
-                //     //     action: `/acquisitions/real-estates/${real_estate?.id}/`,
-                //     //     priority: 2,
-                //     //     toRole: 1,
-                //     // });
-                // });
-                // console.log({ final_data: new_inspection });
+                if (values.finish) {
+                    console.log({ final_data: new_data });
+                    const res = await create_inspection(real_estate.id, new_data);
+                    console.log(res)
+                    swal_success.fire('Inspeccion realizada exitosamente', '', 'success').then(() => {
+                        history.push('/inspection/');
+                        create_notification({
+                            subject: 'Es necesario mantenimiento',
+                            description: `es necesario mantenimiento para el bien inmueble ${real_estate?.name}`,
+                            action: `/acquisitions/real-estates/${real_estate?.id}/`,
+                            priority: 2,
+                            toRole: 1,
+                        });
+                    });
+                }
             },
         },
     ];
@@ -326,7 +349,7 @@ const useInit = (
     };
 
     const execute_save = async () => {
-        await steps[limit - 1]; //.save();
+        await steps[limit - 1].save(true);
     };
 
     useEffect(() => {
@@ -350,9 +373,9 @@ const useInit = (
     //     }
     // }, [old_inspection]);
 
-    useEffect(() => {
-        console.log('new', new_inspection);
-    }, [new_inspection]);
+    // useEffect(() => {
+    //     console.log('new', new_inspection);
+    // }, [new_inspection]);
 
     return [active_key, new_inspection, steps, max, show_next, next_tab, goBack, execute_save, callback];
 };
