@@ -8,9 +8,11 @@ import { actions } from '../../redux';
 export const ListContracts = () => {
     const dispatch = useDispatch();
     const user = useSelector((store: any) => store.auth.user );
+    const contracts = useSelector((store: any) => store.disposition.contracts.value );
+    console.log(contracts);
     const filter = async (_filters, _) => {
-        // await dispatch(actions.get_all_contracts({ page: 1, with: 'pagination', ..._filters }));
-        await dispatch(actions.get_list_contracts());
+        await dispatch(actions.get_all_contracts({ page: 1, with: 'pagination', ..._filters }));
+        // await dispatch(actions.get_list_contracts());
     };
 
     const aux_user = {
@@ -40,7 +42,7 @@ export const ListContracts = () => {
                                 </div>
                             </div>
                         </div>
-                        <TableContract user={aux_user} />
+                        <TableContract user={aux_user} contrats={contracts}  />
                     </Card>
                 </div>
             </div>

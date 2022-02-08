@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { swal_warning, swal } from '../../../../utils';
+import {swal_warning, swal, formatDate} from '../../../../utils';
 import { Link, Table } from '../../../../utils/ui';
 import { actions } from '../../redux';
 import { guards } from '../../routes';
@@ -7,9 +7,10 @@ import { useDispatch } from 'react-redux';
 
 interface ContractProps {
     user?: any;
+    contrats: any;
 }
 
-export const TableContract: FC<ContractProps> = ({ user }) => {
+export const TableContract: FC<ContractProps> = ({ user, contrats }) => {
     const dispatch = useDispatch();
     const deleteContract = (id) => async () => {
         const result = await swal_warning.fire({
@@ -49,14 +50,11 @@ export const TableContract: FC<ContractProps> = ({ user }) => {
         title: 'Inactivar',
         dataIndex: 'id',
         align: 'center' as 'center',
-        render: (/*id*/) => {
+        render: (id) => {
             return (
-                <Link
-                    to={``}
-                    name=""
-                    avatar={false}
-                    icon={<i className="fa fa-plus" aria-hidden="true" />}
-                />
+                <div className="text-danger" onClick={deleteContract(id)}>
+                    <i className="fa fa-times-circle" aria-hidden="true" />
+                </div>
             );
         },
     }
@@ -67,9 +65,12 @@ export const TableContract: FC<ContractProps> = ({ user }) => {
         align: 'center' as 'center',
         render: (id) => {
             return (
-                <div className="text-danger" onClick={deleteContract(id)}>
-                    <i className="fa fa-times-circle" aria-hidden="true" />
-                </div>
+                <Link
+                    to={`/disposition/contract/edit/${id}/`}
+                    name=""
+                    avatar={false}
+                    icon={<i className="fa fa-edit" aria-hidden="true" />}
+                />
             );
         },
 
@@ -84,49 +85,56 @@ export const TableContract: FC<ContractProps> = ({ user }) => {
     const table_columns: any = [
         {
             title: 'ID',
-            dataIndex: '',
+            dataIndex: 'id',
             align: 'left' as 'left',
         },
-        {
-            title: 'Activo Fijo',
-            dataIndex: '',
-            align: 'left' as 'left',
-        },
-        {
-            title: 'CBML',
-            dataIndex: '',
-            align: 'left' as 'left',
-        },
-        {
-            title: 'Dirección',
-            dataIndex: '',
-            align: 'left' as 'left',
-        },
+        // {
+        //     title: 'Activo Fijo',
+        //     dataIndex: '',
+        //     align: 'left' as 'left',
+        // },
+        // {
+        //     title: 'CBML',
+        //     dataIndex: '',
+        //     align: 'left' as 'left',
+        // },
+        // {
+        //     title: 'Dirección',
+        //     dataIndex: '',
+        //     align: 'left' as 'left',
+        // },
         {
             title: 'Numero de contrato',
-            dataIndex: '',
+            dataIndex: 'decree_number',
             align: 'left' as 'left',
         },
         {
-            title: 'Estado',
-            dataIndex: '',
+            title: 'Tipo de contrato',
+            dataIndex: 'type_contract',
             align: 'left' as 'left',
         },
+        // {
+        //     title: 'Estado',
+        //     dataIndex: '',
+        //     align: 'left' as 'left',
+        // },
         {
             title: 'Fecha Inicio',
-            dataIndex: '',
+            dataIndex: 'decree_date',
             align: 'left' as 'left',
+            render: (date) => formatDate(parseInt(date))
         },
         {
             title: 'Fecha Terminación',
-            dataIndex: '',
+            dataIndex: 'finish_date',
             align: 'left' as 'left',
+            render: (date) => formatDate(parseInt(date))
         },
     ];
 
-    if (guards.detailContract({ user })) {
-        acciones.children.push(ver)
-    }
+    // if (guards.detailContract({ user })) {
+    //     acciones.children.push(ver)
+    // }
     if (guards.editContract({ user })) {
         acciones.children.push(editar)
     }
@@ -140,7 +148,7 @@ export const TableContract: FC<ContractProps> = ({ user }) => {
     return (
         <Table
             columns={table_columns}
-            items={[]}
+            items={contrats}
             with_pagination
         //count={total_results}
         //change_page={change_page}

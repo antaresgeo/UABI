@@ -20,7 +20,7 @@ export const EditDisposition = () => {
     const { id } = useParams<IProps>();
     const dispatch = useDispatch();
     const history = useHistory();
-    const location = useLocation<IParams>();
+    // const location = useLocation<IParams>();
     // console.log(location)
     const realEstate: IRealEstateAttributes = useSelector((states: any) => states.acquisitions.realEstate.value);
     const [dispositionType, setDispositionType] = useState('');
@@ -53,9 +53,9 @@ export const EditDisposition = () => {
                                 />
                             </Card> */}
 
-                            <Card title="Contratos del Bien Inmueble">
-                                <TableContract />
-                            </Card>
+                            {/*<Card title="Contratos del Bien Inmueble">*/}
+                            {/*    <TableContract />*/}
+                            {/*</Card>*/}
                         </div>
                     </div>
                 </div>
