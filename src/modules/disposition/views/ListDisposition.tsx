@@ -13,7 +13,7 @@ export const ListDisposition = () => {
 
     const filter = async (_filters, _) => {
         set_filters(_filters);
-        await dispatch(actions.getRealEstates({ page: 1, with: 'pagination', ..._filters }));
+        await dispatch(actions.getRealEstates({ page: 1, with: 'pagination', to: "disposition", ..._filters }));
     };
 
     // const change_page = (page, pageSize) => {

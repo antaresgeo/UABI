@@ -34,14 +34,14 @@ export interface Company {
 
 export const get_all_contracts = async (filters?) => {
     try {
-        //console.log(filters);
-        // const URI = '';
-        // const res: AxiosResponse<AllCompaniesResponse> = await http.get(URI, {
-        //     params: {
-        //         ...filters,
-        //     },
-        // });
-        // return res.data;
+        console.log(filters);
+        const URI = '/contracts/';
+        const res: AxiosResponse<AllCompaniesResponse> = await http.get(URI, {
+            params: {
+                ...filters,
+            },
+        });
+        return res.data;
     } catch (e) {
         return Promise.reject('Error');
     }
@@ -120,7 +120,7 @@ export const update_contract = async (id, data) => {
         return Promise.reject('Error');
     }
 };
-export const delete_contract = async (id, ) => {
+export const delete_contract = async (id) => {
     try {
         // const URI = '/insurance-companies/';
         // const res: AxiosResponse<CompanyResponse> = await http.put(
