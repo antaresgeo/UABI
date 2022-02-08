@@ -254,9 +254,9 @@ export const TableAreas = () => {
                             const res: any = await CreateRealEstate(DataRealEstate);
                             console.log(res)
                             if (res) {
-                                console.log('editar')
-                                const resUpdate: any = await updateRealEstates(realEstatesEdit);
-                                console.log(resUpdate)
+                                // console.log('editar')
+                                // const resUpdate: any = await updateRealEstates(realEstatesEdit);
+                                // console.log(resUpdate)
                                 swal_success.fire({
                                     title: `action realizado satisfactoriamente`,
                                     text: res.data.message,
