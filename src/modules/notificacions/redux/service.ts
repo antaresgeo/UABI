@@ -103,7 +103,7 @@ export interface _Notification {
     description: string;
     action: string;
     priority: number;
-    toRole?: number;
+    toRole?: string;
     _from?: number;
     _to?: number;
 }

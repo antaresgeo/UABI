@@ -21,10 +21,28 @@ const RealEstate = () => {
     const createRealEstate = async (values, form, isFinish) => {
         try {
             const res: any = await dispatch(actions.createRealEstate(values));
-            if(res){
+            await create_notification({
+                subject: 'Creación de un activo fijo',
+                description: `se ha creado un bien inmueble con matrícula ${res.registry_number} asignado al proyecto ${res.project.name}`,
+                action: `/acquisitions/real-estates/${res.id}/`,
+                priority: 2,
+                toRole: "3"
+            });
+
+            await create_notification({
+                subject: 'Creación de un activo fijo',
+                description: `se ha creado un bien inmueble con matrícula ${res.results.registry_number} asignado al proyecto ${res.results.project.name}`,
+                action: `/acquisitions/real-estates/${res.results.id}/`,
+                priority: 2,
+                toRole: "5"
+            });
+            if (res) {
+                console.log('adentro',res)
+
                 if (values.acquisitions.length > 0) {
                     await dispatch(actions.createAcquisitionForRealEstate(res.id, values.acquisitions));
                 }
+
                 if (isFinish) {
                     history.push(`/acquisitions/real-estates/`);
                 } else {
@@ -32,23 +50,8 @@ const RealEstate = () => {
                         return await dispatch(actions.getRealEstatesByProject(res.project_id));
                     }
                 }
+
             }
-
-            await create_notification({
-                subject: 'Creación de un activo fijo',
-                description: `se ha creado un bien inmueble con matrícula ${res.results.registry_number} asignado al proyecto ${res.results.project.name}`,
-                action: `/acquisitions/real-estates/${res.results.id}/`,
-                priority: 2,
-                toRole: 3
-            });
-
-            await create_notification({
-                subject: 'Creación de un activo fijo',
-                description: `se ha creado un bien inmueble con matrícula ${res.results.registry_number} asignado al proyecto ${res.results.project.name}`,
-                action: `/acquisitions/real-estates/${res.results.id}/`,
-                priority: 2,
-                toRole: 5
-            });
             return Promise.resolve(false);
         } catch (e) {
             return Promise.reject();
