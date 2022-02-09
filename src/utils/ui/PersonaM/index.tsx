@@ -124,8 +124,12 @@ export const PersonalInformationForm = ({
         phoneNumber: '',
         phoneNumber_ext: '',
         gender: '',
+        post: '',
+        location_id: '',
         ...persona,
     };
+
+    console.log('personaM inicial',initial_values)
 
     const schema = Yup.object().shape({
         documentType: Yup.string().required('obligatorio'),
@@ -181,6 +185,8 @@ export const PersonalInformationForm = ({
                         setFieldValue('phoneNumber_ext', res.phone_number_ext ?? '', false);
                         setFieldValue('gender', res.gender ?? '', false);
                         setFieldValue('id', res.id ?? '', false);
+                        setFieldValue('company_name', res.company_name ?? '', false);
+                        // setFieldValue('company_name', res.company_name ?? '', false);
                     });
                 };
                 return (
@@ -428,7 +434,11 @@ export const PersonalInformationForm = ({
                                     />
                                     <ErrorMessage name="post" />
                                 </div>
-                                <div className="col-6">
+                            </div>
+                        )}
+                        {disposition && withNit && (
+                            <div className="row">
+                                <div className="col">
                                     <label htmlFor="location_id" className="form-label">
                                         Direccion
                                     </label>
@@ -446,8 +456,8 @@ export const PersonalInformationForm = ({
                                                 view="user"
                                                 onSave={async (values: any) => {
                                                     console.log('valores modal', values);
-                                                    // formik.setFieldValue('location.commune', `${values.commune_name}`, false);
-                                                    // formik.setFieldValue('location.neighborhood', `${values.neighborhood_name}`, false);
+                                                    setFieldValue('location_id', `${values.id}`, false);
+                                                    setFieldValue('location', `${values.address}`, false);
                                                     return Promise.resolve();
                                                 }}
                                             />

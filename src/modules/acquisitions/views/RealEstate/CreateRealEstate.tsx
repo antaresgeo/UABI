@@ -21,6 +21,12 @@ const RealEstate = () => {
     const createRealEstate = async (values, form, isFinish) => {
         try {
             const res: any = await dispatch(actions.createRealEstate(values));
+            if (res) {
+                if (values.acquisitions.length > 0) {
+                    console.log('crear adquisicion')
+                    await dispatch(actions.createAcquisitionForRealEstate(res.id, values.acquisitions));
+                }
+            }
             await create_notification({
                 subject: 'Creación de un activo fijo',
                 description: `se ha creado un bien inmueble con matrícula ${res.registry_number} asignado al proyecto ${res.project.name}`,
@@ -36,22 +42,15 @@ const RealEstate = () => {
                 priority: 2,
                 toRole: "5"
             });
-            if (res) {
-                console.log('adentro',res)
 
-                if (values.acquisitions.length > 0) {
-                    await dispatch(actions.createAcquisitionForRealEstate(res.id, values.acquisitions));
+            if (isFinish) {
+                history.push(`/acquisitions/real-estates/`);
+            } else {
+                if (res) {
+                    return await dispatch(actions.getRealEstatesByProject(res.project_id));
                 }
-
-                if (isFinish) {
-                    history.push(`/acquisitions/real-estates/`);
-                } else {
-                    if (res) {
-                        return await dispatch(actions.getRealEstatesByProject(res.project_id));
-                    }
-                }
-
             }
+
             return Promise.resolve(false);
         } catch (e) {
             return Promise.reject();

@@ -4,12 +4,7 @@ import service from '../services';
 import { AdquisitionsItf } from '../../../../utils/interfaces';
 
 // REAL ESTATES
-export const getRealEstates = (filters: {
-    with?: string;
-    page?: number;
-    pageSize?: 10 | 20 | 30;
-    q?: {};
-}) => {
+export const getRealEstates = (filters) => {
     //console.log('action:', filters.q);
     return request_dispatch(types.realEstates, service.getRealEstates(filters));
 };

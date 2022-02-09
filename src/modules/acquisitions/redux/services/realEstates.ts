@@ -173,15 +173,15 @@ export const createRealEstate = async (
     try {
         let URI = `/real-estates`;
         const docs: any = await compute_docs(data.supports_documents);
+        let res:  AxiosResponse<IRealEstateResponse> ;
         if (docs) {
-            console.log(docs);
 
-            let res: AxiosResponse<IRealEstateResponse> = await http.post(
+            res = await http.post(
                 URI,
                 aux_data
             );
             const docs_ids = await upload_documents(docs);
-            console.log(docs_ids);
+
             await http.put(
                 URI,
                 { supports_documents: docs_ids || '' },
@@ -189,8 +189,9 @@ export const createRealEstate = async (
                     params: { id: res.data.results.id },
                 }
             );
-            return res.data.results;
+            console.log('enviar', res)
         }
+        return res?.data?.results || "";
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');

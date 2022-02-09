@@ -36,6 +36,7 @@ const EditPolicy = () => {
     useEffect(() => {
         if(realEstatesPolicy.length > 0) {
             const id_bis = realEstatesPolicy.map(r => r.id).join(",");
+            console.log(id_bis)
             realEstatesWithoutPolicy(id_bis);
         }
     }, [realEstatesPolicy]);

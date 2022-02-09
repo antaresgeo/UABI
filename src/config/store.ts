@@ -8,6 +8,7 @@ import { reducer as inspectionReducer } from './../modules/inspection/redux';
 import { reducer as authReducer } from './../modules/auth/redux';
 import { reducer as generalListReducer } from './../modules/general_list/redux';
 import { reducer as dispostionReducer } from './../modules/disposition/redux';
+import { reducer as documentManagementReducer } from './../modules/document_management/redux';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -21,7 +22,8 @@ const store = createStore(
         inspection: inspectionReducer,
         auth: authReducer,
         generalList: generalListReducer,
-        disposition: dispostionReducer
+        disposition: dispostionReducer,
+        documentManagement: documentManagementReducer
     }),
     composeEnhancer(applyMiddleware(thunk))
 );

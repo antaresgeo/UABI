@@ -12,14 +12,12 @@ const ElectronicFielList = () => {
     ]);
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.getRealEstates({ page, pageSize, with: 'pagination', /*...filters*/ }));
+        dispatch(actions.getRealEstates({key: 'registry_number', page, pageSize, with: 'pagination', /*...filters*/ }));
     };
 
     useEffect(() => {
         dispatch(actions.clearRealEstates());
     }, []);
-
-    console.log(realEstates)
 
     const table_columns = [
         {
@@ -31,7 +29,7 @@ const ElectronicFielList = () => {
             title: 'Proyecto',
             dataIndex: 'project',
             align: 'left' as 'left',
-            render: (project) => project.name
+            render: (project) => project?.name
         },
         {
             title: 'Bien Inmueble',
@@ -47,7 +45,7 @@ const ElectronicFielList = () => {
             title: 'Dirección',
             dataIndex: 'address',
             align: 'left' as 'left',
-            render: (address) => address.address
+            render: (address) => address?.address
 
         },
         {
