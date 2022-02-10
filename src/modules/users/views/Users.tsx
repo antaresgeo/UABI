@@ -25,7 +25,7 @@ const Users = () => {
     };
 
     const change_page = (page, pageSize) => {
-        dispatch(actions.get_all_users({ page, pageSize, ...filters }));
+        dispatch(actions.get_all_users({key: 'name', with: 'pagination', page, pageSize, ...filters }));
     };
 
     useEffect(() => {

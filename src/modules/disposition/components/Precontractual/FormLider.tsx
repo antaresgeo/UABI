@@ -1,8 +1,7 @@
 import { Field } from 'formik';
 import { FC } from 'react';
 import ErrorMessage from '../../../../utils/ui/error_messge'
-import LocationModal from '../../../../utils/components/Location/LocationModal';
-import Index from '../../../../utils/ui/PersonaM';
+import PersonaM from '../../../../utils/ui/PersonaM';
 
 interface FormProps {
     lease?: boolean;
@@ -57,8 +56,10 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         Información Lider<span className="text-danger">*</span>
                     </label>
                     <Field
-                        component={Index}
+                        component={PersonaM}
                         name="leader"
+                        disposition={true}
+                        withNit={true}
                     />
                     <ErrorMessage name="leader" />
                 </div>
@@ -67,8 +68,9 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         Elaboró<span className="text-danger">*</span>
                     </label>
                     <Field
-                        component={Index}
+                        component={PersonaM}
                         name="elaborated"
+                        disposition={true}
                     />
                     <ErrorMessage name="elaborated" />
                 </div>
@@ -79,8 +81,9 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         Revisó<span className="text-danger">*</span>
                     </label>
                     <Field
-                        component={Index}
+                        component={PersonaM}
                         name="revised"
+                        disposition={true}
                     />
                     <ErrorMessage name="revised" />
                 </div>
@@ -89,8 +92,9 @@ const FormLider: FC<FormProps> = ({ lease, formik }) => {
                         Aprobó<span className="text-danger">*</span>
                     </label>
                     <Field
-                        component={Index}
+                        component={PersonaM}
                         name="approved"
+                        disposition={true}
                     />
                     <ErrorMessage name="approved" />
                 </div>

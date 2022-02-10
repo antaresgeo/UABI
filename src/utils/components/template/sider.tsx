@@ -188,10 +188,10 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                     path: '/document-management/master_formats/',
                     name: 'Máster de Formatos',
                 },
-                // {
-                //     path: '/document-management/electronic_file/list',
-                //     name: 'Expediente Electrónico',
-                // },
+                {
+                    path: '/document-management/electronic_file/list',
+                    name: 'Expediente Electrónico',
+                },
             ],
         },
         {

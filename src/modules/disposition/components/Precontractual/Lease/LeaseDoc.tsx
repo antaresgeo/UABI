@@ -80,7 +80,7 @@ const LeaseDoc = () => {
                                 representative: {
                                     id: values.representative.id
                                 },
-                                active_code: "AM0003L",
+                                active_code: realEstate?.active_code,
                                 type_disposition: "Arrendamiento"
 
                             }
@@ -99,7 +99,7 @@ const LeaseDoc = () => {
                                 res = await dispatch(actions.create_precontract(final_values, 'Arrendamiento'))
                             }
                             console.log('valores',final_values)
-                            history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
+                            history.push({ pathname: `/dispositions/precontractual/view/${realEstate.active_code}`, state: {  realEstate } })
 
                             // if (values.public_service === "Recobro") {
                             //     value_public_service = values.recovery_value;

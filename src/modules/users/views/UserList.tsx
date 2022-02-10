@@ -29,7 +29,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
 
         if (result.isConfirmed) {
             await dispatch(actions.delete_user(id));
-            await dispatch(actions.get_all_users({}));
+            await dispatch(actions.get_all_users({key: 'name', with: 'pagination'}));
         } else if (result.isDenied) {
             swal.close();
         }
@@ -102,11 +102,11 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
                     }`;
             },
         },
-        {
-            title: 'Nombre',
-            dataIndex: 'names',
-            align: 'left' as 'left',
-        },
+        // {
+        //     title: 'Nombre',
+        //     dataIndex: 'names',
+        //     align: 'left' as 'left',
+        // },
         // {
         //     title: 'rol',
         //     dataIndex: 'extra',
