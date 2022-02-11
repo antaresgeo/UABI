@@ -530,7 +530,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                         Guardar y Finalizar
                                         {formik.isSubmitting && (
                                             <i
-                                                className="fa fa-circle-notch fa-spin"
+                                                className="fa fa-spinner fa-spin"
                                                 style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
                                             />
                                         )}
@@ -549,7 +549,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                         Guardar y Crear otro
                                         {formik.isSubmitting && (
                                             <i
-                                                className="fa fa-circle-notch fa-spin"
+                                                className="fa fa-spinner fa-spin"
                                                 style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
                                             />
                                         )}
@@ -571,7 +571,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             Guardar
                                             {formik.isSubmitting && (
                                                 <i
-                                                    className="fa fa-circle-notch fa-spin"
+                                                    className="fa fa-spinner fa-spin"
                                                     style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
                                                 />
                                             )}

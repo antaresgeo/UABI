@@ -3,6 +3,7 @@ import { IRoute } from '../../utils/components/app_router/custom_types';
 import Master_formats from './views/Master_formats';
 import Electronic_file_list from './views/Electronic_file_list';
 import Electronic_file from './views/Electronic_file';
+import MassiveCharge from "./views/massive_charge";
 
 const get_routes = (): IRoute[] => {
     return [
@@ -42,6 +43,18 @@ const get_routes = (): IRoute[] => {
                 ],
             },
             component: Electronic_file_list,
+        },
+        {
+            exact: true,
+            is_private: true,
+            can_access: true,
+            path: '/document-management/massive_charge/',
+            template_props: {
+                breadcrumbs: [
+                    { name: 'Carga Masiva' },
+                ],
+            },
+            component: MassiveCharge,
         },
     ];
 };

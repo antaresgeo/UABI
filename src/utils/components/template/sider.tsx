@@ -192,6 +192,10 @@ const Sider: FC<{ width: number }> = ({ width }) => {
                     path: '/document-management/electronic_file/list',
                     name: 'Expediente Electrónico',
                 },
+                {
+                    path: '/document-management/massive_charge/',
+                    name: 'Carga Masiva',
+                },
             ],
         },
         {
