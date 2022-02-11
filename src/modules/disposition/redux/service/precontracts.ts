@@ -33,6 +33,21 @@ const create_Loan = async (data: any) => {
         return Promise.reject('Error');
     }
 };
+const create_public = async (data: any) => {
+
+    try {
+        let URI = `/public-use`;
+        let res: AxiosResponse<any> = await http.post(
+            URI,
+            data
+        );
+        await swal_success.fire('Estudio Previo de uso Público Creado', res.data.message, 'success');
+        return res.data;
+
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
 
 export const create_precontract = async (data: any, type) => {
 
@@ -45,9 +60,8 @@ export const create_precontract = async (data: any, type) => {
             create_Lease(data);
 
             break;
-        case "Uso Público":
-            console.log('en desarrollo')
-
+        case "Publico":
+            create_public(data);
             break;
 
         default:

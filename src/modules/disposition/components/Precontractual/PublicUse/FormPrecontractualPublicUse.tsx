@@ -1,6 +1,5 @@
 import { Field } from 'formik';
 import ErrorMessage from '../../../../../utils/ui/error_messge';
-import Tooltip from 'antd/lib/tooltip';
 import { FC, useState } from 'react';
 import { LinkButton } from '../../../../../utils/ui/link';
 import moment from 'moment';
@@ -213,7 +212,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                             const obligations_list = [
                                 ...formik.values.obligations,
                                 {
-                                    id: idDisposition,
+                                    key: idDisposition,
                                     obligation: '',
                                 },
                             ];
@@ -275,7 +274,7 @@ export const FormPrecontractualPublicUse: FC<FormProps> = ({ formik }) => {
                             const prohibitions_list = [
                                 ...formik.values.prohibitions,
                                 {
-                                    id: idProhibition,
+                                    key: idProhibition,
                                     prohibition: '',
                                 },
                             ];

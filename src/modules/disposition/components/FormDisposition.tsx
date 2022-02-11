@@ -5,9 +5,10 @@ import { actions } from '../../acquisitions/redux';
 interface DispositionFormPros {
     dispositionType: string;
     realEstate: any;
+    contractual: any;
 }
 
-export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, realEstate }) => {
+export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, realEstate, contractual }) => {
     const dispatch = useDispatch();
     const tipology: any = useSelector((store: any) => store.acquisitions.tipology.value);
     useEffect(() => {

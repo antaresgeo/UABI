@@ -186,7 +186,8 @@ export const PersonalInformationForm = ({
                         setFieldValue('gender', res.gender ?? '', false);
                         setFieldValue('id', res.id ?? '', false);
                         setFieldValue('company_name', res.company_name ?? '', false);
-                        // setFieldValue('company_name', res.company_name ?? '', false);
+                        setFieldValue('location', res?.localization?.address ?? '', false);
+                        setFieldValue('post', res?.post ?? '', false);
                     });
                 };
                 return (

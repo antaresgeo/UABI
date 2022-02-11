@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-const Detail_publicUse = () => {
+interface IPros {
+    precontractual: any;
+
+}
+
+const DetailPublicUse: FC<IPros> = ({ precontractual }) => {
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -13,39 +18,37 @@ const Detail_publicUse = () => {
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Fecha de Registro estudio previo</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{precontractual?.registration_date}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Número Prediación</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{precontractual?.prediation_number}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Fecha de Prediación</label>
-                                <div className="my-3">
-                                </div>
+                                <div className="my-3">{precontractual?.prediation_date}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Duración del contrato</label>
-                                <div className="my-3">
-                                </div>
+                                <div className="my-3">{precontractual?.contract_period} meses</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Base asegurable</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{precontractual?.lockable_base}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Valor de avalúo Catastral</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{precontractual?.cadastral_value}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Valor del contrato</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{precontractual?.contract_value}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Tipo de negocio</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{precontractual?.business_type}</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
@@ -53,11 +56,7 @@ const Detail_publicUse = () => {
                                 <label htmlFor="">Riesgos Ambientales</label>
                                 <div className="my-3" style={{ height: '60px', overflowX: 'auto' }}>
                                     <div style={{ width: '1000px' }}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus neque a ex
-                                        porta aliquet. Nunc malesuada auctor risus, ut condimentum mauris scelerisque
-                                        non. Aliquam erat volutpat. Nullam quis blandit elit. In non tincidunt eros, sed
-                                        pretium erat. Curabitur sollicitudin ex in odio pellentesque fringilla. Nulla
-                                        vehicula,
+                                        {precontractual?.environmental_risk}
                                     </div>
                                 </div>
                             </div>
@@ -65,11 +64,7 @@ const Detail_publicUse = () => {
                                 <label htmlFor="">Destinación de bien Inmueble</label>
                                 <div className="my-3" style={{ height: '60px', overflowX: 'auto' }}>
                                     <div style={{ width: '1000px' }}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus neque a ex
-                                        porta aliquet. Nunc malesuada auctor risus, ut condimentum mauris scelerisque
-                                        non. Aliquam erat volutpat. Nullam quis blandit elit. In non tincidunt eros, sed
-                                        pretium erat. Curabitur sollicitudin ex in odio pellentesque fringilla. Nulla
-                                        vehicula,
+                                        {precontractual?.destination_realestate}
                                     </div>
                                 </div>
                             </div>
@@ -79,11 +74,7 @@ const Detail_publicUse = () => {
                                 <label htmlFor="">Descripcion de linderos</label>
                                 <div className="my-3" style={{ height: '60px', overflowX: 'auto' }}>
                                     <div style={{ width: '1000px' }}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus neque a ex
-                                        porta aliquet. Nunc malesuada auctor risus, ut condimentum mauris scelerisque
-                                        non. Aliquam erat volutpat. Nullam quis blandit elit. In non tincidunt eros, sed
-                                        pretium erat. Curabitur sollicitudin ex in odio pellentesque fringilla. Nulla
-                                        vehicula,
+                                        {precontractual?.boundaries}
                                     </div>
                                 </div>
                             </div>
@@ -95,4 +86,4 @@ const Detail_publicUse = () => {
     )
 }
 
-export default Detail_publicUse
+export default DetailPublicUse

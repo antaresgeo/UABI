@@ -6,7 +6,7 @@ interface FormPros {
     person?: any;
 }
 
-const ViewPerson: FC<FormPros> = ({dispositionType, title,  person }) =>  {
+const ViewPerson: FC<FormPros> = ({ dispositionType, title, person }) => {
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -24,7 +24,7 @@ const ViewPerson: FC<FormPros> = ({dispositionType, title,  person }) =>  {
                             <div className="col-6">
                                 <label htmlFor="">Nombre</label>
                                 <div className="my-3">
-                                    {person?.document_type !== "NIT" ? `${person?.first_name ?? ""} ${person?.last_name ?? ""} ${person?.first_surname ?? ""} ${person?.last_surname ?? ""} ` : person?.company_name }
+                                    {person?.document_type !== "NIT" ? `${person?.first_name ?? ""} ${person?.last_name ?? ""} ${person?.first_surname ?? ""} ${person?.last_surname ?? ""} ` : person?.company_name}
                                 </div>
                             </div>
                             <div className="col-3">
@@ -37,15 +37,18 @@ const ViewPerson: FC<FormPros> = ({dispositionType, title,  person }) =>  {
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                            <div className="col-3">
-                                <label htmlFor="">Genero</label>
-                                <div className="my-3">{person?.gender === "F" ? "Femenino" : person?.gender === "M" ? "Masculino" : "otro" }</div>
-                            </div>
+                            {person?.document_type !== "NIT" &&
+                                <div className="col-3">
+                                    <label htmlFor="">Genero</label>
+                                    <div className="my-3">{person?.gender === "F" ? "Femenino" : person?.gender === "M" ? "Masculino" : "otro"}</div>
+                                </div>
+
+                            }
                             <div className="col-3">
                                 <label htmlFor="">Direccion</label>
                                 <div className="my-3">{person?.location?.address}</div>
                             </div>
-                            <div className="col-3">
+                            <div className={person?.document_type !== "NIT" ? `col-3` : "col-6"}>
                                 <label htmlFor="">Correo Electronico</label>
                                 <div className="my-3">{person?.email}</div>
                             </div>

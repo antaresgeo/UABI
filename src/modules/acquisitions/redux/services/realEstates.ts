@@ -180,7 +180,7 @@ export const createRealEstate = async (
                 URI,
                 aux_data
             );
-            const docs_ids = await upload_documents(docs);
+            const docs_ids = await upload_documents(docs, res.data.results.id);
 
             await http.put(
                 URI,
@@ -231,8 +231,8 @@ export const createRealEstates = async (data: any, quantity) => {
 
 
         const docs_ids = await Promise.all(
-            docs.map(async (d) => {
-                return await upload_documents(d);
+            docs.map(async (d, i) => {
+                return await upload_documents(d, res.data.results[i].id );
             })
         );
 
@@ -331,7 +331,7 @@ export const updateRealEstate = async (data: any, id: number) => {
                     params: { id },
                 }
             );
-            const docs_ids = await upload_documents(docs);
+            const docs_ids = await upload_documents(docs, res.data.results.id);
             await http.put(
                 URI,
                 { supports_documents: docs_ids || '' },

@@ -8,33 +8,28 @@ import FormPrecontractualLease from './FormPrecontractualLease';
 import * as Yup from 'yup';
 import { FC, useEffect, useState } from 'react';
 import moment from 'moment';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, } from 'react-redux';
 import { actions } from '../../../redux';
+import { swal_success } from '../../../../../utils/index';
 
 interface FormPros {
     innerRef?: any;
     realEstate?: any;
     onSubmit?: (values, form?, isFinish?: boolean) => Promise<any>;
     values_form?: any;
+    precontractual?: any;
 }
 
-export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_form }) => {
-    console.log(realEstate)
+export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_form, precontractual }) => {
+
     const [edit, setEdit] = useState(false);
     const dispatch = useDispatch();
-    const precontractual: any = useSelector((state: any) => {
-        return state.disposition.precontractual?.value;
-    });
 
     useEffect(() => {
         if (precontractual) {
             setEdit(true);
         }
     }, [precontractual]);
-
-    useEffect(() => {
-        dispatch(actions.get_precontract(realEstate?.active_code));
-    }, [dispatch, realEstate]);
 
     let initialValues = {
         environmental_risk: '',
@@ -110,6 +105,7 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
                 gender: precontractual?.leader?.gender || "",
                 post: precontractual?.leader?.post || "",
                 location_id: precontractual?.leader?.location_id || "",
+                location: precontractual?.leader?.location?.address || "",
             },
             elaborated: {
                 id: precontractual?.elaborated?.id || "",
@@ -166,17 +162,15 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
                 gender: precontractual?.applicant?.gender || "",
                 post: precontractual?.applicant?.post || "",
                 location_id: precontractual?.applicant?.location_id || "",
+                location: precontractual?.applicant?.location?.address || "",
             },
-
             business_type: {
                 select:
                     precontractual?.business_type === 'Restaurante'
                         ? precontractual?.business_type
                         : precontractual?.business_type === 'Cafetería'
                             ? precontractual?.business_type
-                            : precontractual?.business_type === 'otro'
-                                ? precontractual?.business_type
-                                : '',
+                            : "otro",
                 input:
                     precontractual?.business_type !== 'Restaurante'
                         ? precontractual?.business_type
@@ -189,14 +183,7 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
         },
         ...values_form,
     };
-    console.log(initialValues)
-    // if (precontractual) {
-    //     initialValues.prediation_date = moment(new Date(Number(initialValues?.prediation_date))).format('YYYY-MM-DD');
-    //     initialValues.registration_date = moment(new Date(Number(initialValues?.registration_date))).format(
-    //         'YYYY-MM-DD'
-    //     );
-    //     initialValues.
-    // }
+
 
     const submit = (values, actions) => {
         values = {
@@ -210,76 +197,30 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
     };
 
     const schema = Yup.object().shape({
-        // //general
-        // public_service: Yup.string().required('obligatorio'),
-        // administration_value: Yup.number().required('obligatorio'),
-        // lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
-        // //business_type: Yup.string().required('obligatorio'),
-        // fines: Yup.string().required('obligatorio'),
-        // boundaries: Yup.string().required('obligatorio'),
-        // // solo arrrendamiento
-        // prediation_number: Yup.string().required('obligatorio'),
-        // prediation_date: Yup.string().required('obligatorio'),
-        // destination_realestate: Yup.string().required('obligatorio'),
-        // contract_period: Yup.number().required('obligatorio'),
-        // appraisal_number: Yup.number().required('obligatorio'),
-        // appraisal_date: Yup.string().required('obligatorio'),
-        // environmental_risk: Yup.string().required('obligatorio'),
-        // // Solicitante
-        // applicant: Yup.object({
-        //     person_type: Yup.string().required('obligatorio'),
-        //     company_name: Yup.string().when('person_type', {
-        //         is: "Persona Juridica",
-        //         then: Yup.string().required('obligatorio')
-        //     }),
-        //     document_number: Yup.number().when('person_type', {
-        //         is: "Persona Juridica",
-        //         then: Yup.number().required('obligatorio')
-        //     }),
-        //     company_phone_number: Yup.number().when('person_type', {
-        //         is: "Persona Juridica",
-        //         then: Yup.number().required('obligatorio')
-        //     }),
-        //     company_email: Yup.string().email().when('person_type', {
-        //         is: "Persona Juridica",
-        //         then: Yup.string().email().required('obligatorio')
-        //     }),
-        // }),
-        // detailsApplicant: Yup.object().when('applicant.person_type', {
-        //     is: "Persona Natural",
-        //     then: Yup.object().required('obligatorio'),
-        // }),
-        // location_applicant: Yup.object({
-        //     address: Yup.string().required('obligatorio')
-        // }),
-        // //representante
-        // detailsRepresentative: Yup.object().when('applicant.person_type', {
-        //     is: "Persona Juridica",
-        //     then: Yup.object().required('obligatorio'),
-        // }),
-        // //lider y personas a cargo
-        // detailsLeader: Yup.object().required('obligatorio'),
-        // // location_leader: Yup.object({
-        // //     address: Yup.string().required('obligatorio')
-        // // }),
-        // elaborated: Yup.object({
-        //     first_name: Yup.string().required('obligatorio'),
-        //     first_surname: Yup.string().required('obligatorio'),
-        //     post: Yup.string().required('obligatorio'),
-        //     email: Yup.string().required('obligatorio')
-        // }),
-        // revised: Yup.object({
-        //     first_name: Yup.string().required('obligatorio'),
-        //     first_surname: Yup.string().required('obligatorio'),
-        //     post: Yup.string().required('obligatorio'),
-        //     email: Yup.string().required('obligatorio')
-        // }),
-        // approved: Yup.object({
-        //     first_name: Yup.string().required('obligatorio'),
-        //     first_surname: Yup.string().required('obligatorio'),
-        //     post: Yup.string().required('obligatorio'),
-        //     email: Yup.string().required('obligatorio')
-        // }),
+        //general
+        public_service: Yup.string().required('obligatorio'),
+        administration_value: Yup.number().required('obligatorio'),
+        lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
+        business_type: Yup.object({
+            select: Yup.string().required('obligatorio'),
+            input: Yup.string().when('select', {
+                is: "otro",
+                then: Yup.string().required('obligatorio')
+            }),
+        }),
+        fines: Yup.string().required('obligatorio'),
+        boundaries: Yup.string().required('obligatorio'),
+        // solo arrrendamiento
+        prediation_number: Yup.string().required('obligatorio'),
+        prediation_date: Yup.string().required('obligatorio'),
+        destination_realestate: Yup.string().required('obligatorio'),
+        contract_period: Yup.number().required('obligatorio'),
+        appraisal_number: Yup.number().required('obligatorio'),
+        appraisal_date: Yup.string().required('obligatorio'),
+        environmental_risk: Yup.string().required('obligatorio'),
+
+        // applicant: Yup.object().required('obligatorio'),
+
     });
 
     return (
@@ -293,7 +234,34 @@ export const GeneralFormLease: FC<FormPros> = ({ onSubmit, innerRef, realEstate,
             {(formik) => {
                 return (
                     <Form>
-                        <Card title="Estudio previo para Arrendamiento" extra={<ModalNotificar />}>
+                        <Card title="Estudio previo para Arrendamiento" extra={
+                            <>
+                                <ModalNotificar />
+                                {precontractual &&
+                                    <button
+                                        type="button"
+                                        className='btn btn-primary'
+                                        style={{ marginLeft: '5px' }}
+                                        onClick={async () => {
+                                            await dispatch(actions.inactivate_precontract(precontractual?.active_code));
+                                            swal_success.fire({
+                                                title: `estudio Previo inactivado`,
+                                                text: "puede iniciar un nuevo proceso precontractual",
+                                                icon: 'success',
+                                                showConfirmButton: false,
+                                                timer: 1500,
+                                            });
+                                            precontractual = {}
+
+                                            // dispatch(actions.get_precontract(realEstate?.active_code));
+                                        }}
+
+                                    >
+                                        Iniciar Nuevo Proceso
+                                    </button>
+                                }
+                            </>
+                        }>
                             <FormPrecontractualLease formik={formik} />
                         </Card>
                         <Card title="Información del solicitante">

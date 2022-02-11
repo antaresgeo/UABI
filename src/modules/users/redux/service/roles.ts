@@ -25,7 +25,7 @@ export const getRole = async (id: number): Promise<IRolAttributes | number> => {
 };
 
 export const getRolesList = async (filters?): Promise<any> => {
-    console.log(filters)
+    // console.log(filters)
     try {
         let URI = `/roles/`;
         let res: AxiosResponse<IRolesResponse> = await auth_http.get(URI, {

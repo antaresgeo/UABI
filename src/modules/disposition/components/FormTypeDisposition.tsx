@@ -2,32 +2,25 @@ import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Select from '../../../utils/ui/select';
 import { FC, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import actions from './../redux/actions';
 
 
 interface DispositionFormPros {
     realEstate: any;
     onTypeDispositionChange?: (value) => void;
+    precontractual?: any;
+    dispositionType: string;
 }
 
-export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTypeDispositionChange }) => {
+export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTypeDispositionChange, precontractual, dispositionType }) => {
 
-    const dispatch = useDispatch();
-    const precontractual: any = useSelector((state: any) => {
-        return state.disposition.precontractual.value
-    });
     const [isDisabled, setIsDisabled] = useState(false);
-    console.log(precontractual)
-    useEffect(() => {
-        dispatch(actions.get_precontract(realEstate?.active_code));
-    }, [dispatch, realEstate]);
 
     useEffect(() => {
         if(precontractual) {
             onTypeDispositionChange(precontractual?.type_disposition)
             setIsDisabled(true)
-
+        }else {
+            setIsDisabled(false)
         }
     }, [onTypeDispositionChange, precontractual]);
 
@@ -35,7 +28,7 @@ export const FormTypeDisposition: FC<DispositionFormPros> = ({ realEstate, onTyp
     let initialValues = {
         destination_type: realEstate?.destination_type,
         disposition_type: realEstate?.disposition_type === null ? "" : realEstate?.disposition_type,
-        availability: precontractual ? precontractual?.type_disposition : "",
+        availability: precontractual ? dispositionType : "",
     };
 
 
