@@ -12,13 +12,14 @@ import { IRealEstateAttributes } from '../../../../utils/interfaces/components.i
 
 // Services: POST
 export const createPolicy = async (
-    data: any
+    data: any,
+    id?: number
 ): Promise<IPolicyAttributes | string> => {
     try {
         console.log('service', data);
         let URI = `/insurabilities`;
         const doc: any = await compute_doc_policy(data.insurance_document);
-        const create_doc: any = await create_document(doc);
+        const create_doc: any = await create_document(doc, null);
         console.log('doc', create_doc);
         delete data.insurance_document;
         delete data.registry_numbers;
@@ -137,7 +138,7 @@ export const updatePolicy = async (data: any, id: number) => {
             !data.insurance_document.hasOwnProperty('id') &&
             data.insurance_document.hasOwnProperty('pdf')
         ) {
-            new_doc = await create_document(data.insurance_document);
+            new_doc = await create_document(data.insurance_document, id);
             data.insurance_document_id = new_doc.id;
         }
 
@@ -154,7 +155,7 @@ export const updatePolicy = async (data: any, id: number) => {
         const finalData = {
             ...data,
             id: id,
-            insurance_broker_id: data.insurance_broker.id,
+            // insurance_broker_id: data.insurance_broker.id,
             insurance_document_id: data.insurance_document_id,
             insurance_companies: companias,
         };

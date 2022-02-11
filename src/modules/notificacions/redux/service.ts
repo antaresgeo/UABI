@@ -48,7 +48,7 @@ const format_response = (data) => {
 };
 
 export const get_all_notifications = async (filters?) => {
-    console.log(filters);
+    // console.log(filters);
     try {
         const URI = '/notifications/';
         const res: AxiosResponse<AllNotificationsResponse> =
@@ -59,7 +59,7 @@ export const get_all_notifications = async (filters?) => {
                 },
             });
         res.data.results = format_response(res?.data?.results);
-        console.log(filters);
+        // console.log(filters);
         return res.data;
     } catch (e) {
         return Promise.reject('Error');

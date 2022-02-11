@@ -21,12 +21,17 @@ const RealEstate = () => {
     const createRealEstate = async (values, form, isFinish) => {
         try {
             const res: any = await dispatch(actions.createRealEstate(values));
-            if (res) {
-                if (values.acquisitions.length > 0) {
-                    console.log('crear adquisicion')
-                    await dispatch(actions.createAcquisitionForRealEstate(res.id, values.acquisitions));
-                }
+
+            console.log('res', res)
+            console.log('ad', values.acquisitions.length)
+
+            if (res && values.acquisitions.length > 0) {
+                console.log('dentro de res', res);
+                console.log('dentro de adquisicones', values.acquisitions.length > 0)
+                console.log('crear adquisicion')
+                await dispatch(actions.createAcquisitionForRealEstate(res.id, values.acquisitions));
             }
+
             await create_notification({
                 subject: 'Creación de un activo fijo',
                 description: `se ha creado un bien inmueble con matrícula ${res.registry_number} asignado al proyecto ${res.project.name}`,

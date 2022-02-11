@@ -348,7 +348,7 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
             </Text>
             <Text style={styles.text}>
                 <Text style={styles.subtitle}>3. Solicitante:</Text>
-                <Text style={styles.subtitle}>{` ${values?.applicant?.company_name || ""} NIT: ${values?.applicant?.document_number}`}</Text>
+                <Text style={styles.subtitle}>{` ${values?.applicant?.company_name || ""} NIT: ${values?.applicant?.document_number ?? values?.applicant?.documentNumber}`}</Text>
             </Text>
             <Text style={styles.subtitle}>
                 4. Justificación de la contratación.

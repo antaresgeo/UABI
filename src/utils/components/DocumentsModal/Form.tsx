@@ -9,9 +9,10 @@ interface DocumentsFormProps {
     file_type: 'pdf' | 'img';
     innerRef: any;
     onSubmit: (values) => Promise<any>;
+    real_estate_id?: number;
 }
 
-const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, file_type, onSubmit }) => {
+const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, file_type, onSubmit, real_estate_id }) => {
     const has_name = !!name;
     const [is_correct_type, set_is_correct_type] = useState(true);
     // const [disable_upload, set_disable_upload] = useState(false);
@@ -19,6 +20,7 @@ const DocumentsForm: FC<DocumentsFormProps> = ({ name, innerRef, file_type, onSu
         name: name || '',
         file: null,
         fileList: [],
+        real_estate_id: real_estate_id || null,
     };
     const submit = (values, form) => {
         const res_values = { ...values };

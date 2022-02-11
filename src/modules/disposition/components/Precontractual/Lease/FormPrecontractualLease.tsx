@@ -29,9 +29,9 @@ const FormPrecontractualLease: FC<FormProps> = ({ formik }) => {
             default:
                 break;
         }
-        console.log((Number(formik.values.monthly_total) + Number(formik.values.administration_value) +Number(valueServPublic)))
-        console.log(parseInt(formik.values.monthly_total))
-        console.log(parseInt(formik.values.administration_value))
+        // console.log((Number(formik.values.monthly_total) + Number(formik.values.administration_value) +Number(valueServPublic)))
+        // console.log(parseInt(formik.values.monthly_total))
+        // console.log(parseInt(formik.values.administration_value))
         formik.setFieldValue(
             'contract_value',
             (Number(formik.values.monthly_total) + Number(formik.values.administration_value) +Number(valueServPublic)),

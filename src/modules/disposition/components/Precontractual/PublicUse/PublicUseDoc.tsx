@@ -47,9 +47,58 @@ const PublicUseDoc = () => {
                         <button
                             type="button"
                             className="btn btn-outline-primary"
-                            onClick={(values) => {
-                                dispatch(actions.create_precontract(values, dispositionType))
-                                //history.push({ pathname: "/disposition/create/", state: { dispositionType, realEstate, values } })
+                            onClick={async () => {
+                                console.log(values)
+                                let final_values = {
+                                    ...values,
+                                    applicant: {
+                                        id: values.applicant.id
+                                    },
+                                    prediation_date: new Date(values.prediation_date).getTime(),
+                                    registration_date: new Date(values.registration_date).getTime(),
+                                    leader: {
+                                        id: values.leader.id
+                                    },
+                                    operational_risk: {
+                                        ...values.operational_risk,
+                                        type: "operational"
+                                    },
+                                    regulatory_risk: {
+                                        ...values.regulatory_risk,
+                                        type: "regulatory"
+                                    },
+                                    approved: {
+                                        id: values.approved.id
+                                    },
+                                    revised: {
+                                        id: values.revised.id
+                                    },
+                                    elaborated: {
+                                        id: values.elaborated.id
+                                    },
+                                    representative: {
+                                        id: values.representative.id
+                                    },
+                                    active_code: realEstate?.active_code,
+                                    type_disposition: "Publico",
+
+                                }
+                                delete final_values.dependency;
+                                delete final_values.secretary;
+                                console.log('final', final_values)
+
+                                let res: any;
+                                if (final_values.edit === true) {
+                                    delete final_values.edit;
+                                    res = await dispatch(actions.update_precontract(realEstate?.active_code, final_values))
+
+                                } else {
+                                    delete final_values.edit;
+                                    res = await dispatch(actions.create_precontract(final_values, "Publico"))
+                                }
+                                console.log(res)
+
+                                history.push({ pathname: `/dispositions/precontractual/view/${realEstate.active_code}`, state: { realEstate } })
                             }}
                         >
                             guardar y descargar

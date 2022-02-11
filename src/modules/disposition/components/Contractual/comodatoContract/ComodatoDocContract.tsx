@@ -3,6 +3,8 @@ import '../../../../../utils/assets/styles/contract_comodato.css';
 import { useLocation, useHistory } from 'react-router-dom';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import ComodatoContractPdf from './ComodatoContractPdf';
+import actions from './../../../redux/actions';
+import { useDispatch } from 'react-redux';
 interface IParams {
     values_contract: any;
     realEstate: any;
@@ -12,6 +14,7 @@ interface IParams {
 const ComodatoDocContract = () => {
     const location = useLocation<IParams>();
     const history = useHistory();
+    const dispatch = useDispatch();
     const { values_contract, realEstate, dispositionType } = location.state;
     console.log(values_contract, realEstate, dispositionType);
     const comodato = {
@@ -151,7 +154,25 @@ const ComodatoDocContract = () => {
                 <button
                     type="button"
                     className="btn btn-outline-primary"
-                    onClick={() => { }}
+                    onClick={async () => {
+                        let res: any;
+                        console.log(values_contract)
+                        const final_values = {
+                            ...values_contract,
+                            type_contract: "Comodato"
+
+                        }
+                        if (values_contract.edit === true) {
+                            delete values_contract.edit;
+                            res = await dispatch(actions.update_contract(realEstate?.active_code, final_values))
+
+                        } else {
+                            delete values_contract.edit;
+                            res = await dispatch(actions.create_contract(final_values))
+                        }
+                        // history.push({ pathname: `/dispositions/precontractual/view/${realEstate.active_code}`, state: {  realEstate } })
+
+                    }}
                 >
                     guardar y descargar
                 </button>

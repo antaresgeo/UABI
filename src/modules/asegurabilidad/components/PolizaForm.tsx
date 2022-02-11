@@ -166,6 +166,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
             validationSchema={schema}
         >
             {({ setFieldValue, values, handleChange, isSubmitting }) => {
+                console.log(values.insurance_broker_id)
                 return (
                     <Form>
                         <div className="row">
@@ -298,10 +299,12 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                     name="insurance_broker_id"
                                     placeholder="Selecciona una corredor de seguros"
                                     disabled={disabled}
-                                    options={brokers?.map((broker) => ({
+                                    options={brokers?.map((broker) => {
+                                        return {
                                         id: broker.id,
-                                        name: `${broker.nit} - ${broker.name}`,
-                                    }))}
+                                        name: `${broker.nit} - ${broker.name}`
+                                        }
+                                    })}
                                     showSearch // habilitar para buscarx
                                     filterOption={(input, option) => {
                                         return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;

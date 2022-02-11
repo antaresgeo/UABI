@@ -2,8 +2,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Card } from '../../../../utils/ui';
 import { FormContract } from './FormContract';
-import { FormUser } from '../Precontractual/FormUser';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import ViewPerson from './../Precontractual/ViewPerson';
 import moment from 'moment';
 
@@ -13,10 +12,21 @@ interface FormPros {
     onSubmit?: (values, form?, isFinish?: boolean) => Promise<any>;
     values_contract?: any;
     dispositionType?: string;
+    precontractual?: any;
+    contractual?: any;
 }
 
 
-export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_contract, dispositionType }) => {
+export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_contract, dispositionType, precontractual, contractual }) => {
+    const [edit, setEdit] = useState(false);
+
+    useEffect(() => {
+        if (precontractual) {
+            setEdit(true);
+        }
+    }, [precontractual]);
+
+
     const initialValues = {
         decree_number: "",
         decree_date: "",
@@ -35,16 +45,21 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         //     name: "",
         //     id_number: "",
         // },
+        ...contractual,
         ...values_contract
     };
 
-    initialValues.decree_date = moment(new Date(Number(initialValues.decree_date))).format('YYYY-MM-DD');
-    initialValues.subscription_date = moment(new Date(Number(initialValues.subscription_date))).format('YYYY-MM-DD');
-    initialValues.minutes_date = moment(new Date(Number(initialValues.minutes_date))).format('YYYY-MM-DD');
-    initialValues.finish_date = moment(new Date(Number(initialValues.finish_date))).format('YYYY-MM-DD');
+    // initialValues.decree_date = moment(new Date(Number(initialValues.decree_date))).format('YYYY-MM-DD');
+    // initialValues.subscription_date = moment(new Date(Number(initialValues.subscription_date))).format('YYYY-MM-DD');
+    // initialValues.minutes_date = moment(new Date(Number(initialValues.minutes_date))).format('YYYY-MM-DD');
+    // initialValues.finish_date = moment(new Date(Number(initialValues.finish_date))).format('YYYY-MM-DD');
 
 
     const submit = (values, actions) => {
+        values = {
+            ...values,
+            edit
+        }
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
             actions.resetForm();
@@ -70,7 +85,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
     });
     return (
         <>
-            {/* <div className="col-3-12">
+            <div className="col-3-12">
                 <div className="content_box_table">
                     <div
                         className="title"
@@ -87,28 +102,38 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                                 </div>
                                 <div className="col-3">
                                     <label htmlFor="">Canon Mensual</label>
-                                    <div className="my-3">{realEstate.canyon_value}</div>
+                                    <div className="my-3">{realEstate?.canyon_value}</div>
                                 </div>
                                 <div className="col-3">
-                                    <label htmlFor="">Valor de Administración</label>
-                                    <div className="my-3">-</div>
+                                    <label htmlFor="">Valor del contrato</label>
+                                    <div className="my-3">{precontractual?.contract_value}</div>
                                 </div>
                                 <div className="col-3">
-                                    <label htmlFor="">Valor de Vigilancia</label>
-                                    <div className="my-3">-</div>
+                                    <label htmlFor="">Fecha de Registro Estudio Previo</label>
+                                    <div className="my-3">{precontractual?.registration_date}</div>
                                 </div>
+
                             </div>
-                            TODO: PONER CAMPO CUANDO TENGA DOCUMENTO DE USO PUBLICO
-                            <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                                <div className="col-3">
-                                    <label htmlFor="">Valor Servicio Público</label>
-                                    <div className="my-3">-</div>
+                            {precontractual?.type_disposition === "Arrendamiento" &&
+                                <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
+                                    <div className="col-3">
+                                        <label htmlFor="">Valor de Administración</label>
+                                        <div className="my-3">{precontractual?.administration_value || "-"}</div>
+                                    </div>
+                                    <div className="col-3">
+                                        <label htmlFor="">Valor de Vigilancia</label>
+                                        <div className="my-3">{precontractual?.vigilance_value || "-"}</div>
+                                    </div>
+                                    <div className="col-3">
+                                        <label htmlFor="">Servicio Público</label>
+                                        <div className="my-3">{precontractual?.public_service || "-"}</div>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
             <Formik enableReinitialize onSubmit={submit} innerRef={innerRef} initialValues={initialValues} validationSchema={schema} >
                 {(formik) => {
                     return (
@@ -117,15 +142,23 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                                 <FormContract
                                     formik={formik}
                                     realEstate={realEstate}
-                                    />
+                                />
                             </Card>
                         </Form>
                     );
                 }}
             </Formik>
-            {/* <ViewPerson title={`Información del ${dispositionType === "arrendamiento" ? "Arrendador" : dispositionType === "Comodato" ? "Comodante" : ""  }`}/> encargado */}
-            {/* <ViewPerson title={`Información del ${dispositionType === "arrendamiento" ? "Arrendatario" : dispositionType === "Comodato" ? "Comodatario" : ""  }`}/>solicitante */}
-            {/* <ViewPerson title='Informacion del Representante Legal'/> */}
+            <ViewPerson title={`Información del ${dispositionType === "Arrendamiento" ? "Arrendador" : dispositionType === "Comodato" ? "Comodante" : ""}`}
+                person={precontractual?.leader}
+            />
+            <ViewPerson title={`Información del ${dispositionType === "Arrendamiento" ? "Arrendatario" : dispositionType === "Comodato" ? "Comodatario" : ""}`}
+                person={precontractual?.applicant}
+            />
+            {precontractual?.representative?.document_number &&
+                <ViewPerson title='Informacion del Representante Legal'
+                    person={precontractual?.representative}
+                />
+            }
 
         </>
     );

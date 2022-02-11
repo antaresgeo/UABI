@@ -25,8 +25,8 @@ export const FormUser: FC<FormProps> = ({ formik, comodato, lease }) => {
                     /> */}
                     <ErrorMessage name="applicant" />
                 </div>
-                {console.log(formik.values)}
-                {formik.values.applicant.document_type === "NIT" &&
+
+                {(formik.values.applicant.document_type === "NIT" || formik.values.applicant.documentNumber === "NIT") &&
                     <div className="col-6">
                         <label htmlFor="representative" className="form-label">
                             Información Representante<span className="text-danger">*</span>
