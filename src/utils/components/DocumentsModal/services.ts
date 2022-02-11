@@ -101,6 +101,7 @@ export const createDownload = (filename: string, file: File | Blob) => {
     const [name, _type] = filename.split('.');
     link.setAttribute('download', `${name}_${formatDate(new Date())}.${_type}`);
     document.body.appendChild(link);
+    console.log(link);
     link.click();
 };
 

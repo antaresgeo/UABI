@@ -101,20 +101,14 @@ const loginFail = (payload) => {
 
 const logOut = () => {
     return (dispatch: Function) => {
-        service.logout().then(() => {
+        const emit_logout = () => {
             dispatch({
                 type: authTypes.LOGOUT,
             });
-        });
+        };
+        service.logout().then(emit_logout).catch(emit_logout);
     };
 };
-
-// const logOut = (): { type: string } => {
-//     service.logout();
-//     return {
-//         type: authTypes.LOGOUT,
-//     };
-// };
 
 // const change_password = (data: PasswordResetBody) => {
 //     return (dispatch) => {

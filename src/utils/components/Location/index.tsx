@@ -541,7 +541,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                 Consultar
                                 {isSubmitting && (
                                     <i
-                                        className="fa fa-circle-notch fa-spin"
+                                        className="fa fa-spinner fa-spin"
                                         style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
                                     />
                                 )}
