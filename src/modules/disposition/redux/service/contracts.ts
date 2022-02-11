@@ -34,7 +34,7 @@ export interface Company {
 
 export const get_all_contracts = async (filters?) => {
     try {
-        console.log(filters);
+        // console.log(filters);
         const URI = '/contracts/';
         const res: AxiosResponse<AllCompaniesResponse> = await http.get(URI, {
             params: {
@@ -57,16 +57,14 @@ export const get_list_contracts = async () => {
     }
 };
 
-export const create_contract = async (data: Company) => {
+export const create_contract = async (data: any) => {
     try {
-        // const URI = '';
-        // const res: AxiosResponse<CompanyResponse> = await http.post(URI, {
-        //     name: data.name,
-        //     nit: data.nit,
-        //     location_id: data.location_id,
-        //     phone: data.phone,
-        // });
-        // return res.data;
+        const URI = '/contracts';
+        const res: AxiosResponse<any> = await http.post(
+            URI,
+            data
+        );
+        return res.data;
     } catch (e) {
         return Promise.reject('Error');
     }
@@ -77,10 +75,58 @@ export const get_contract = async (id) => {
         const URI = `contracts`;
         const res: AxiosResponse<any> = await http.get(URI,
             {
-                params: {id}
+                params: { id }
             }
-            );
-        console.log(res.data)
+        );
+
+        return res.data;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
+
+export const get_contracts_realestates = async (active_code) => {
+    try {
+        const URI = `/contracts`;
+        const res: AxiosResponse<any> = await http.get(URI,
+            {
+                params: {
+                    active_code,
+
+                }
+            }
+        );
+        return res.data.results;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
+export const get_contract_realestate = async (active_code, status) => {
+    try {
+        const URI = `/contracts`;
+        const res: AxiosResponse<any> = await http.get(URI,
+            {
+                params: {
+                    active_code,
+                    status
+
+                }
+            }
+        );
+        return res.data.results;
+    } catch (e) {
+        return Promise.reject('Error');
+    }
+};
+
+export const get_contracts = async () => {
+    try {
+        const URI = `/contracts`;
+        const res: AxiosResponse<any> = await http.get(URI,
+            {
+                params: { with: 'pagination' }
+            }
+        );
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -91,10 +137,10 @@ const final_data = (data) => {
     const aux_data = {
         ...data,
     }
-    aux_data.decree_date =  new Date(moment(aux_data.decree_date).format('YYYY/MM/DD')).getTime();
-    aux_data.finish_date =  new Date(moment(aux_data.finish_date).format('YYYY/MM/DD')).getTime();
-    aux_data.minutes_date =  new Date(moment(aux_data.minutes_date).format('YYYY/MM/DD')).getTime();
-    aux_data.subscription_date =  new Date(moment(aux_data.subscription_date).format('YYYY/MM/DD')).getTime();
+    aux_data.decree_date = new Date(moment(aux_data.decree_date).format('YYYY/MM/DD')).getTime();
+    aux_data.finish_date = new Date(moment(aux_data.finish_date).format('YYYY/MM/DD')).getTime();
+    aux_data.minutes_date = new Date(moment(aux_data.minutes_date).format('YYYY/MM/DD')).getTime();
+    aux_data.subscription_date = new Date(moment(aux_data.subscription_date).format('YYYY/MM/DD')).getTime();
     aux_data.secretary = {
         id: aux_data.secretary.id
     }
@@ -122,22 +168,16 @@ export const update_contract = async (id, data) => {
 };
 export const delete_contract = async (id) => {
     try {
-        // const URI = '/insurance-companies/';
-        // const res: AxiosResponse<CompanyResponse> = await http.put(
-        //     URI,
-        //     {
-        //         name: data.name,
-        //         nit: data.nit,
-        //         location_id: data.location_id,
-        //         phone: data.phone,
-        //     },
-        //     {
-        //         params: {
-        //             id,
-        //         },
-        //     }
-        // );
-        // return res.data;
+        const URI = '/contracts/';
+        const res: AxiosResponse<any> = await http.put(
+            URI,
+            {
+                params: {
+                    id,
+                },
+            }
+        );
+        return res.data;
     } catch (e) {
         return Promise.reject('Error');
     }

@@ -7,6 +7,7 @@ import { useHistory, useParams, useLocation } from 'react-router-dom';
 import DetailComodato from '../../components/Precontractual/comodato/Detail_comodato';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions as actionsDisposition } from '../../redux';
+import DetailPublicUse from '../../components/Precontractual/PublicUse/Detail_publicUse';
 
 interface IParams {
     active_code: string;
@@ -66,6 +67,11 @@ const DetailPrecontractual = () => {
                                 }
                                 {precontractual?.type_disposition === 'Comodato' &&
                                     <DetailComodato
+                                        precontractual={precontractual}
+                                    />
+                                }
+                                {precontractual?.type_disposition === 'Publico' &&
+                                    <DetailPublicUse
                                         precontractual={precontractual}
                                     />
                                 }

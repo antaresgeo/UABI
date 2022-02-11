@@ -8,7 +8,7 @@ import Select from '../../../utils/ui/select';
 import Tooltip from 'antd/lib/tooltip';
 import { LinkButton } from '../../../utils/ui/link';
 import DocumentModal from './../../../utils/components/DocumentsModal/index';
-import {swal_warning} from '../../../utils';
+import { swal_warning } from '../../../utils';
 import moment from 'moment';
 
 interface InsurabilityFormPros {
@@ -80,7 +80,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
         insurance_document_id: '',
         insurance_document: {
             label: 'póliza',
-            type: 5,
+            type: 11,
             pdf: null,
         },
         real_estates_id: realEstatesPolicy ? realEstatesPolicy.map((r) => r.id) : [],
@@ -166,6 +166,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
             validationSchema={schema}
         >
             {({ setFieldValue, values, handleChange, isSubmitting }) => {
+                console.log(values.insurance_broker_id)
                 return (
                     <Form>
                         <div className="row">
@@ -179,13 +180,16 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                         name="real_estates_id"
                                         id="real_estates_id_id"
                                         className="w-100"
-                                        options={[
+                                        options={Array.isArray(newrealEstates) ? [
                                             { id: 'all', name: 'Todas las matriculas' },
-                                            ...newrealEstates.map((realestate) => ({
+                                            ...newrealEstates?.map((realestate) => ({
                                                 id: realestate.id,
                                                 name: `${realestate.registry_number} - ${realestate.name}`
                                             })),
-                                        ]}
+                                        ]
+                                            :
+                                            []
+                                        }
                                         mode="multiple"
                                         extra_on_change={(ids) => {
                                             if (ids.includes('all')) {
@@ -280,7 +284,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                     placeholder="Fecha Final"
                                     className="form-control"
                                     min={moment(values.vigency_start).format("YYYY-MM-DD")}
-                                    max={moment(new Date()).format("YYYY-MM-DD")}
+                                    // max={moment(new Date()).format("YYYY-MM-DD")}
                                     disabled={disabled}
                                 />
                                 <ErrorMessage name="vigency_end" />
@@ -295,10 +299,12 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                     name="insurance_broker_id"
                                     placeholder="Selecciona una corredor de seguros"
                                     disabled={disabled}
-                                    options={brokers?.map((broker) => ({
+                                    options={brokers?.map((broker) => {
+                                        return {
                                         id: broker.id,
-                                        name: `${broker.nit} - ${broker.name}`,
-                                    }))}
+                                        name: `${broker.nit} - ${broker.name}`
+                                        }
+                                    })}
                                     showSearch // habilitar para buscarx
                                     filterOption={(input, option) => {
                                         return option?.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -378,11 +384,11 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                                     const insurance_companies_list = [
                                                         values.insurance_companies[0],
                                                     ] || [
-                                                        {
-                                                            id: '',
-                                                            percentage_insured: '',
-                                                        },
-                                                    ];
+                                                            {
+                                                                id: '',
+                                                                percentage_insured: '',
+                                                            },
+                                                        ];
                                                     setFieldValue(
                                                         'insurance_companies',
                                                         insurance_companies_list,

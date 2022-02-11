@@ -1,8 +1,6 @@
 import { Field } from 'formik';
 import { FC, useEffect } from 'react';
-import DocumentModal from '../../../../utils/components/DocumentsModal/index';
 import ErrorMessage from '../../../../utils/ui/error_messge';
-import Select from './../../../../utils/ui/select';
 import moment from "moment";
 import Index from '../../../../utils/ui/PersonaM';
 

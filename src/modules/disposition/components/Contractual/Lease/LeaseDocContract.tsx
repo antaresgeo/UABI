@@ -3,6 +3,8 @@ import '../../../../../utils/assets/styles/contract_lease.css';
 import { useLocation, useHistory } from 'react-router-dom';
 import LeaseContractPdf from './LeaseContractPdf';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
+import actions from './../../../redux/actions';
+import { useDispatch } from 'react-redux';
 
 interface IParams {
     values_contract: any;
@@ -12,6 +14,7 @@ interface IParams {
 const LeaseDocContract = () => {
     const location = useLocation<IParams>();
     const history = useHistory();
+    const dispatch = useDispatch();
     const { values_contract, realEstate, dispositionType } = location.state;
     console.log(values_contract, realEstate, dispositionType);
     const arrendamiento = {
@@ -129,7 +132,38 @@ const LeaseDocContract = () => {
                     <button
                         type="button"
                         className="btn btn-outline-primary"
-                        onClick={() => { }}
+                        onClick={async () => {
+                            let res: any;
+                            const final_values = {
+                                act_number: values_contract?.act_number,
+                                consecutive: values_contract?.consecutive,
+                                contract_decree: values_contract?.contract_decree,
+                                decree_number: values_contract?.decree_number,
+                                dispose_area: values_contract?.dispose_area,
+                                guarantee: values_contract?.guarantee,
+                                manager_sabi:values_contract?.manager_sabi,
+                                object_contract: values_contract?.object_contract,
+                                active_code: realEstate?.active_code,
+                                decree_date: new Date(values_contract?.decree_date).getTime(),
+                                finish_date: new Date(values_contract?.finish_date).getTime(),
+                                minutes_date: new Date(values_contract?.minutes_date).getTime(),
+                                subscription_date: new Date(values_contract?.subscription_date).getTime(),
+                                secretary: {
+                                    id: values_contract?.secretary?.id
+
+                                },
+                                type_contract: "Arrendamiento",
+                            }
+                            console.log(final_values)
+
+                            if (values_contract.edit === true) {
+                                res = await dispatch(actions.update_contract(realEstate?.id, final_values))
+
+                            } else {
+                                res = await dispatch(actions.create_contract(final_values,))
+                            }
+                            history.push({ pathname: `'/disposition/contract/${res.id}/`})
+                        }}
                     >
                         guardar y descargar
                     </button>

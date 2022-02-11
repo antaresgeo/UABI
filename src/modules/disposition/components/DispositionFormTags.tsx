@@ -11,11 +11,13 @@ interface IParams {
     stage?: string;
     values_contract?: any;
     precontractual?: any;
+    contractual?: any;
 }
 
 export const DispositionFormTags = () => {
     const location = useLocation<IParams>();
-    const { dispositionType, realEstate, values,values_contract, stage, precontractual } = location.state;
+    const { dispositionType, realEstate, values,values_contract, stage, precontractual, contractual } = location.state;
+
     // console.log(location.state)
 
     const { TabPane } = Tabs;
@@ -30,13 +32,6 @@ export const DispositionFormTags = () => {
         }
     }, [stage])
 
-    // const next_tab = () => {
-    //     const key = parseInt(activeKey);
-    //     const next = key + 1;
-    //     if (next <= 5) {
-    //         set_activeKey(`${next}`);
-    //     }
-    // };
 
     function callback(key) {
         set_activeKey(key);
@@ -59,8 +54,15 @@ export const DispositionFormTags = () => {
                             precontractual={precontractual}
                             />
                         </TabPane>
-                        <TabPane tab="Proceso Contractual" key="2">
-                            <CreateContract dispositionType={dispositionType} realEstate={realEstate} values_contract={values_contract}/>
+                        <TabPane tab="Proceso Contractual" key="2" disabled={precontractual ? false : true}>
+                            <CreateContract
+                                dispositionType={dispositionType}
+                                realEstate={realEstate}
+                                values_contract={values_contract}
+                                precontractual={precontractual}
+                                contractual={contractual}
+
+                            />
                         </TabPane>
                     </Tabs>
                 </div>

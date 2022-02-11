@@ -27,20 +27,27 @@ export interface GetAllDocumentsResponse {
     results: Document[];
 }
 
-export const create_document = async ({
-    pdf,
-    name,
-    type,
-}: {
+interface CreateDocumentProps {
     pdf: File;
     name?: string;
     type?: string;
-}): Promise<Document | string> => {
+}
+
+export const create_document = async (file: CreateDocumentProps, id: number): Promise<Document | string> => {
+    const {
+        pdf,
+        name,
+        type,
+    } = file;
+
     try {
         const formData: FormData = new FormData();
         formData.append('pdf', pdf);
         name && formData.append('name', name);
         type && formData.append('type', type);
+        if (id) {
+            formData.append('real_estate_id', `${id}`);
+        }
         const URI = `/docs/upload/?type=pdf&from=sabi`;
         const res: AxiosResponse<CreateDocumentResponse> =
             await documents_http.post(URI, formData, {

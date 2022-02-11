@@ -1,30 +1,33 @@
 import { FC, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { create_notification } from '../../../notificacions/redux/service';
 import { GeneralDataContract } from './../../components/Contractual/GeneralDataContract';
 
 interface FormPros {
     dispositionType?: string;
     realEstate?: any;
     values_contract?: any;
+    precontractual?: any;
+    contractual?: any;
 }
 
-const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_contract }) => {
+const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_contract, precontractual, contractual }) => {
+
     const form_ref = useRef<any>();
     const history = useHistory();
     const submit_contract = async (values_contract) => {
         console.log("vaules contrato", values_contract)
+        //TODO: descomentar notificacion contratos
         // await create_notification({
-        //     title: 'Creación de un Contrato',
+        //     subject: 'Creación de un Contrato',
         //     description: `se ha creado un contrato de ${tipo_contrato} con número ${numero_de_contrato} y fecha de terminación ${fecha_terminacion}`,
         //     action: `/disposition/contract/${id}/`,
         //     priority: 2,
-        //     toRole: 5
+        //     toRole: "5"
         // });
         if (values_contract.type_contract === "Comodato") {
             history.push({ pathname: "/document/comodato/contract", state: { values_contract, realEstate, dispositionType } })
 
-        } else if (values_contract.type_contract === "arrendamiento") {
+        } else if (values_contract.type_contract === "Arrendamiento") {
             history.push({ pathname: "/document/lease/contract", state: { values_contract, realEstate, dispositionType } })
         }
     }
@@ -40,6 +43,9 @@ const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_cont
                                 dispositionType={dispositionType}
                                 realEstate={realEstate}
                                 values_contract={values_contract}
+                                precontractual={precontractual}
+                                contractual={contractual}
+
 
                             />
                         </div>

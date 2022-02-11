@@ -173,15 +173,15 @@ export const createRealEstate = async (
     try {
         let URI = `/real-estates`;
         const docs: any = await compute_docs(data.supports_documents);
+        let res:  AxiosResponse<IRealEstateResponse> ;
         if (docs) {
-            console.log(docs);
 
-            let res: AxiosResponse<IRealEstateResponse> = await http.post(
+            res = await http.post(
                 URI,
                 aux_data
             );
-            const docs_ids = await upload_documents(docs);
-            console.log(docs_ids);
+            const docs_ids = await upload_documents(docs, res.data.results.id);
+
             await http.put(
                 URI,
                 { supports_documents: docs_ids || '' },
@@ -189,8 +189,9 @@ export const createRealEstate = async (
                     params: { id: res.data.results.id },
                 }
             );
-            return res.data.results;
+            console.log('enviar', res)
         }
+        return res?.data?.results || "";
     } catch (error) {
         console.error(error);
         return Promise.reject('Error');
@@ -230,8 +231,8 @@ export const createRealEstates = async (data: any, quantity) => {
 
 
         const docs_ids = await Promise.all(
-            docs.map(async (d) => {
-                return await upload_documents(d);
+            docs.map(async (d, i) => {
+                return await upload_documents(d, res.data.results[i].id );
             })
         );
 
@@ -330,7 +331,7 @@ export const updateRealEstate = async (data: any, id: number) => {
                     params: { id },
                 }
             );
-            const docs_ids = await upload_documents(docs);
+            const docs_ids = await upload_documents(docs, res.data.results.id);
             await http.put(
                 URI,
                 { supports_documents: docs_ids || '' },

@@ -21,25 +21,23 @@ const RealEstate = () => {
     const createRealEstate = async (values, form, isFinish) => {
         try {
             const res: any = await dispatch(actions.createRealEstate(values));
-            if(res){
-                if (values.acquisitions.length > 0) {
-                    await dispatch(actions.createAcquisitionForRealEstate(res.id, values.acquisitions));
-                }
-                if (isFinish) {
-                    history.push(`/acquisitions/real-estates/`);
-                } else {
-                    if (res) {
-                        return await dispatch(actions.getRealEstatesByProject(res.project_id));
-                    }
-                }
+
+            console.log('res', res)
+            console.log('ad', values.acquisitions.length)
+
+            if (res && values.acquisitions.length > 0) {
+                console.log('dentro de res', res);
+                console.log('dentro de adquisicones', values.acquisitions.length > 0)
+                console.log('crear adquisicion')
+                await dispatch(actions.createAcquisitionForRealEstate(res.id, values.acquisitions));
             }
 
             await create_notification({
                 subject: 'Creación de un activo fijo',
-                description: `se ha creado un bien inmueble con matrícula ${res.results.registry_number} asignado al proyecto ${res.results.project.name}`,
-                action: `/acquisitions/real-estates/${res.results.id}/`,
+                description: `se ha creado un bien inmueble con matrícula ${res.registry_number} asignado al proyecto ${res.project.name}`,
+                action: `/acquisitions/real-estates/${res.id}/`,
                 priority: 2,
-                toRole: 3
+                toRole: "3"
             });
 
             await create_notification({
@@ -47,8 +45,17 @@ const RealEstate = () => {
                 description: `se ha creado un bien inmueble con matrícula ${res.results.registry_number} asignado al proyecto ${res.results.project.name}`,
                 action: `/acquisitions/real-estates/${res.results.id}/`,
                 priority: 2,
-                toRole: 5
+                toRole: "5"
             });
+
+            if (isFinish) {
+                history.push(`/acquisitions/real-estates/`);
+            } else {
+                if (res) {
+                    return await dispatch(actions.getRealEstatesByProject(res.project_id));
+                }
+            }
+
             return Promise.resolve(false);
         } catch (e) {
             return Promise.reject();

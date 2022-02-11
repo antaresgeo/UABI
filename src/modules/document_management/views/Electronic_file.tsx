@@ -1,10 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Card } from '../../../utils/ui';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import CollapseElectronicFiel from '../components/CollapseElectronicFiel';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from './../redux/actions';
+
+interface IParams {
+    id: string;
+}
 
 const Electronic_file = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
+    const { id } = useParams<IParams>();
+    const documents: any = useSelector((state: any) => state.documentManagement.files.value);
+    console.log(documents)
+    // const _update = async (data: Broker) => {
+    //     let res: any;
+    //     res = await dispatch(actions.update_broker(data.id, data));
+    //     await swal('Corredor de seguros actualizado', res.message, 'success');
+    //     history.push(`/insurabilities/broker/${res.results.id}`);
+    // };
+
+    useEffect(() => {
+        dispatch(actions.getFiles(id));
+    }, []);
+
+
+
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -15,7 +38,10 @@ const Electronic_file = () => {
                             <Card
                                 title={`Documentos asociados a:`}
                             >
-                                <CollapseElectronicFiel/>
+                                <CollapseElectronicFiel
+                                    documents={documents}
+                                    real_estate_id={ Number(id)}
+                                />
                             </Card>
                         </div>
                     </div>

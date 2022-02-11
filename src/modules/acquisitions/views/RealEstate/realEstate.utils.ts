@@ -50,11 +50,11 @@ export const compute_docs = async (supports_documents) => {
     }
 };
 
-export const upload_documents = (docs) => {
+export const upload_documents = (docs, id) => {
     const promises = [];
     if (docs && Array.isArray(docs)) {
         docs.filter((d) => d.action === 'create').forEach((d) => {
-            promises.push(create_document(d));
+            promises.push(create_document(d, id));
         });
     }
     return Promise.all(promises).then((res) => {

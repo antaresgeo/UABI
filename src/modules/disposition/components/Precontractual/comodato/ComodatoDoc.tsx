@@ -54,15 +54,14 @@ const ComodatoDoc = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
-                {/* <PDFDownloadLink
+                <PDFDownloadLink
                     document={<ComodatoPdf values={values} realEstate={realEstate} />}
                     fileName="EstudioPrevioparacomodatodeBienInmueble.pdf"
-                > */}
+                >
                 <button
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={async () => {
-                        console.log(values.registration_date)
 
                         let final_values = {
                             ...values,
@@ -96,11 +95,12 @@ const ComodatoDoc = () => {
                                 id: values.representative.id
                             },
                             active_code: realEstate?.active_code,
-                            beneficiary_location_id: {
-                                id: 20 //TODO: CAMBIAR A VALOR REAL
-                            },
-                            contract_value: contract_value,
-                            type_disposition: "Comodato"
+
+                            contract_value: contract_value || 0,
+                            type_disposition: "Comodato",
+                            // beneficiary_location_id: {
+                            //     id: 20,
+                            // }
 
                         }
                         delete final_values.canon_value;
@@ -114,7 +114,7 @@ const ComodatoDoc = () => {
                             final_values = {
                                 ...final_values,
                                 beneficiary_location_id: {
-                                    id: final_values.beneficiary_location_id
+                                    id: final_values.beneficiary_location_id || 20
                                 }
                             }
                             res = await dispatch(actions.update_precontract(realEstate?.active_code, final_values))
@@ -130,7 +130,7 @@ const ComodatoDoc = () => {
                 >
                     guardar y descargar
                 </button>
-                {/* </PDFDownloadLink> */}
+                </PDFDownloadLink>
             </div>
         </div>
     );

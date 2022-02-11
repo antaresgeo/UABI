@@ -13,7 +13,7 @@ interface FormPros {
 }
 
 const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, values_form, stage, precontractual }) => {
-    // console.log('tiene estudio previo',precontractual)
+
     const form_ref = useRef<any>();
     const history = useHistory();
     const on_submit_lease = async (values) => {
@@ -29,8 +29,6 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
         history.push({ pathname: "/document/use-public/", state: { values, realEstate, dispositionType } })
     }
 
-
-
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-fill overflow-auto">
@@ -43,6 +41,8 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                                     innerRef={form_ref}
                                     onSubmit={on_submit_comodato}
                                     values_form={values_form}
+                                    precontractual={precontractual?.type_disposition === "Comodato" ? precontractual : {} }
+
                                 />
                             )}
                             {dispositionType === 'Arrendamiento' && (
@@ -51,6 +51,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                                     innerRef={form_ref}
                                     onSubmit={on_submit_lease}
                                     values_form={values_form}
+                                    precontractual={precontractual?.type_disposition === "Arrendamiento" ? precontractual : {} }
                                 />
                             )}
                             {(dispositionType !== "Arrendamiento" && dispositionType !== "Comodato") &&
@@ -59,6 +60,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                                     innerRef={form_ref}
                                     onSubmit={on_submit_publicuse}
                                     values_form={values_form}
+                                    precontractual={precontractual?.type_disposition === "Publico" ? precontractual : {} }
                                 />
                             }
 

@@ -306,7 +306,7 @@ const useInit = (
                             description: `es necesario mantenimiento para el bien inmueble ${real_estate?.name}`,
                             action: `/acquisitions/real-estates/${real_estate?.id}/`,
                             priority: 2,
-                            toRole: 1,
+                            toRole: "1",
                         });
                     });
                 }
