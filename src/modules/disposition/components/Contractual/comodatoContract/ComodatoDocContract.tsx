@@ -151,31 +151,47 @@ const ComodatoDocContract = () => {
                     document={<ComodatoContractPdf values_contract={values_contract} comodato={comodato} realEstate={realEstate}></ComodatoContractPdf>}
                     fileName="ContratodeComodatoBienInmueble.pdf"
                 >
-                <button
-                    type="button"
-                    className="btn btn-outline-primary"
-                    onClick={async () => {
-                        let res: any;
-                        console.log(values_contract)
-                        const final_values = {
-                            ...values_contract,
-                            type_contract: "Comodato"
+                    <button
+                        type="button"
+                        className="btn btn-outline-primary"
+                        onClick={async () => {
+                            let res: any;
+                            console.log(values_contract)
+                            const final_values = {
+                                act_number: values_contract?.act_number,
+                                consecutive: values_contract?.consecutive,
+                                contract_decree: values_contract?.contract_decree,
+                                decree_number: values_contract?.decree_number,
+                                dispose_area: values_contract?.dispose_area,
+                                guarantee: values_contract?.guarantee,
+                                manager_sabi:values_contract?.manager_sabi,
+                                object_contract: values_contract?.object_contract,
+                                type_contract: "Comodato",
+                                active_code: realEstate?.active_code,
+                                decree_date: new Date(values_contract?.decree_date).getTime(),
+                                finish_date: new Date(values_contract?.finish_date).getTime(),
+                                minutes_date: new Date(values_contract?.minutes_date).getTime(),
+                                subscription_date: new Date(values_contract?.subscription_date).getTime(),
+                                secretary: {
+                                    id: values_contract?.secretary?.id
 
-                        }
-                        if (values_contract.edit === true) {
-                            delete values_contract.edit;
-                            res = await dispatch(actions.update_contract(realEstate?.active_code, final_values))
+                                }
 
-                        } else {
-                            delete values_contract.edit;
-                            res = await dispatch(actions.create_contract(final_values))
-                        }
-                        // history.push({ pathname: `/dispositions/precontractual/view/${realEstate.active_code}`, state: {  realEstate } })
+                            }
+                            if (values_contract.edit === true) {
+                                delete values_contract.edit;
+                                res = await dispatch(actions.update_contract(realEstate?.active_code, final_values))
 
-                    }}
-                >
-                    guardar y descargar
-                </button>
+                            } else {
+                                delete values_contract.edit;
+                                res = await dispatch(actions.create_contract(final_values))
+                            }
+                            // history.push({ pathname: `/dispositions/precontractual/view/${realEstate.active_code}`, state: {  realEstate } })
+
+                        }}
+                    >
+                        guardar y descargar
+                    </button>
                 </PDFDownloadLink>
             </div>
         </div>

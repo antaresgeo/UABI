@@ -19,7 +19,6 @@ interface FormPros {
 
 export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_contract, dispositionType, precontractual, contractual }) => {
     const [edit, setEdit] = useState(false);
-
     useEffect(() => {
         if (precontractual) {
             setEdit(true);
@@ -28,8 +27,12 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
 
 
     const initialValues = {
+
+        // registration_date: precontractual?.registration_date ? moment(new Date(Number(precontractual?.registration_date))).format('YYYY-MM-DD') : moment(new Date()).format('YYYY-MM-DD'),
+        // appraisal_date: precontractual?.appraisal_date ? moment(new Date(Number(precontractual?.appraisal_date))).format('YYYY-MM-DD') : "",
+
         decree_number: "",
-        decree_date: "",
+        // decree_date: "",
         act_number: "",
         minutes_date: "",
         contract_decree: "",
@@ -45,9 +48,16 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         //     name: "",
         //     id_number: "",
         // },
-        ...contractual,
-        ...values_contract
+        ...values_contract,
+        ...{
+            ...contractual,
+            decree_date: contractual?.decree_date ? moment(new Date(Number(contractual?.decree_date))).format('YYYY-MM-DD') : "",
+            subscription_date: contractual?.subscription_date ? moment(new Date(Number(contractual?.subscription_date))).format('YYYY-MM-DD') : "",
+            minutes_date: contractual?.minutes_date ? moment(new Date(Number(contractual?.minutes_date))).format('YYYY-MM-DD') : "",
+            finish_date: contractual?.finish_date ? moment(new Date(Number(contractual?.finish_date))).format('YYYY-MM-DD') : "",
+        }
     };
+    console.log(initialValues)
 
     // initialValues.decree_date = moment(new Date(Number(initialValues.decree_date))).format('YYYY-MM-DD');
     // initialValues.subscription_date = moment(new Date(Number(initialValues.subscription_date))).format('YYYY-MM-DD');
