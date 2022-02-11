@@ -11,6 +11,7 @@ interface FormPros {
 }
 
 const CreateContract: FC<FormPros> = ({ dispositionType, realEstate, values_contract, precontractual, contractual }) => {
+
     const form_ref = useRef<any>();
     const history = useHistory();
     const submit_contract = async (values_contract) => {

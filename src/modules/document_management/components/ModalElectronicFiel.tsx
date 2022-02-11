@@ -1,16 +1,21 @@
 import React, { FC, useState } from 'react'
 import Modal from 'antd/lib/modal/Modal';
-import { Link } from '../../../utils/ui';
 import { LinkButton } from '../../../utils/ui/link';
 import { Tag } from 'antd';
+import { create_document } from '../../../utils/components/DocumentsModal/services';
+import { getFiles } from '../redux/service';
+import { useDispatch } from 'react-redux';
 
 interface LocationModalProps {
     onSave?: (values) => Promise<any>;
     disabled?: boolean;
+    real_estate_id?: number;
+    type?: string;
+    setNewDoc?: () => {};
 
 }
 
-const ModalElectronicFiel: FC<LocationModalProps> = ({ /*onSave,*/ disabled, }) => {
+const ModalElectronicFiel: FC<LocationModalProps> = ({ /*onSave,*/ disabled, real_estate_id, type, }) => {
 
     const input: HTMLInputElement = document.getElementById("subir_archivo") as HTMLInputElement;
     console.log(input?.files)
@@ -19,9 +24,10 @@ const ModalElectronicFiel: FC<LocationModalProps> = ({ /*onSave,*/ disabled, }) 
     const [docName, setDocName] = useState(null)
     const open = () => !disabled && set_is_visible(true);
     const close = () => set_is_visible(false);
+    const dispatch = useDispatch();
     const documento = (e) => {
         console.log(e.target.files);
-        setDocName(e.target.files[0].name ?? null)
+        setDocName(e.target?.files[0] ?? null)
     }
     return (
         <>
@@ -54,8 +60,21 @@ const ModalElectronicFiel: FC<LocationModalProps> = ({ /*onSave,*/ disabled, }) 
                         key="2"
                         className="btn btn-primary"
                         onClick={() => {
+                            const doc = {
+                                type: type,
+                                name: docName?.name,
+                                pdf: docName,
+                            }
+                            create_document(doc, real_estate_id ).then((res) => {
+                                dispatch(getFiles(real_estate_id));
+                                close();
 
-                            close();
+
+                            }).catch((error) => {
+                                console.log(error);
+
+                            })
+
                         }}
                     >
                         volver y adjuntar
@@ -88,7 +107,7 @@ const ModalElectronicFiel: FC<LocationModalProps> = ({ /*onSave,*/ disabled, }) 
                 </div>
                 {docName !== null &&
                     <div className="text-center my-3">
-                        <Tag>{docName}</Tag>
+                        <Tag>{docName?.name}</Tag>
                     </div>
                 }
             </Modal>

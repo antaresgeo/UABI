@@ -22,7 +22,7 @@ export const EditDisposition = () => {
     const [dispositionType, setDispositionType] = useState('');
     const precontractual: any = useSelector((state: any) => state.disposition.precontractual.value);
     const contracts: any = useSelector((state: any) => state.disposition.contracts.value);
-    let contractual: any = useSelector((state: any) =>  state.disposition.contract.value);
+    let contractual: any = useSelector((state: any) =>  state.disposition.contracts.value);
 
     useEffect(() => {
         dispatch(realActions.getRealEstate(id));

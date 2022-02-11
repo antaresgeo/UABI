@@ -15,8 +15,8 @@ const get_all_contracts = (filters?) =>
 const create_contract = (data: any) =>
     request_dispatch(types.create_contract, service.create_contract(data));
 
-const get_contract = (active_code) =>
-    request_dispatch(types.get_contract, service.get_contract(active_code));
+const get_contract = (id) =>
+    request_dispatch(types.get_contract, service.get_contract(id));
 
 const get_contracts_realestates = (active_code) =>
     request_dispatch(types.get_list_contracts, service.get_contracts_realestates(active_code));
@@ -27,8 +27,8 @@ const get_contract_realestate = (active_code, status) =>
 const get_contracts = () =>
     request_dispatch(types.get_list_contracts, service.get_contracts());
 
-const update_contract = (active_code, data: any) =>
-    request_dispatch(types.update_contract, service.update_contract(active_code, data));
+const update_contract = (id, data: any) =>
+    request_dispatch(types.update_contract, service.update_contract(id, data));
 
 const delete_contract = (id) =>
     request_dispatch(types.update_contract, service.delete_contract(id));

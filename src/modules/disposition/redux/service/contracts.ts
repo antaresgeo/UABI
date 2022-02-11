@@ -70,12 +70,12 @@ export const create_contract = async (data: any) => {
     }
 };
 
-export const get_contract = async (active_code) => {
+export const get_contract = async (id) => {
     try {
         const URI = `contracts`;
         const res: AxiosResponse<any> = await http.get(URI,
             {
-                params: { active_code }
+                params: { id }
             }
         );
 
@@ -148,7 +148,7 @@ const final_data = (data) => {
 
 }
 
-export const update_contract = async (active_code, data) => {
+export const update_contract = async (id, data) => {
     const aux_data = final_data(data)
     try {
         const URI = '/contracts';
@@ -157,7 +157,7 @@ export const update_contract = async (active_code, data) => {
             aux_data,
             {
                 params: {
-                    active_code,
+                    id,
                 },
             }
         );
@@ -168,22 +168,16 @@ export const update_contract = async (active_code, data) => {
 };
 export const delete_contract = async (id) => {
     try {
-        // const URI = '/insurance-companies/';
-        // const res: AxiosResponse<CompanyResponse> = await http.put(
-        //     URI,
-        //     {
-        //         name: data.name,
-        //         nit: data.nit,
-        //         location_id: data.location_id,
-        //         phone: data.phone,
-        //     },
-        //     {
-        //         params: {
-        //             id,
-        //         },
-        //     }
-        // );
-        // return res.data;
+        const URI = '/contracts/';
+        const res: AxiosResponse<any> = await http.put(
+            URI,
+            {
+                params: {
+                    id,
+                },
+            }
+        );
+        return res.data;
     } catch (e) {
         return Promise.reject('Error');
     }

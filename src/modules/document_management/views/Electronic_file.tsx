@@ -40,6 +40,7 @@ const Electronic_file = () => {
                             >
                                 <CollapseElectronicFiel
                                     documents={documents}
+                                    real_estate_id={ Number(id)}
                                 />
                             </Card>
                         </div>
