@@ -37,16 +37,34 @@ const RealEstate = () => {
                 description: `se ha creado un bien inmueble con matrícula ${res.registry_number} asignado al proyecto ${res.project.name}`,
                 action: `/acquisitions/real-estates/${res.id}/`,
                 priority: 2,
-                toRole: "3"
+                toRole: "5"
             });
+            console.log("primero notificacion")
 
             await create_notification({
                 subject: 'Creación de un activo fijo',
-                description: `se ha creado un bien inmueble con matrícula ${res.results.registry_number} asignado al proyecto ${res.results.project.name}`,
-                action: `/acquisitions/real-estates/${res.results.id}/`,
+                description: `se ha creado un bien inmueble con matrícula ${res.registry_number} asignado al proyecto ${res.project.name}`,
+                action: `/acquisitions/real-estates/${res.id}/`,
                 priority: 2,
-                toRole: "5"
+                toRole: "4"
             });
+            console.log("segunada notificacion")
+
+
+            await create_notification({
+                subject: 'Creación de un activo fijo',
+                description: `se ha creado un bien inmueble con matrícula ${res.registry_number} asignado al proyecto ${res.project.name}`,
+                action: `/acquisitions/real-estates/${res.id}/`,
+                priority: 2,
+                toRole: "3"
+            });
+            console.log("tercera notificacion")
+
+
+
+
+
+
 
             if (isFinish) {
                 history.push(`/acquisitions/real-estates/`);

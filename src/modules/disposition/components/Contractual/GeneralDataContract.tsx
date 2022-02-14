@@ -18,13 +18,13 @@ interface FormPros {
 
 
 export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_contract, dispositionType, precontractual, contractual }) => {
-    const [edit, setEdit] = useState(false);
-    useEffect(() => {
-        if (precontractual) {
-            setEdit(true);
-        }
-    }, [precontractual]);
 
+    const [editContract, setEditContract] = useState(false)
+    useEffect(() => {
+        if (contractual) {
+            setEditContract(true);
+        }
+    }, [contractual]);
 
     const initialValues = {
 
@@ -57,7 +57,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
             finish_date: contractual?.finish_date ? moment(new Date(Number(contractual?.finish_date))).format('YYYY-MM-DD') : "",
         }
     };
-    console.log(initialValues)
+
 
     // initialValues.decree_date = moment(new Date(Number(initialValues.decree_date))).format('YYYY-MM-DD');
     // initialValues.subscription_date = moment(new Date(Number(initialValues.subscription_date))).format('YYYY-MM-DD');
@@ -68,7 +68,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
     const submit = (values, actions) => {
         values = {
             ...values,
-            edit
+            editContract
         }
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
@@ -108,7 +108,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                             <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                                 <div className="col-3">
                                     <label htmlFor="">Tipo de Contrato</label>
-                                    <div className="my-3">{dispositionType}</div>
+                                    <div className="my-3">{precontractual?.type_disposition}</div>
                                 </div>
                                 <div className="col-3">
                                     <label htmlFor="">Canon Mensual</label>
@@ -120,7 +120,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                                 </div>
                                 <div className="col-3">
                                     <label htmlFor="">Fecha de Registro Estudio Previo</label>
-                                    <div className="my-3">{precontractual?.registration_date}</div>
+                                    <div className="my-3">{moment(new Date(Number(precontractual?.registration_date))).format('YYYY-MM-DD') ?? "-" }</div>
                                 </div>
 
                             </div>
@@ -148,7 +148,7 @@ export const GeneralDataContract: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                 {(formik) => {
                     return (
                         <Form>
-                            <Card title={`Informacion Contrato de ${dispositionType !== "Comodato" && dispositionType !== "arrendamiento" ? "" : dispositionType}`}>
+                            <Card title={`Informacion Contrato de ${dispositionType !== "Comodato" && dispositionType !== "Arrendamiento" ? "" : dispositionType}`}>
                                 <FormContract
                                     formik={formik}
                                     realEstate={realEstate}

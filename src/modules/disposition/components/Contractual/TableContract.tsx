@@ -4,6 +4,7 @@ import { Link, Table } from '../../../../utils/ui';
 import { actions } from '../../redux';
 import { guards } from '../../routes';
 import { useDispatch } from 'react-redux';
+import { Tag } from 'antd';
 
 interface ContractProps {
     user?: any;
@@ -35,10 +36,10 @@ export const TableContract: FC<ContractProps> = ({ user, contrats }) => {
         title: 'Ver',
         dataIndex: 'id',
         align: 'center' as 'center',
-        render: (/*id*/) => {
+        render: (id) => {
             return (
                 <Link
-                    to={`/disposition/contract/:id/`}
+                    to={`/disposition/contract/${id}/`}
                     name=""
                     avatar={false}
                     icon={<i className="fa fa-eye" aria-hidden="true" />}
@@ -106,7 +107,7 @@ export const TableContract: FC<ContractProps> = ({ user, contrats }) => {
         {
             title: 'Numero de contrato',
             dataIndex: 'decree_number',
-            align: 'left' as 'left',
+            align: 'center' as 'center',
         },
         {
             title: 'Tipo de contrato',
@@ -130,11 +131,20 @@ export const TableContract: FC<ContractProps> = ({ user, contrats }) => {
             align: 'left' as 'left',
             render: (date) => formatDate(parseInt(date))
         },
+        {
+            title: 'estado',
+            dataIndex: 'status',
+            align: 'center' as 'center',
+            render: (s) => {
+                if (s === 1) return <Tag color="success">Activo</Tag>;
+                return <Tag color="default">Inactivo</Tag>;
+            },
+        },
     ];
 
-    // if (guards.detailContract({ user })) {
-    //     acciones.children.push(ver)
-    // }
+    if (guards.detailContract({ user })) {
+        acciones.children.push(ver)
+    }
     if (guards.editContract({ user })) {
         acciones.children.push(editar)
     }

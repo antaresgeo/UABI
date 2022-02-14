@@ -155,7 +155,10 @@ export const PersonalInformationForm = ({
             }),
         }),
         email: Yup.string().email().required('obligatorio'),
-        phoneNumber: Yup.number().required('obligatorio'),
+        phoneNumber: Yup.number()
+        .required('Campo obligatorio')
+        .min(999999, 'El minimo es 7 caracteres')
+        .max(9999999999, 'El maximo 10 es caracteres'),
         gender: Yup.string().when('documentType', {
             is: 'NIT',
             otherwise: Yup.string().required('obligatorio'),

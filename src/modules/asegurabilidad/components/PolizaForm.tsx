@@ -166,7 +166,16 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
             validationSchema={schema}
         >
             {({ setFieldValue, values, handleChange, isSubmitting }) => {
-                console.log(values.insurance_broker_id)
+                // console.log(values.insurance_broker_id)
+                const number_validate = (limit?: number) => (e) => {
+                    e.preventDefault();
+                    const regex = new RegExp(`^([1-9]+\\d*)|[0]${limit ? `{0,${limit}}` : '*'}$`);
+                    if (regex.test(e.target.value.toString())) {
+                        const a = Math.abs(parseInt(e.target.value))
+                        e.target.value = a
+                        handleChange(e);
+                    }
+                };
                 return (
                     <Form>
                         <div className="row">
@@ -510,6 +519,7 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
                                                             min={0}
                                                             max={100}
                                                             type="number"
+                                                            onChange={number_validate()}
                                                         />
                                                         <div className="input-group-prepend">
                                                             <span className="input-group-text bg-white border-start-0">

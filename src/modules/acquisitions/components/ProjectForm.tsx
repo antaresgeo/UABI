@@ -177,7 +177,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                 </div>
                                 <div className={`col-${project ? 3 : 4}`}>
                                     <label htmlFor="subdependency_id" className="form-label">
-                                        Sub. Dependecia
+                                        Subdependencia Dependecia
                                     </label>
                                     <Field
                                         component={Select}

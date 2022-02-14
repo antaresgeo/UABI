@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import ViewDetailDisposition from './../components/Detail_disposition';
 import actions from './../../acquisitions/redux/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
+import {actions as actionsDisposition} from './../redux';
 
 interface IProps {
     id: string;
@@ -12,12 +13,29 @@ export const DetailDisposition = () => {
     const { id } = useParams<IProps>();
     const history = useHistory();
     const dispatch = useDispatch();
-    const  realEstate = useSelector((store: any) => store.acquisitions.realEstate.value)
+    const  realEstate = useSelector((store: any) => store.acquisitions.realEstate.value);
+    const precontractual: any = useSelector((state: any) =>  state.disposition.precontractual.value);
+    const contract: any = useSelector((store: any) => store.disposition.contracts.value);
+
     useEffect(() => {
         if (id) {
             dispatch(actions.getRealEstate(id));
         }
     }, [dispatch, id]);
+
+
+    useEffect(() => {
+        if(realEstate) {
+            dispatch(actionsDisposition.get_precontract(realEstate?.active_code));
+        }
+    }, [dispatch, realEstate]);
+
+    useEffect(() => {
+        if (realEstate) {
+        dispatch(actionsDisposition.get_contract_realestate(realEstate?.active_code, 1));
+        }
+    }, [dispatch, realEstate])
+
     return (
         <>
             <div className="h-100 d-flex flex-column">
@@ -44,6 +62,8 @@ export const DetailDisposition = () => {
                                 <div className="col-md-12">
                                     <ViewDetailDisposition
                                         realEstate={realEstate}
+                                        precontractual={precontractual}
+                                        contractual={contract?.length > 0 ? contract[0] : null}
                                     />
                                 </div>
                             </div>

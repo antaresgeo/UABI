@@ -159,34 +159,31 @@ const ComodatoDocContract = () => {
                             console.log(values_contract)
                             const final_values = {
                                 act_number: values_contract?.act_number,
-                                consecutive: values_contract?.consecutive,
                                 contract_decree: values_contract?.contract_decree,
                                 decree_number: values_contract?.decree_number,
                                 dispose_area: values_contract?.dispose_area,
+                                active_code: values_contract?.active_code,
                                 guarantee: values_contract?.guarantee,
-                                manager_sabi:values_contract?.manager_sabi,
-                                object_contract: values_contract?.object_contract,
-                                type_contract: "Comodato",
-                                active_code: realEstate?.active_code,
+                                manager_sabi: values_contract?.manager_sabi,
+                                object_contract: "Comodato",
+                                secretary: {
+                                    id: values_contract?.secretary?.id
+                                },
+                                type_contract: values_contract?.type_contract,
                                 decree_date: new Date(values_contract?.decree_date).getTime(),
                                 finish_date: new Date(values_contract?.finish_date).getTime(),
                                 minutes_date: new Date(values_contract?.minutes_date).getTime(),
                                 subscription_date: new Date(values_contract?.subscription_date).getTime(),
-                                secretary: {
-                                    id: values_contract?.secretary?.id
-
-                                }
-
                             }
-                            if (values_contract.edit === true) {
-                                delete values_contract.edit;
-                                res = await dispatch(actions.update_contract(realEstate?.active_code, final_values))
+                            if (values_contract.editContract === true) {
+                                delete values_contract.editContract;
+                                res = await dispatch(actions.update_contract(values_contract?.id, final_values))
 
                             } else {
-                                delete values_contract.edit;
+                                delete values_contract.editContract;
                                 res = await dispatch(actions.create_contract(final_values))
                             }
-                            // history.push({ pathname: `/dispositions/precontractual/view/${realEstate.active_code}`, state: {  realEstate } })
+                            history.push({ pathname: `/dispositions/precontractual/view/${res.results.id}`, state: {  realEstate } })
 
                         }}
                     >

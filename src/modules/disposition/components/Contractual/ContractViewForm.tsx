@@ -5,6 +5,7 @@ interface FormPros {
 }
 
 const ContractViewForm : FC<FormPros> = ({ values_contract }) => {
+    console.log(values_contract)
     return (
         <div className="col-3-12">
             <div className="content_box_table">
@@ -19,52 +20,37 @@ const ContractViewForm : FC<FormPros> = ({ values_contract }) => {
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Número de Contrato</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{values_contract?.consecutive}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Tipo de Contrato</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{values_contract?.type_contract}</div>
                             </div>
                             <div className="col-3">
-                                <label htmlFor="">Canon Mensual</label>
-                                <div className="my-3">-</div>
+                                <label htmlFor="">Código Activo</label>
+                                <div className="my-3"></div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Fecha de suscripción</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{values_contract?.subscription_date}</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
                             <div className="col-3">
                                 <label htmlFor="">Fecha de Inicio</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{values_contract?.subscription_date}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Fecha de terminación</label>
-                                <div className="my-3">-</div>
-                            </div>
-
-                            <div className="col-3">
-                                <label htmlFor="">Valor de administración</label>
-                                <div className="my-3">-</div>
-                            </div>
-                            <div className="col-3">
-                                <label htmlFor="">Valor Vigilancia</label>
-                                <div className="my-3">-</div>
-                            </div>
-                        </div>
-                        <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                            <div className="col-3">
-                                <label htmlFor="">Valor Servicio Público</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{values_contract?.finish_date}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">Área a disponer</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{values_contract?.dispose_area}</div>
                             </div>
                             <div className="col-3">
                                 <label htmlFor="">UABI es la encargada del contrato</label>
-                                <div className="my-3">-</div>
+                                <div className="my-3">{values_contract?.manager_sabi}</div>
                             </div>
                         </div>
                         <div className="row">
@@ -72,11 +58,7 @@ const ContractViewForm : FC<FormPros> = ({ values_contract }) => {
                                 <label htmlFor="">Objeto del contrato</label>
                                 <div className="my-3" style={{ height: '60px', overflowX: 'auto' }}>
                                     <div style={{ width: '1000px' }}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus neque a ex
-                                        porta aliquet. Nunc malesuada auctor risus, ut condimentum mauris scelerisque
-                                        non. Aliquam erat volutpat. Nullam quis blandit elit. In non tincidunt eros, sed
-                                        pretium erat. Curabitur sollicitudin ex in odio pellentesque fringilla. Nulla
-                                        vehicula,
+                                        {values_contract?.object_contract}
                                     </div>
                                 </div>
                             </div>

@@ -20,6 +20,8 @@ export const ListContracts = () => {
         permits: user?.permits.map((a) => a.name) || [],
         roles: user?.roles.map((a) => a.name) || [],
     };
+
+
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">

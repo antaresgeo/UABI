@@ -102,9 +102,20 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     //     }
     //     return [];
     // };
+    const number_validate = (limit?: number) => (e) => {
+        e.preventDefault();
+        const regex = new RegExp(`^([1-9]+\\d*)|[0]${limit ? `{0,${limit}}` : '*'}$`);
+        if (regex.test(e.target.value.toString())) {
+            const a = Math.abs(parseInt(e.target.value))
+            e.target.value = a
+            formik.handleChange(e);
+        }
+    };
 
     return (
+
         <>
+
             <div className="row">
                 <div className="form-group col-6">
                     <label htmlFor="project_id_id" className="form-label">
@@ -373,6 +384,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             id="total_area_id"
                             className="form-control border-end-0"
                             min={0}
+                            onChange={number_validate(15)}
                         />
                         <div className="input-group-prepend">
                             <Field
@@ -428,6 +440,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             className="form-control border-start-0 text-end"
                             min={0}
                             max={9999999999}
+                            onChange={number_validate(15)}
+
                         />
                     </div>
 
@@ -445,6 +459,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             className="form-control border-end-0"
                             min={0}
                             max={100}
+                            onChange={number_validate(15)}
                             type="number"
                         />
                         <div className="input-group-prepend">
@@ -585,13 +600,14 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             id="plot_area_id"
                             name="plot_area"
                             disabled={!formik.values.active_type?.includes('Lote')}
-                            onChange={(e) => {
-                                formik.handleChange(e);
-                                // const value1 = parseFloat(e.target.value || 0);
-                                // const value2 = parseFloat(formik.values.construction_area || 0);
-                                //formik.setFieldValue('total_area', value1 + value2, false);
-                            }}
+                            // onChange={(e) => {
+                            //     formik.handleChange(e);
+                            //     // const value1 = parseFloat(e.target.value || 0);
+                            //     // const value2 = parseFloat(formik.values.construction_area || 0);
+                            //     //formik.setFieldValue('total_area', value1 + value2, false);
+                            // }}
                             min={0}
+                            onChange={number_validate(15)}
                         />
                         <div className="input-group-prepend">
                             <Field
@@ -664,12 +680,12 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     formik.values.active_type?.includes(active_type[3])
                                 )
                             }
-                            onChange={(e) => {
-                                formik.handleChange(e);
-                                // const value2 = parseFloat(e.target.value || 0);
-                                // const value1 = parseFloat(formik.values.plot_area || 0);
-                                //formik.setFieldValue('total_area', value1 + value2, false);
-                            }}
+                            // onChange={(e) => {
+                            //     formik.handleChange(e);
+                            //     // const value2 = parseFloat(e.target.value || 0);
+                            //     // const value1 = parseFloat(formik.values.plot_area || 0);
+                            //     //formik.setFieldValue('total_area', value1 + value2, false);
+                            // }}
                         />
                         <div className="input-group-prepend">
                             <Field

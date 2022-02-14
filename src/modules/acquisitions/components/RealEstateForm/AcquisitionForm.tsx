@@ -42,7 +42,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
         title_type: Yup.string().required('Campo obligatorio'),
         act_number: Yup.string().required('Campo obligatorio'),
         act_value: Yup.number().required('Campo obligatorio'),
-        acquired_percentage: Yup.number().required('Campo obligatorio'),
+        acquired_percentage: Yup.number().required('Campo obligatorio').min(0, 'El minimo es 0').max(100, 'El maximo es 100'),
         origin: Yup.object().required('Campo obligatorio'),
         entity_type: Yup.string().required('Campo obligatorio'),
         entity_number: Yup.string().required('Campo obligatorio'),
@@ -71,7 +71,17 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
             validationSchema={schema}
             innerRef={innerRef}
         >
-            {({ setFieldValue }) => {
+            {({ setFieldValue, handleChange }) => {
+                const number_validate = (limit?: number) => (e) => {
+                    e.preventDefault();
+                    const regex = new RegExp(`^([1-9]+\\d*)|[0]${limit ? `{0,${limit}}` : '*'}$`);
+                    if (regex.test(e.target.value.toString())) {
+                        const a = Math.abs(parseInt(e.target.value))
+                        e.target.value = a
+                        handleChange(e);
+                    }
+                };
+
                 return (
                     <Form>
                         <div className="row">
@@ -163,6 +173,9 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                         className="form-control border-end-0"
                                         id="acquired_percentage_id"
                                         name="acquired_percentage"
+                                        min={0}
+                                        max={999}
+                                        onChange={number_validate(3)}
                                     />
                                     <div className="input-group-prepend">
                                         <span className="input-group-text bg-white border-start-0">%</span>
@@ -181,6 +194,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                         id="area_id"
                                         name="area"
                                         min={0}
+                                        onChange={number_validate(10)}
                                     />
                                     <div className="input-group-prepend">
                                         <span className="input-group-text bg-white border-start-0">
@@ -201,6 +215,9 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     className="form-control"
                                     id="acquisition_value_id"
                                     name="act_value"
+                                    // min={0}
+                                    // max={9999999999}
+                                    onChange={number_validate(15)}
                                 />
                                 <ErrorMessage name="act_value" />
                             </div>
@@ -213,6 +230,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     className="form-control"
                                     id="acquisition_value_id"
                                     name="recognition_value"
+                                    onChange={number_validate(15)}
                                 />
                                 <ErrorMessage name="recognition_value" />
                             </div>

@@ -154,7 +154,7 @@ const get_routes = (): IRoute[] => {
             path: '/disposition/contract/:id/',
             template_props: {
                 breadcrumbs: [
-                    { name: 'Disposición', to: '/disposition/list/' },
+                    { name: 'Lista de Contratos', to: '/dispositions/contract/list' },
                     { name: 'Contrato' },
                 ],
             },
@@ -167,7 +167,7 @@ const get_routes = (): IRoute[] => {
             path: '/disposition/contract/edit/:id/',
             template_props: {
                 breadcrumbs: [
-                    { name: 'Disposición', to: '/disposition/list/' },
+                    { name: 'Lista de Contratos', to: '/dispositions/contract/list' },
                     { name: 'Contrato' },
                 ],
             },
@@ -179,7 +179,7 @@ const get_routes = (): IRoute[] => {
             can_access: true,
             path: '/dispositions/contract/list',
             template_props: {
-                breadcrumbs: [{ name: 'Contratos' }],
+                breadcrumbs: [{ name: 'lista de Contratos' }],
             },
             component: ListContracts,
         },
