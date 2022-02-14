@@ -46,7 +46,7 @@ const get_routes = (): IRoute[] => {
         {
             exact: true,
             is_private: true,
-            can_access: true, //guards.createInpection,
+            can_access: guards.updateInspection, //guards.createInpection,
             path: '/inspection/:real_estate_id/create/',
             template_props: {
                 breadcrumbs: [
@@ -60,24 +60,6 @@ const get_routes = (): IRoute[] => {
                 ],
             },
             component: InspectionCreate,
-        },
-        {
-            exact: true,
-            is_private: true,
-            can_access: true, //guards.scheduler,
-            path: '/inspection/scheduler/',
-            template_props: {
-                breadcrumbs: [
-                    {
-                        name: 'Inspecciones',
-                        to: '/inspection/',
-                    },
-                    {
-                        name: 'Calendario',
-                    },
-                ],
-            },
-            component: Scheduler,
         },
     ];
 };

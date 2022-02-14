@@ -20,38 +20,6 @@ function App() {
         roles: user?.roles?.map((a) => a.name) || [],
     };
 
-    // const query_test = async () => {
-    //     return await axios.post('https://www.medellin.gov.co/test/servicio-usuarios/auth', {
-    //         info: { action: 'registrarInfoPersona' },
-    //         persona: {
-    //             tipo_sociedad: 'N-Persona Natural',
-    //             tipo_entidad: 'NINGUNO',
-    //             tipo_identificacion: '1-Cédula de Ciudadanía',
-    //             documento: '1000416139',
-    //             nombres: 'Ficticio Prueba',
-    //             apellidos: 'Listo ejemplo',
-    //             correo: 'santiago.suarez@dation.co',
-    //             direccion: 'calle falsa 123',
-    //             barrio: 'Candelaria',
-    //             telefono: '5814766',
-    //             celular: '300102000',
-    //             pais: 'CO',
-    //             departamento: '05-ANTIOQUIA',
-    //             municipio: '05001-MEDELLÍN',
-    //             politica: 'true',
-    //             notificacion: 'false',
-    //             genero: 'f',
-    //         },
-    //         autenticacion: {
-    //             fecha: '2021-12-23T18:44:33Z',
-    //             usuario: 'VVNSX1VBQklfVU1F',
-    //             llave: 'ODk3NTZEQ0QyMDJDMzVERDExQjU1ODkyODhCMDUwRTU0REJFOEJEQ0Y2MzIzMzJBOTIwRURFMUYyQTg2RTA0OA==',
-    //             cadena: 'CE4cPWUOXJZVVLCjTFmx85n0TKEpFoSrJ6X6c4r5',
-    //         },
-    //     });
-    // };
-    // query_test().then((res) => console.log(res))
-
     return (
         <>
             <Router routes={routes} template={Template} user={aux_user} />

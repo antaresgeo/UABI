@@ -121,7 +121,7 @@ const EditContract = () => {
                     Guardar
                     {form_ref.current?.isSubmitting && (
                         <i
-                            className="fa fa-circle-notch fa-spin"
+                            className="fa fa-spinner fa-spin"
                             style={{ fontSize: 12, marginLeft: 4, color: '#fff' }}
                         />
                     )}

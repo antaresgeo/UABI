@@ -46,9 +46,11 @@ const reducer = (state = initialState, action) => {
         }
 
         case authTypes.LOGOUT: {
+
             localStorage.removeItem('_tk_');
             localStorage.removeItem('_uk_');
             localStorage.removeItem('_rf_');
+            console.log("ok")
             return {
                 ...state,
                 can_access: false,

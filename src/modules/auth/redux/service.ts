@@ -50,14 +50,18 @@ const services = {
     // },
     logout: async () => {
         return auth_http
-            .post("/auth/log-out/")
+            .post('/auth/log-out/')
             .then((response) => {
                 console.log(
                     `%c LogOut `,
-                    "background: #ffff00; color: #000; padding: 8px; border-radius: 4px;"
+                    'background: #ffff00; color: #000; padding: 8px; border-radius: 4px;'
                 );
+                return response;
             })
-            .catch((response) => console.log({ response }));
+            .catch((response) => {
+                console.log({ response });
+                return Promise.reject();
+            });
     },
     // logout: async () => {
     //     return auth_http
