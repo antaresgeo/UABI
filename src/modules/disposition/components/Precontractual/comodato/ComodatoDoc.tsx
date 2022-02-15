@@ -48,7 +48,7 @@ const ComodatoDoc = () => {
                     className="btn btn-outline-primary"
                     onClick={() => {
                         //console.log('@values',values)
-                        history.push({ pathname: "/disposition/create/", state: { dispositionType, stage: "pre-contractual", realEstate, values } })
+                        history.push({ pathname: "/disposition/create/", state: { dispositionType, stage: "pre-contractual", realEstate, values, precontractual: values?.edit === true ? values : null } })
                     }}
                 >
                     Atras
@@ -114,13 +114,19 @@ const ComodatoDoc = () => {
                             final_values = {
                                 ...final_values,
                                 beneficiary_location_id: {
-                                    id: final_values.beneficiary_location_id || 20
+                                    id: final_values?.beneficiary_location_id || 20
                                 }
                             }
                             res = await dispatch(actions.update_precontract(realEstate?.active_code, final_values))
 
                         } else {
                             delete final_values.edit;
+                            final_values = {
+                                ...final_values,
+                                beneficiary_location_id: {
+                                    id: final_values?.beneficiary_location_id || 20
+                                }
+                            }
                             res = await dispatch(actions.create_precontract(final_values, "Comodato"))
                         }
                         console.log(res)

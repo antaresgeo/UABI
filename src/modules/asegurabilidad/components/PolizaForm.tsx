@@ -108,7 +108,11 @@ const PolizaForm: FC<InsurabilityFormPros> = ({
         insurance_companies: Yup.array().of(
             Yup.object().shape({
                 id: Yup.string().required('obligatorio'),
-                percentage_insured: Yup.number().required('obligatorio'),
+                percentage_insured: Yup.number()
+                .required('Campo obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(100, 'El maximo 100 es caracteres'),
+
             })
         ),
         // policy_number: Yup.number()

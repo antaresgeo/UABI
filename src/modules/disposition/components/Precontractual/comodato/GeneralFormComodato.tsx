@@ -23,7 +23,6 @@ interface FormPros {
 }
 
 export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEstate, values_form, precontractual }) => {
-
     const [edit, setEdit] = useState(false);
     const dispatch = useDispatch();
 
@@ -44,6 +43,7 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
             input: "",
         },
         lockable_base: 10,
+        boundaries: "",
         //solicitante
         applicant: "",
 
@@ -102,11 +102,7 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         //beneficiario
         population: '',
         benefited_sector: '',
-        location: {
-            beneficiary_location_id: "",
-            commune: '',
-            neighborhood: '',
-        },
+        location: "",
 
         dependency: realEstate?.dependency?.dependency,
         secretary: realEstate?.cost_center?.subdependency,
@@ -114,7 +110,7 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
             ...precontractual,
             prediation_date: precontractual?.prediation_date ? moment(new Date(Number(precontractual?.prediation_date))).format('YYYY-MM-DD') : "",
             registration_date: precontractual?.registration_date ? moment(new Date(Number(precontractual?.registration_date))).format('YYYY-MM-DD') : moment(new Date()).format('YYYY-MM-DD'),
-            leader: {
+            leader: precontractual?.leader ? {
                 id: precontractual?.leader?.id || "",
                 documentType: precontractual?.leader?.document_type || "",
                 documentNumber: precontractual?.leader?.document_number || "",
@@ -127,8 +123,8 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                 gender: precontractual?.leader?.gender || "",
                 post: precontractual?.leader?.post || "",
                 location_id: precontractual?.leader?.location_id || "",
-            },
-            elaborated: {
+            } : "",
+            elaborated: precontractual?.elaborated ? {
                 id: precontractual?.elaborated?.id || "",
                 documentType: precontractual?.elaborated?.document_type || "",
                 documentNumber: precontractual?.elaborated?.document_number || "",
@@ -141,8 +137,8 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                 gender: precontractual?.elaborated?.gender || "",
                 post: precontractual?.elaborated?.post || "",
                 location_id: precontractual?.elaborated?.location_id || "",
-            },
-            revised: {
+            } : "",
+            revised: precontractual?.revised ? {
                 id: precontractual?.revised?.id || "",
                 documentType: precontractual?.revised?.document_type || "",
                 documentNumber: precontractual?.revised?.document_number || "",
@@ -155,8 +151,8 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                 gender: precontractual?.revised?.gender || "",
                 post: precontractual?.revised?.post || "",
                 location_id: precontractual?.revised?.location_id || "",
-            },
-            approved: {
+            } : "",
+            approved: precontractual?.approved ? {
                 id: precontractual?.approved?.id || "",
                 documentType: precontractual?.approved?.document_type || "",
                 documentNumber: precontractual?.approved?.document_number || "",
@@ -169,10 +165,10 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                 gender: precontractual?.approved?.gender || "",
                 post: precontractual?.approved?.post || "",
                 location_id: precontractual?.approved?.location_id || "",
-            },
-            applicant: {
+            } : "",
+            applicant: precontractual?.applicant ? {
                 id: precontractual?.applicant?.id || "",
-                documentType: precontractual?.applicant?.document_type || "",
+                documentType: precontractual?.applicant?.document_type || "NIT",
                 documentNumber: precontractual?.applicant?.document_number || "",
                 names: { firstName: precontractual?.applicant?.first_name || '', lastName: precontractual?.applicant?.last_name || '' },
                 surnames: { firstSurname: precontractual?.applicant?.first_surname || '', lastSurname: precontractual?.applicant?.last_surname || '' },
@@ -184,8 +180,8 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                 post: precontractual?.applicant?.post || "",
                 location_id: precontractual?.applicant?.location_id || "",
                 location: precontractual?.applicant?.location?.address || "",
-            },
-            representative: {
+            } : "",
+            representative: precontractual?.representative ? {
                 id: precontractual?.representative?.id || "",
                 documentType: precontractual?.representative?.document_type || "",
                 documentNumber: precontractual?.representative?.document_number || "",
@@ -199,7 +195,7 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                 post: precontractual?.representative?.post || "",
                 location_id: precontractual?.representative?.location_id || "",
                 location: precontractual?.representative?.location?.address || "",
-            },
+            } : "",
             business_type: {
                 select:
                     precontractual?.business_type === 'teatro' ? precontractual?.business_type :
@@ -211,7 +207,17 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
                             precontractual?.business_type !== 'otro' ? precontractual?.business_type :
                                 "",
             },
-            commercial_appraisal: precontractual?.contract_value || 0
+            commercial_appraisal: precontractual?.contract_value || 0,
+            value_public_service: precontractual?.value_public_service || "",
+            value_locative_repairs: precontractual?.value_locative_repairs || "",
+            value_repairs_damages: precontractual?.value_repairs_damages || "",
+            value_domiciliary_public: precontractual?.value_domiciliary_public || "",
+            surveillance_value: precontractual?.surveillance_value || "",
+            cleaning_value: precontractual?.cleaning_value || "",
+            conservation_value: precontractual?.conservation_value || "",
+            administration_value: precontractual?.administration_value || "",
+            network_value: precontractual?.network_value || "",
+            value_economic_obligations: precontractual?.value_economic_obligations || "",
 
         },
 
@@ -243,63 +249,92 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
     const schema = Yup.object().shape({
         //obligaciones
         resolution: Yup.string().required('obligatorio'),
-        // value_locative_repairs: Yup.number().when('resolution', {
-        //     is: "si",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // value_repairs_damages: Yup.number().when('resolution', {
-        //     is: "si",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // value_domiciliary_public: Yup.number().when('resolution', {
-        //     is: "si",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // surveillance_value: Yup.number().when('resolution', {
-        //     is: "si",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // cleaning_value: Yup.number().when('resolution', {
-        //     is: "si",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // conservation_value: Yup.number().when('resolution', {
-        //     is: "si",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // administration_value: Yup.number().when('resolution', {
-        //     is: "si",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // network_value: Yup.number().when('resolution', {
-        //     is: "si",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // value_economic_obligations: Yup.number().when('resolution', {
-        //     is: "si",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // commercial_appraisal: Yup.number().when('resolution', {
-        //     is: "no",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // // //service public
-        // public_service: Yup.string().required('obligatorio'),
-        // value_public_service: Yup.number().when('public_service', {
-        //     is: "si",
-        //     then: Yup.number().required('obligatorio')
-        // }),
-        // capacity_specification: Yup.string().when('public_service', {
-        //     is: "si",
-        //     then: Yup.string().required('obligatorio')
-        // }),
+
+        value_locative_repairs: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+        value_repairs_damages: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+        value_domiciliary_public: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+        surveillance_value: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+        cleaning_value: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+        conservation_value: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+        administration_value: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+        network_value: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+        value_economic_obligations: Yup.number().when('resolution', {
+            is: "si",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+        commercial_appraisal: Yup.number().when('resolution', {
+            is: "no",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+
+
         prediation_date: Yup.string().required('obligatorio'),
         environmental_risk: Yup.string().required('obligatorio'),
-        // // business_type: Yup.string().required('obligatorio'),
         lockable_base: Yup.number().required('obligatorio').min(10, 'El minimo es 10').max(100, 'El maximo es 100'),
-        contract_period: Yup.string().required('obligatorio'),
+        contract_period: Yup.number()
+            .required('obligatorio')
+            .min(0, 'El minimo es 0')
+            .max(99, 'maximo 2 caracteres'),
 
         loan_typology: Yup.string().required('obligatorio'),
+        loan_value: Yup.number()
+            .required('obligatorio')
+            .min(0, 'El minimo es 0')
+            .max(9999999999, 'maximo 10 caracteres'),
         destination_realestate: Yup.string().required('obligatorio'),
         peacesafe: Yup.string().required('obligatorio'),
         social_event: Yup.string().required('obligatorio'),
@@ -307,16 +342,47 @@ export const GeneralFormComodato: FC<FormPros> = ({ onSubmit, innerRef, realEsta
         action_field: Yup.string().required('obligatorio'),
         horizontal_property: Yup.string().required('obligatorio'),
         activities: Yup.string().required('obligatorio'),
-        // //Beneficiario
+        competitive_process: Yup.string().required('obligatorio'),
+        competitive_process_value: Yup.string().when('competitive_process', {
+            is: "Aplica",
+            then: Yup.string().required('obligatorio')
+        }),
+        //service public
+        public_service: Yup.string().required('obligatorio'),
+        value_public_service: Yup.number().when('public_service', {
+            is: "si",
+            then: Yup.number()
+                .required('obligatorio')
+                .min(0, 'El minimo es 0')
+                .max(9999999999, 'maximo 10 caracteres'),
+        }),
+        capacity_specification: Yup.string().when('public_service', {
+            is: "si",
+            then: Yup.string().required('obligatorio')
+        }),
+        boundaries: Yup.string().required('obligatorio'),
+        //Beneficiario
         population: Yup.string().required('obligatorio'),
         benefited_sector: Yup.string().required('obligatorio'),
+        location: Yup.object().required('obligatorio'),
         dependence: Yup.string().required('obligatorio'),
         registration_date: Yup.string().required('obligatorio'),
-
-
-
-
+        business_type: Yup.object({
+            select: Yup.string().required('obligatorio'),
+            input: Yup.string().when('select', {
+                is: "otro",
+                then: Yup.string().required('obligatorio')
+            })
+        }),
+        //solicitante
+        applicant: Yup.object().required('obligatorio'),
+        // representative: Yup.object().required('obligatorio'),
+        leader: Yup.object().required('obligatorio'),
+        elaborated: Yup.object().required('obligatorio'),
+        revised: Yup.object().required('obligatorio'),
+        approved: Yup.object().required('obligatorio'),
     });
+
     return (
         <Formik
             enableReinitialize

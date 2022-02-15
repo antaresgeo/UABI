@@ -439,8 +439,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             id="reconstruction_value_id"
                             className="form-control border-start-0 text-end"
                             min={0}
-                            max={9999999999}
-                            onChange={number_validate(15)}
+                            onChange={number_validate()}
 
                         />
                     </div>

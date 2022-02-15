@@ -79,6 +79,7 @@ const Importer: FC<any> = (props) => {
                         <div {...getRootProps({ style })}>
                             <input {...getInputProps()} />
                             <Alert
+                                message=""
                                 description="Arrastre el archivo a importar aqui, o haga clic para seleccionar le archivo"
                                 type="info"
                                 showIcon

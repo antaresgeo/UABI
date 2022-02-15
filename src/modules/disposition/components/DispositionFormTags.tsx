@@ -17,7 +17,6 @@ interface IParams {
 export const DispositionFormTags = () => {
     const location = useLocation<IParams>();
     const { dispositionType, realEstate, values,values_contract, stage, precontractual, contractual } = location.state;
-
     // console.log(location.state)
 
     const { TabPane } = Tabs;

@@ -49,7 +49,7 @@ const BeneficiaryForm: FC<FormProps> = ({ formik }) => {
                             type="text"
                             className="form-control"
                             disabled
-                            value={`${formik.values.location.commune}, ${formik.values.location.neighborhood}`}
+                            value={`${formik.values.location.commune || ""}, ${formik.values.location.neighborhood || ""}`}
                         />
                         <div className="input-group-prepend">
                             <LocationModal

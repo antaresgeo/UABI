@@ -13,7 +13,6 @@ interface FormPros {
 }
 
 const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, values_form, stage, precontractual }) => {
-
     const form_ref = useRef<any>();
     const history = useHistory();
     const on_submit_lease = async (values) => {
@@ -41,7 +40,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                                     innerRef={form_ref}
                                     onSubmit={on_submit_comodato}
                                     values_form={values_form}
-                                    precontractual={precontractual?.type_disposition === "Comodato" ? precontractual : {} }
+                                    precontractual={precontractual?.type_disposition === "Comodato" ? precontractual : null }
 
                                 />
                             )}
@@ -51,7 +50,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                                     innerRef={form_ref}
                                     onSubmit={on_submit_lease}
                                     values_form={values_form}
-                                    precontractual={precontractual?.type_disposition === "Arrendamiento" ? precontractual : {} }
+                                    precontractual={precontractual?.type_disposition === "Arrendamiento" ? precontractual : null }
                                 />
                             )}
                             {(dispositionType !== "Arrendamiento" && dispositionType !== "Comodato") &&
@@ -60,7 +59,7 @@ const CreatePrecontractual: FC<FormPros> = ({ dispositionType, realEstate, value
                                     innerRef={form_ref}
                                     onSubmit={on_submit_publicuse}
                                     values_form={values_form}
-                                    precontractual={precontractual?.type_disposition === "Publico" ? precontractual : {} }
+                                    precontractual={precontractual?.type_disposition === "Publico" ? precontractual : null }
                                 />
                             }
 

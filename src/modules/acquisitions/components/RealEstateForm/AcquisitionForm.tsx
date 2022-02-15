@@ -41,7 +41,13 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
         area: Yup.number().required('Campo obligatorio'),
         title_type: Yup.string().required('Campo obligatorio'),
         act_number: Yup.string().required('Campo obligatorio'),
-        act_value: Yup.number().required('Campo obligatorio'),
+        act_value: Yup.number()
+            .required('Campo obligatorio')
+            .min(0, 'El minimo es 0')
+            .max(9999999999, 'El maximo 10 es caracteres'),
+        recognition_value: Yup.number()
+            .min(0, 'El minimo es 0')
+            .max(9999999999, 'El maximo 10 es caracteres'),
         acquired_percentage: Yup.number().required('Campo obligatorio').min(0, 'El minimo es 0').max(100, 'El maximo es 100'),
         origin: Yup.object().required('Campo obligatorio'),
         entity_type: Yup.string().required('Campo obligatorio'),
@@ -194,7 +200,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                         id="area_id"
                                         name="area"
                                         min={0}
-                                        onChange={number_validate(10)}
+                                        onChange={number_validate()}
                                     />
                                     <div className="input-group-prepend">
                                         <span className="input-group-text bg-white border-start-0">
@@ -217,7 +223,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     name="act_value"
                                     // min={0}
                                     // max={9999999999}
-                                    onChange={number_validate(15)}
+                                    onChange={number_validate()}
                                 />
                                 <ErrorMessage name="act_value" />
                             </div>
@@ -230,7 +236,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     className="form-control"
                                     id="acquisition_value_id"
                                     name="recognition_value"
-                                    onChange={number_validate(15)}
+                                    onChange={number_validate()}
                                 />
                                 <ErrorMessage name="recognition_value" />
                             </div>
