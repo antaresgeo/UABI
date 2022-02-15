@@ -24,7 +24,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
     return (
         <>
             <div className="row">
-                <div className={`col-${formik.values.entity_type === 'Publica' ? 3 : 6}`}>
+                <div className={`col-lg-${formik.values.entity_type === 'Publica' ? 3 : 6} col-12 col-md-6`}>
                     <label htmlFor="id" className="form-label">
                         Tipo de Sociedad <span className="text-danger">*</span>
                     </label>
@@ -44,7 +44,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                     </Field>
                     <ErrorMessage name="detailsUser.society_type" />
                 </div>
-                <div className={`col-${formik.values.entity_type === 'Publica' ? 3 : 6}`}>
+                <div className={`col-12 col-md-6 col-lg-${formik.values.entity_type === 'Publica' ? 3 : 6}`}>
                     <label htmlFor="id" className="form-label">
                         Tipo Entidad <span className="text-danger">*</span>
                     </label>
@@ -68,7 +68,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                 </div>
                 {formik.values.detailsUser.entity_type === 'P' && (
                     <>
-                        <div className="col-6">
+                        <div className="col-12 col-lg-6 col-md-6">
                             <label htmlFor="dependency_id" className="form-label">
                                 Dependecia <span className="text-danger">*</span>
                             </label>
@@ -105,7 +105,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                             />
                             <ErrorMessage name="detailsUser.dependency" />
                         </div>
-                        <div className="col-6">
+                        <div className="col-12 col-lg-6 col-md-6">
                             <label htmlFor="subdependency_id" className="form-label">
                                 Sub. Dependecia <span className="text-danger">*</span>
                             </label>
@@ -139,7 +139,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                 )}
             </div>
             <div className="row">
-                <div className="col-3">
+                <div className="col-12 col-lg-3 col-md-6">
                     <label htmlFor="first_name_id" className="form-label">
                         Primer Nombre <span className="text-danger">*</span>
                     </label>
@@ -155,7 +155,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                     />
                     <ErrorMessage name="detailsUser.names.firstName" />
                 </div>
-                <div className="col-3">
+                <div className="col-12 col-lg-3 col-md-6">
                     <label htmlFor="second_name_id" className="form-label">
                         Segundo Nombre
                     </label>
@@ -171,7 +171,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                     />
                     <ErrorMessage name="detailsUser.names.lastName" />
                 </div>
-                <div className="col-3">
+                <div className="col-12 col-lg-3 col-md-6">
                     <label htmlFor="surname_id" className="form-label">
                         Primer apellido <span className="text-danger">*</span>
                     </label>
@@ -187,7 +187,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                     />
                     <ErrorMessage name="detailsUser.surnames.firstSurname" />
                 </div>
-                <div className="col-3">
+                <div className="col-12 col-lg-3 col-md-6">
                     <label htmlFor="second_surname_id" className="form-label">
                         Segundo apellido
                     </label>
@@ -205,7 +205,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                 </div>
             </div>
             <div className="row">
-                <div className="col-3">
+                <div className="col-12 col-lg-3 col-md-6">
                     <label htmlFor="id" className="form-label">
                         Tipo de Documento <span className="text-danger">*</span>
                     </label>
@@ -227,7 +227,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                     </Field>
                     <ErrorMessage name="detailsUser.id_type" />
                 </div>
-                <div className="col-3">
+                <div className="col-12 col-lg-3 col-md-6">
                     <label htmlFor="username" className="form-label">
                         Numero de documento <span className="text-danger">*</span>
                     </label>
@@ -250,7 +250,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                     />
                     <ErrorMessage name="user.id_number" withCount max={20} />
                 </div>
-                <div className={`col-${type === 'create' || is_admin ? 3 : 6}`}>
+                <div className={`col-12 col-md-6 col-lg-${type === 'create' || is_admin ? 3 : 6}`}>
                     <label htmlFor="username" className="form-label">
                         Correo Electronico <span className="text-danger">*</span>
                     </label>
@@ -267,7 +267,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                     <ErrorMessage name="detailsUser.email" />
                 </div>
                 {(type === 'create' || is_admin) && (
-                    <div className="col-3">
+                    <div className="col-12 col-lg-3 col-md-6">
                         <label htmlFor="username" className="form-label">
                             Contraseña
                         </label>
@@ -284,7 +284,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                 )}
             </div>
             <div className="row">
-                <div className="col-3">
+                <div className="col-12 col-lg-3 col-md-6">
                     <label htmlFor="username" className="form-label">
                         Celular <span className="text-danger">*</span>
                     </label>
@@ -300,7 +300,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                     />
                     <ErrorMessage name="detailsUser.cellphone_number" />
                 </div>
-                <div className="col-3">
+                <div className="col-12 col-lg-3 col-md-6">
                     <div className="row">
                         <div className="col-8">
                             <label htmlFor="phone_number" className="form-label">
@@ -335,7 +335,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                         </div>
                     </div>
                 </div>
-                <div className="col-3">
+                <div className="col-12 col-lg-3 col-md-6">
                     <label htmlFor="username" className="form-label">
                         Genero <span className="text-danger">*</span>
                     </label>
@@ -356,7 +356,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                     </Field>
                     <ErrorMessage name="detailsUser.gender" />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-lg-3 col-md-6">
                     <label htmlFor="location" className="form-label">
                         Dirección <span className="text-danger">*</span>
                     </label>
@@ -386,7 +386,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
             </div>
             {type === 'view' && (
                 <div className="row">
-                    <div className="col-3">
+                    <div className="col-12 col-lg-3 col-md-6">
                         <label htmlFor="id_rol" className="form-label">
                             Rol
                         </label>

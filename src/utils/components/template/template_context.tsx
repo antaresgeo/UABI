@@ -23,6 +23,8 @@ interface TemplateProps {
     idNode: string;
     socket: Socket;
     set_canon_type: (type: 'inversion' | 'inversion_social' | null) => void;
+    device: 'sm' | 'md' | 'lg';
+    // width: number;
 }
 
 export const TemplateContext = React.createContext<TemplateProps>(null);
@@ -38,6 +40,29 @@ const TemplateProvider: FC = React.memo(({ children }) => {
     const [idNode, set_idNode] = useState<string>(null);
     const [socket, set_socket] = useState<Socket>(null);
     const [user] = useSelector((store: any) => [store.auth.user]);
+    const [width, setWidth] = useState<number>(window.innerWidth);
+    const [device, setDevice] = useState<'sm' | 'md' | 'lg'>('lg');
+    const updateDimensions = () => {
+        const _width = window.innerWidth;
+        let _device;
+        switch (true) {
+            case _width <= 425:
+                _device = 'sm';
+                break;
+            case _width <= 768 && _width > 425:
+                _device = 'md';
+                break;
+            default:
+                _device = 'lg';
+                break;
+        }
+        if (_width !== width) {
+            setWidth(_width);
+        }
+        if (_device !== device) {
+            setDevice(_device);
+        }
+    };
 
     useEffect(() => {
         const new_socket = io(BASE_URL);
@@ -63,6 +88,15 @@ const TemplateProvider: FC = React.memo(({ children }) => {
         };
     }, [user]);
 
+    useEffect(() => {
+        window.addEventListener('resize', updateDimensions.bind(this));
+        window.addEventListener('load', updateDimensions.bind(this));
+        return () => {
+            window.removeEventListener('load', updateDimensions.bind(this));
+            window.removeEventListener('resize', updateDimensions.bind(this));
+        };
+    }, [width]);
+
     return (
         <TemplateContext.Provider
             value={{
@@ -75,6 +109,8 @@ const TemplateProvider: FC = React.memo(({ children }) => {
                 canon_type,
                 idNode,
                 socket,
+                device,
+                // width,
                 set_menu_key_path,
                 set_drawer_menu_collapsed,
                 menu_toggle: () => set_menu_collapsed((collapsed) => !collapsed),
