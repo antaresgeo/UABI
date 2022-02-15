@@ -37,8 +37,6 @@ const Home = () => {
                                     { name: 'Gestionar compañía aseguradora', to: '/insurabilities/broker/' },
                                 ]}
                             />
-                        </div>
-                        <div className="row justify-content-center mt-3">
                             <Card name="Inspección" links={[{ name: 'Gestionar inspección', to: '/inspection/' }]} />
                             <Card
                                 name="Disposición"
@@ -48,8 +46,6 @@ const Home = () => {
                                 ]}
                             />
                             <Card name="Supervisión" links={[]} />
-                        </div>
-                        <div className="row justify-content-center mt-3">
                             <Card name="Mantenimiento" links={[]} />
                             <Card name="Consultas" links={[]} />
                             <Card name="Informes y Logs" links={[]} />

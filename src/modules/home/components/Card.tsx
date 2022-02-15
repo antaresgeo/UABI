@@ -9,7 +9,7 @@ interface CardProps {
 const Card: FC<CardProps> = ({ name, links }) => {
     links = links || [];
     return (
-        <div className="col-4">
+        <div className="col-12 col-md-6 col-lg-4 mb-3">
             <SabiCard
                 className="h-100 dash-card"
                 title={
