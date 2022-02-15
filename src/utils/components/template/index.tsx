@@ -7,16 +7,16 @@ import AppHeader from './header';
 import { Link, useHistory } from 'react-router-dom';
 import { Breadcrumb } from '../app_router/custom_types';
 import Menu from 'antd/lib/menu';
-import { useDispatch } from "react-redux";
-import { actions } from "../../../modules/notificacions/redux";
-import { actions as auth_actions } from "../../../modules/auth/redux"
-import notification from "antd/lib/notification";
+import { useDispatch } from 'react-redux';
+import { actions } from '../../../modules/notificacions/redux';
+import { actions as auth_actions } from '../../../modules/auth/redux';
+import notification from 'antd/lib/notification';
 
 interface ITemplate {
     breadcrumbs?: Breadcrumb[];
     show_breadcrumbs?: boolean;
     user: any;
-    roles_user?: any
+    roles_user?: any;
 }
 
 const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user, roles_user }) => {
@@ -30,14 +30,15 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
         style: { backgroundColor: 'white' },
         ...(collapsible
             ? {
-                trigger: null,
-                collapsible,
-                collapsed: context.menu_collapsed,
-            }
+                  trigger: null,
+                  collapsible,
+                  collapsed: context.menu_collapsed,
+              }
             : {}),
     };
-    const name = `${(user && Object.values(user?.names).join(' ')) || ''} ${(user && Object.values(user?.surnames).join(' ')) || ''
-        }`;
+    const name = `${(user && Object.values(user?.names).join(' ')) || ''} ${
+        (user && Object.values(user?.surnames).join(' ')) || ''
+    }`;
 
     const openNotification = (data) => {
         console.log('received new:notification', data);
@@ -50,12 +51,12 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
             await dispatch(actions.get_list_notifications(id));
         };
         init(user.user_id).then(() => {
-            context.socket?.emit("receive:notification", {id: data.id})
+            context.socket?.emit('receive:notification', { id: data.id });
         });
     };
 
     useEffect(() => {
-        if(user && context.idNode){
+        if (user && context.idNode) {
             context.socket?.off('new:notification');
             context.socket?.on('new:notification', (data) => {
                 openNotification(data);
@@ -66,10 +67,11 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
     return (
         <>
             <Layout className="w-100 h-100">
-
-                <Sider {...sider_ops}>
-                    <AppSider width={sider_ops.width} />
-                </Sider>
+                {context.device !== 'sm' && (
+                    <Sider {...sider_ops} collapsed={context.device === 'md'} collapsedWidth={0}>
+                        <AppSider width={sider_ops.width} />
+                    </Sider>
+                )}
                 <Layout className="site-layout">
                     <Header className="sabi-header p-0">
                         <AppHeader collapsible={collapsible} name={name} user_id={user?.user_id} />
@@ -111,8 +113,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                         letterSpacing: '-0.4px',
                     }}
                 >
-
-                    <div className="d-flex align-start flex-column" style={{width: "80%"}}>
+                    <div className="d-flex align-start flex-column" style={{ width: '80%' }}>
                         <span style={{ fontWeight: 'bold', fontSize: 22 }}>{name}</span>
                         {user && (
                             <span
@@ -127,48 +128,54 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                         )}
                     </div>
                 </div>
-                <div className="drawer-content">
-                    <Menu mode="inline" selectedKeys={[]}>
-                        <Menu.Item
-                            style={{ borderBottom: '0.5px solid #00000029' }}
-                            key="1"
-                            onClick={() => {
-                                context.toggle_pass_modal();
-                                context.drawer_close();
-                            }}
-                        >
-                            Cambiar contraseña
-                        </Menu.Item>
-                        <Menu.Item
-                            style={{ borderBottom: '0.5px solid #00000029' }}
-                            key="2"
-                            onClick={() => {
-                                history.push(`/users/edit/${user.user_id}/`);
-                                context.drawer_close();
-                            }}
-                        >
-                            Editar usuario
-                        </Menu.Item>
-                        {roles_user.includes('Administrador') /*|| roles_user.includes('Administrador')*/ &&
+                <div className="drawer-content d-flex flex-column">\
+                    <div style={{padding: 16}}>
+                        <Menu mode="inline" selectedKeys={[]}>
                             <Menu.Item
                                 style={{ borderBottom: '0.5px solid #00000029' }}
-                                key="3"
+                                key="1"
                                 onClick={() => {
-                                    context.set_canon_type(null);
-                                    context.toggle_percentage_modal();
+                                    context.toggle_pass_modal();
                                     context.drawer_close();
                                 }}
                             >
-                                Aumento porcentual de canon
+                                Cambiar contraseña
                             </Menu.Item>
-
-                        }
-                    </Menu>
+                            <Menu.Item
+                                style={{ borderBottom: '0.5px solid #00000029' }}
+                                key="2"
+                                onClick={() => {
+                                    history.push(`/users/edit/${user.user_id}/`);
+                                    context.drawer_close();
+                                }}
+                            >
+                                Editar usuario
+                            </Menu.Item>
+                            {roles_user.includes('Administrador') /*|| roles_user.includes('Administrador')*/ && (
+                                <Menu.Item
+                                    style={{ borderBottom: '0.5px solid #00000029' }}
+                                    key="3"
+                                    onClick={() => {
+                                        context.set_canon_type(null);
+                                        context.toggle_percentage_modal();
+                                        context.drawer_close();
+                                    }}
+                                >
+                                    Aumento porcentual de canon
+                                </Menu.Item>
+                            )}
+                        </Menu>
+                    </div>
+                    {context.device === 'sm' && (
+                        <div className="flex-fill" style={{overflowY: "auto"}}>
+                            <AppSider width={sider_ops.width} />
+                        </div>
+                    )}
                 </div>
                 <div
                     className="p-4 session-close"
                     onClick={async () => {
-                        await dispatch(auth_actions.logOut())
+                        await dispatch(auth_actions.logOut());
                         context.drawer_close();
                         history.push('/auth/login/');
                     }}
