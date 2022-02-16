@@ -32,7 +32,7 @@ const DetailUser = () => {
             <div className="flex-fill overflow-auto">
                 <div className="bg-white d-flex flex-column h-100">
                     <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
-                        <h5 className="col-11 ">Detalle Usuario</h5>
+                        <h5 className="col-9 col-md-11 col-lg-11">Detalle Usuario</h5>
                         <Link
                             to={`/users/edit/${id}/`}
                             name=""

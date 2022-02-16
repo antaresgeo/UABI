@@ -133,7 +133,7 @@ const DataformRole: FC<IUserFormPros> = ({ disabled, type_rol, user_roles, user_
     return (
         <div className="row">
             {type_rol !== 'assign' && (
-                <div className="col-6">
+                <div className="col-12 col-lg-6">
                     <label htmlFor="name" className="form-label">
                         Rol
                     </label>
@@ -150,7 +150,7 @@ const DataformRole: FC<IUserFormPros> = ({ disabled, type_rol, user_roles, user_
                 </div>
             )}
             {type_rol === 'assign' && (
-                <div className="col-6">
+                <div className="col-12 col-lg-6">
                     <label htmlFor="assign_id" className="form-label">
                         Rol
                     </label>
@@ -181,7 +181,7 @@ const DataformRole: FC<IUserFormPros> = ({ disabled, type_rol, user_roles, user_
                     <ErrorMessage name="roles" />
                 </div>
             )}
-            <div className="col-12">
+            <div className="col-12 ">
                 <label htmlFor="permits" className="form-label">
                     Permisos
                 </label>

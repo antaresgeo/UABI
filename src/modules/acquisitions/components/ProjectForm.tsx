@@ -109,7 +109,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                         <Card title="Información del Proyecto">
                             <div className="row">
                                 {project && (
-                                    <div className="col-3">
+                                    <div className="col-12 col-lg-3">
                                         <label htmlFor="id_id" className="form-label">
                                             Código del proyecto
                                         </label>
@@ -125,7 +125,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                         <ErrorMessage name="id" />
                                     </div>
                                 )}
-                                <div className={`col-${project ? 3 : 4}`}>
+                                <div className={`col-12 col-lg-${project ? 3 : 4}`}>
                                     <label htmlFor="name_id" className="form-label">
                                         Nombre del proyecto
                                     </label>
@@ -141,7 +141,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                     />
                                     <ErrorMessage name="name" />
                                 </div>
-                                <div className={`col-${project ? 3 : 4}`}>
+                                <div className={`col-12 col-lg-${project ? 3 : 4}`}>
                                     <label htmlFor="dependency_id" className="form-label">
                                         Dependecia
                                     </label>
@@ -175,7 +175,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                     />
                                     <ErrorMessage name="dependency" />
                                 </div>
-                                <div className={`col-${project ? 3 : 4}`}>
+                                <div className={`col-12 col-lg-${project ? 3 : 4}`}>
                                     <label htmlFor="subdependency_id" className="form-label">
                                         Subdependencia Dependecia
                                     </label>
@@ -207,7 +207,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="form-group col-4">
+                                <div className="form-group col-12 col-lg-4">
                                     <label htmlFor="management_center_id" className="form-label">
                                         Centro Gestor
                                     </label>
@@ -220,7 +220,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                     />
                                     <ErrorMessage name="cost_center" />
                                 </div>
-                                <div className="form-group col-4">
+                                <div className="form-group col-12 col-lg-4">
                                     <label htmlFor="cost_center_id" className="form-label">
                                         Centro de Costos
                                     </label>
@@ -233,7 +233,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                     />
                                     <ErrorMessage name="cost_center" />
                                 </div>
-                                <div className="col-4">
+                                <div className="col-12 colo-lg-4">
                                     <label htmlFor="budget_value" className="form-label">
                                         Valor Presupuestal
                                     </label>
@@ -254,7 +254,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col">
+                                <div className="col-12">
                                     <label htmlFor="description_id" className="form-label">
                                         Descripción
                                     </label>
@@ -276,7 +276,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                 {type === 'view' && (
                                     <>
                                         <div className="row">
-                                            <div className="col-6">
+                                            <div className="col-12 col-lg-6">
                                                 <label htmlFor="audit_trail_created_on_id" className="form-label">
                                                     Fecha de creación
                                                 </label>
@@ -290,7 +290,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                                 />
                                                 <ErrorMessage />
                                             </div>
-                                            <div className="col-6">
+                                            <div className="col-12 col-lg-6">
                                                 <label htmlFor="audit_trail_created_by_id" className="form-label">
                                                     Creado por
                                                 </label>
@@ -348,7 +348,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                             {values.contracts?.length > 0 &&
                                 values.contracts?.map((contract, i) => (
                                     <div className="row">
-                                        <div className="col-3">
+                                        <div className="col-12 col-lg-3">
                                             <label htmlFor="contract_number_id" className="form-label">
                                                 Numero de Contrato
                                             </label>
@@ -364,7 +364,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                             />
                                             <ErrorMessage name={`contracts[${i}].contract_number`} />
                                         </div>
-                                        <div className="col-5">
+                                        <div className="col-12 col-lg-5">
                                             <div className="form-group">
                                                 <label>Vigencia</label>
                                                 <Field
@@ -382,7 +382,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                                 />
                                             </div>
                                         </div>
-                                        <div className="col-3">
+                                        <div className="col-10 col-lg-3">
                                             <label htmlFor="contract_number_id" className="form-label">
                                                 Contratista
                                             </label>
@@ -399,7 +399,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                             <ErrorMessage name={`contracts[${i}].contractor`} />
                                         </div>
                                         <div
-                                            className="col-1 "
+                                            className="col-1"
                                             style={{ display: 'flex', alignItems: 'center', marginTop: '-30px' }}
                                         >
                                             <LinkButton
