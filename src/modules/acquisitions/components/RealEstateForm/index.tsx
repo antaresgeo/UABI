@@ -505,7 +505,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
 
                                 <button
                                     type="button"
-                                    className="btn btn-outline-primary"
+                                    className="btn btn-outline-primary btn-sm"
                                     onClick={() => {
                                         history.goBack();
 
@@ -520,7 +520,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
 
                                     <button
                                         type="button"
-                                        className="btn btn-outline-primary me-3"
+                                        className="btn btn-outline-primary me-3 btn-sm"
                                         onClick={() => {
                                             formik.setFieldValue('_type', 'finish');
                                             formik.submitForm();
@@ -539,7 +539,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                 {type === 'create' && (
                                     <button
                                         type="button"
-                                        className="btn btn-primary"
+                                        className="btn btn-primary btn-sm"
                                         onClick={() => {
                                             formik.setFieldValue('_type', 'normal');
                                             formik.submitForm();

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, MutableRefObject } from 'react';
+import { FC, useEffect, useState, MutableRefObject, useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 import ErrorMessage from '../../../utils/ui/error_messge';
 import { IProjectAttributes } from '../../../utils/interfaces/';
@@ -12,6 +12,7 @@ import { LinkButton } from '../../../utils/ui/link';
 import { Empty } from 'antd';
 import { FormikProps } from 'formik';
 import { FormikValues } from 'formik';
+import { TemplateContext } from '../../../utils/components/template/template_context';
 
 interface ProjectFormPros {
     project?: IProjectAttributes;
@@ -23,6 +24,7 @@ interface ProjectFormPros {
 }
 const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, innerRef, dependencies }) => {
     const [subs, set_subs] = useState<any[]>([]);
+    const context = useContext(TemplateContext);
 
     const empty_contract = {
         contract_number: '',
@@ -38,7 +40,8 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
         description: '',
         dependency: '',
         subdependency: '',
-        cost_center_id : "",
+        cost_center_id: "",
+        budget_value: '',
         contracts: [],
         ...project,
     };
@@ -49,6 +52,10 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
             .required('Campo obligatorio')
             .max(1000, 'La Descripción debe tener maximo 1000 caracteres'),
         dependency: Yup.string().required('Campo obligatorio'),
+        budget_value: Yup.number()
+            .min(0, 'El minimo es 0')
+            .max(9999999999, 'El maximo 10 es caracteres'),
+
     });
 
     const submit = (values, form) => {
@@ -80,7 +87,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
         if (project) {
             const dependency = dependencies.find((d) => d.dependency === project.dependency);
             const _subs = dependency?.subs;
-            if(_subs !== undefined) {
+            if (_subs !== undefined) {
                 set_subs(_subs);
             }
         } else {
@@ -103,13 +110,20 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
 
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema} innerRef={innerRef}>
-            {({ values, isSubmitting, setFieldValue }) => {
+            {({ values, isSubmitting, setFieldValue, handleChange }) => {
+                const number_validate = (limit?: number) => (e) => {
+                    e.preventDefault();
+                    const regex = new RegExp(`^[+]?\\d${limit ? `{0,${limit}}` : '*'}$`);
+                    if (regex.test(e.target.value.toString())) {
+                        handleChange(e);
+                    }
+                };
                 return (
                     <Form>
                         <Card title="Información del Proyecto">
                             <div className="row">
-                                {project && (
-                                    <div className="col-12 col-lg-3">
+                                {project && context.device !== "md" && (
+                                    <div className="col-12 col-md-6 col-lg-3">
                                         <label htmlFor="id_id" className="form-label">
                                             Código del proyecto
                                         </label>
@@ -125,7 +139,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                         <ErrorMessage name="id" />
                                     </div>
                                 )}
-                                <div className={`col-12 col-lg-${project ? 3 : 4}`}>
+                                <div className={`col-12 col-md-6 col-lg-${project ? 3 : 4}`}>
                                     <label htmlFor="name_id" className="form-label">
                                         Nombre del proyecto
                                     </label>
@@ -141,7 +155,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                     />
                                     <ErrorMessage name="name" />
                                 </div>
-                                <div className={`col-12 col-lg-${project ? 3 : 4}`}>
+                                <div className={`col-12 col-md-6 col-lg-${project ? 3 : 4}`}>
                                     <label htmlFor="dependency_id" className="form-label">
                                         Dependecia
                                     </label>
@@ -163,7 +177,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                                 setFieldValue('management_center', dependency.management_center);
                                                 set_subs(_subs);
                                                 const subdependency = _subs.find((d) => d.subdependency === dependency.dependency);
-                                                if( subdependency !== undefined) {
+                                                if (subdependency !== undefined) {
                                                     setFieldValue('subdependency', subdependency.subdependency);
                                                     setFieldValue('cost_center_id', subdependency.id);
                                                 }
@@ -175,7 +189,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                     />
                                     <ErrorMessage name="dependency" />
                                 </div>
-                                <div className={`col-12 col-lg-${project ? 3 : 4}`}>
+                                <div className={`col-12 col-md-6 col-lg-${project ? 3 : 4}`}>
                                     <label htmlFor="subdependency_id" className="form-label">
                                         Subdependencia Dependecia
                                     </label>
@@ -205,9 +219,8 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                     />
                                     <ErrorMessage name="subdependency" />
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-group col-12 col-lg-4">
+
+                                <div className="form-group col-md-6 col-12 col-lg-4">
                                     <label htmlFor="management_center_id" className="form-label">
                                         Centro Gestor
                                     </label>
@@ -220,7 +233,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                     />
                                     <ErrorMessage name="cost_center" />
                                 </div>
-                                <div className="form-group col-12 col-lg-4">
+                                <div className="form-group col-md-6 col-12 col-lg-4">
                                     <label htmlFor="cost_center_id" className="form-label">
                                         Centro de Costos
                                     </label>
@@ -233,7 +246,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                     />
                                     <ErrorMessage name="cost_center" />
                                 </div>
-                                <div className="col-12 colo-lg-4">
+                                <div className="col-12 col-md-6 col-lg-4">
                                     <label htmlFor="budget_value" className="form-label">
                                         Valor Presupuestal
                                     </label>
@@ -249,11 +262,10 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                             className="form-control border-start-0 text-end"
                                             min={0}
                                             max={9999999999}
+                                            onChange={number_validate(10)}
                                         />
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row">
                                 <div className="col-12">
                                     <label htmlFor="description_id" className="form-label">
                                         Descripción

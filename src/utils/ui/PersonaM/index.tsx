@@ -196,7 +196,7 @@ export const PersonalInformationForm = ({
                 return (
                     <Form>
                         <div className="row">
-                            <div className="col-6">
+                            <div className="col-12 col-md-6 col-lg-6">
                                 <label htmlFor="id" className="form-label">
                                     Tipo de Documento
                                 </label>
@@ -228,7 +228,7 @@ export const PersonalInformationForm = ({
                                 </Field>
                                 <ErrorMessage name="documentType" />
                             </div>
-                            <div className={`col-${values.documentType === 'NIT' ? 6 : 3}`}>
+                            <div className={`col-12 col-lg-${values.documentType === 'NIT' ? 6 : 3}`}>
                                 <label htmlFor="username" className="form-label">
                                     Número {values.documentType === 'NIT' ? 'de Nit' : 'de documento'}
                                 </label>
@@ -257,7 +257,7 @@ export const PersonalInformationForm = ({
                                 <ErrorMessage name="documentNumber" />
                             </div>
                             {values.documentType !== 'NIT' && (
-                                <div className="col-3">
+                                <div className="col-12 col-6 col-lg-3">
                                     <label htmlFor="username" className="form-label">
                                         Genero
                                     </label>
@@ -302,7 +302,7 @@ export const PersonalInformationForm = ({
                             )}
                             {values.documentType !== 'NIT' && (
                                 <Fragment>
-                                    <div className="col-3">
+                                    <div className="col-12 col-md-6 col-lg-3">
                                         <label htmlFor="first_name_id" className="form-label">
                                             Primer Nombre
                                         </label>
@@ -318,7 +318,7 @@ export const PersonalInformationForm = ({
                                         />
                                         <ErrorMessage name="names.firstName" />
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-12 col-md-6 col-lg-3">
                                         <label htmlFor="second_name_id" className="form-label">
                                             Segundo Nombre
                                         </label>
@@ -334,7 +334,7 @@ export const PersonalInformationForm = ({
                                         />
                                         <ErrorMessage name="names.lastName" />
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-12 col-md-6 col-lg-3">
                                         <label htmlFor="surname_id" className="form-label">
                                             Primer apellido
                                         </label>
@@ -350,7 +350,7 @@ export const PersonalInformationForm = ({
                                         />
                                         <ErrorMessage name="surnames.firstSurname" />
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-12 col-md-6 col-lg-3">
                                         <label htmlFor="second_surname_id" className="form-label">
                                             Segundo apellido
                                         </label>
@@ -370,7 +370,7 @@ export const PersonalInformationForm = ({
                             )}
                         </div>
                         <div className="row">
-                            <div className="col-6">
+                            <div className="col-12 col-md-6 col-lg-6">
                                 <div className="row">
                                     <label htmlFor="username" className="form-label">
                                         Teléfono
@@ -403,7 +403,7 @@ export const PersonalInformationForm = ({
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-6">
+                            <div className="col-12 col-md-6 col-lg-6">
                                 <label htmlFor="username" className="form-label">
                                     Correo Electrónico
                                 </label>
@@ -422,7 +422,7 @@ export const PersonalInformationForm = ({
                         </div>
                         {disposition && !withNit && (
                             <div className="row">
-                                <div className="col-6">
+                                <div className="col-12 col-md-6 col-lg-6">
                                     <label htmlFor="post_id" className="form-label">
                                         Cargo
                                     </label>

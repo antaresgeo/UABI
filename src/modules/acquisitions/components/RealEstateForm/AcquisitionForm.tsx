@@ -91,7 +91,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                 return (
                     <Form>
                         <div className="row">
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="acquisition_type_id" className="form-label">
                                     Tipo de Adquisición <span className="text-danger">*</span>
                                 </label>
@@ -114,7 +114,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 </Field>
                                 <ErrorMessage name="acquisition_type" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="title_type_id" className="form-label">
                                     Tipo de Título <span className="text-danger">*</span>
                                 </label>
@@ -129,14 +129,14 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 </Field>
                                 <ErrorMessage name="title_type" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="act_number_id" className="form-label">
                                     N° acto administrativo <span className="text-danger">*</span>
                                 </label>
                                 <Field type="text" className="form-control" id="act_number_id" name="act_number" />
                                 <ErrorMessage name="act_number" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="origin_id" className="form-label">
                                     Procedencia <span className="text-danger">*</span>
                                 </label>
@@ -146,7 +146,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="entity_type_id" className="form-label">
                                     Tipo de Entidad <span className="text-danger">*</span>
                                 </label>
@@ -156,7 +156,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 </Field>
                                 <ErrorMessage name="entity_type" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="entity_number_id" className="form-label">
                                     N° de entidad <span className="text-danger">*</span>
                                 </label>
@@ -169,7 +169,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 />
                                 <ErrorMessage name="entity_number" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="acquired_percentage_id" className="form-label">
                                     Porcentaje Adquirido <span className="text-danger">*</span>
                                 </label>
@@ -189,7 +189,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 </div>
                                 <ErrorMessage name="acquired_percentage" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="area_id" className="form-label">
                                     Área <span className="text-danger">*</span>
                                 </label>
@@ -212,7 +212,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="acquisition_value_id" className="form-label">
                                     Valor de adquisición <span className="text-danger">*</span>
                                 </label>
@@ -227,7 +227,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 />
                                 <ErrorMessage name="act_value" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="acquisition_value_id" className="form-label">
                                     Valor de Reconocimiento
                                 </label>
@@ -240,7 +240,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 />
                                 <ErrorMessage name="recognition_value" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">
                                     Fecha de Adquisición <span className="text-danger">*</span>
                                 </label>
@@ -254,7 +254,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 />
                                 <ErrorMessage name="acquisition_date" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="address_id" className="form-label">
                                     Ciudad <span className="text-danger">*</span>
                                 </label>

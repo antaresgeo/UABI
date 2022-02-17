@@ -1,10 +1,12 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
+import { TemplateContext } from '../../../utils/components/template/template_context';
 interface IUserFormPros {
     user: any;
 
 }
 const UserViewForm: FC<IUserFormPros> = ({ user }) => {
 
+    const context = useContext(TemplateContext);
 
 
     let genero = '';
@@ -85,72 +87,72 @@ const UserViewForm: FC<IUserFormPros> = ({ user }) => {
                 <div className="table_content" style={{ margin: 7 }}>
                     <div className="detailForm" style={{ width: '100%' }}>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Primer Nombre</label>
                                 <div className="my-3">{user?.names.firstName}</div>
                             </div>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Segundo Nombre</label>
                                 <div className="my-3">{user?.names.lastName || "-"}</div>
                             </div>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Primer apellido</label>
                                 <div className="my-3">{user?.surnames.firstSurname}</div>
                             </div>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Segundo apellido</label>
                                 <div className="my-3">{user?.surnames.lastSurname || "-"}</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Tipo de Sociedad</label>
                                 <div className="my-3">{type_society}</div>
                             </div>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Tipo Entidad</label>
                                 <div className="my-3">{type_entity}</div>
                             </div>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Tipo de Documento</label>
                                 <div className="my-3">{type_doc}</div>
                             </div>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Numero de documento</label>
                                 <div className="my-3">{user?.id_number}</div>
                             </div>
                         </div>
                         <div className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Correo Electronico</label>
                                 <div className="my-3">{user?.email}</div>
                             </div>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Celular</label>
                                 <div className="my-3">{user?.cellphone_number}</div>
                             </div>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Teléfono</label>
                                 <div className="my-3">{user?.phone_number}</div>
                             </div>
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Genero</label>
                                 <div className="my-3">{genero}</div>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-6 col-lg-3 col-md-3">
+                            <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                 <label htmlFor="">Dirección</label>
                                 <div className="my-3">{user?.location?.address}</div>
                             </div>
 
                             {user?.entity_type === 'P' && (
                                 <>
-                                    <div className="col-6 col-lg-3 col-md-3">
+                                    <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                         <label htmlFor="">Dependencia</label>
                                         <div className="my-3">{user?.dependency}</div>
                                     </div>
-                                    <div className="col-6 col-lg-3 col-md-3">
+                                    <div className={`col-6 col-lg-3 col-md-${context.menu_collapsed ? 3 : 6 }`}>
                                         <label htmlFor="">Subdependencia</label>
                                         <div className="my-3">{user?.subdependency}</div>
                                     </div>

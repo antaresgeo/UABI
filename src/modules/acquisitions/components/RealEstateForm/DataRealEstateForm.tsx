@@ -117,7 +117,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
         <>
 
             <div className="row">
-                <div className="form-group col-6">
+                <div className="form-group col-12 col-md-6 col-lg-6">
                     <label htmlFor="project_id_id" className="form-label">
                         Proyecto al que pertenece <span className="text-danger">*</span>
                     </label>
@@ -138,7 +138,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     />
                     <ErrorMessage name="projects_id" />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-3 col-lg-3">
                     <label htmlFor="tipology_id" className="form-label">
                         Tipología <span className="text-danger">*</span>
                     </label>
@@ -161,7 +161,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <ErrorMessage name="tipology_id" />
                 </div>
 
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-3 col-lg-3">
                     <label htmlFor="accounting_account_id" className="form-label">
                         Cuenta Contable
                     </label>
@@ -176,7 +176,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
             </div>
             <div className="row">
-                <div className="col-3">
+                <div className="col-12 col-md-6 col-lg-3">
                     <label htmlFor="dependency_id" className="form-label">
                         Dependecia
                     </label>
@@ -215,7 +215,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     />
                     <ErrorMessage name="dependency" />
                 </div>
-                <div className="col-3">
+                <div className="col-12 col-md-6 col-lg-3">
                     <label htmlFor="subdependency_id" className="form-label">
                         Sub. Dependecia
                     </label>
@@ -248,7 +248,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     />
                     <ErrorMessage name="subdependency" />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-6 col-lg-3">
                     <label htmlFor="management_center_id" className="form-label">
                         Centro Gestor
                     </label>
@@ -261,7 +261,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     />
                     <ErrorMessage name="cost_center" />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-6 col-lg-3">
                     <label htmlFor="cost_center_id" className="form-label">
                         Centro de Costos
                     </label>
@@ -270,7 +270,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
             </div>
             <div className="row">
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-6 col-lg-3">
                     <label htmlFor="name_id" className="form-label">
                         Nombre Inmueble <span className="text-danger">*</span>
                     </label>
@@ -286,7 +286,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     />
                     <ErrorMessage name="name" withCount max={200} />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-6 col-lg-3">
                     <label htmlFor="registry_number_noc" className="form-label">
                         Número matrícula <span className="text-danger">*</span>
                     </label>
@@ -304,7 +304,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="registry_number" withCount max={20} />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-6 col-lg-3">
                     <label htmlFor="active_code_id" className="form-label">
                         Código Activo
                     </label>
@@ -318,7 +318,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     />
                     <ErrorMessage name="active_code" />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-6 col-lg-3">
                     <label htmlFor="destination_type_id" className="form-label">
                         Tipo de Uso <span className="text-danger">*</span>
                     </label>
@@ -347,7 +347,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
             </div>
             <div className="row">
-                <div className="col-3">
+                <div className="col-12 col-md-6 col-lg-3">
                     <label htmlFor="patrimonial_value_id" className="form-label">
                         Valor Patrimonial <span className="text-danger">*</span>
                     </label>
@@ -368,7 +368,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     </div>
                     <ErrorMessage name="patrimonial_value" />
                 </div>
-                <div className="col-3">
+                <div className="col-12 col-md-6 col-lg-3">
                     <div className="row">
                         <div className="col-9">
                             <label htmlFor="total_area_id" className="form-label">
@@ -424,7 +424,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="total_area" />
                 </div>
-                <div className="col-3">
+                <div className="col-12 col-md-6 col-lg-3">
                     <label htmlFor="reconstruction_value_id" className="form-label">
                         Valor de reconstrucción <span className="text-danger">*</span>
                     </label>
@@ -446,7 +446,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="reconstruction_value" />
                 </div>
-                <div className="col-3">
+                <div className="col-12 col-md-6 col-lg-3">
                     <label htmlFor="total_percentage_id" className="form-label">
                         Porcentaje Total <span className="text-danger">*</span>
                     </label>
@@ -470,7 +470,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                 </div>
             </div>
             <div className="row">
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-6 col-lg-3">
                     <label htmlFor="material_id" className="form-label">
                         Materiales de construcción
                     </label>
@@ -489,7 +489,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="materials" />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-6 col-lg-3">
                     <label htmlFor="zone_id" className="form-label">
                         Zona del Bien Inmueble
                     </label>
@@ -523,14 +523,14 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
 
                     <ErrorMessage name="zone" />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-6 col-lg-3">
                     <label htmlFor="address" className="form-label">
                         CBML
                     </label>
                     <Field name="_address.cbml" id="address" type="text" className="form-control" disabled />
                     <ErrorMessage name="_address.cbml" />
                 </div>
-                <div className="form-group col-3">
+                <div className="form-group col-12 col-md-6 col-lg-3">
                     <label htmlFor="address" className="form-label">
                         Dirección
                     </label>
@@ -577,8 +577,8 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     <ErrorMessage name="active_type" />
                 </div>
             </div>
-            <div className="row">
-                <div className="col-6">
+            <div className={`row ${context.device === "sm" && "my-5"}`}>
+                <div className="col-12 col-md-6 col-lg-6">
                     <div className="row">
                         <div className="col-9">
                             <label htmlFor="plot_area_id" className="form-label">
@@ -586,7 +586,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             </label>
                         </div>
                         {inventory && (
-                            <div className="col-3">
+                            <div className="col-12 col-lg-3">
                                 <ModalDivideAreas total_area={formik.values.plot_area} formik={formik} type={'Lote'} />
                             </div>
                         )}
@@ -648,7 +648,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     </div>
                     <ErrorMessage name="plot_area" />
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-md-6 col-lg-6">
                     <div className="row">
                         <div className="col-9">
                             <label htmlFor="area_construccion_id" className="form-label">
@@ -656,7 +656,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             </label>
                         </div>
                         {inventory && (
-                            <div className="col-3">
+                            <div className="col-12 col-lg-3">
                                 <ModalDivideAreas
                                     total_area={formik.values.construction_area}
                                     formik={formik}
@@ -763,7 +763,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
             {type !== 'create' && (
                 <>
                     <div className="row">
-                        <div className={`form-group col-6`}>
+                        <div className={`form-group col-12 col-md-6 col-lg-6`}>
                             <label htmlFor="audit_trail_created_by_id" className="form-label">
                                 Creado por
                             </label>
@@ -776,7 +776,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             />
                             <ErrorMessage />
                         </div>
-                        <div className="col-3">
+                        <div className="col-12 col-lg-3">
                             <label htmlFor="audit_trail_created_on_id" className="form-label">
                                 Fecha creación
                             </label>
@@ -790,7 +790,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             />
                             <ErrorMessage />
                         </div>
-                        <div className="col-3">
+                        <div className="col-12 col-lg-3">
                             <label htmlFor="sociedad_id" className="form-label">
                                 Sociedad
                             </label>
@@ -808,7 +808,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                     {inventory && (
                         <>
                             <div className="row">
-                                <div className="col-3">
+                                <div className="col-12 col-lg-3">
                                     <label htmlFor="accounting_amount_id" className="form-label">
                                         Importe Contabilidad
                                     </label>
@@ -825,7 +825,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     </div>
                                     <ErrorMessage />
                                 </div>
-                                <div className="col-3">
+                                <div className="col-12 col-lg-3">
                                     <label htmlFor="periodo_contable_id" className="form-label">
                                         Periodo contable
                                     </label>
@@ -841,7 +841,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     />
                                     <ErrorMessage />
                                 </div>
-                                <div className="col-3">
+                                <div className="col-12 col-lg-3">
                                     <label htmlFor="counterpart_id" className="form-label">
                                         Contrapartida
                                     </label>
@@ -853,7 +853,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     />
                                     <ErrorMessage />
                                 </div>
-                                <div className="col-3">
+                                <div className="col-12 col-lg-3">
                                     <label htmlFor="assignments_id" className="form-label">
                                         Asignaciones
                                     </label>
@@ -868,7 +868,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-3">
+                                <div className="col-12 col-lg-3">
                                     <label htmlFor="exploitation_value_id" className="form-label">
                                         Valor Aprovechamiento
                                     </label>
@@ -888,7 +888,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                         <ErrorMessage />
                                     </div>
                                 </div>
-                                <div className="col-3">
+                                <div className="col-12 col-lg-3">
                                     <label htmlFor="authorization_value_id" className="form-label">
                                         Valor de Autorización
                                     </label>
@@ -908,7 +908,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     </div>
                                     <ErrorMessage />
                                 </div>
-                                <div className="col-3">
+                                <div className="col-12 col-lg-3">
                                     <label htmlFor="years_useful_life_id" className="form-label">
                                         Vida util años
                                     </label>
@@ -921,7 +921,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     />
                                     <ErrorMessage name="years_useful_life" />
                                 </div>
-                                <div className="col-3">
+                                <div className="col-12 col-lg-3">
                                     <label htmlFor="useful_life_periods_id" className="form-label">
                                         Vida util Períodos
                                     </label>

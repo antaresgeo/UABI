@@ -24,8 +24,8 @@ export const getRealEstate = (id: string) =>
 export const createRealEstate = (data) =>
     request_dispatch(types.realEstate, service.createRealEstate(data));
 
-export const createRealEstates = (data, action) =>
-    request_dispatch(types.realEstates, service.createRealEstates(data, action));
+export const createRealEstates = (data, fathers, action, quantity) =>
+    request_dispatch(types.realEstates, service.createRealEstates(data, fathers, action, quantity));
 
 export const updateRealEstates = (data) =>
     request_dispatch(types.realEstates, service.updateRealEstates(data));

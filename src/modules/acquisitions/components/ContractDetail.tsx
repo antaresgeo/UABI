@@ -7,7 +7,7 @@ interface IUserFormPros {
 
 const ContractDetail: FC<IUserFormPros> = ({ contracts }) => {
     return (
-        <div className="col-3-12">
+        <div className="col-12">
             <div className="content_box_table">
                 <div
                     className="title"
@@ -20,15 +20,15 @@ const ContractDetail: FC<IUserFormPros> = ({ contracts }) => {
                         {contracts?.map((contract,i) => {
                             return (
                                 <div key={i} className="row my-3" style={{ borderBottom: '1px solid #e2e4e4' }}>
-                                    <div className="col-3">
+                                    <div className="col-12 col-lg-3 col-md-3">
                                         <label htmlFor="">Número de Contrato</label>
                                         <div className="my-3">{contract?.contract_number}</div>
                                     </div>
-                                    <div className="col-6">
+                                    <div className="col-12 col-lg-6 col-md-6">
                                         <label htmlFor="">Vigencia</label>
                                         <div className="my-3">{moment(Number(contract?.vigency_start)).format('DD/MM/YYYY')} - {moment(Number(contract?.vigency_end)).format('DD/MM/YYYY')}</div>
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-12 col-lg-3 col-md-3">
                                         <label htmlFor="">Contratista</label>
                                         <div className="my-3">{contract?.contractor}</div>
                                     </div>

@@ -142,7 +142,7 @@ const finalData = (data, docs_ids?) => {
     if (aux_data.cost_center_id) {
         aux_data.cost_center_id = Number(aux_data.cost_center_id);
     }
-    if(aux_data.projects_id) {
+    if (aux_data.projects_id) {
         aux_data.projects_id[0] = Number(aux_data.projects_id[0]);
     }
     if (aux_data.patrimonial_value === "") {
@@ -173,7 +173,7 @@ export const createRealEstate = async (
     try {
         let URI = `/real-estates`;
         const docs: any = await compute_docs(data.supports_documents);
-        let res:  AxiosResponse<IRealEstateResponse> ;
+        let res: AxiosResponse<IRealEstateResponse>;
         if (docs) {
 
             res = await http.post(
@@ -199,7 +199,7 @@ export const createRealEstate = async (
 };
 
 //TODO: Crear realEstates englobe - desenglobe
-export const createRealEstates = async (data: any, quantity) => {
+export const createRealEstates = async (data: any, fathers: any[], action, quantity) => {
     console.log('crear', data);
     let realEstates = [];
     const docs = await Promise.all(
@@ -216,26 +216,46 @@ export const createRealEstates = async (data: any, quantity) => {
         delete dr.key;
         delete dr.project_id;
     });
-    const data_final = { realEstates };
+    // const data_fathers = fathers.map(f => {
+    //     return {
+    //         id: f.id,
+    //         status:
+    //             action === "englobar" ?
+    //                 f.type === "lote" ?
+    //                     f.plot_area === 0 ? 4 : 6
+    //                     : f.type === "constrution" &&
+    //                         f.construction_area === 0 ? 4 : 6
+    //             : action === "desenglobar" &&
+    //                 f.type === "lote" ?
+    //                     f.plot_area === 0 ? 5 : 7
+    //                     : f.type === "constrution" &&
+    //                         f.construction_area === 0 ? 5 : 7
+    //         ,
+    //         ...f
+
+
+    //     }
+    // })
+    const data_final = { realEstateFather: fathers, realEstates };
+    console.log(data_final)
+
+
 
     try {
-        let URI = `/real-estates`;
+        let URI = `/real-estates/kbhdhxkasjbdckjs`;
         let res: AxiosResponse<any> = await http.post(
             URI,
             data_final,
             {
-                params: { quantity },
+                params: { quantity, action: action === "englobar" ? "bundle" : "unbundle" },
             }
         );
 
-
-
         const docs_ids = await Promise.all(
             docs.map(async (d, i) => {
-                return await upload_documents(d, res.data.results[i].id );
+                return await upload_documents(d, res.data.results[i].id);
             })
         );
-
 
         const project = res.data.results.project;
 
@@ -251,7 +271,6 @@ export const createRealEstates = async (data: any, quantity) => {
                     params: { id: r.id },
                 }
             );
-
         })
 
 

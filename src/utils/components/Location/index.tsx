@@ -130,7 +130,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                 return (
                     <Form>
                         <div className="form-row row">
-                            <div className="form-group col-4">
+                            <div className="form-group col-12 col-md-4 col-lg-4">
                                 <label htmlFor="" className="form-label">
                                     País <span className="text-danger">*</span>
                                 </label>
@@ -156,7 +156,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                 />
                                 <ErrorMessage name="country" />
                             </div>
-                            <div className="form-group col-4">
+                            <div className="form-group col-12 col-md-4 col-lg-4">
                                 <label htmlFor="" className="form-label">
                                     Departamento <span className="text-danger">*</span>
                                 </label>
@@ -182,7 +182,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                 />
                                 <ErrorMessage name="state" />
                             </div>
-                            <div className="form-group col-4">
+                            <div className="form-group col-12 col-md-4 col-lg-4">
                                 <label htmlFor="" className="form-label">
                                     {zone && zone === 'Rural' ? 'Municipio ' : 'Ciudad '}
                                     <span className="text-danger">*</span>
@@ -211,7 +211,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                         </div>
                         {(view === 'general' || view === 'user' || view === 'comodato') && (
                             <div className="form-row row">
-                                <div className="form-group col-4">
+                                <div className="form-group col-12 col-md-4 col-lg-4">
                                     <label htmlFor="" className="form-label">
                                         {zone && zone === 'Rural' ? 'Corregimiento ' : 'Comuna '}
                                         <span className="text-danger">*</span>
@@ -241,7 +241,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                     />
                                     <ErrorMessage name="commune" />
                                 </div>
-                                <div className="form-group col-4">
+                                <div className="form-group col-12 col-md-4 col-lg-4">
                                     <label htmlFor="" className="form-label">
                                         {zone && zone === 'Rural' ? 'Vereda ' : 'Barrio '}
                                         <span className="text-danger">*</span>
@@ -269,14 +269,14 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
 
                                 {view !== 'user' && view !== 'comodato' && (
                                     <>
-                                        <div className="form-group col-4">
+                                        <div className="form-group col-12 col-md-4 col-lg-4">
                                             <label htmlFor="" className="form-label">
                                                 CB
                                             </label>
                                             <input className="w-100 form-control" type="text" value={cb} disabled />
                                             <ErrorMessage />
                                         </div>
-                                        <div className="form-group col">
+                                        <div className="form-group col-12 col-md-6 col-lg-6">
                                             <label htmlFor="" className="form-label">
                                                 Manzana
                                                 <Tooltip title="Lorem impsu texto descriptivo">
@@ -300,7 +300,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                             <ErrorMessage name="block" />
                                         </div>
 
-                                        <div className="form-group col">
+                                        <div className="form-group col-12 col-lg-6 col-md-6">
                                             <label htmlFor="" className="form-label">
                                                 Lote
                                                 <Tooltip title="Lorem impsu texto descriptivo">
@@ -332,7 +332,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                 <h5>Dirección</h5>
                                 <hr />
                                 <div className="from-row row">
-                                    <div className="form-group col">
+                                    <div className="form-group col-12 col-lg-3 col-md-3">
                                         <label htmlFor="" className="form-label">
                                             Tipo <span className="text-danger">*</span>
                                         </label>
@@ -363,7 +363,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                         />
                                         <ErrorMessage name="type" />
                                     </div>
-                                    <div className="form-group col">
+                                    <div className="form-group col-12 col-md-3 col-lg-3">
                                         <label htmlFor="" className="form-label">
                                             Número <span className="text-danger">*</span>
                                         </label>
@@ -377,7 +377,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
 
                                         <ErrorMessage name="first_number" />
                                     </div>
-                                    <div className="form-group col">
+                                    <div className="form-group col-12 col-md-3 col-lg-3">
                                         <label htmlFor="" className="form-label">
                                             Letra
                                         </label>
@@ -395,7 +395,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                         />
                                         <ErrorMessage name="first_appendix" />
                                     </div>
-                                    <div className="form-group col">
+                                    <div className="form-group col-12 col-md-3 col-lg-3">
                                         <label htmlFor="" className="form-label">
                                             Orientación
                                         </label>
@@ -416,7 +416,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                     </div>
                                 </div>
                                 <div className="row align-items-center">
-                                    <div className="form-group col">
+                                    <div className="form-group col-12 col-md-3 col-lg-3">
                                         <label htmlFor="" className="form-label">
                                             Número <span className="text-danger">*</span>
                                         </label>
@@ -440,7 +440,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
 
                                         <ErrorMessage name="second_number" />
                                     </div>
-                                    <div className="form-group col">
+                                    <div className="form-group col-12 col-md-3 col-lg-3">
                                         <label htmlFor="" className="form-label">
                                             Letra
                                         </label>
@@ -458,7 +458,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                         />
                                         <ErrorMessage name="first_appendix" />
                                     </div>
-                                    <div className="form-group col">
+                                    <div className="form-group col-12 col-md-3 col-lg-3">
                                         <label htmlFor="" className="form-label">
                                             Orientación
                                         </label>
@@ -475,9 +475,8 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                             ]}
                                         />
                                         <ErrorMessage name="first_orientation" />
-                                    </div>{' '}
-                                    -
-                                    <div className="form-group col">
+                                    </div>
+                                    <div className="form-group col-12 col-md-3 col-lg-3">
                                         <label htmlFor="" className="form-label">
                                             Indicativo <span className="text-danger">*</span>
                                         </label>
@@ -493,7 +492,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                     </div>
                                 </div>
                                 <div className="from-row row">
-                                    <div className="form-group col-4">
+                                    <div className="form-group col-12 col-md-4 col-lg-4">
                                         <label htmlFor="" className="form-label">
                                             Estrato
                                             <span className="text-danger">*</span>
@@ -514,7 +513,7 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
 
                                         <ErrorMessage name="stratum" />
                                     </div>
-                                    <div className="form-group col-8">
+                                    <div className="form-group col-12 col-md-8 col-lg-8">
                                         <label htmlFor="" className="form-label">
                                             Indicaciones
                                             <Tooltip title="Lorem impsu texto descriptivo">

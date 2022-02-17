@@ -153,11 +153,17 @@ const Projects = () => {
         title: 'Desactivar',
         dataIndex: 'id',
         align: 'center' as 'center',
-        render: (id) => {
+        render: (id, row) => {
             if (id !== 0) {
                 return (
-                    <div className="text-danger" onClick={deleteProject(id)}>
-                        <i className="fa fa-times-circle" aria-hidden="true" />
+                    <div className="text-primary" onClick={deleteProject(id)}>
+                        {row.status === "Activo" ?
+                            <i className="fa fa-toggle-on" aria-hidden="true"  style={{fontSize: "18px", color: '#1FAEEF'}} />
+                            :
+                            <i className="fa fa-toggle-off" aria-hidden="true" style={{fontSize: "18px", color: '#1FAEEF'}} />
+
+                        }
+                        {/* <i className="fa fa-times-circle" aria-hidden="true" /> */}
                         {/*<Switch size="small" />*/}
                     </div>
                 );
@@ -243,8 +249,8 @@ const Projects = () => {
                         }
                     >
                         <div className="row justify-content-between">
-                            <div className="col-5 d-flex">
-                                <div className="col-6 ">
+                            <div className="col-12 col-lg-5  d-flex">
+                                <div className="col-12 col-md-6 col-lg-6">
                                     <FilterForm
                                         filters={[
                                             { key: 'name', name: 'Nombre' },

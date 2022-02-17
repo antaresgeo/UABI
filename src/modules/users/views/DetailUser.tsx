@@ -1,12 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { actions, } from '../redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Link } from '../../../utils/ui';
 import UserViewForm from './../components/UserViewForm';
-import { FormikProps, FormikValues } from 'formik';
 import AssignRolePermitsView from '../components/AssignRolePermitsView';
+import { TemplateContext } from '../../../utils/components/template/template_context';
 
 interface IParams {
     id: string;
@@ -16,15 +16,15 @@ const DetailUser = () => {
     const { id } = useParams<IParams>();
     const dispatch = useDispatch();
     const history = useHistory();
+    const context = useContext(TemplateContext);
     const [user, roles, permits] = useSelector((store: any) => [
         store.users.user.value?.detailsUser,
         store.users.user.value?.roles,
         store.users.user.value?.permits,
     ]);
-    const form = useRef<FormikProps<FormikValues>>();
     useEffect(() => {
         dispatch(actions.get_user_by_id(parseInt(id)));
-    }, []);
+    }, [dispatch, id]);
 
     return (
 
@@ -32,7 +32,7 @@ const DetailUser = () => {
             <div className="flex-fill overflow-auto">
                 <div className="bg-white d-flex flex-column h-100">
                     <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
-                        <h5 className="col-9 col-md-11 col-lg-11">Detalle Usuario</h5>
+                        <h5 className={`col-9 col-md-${context.menu_collapsed ? 11 : 10 } col-lg-11`}>Detalle Usuario</h5>
                         <Link
                             to={`/users/edit/${id}/`}
                             name=""
@@ -83,15 +83,6 @@ const DetailUser = () => {
                     Atras
                 </button>
                 <div className="flex-fill" />
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={() => {
-                        form.current?.submitForm();
-                    }}
-                >
-                    Asignar Roles y Permisos
-                </button>
             </div>
         </div>
     );

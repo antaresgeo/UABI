@@ -38,8 +38,8 @@ const RealEstates = () => {
                         }
                     >
                         <div className="row justify-content-between">
-                            <div className="col-5 d-flex">
-                                <div className="col-6 ">
+                            <div className="col-12 col-lg-5 d-flex">
+                                <div className="col-12 col-md-6 col-lg-6">
                                     <FilterForm
                                         filters={[
                                             { key: 'registry_number', name: 'Matrícula' },
