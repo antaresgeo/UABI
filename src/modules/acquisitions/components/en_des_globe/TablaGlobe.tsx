@@ -318,6 +318,7 @@ export const TablaGlobe: FC<TableGlobeProps> = ({ action }) => {
                                         text: `El valor del área a ${action} no puede ser cero`,
                                     });
                                 } else {
+                                    console.log(action)
                                     history.push({
                                         pathname: `/englobar/realEstates/`,
                                         state: { numberRealEstates, valueArea, data, action, realEstates },

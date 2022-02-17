@@ -11,6 +11,7 @@ interface IParams {
     valueArea?: any;
     data: any;
     realEstates: any;
+    action: any;
 
 }
 
@@ -26,7 +27,7 @@ const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealEstates,
     const history: any = useHistory();
     const dispatch = useDispatch();
     console.log(location.state);
-    const { index, realEstateData, DataRealEstate, valueArea, data, realEstates } = location.state;
+    const { index, realEstateData, DataRealEstate, valueArea, data, action, realEstates } = location.state;
     const dependencies: any = useSelector((states: any) => states.acquisitions.dependencies.value);
     useEffect(() => {
         dispatch(actions.getDependencies());
@@ -38,7 +39,7 @@ const RealEstateGlobe: FC<RealEstateModalProps> = ({ disabled, arrayRealEstates,
         const arrayRealEstates = [...DataRealEstate];
         arrayRealEstates[index] = values;
         // console.log(arrayRealEstates);
-        history.push({ pathname: `/englobar/realEstates/`, state: { arrayRealEstates, valueArea, data, realEstates } });
+        history.push({ pathname: `/englobar/realEstates/`, state: { arrayRealEstates, valueArea, data, action, realEstates } });
     };
 
     return <RealEstateForm type="create" onSubmit={createRealEstate} globe={true} realEstateData={realEstateData} dependencies={dependencies}  />;

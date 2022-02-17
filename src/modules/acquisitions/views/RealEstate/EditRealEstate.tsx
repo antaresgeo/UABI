@@ -38,6 +38,7 @@ const DetailProjects = () => {
                 //     priority: 2,
                 //     toRole: "3"
                 // });
+
                 try {
                     const res: any = await dispatch(actions.updateRealEstate(values, values.id));
                     if (res) {

@@ -92,7 +92,17 @@ export const createProject = async (
         return res.data.results;
     } catch (error) {
         console.error(error);
-        await swal_warning.fire('Error', '', 'error');
+        if(error?.response ) {
+            if (error.response?.status === 400) {
+                await swal_warning.fire({
+                    text: "El campo Nombre del proyecto ya se encuentra registrado"
+                });
+
+            }
+
+        }
+
+        // await swal_warning.fire('Error', '', 'error');
 
         return Promise.reject('Error');
     }

@@ -39,25 +39,32 @@ export const TableAreas = () => {
             const editables = arrayEditRealEsates.map((r) => {
                 return realEstates.find((realEsate) => realEsate.id === r.id);
             });
+
             let result = editables.filter((item, index) => {
                 return editables.indexOf(item) === index;
             });
             const real_estates_edit = result.map((realEstate) => {
                 const editRealEstate = arrayEditRealEsates.filter((r) => r.id === realEstate?.id);
-                let areaCons = 0;
-                let arealote = 0;
+                let areaCons = null;
+                let arealote = null;
                 if (editRealEstate !== undefined) {
                     editRealEstate.map((r) => {
                         if (r.type === 'constrution') {
                             areaCons = r.intact_area;
+
+
                         } else if (r.type === 'lote') {
                             arealote = r.intact_area;
                         }
                     });
                     const real = {
-                        ...realEstate,
-                        construction_area: areaCons === 0 ? realEstate?.construction_area : areaCons,
-                        plot_area: arealote === 0 ? realEstate.plot_area : arealote,
+                        // ...realEstate,
+                        // id: realEstate.id,
+                        active_code: realEstate.active_code,
+                        construction_area: areaCons === null ? realEstate?.construction_area : areaCons,
+                        plot_area: arealote === null ? realEstate.plot_area : arealote,
+
+
                     };
                     return {
                         ...real,
@@ -67,6 +74,7 @@ export const TableAreas = () => {
                     return realEstate;
                 }
             });
+
             setRealEstatesEdit(real_estates_edit);
         }
     }, []);
@@ -152,7 +160,7 @@ export const TableAreas = () => {
                     <Link
                         to={{
                             pathname: `/englobar/real-estates/edit`,
-                            state: { realEstateData: realEstate, index, DataRealEstate, valueArea, data, realEstates },
+                            state: { realEstateData: realEstate, index, DataRealEstate, valueArea, data, action, realEstates },
                         }}
                         name=""
                         avatar={false}
@@ -168,9 +176,9 @@ export const TableAreas = () => {
         DataRealEstate.map((data) => (totalArea = totalArea + Number(data.total_area)));
     }
 
-    const CreateRealEstate = async (DataRealEstate) => {
-        const result = await dispatch(actions.createRealEstates(DataRealEstate, "many"))
-        console.log(result);
+    const CreateRealEstate = async (DataRealEstate, realEstatesEdit) => {
+        const result = await dispatch(actions.createRealEstates(DataRealEstate, realEstatesEdit, action, "many"))
+        // console.log(result);
         return result
         //history.push(`/acquisitions/real-estates/`);
         //return Promise.resolve();
@@ -251,8 +259,8 @@ export const TableAreas = () => {
                                 text: 'se deben completar los datos de todos los bienes Inmuebles',
                             });
                         } else {
-                            const res: any = await CreateRealEstate(DataRealEstate);
-                            console.log(res)
+                            const res: any = await CreateRealEstate(DataRealEstate, realEstatesEdit);
+                            // console.log(res)
                             if (res) {
                                 // console.log('editar')
                                 // const resUpdate: any = await updateRealEstates(realEstatesEdit);
@@ -269,7 +277,7 @@ export const TableAreas = () => {
                             }
                             history.push(`/acquisitions/real-estates/`);
                             //console.log('desde tabla', DataRealEstate)
-                            console.log('bienes inmuebles a editar', realEstatesEdit);
+                            // console.log('bienes inmuebles a editar', realEstatesEdit);
 
                         }
                     }}

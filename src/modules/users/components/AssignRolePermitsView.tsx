@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { chunk } from 'lodash';
+import { TemplateContext } from '../../../utils/components/template/template_context';
 
 interface IUserFormPros {
     roles: any[];
@@ -7,12 +8,13 @@ interface IUserFormPros {
 }
 
 const AssignRolePermitsView: FC<IUserFormPros> = ({ roles, permits }) => {
+    const context = useContext(TemplateContext);
     const has_permits = permits?.length > 0;
     const valores = chunk(permits, 10);
     const has_roles = roles?.length > 0;
     const valoresR = chunk(roles, 4);
     return (
-        <div className="col-3-12">
+        <div className="col-12">
             <div className="content_box_table">
                 <div
                     className="title"
@@ -28,7 +30,7 @@ const AssignRolePermitsView: FC<IUserFormPros> = ({ roles, permits }) => {
                                 <div className="row">
                                     {valoresR.map((vals: any[], i) => {
                                         return (
-                                            <div className="col-3" key={`col-${i}`}>
+                                            <div className={`col-12 col-md-${context.menu_collapsed ? 6 : 12 } col-lg-3`} key={`col-${i}`}>
                                                 <div className="my-3" key={i}>
                                                     <ul>
                                                         {vals?.map((v: any, j) => (
@@ -66,7 +68,7 @@ const AssignRolePermitsView: FC<IUserFormPros> = ({ roles, permits }) => {
                                 <div className="row">
                                     {valores.map((vals: any[], i) => {
                                         return (
-                                            <div className="col-3" key={`colp-${i}`}>
+                                            <div className={`col-12 col-md-${context.menu_collapsed ? 6 : 12 } col-lg-3`} key={`colp-${i}`}>
                                                 <div className="my-3" key={i}>
                                                     <ul>
                                                         {vals?.map((v: any, j) => (

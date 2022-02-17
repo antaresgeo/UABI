@@ -48,7 +48,53 @@ export default function SignIn({ location, redirect }) {
     return (
         <div>
             {redirect(can_access, location)}
-            <Grid columns={2} style={{ height: '100vh' }} className="no-margin">
+
+            <div className="row" style={{ height: '100vh' }}>
+                <div className="col d-none d-md-block no-padding-bottom no-padding-top">
+                    <Image className="image-container-login" src={loginimage} />
+                </div>
+                <div className="col mt-3 no-padding-right no-padding-left container-form-creacion-cuentas">
+                    <div className="container-form-login" style={{ width: 300 }}>
+                        <div className="container-center">
+                            <Image className="image-logo-container-login" src={logo} />
+                        </div>
+                        <h5 className="sub-header-login text-center">
+                            Sistema para la Administración de Bienes Inmuebles
+                        </h5>
+                        <div className='form-login'>
+                            <div>
+                                <p
+                                    style={{
+                                        fontWeight: 'bold',
+                                        paddingTop: '15px',
+                                        fontSize: '14px',
+                                        borderTop: '0.5px solid #D1D0D0',
+                                    }}
+                                >
+                                    Ingrese sus datos para Iniciar sesión
+                                </p>
+                            </div>
+                            <LoginForm onSubmit={onLogin} alert={alert} />
+                            <div
+                                className="row"
+                                style={{
+                                    paddingTop: '15px',
+                                    borderTop: '0.5px solid #D1D0D0',
+                                }}
+                            >
+                                <div className="col-12 text-center">
+                                    <span>¿Olvidó su contraseña?</span>
+                                    <Link to="/auth/login/" name="Recupérala AQUÍ" />
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            {/* <Grid columns={2} style={{ height: '100vh' }} className="no-margin">
                 <Grid.Row className="no-padding-bottom no-padding-top">
                     <Grid.Column className="no-padding-right no-padding-left">
                         <Image className="image-container-login" src={loginimage} />
@@ -90,7 +136,7 @@ export default function SignIn({ location, redirect }) {
                         </div>
                     </Grid.Column>
                 </Grid.Row>
-            </Grid>
+            </Grid> */}
         </div>
     );
 }

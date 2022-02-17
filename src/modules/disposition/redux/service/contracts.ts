@@ -78,7 +78,6 @@ export const get_contract = async (id) => {
                 params: { id }
             }
         );
-
         return res.data;
     } catch (e) {
         return Promise.reject('Error');
@@ -169,7 +168,7 @@ export const update_contract = async (id, data) => {
 export const delete_contract = async (id) => {
     try {
         const URI = '/contracts/';
-        const res: AxiosResponse<any> = await http.put(
+        const res: AxiosResponse<any> = await http.delete(
             URI,
             {
                 params: {

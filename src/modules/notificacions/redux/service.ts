@@ -123,7 +123,7 @@ export const create_notification = async (notification: _Notification) => {
                 ...(_to ? { to: _to } : {}),
                 ...(toRole ? { toRole } : {}),
             });
-        return res.data;
+        return res.data.results;
     } catch (e) {
         return Promise.reject('Error');
     }

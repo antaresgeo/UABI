@@ -49,6 +49,9 @@ const EditPolicy = () => {
     const _updatePolicy = async (policyForm) => {
         console.log(policyForm);
         await dispatch(actions.updatePolicy(policyForm, id));
+
+        history.push(`/insurabilities/policy/${id}/`);
+
     };
 
     return (

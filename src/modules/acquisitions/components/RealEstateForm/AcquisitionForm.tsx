@@ -41,8 +41,14 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
         area: Yup.number().required('Campo obligatorio'),
         title_type: Yup.string().required('Campo obligatorio'),
         act_number: Yup.string().required('Campo obligatorio'),
-        act_value: Yup.number().required('Campo obligatorio'),
-        acquired_percentage: Yup.number().required('Campo obligatorio'),
+        act_value: Yup.number()
+            .required('Campo obligatorio')
+            .min(0, 'El minimo es 0')
+            .max(9999999999, 'El maximo 10 es caracteres'),
+        recognition_value: Yup.number()
+            .min(0, 'El minimo es 0')
+            .max(9999999999, 'El maximo 10 es caracteres'),
+        acquired_percentage: Yup.number().required('Campo obligatorio').min(0, 'El minimo es 0').max(100, 'El maximo es 100'),
         origin: Yup.object().required('Campo obligatorio'),
         entity_type: Yup.string().required('Campo obligatorio'),
         entity_number: Yup.string().required('Campo obligatorio'),
@@ -71,11 +77,21 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
             validationSchema={schema}
             innerRef={innerRef}
         >
-            {({ setFieldValue }) => {
+            {({ setFieldValue, handleChange }) => {
+                const number_validate = (limit?: number) => (e) => {
+                    e.preventDefault();
+                    const regex = new RegExp(`^([1-9]+\\d*)|[0]${limit ? `{0,${limit}}` : '*'}$`);
+                    if (regex.test(e.target.value.toString())) {
+                        const a = Math.abs(parseInt(e.target.value))
+                        e.target.value = a
+                        handleChange(e);
+                    }
+                };
+
                 return (
                     <Form>
                         <div className="row">
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="acquisition_type_id" className="form-label">
                                     Tipo de Adquisición <span className="text-danger">*</span>
                                 </label>
@@ -98,7 +114,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 </Field>
                                 <ErrorMessage name="acquisition_type" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="title_type_id" className="form-label">
                                     Tipo de Título <span className="text-danger">*</span>
                                 </label>
@@ -113,14 +129,14 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 </Field>
                                 <ErrorMessage name="title_type" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="act_number_id" className="form-label">
                                     N° acto administrativo <span className="text-danger">*</span>
                                 </label>
                                 <Field type="text" className="form-control" id="act_number_id" name="act_number" />
                                 <ErrorMessage name="act_number" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="origin_id" className="form-label">
                                     Procedencia <span className="text-danger">*</span>
                                 </label>
@@ -130,7 +146,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="entity_type_id" className="form-label">
                                     Tipo de Entidad <span className="text-danger">*</span>
                                 </label>
@@ -140,7 +156,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 </Field>
                                 <ErrorMessage name="entity_type" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="entity_number_id" className="form-label">
                                     N° de entidad <span className="text-danger">*</span>
                                 </label>
@@ -153,7 +169,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 />
                                 <ErrorMessage name="entity_number" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="acquired_percentage_id" className="form-label">
                                     Porcentaje Adquirido <span className="text-danger">*</span>
                                 </label>
@@ -163,6 +179,9 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                         className="form-control border-end-0"
                                         id="acquired_percentage_id"
                                         name="acquired_percentage"
+                                        min={0}
+                                        max={999}
+                                        onChange={number_validate(3)}
                                     />
                                     <div className="input-group-prepend">
                                         <span className="input-group-text bg-white border-start-0">%</span>
@@ -170,7 +189,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 </div>
                                 <ErrorMessage name="acquired_percentage" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="area_id" className="form-label">
                                     Área <span className="text-danger">*</span>
                                 </label>
@@ -181,6 +200,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                         id="area_id"
                                         name="area"
                                         min={0}
+                                        onChange={number_validate()}
                                     />
                                     <div className="input-group-prepend">
                                         <span className="input-group-text bg-white border-start-0">
@@ -192,7 +212,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="acquisition_value_id" className="form-label">
                                     Valor de adquisición <span className="text-danger">*</span>
                                 </label>
@@ -201,10 +221,13 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     className="form-control"
                                     id="acquisition_value_id"
                                     name="act_value"
+                                    // min={0}
+                                    // max={9999999999}
+                                    onChange={number_validate()}
                                 />
                                 <ErrorMessage name="act_value" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="acquisition_value_id" className="form-label">
                                     Valor de Reconocimiento
                                 </label>
@@ -213,10 +236,11 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     className="form-control"
                                     id="acquisition_value_id"
                                     name="recognition_value"
+                                    onChange={number_validate()}
                                 />
                                 <ErrorMessage name="recognition_value" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="vigency_start" className="form-label mt-3 mt-lg-0">
                                     Fecha de Adquisición <span className="text-danger">*</span>
                                 </label>
@@ -230,7 +254,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                 />
                                 <ErrorMessage name="acquisition_date" />
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-md-6 col-lg-3">
                                 <label htmlFor="address_id" className="form-label">
                                     Ciudad <span className="text-danger">*</span>
                                 </label>

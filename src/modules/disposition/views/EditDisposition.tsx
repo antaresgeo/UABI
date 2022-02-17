@@ -80,7 +80,7 @@ export const EditDisposition = () => {
                                 dispositionType={dispositionType}
                                 contractual={contractual?.length > 0 ? contractual[0] : null}
                             />
-                            <Card title="Contratos del Bien Inmueble">
+                            <Card title="Histórico de Contratos del Bien Inmueble">
                                 <TableContract
                                     contrats={contracts}
                                 />

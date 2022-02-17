@@ -136,33 +136,32 @@ const LeaseDocContract = () => {
                             let res: any;
                             const final_values = {
                                 act_number: values_contract?.act_number,
-                                consecutive: values_contract?.consecutive,
                                 contract_decree: values_contract?.contract_decree,
+                                decree_date: new Date(values_contract?.decree_date).getTime(),
                                 decree_number: values_contract?.decree_number,
                                 dispose_area: values_contract?.dispose_area,
-                                guarantee: values_contract?.guarantee,
-                                manager_sabi:values_contract?.manager_sabi,
-                                object_contract: values_contract?.object_contract,
-                                active_code: realEstate?.active_code,
-                                decree_date: new Date(values_contract?.decree_date).getTime(),
+                                active_code: values_contract?.active_code,
                                 finish_date: new Date(values_contract?.finish_date).getTime(),
+                                guarantee: values_contract?.guarantee,
+                                manager_sabi: values_contract?.manager_sabi,
                                 minutes_date: new Date(values_contract?.minutes_date).getTime(),
-                                subscription_date: new Date(values_contract?.subscription_date).getTime(),
+                                object_contract: values_contract?.object_contract,
                                 secretary: {
-                                    id: values_contract?.secretary?.id
-
+                                id: values_contract?.secretary?.id,
                                 },
-                                type_contract: "Arrendamiento",
+                                subscription_date: new Date(values_contract?.subscription_date).getTime(),
+                                type_contract: "Arrendamiento"
                             }
                             console.log(final_values)
 
-                            if (values_contract.edit === true) {
-                                res = await dispatch(actions.update_contract(realEstate?.id, final_values))
+                            if (values_contract.editContract === true) {
+                                res = await dispatch(actions.update_contract(values_contract?.id, final_values))
 
                             } else {
-                                res = await dispatch(actions.create_contract(final_values,))
+                                res = await dispatch(actions.create_contract(final_values))
                             }
-                            history.push({ pathname: `'/disposition/contract/${res.id}/`})
+                            console.log(res)
+                            history.push({ pathname: `/disposition/contract/${res.results.id}/`})
                         }}
                     >
                         guardar y descargar

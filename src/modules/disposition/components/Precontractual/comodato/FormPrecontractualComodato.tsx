@@ -508,7 +508,7 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                 </div>
                 <div className="col-12">
                     <label htmlFor="boundaries_id" className="form-label">
-                        Descripcion de linderos<span className="text-danger">*</span>
+                        Descripción de linderos<span className="text-danger">*</span>
                     </label>
                     <Field
                         as="textarea"

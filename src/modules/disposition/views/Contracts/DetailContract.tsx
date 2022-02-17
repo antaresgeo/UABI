@@ -15,7 +15,7 @@ const DetailContract = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const contract: any = useSelector((store: any) => store.disposition.contract.value);
+    const contract: any = useSelector((store: any) => store.disposition.contract.value );
 
     useEffect(() => {
         dispatch(actions.get_contract(id));
@@ -28,7 +28,7 @@ const DetailContract = () => {
                     <div className="d-flex flex-row mb-3 pt-3 ps-4 shadow-sm p-3 bg-white rounded">
                         <h5 className="col-11 ">Detalle Contrato</h5>
                         <Link
-                            to={`/disposition/contract/edit/:id/`}
+                            to={`/disposition/contract/edit/${id}/`}
                             name=""
                             avatar={false}
                             icon={
@@ -45,7 +45,7 @@ const DetailContract = () => {
                             <div className="col-md-12">
                                 {/* <UserViewForm user={user} /> */}
                                 <ContractViewForm
-                                values_contract={contract}
+                                values_contract={contract?.length > 0 ? contract[0] : null}
 
                                 />
                             </div>

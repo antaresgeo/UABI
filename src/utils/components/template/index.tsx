@@ -24,7 +24,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
     const { Header, Sider, Content } = Layout;
     const history = useHistory();
     const context = useContext(TemplateContext);
-    const collapsible = false; // TO DO: verificar si esto debe ser collapsible
+    const collapsible = context.device === 'md' ? true : false; // TODO: verificar si esto debe ser collapsible
     const sider_ops = {
         width: 280,
         style: { backgroundColor: 'white' },
@@ -33,8 +33,11 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                   trigger: null,
                   collapsible,
                   collapsed: context.menu_collapsed,
+                  collapsedWidth: 0
               }
-            : {}),
+            : {
+                collapsed: false
+            }),
     };
     const name = `${(user && Object.values(user?.names).join(' ')) || ''} ${
         (user && Object.values(user?.surnames).join(' ')) || ''
@@ -68,7 +71,7 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
         <>
             <Layout className="w-100 h-100">
                 {context.device !== 'sm' && (
-                    <Sider {...sider_ops} collapsed={context.device === 'md'} collapsedWidth={0}>
+                    <Sider {...sider_ops}  width={280}/*collapsed={context.device === 'md'}*/>
                         <AppSider width={sider_ops.width} />
                     </Sider>
                 )}

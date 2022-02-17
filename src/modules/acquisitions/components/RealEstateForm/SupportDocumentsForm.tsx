@@ -50,7 +50,7 @@ const SupportDocumentsForm: FC<AcquisitionsFromProps> = ({ type, disabled, formi
                 {formik.values?.supports_documents?.map((doc, i) => {
                     return (
                         <Fragment key={i}>
-                            <div className="col-5">
+                            <div className="col-12 col-md-5 col-lg-5">
                                 <label htmlFor="form-select" className="form-label">
                                     {doc?.label || ''}
                                 </label>

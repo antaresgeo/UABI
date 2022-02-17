@@ -48,7 +48,10 @@ const CreateInsurability = () => {
         //console.log(dataPolicy)
         const res: any = await dispatch(actions.createPolicy(dataPolicy));
         //await swal("Message", response.message, "success");
-        history.push(`/insurabilities/policy/${res.id}/`);
+        console.log(res)
+        if(res) {
+            history.push(`/insurabilities/policy/${res.id}/`);
+        }
     };
     return (
         <div className="h-100 d-flex flex-column">
@@ -91,7 +94,7 @@ const CreateInsurability = () => {
                     onClick={() => {
                         form_ref.current.submitForm();
                     }}
-                    disabled={form_ref.current?.isSubmitting}
+                    // disabled={form_ref.current?.isSubmitting}
                 >
                     Guardar
                     {form_ref.current?.isSubmitting && (

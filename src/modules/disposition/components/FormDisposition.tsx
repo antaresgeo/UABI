@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { FC, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../acquisitions/redux';
@@ -13,7 +14,7 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
     const tipology: any = useSelector((store: any) => store.acquisitions.tipology.value);
     useEffect(() => {
         dispatch(actions.getTipology(realEstate?.tipology_id));
-    }, []);
+    }, [dispatch,realEstate]);
 
     const is_aepDisposition = dispositionType === 'AEP';
     const is_ComodatoDisposition = dispositionType === 'Comodato';
@@ -82,13 +83,13 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                             <div className="col-3">
                                 <label htmlFor="">Área</label>
                                 <div className="my-3">
-                                    {realEstate?.total_area}m<sup>2</sup>
+                                    {realEstate?.total_area} m<sup>2</sup>
                                 </div>
                             </div>
                             {dispositionType !== 'autorizaciones' && (
                                 <div className="col-3">
                                     <label htmlFor="">Avaluo</label>
-                                    <div className="my-3">-</div>
+                                    <div className="my-3">$ {realEstate?.patrimonial_value ?? "0"}</div>
                                 </div>
                             )}
                             {dispositionType !== 'ventas' && dispositionType !== 'autorizaciones' && (
@@ -109,19 +110,19 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                                 {showContract && (
                                     <div className="col-3">
                                         <label htmlFor="">Número contrato</label>
-                                        <div className="my-3">-</div>
+                                        <div className="my-3">{contractual?.consecutive ?? "-"}</div>
                                     </div>
                                 )}
                                 {showContract && (
                                     <div className="col-3">
                                         <label htmlFor="">Fecha Terminación Contrato</label>
-                                        <div className="my-3">-</div>
+                                        <div className="my-3">{ contractual?.finish_date ? moment(new Date(Number(contractual?.finish_date))).format('YYYY-MM-DD') === "Fecha inválida" : "-" }</div>
                                     </div>
                                 )}
                                 {showCanon && (
                                     <div className="col-3">
                                         <label htmlFor="">Ultimo Canon de Arrendamiento</label>
-                                        <div className="my-3">{realEstate?.canyon_value === null ? 0 : realEstate?.canyon_value}</div>
+                                        <div className="my-3">$ {realEstate?.canyon_value === null ? 0 : realEstate?.canyon_value}</div>
                                     </div>
                                 )}
                             </div>
@@ -132,11 +133,11 @@ export const FormDisposition: FC<DispositionFormPros> = ({ dispositionType, real
                                 <>
                                     <div className="col-3">
                                         <label htmlFor="">Valor de Aprovechamiento</label>
-                                        <div className="my-3">{realEstate?.exploitation_value === null ? 0 : realEstate?.exploitation_value}</div>
+                                        <div className="my-3">$ {realEstate?.exploitation_value === null ? 0 : realEstate?.exploitation_value}</div>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="">Valor Autorización</label>
-                                        <div className="my-3">{realEstate?.authorization_value === null ? 0 : realEstate?.authorization_value}</div>
+                                        <div className="my-3">$ {realEstate?.authorization_value === null ? 0 : realEstate?.authorization_value}</div>
                                     </div>
                                 </>
                             )}

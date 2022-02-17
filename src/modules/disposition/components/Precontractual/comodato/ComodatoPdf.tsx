@@ -181,9 +181,9 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
             </thead>
             <tbody>
                 <tr class="middle_frame">
-                    <td class="right_frame">${values?.elaborated.first_name ?? ""} ${values?.elaborated.last_name ?? ""} ${values?.elaborated.first_surname ?? ""} ${values.elaborated.last_surname ?? ""}</td>
-                    <td class="right_frame">${values?.revised.first_name ?? ""} ${values?.revised.last_name ?? ""} ${values?.revised.first_surname ?? ""} ${values.revised.last_surname ?? ""}</td>
-                    <td class="right_frame">${values?.approved.first_name ?? ""} ${values?.approved.last_name ?? ""} ${values?.approved.first_surname ?? ""} ${values.approved.last_surname ?? ""}</td>
+                    <td class="right_frame">${values?.elaborated?.names.firstName ?? ""} ${values?.elaborated?.names.lastName ?? ""} ${values?.elaborated?.surnames?.firstSurname ?? ""} ${values.elaborated?.surnames?.lastSurname ?? ""}</td>
+                    <td class="right_frame">${values?.revised?.names.firstName ?? ""} ${values?.revised?.names?.lastName ?? ""} ${values?.revised?.surnames?.firstSurname ?? ""} ${values.revised?.surnames?.lastSurname ?? ""}</td>
+                    <td class="right_frame">${values?.approved?.names.firstName ?? ""} ${values?.approved?.names?.lastName ?? ""} ${values?.approved?.surnames?.firstSurname ?? ""} ${values.approved?.surnames?.lastSurname ?? ""}</td>
                 </tr>
                 <tr class="frame_down">
                     <td class="right_frame">${values?.elaborated.post ?? ""}</td>
@@ -886,12 +886,13 @@ const ComodatoPdf: FC<Idata> = ({ values, realEstate }) => {
             </Text>
             <Text style={styles.text}></Text>
             <Text style={styles.sub_text}>
-                {`${values?.leader?.first_name} ${values?.leader?.last_name ?? ""} ${values?.leader?.first_surname ?? ""} ${values?.leader?.last_surname ?? ""}  `}
+                {`${values?.leader?.names?.firstName} ${values?.leader?.names?.lastName ?? ""} ${values?.leader?.surnames?.firstSurname ?? ""} ${values?.leader?.surnames?.lastSurname ?? ""}  `}
+                {/* {`${values?.leader?.first_name} ${values?.leader?.last_name ?? ""} ${values?.leader?.first_surname ?? ""} ${values?.leader?.last_surname ?? ""}  `} */}
             </Text>
             <Text style={styles.sub_text}>{values?.leader?.post}</Text>
-            <Text style={styles.sub_text}>{values?.leader?.dependence}</Text>
-            <Text style={styles.sub_text}>{values?.leader?.secretary}</Text>
-            <Text style={styles.text}></Text>
+            <Text style={styles.sub_text}>{values?.dependency}</Text>
+            <Text style={styles.sub_text}>{values?.secretary}</Text>
+            {/* <Text style={styles.text}></Text> */}
             <Html>{table_lider}</Html>
         </DocumentPdf >
     )

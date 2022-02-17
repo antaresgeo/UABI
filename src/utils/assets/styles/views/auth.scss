@@ -115,3 +115,12 @@
     width: 179.18px;
     height: 96.58px;
 }
+
+@media (max-width: 576px)  {
+    .form-login {
+        width: 250px;
+        margin: 0 auto;
+    }
+}
+
+

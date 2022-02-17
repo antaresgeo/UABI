@@ -91,12 +91,14 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
         {
             title: 'ID',
             dataIndex: 'user_id',
+            responsive: ['md'],
             align: 'center' as 'center',
         },
         {
             title: 'Nombre',
             dataIndex: 'names',
             align: 'left' as 'left',
+            responsive: ['md'],
             render: (_, user) => {
                 return `${(user && Object.values(user?.names).join(' ')) || ''} ${(user && Object.values(user?.surnames).join(' ')) || ''
                     }`;
@@ -118,24 +120,28 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
         {
             title: 'C.C',
             dataIndex: 'id_number',
+            // responsive: ['md'],
             align: 'center' as 'center',
         },
         {
             title: 'Fecha Creación',
             dataIndex: 'audit_trail',
             align: 'center' as 'center',
+            responsive: ['md'],
             render: (_) => formatDate(_?.created_on),
         },
         {
             title: 'Creado por',
             dataIndex: 'audit_trail',
             align: 'center' as 'center',
+            responsive: ['md'],
             render: (_) => _?.created_by,
         },
         {
             title: 'Estado',
             dataIndex: 'status',
             align: 'center' as 'center',
+            responsive: ['md'],
             render: (s) => {
                 if (s === 'Activo') return <Tag color="success">{s}</Tag>;
                 return <Tag color="default">{s}</Tag>;
