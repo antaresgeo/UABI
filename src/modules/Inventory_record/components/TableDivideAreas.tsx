@@ -75,14 +75,24 @@ export class TableDivideAreas extends React.Component<any, EditableTableState> {
         console.log(newRealEstates)
         let realestateCreate = newRealEstates.filter((r, i) => i !== 0)
         try {
-            const result = await Promise.all(
-                realestateCreate.map(async (d,) => {
-                    return await this.props.dispatch(actions.createRealEstate(d))
-                })
-            )
-            if (result) {
-                await this.props.dispatch(actions.updateRealEstate(newRealEstates[0], newRealEstates[0].id))
+            // const result = await Promise.all(
+            //     realestateCreate.map(async (d,) => {
+            //         return await this.props.dispatch(actions.createRealEstate(d))
+            //     })
+            // )
+            // if (result) {
+            //     await this.props.dispatch(actions.updateRealEstate(newRealEstates[0], newRealEstates[0].id))
+            // }
+
+            const realEstateEdit = {
+                id: newRealEstates[0].id,
+                active_code: newRealEstates[0].active_code,
+                total_area: newRealEstates[0].plot_area + newRealEstates[0].construction_area,
+                plot_area: newRealEstates[0].plot_area,
+                construction_area: newRealEstates[0].construction_area,
             }
+
+            const result = await this.props.dispatch(actions.createRealEstates(realestateCreate,realEstateEdit, "divide", "many"))
             this.props.setShowTable(false);
             this.props.setNumberAreas(2)
             this.setState({ dataSource: [] })

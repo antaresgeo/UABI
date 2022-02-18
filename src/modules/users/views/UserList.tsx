@@ -16,11 +16,11 @@ interface UserListProps {
 }
 const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading }) => {
     const dispatch = useDispatch();
-    const deleteUser = (id) => async () => {
+    const deleteUser = (id, status) => async () => {
         const result = await swal_warning.fire({
             icon: 'warning',
             title: '¿Está seguro?',
-            text: '¿Está seguro que quiere inactivar este Usuario?',
+            text: `¿Está seguro que quiere ${status === "Inactivo" ? "Activar" : "Inactivar"} este Usuario?`,
             showDenyButton: true,
             showCancelButton: false,
             confirmButtonText: 'Continuar',
@@ -28,7 +28,7 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
         });
 
         if (result.isConfirmed) {
-            await dispatch(actions.delete_user(id));
+            await dispatch(actions.delete_user(id, status === "Inactivo" ? "activate" : "inactivate" ));
             await dispatch(actions.get_all_users({key: 'name', with: 'pagination'}));
         } else if (result.isDenied) {
             swal.close();
@@ -69,12 +69,18 @@ const UserList: FC<UserListProps> = ({ users, change_page, total, user, loading 
 
     const eliminar = {
         title: 'Desactivar',
-        dataIndex: 'id',
+        dataIndex: 'user_id',
         align: 'center' as 'center',
-        render: (id) => {
+        render: (id, row) => {
             return (
-                <div className="text-danger" onClick={deleteUser(id)}>
-                    <i className="fa fa-times-circle" aria-hidden="true" />
+                <div className="text-danger" onClick={deleteUser(id, row.status)}>
+                    {row.status === "Activo" ?
+                        <i className="fa fa-toggle-on" aria-hidden="true" style={{ fontSize: "18px", color: '#1FAEEF' }} />
+                        :
+                        <i className="fa fa-toggle-off" aria-hidden="true" style={{ fontSize: "18px", color: '#1FAEEF' }} />
+
+                    }
+                    {/* <i className="fa fa-times-circle" aria-hidden="true" /> */}
                 </div>
             );
         },

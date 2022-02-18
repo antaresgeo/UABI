@@ -528,6 +528,14 @@ const Location: FC<LocationProps> = ({ modalClose, view, zone, innerRef }) => {
                                             type="text"
                                             className="w-100 form-control"
                                             autoComplete="off"
+                                            onChange={(e) => {
+                                                e.preventDefault();
+                                                const { value } = e.target;
+                                                const regex = new RegExp(/^[A-Za-z0-9\s\\Ñ\\ñ\\áéíóúüÁÉÍÓÚÜ]*$/g);
+                                                if (regex.test(value.toString())) {
+                                                    handleChange(e);
+                                                }
+                                            }}
                                         />
                                         <ErrorMessage name="indicaciones" />
                                     </div>

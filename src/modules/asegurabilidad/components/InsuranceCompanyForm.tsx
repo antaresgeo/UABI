@@ -47,7 +47,11 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
     const schema = Yup.object().shape({
         name: Yup.string().required('Campo obligatorio'),
         nit: Yup.string().required('Campo obligatorio'),
-        phone: Yup.string().required('Campo obligatorio'),
+        phone: Yup.number()
+            .required('Campo obligatorio')
+            .min(999999, 'El minimo es 7 caracteres')
+            .max(9999999999, 'El maximo 10 es caracteres'),
+        address: Yup.string().required('Campo obligatorio')
     });
 
     const submit = (values, form) => {
@@ -59,7 +63,7 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
     };
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema} innerRef={innerRef}>
-            {({ /*values, isValid,*/ isSubmitting, setFieldValue }) => {
+            {({ /*values, isValid,*/ isSubmitting, setFieldValue, handleChange }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -91,6 +95,14 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
                                     name="name"
                                     autoComplete="off"
                                     disabled={disabled}
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        const { value } = e.target;
+                                        const regex = new RegExp(/^[A-Za-z0-9\s\\Ñ\\ñ\\áéíóúüÁÉÍÓÚÜ]*$/g);
+                                        if (regex.test(value.toString())) {
+                                            handleChange(e);
+                                        }
+                                    }}
                                 />
                                 <ErrorMessage name="name" />
                             </div>
@@ -108,6 +120,14 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={20}
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        const { value } = e.target;
+                                        const regex = /^[0-9,-]*$/;
+                                        if (regex.test(value.toString())) {
+                                            handleChange(e);
+                                        }
+                                    }}
                                 />
                                 <ErrorMessage name="nit" withCount max={20} />
                             </div>
@@ -141,6 +161,14 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
                                             autoComplete="off"
                                             disabled={disabled}
                                             maxLength={20}
+                                            onChange={(e) => {
+                                                e.preventDefault();
+                                                const { value } = e.target;
+                                                const regex = new RegExp(`^[+]?\\d{0,3}$`);
+                                                if (regex.test(value.toString())) {
+                                                    handleChange(e);
+                                                }
+                                            }}
                                         />
                                         <ErrorMessage name="phone_ext" />
                                     </div>
@@ -181,6 +209,7 @@ const InsuranceCompanyForm: FC<InsuranceCompanyFormPros> = ({ insurance_company,
                                         />
                                     </div>
                                 </div>
+                                <ErrorMessage name="address" />
                             </div>
                         </div>
                         {/* <div className="row justify-content-end">

@@ -65,6 +65,14 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                             className="form-control border-start-0 text-end"
                             min={0}
                             max={9999999999}
+                            onChange={(e) => {
+                                e.preventDefault();
+                                const { value } = e.target;
+                                const regex = new RegExp(`^[+]?\\d{0,10}$`);
+                                if (regex.test(value.toString())) {
+                                    formik.handleChange(e);
+                                }
+                            }}
                         />
                     </div>
                     <ErrorMessage name="loan_value" />
@@ -80,8 +88,16 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                         name="contract_period"
                         className="form-control"
                         disabled={false}
-                        min={1}
-                        max={12}
+                        min={0}
+                        max={3}
+                        onChange={(e) => {
+                            e.preventDefault();
+                            const { value } = e.target;
+                            const regex = new RegExp(`^[+]?\\d{0,3}$`);
+                            if (regex.test(value.toString())) {
+                                formik.handleChange(e);
+                            }
+                        }}
                     />
                     <ErrorMessage name="contract_period" />
                 </div>
@@ -169,6 +185,15 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                             placeholder="proceso competitivo"
                             autoComplete="off"
                             maxLength={500}
+                            onChange={(e) => {
+                                e.preventDefault();
+                                const { value } = e.target;
+                                const regex = new RegExp(/^[^'\\\/<>=*@&#$+-]*$/);
+                                // const regex = new RegExp(/^[A-Za-z0-9\s\\Ñ\\ñ\\.\\,\\:\\;\\(\\)\\áéíóúüÁÉÍÓÚÜ]*$/g);
+                                if (regex.test(value.toString())) {
+                                    formik.handleChange(e);
+                                }
+                            }}
                         />
                         <ErrorMessage name="competitive_process_value" withCount max={500} />
                     </div>

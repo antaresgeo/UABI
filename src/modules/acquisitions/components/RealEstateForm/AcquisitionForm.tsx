@@ -80,10 +80,8 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
             {({ setFieldValue, handleChange }) => {
                 const number_validate = (limit?: number) => (e) => {
                     e.preventDefault();
-                    const regex = new RegExp(`^([1-9]+\\d*)|[0]${limit ? `{0,${limit}}` : '*'}$`);
+                    const regex = new RegExp(`^[+]?\\d${limit ? `{0,${limit}}` : '*'}$`);
                     if (regex.test(e.target.value.toString())) {
-                        const a = Math.abs(parseInt(e.target.value))
-                        e.target.value = a
                         handleChange(e);
                     }
                 };
@@ -166,6 +164,14 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     id="entity_number_id"
                                     aria-describedby="entity_number"
                                     name="entity_number"
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        const { value } = e.target;
+                                        const regex = /^[0-9]{0,10}$/;
+                                        if (regex.test(value.toString())) {
+                                            handleChange(e);
+                                        }
+                                    }}
                                 />
                                 <ErrorMessage name="entity_number" />
                             </div>
@@ -200,7 +206,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                         id="area_id"
                                         name="area"
                                         min={0}
-                                        onChange={number_validate()}
+                                        onChange={number_validate(10)}
                                     />
                                     <div className="input-group-prepend">
                                         <span className="input-group-text bg-white border-start-0">
@@ -223,7 +229,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     name="act_value"
                                     // min={0}
                                     // max={9999999999}
-                                    onChange={number_validate()}
+                                    onChange={number_validate(10)}
                                 />
                                 <ErrorMessage name="act_value" />
                             </div>
@@ -236,7 +242,7 @@ const AcquisitionsFrom: FC<AcquisitionsFromProps> = ({ disabled, acquisition, on
                                     className="form-control"
                                     id="acquisition_value_id"
                                     name="recognition_value"
-                                    onChange={number_validate()}
+                                    onChange={number_validate(10)}
                                 />
                                 <ErrorMessage name="recognition_value" />
                             </div>

@@ -36,7 +36,7 @@ const FormUserprueba: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, inn
             surnames: { firstSurname: '', lastSurname: '' },
             email: '',
             location: '',
-            str_location:  user?.location?.address || "",
+            str_location: user?.location?.address || "",
             cellphone_number: '',
             phone_number: '',
             phone_number_ext: '',
@@ -47,14 +47,14 @@ const FormUserprueba: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, inn
             ...user,
         },
         permits: [],
-        roles: user_roles ?  user_roles.map((rol) => rol.id)  : []
+        roles: user_roles ? user_roles.map((rol) => rol.id) : []
 
 
     };
 
     const schema = Yup.object().shape({
         user: Yup.object().shape({
-            id_number: Yup.number().required('Campo obligatorio'),
+            id_number: Yup.string().required('Campo obligatorio'),
             password: Yup.string()
                 .matches(/(?=.*[0-9])/, 'debe contener almenos 1 numero')
                 .matches(/(?=.*[@$!%*?&,.#])/, 'debe contener almenos 1 caracter special')
@@ -72,8 +72,14 @@ const FormUserprueba: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, inn
                 firstSurname: Yup.string().required('Campo obligatorio'),
             }),
             email: Yup.string().email('email invalido').required('Campo obligatorio'),
-            cellphone_number: Yup.number().required('Campo obligatorio'),
-            phone_number: Yup.number().required('Campo obligatorio'),
+            cellphone_number: Yup.number()
+                .required('Campo obligatorio')
+                .min(999999, 'El minimo es 7 caracteres')
+                .max(9999999999, 'El maximo 10 es caracteres'),
+            phone_number: Yup.number()
+                .required('Campo obligatorio')
+                .min(999999, 'El minimo es 7 caracteres')
+                .max(9999999999, 'El maximo 10 es caracteres'),
             gender: Yup.string().required('Campo obligatorio'),
             dependency: Yup.string()
                 .when('entity_type', {

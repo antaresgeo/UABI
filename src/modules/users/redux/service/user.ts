@@ -273,18 +273,43 @@ export const assignRolesAndPermits = async (id, data) => {
     }
 };
 
-export const delete_user = async (id) => {
+export type Action = "inactivate" | "activate";
+
+export const delete_user = async (id, action: Action) => {
     try {
-        const URI = `/users/`;
-        const res: AxiosResponse<UserResponse> = await auth_http.delete(URI, {
-            params: { id },
-        });
+        const URI = `/users/change-status`;
+        const body = {}
+        const res: AxiosResponse<UserResponse> = await auth_http.patch(
+            URI,
+            body,
+            {
+                params: {
+                    id,
+                    action
+                },
+            }
+        );
         return res.data;
+
     } catch (e) {
-        if (e?.response?.status === 400) {
+            if (e?.response?.status === 400) {
             swal_warning.fire({ text: e.response.data.message, icon: 'error' });
             console.log(e.response.data);
         }
         return Promise.reject('Error');
+
     }
+    // try {
+    //     const URI = `/users/`;
+    //     const res: AxiosResponse<UserResponse> = await auth_http.delete(URI, {
+    //         params: { id },
+    //     });
+    //     return res.data;
+    // } catch (e) {
+    //     if (e?.response?.status === 400) {
+    //         swal_warning.fire({ text: e.response.data.message, icon: 'error' });
+    //         console.log(e.response.data);
+    //     }
+    //     return Promise.reject('Error');
+    // }
 };

@@ -3,11 +3,9 @@ import { formatDate, swal_warning } from '../../../utils';
 import { Link, Table } from '../../../utils/ui';
 import { useSelector, useDispatch } from 'react-redux';
 import { swal } from '../../../utils';
-import { IRealEstateAttributes } from '../../../utils/interfaces';
 import { actions } from '../redux';
 import Tag from 'antd/lib/tag';
 import { guards } from '../routes';
-import { deleteRealEstate } from './../redux/actions/realEstates';
 
 interface RealEstateListProps {
     withProject?: boolean;
@@ -37,11 +35,11 @@ const RealEstateList: FC<RealEstateListProps> = ({
         store.acquisitions.realEstates.loading,
         store.acquisitions.realEstates.pagination.total_results,
     ]);
-    const deleteRealEstate = (id) => async () => {
+    const deleteRealEstate = (id, status) => async () => {
         const result = await swal_warning.fire({
             icon: 'warning',
             title: '¿Está seguro?',
-            text: '¿Está seguro que quiere inactivar el Bien Inmueble?',
+            text: `¿Está seguro que quiere ${status === 'Inactivo' ? 'Activar' : 'Inactivar'} el Bien Inmueble?`,
             showDenyButton: true,
             showCancelButton: false,
             confirmButtonText: 'Continuar',
@@ -50,7 +48,7 @@ const RealEstateList: FC<RealEstateListProps> = ({
 
         if (result.isConfirmed) {
             await dispatch(actions.deleteRealEstate(id));
-            await dispatch(actions.getRealEstates({ with: 'pagination' }));
+            await dispatch(actions.getRealEstates({ with: 'pagination', key: 'registry_number' }));
             // const _res: any = await dispatch(actions.deleteProject(id));
 
             // swal_warning.fire({
@@ -114,10 +112,16 @@ const RealEstateList: FC<RealEstateListProps> = ({
         title: 'Desactivar',
         dataIndex: 'id',
         align: 'center' as 'center',
-        render: (id) => {
+        render: (id, row) => {
             return (
-                <div className="text-danger" onClick={deleteRealEstate(id)}>
-                    <i className="fa fa-times-circle" aria-hidden="true" />
+                <div className="text-danger" onClick={deleteRealEstate(id, row.status)}>
+                    {row.status === "Activo" ?
+                        <i className="fa fa-toggle-on" aria-hidden="true" style={{ fontSize: "18px", color: '#1FAEEF' }} />
+                        :
+                        <i className="fa fa-toggle-off" aria-hidden="true" style={{ fontSize: "18px", color: '#1FAEEF' }} />
+
+                    }
+                    {/* <i className="fa fa-times-circle" aria-hidden="true" /> */}
                 </div>
             );
         },
@@ -162,22 +166,16 @@ const RealEstateList: FC<RealEstateListProps> = ({
             align: 'left' as 'left',
             render: (data) => data.created_by,
         },
-        ...(register
-            ?
-            [
-                {
-                    title: 'Estado',
-                    dataIndex: 'status',
-                    align: 'center' as 'center',
-                    render: (s) => {
-                        if (s === 'Activo') return <Tag color="success">{s}</Tag>;
-                        return <Tag color="default">{s}</Tag>;
-                    },
-                },
-            ]
-            :
-            []
-        ),
+        {
+            title: 'Estado',
+            dataIndex: 'status',
+            align: 'center' as 'center',
+            render: (s) => {
+                if (s === 'Activo') return <Tag color="success">{s}</Tag>;
+                return <Tag color="default">{s}</Tag>;
+            },
+        },
+
     ];
 
     if (guards.detailRealEstate({ user })) {
@@ -233,10 +231,10 @@ const RealEstateList: FC<RealEstateListProps> = ({
 
     const change_page = (page, pageSize) => {
         // console.log(filters)
-        if(project_id) {
+        if (project_id) {
             dispatch(actions.getRealEstatesByProject(project_id, { page, pageSize, with: 'pagination', ...filters }));
 
-        }else {
+        } else {
             dispatch(actions.getRealEstates({ page, pageSize, with: 'pagination', ...filters }));
         }
     };

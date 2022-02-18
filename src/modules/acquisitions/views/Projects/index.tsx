@@ -33,12 +33,12 @@ const Projects = () => {
         dispatch(actions.getProjects({ page, pageSize, q: query }));
     };
 
-    const deleteProject = (id) => async () => {
+    const deleteProject = (id, status) => async () => {
         let res: any;
         if (id !== '' && id !== undefined) {
             res = await dispatch(actions.getRealEstatesByProject(id));
         }
-        if (res?.total && res.total !== 0) {
+        if (res?.total && res.total !== 0 && status === "Activo" ) {
             const result = await swal_warning.fire({
                 icon: 'warning',
                 title: '¡Precaución!',
@@ -54,7 +54,7 @@ const Projects = () => {
                 swal_warning.fire({
                     icon: 'info',
                     title: '¡Última oportunidad!',
-                    text: '¿Está seguro que quiere inactivar el proyecto?',
+                    text: `¿Está seguro que quiere  inactivar el proyecto?`,
                     showDenyButton: true,
                     showCancelButton: false,
                     confirmButtonText: 'Continuar',
@@ -81,7 +81,7 @@ const Projects = () => {
             const result = await swal_warning.fire({
                 icon: 'warning',
                 title: '¿Está seguro?',
-                text: '¿Está seguro que quiere inactivar el proyecto?',
+                text: `¿Está seguro que quiere  ${status === 'Inactivo' ? 'Activar' : 'Inactivar'} el proyecto?`,
                 showDenyButton: true,
                 showCancelButton: false,
                 confirmButtonText: 'Continuar',
@@ -156,7 +156,7 @@ const Projects = () => {
         render: (id, row) => {
             if (id !== 0) {
                 return (
-                    <div className="text-primary" onClick={deleteProject(id)}>
+                    <div className="text-primary" onClick={deleteProject(id, row.status)}>
                         {row.status === "Activo" ?
                             <i className="fa fa-toggle-on" aria-hidden="true"  style={{fontSize: "18px", color: '#1FAEEF'}} />
                             :

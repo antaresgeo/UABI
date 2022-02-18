@@ -32,7 +32,16 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
     const schema = Yup.object().shape({
         name: Yup.string().required('Campo obligatorio'),
         nit: Yup.string().required('Campo obligatorio'),
-        phone: Yup.string().required('Campo obligatorio'),
+        phone: Yup.number()
+            .required('Campo obligatorio')
+            .min(999999, 'El minimo es 7 caracteres')
+            .max(9999999999, 'El maximo 10 es caracteres'),
+        address: Yup.string().required('Campo obligatorio'),
+        contact_information: Yup.object({
+            name: Yup.string().required('Campo Obligatorio'),
+            email: Yup.string().required('Campo Obligatorio'),
+            phone: Yup.string().required('Campo Obligatorio'),
+        })
     });
 
     const submit = (values, form) => {
@@ -44,7 +53,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
     };
     return (
         <Formik enableReinitialize onSubmit={submit} initialValues={initial_values} validationSchema={schema} innerRef={innerRef}>
-            {({ /*values, isValid,*/ isSubmitting, setFieldValue }) => {
+            {({ /*values, isValid,*/ isSubmitting, setFieldValue, handleChange }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -77,6 +86,14 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={100}
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        const { value } = e.target;
+                                        const regex = new RegExp(/^[A-Za-z0-9\s\\Ñ\\ñ\\áéíóúüÁÉÍÓÚÜ]*$/g);
+                                        if (regex.test(value.toString())) {
+                                            handleChange(e);
+                                        }
+                                    }}
                                 />
                                 <ErrorMessage name="name" withCount max={100} />
                             </div>
@@ -92,6 +109,14 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                     autoComplete="off"
                                     disabled={disabled}
                                     maxLength={20}
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        const { value } = e.target;
+                                        const regex = /^[0-9,-]*$/;
+                                        if (regex.test(value.toString())) {
+                                            handleChange(e);
+                                        }
+                                    }}
                                 />
                                 <ErrorMessage name="nit" withCount max={20} />
                             </div>
@@ -125,6 +150,14 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                             autoComplete="off"
                                             disabled={disabled}
                                             maxLength={20}
+                                            onChange={(e) => {
+                                                e.preventDefault();
+                                                const { value } = e.target;
+                                                const regex = new RegExp(`^[+]?\\d{0,3}$`);
+                                                if (regex.test(value.toString())) {
+                                                    handleChange(e);
+                                                }
+                                            }}
                                         />
                                         <ErrorMessage name="phone_ext" />
                                     </div>
@@ -163,6 +196,7 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                         />
                                     </div>
                                 </div>
+                                <ErrorMessage name="address" />
                             </div>
                             <div className="form-group col-6">
                                 <label htmlFor="contact_name_id" className="form-label">
@@ -176,6 +210,14 @@ const InsuranceBrokerForm: FC<InsuranceBrokerFormPros> = ({ insurance_broker, on
                                     disabled={disabled}
                                     autoComplete="off"
                                     maxLength={50}
+                                    onChange={(e) => {
+                                        e.preventDefault();
+                                        const { value } = e.target;
+                                        const regex = new RegExp(/^[A-Za-z0-9\s\\Ñ\\ñ\\áéíóúüÁÉÍÓÚÜ]*$/g);
+                                        if (regex.test(value.toString())) {
+                                            handleChange(e);
+                                        }
+                                    }}
                                 />
                                 <ErrorMessage name="contact_information.name" withCount max={50} />
                             </div>
