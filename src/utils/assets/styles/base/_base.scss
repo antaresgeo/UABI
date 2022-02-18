@@ -1,6 +1,6 @@
-* {
+*:not(i):not(.anticon) {
     font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
+    font-size: 12px !important;
 }
 
 h1,
@@ -33,4 +33,10 @@ label {
 
 #root {
     height: 100vh;
+}
+
+@media (max-width: 576px) {
+    *:not(i):not(.anticon) {
+        font-size: 11px !important;
+    }
 }

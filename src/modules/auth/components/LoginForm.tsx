@@ -27,6 +27,8 @@ const LoginForm: FC<IloginFormPros> = ({ onSubmit, disabled, alert }) => {
         onSubmit(values, actions).then(() => {
             actions.setSubmitting(false);
             actions.resetForm();
+        }).catch(() => {
+            actions.setSubmitting(false);
         });
     };
 
