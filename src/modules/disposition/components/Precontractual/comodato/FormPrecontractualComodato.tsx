@@ -137,6 +137,14 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                             min={10}
                             max={100}
                             type="number"
+                            onChange={(e) => {
+                                e.preventDefault();
+                                const { value } = e.target;
+                                const regex = new RegExp(`^[+]?\\d{0,3}$`);
+                                if (regex.test(value.toString())) {
+                                    formik.handleChange(e);
+                                }
+                            }}
                         />
                         <div className="input-group-prepend">
                             <span className="input-group-text bg-white border-start-0">%</span>
@@ -276,6 +284,14 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                                 className="form-control border-start-0 text-end"
                                 min={0}
                                 max={9999999999}
+                                onChange={(e) => {
+                                    e.preventDefault();
+                                    const { value } = e.target;
+                                    const regex = new RegExp(`^[+]?\\d{0,10}$`);
+                                    if (regex.test(value.toString())) {
+                                        formik.handleChange(e);
+                                    }
+                                }}
                             />
                         </div>
                         <ErrorMessage name="commercial_appraisal" />
@@ -365,6 +381,14 @@ export const FormPrecontractualComodato: FC<FormProps> = ({ formik }) => {
                                 placeholder="Especificación"
                                 autoComplete="off"
                                 maxLength={200}
+                                onChange={(e) => {
+                                    e.preventDefault();
+                                    const { value } = e.target;
+                                    const regex = new RegExp(/^[^'\\/<>=*@&#$+-]*$/);
+                                    if (regex.test(value.toString())) {
+                                        formik.handleChange(e);
+                                    }
+                                }}
                             />
                             <ErrorMessage name="capacity_specification" withCount max={200} />
                         </div>
