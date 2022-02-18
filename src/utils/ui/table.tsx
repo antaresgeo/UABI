@@ -30,10 +30,10 @@ const getPaginator = (
             : {}),
         showTotal: (total /*, current*/) => {
             return (
-                <>
-                    <span>Total de resultados</span>:<span style={{ color: '#F28C02' }}>: {total}</span>
-                    <span style={{ fontSize: '11px', marginLeft: '16px' }}> Registros por página: </span>
-                </>
+                <div>
+                    <span className="total-results">Total de resultados :<span style={{ color: '#F28C02' }}>: {total}</span></span>
+                    <span className="results-text"> Registros por página </span>
+                </div>
             );
         },
     };

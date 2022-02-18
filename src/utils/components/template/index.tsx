@@ -117,12 +117,12 @@ const Template: FC<ITemplate> = ({ children, breadcrumbs, show_breadcrumbs, user
                     }}
                 >
                     <div className="d-flex align-start flex-column" style={{ width: '80%' }}>
-                        <span style={{ fontWeight: 'bold', fontSize: 22 }}>{name}</span>
+                        <span style={{ fontWeight: 'bold', fontSize: "22px !important" }}>{name}</span>
                         {user && (
                             <span
                                 style={{
                                     fontWeight: 400,
-                                    fontSize: 16,
+                                    fontSize: "16px !important",
                                     lineHeight: '40px',
                                 }}
                             >
