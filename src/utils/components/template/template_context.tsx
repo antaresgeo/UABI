@@ -41,7 +41,7 @@ const TemplateProvider: FC = React.memo(({ children }) => {
     const [socket, set_socket] = useState<Socket>(null);
     const [user] = useSelector((store: any) => [store.auth.user]);
     const [width, setWidth] = useState<number>(window.innerWidth);
-    const [device, setDevice] = useState<'sm' | 'md' | 'lg'>('lg');
+    const [device, setDevice] = useState<'sm' | 'md' | 'lg'>('sm');
     const updateDimensions = () => {
         const _width = window.innerWidth;
         let _device;
