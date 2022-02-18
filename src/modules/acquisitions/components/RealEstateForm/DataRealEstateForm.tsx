@@ -102,12 +102,21 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
     //     }
     //     return [];
     // };
+
+    // const number_validate = (limit?: number) => (e) => {
+    //     e.preventDefault();
+    //     const regex = new RegExp(`^([1-9]+\\d*)|[0]${limit ? `{0,${limit}}` : '*'}$`);
+    //     if (regex.test(e.target.value.toString())) {
+    //         const a = Math.abs(parseInt(e.target.value))
+    //         e.target.value = a
+    //         formik.handleChange(e);
+    //     }
+    // };
+
     const number_validate = (limit?: number) => (e) => {
         e.preventDefault();
-        const regex = new RegExp(`^([1-9]+\\d*)|[0]${limit ? `{0,${limit}}` : '*'}$`);
+        const regex = new RegExp(`^[+]?\\d${limit ? `{0,${limit}}` : '*'}$`);
         if (regex.test(e.target.value.toString())) {
-            const a = Math.abs(parseInt(e.target.value))
-            e.target.value = a
             formik.handleChange(e);
         }
     };
@@ -384,7 +393,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             id="total_area_id"
                             className="form-control border-end-0"
                             min={0}
-                            onChange={number_validate(15)}
+                            onChange={number_validate(10)}
                         />
                         <div className="input-group-prepend">
                             <Field
@@ -439,7 +448,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             id="reconstruction_value_id"
                             className="form-control border-start-0 text-end"
                             min={0}
-                            onChange={number_validate()}
+                            onChange={number_validate(10)}
 
                         />
                     </div>
@@ -458,7 +467,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             className="form-control border-end-0"
                             min={0}
                             max={100}
-                            onChange={number_validate(15)}
+                            onChange={number_validate(3)}
                             type="number"
                         />
                         <div className="input-group-prepend">
@@ -606,7 +615,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                             //     //formik.setFieldValue('total_area', value1 + value2, false);
                             // }}
                             min={0}
-                            onChange={number_validate(15)}
+                            onChange={number_validate(10)}
                         />
                         <div className="input-group-prepend">
                             <Field
@@ -679,6 +688,7 @@ export const DataRealEstateForm: FC<DataRealEstateFormProps> = ({
                                     formik.values.active_type?.includes(active_type[3])
                                 )
                             }
+                            onChange={number_validate(10)}
                             // onChange={(e) => {
                             //     formik.handleChange(e);
                             //     // const value2 = parseFloat(e.target.value || 0);

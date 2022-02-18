@@ -129,11 +129,11 @@ export const PersonalInformationForm = ({
         ...persona,
     };
 
-    console.log('personaM inicial',initial_values)
+    console.log('personaM inicial', initial_values)
 
     const schema = Yup.object().shape({
         documentType: Yup.string().required('obligatorio'),
-        documentNumber: Yup.number().required('obligatorio'),
+        documentNumber: Yup.string().required('obligatorio'),
         company_name: Yup.string().when('documentType', {
             is: 'NIT',
             then: Yup.string().required('obligatorio'),
@@ -156,9 +156,9 @@ export const PersonalInformationForm = ({
         }),
         email: Yup.string().email().required('obligatorio'),
         phoneNumber: Yup.number()
-        .required('Campo obligatorio')
-        .min(999999, 'El minimo es 7 caracteres')
-        .max(9999999999, 'El maximo 10 es caracteres'),
+            .required('Campo obligatorio')
+            .min(999999, 'El minimo es 7 caracteres')
+            .max(9999999999, 'El maximo 10 es caracteres'),
         gender: Yup.string().when('documentType', {
             is: 'NIT',
             otherwise: Yup.string().required('obligatorio'),
@@ -233,7 +233,7 @@ export const PersonalInformationForm = ({
                                     Número {values.documentType === 'NIT' ? 'de Nit' : 'de documento'}
                                 </label>
                                 <Field
-                                    type="number"
+                                    type="text"
                                     className="form-control"
                                     id="documentNumber"
                                     placeholder={`Número ${values.documentType === 'NIT' ? 'de Nit' : 'de documento'}`}
@@ -244,7 +244,12 @@ export const PersonalInformationForm = ({
                                     onChange={(ev) => {
                                         ev.preventDefault();
                                         setFieldValue('id', '', false);
-                                        handleChange(ev);
+                                        // handleChange(ev);
+                                        const { value } = ev.target;
+                                        const regex = /^[0-9,-]*$/;
+                                        if (regex.test(value.toString())) {
+                                            handleChange(ev);
+                                        }
                                     }}
                                     onBlur={(ev) => {
                                         const id_n = ev.target.value;
@@ -274,8 +279,8 @@ export const PersonalInformationForm = ({
                                         </option>
                                         <option value="F">Femenino</option>
                                         <option value="M">Masculino</option>
-                                        <option value="O">Intersexual</option>
-                                        <option value="O">No Deseo Responder</option>
+                                        <option value="I">Intersexual</option>
+                                        <option value="NA">No Deseo Responder</option>
                                     </Field>
                                     <ErrorMessage name="gender" />
                                 </div>
@@ -453,7 +458,7 @@ export const PersonalInformationForm = ({
                                             type="text"
                                             className="form-control"
                                             disabled
-                                            // value={`${formik.values.location.commune}, ${formik.values.location.neighborhood}`}
+                                        // value={`${formik.values.location.commune}, ${formik.values.location.neighborhood}`}
                                         />
                                         <div className="input-group-prepend">
                                             <LocationModal

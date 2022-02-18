@@ -152,6 +152,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                         autoComplete="off"
                         disabled={disabled}
                         maxLength={20}
+
                     />
                     <ErrorMessage name="detailsUser.names.firstName" />
                 </div>
@@ -232,21 +233,31 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                         Numero de documento <span className="text-danger">*</span>
                     </label>
                     <Field
-                        type="number"
+                        type="text"
                         className="form-control"
                         id="id_number"
                         placeholder="Número de documento"
                         name="user.id_number"
                         autoComplete="off"
                         disabled={disabled}
+                        maxLength={20}
                         onChange={(e) => {
                             e.preventDefault();
                             const { value } = e.target;
-                            const regex = /^[+]?\d{0,20}$/;
+                            const regex = /^[0-9,-]*$/;
                             if (regex.test(value.toString())) {
                                 formik.handleChange(e);
                             }
                         }}
+
+                    // onChange={(e) => {
+                    //     e.preventDefault();
+                    //     const { value } = e.target;
+                    //     const regex = /^[+]?\d{0,20}$/;
+                    //     if (regex.test(value.toString())) {
+                    //         formik.handleChange(e);
+                    //     }
+                    // }}
                     />
                     <ErrorMessage name="user.id_number" withCount max={20} />
                 </div>
@@ -330,6 +341,14 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                                 autoComplete="off"
                                 disabled={disabled}
                                 maxLength={20}
+                                onChange={(e) => {
+                                    e.preventDefault();
+                                    const { value } = e.target;
+                                    const regex = new RegExp(`^[+]?\\d{0,3}$`);
+                                    if (regex.test(value.toString())) {
+                                        formik.handleChange(e);
+                                    }
+                                }}
                             />
                             <ErrorMessage name="detailsUser.phone_number_ext" />
                         </div>
@@ -350,9 +369,10 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                         <option value="" hidden>
                             --Selecciona Genero--
                         </option>
-                        <option value="f">Femenino</option>
-                        <option value="m">Masculino</option>
-                        <option value="o">Otro</option>
+                        <option value="F">Femenino</option>
+                        <option value="M">Masculino</option>
+                        <option value="I">Intersexual</option>
+                        <option value="NA">No Deseo Responder</option>
                     </Field>
                     <ErrorMessage name="detailsUser.gender" />
                 </div>
@@ -376,7 +396,7 @@ const Dataformuser: FC<IUserFormPros> = ({ type, disabled, formik, dependencies 
                                 disabled={disabled}
                                 onSave={async (values) => {
                                     formik.setFieldValue('detailsUser.str_location', values.address);
-                                    formik.setFieldValue('detailsUser.location', values.id );
+                                    formik.setFieldValue('detailsUser.location', values.id);
                                 }}
                             />
                         </div>

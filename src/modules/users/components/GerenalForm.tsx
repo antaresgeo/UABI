@@ -23,7 +23,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, addres
     // const history = useHistory();
     const [subs, set_subs] = useState<any[]>([]);
     const roles = useSelector((store: any) => store.auth.user.roles);
-    const is_admin =  !!roles.find((r) => r.name === 'Administrador');
+    const is_admin = !!roles.find((r) => r.name === 'Administrador');
     const initial_values = {
         user: {
             id_number: '',
@@ -122,7 +122,7 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, addres
             validationSchema={schema}
             innerRef={innerRef}
         >
-            {({ values, isValid, isSubmitting, setFieldValue, handleChange, errors,  }) => {
+            {({ values, isValid, isSubmitting, setFieldValue, handleChange, errors, }) => {
                 return (
                     <Form>
                         <div className="row">
@@ -352,21 +352,21 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, addres
                                 <ErrorMessage name="detailsUser.email" />
                             </div>
                             {(type === 'create' || is_admin) && (
-                                    <div className="col-3">
-                                        <label htmlFor="username" className="form-label">
-                                            Contraseña
-                                        </label>
-                                        <Field
-                                            type="password"
-                                            className="form-control"
-                                            id="password_id"
-                                            name="user.password"
-                                            autoComplete="off"
-                                            disabled={disabled}
-                                        />
-                                        <ErrorMessage name="user.password" />
-                                    </div>
-                                )}
+                                <div className="col-3">
+                                    <label htmlFor="username" className="form-label">
+                                        Contraseña
+                                    </label>
+                                    <Field
+                                        type="password"
+                                        className="form-control"
+                                        id="password_id"
+                                        name="user.password"
+                                        autoComplete="off"
+                                        disabled={disabled}
+                                    />
+                                    <ErrorMessage name="user.password" />
+                                </div>
+                            )}
                         </div>
                         <div className="row">
                             <div className="col-3">
@@ -435,9 +435,10 @@ const GeneralForm: FC<IUserFormPros> = ({ type, disabled, onSubmit, user, addres
                                     <option value="" hidden>
                                         --Selecciona Genero--
                                     </option>
-                                    <option value="f">Femenino</option>
-                                    <option value="m">Masculino</option>
-                                    <option value="o">Otro</option>
+                                    <option value="F">Femenino</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="I">Intersexual</option>
+                                    <option value="NA">No Deseo Responder</option>
                                 </Field>
                                 <ErrorMessage name="detailsUser.gender" />
                             </div>

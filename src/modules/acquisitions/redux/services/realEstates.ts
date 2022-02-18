@@ -212,9 +212,11 @@ export const createRealEstates = async (data: any, fathers: any[], action, quant
         if (dr.plot_area === '') {
             dr.plot_area = 0;
         }
-        delete dr.value;
-        delete dr.key;
-        delete dr.project_id;
+        if(action !== "divide") {
+            delete dr.value;
+            delete dr.key;
+            delete dr.project_id;
+        }
     });
     // const data_fathers = fathers.map(f => {
     //     return {
@@ -239,15 +241,13 @@ export const createRealEstates = async (data: any, fathers: any[], action, quant
     const data_final = { realEstateFather: fathers, realEstates };
     console.log(data_final)
 
-
-
     try {
-        let URI = `/real-estates/kbhdhxkasjbdckjs`;
+        let URI = `/real-estates`;
         let res: AxiosResponse<any> = await http.post(
             URI,
             data_final,
             {
-                params: { quantity, action: action === "englobar" ? "bundle" : "unbundle" },
+                params: { quantity, action: action === "englobar" ? "bundle"  :  action === "desenglobar" ? "unbundle" : action },
             }
         );
 

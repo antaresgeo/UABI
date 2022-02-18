@@ -32,8 +32,8 @@ const clear_get_all_users = () =>
     request_dispatch(types.get_all_users, Promise.resolve([]));
 const create_user = (data: User) =>
     request_dispatch(types.create_user, service.create_user(data));
-const delete_user = (id) =>
-    request_dispatch(types.delete_user, service.delete_user(id));
+const delete_user = (id, action) =>
+    request_dispatch(types.delete_user, service.delete_user(id, action));
 const get_user_by_id = (id) =>
     request_dispatch(types.get_user, service.get_user_by_id(id));
 const update_user = (id, data: any) =>

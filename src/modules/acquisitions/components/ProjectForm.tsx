@@ -52,7 +52,7 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
             .required('Campo obligatorio')
             .max(1000, 'La Descripción debe tener maximo 1000 caracteres'),
         dependency: Yup.string().required('Campo obligatorio'),
-        budget_value: Yup.number()
+        budget_value: Yup.number().required('obligatorio')
             .min(0, 'El minimo es 0')
             .max(9999999999, 'El maximo 10 es caracteres'),
 
@@ -262,7 +262,8 @@ const ProjectForm: FC<ProjectFormPros> = ({ project, onSubmit, disabled, type, i
                                             className="form-control border-start-0 text-end"
                                             min={0}
                                             max={9999999999}
-                                            onChange={number_validate(10)}
+                                            // onChange={number_validate(10)}
+
                                         />
                                     </div>
                                 </div>
