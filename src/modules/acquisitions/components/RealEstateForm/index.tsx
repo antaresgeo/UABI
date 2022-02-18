@@ -320,7 +320,7 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
         onSubmit(values, form, isFinish)
             .then(() => {
                 form.setSubmitting(false);
-                if(!isFinish){
+                if (!isFinish) {
                     form.resetForm()
                     form.setFieldValue('projects_id', `${project_id}` || '');
                 }
@@ -517,7 +517,6 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                 <div className="flex-fill" />
 
                                 {(type !== 'view' && globe !== true) && (
-
                                     <button
                                         type="button"
                                         className="btn btn-outline-primary me-3 btn-sm"
@@ -535,7 +534,10 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                             />
                                         )}
                                     </button>
+
                                 )}
+
+
                                 {type === 'create' && (
                                     <button
                                         type="button"
@@ -555,6 +557,12 @@ const RealEstateForm: FC<RealEstateFormProps> = ({
                                         )}
                                     </button>
                                 )}
+
+                                {inventory &&
+
+                                    <a href="/supervisionArrendamientos.xlsx" target="_blank" className='btn btn-outline-primary me-3 btn-sm' download="supervisionArrendamientos.xlsx" >plantilla sap</a>
+
+                                }
 
                                 {globe === true && (
                                     <>
